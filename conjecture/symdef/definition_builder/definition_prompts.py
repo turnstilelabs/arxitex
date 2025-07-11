@@ -1,4 +1,3 @@
-# enhancement_prompts.py
 from typing import Optional
 from conjecture.symbol.utils import Definition
 from conjecture.llms.prompt import Prompt

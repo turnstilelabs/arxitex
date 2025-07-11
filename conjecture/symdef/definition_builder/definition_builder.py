@@ -1,16 +1,13 @@
-# enhancement_interface.py
-
 from typing import List, Optional
 from loguru import logger
-from openai import OpenAI
 
-from conjecture.symbol.symbol_extractor.prompts import SymbolEnhancementPromptGenerator
-from conjecture.symbol.symbol_extractor.models import TermExtractionResult, DefinitionSynthesisResult, ExtractedDefinition
+from conjecture.symbol.symbol_extractor.definition_prompts import SymbolEnhancementPromptGenerator
+from conjecture.symbol.symbol_extractor.definition_models import TermExtractionResult, DefinitionSynthesisResult, ExtractedDefinition
 from conjecture.symbol.utils import Definition
 from conjecture.llms import llms
 
 
-class SymbolEnhancementInterface:
+class DefinitionBuilder:
     def __init__(self):
         self.prompt_generator = SymbolEnhancementPromptGenerator()
         
