@@ -17,7 +17,7 @@ class Definition:
     """Represents a single, resolved definition for a term."""
     term: str
     definition_text: str
-    source_artifact_id: str  # ID of the artifact where this was defined/synthesized
+    source_artifact_id: str
     aliases: List[str] = field(default_factory=list)
     dependencies: List[str] = field(default_factory=list) # e.g., "abelian group" depends on "group"
 
@@ -61,7 +61,6 @@ def load_artifacts_from_json(file_path: Path) -> List[ArtifactNode]:
         ArtifactListAdapter = TypeAdapter(List[ArtifactNode])
         with open(file_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            # Assuming the artifacts are under a "nodes" key
             artifacts = ArtifactListAdapter.validate_python(data.get("nodes", []))
         logger.success(f"Successfully loaded and validated {len(artifacts)} artifacts.")
         return artifacts

@@ -143,8 +143,6 @@ class DocumentEnhancer:
 
 
 def main():
-    """Main execution function."""
-
     parser = argparse.ArgumentParser(
         description="Enhance mathematical artifacts from a LaTeX paper to make them self-contained.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter

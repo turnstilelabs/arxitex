@@ -73,16 +73,16 @@ class DefinitionBank:
         """Finds the best base definition, operating on canonical forms."""
         new_term_parts = self._normalize_term(term).split()
 
-        # Phase 1: Exact Sub-phrase Matching
+        # Step 1: Exact Sub-phrase Matching
         if len(new_term_parts) > 1:
             for i in range(1, len(new_term_parts)):
                 sub_phrase_str = " ".join(new_term_parts[i:])
-                definition = self.find(sub_phrase_str) # `find` normalizes correctly
+                definition = self.find(sub_phrase_str)
                 if definition:
                     logger.debug(f"Found base via exact sub-phrase: '{definition.term}' for new term '{term}'.")
                     return definition
 
-        # --- Step 2: Parameterized Term Matching (New Logic) ---
+        # Step 2: Parameterized Term Matching
         best_param_match_def = None
         max_match_len = 0
 
@@ -92,7 +92,7 @@ class DefinitionBank:
 
             # CRITICAL GUARD: The parameterized matching heuristic is only meaningful
             # for multi-word terms (k_len > 1).
-            # Also, the known term cannot be longer than the new term.
+            # Also, the known term cannot be longer than the new term??
             if k_len <= 1 or k_len > len(new_term_parts):
                 continue
 
@@ -104,7 +104,7 @@ class DefinitionBank:
                 # Now, perform the single-difference check between the known term and the sub-phrase.
                 diff_count = sum(1 for known_part, sub_part in zip(known_term_parts, sub_phrase_parts) if known_part != sub_part)
                 
-                # If they differ by exactly one "word", it's a parameterized match.
+                # If they differ by exactly one, it's a parameterized match.
                 if diff_count == 1:
                     if len(known_canonical_term) > max_match_len:
                         max_match_len = len(known_canonical_term)

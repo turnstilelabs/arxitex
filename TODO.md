@@ -3,3 +3,5 @@
 - [ ] Get the same numbering of artifacts as in the paper.
 - [ ] Resolve External reference: find them in the paper bibliography and extract it from the external paper.
 - [ ] Make statement self-sustained.
+- [ ] Write to disk when there is a match between new terms and terms in the bank
+- [ ] Make _validate_definition_in_context proof
