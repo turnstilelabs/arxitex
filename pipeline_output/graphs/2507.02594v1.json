@@ -1,0 +1,1529 @@
+{
+  "arxiv_id": "2507.02594v1",
+  "nodes": [
+    {
+      "id": "example_1_3d411f65",
+      "type": "example",
+      "content": "For example, if $G \\cong {\\rm PSL}(2,5)$, then  $\\rho(G) = 2^{15}\\cdot3^{20}\\cdot5^{24}$. Therefore\n\t $[\\rho(G)]_2=15$,  $[\\rho(G)]_3=20$,  $[\\rho(G)]_5=24$, $\\pi(G)=\\{2, 3, 5\\}$\n\t  and $ {\\operatorname{Exp}}_{\\rho}(G)=\\{15, 20, 24\\}$.",
+      "content_preview": "For example, if G PSL(2,5), then (G) = 2^153^205^24. Therefore [(G)]_2=15, [(G)]_3=20, [(G)]_5=24, (G)=2, 3, 5 and _(G)=15, 20, 24.",
+      "display_name": "Example",
+      "raw_content": "For example, if $G \\cong {\\rm PSL}(2,5)$, then  $\\rho(G) = 2^{15}\\cdot3^{20}\\cdot5^{24}$. Therefore\n\t $[\\rho(G)]_2=15$,  $[\\rho(G)]_3=20$,  $[\\rho(G)]_5=24$, $\\pi(G)=\\{2, 3, 5\\}$\n\t  and $ {\\operatorname{Exp}}_{\\rho}(G)=\\{15, 20, 24\\}$.",
+      "label": null,
+      "position": {
+        "line_start": 122,
+        "line_end": 126,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "lemma_2_c1e7d0fa",
+      "type": "lemma",
+      "content": "\\cite{frobenius1895verallgemeinerung}\n\tLet $G$ be a finite group and $m$ be a positive integer dividing $|G|$. If\n\t$L_m(G) = \\lbrace g \\in G|g^m = 1\\rbrace$, then $m \\mid |L_m(G)|$.",
+      "content_preview": "Let G be a finite group and m be a positive integer dividing |G|. If L_m(G) = g G|g^m = 1, then m |L_m(G)|.",
+      "display_name": "Lemma",
+      "raw_content": "\\cite{frobenius1895verallgemeinerung}\n\tLet $G$ be a finite group and $m$ be a positive integer dividing $|G|$. If\n\t$L_m(G) = \\lbrace g \\in G|g^m = 1\\rbrace$, then $m \\mid |L_m(G)|$.",
+      "label": null,
+      "position": {
+        "line_start": 140,
+        "line_end": 143,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "karan",
+      "type": "lemma",
+      "content": "\\cite[Lemma 2.2]{baniMal} \\label{karan}\n\tIf $\\rho(G)={p_1}^{\\alpha_1}{p_2}^{\\alpha_2}\\cdots{p_k}^{\\alpha_k}$, where $k\\in \\mathbb{N}$, then\n\t\\begin{enumerate}\n\t\t\\item $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\t\\item $|G| \\leq 1+{\\alpha_1}+{\\alpha_2}+\\cdots+{\\alpha_k}$, with equality if and only if $G$ is a  group have only elements of prime order.\n\t\\end{enumerate}",
+      "content_preview": "If (G)=p_1^_1p_2^_2^_k, where k , then (G)=p_1, p_2, , p_k, |G| 1+_1+_2++_k, with equality if and only if G is a group have only elements of prime...",
+      "display_name": "Lemma",
+      "raw_content": "\\cite[Lemma 2.2]{baniMal} \\label{karan}\n\tIf $\\rho(G)={p_1}^{\\alpha_1}{p_2}^{\\alpha_2}\\cdots{p_k}^{\\alpha_k}$, where $k\\in \\mathbb{N}$, then\n\t\\begin{enumerate}\n\t\t\\item $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\t\\item $|G| \\leq 1+{\\alpha_1}+{\\alpha_2}+\\cdots+{\\alpha_k}$, with equality if and only if $G$ is a  group have only elements of prime order.\n\t\\end{enumerate}",
+      "label": "karan",
+      "position": {
+        "line_start": 160,
+        "line_end": 166,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "productdirect",
+      "type": "lemma",
+      "content": "\\cite[Proposition 1.1]{TzbMATH06233336} \\label{productdirect}\n\tLet $G_1, G_2, \\dots, G_k$ be finite groups having coprime orders. Then\n\t\\begin{align*}\n\t\t\\rho(G_1 \\times G_2 \\times \\dots \\times G_k)= \\prod_{i=1}^{k} {\\rho(G_i)}^{n_i},\\quad \\text{where} \\quad \n\t\tn_i =\\prod_{\\substack{j=1 \\\\ j\\neq i}}^{k}|G_i|, i=1, 2, \\dots, k.\n\t\\end{align*}",
+      "content_preview": "Let G_1, G_2, , G_k be finite groups having coprime orders. Then (G_1 G_2 G_k)= _i=1^k (G_i)^n_i, n_i =_^k|G_i|, i=1, 2, , k.",
+      "display_name": "Lemma",
+      "raw_content": "\\cite[Proposition 1.1]{TzbMATH06233336} \\label{productdirect}\n\tLet $G_1, G_2, \\dots, G_k$ be finite groups having coprime orders. Then\n\t\\begin{align*}\n\t\t\\rho(G_1 \\times G_2 \\times \\dots \\times G_k)= \\prod_{i=1}^{k} {\\rho(G_i)}^{n_i},\\quad \\text{where} \\quad \n\t\tn_i =\\prod_{\\substack{j=1 \\\\ j\\neq i}}^{k}|G_i|, i=1, 2, \\dots, k.\n\t\\end{align*}",
+      "label": "productdirect",
+      "position": {
+        "line_start": 167,
+        "line_end": 173,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "mid1",
+      "type": "lemma",
+      "content": "\\label{mid1}   \\cite[Lemma 2.6]{baniAust}\n\tLet $ G  $ be a finite group satisfying  $ G = P  \\rtimes F$, where $P$ is a cyclic $p$-group\n\tfor some prime $p$, $|F| > 1$ and $(p,|F|) = 1$. Then\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|} .\\]",
+      "content_preview": "Let G be a finite group satisfying G = P F, where P is a cyclic p-group for some prime p, |F| > 1 and (p,|F|) = 1. Then [(G) = (P)^|C_F(P)| (F)^|P| .]",
+      "display_name": "Lemma",
+      "raw_content": "\\label{mid1}   \\cite[Lemma 2.6]{baniAust}\n\tLet $ G  $ be a finite group satisfying  $ G = P  \\rtimes F$, where $P$ is a cyclic $p$-group\n\tfor some prime $p$, $|F| > 1$ and $(p,|F|) = 1$. Then\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|} .\\]",
+      "label": "mid1",
+      "position": {
+        "line_start": 174,
+        "line_end": 178,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "hall",
+      "type": "lemma",
+      "content": "\\cite{hallzbMATH02575957} \\label{hall} \n\tAn integer $n = {p_1}^{\\alpha_1} \\dots {p_k}^{\\alpha_k}$\n\tis the number of Sylow $p$-subgroups of a\n\tfinite solvable group $G$ if and only if  ${p_i}^{\\alpha_i} \\equiv 1 \\pmod{p}$\n\tfor $i = 1, \\dots, k$.",
+      "content_preview": "An integer n = p_1^_1 p_k^_k is the number of Sylow p-subgroups of a finite solvable group G if and only if p_i^_i 1 for i = 1, , k.",
+      "display_name": "Lemma",
+      "raw_content": "\\cite{hallzbMATH02575957} \\label{hall} \n\tAn integer $n = {p_1}^{\\alpha_1} \\dots {p_k}^{\\alpha_k}$\n\tis the number of Sylow $p$-subgroups of a\n\tfinite solvable group $G$ if and only if  ${p_i}^{\\alpha_i} \\equiv 1 \\pmod{p}$\n\tfor $i = 1, \\dots, k$.",
+      "label": "hall",
+      "position": {
+        "line_start": 179,
+        "line_end": 184,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "huppert",
+      "type": "lemma",
+      "content": "\\cite{huppert} \\label{huppert}\n\tLet $ G ={\\rm PSL}(2, q) $ where $ q $ is a $p$-power ($ p $ prime). Then\\\\\n\t(1) a Sylow $ p $-subgroup $ P $ of $ G $ is an elementary abelian group of\n\torder $ q $ and the number of Sylow $ p $-subgroup of $ G $ is $ q + 1 $,\\\\\n\t(2) $ G $ contains a cyclic subgroup $ A $ of order $\\dfrac{q-1}{2}  $ such that $ N_G(u) $\n\tis a dihedral group of order $ q - 1 $ for every nontrivial element\n\t$ u \\in A $,\\\\\n\t(3) $ G $ contains a cyclic subgroup $ B $ of order $ \\dfrac{q+1}{2} $ such that $ N_G(u) $\n\tis a dihedral group of order $ q + 1 $ for every nontrivial element\n\t$ u \\in B $,\\\\\n\t(4) the set $ \\{ P^x, A^x, B^x | x \\in G \\} $ is a partition of $ G $.",
+      "content_preview": "Let G = PSL(2, q) where q is a p-power ( p prime). Then (1) a Sylow p -subgroup P of G is an elementary abelian group of order q and the number of...",
+      "display_name": "Lemma",
+      "raw_content": "\\cite{huppert} \\label{huppert}\n\tLet $ G ={\\rm PSL}(2, q) $ where $ q $ is a $p$-power ($ p $ prime). Then\\\\\n\t(1) a Sylow $ p $-subgroup $ P $ of $ G $ is an elementary abelian group of\n\torder $ q $ and the number of Sylow $ p $-subgroup of $ G $ is $ q + 1 $,\\\\\n\t(2) $ G $ contains a cyclic subgroup $ A $ of order $\\dfrac{q-1}{2}  $ such that $ N_G(u) $\n\tis a dihedral group of order $ q - 1 $ for every nontrivial element\n\t$ u \\in A $,\\\\\n\t(3) $ G $ contains a cyclic subgroup $ B $ of order $ \\dfrac{q+1}{2} $ such that $ N_G(u) $\n\tis a dihedral group of order $ q + 1 $ for every nontrivial element\n\t$ u \\in B $,\\\\\n\t(4) the set $ \\{ P^x, A^x, B^x | x \\in G \\} $ is a partition of $ G $.",
+      "label": "huppert",
+      "position": {
+        "line_start": 185,
+        "line_end": 196,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "111",
+      "type": "lemma",
+      "content": "\\label{111}\n\t\tIf $|{\\operatorname{Exp}}_{\\rho}(G)|=m$, then $|\\pi(G)|\\geqslant m$.",
+      "content_preview": "If |_(G)|=m, then |(G)| m.",
+      "display_name": "Lemma",
+      "raw_content": "\\label{111}\n\t\tIf $|{\\operatorname{Exp}}_{\\rho}(G)|=m$, then $|\\pi(G)|\\geqslant m$.",
+      "label": "111",
+      "position": {
+        "line_start": 200,
+        "line_end": 202,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_9_e71c6106",
+      "type": "proof",
+      "content": "The proof is straightforward.",
+      "content_preview": "The proof is straightforward.",
+      "display_name": "Proof",
+      "raw_content": "The proof is straightforward.",
+      "label": null,
+      "position": {
+        "line_start": 203,
+        "line_end": 205,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "bhamed",
+      "type": "lemma",
+      "content": "\\label{bhamed}  \n\t\tLet $G$ be a finite group such that $|G|=p^{\\alpha}m$ and  $(p,m)=1$, where $p$ is a  prime  number. Then\n\t\t$m $ divides $ [\\rho(G)]_p$.",
+      "content_preview": "Let G be a finite group such that |G|=p^m and (p,m)=1, where p is a prime number. Then m divides [(G)]_p.",
+      "display_name": "Lemma",
+      "raw_content": "\\label{bhamed}  \n\t\tLet $G$ be a finite group such that $|G|=p^{\\alpha}m$ and  $(p,m)=1$, where $p$ is a  prime  number. Then\n\t\t$m $ divides $ [\\rho(G)]_p$.",
+      "label": "bhamed",
+      "position": {
+        "line_start": 206,
+        "line_end": 209,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_11_19e6c235",
+      "type": "proof",
+      "content": "Using $(\\ref{yek})$, we  have\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}}s_t  = |G|-\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p\\,  \\nmid \\,t }}s_t  \n\t\t\t= p^{\\alpha} m- \\sum_{d \\mid m} s_d.\n\t\t\\end{align*}\n\t\tBy $(\\ref{star})$, since $ m \\mid \\sum_{d \\mid m} s_d$, we conclude  $m $ divides $ [\\rho(G)]_p$.",
+      "content_preview": "Using (), we have [(G)]_p=_ s_t = |G|-_ s_t = p^ m- _d m s_d. By (), since m _d m s_d, we conclude m divides [(G)]_p.",
+      "display_name": "Proof",
+      "raw_content": "Using $(\\ref{yek})$, we  have\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}}s_t  = |G|-\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p\\,  \\nmid \\,t }}s_t  \n\t\t\t= p^{\\alpha} m- \\sum_{d \\mid m} s_d.\n\t\t\\end{align*}\n\t\tBy $(\\ref{star})$, since $ m \\mid \\sum_{d \\mid m} s_d$, we conclude  $m $ divides $ [\\rho(G)]_p$.",
+      "label": null,
+      "position": {
+        "line_start": 210,
+        "line_end": 217,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "yek",
+          "reference_type": "external",
+          "context": "Using $(\\ref{yek})$, we  have\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "star",
+          "reference_type": "external",
+          "context": "ha} m- \\sum_{d \\mid m} s_d.\n\t\t\\end{align*}\n\t\tBy $(\\ref{star})$, since $ m \\mid \\sum_{d \\mid m} s_d$, we conclu",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "bbhamed",
+      "type": "lemma",
+      "content": "\\label{bbhamed}  \n\t\tLet $G$ be a finite group such that $p$ divides $| G |$, where $p$ is a  prime  number. Then\n\t\t$\\phi(p) $ divides  $ [\\rho(G)]_p$.",
+      "content_preview": "Let G be a finite group such that p divides | G |, where p is a prime number. Then (p) divides [(G)]_p.",
+      "display_name": "Lemma",
+      "raw_content": "\\label{bbhamed}  \n\t\tLet $G$ be a finite group such that $p$ divides $| G |$, where $p$ is a  prime  number. Then\n\t\t$\\phi(p) $ divides  $ [\\rho(G)]_p$.",
+      "label": "bbhamed",
+      "position": {
+        "line_start": 218,
+        "line_end": 221,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_13_a94f6156",
+      "type": "proof",
+      "content": "We note\n\t\tthat $s_t = m_t \\phi(t)$, where $m_t$ is the number of cyclic subgroups of order $t$.\n\t\tBy $(\\ref{yek})$, we  obtain that\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}}s_t  =\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}} k_t \\phi(t)\n\t\t\\end{align*}\n\tSince $p$ divides $t$, it follows that $ t=p^r \\cdot s $, where $(p,s)=1$.\n\t\tTherefore $\\phi(t)= \\phi(p^r) \\phi(s)$. \n\t\tWe know $\\phi(p) $ divides $ \\phi(p^n)$, for any $n \\in \\mathbb{N}$.  Thus $\\phi(p) \\mid s_t$, whenever  $p \\mid t$.\n\t\tConsequently   $\\phi(p) \\mid [\\rho(G)]_p$.",
+      "content_preview": "We note that s_t = m_t (t), where m_t is the number of cyclic subgroups of order t. By (), we obtain that [(G)]_p=_ s_t =_ k_t (t) Since p divides t,...",
+      "display_name": "Proof",
+      "raw_content": "We note\n\t\tthat $s_t = m_t \\phi(t)$, where $m_t$ is the number of cyclic subgroups of order $t$.\n\t\tBy $(\\ref{yek})$, we  obtain that\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}}s_t  =\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}} k_t \\phi(t)\n\t\t\\end{align*}\n\tSince $p$ divides $t$, it follows that $ t=p^r \\cdot s $, where $(p,s)=1$.\n\t\tTherefore $\\phi(t)= \\phi(p^r) \\phi(s)$. \n\t\tWe know $\\phi(p) $ divides $ \\phi(p^n)$, for any $n \\in \\mathbb{N}$.  Thus $\\phi(p) \\mid s_t$, whenever  $p \\mid t$.\n\t\tConsequently   $\\phi(p) \\mid [\\rho(G)]_p$.",
+      "label": null,
+      "position": {
+        "line_start": 222,
+        "line_end": 233,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "yek",
+          "reference_type": "external",
+          "context": "e number of cyclic subgroups of order $t$.\n\t\tBy $(\\ref{yek})$, we  obtain that\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "bbbhamed",
+      "type": "lemma",
+      "content": "\\label{bbbhamed}  \n\t\tLet $G$ be a finite group of order $pm$ such that  $(p,m)=1$ and $p$ is a  prime  number. Then\n\t\t$p \\nmid [\\rho(G)]_p$.",
+      "content_preview": "Let G be a finite group of order pm such that (p,m)=1 and p is a prime number. Then p [(G)]_p.",
+      "display_name": "Lemma",
+      "raw_content": "\\label{bbbhamed}  \n\t\tLet $G$ be a finite group of order $pm$ such that  $(p,m)=1$ and $p$ is a  prime  number. Then\n\t\t$p \\nmid [\\rho(G)]_p$.",
+      "label": "bbbhamed",
+      "position": {
+        "line_start": 234,
+        "line_end": 237,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_15_d5d99e83",
+      "type": "proof",
+      "content": "On the contrary, let $p $ divides $ [\\rho(G)]_p$.\n\t\tBy $(\\ref{yek})$, we  obtain that\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}}s_t  = |G|-\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p\\,  \\nmid \\,t }}s_t  \n\t\t\t= pm - \\sum_{d \\mid m} s_d.\n\t\t\\end{align*}\n\t\tTherefore $p $ divides $ \\sum_{d \\mid m} s_d$. \n\t\tOn the other hand, using  $(\\ref{star})$, $m$ divides $\\sum_{d \\mid m} s_d$. \n\tAlso,\tsince $(p,m)=1$, it follows that   $pm \\mid \\sum_{d \\mid m} s_d$. Thus $[\\rho(G)]_p\\leq0$, which is a contradiction. Thus we have  $p \\nmid [\\rho(G)]_p$.",
+      "content_preview": "On the contrary, let p divides [(G)]_p. By (), we obtain that [(G)]_p=_ s_t = |G|-_ s_t = pm - _d m s_d. Therefore p divides _d m s_d.",
+      "display_name": "Proof",
+      "raw_content": "On the contrary, let $p $ divides $ [\\rho(G)]_p$.\n\t\tBy $(\\ref{yek})$, we  obtain that\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_p=\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p \\mid t}}s_t  = |G|-\\sum_{ \\substack{ t \\in \\omega(G) \\\\ p\\,  \\nmid \\,t }}s_t  \n\t\t\t= pm - \\sum_{d \\mid m} s_d.\n\t\t\\end{align*}\n\t\tTherefore $p $ divides $ \\sum_{d \\mid m} s_d$. \n\t\tOn the other hand, using  $(\\ref{star})$, $m$ divides $\\sum_{d \\mid m} s_d$. \n\tAlso,\tsince $(p,m)=1$, it follows that   $pm \\mid \\sum_{d \\mid m} s_d$. Thus $[\\rho(G)]_p\\leq0$, which is a contradiction. Thus we have  $p \\nmid [\\rho(G)]_p$.",
+      "label": null,
+      "position": {
+        "line_start": 238,
+        "line_end": 248,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "yek",
+          "reference_type": "external",
+          "context": "contrary, let $p $ divides $ [\\rho(G)]_p$.\n\t\tBy $(\\ref{yek})$, we  obtain that\n\t\t\\begin{align*}\n\t\t\t[\\rho(G)]_",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "star",
+          "reference_type": "external",
+          "context": "m_{d \\mid m} s_d$. \n\t\tOn the other hand, using  $(\\ref{star})$, $m$ divides $\\sum_{d \\mid m} s_d$. \n\tAlso,\tsin",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "2-part",
+      "type": "corollary",
+      "content": "\\label{2-part}\n\t\tFor a finite group $G$,  $[\\rho(G)]_p$ is even, where $p$ is an odd prime number and $p \\mid |G|$. \n\t\tAlso, if $2 $ divides $|G|$, then $[\\rho(G)]_2$ is odd.",
+      "content_preview": "For a finite group G, [(G)]_p is even, where p is an odd prime number and p |G|. Also, if 2 divides |G|, then [(G)]_2 is odd.",
+      "display_name": "Corollary",
+      "raw_content": "\\label{2-part}\n\t\tFor a finite group $G$,  $[\\rho(G)]_p$ is even, where $p$ is an odd prime number and $p \\mid |G|$. \n\t\tAlso, if $2 $ divides $|G|$, then $[\\rho(G)]_2$ is odd.",
+      "label": "2-part",
+      "position": {
+        "line_start": 249,
+        "line_end": 252,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_17_7ec934b6",
+      "type": "proof",
+      "content": "By Lemma \\ref{bhamed} and Lemma \\ref{bbhamed}, we obtain  the result.",
+      "content_preview": "By Lemma and Lemma , we obtain the result.",
+      "display_name": "Proof",
+      "raw_content": "By Lemma \\ref{bhamed} and Lemma \\ref{bbhamed}, we obtain  the result.",
+      "label": null,
+      "position": {
+        "line_start": 253,
+        "line_end": 255,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "By Lemma \\ref{bhamed} and Lemma \\ref{bbhamed}, we obtain  the result.",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbhamed",
+          "reference_type": "internal",
+          "context": "By Lemma \\ref{bhamed} and Lemma \\ref{bbhamed}, we obtain  the result.",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "mohasebe",
+      "type": "lemma",
+      "content": "\\label{mohasebe}\n\tLet $ G = {\\rm PSL}(2, q) $ where $ q $ is a $p$-power ($ p $ prime). Then\n\t\t$$\\rho({\\rm PSL}(2,q))={\\rho(\\mathbb{Z}_{\\frac{q-1}{2}})}^{\\frac{q(q+1)}{2}} {\\rho(\\mathbb{Z}_{\\frac{q+1}{2}})}^{\\frac{q(q-1)}{2}}  p^{(q+1)(q-1)}.$$",
+      "content_preview": "Let G = PSL(2, q) where q is a p-power ( p prime). Then ( PSL(2,q))=(_)^ (_)^ p^(q+1)(q-1).",
+      "display_name": "Lemma",
+      "raw_content": "\\label{mohasebe}\n\tLet $ G = {\\rm PSL}(2, q) $ where $ q $ is a $p$-power ($ p $ prime). Then\n\t\t$$\\rho({\\rm PSL}(2,q))={\\rho(\\mathbb{Z}_{\\frac{q-1}{2}})}^{\\frac{q(q+1)}{2}} {\\rho(\\mathbb{Z}_{\\frac{q+1}{2}})}^{\\frac{q(q-1)}{2}}  p^{(q+1)(q-1)}.$$",
+      "label": "mohasebe",
+      "position": {
+        "line_start": 257,
+        "line_end": 260,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_19_74de5376",
+      "type": "proof",
+      "content": "By Lemma \\ref{huppert}  we get the result.",
+      "content_preview": "By Lemma we get the result.",
+      "display_name": "Proof",
+      "raw_content": "By Lemma \\ref{huppert}  we get the result.",
+      "label": null,
+      "position": {
+        "line_start": 262,
+        "line_end": 264,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "huppert",
+          "reference_type": "internal",
+          "context": "By Lemma \\ref{huppert}  we get the result.",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "theorem_20_296a0e31",
+      "type": "theorem",
+      "content": "Let $G$ be a finite group. Then\n\t\t$G \\cong {\\rm PSL}(2,11)$  if and only if \n\t\t $ {\\operatorname{Exp}}_{\\rho}(G) ={\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,11))$.",
+      "content_preview": "Let G be a finite group. Then G PSL(2,11) if and only if _(G) =_( PSL(2,11)).",
+      "display_name": "Theorem",
+      "raw_content": "Let $G$ be a finite group. Then\n\t\t$G \\cong {\\rm PSL}(2,11)$  if and only if \n\t\t $ {\\operatorname{Exp}}_{\\rho}(G) ={\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,11))$.",
+      "label": null,
+      "position": {
+        "line_start": 265,
+        "line_end": 270,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "222",
+      "type": "proof",
+      "content": "By Lemma \\ref{mohasebe}, we obtain that\n\t\\begin{align*}\n\t\\rho({\\rm PSL}(2,11))={\\rho(\\mathbb{Z}_{5})}^{66} {\\rho(\\mathbb{Z}_{6})}^{55}  11^{120}=2^{165}\\cdot3^{220}\\cdot5^{264}\\cdot11^{120}.\n\t\\end{align*}\nTherefore $ {\\operatorname{Exp}}_{\\rho}(G) =\\{120, 165, 220, 264\\}$.\n\t\tUsing Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $4\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k}.\n\t\t\\end{align*}\nSince $$[\\rho(G)]_{p_k}\t\\in  {\\operatorname{Exp}}_{\\rho}(G)=\\{120, 165, 220, 264\\}=\\{2^3 \\cdot 3 \\cdot 5, 3 \\cdot 5 \\cdot 11,  2^2 \\cdot 5 \\cdot 11, 2^3 \\cdot 3 \\cdot 11\\},$$\n\t\ttherefore $\\{p_1, p_2, \\cdots, p_{k-1}\\} \\subseteq \\{2, 3, 5, 11\\}$.\n\t\tBy Lemma \\ref{bhamed}, similarly, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq \\{2, 3, 5, 11\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 5, 11\\}$. Since $k\\geq4$, we have $ k=4 $  and \n\t\t$p_1=2$, $p_2=3$, $p_3=5$ and $p_4=11$.\n\t\t\tUsing Lemma \\ref{karan},\n\t\t\\begin{align}\\label{222}\n\t\t\t2 \\cdot 3 \\cdot 5 \\cdot 11 \\leq |G| \\leq 1 + 120 + 165 + 220 + 264=770.\n\t\t\\end{align}\n\t\tTherefore $|G|=2 \\cdot 3 \\cdot 5 \\cdot 11$ or $2^2 \\cdot 3 \\cdot 5 \\cdot 11$. \n By Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=165$, $[\\rho(G)]_3=220$, $[\\rho(G)]_5=264$ and $[\\rho(G)]_{11}=120$ and so\n\t\t$\\rho(G) = 2^{165}\\cdot3^{220}\\cdot5^{264}\\cdot11^{120}$.\n\t\tBy \\cite[Theorem 5]{baniMal}, we conclude  that $G \\cong {\\rm PSL}(2,11)$.",
+      "content_preview": "By Lemma , we obtain that ( PSL(2,11))=(_5)^66 (_6)^55 11^120=2^1653^2205^26411^120. Therefore _(G) =120, 165, 220, 264. Using Lemma , |(G)| 4.",
+      "display_name": "Proof",
+      "raw_content": "By Lemma \\ref{mohasebe}, we obtain that\n\t\\begin{align*}\n\t\\rho({\\rm PSL}(2,11))={\\rho(\\mathbb{Z}_{5})}^{66} {\\rho(\\mathbb{Z}_{6})}^{55}  11^{120}=2^{165}\\cdot3^{220}\\cdot5^{264}\\cdot11^{120}.\n\t\\end{align*}\nTherefore $ {\\operatorname{Exp}}_{\\rho}(G) =\\{120, 165, 220, 264\\}$.\n\t\tUsing Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $4\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k}.\n\t\t\\end{align*}\nSince $$[\\rho(G)]_{p_k}\t\\in  {\\operatorname{Exp}}_{\\rho}(G)=\\{120, 165, 220, 264\\}=\\{2^3 \\cdot 3 \\cdot 5, 3 \\cdot 5 \\cdot 11,  2^2 \\cdot 5 \\cdot 11, 2^3 \\cdot 3 \\cdot 11\\},$$\n\t\ttherefore $\\{p_1, p_2, \\cdots, p_{k-1}\\} \\subseteq \\{2, 3, 5, 11\\}$.\n\t\tBy Lemma \\ref{bhamed}, similarly, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq \\{2, 3, 5, 11\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 5, 11\\}$. Since $k\\geq4$, we have $ k=4 $  and \n\t\t$p_1=2$, $p_2=3$, $p_3=5$ and $p_4=11$.\n\t\t\tUsing Lemma \\ref{karan},\n\t\t\\begin{align}\\label{222}\n\t\t\t2 \\cdot 3 \\cdot 5 \\cdot 11 \\leq |G| \\leq 1 + 120 + 165 + 220 + 264=770.\n\t\t\\end{align}\n\t\tTherefore $|G|=2 \\cdot 3 \\cdot 5 \\cdot 11$ or $2^2 \\cdot 3 \\cdot 5 \\cdot 11$. \n By Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=165$, $[\\rho(G)]_3=220$, $[\\rho(G)]_5=264$ and $[\\rho(G)]_{11}=120$ and so\n\t\t$\\rho(G) = 2^{165}\\cdot3^{220}\\cdot5^{264}\\cdot11^{120}$.\n\t\tBy \\cite[Theorem 5]{baniMal}, we conclude  that $G \\cong {\\rm PSL}(2,11)$.",
+      "label": "222",
+      "position": {
+        "line_start": 271,
+        "line_end": 299,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "mohasebe",
+          "reference_type": "internal",
+          "context": "By Lemma \\ref{mohasebe}, we obtain that\n\t\\begin{align*}\n\t\\rho({\\rm PSL}(2",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "111",
+          "reference_type": "internal",
+          "context": "\\rho}(G) =\\{120, 165, 220, 264\\}$.\n\t\tUsing Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "ots<p_k$ and $4\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t{p_1}, {p_2}, \\cdots",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "p_{k-1}\\} \\subseteq \\{2, 3, 5, 11\\}$.\n\t\tBy Lemma \\ref{bhamed}, similarly, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\}",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "karan",
+          "reference_type": "internal",
+          "context": "2$, $p_2=3$, $p_3=5$ and $p_4=11$.\n\t\t\tUsing Lemma \\ref{karan},\n\t\t\\begin{align}\\label{222}\n\t\t\t2 \\cdot 3 \\cdot 5",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbbhamed",
+          "reference_type": "internal",
+          "context": "11$ or $2^2 \\cdot 3 \\cdot 5 \\cdot 11$. \n By Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=165$, $[\\rho(G)]_3=220$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "theorem_22_6370cbe2",
+      "type": "theorem",
+      "content": "Let $G$ be a finite group. Then\n\t\t$G \\cong {\\rm PSL}(2,5)$ or $G \\cong \\mathbb{Z}_{30}$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,5))$.",
+      "content_preview": "Let G be a finite group. Then G PSL(2,5) or G _30 if and only if _(G) = _( PSL(2,5)).",
+      "display_name": "Theorem",
+      "raw_content": "Let $G$ be a finite group. Then\n\t\t$G \\cong {\\rm PSL}(2,5)$ or $G \\cong \\mathbb{Z}_{30}$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,5))$.",
+      "label": null,
+      "position": {
+        "line_start": 300,
+        "line_end": 303,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_23_a110c679",
+      "type": "proof",
+      "content": "By Lemma \\ref{mohasebe}, we obtain \n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,5))={\\rho(\\mathbb{Z}_{2})}^{15} {\\rho(\\mathbb{Z}_{3})}^{10}  5^{24}=2^{15}\\cdot3^{20}\\cdot5^{24}.\n\t\t\\end{align*}\n\tUsing Lemma \\ref{productdirect}, we see that\n\t\t\t\\begin{align*}\n\t\t\\rho(\\mathbb{Z}_{30})={\\rho(\\mathbb{Z}_{2})}^{15} {\\rho(\\mathbb{Z}_{3})}^{10} {\\rho(\\mathbb{Z}_{5})}^{6}=2^{15}\\cdot3^{20}\\cdot5^{24}.\n\t\\end{align*}\n\t\tTherefore $ {\\operatorname{Exp}}_{\\rho}(G) =\\{15,20,24\\}$.\n\t\tBy Lemma  \\ref{111}, we have $|\\pi(G)|\\geqslant 3$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $3\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k} \\in \\{15, 20, 24\\}=\\{ 3 \\cdot 5,   2^2 \\cdot 5, 2^3 \\cdot 3 \\},\\\\\n\t\t\t&{p_2, p_3, \\dots, p_k} \\mid [\\rho(G)]_{p_1} \\in \\{15, 20, 24\\}=\\{ 3 \\cdot 5,   2^2 \\cdot 5, 2^3 \\cdot 3 \\}.\n\t\t\\end{align*}\n\t\tTherefore $$\\pi(G)=\\{p_1, p_2, \\cdots, p_{k-1}\\} \\cup \\{p_2, p_3, \\cdots, p_{k}\\} \\subseteq \\{2, 3, 5\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 5\\}$. Since $k\\geq 3$, we have $ k=3 $  and \n\t\t$p_1=2$, $p_2=3$ and $p_3=5$.\n\t\tUsing Lemma \\ref{karan},\n\t\t$$\t2 \\cdot 3 \\cdot 5  \\mid |G| \\leq 1 + 15 + 20 + 24=60.$$\n\t\tTherefore $|G|=2 \\cdot 3 \\cdot 5$ or $2^2 \\cdot 3 \\cdot 5$.\n By Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=15$, $[\\rho(G)]_3=20$ and $[\\rho(G)]_5=24$  and so\n\t\t$\\rho(G) = 2^{15}\\cdot3^{20}\\cdot5^{24}$.\n\t\tBy \\cite[Theorem 3]{baniMal}, we obtain that $G \\cong {\\rm PSL}(2,5)$ or $G \\cong \\mathbb{Z}_{30}$.",
+      "content_preview": "By Lemma , we obtain ( PSL(2,5))=(_2)^15 (_3)^10 5^24=2^153^205^24. Using Lemma , we see that (_30)=(_2)^15 (_3)^10 (_5)^6=2^153^205^24.",
+      "display_name": "Proof",
+      "raw_content": "By Lemma \\ref{mohasebe}, we obtain \n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,5))={\\rho(\\mathbb{Z}_{2})}^{15} {\\rho(\\mathbb{Z}_{3})}^{10}  5^{24}=2^{15}\\cdot3^{20}\\cdot5^{24}.\n\t\t\\end{align*}\n\tUsing Lemma \\ref{productdirect}, we see that\n\t\t\t\\begin{align*}\n\t\t\\rho(\\mathbb{Z}_{30})={\\rho(\\mathbb{Z}_{2})}^{15} {\\rho(\\mathbb{Z}_{3})}^{10} {\\rho(\\mathbb{Z}_{5})}^{6}=2^{15}\\cdot3^{20}\\cdot5^{24}.\n\t\\end{align*}\n\t\tTherefore $ {\\operatorname{Exp}}_{\\rho}(G) =\\{15,20,24\\}$.\n\t\tBy Lemma  \\ref{111}, we have $|\\pi(G)|\\geqslant 3$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $3\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k} \\in \\{15, 20, 24\\}=\\{ 3 \\cdot 5,   2^2 \\cdot 5, 2^3 \\cdot 3 \\},\\\\\n\t\t\t&{p_2, p_3, \\dots, p_k} \\mid [\\rho(G)]_{p_1} \\in \\{15, 20, 24\\}=\\{ 3 \\cdot 5,   2^2 \\cdot 5, 2^3 \\cdot 3 \\}.\n\t\t\\end{align*}\n\t\tTherefore $$\\pi(G)=\\{p_1, p_2, \\cdots, p_{k-1}\\} \\cup \\{p_2, p_3, \\cdots, p_{k}\\} \\subseteq \\{2, 3, 5\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 5\\}$. Since $k\\geq 3$, we have $ k=3 $  and \n\t\t$p_1=2$, $p_2=3$ and $p_3=5$.\n\t\tUsing Lemma \\ref{karan},\n\t\t$$\t2 \\cdot 3 \\cdot 5  \\mid |G| \\leq 1 + 15 + 20 + 24=60.$$\n\t\tTherefore $|G|=2 \\cdot 3 \\cdot 5$ or $2^2 \\cdot 3 \\cdot 5$.\n By Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=15$, $[\\rho(G)]_3=20$ and $[\\rho(G)]_5=24$  and so\n\t\t$\\rho(G) = 2^{15}\\cdot3^{20}\\cdot5^{24}$.\n\t\tBy \\cite[Theorem 3]{baniMal}, we obtain that $G \\cong {\\rm PSL}(2,5)$ or $G \\cong \\mathbb{Z}_{30}$.",
+      "label": null,
+      "position": {
+        "line_start": 304,
+        "line_end": 332,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "mohasebe",
+          "reference_type": "internal",
+          "context": "By Lemma \\ref{mohasebe}, we obtain \n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "productdirect",
+          "reference_type": "internal",
+          "context": "dot3^{20}\\cdot5^{24}.\n\t\t\\end{align*}\n\tUsing Lemma \\ref{productdirect}, we see that\n\t\t\t\\begin{align*}\n\t\t\\rho(\\mathbb{Z}_",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "111",
+          "reference_type": "internal",
+          "context": "rname{Exp}}_{\\rho}(G) =\\{15,20,24\\}$.\n\t\tBy Lemma  \\ref{111}, we have $|\\pi(G)|\\geqslant 3$.\n\t\tLet $\\pi(G)=\\{{",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "ots<p_k$ and $3\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdot",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "karan",
+          "reference_type": "internal",
+          "context": "nd \n\t\t$p_1=2$, $p_2=3$ and $p_3=5$.\n\t\tUsing Lemma \\ref{karan},\n\t\t$$\t2 \\cdot 3 \\cdot 5  \\mid |G| \\leq 1 + 15 + 2",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbbhamed",
+          "reference_type": "internal",
+          "context": "ot 3 \\cdot 5$ or $2^2 \\cdot 3 \\cdot 5$.\n By Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=15$, $[\\rho(G)]_3=20$ and",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "theorem_24_f7e09a97",
+      "type": "theorem",
+      "content": "Let $G$ be a finite group. Then\n\t\t$G \\cong {\\rm PSL}(2,7)$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,7))$.",
+      "content_preview": "Let G be a finite group. Then G PSL(2,7) if and only if _(G) = _( PSL(2,7)).",
+      "display_name": "Theorem",
+      "raw_content": "Let $G$ be a finite group. Then\n\t\t$G \\cong {\\rm PSL}(2,7)$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,7))$.",
+      "label": null,
+      "position": {
+        "line_start": 333,
+        "line_end": 336,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_25_57dcb1e2",
+      "type": "proof",
+      "content": "Using Lemma \\ref{mohasebe}, we have\n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,7))={\\rho(\\mathbb{Z}_{3})}^{28} {\\rho(\\mathbb{Z}_{4})}^{21}  7^{56}=2^{105}\\cdot3^{56}\\cdot7^{48}.\n\t\t\\end{align*}\n\t\tTherefore $ {\\operatorname{Exp}}_{\\rho}(G) = \\{48, 56, 105\\}$.\n\t\tBy Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 3$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $3\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k} \\in \\{48, 56, 105\\}=\\{2^4\\cdot3,   2^3\\cdot7, 3\\cdot5\\cdot7  \\},\n\t\t\\end{align*}\n\t\ttherefore $\\{p_1, p_2, \\cdots, p_{k-1}\\} \\subseteq \\{2, 3, 5, 7\\}$.\n\t\tBy Lemma \\ref{bhamed}, similarly, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq \\{2, 3, 5, 7\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 5, 7\\}$. \n\t\tNow we consider the following cases separately.\n\t\t\\begin{itemize}\n\t\t\t\\item Let $ \\pi(G) = \\{2, 3, 5\\} $. If $p=3$, then by lemma \\ref{bhamed}, $ 10 \\mid [\\rho(G)]_3 \\in \\{48, 56,105\\}$, which is a contradiction.\n\t\t\t\\item Let $ \\pi(G) = \\{2, 3, 7\\} $. \n\t\t\tUsing Lemma \\ref{karan},\n\t\t\t$\t2 \\cdot 3 \\cdot 7  \\mid |G| \\leq 1 + 48 + 56 + 105=210.\t$\n\t\t\tIf $7^{\\alpha}\\mid |G|$, where $\\alpha\\geq2$, then $294=2 \\cdot 3 \\cdot 7^2 \\leq 2 \\cdot 3 \\cdot 7^\\alpha \\leq210$, which is a contradiction.\n\t\t\tTherefore $[|G|]_7=1$. By Lemma \\ref{bbbhamed},\n\t\t\twe have $[\\rho(G)]_2=105$, $[\\rho(G)]_7=48$. Thus  $[\\rho(G)]_3=56$  and so\n\t\t\t$\\rho(G) = 2^{105}\\cdot3^{56}\\cdot 7^{48}$.\n\t\t\tBy  \\cite[Theorem 4]{baniMal}, we see that $G \\cong {\\rm PSL}(2, 7)$.\n\t\t\t\\item Let $ \\pi(G) = \\{2, 5, 7\\} $. \n\t\t\tIf $p=7$, then by lemma \\ref{bhamed}, $ 10 \\mid [\\rho(G)]_7 \\in \\{48, 56,105\\}$, which is a contradiction.\n\n\t\t\t\\item Let $ \\pi(G) = \\{2, 3, 5, 7\\} $.\n\t\t\tIf $p=7$, then by lemma \\ref{bhamed}, $ 30 \\mid [\\rho(G)]_7 \\in \\{48, 56,105\\}$, which is a contradiction.\n\n\t\t\\end{itemize}\n\tThe proof is now complete.",
+      "content_preview": "Using Lemma , we have ( PSL(2,7))=(_3)^28 (_4)^21 7^56=2^1053^567^48. Therefore _(G) = 48, 56, 105. By Lemma , |(G)| 3.",
+      "display_name": "Proof",
+      "raw_content": "Using Lemma \\ref{mohasebe}, we have\n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,7))={\\rho(\\mathbb{Z}_{3})}^{28} {\\rho(\\mathbb{Z}_{4})}^{21}  7^{56}=2^{105}\\cdot3^{56}\\cdot7^{48}.\n\t\t\\end{align*}\n\t\tTherefore $ {\\operatorname{Exp}}_{\\rho}(G) = \\{48, 56, 105\\}$.\n\t\tBy Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 3$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $3\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k} \\in \\{48, 56, 105\\}=\\{2^4\\cdot3,   2^3\\cdot7, 3\\cdot5\\cdot7  \\},\n\t\t\\end{align*}\n\t\ttherefore $\\{p_1, p_2, \\cdots, p_{k-1}\\} \\subseteq \\{2, 3, 5, 7\\}$.\n\t\tBy Lemma \\ref{bhamed}, similarly, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq \\{2, 3, 5, 7\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 5, 7\\}$. \n\t\tNow we consider the following cases separately.\n\t\t\\begin{itemize}\n\t\t\t\\item Let $ \\pi(G) = \\{2, 3, 5\\} $. If $p=3$, then by lemma \\ref{bhamed}, $ 10 \\mid [\\rho(G)]_3 \\in \\{48, 56,105\\}$, which is a contradiction.\n\t\t\t\\item Let $ \\pi(G) = \\{2, 3, 7\\} $. \n\t\t\tUsing Lemma \\ref{karan},\n\t\t\t$\t2 \\cdot 3 \\cdot 7  \\mid |G| \\leq 1 + 48 + 56 + 105=210.\t$\n\t\t\tIf $7^{\\alpha}\\mid |G|$, where $\\alpha\\geq2$, then $294=2 \\cdot 3 \\cdot 7^2 \\leq 2 \\cdot 3 \\cdot 7^\\alpha \\leq210$, which is a contradiction.\n\t\t\tTherefore $[|G|]_7=1$. By Lemma \\ref{bbbhamed},\n\t\t\twe have $[\\rho(G)]_2=105$, $[\\rho(G)]_7=48$. Thus  $[\\rho(G)]_3=56$  and so\n\t\t\t$\\rho(G) = 2^{105}\\cdot3^{56}\\cdot 7^{48}$.\n\t\t\tBy  \\cite[Theorem 4]{baniMal}, we see that $G \\cong {\\rm PSL}(2, 7)$.\n\t\t\t\\item Let $ \\pi(G) = \\{2, 5, 7\\} $. \n\t\t\tIf $p=7$, then by lemma \\ref{bhamed}, $ 10 \\mid [\\rho(G)]_7 \\in \\{48, 56,105\\}$, which is a contradiction.\n\n\t\t\t\\item Let $ \\pi(G) = \\{2, 3, 5, 7\\} $.\n\t\t\tIf $p=7$, then by lemma \\ref{bhamed}, $ 30 \\mid [\\rho(G)]_7 \\in \\{48, 56,105\\}$, which is a contradiction.\n\n\t\t\\end{itemize}\n\tThe proof is now complete.",
+      "label": null,
+      "position": {
+        "line_start": 337,
+        "line_end": 373,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "mohasebe",
+          "reference_type": "internal",
+          "context": "Using Lemma \\ref{mohasebe}, we have\n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,7))",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "111",
+          "reference_type": "internal",
+          "context": "e{Exp}}_{\\rho}(G) = \\{48, 56, 105\\}$.\n\t\tBy Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 3$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "ots<p_k$ and $3\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdot",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": ", p_{k-1}\\} \\subseteq \\{2, 3, 5, 7\\}$.\n\t\tBy Lemma \\ref{bhamed}, similarly, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\}",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "$ \\pi(G) = \\{2, 3, 5\\} $. If $p=3$, then by lemma \\ref{bhamed}, $ 10 \\mid [\\rho(G)]_3 \\in \\{48, 56,105\\}$, which",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "karan",
+          "reference_type": "internal",
+          "context": "tem Let $ \\pi(G) = \\{2, 3, 7\\} $. \n\t\t\tUsing Lemma \\ref{karan},\n\t\t\t$\t2 \\cdot 3 \\cdot 7  \\mid |G| \\leq 1 + 48 + 5",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbbhamed",
+          "reference_type": "internal",
+          "context": "contradiction.\n\t\t\tTherefore $[|G|]_7=1$. By Lemma \\ref{bbbhamed},\n\t\t\twe have $[\\rho(G)]_2=105$, $[\\rho(G)]_7=48$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "i(G) = \\{2, 5, 7\\} $. \n\t\t\tIf $p=7$, then by lemma \\ref{bhamed}, $ 10 \\mid [\\rho(G)]_7 \\in \\{48, 56,105\\}$, which",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "G) = \\{2, 3, 5, 7\\} $.\n\t\t\tIf $p=7$, then by lemma \\ref{bhamed}, $ 30 \\mid [\\rho(G)]_7 \\in \\{48, 56,105\\}$, which",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "theorem_26_31d35b4d",
+      "type": "theorem",
+      "content": "Let $G$ be a finite group. Then\n\t\t\t$G \\cong {\\rm PSL}(2,13)$ or $G \\cong  {\\rm SmallGroup}(546, 13)=\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,13))$.",
+      "content_preview": "Let G be a finite group. Then G PSL(2,13) or G SmallGroup(546, 13)=_14 (_13 _3) if and only if _(G) = _( PSL(2,13)).",
+      "display_name": "Theorem",
+      "raw_content": "Let $G$ be a finite group. Then\n\t\t\t$G \\cong {\\rm PSL}(2,13)$ or $G \\cong  {\\rm SmallGroup}(546, 13)=\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,13))$.",
+      "label": null,
+      "position": {
+        "line_start": 375,
+        "line_end": 378,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_27_589f5ea0",
+      "type": "proof",
+      "content": "Using Lemma \\ref{mohasebe}, we have\n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,13))={\\rho(\\mathbb{Z}_{6})}^{91} {\\rho(\\mathbb{Z}_{7})}^{78}  13^{168}=2^{273}\\cdot3^{364}\\cdot7^{468}\\cdot13^{168}.\n\t\t\\end{align*}\n\t\tUsing Lemma \\ref{productdirect} and Lemma \\ref{mid1}, we obtain that\n\t\\begin{align*}\n\t\t\\rho({\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})})\n\t\t={\\rho(\\mathbb{Z}_{14})}^{39} {\\rho(\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})}^{14} =\n\t\t(\\rho(\\mathbb{Z}_{2})^7\\rho(\\mathbb{Z}_{7})^2)^{39}(\\rho(\\mathbb{Z}_{13}) \\rho(\\mathbb{Z}_{3})^{13})^{14},\n\t\\end{align*}\nThus $\t\\rho({\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})})=2^{273}\\cdot3^{364}\\cdot7^{468}\\cdot13^{168}$.\n\t\tTherefore $ {\\operatorname{Exp}}_{\\rho}(G) = \\{168, 273, 364, 468\\}$.\n\t\tBy Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $4\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k} \\in {\\operatorname{Exp}}_{\\rho}(G) = \\{2^3\\cdot3\\cdot7, 3\\cdot7\\cdot13, 2^2\\cdot7\\cdot13, 2^2\\cdot3^2\\cdot13\\},\n\t\t\\end{align*}\n\t\ttherefore $\\{p_1, p_2, \\cdots, p_{k-1}\\} \\subseteq \\{2, 3, 7, 13\\}$.\nSimilarly, by Lemma\t \\ref{bhamed}, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq \\{2, 3, 7, 13\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 7, 13\\}$. \n\t\tSince $k\\geq 4$, we have $ k=4 $  and \n\t\t$p_1=2$, $p_2=3$, $p_3=7$ and $p_{4}=13$.\n\t\tUsing Lemma \\ref{karan},\n\t\t\\begin{align}\n\t\t\t2 \\cdot 3 \\cdot 7 \\cdot 13 \\mid |G| \\leq 1 + 168 + 273 + 364 + 468=1274.\n\t\t\\end{align}\n\t\tTherefore $[|G|]_3=[|G|]_7=[|G|]_{11}=1$.\n\t\tBy Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=273$, $[\\rho(G)]_3=364$, $[\\rho(G)]_7=468$ and $[\\rho(G)]_{13}=168$  and so\n\t\t$\\rho(G) = 2^{273}\\cdot3^{364}\\cdot7^{468} \\cdot 13^{168}$.\n\t\tBy \\cite[Theorem 6]{baniMal}, we see that $G \\cong {\\rm PSL}(2,13)$ or\n\t\t$G \\cong {\\rm SmallGroup}(546, 13)=\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})$.",
+      "content_preview": "Using Lemma , we have ( PSL(2,13))=(_6)^91 (_7)^78 13^168=2^2733^3647^46813^168. Using Lemma and Lemma , we obtain that (_14 (_13 _3)) =(_14)^39 (_13...",
+      "display_name": "Proof",
+      "raw_content": "Using Lemma \\ref{mohasebe}, we have\n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,13))={\\rho(\\mathbb{Z}_{6})}^{91} {\\rho(\\mathbb{Z}_{7})}^{78}  13^{168}=2^{273}\\cdot3^{364}\\cdot7^{468}\\cdot13^{168}.\n\t\t\\end{align*}\n\t\tUsing Lemma \\ref{productdirect} and Lemma \\ref{mid1}, we obtain that\n\t\\begin{align*}\n\t\t\\rho({\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})})\n\t\t={\\rho(\\mathbb{Z}_{14})}^{39} {\\rho(\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})}^{14} =\n\t\t(\\rho(\\mathbb{Z}_{2})^7\\rho(\\mathbb{Z}_{7})^2)^{39}(\\rho(\\mathbb{Z}_{13}) \\rho(\\mathbb{Z}_{3})^{13})^{14},\n\t\\end{align*}\nThus $\t\\rho({\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})})=2^{273}\\cdot3^{364}\\cdot7^{468}\\cdot13^{168}$.\n\t\tTherefore $ {\\operatorname{Exp}}_{\\rho}(G) = \\{168, 273, 364, 468\\}$.\n\t\tBy Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p_2}, \\cdots, {p_k}\\}$,\n\t\twhere $p_1<p_2<\\cdots<p_k$ and $4\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdots,  {p_{k-1}} \\mid [\\rho(G)]_{p_k} \\in {\\operatorname{Exp}}_{\\rho}(G) = \\{2^3\\cdot3\\cdot7, 3\\cdot7\\cdot13, 2^2\\cdot7\\cdot13, 2^2\\cdot3^2\\cdot13\\},\n\t\t\\end{align*}\n\t\ttherefore $\\{p_1, p_2, \\cdots, p_{k-1}\\} \\subseteq \\{2, 3, 7, 13\\}$.\nSimilarly, by Lemma\t \\ref{bhamed}, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq \\{2, 3, 7, 13\\}.$$\n\t\tThus $\\pi(G)=\\{p_1, p_2, \\cdots, p_k\\} \\subseteq \\{2, 3, 7, 13\\}$. \n\t\tSince $k\\geq 4$, we have $ k=4 $  and \n\t\t$p_1=2$, $p_2=3$, $p_3=7$ and $p_{4}=13$.\n\t\tUsing Lemma \\ref{karan},\n\t\t\\begin{align}\n\t\t\t2 \\cdot 3 \\cdot 7 \\cdot 13 \\mid |G| \\leq 1 + 168 + 273 + 364 + 468=1274.\n\t\t\\end{align}\n\t\tTherefore $[|G|]_3=[|G|]_7=[|G|]_{11}=1$.\n\t\tBy Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=273$, $[\\rho(G)]_3=364$, $[\\rho(G)]_7=468$ and $[\\rho(G)]_{13}=168$  and so\n\t\t$\\rho(G) = 2^{273}\\cdot3^{364}\\cdot7^{468} \\cdot 13^{168}$.\n\t\tBy \\cite[Theorem 6]{baniMal}, we see that $G \\cong {\\rm PSL}(2,13)$ or\n\t\t$G \\cong {\\rm SmallGroup}(546, 13)=\\mathbb{Z}_{14} \\times (\\mathbb{Z}_{13} \\rtimes \\mathbb{Z}_{3})$.",
+      "label": null,
+      "position": {
+        "line_start": 380,
+        "line_end": 416,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "mohasebe",
+          "reference_type": "internal",
+          "context": "Using Lemma \\ref{mohasebe}, we have\n\t\t\\begin{align*}\n\t\t\t\\rho({\\rm PSL}(2,13)",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "productdirect",
+          "reference_type": "internal",
+          "context": "^{468}\\cdot13^{168}.\n\t\t\\end{align*}\n\t\tUsing Lemma \\ref{productdirect} and Lemma \\ref{mid1}, we obtain that\n\t\\begin{alig",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": "ign*}\n\t\tUsing Lemma \\ref{productdirect} and Lemma \\ref{mid1}, we obtain that\n\t\\begin{align*}\n\t\t\\rho({\\mathbb{Z",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "111",
+          "reference_type": "internal",
+          "context": "_{\\rho}(G) = \\{168, 273, 364, 468\\}$.\n\t\tBy Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\t\tLet $\\pi(G)=\\{{p_1}, {p",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "ots<p_k$ and $4\\leq k \\in \\mathbb{N}$.\n\t\tBy Lemma \\ref{bhamed}, we have\n\t\t\\begin{align*}\n\t\t\t&{p_1}, {p_2}, \\cdot",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "\\subseteq \\{2, 3, 7, 13\\}$.\nSimilarly, by Lemma\t \\ref{bhamed}, we have \n\t\t$$\\{p_2, p_3, \\dots, p_k\\} \\subseteq",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "karan",
+          "reference_type": "internal",
+          "context": "$, $p_2=3$, $p_3=7$ and $p_{4}=13$.\n\t\tUsing Lemma \\ref{karan},\n\t\t\\begin{align}\n\t\t\t2 \\cdot 3 \\cdot 7 \\cdot 13 \\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbbhamed",
+          "reference_type": "internal",
+          "context": "refore $[|G|]_3=[|G|]_7=[|G|]_{11}=1$.\n\t\tBy Lemma \\ref{bbbhamed},\n\t\twe have $[\\rho(G)]_2=273$, $[\\rho(G)]_3=364$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "theorem_28_eefc52fb",
+      "type": "theorem",
+      "content": "Let $p > 5$ be a prime number. Then\n\t$G \\cong {\\rm PSL}(2, 5) \\times \\mathbb{Z}_p$   if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_p)$.",
+      "content_preview": "Let p > 5 be a prime number. Then G PSL(2, 5) _p if and only if _(G) = _( PSL(2, 5) _p).",
+      "display_name": "Theorem",
+      "raw_content": "Let $p > 5$ be a prime number. Then\n\t$G \\cong {\\rm PSL}(2, 5) \\times \\mathbb{Z}_p$   if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_p)$.",
+      "label": null,
+      "position": {
+        "line_start": 420,
+        "line_end": 423,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_29_6c4d3ebc",
+      "type": "proof",
+      "content": "Using Lemma \\ref{productdirect}, we see that\n\t$$\\rho({\\rm PSL}(2, 5) \\times \\mathbb{Z}_p)=\\rho({\\rm PSL}(2, 5))^p\\rho(\\mathbb{Z}_p)^{60}=(2^{15}3^{20}5^{24})^p(p^{p-1})^{60}.$$\n\tTherefore ${\\operatorname{Exp}}_{\\rho}(G) = \\{15p, 20p, 24p, 60(p-1)\\}$.\n\t\n\tBy Corollary \\ref{2-part}, we have $[\\rho(G)]_2=15p$. Therefore $|G|=2^{\\alpha } m$, where $m$ is an odd number.\nUsing Lemma \\ref{bhamed}, we deduce  $m$\tdivides  $[\\rho(G)]_2=15p$.\nOn the other hand,\n\tby Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\tTherefore $|G|=2^\\alpha\\cdot 3  \\cdot 5 \\cdot p$.   \n\tApplying  Lemma \\ref{bbbhamed},\n\twe have $[\\rho(G)]_5=24p$, $[\\rho(G)]_p=60(p-1)$, and  $[\\rho(G)]_3=20p$. Therefore  \n\t$\\rho(G) = 2^{15p}\\cdot3^{20p}\\cdot5^{24p} \\cdot p^{60(p-1)}$.\n\tBy \\cite[Theorem 2.3]{banihamedcom}, we see that $G \\cong {\\rm PSL}(2,5) \\times \\mathbb{Z}_p$.",
+      "content_preview": "Using Lemma , we see that ( PSL(2, 5) _p)=( PSL(2, 5))^p(_p)^60=(2^153^205^24)^p(p^p-1)^60. Therefore _(G) = 15p, 20p, 24p, 60(p-1).",
+      "display_name": "Proof",
+      "raw_content": "Using Lemma \\ref{productdirect}, we see that\n\t$$\\rho({\\rm PSL}(2, 5) \\times \\mathbb{Z}_p)=\\rho({\\rm PSL}(2, 5))^p\\rho(\\mathbb{Z}_p)^{60}=(2^{15}3^{20}5^{24})^p(p^{p-1})^{60}.$$\n\tTherefore ${\\operatorname{Exp}}_{\\rho}(G) = \\{15p, 20p, 24p, 60(p-1)\\}$.\n\t\n\tBy Corollary \\ref{2-part}, we have $[\\rho(G)]_2=15p$. Therefore $|G|=2^{\\alpha } m$, where $m$ is an odd number.\nUsing Lemma \\ref{bhamed}, we deduce  $m$\tdivides  $[\\rho(G)]_2=15p$.\nOn the other hand,\n\tby Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\tTherefore $|G|=2^\\alpha\\cdot 3  \\cdot 5 \\cdot p$.   \n\tApplying  Lemma \\ref{bbbhamed},\n\twe have $[\\rho(G)]_5=24p$, $[\\rho(G)]_p=60(p-1)$, and  $[\\rho(G)]_3=20p$. Therefore  \n\t$\\rho(G) = 2^{15p}\\cdot3^{20p}\\cdot5^{24p} \\cdot p^{60(p-1)}$.\n\tBy \\cite[Theorem 2.3]{banihamedcom}, we see that $G \\cong {\\rm PSL}(2,5) \\times \\mathbb{Z}_p$.",
+      "label": null,
+      "position": {
+        "line_start": 424,
+        "line_end": 438,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "productdirect",
+          "reference_type": "internal",
+          "context": "Using Lemma \\ref{productdirect}, we see that\n\t$$\\rho({\\rm PSL}(2, 5) \\times \\math",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "2-part",
+          "reference_type": "internal",
+          "context": "G) = \\{15p, 20p, 24p, 60(p-1)\\}$.\n\t\n\tBy Corollary \\ref{2-part}, we have $[\\rho(G)]_2=15p$. Therefore $|G|=2^{\\al",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "pha } m$, where $m$ is an odd number.\nUsing Lemma \\ref{bhamed}, we deduce  $m$\tdivides  $[\\rho(G)]_2=15p$.\nOn th",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "111",
+          "reference_type": "internal",
+          "context": "$[\\rho(G)]_2=15p$.\nOn the other hand,\n\tby Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 4$.\n\tTherefore $|G|=2^\\alpha\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbbhamed",
+          "reference_type": "internal",
+          "context": "pha\\cdot 3  \\cdot 5 \\cdot p$.   \n\tApplying  Lemma \\ref{bbbhamed},\n\twe have $[\\rho(G)]_5=24p$, $[\\rho(G)]_p=60(p-1)",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "remark_30_f5c229da",
+      "type": "remark",
+      "content": "We note that\n\t\\begin{align*}\n&\t{\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{60}) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_2),\\\\\n&\t{\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{90}) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_3),\\\\\n&{\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{150}) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_5).\n\t\t\\end{align*}\nTherefore the groups ${\\rm PSL}(2, 5) \\times \\mathbb{Z}_p$, where $p \\in\\{2,3,5\\}$, are not characterizable by the set ${\\operatorname{Exp}}_{\\rho}(G)$.",
+      "content_preview": "We note that & _(_60) = _( PSL(2, 5) _2), & _(_90) = _( PSL(2, 5) _3), &_(_150) = _( PSL(2, 5) _5). Therefore the groups PSL(2, 5) _p, where p 2,3,5,...",
+      "display_name": "Remark",
+      "raw_content": "We note that\n\t\\begin{align*}\n&\t{\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{60}) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_2),\\\\\n&\t{\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{90}) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_3),\\\\\n&{\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{150}) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_5).\n\t\t\\end{align*}\nTherefore the groups ${\\rm PSL}(2, 5) \\times \\mathbb{Z}_p$, where $p \\in\\{2,3,5\\}$, are not characterizable by the set ${\\operatorname{Exp}}_{\\rho}(G)$.",
+      "label": null,
+      "position": {
+        "line_start": 440,
+        "line_end": 448,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "theorem_31_a72fb25f",
+      "type": "theorem",
+      "content": "Let $G$ be a finite group. Let  $q$ and $r$ be distinct  odd prime numbers. Then\n\t\t$G \\cong {\\rm PSL}(2, 5)$  or $G \\cong \\mathbb{Z}_{2qr}$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) =  {\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{2qr})$.",
+      "content_preview": "Let G be a finite group. Let q and r be distinct odd prime numbers. Then G PSL(2, 5) or G _2qr if and only if _(G) = _(_2qr).",
+      "display_name": "Theorem",
+      "raw_content": "Let $G$ be a finite group. Let  $q$ and $r$ be distinct  odd prime numbers. Then\n\t\t$G \\cong {\\rm PSL}(2, 5)$  or $G \\cong \\mathbb{Z}_{2qr}$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) =  {\\operatorname{Exp}}_{\\rho}(\\mathbb{Z}_{2qr})$.",
+      "label": null,
+      "position": {
+        "line_start": 451,
+        "line_end": 454,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "proof_32_0b267c44",
+      "type": "proof",
+      "content": "Using Lemma \\ref{productdirect}, we see that\n\t$$\\rho(\\mathbb{Z}_{2qr})=\\rho(\\mathbb{Z}_2)^{qr}\\rho(\\mathbb{Z}_q)^{2r}\\rho(\\mathbb{Z}_r)^{2q}=2^{qr}q^{2r(q-1)}r^{2q(r-1)}.$$\n\tTherefore ${\\operatorname{Exp}}_{\\rho}(G) = \\{{qr}, {2r(q-1)}, {2q(r-1)}\\}$.\n\t\n\tBy Corollary \\ref{2-part}, we have $[\\rho(G)]_2=qr$. Therefore $|G|=2^{\\alpha } m$, where $m$ is an odd number.\n\tUsing Lemma \\ref{bhamed}, we derive $m$\tdivides  $[\\rho(G)]_2=qr$.\n\tOn the other hand,\n\tby Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 3$.\n\tTherefore $|G|=2^\\alpha\\cdot q  \\cdot r$.   \n\tUsing Lemma \\ref{bbbhamed},\n\twe have $[\\rho(G)]_q=2r(q-1)$, $[\\rho(G)]_r=2q(r-1)$. Therefore  \n\t$\\rho(G) = 2^{qr}\\cdot q^{2r(q-1)}\\cdot r^{2q(r-1)}=\\rho(\\mathbb{Z}_{2qr})$.\n\tBy \\cite[Theorem 2.5]{banihamedapplication}, we see that $G \\cong {\\rm PSL}(2,5)$ or $G \\cong \\mathbb{Z}_{2qr}$.",
+      "content_preview": "Using Lemma , we see that (_2qr)=(_2)^qr(_q)^2r(_r)^2q=2^qrq^2r(q-1)r^2q(r-1). Therefore _(G) = qr, 2r(q-1), 2q(r-1).",
+      "display_name": "Proof",
+      "raw_content": "Using Lemma \\ref{productdirect}, we see that\n\t$$\\rho(\\mathbb{Z}_{2qr})=\\rho(\\mathbb{Z}_2)^{qr}\\rho(\\mathbb{Z}_q)^{2r}\\rho(\\mathbb{Z}_r)^{2q}=2^{qr}q^{2r(q-1)}r^{2q(r-1)}.$$\n\tTherefore ${\\operatorname{Exp}}_{\\rho}(G) = \\{{qr}, {2r(q-1)}, {2q(r-1)}\\}$.\n\t\n\tBy Corollary \\ref{2-part}, we have $[\\rho(G)]_2=qr$. Therefore $|G|=2^{\\alpha } m$, where $m$ is an odd number.\n\tUsing Lemma \\ref{bhamed}, we derive $m$\tdivides  $[\\rho(G)]_2=qr$.\n\tOn the other hand,\n\tby Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 3$.\n\tTherefore $|G|=2^\\alpha\\cdot q  \\cdot r$.   \n\tUsing Lemma \\ref{bbbhamed},\n\twe have $[\\rho(G)]_q=2r(q-1)$, $[\\rho(G)]_r=2q(r-1)$. Therefore  \n\t$\\rho(G) = 2^{qr}\\cdot q^{2r(q-1)}\\cdot r^{2q(r-1)}=\\rho(\\mathbb{Z}_{2qr})$.\n\tBy \\cite[Theorem 2.5]{banihamedapplication}, we see that $G \\cong {\\rm PSL}(2,5)$ or $G \\cong \\mathbb{Z}_{2qr}$.",
+      "label": null,
+      "position": {
+        "line_start": 455,
+        "line_end": 469,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": [
+        {
+          "target_id": "productdirect",
+          "reference_type": "internal",
+          "context": "Using Lemma \\ref{productdirect}, we see that\n\t$$\\rho(\\mathbb{Z}_{2qr})=\\rho(\\math",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "2-part",
+          "reference_type": "internal",
+          "context": "\\{{qr}, {2r(q-1)}, {2q(r-1)}\\}$.\n\t\n\tBy Corollary \\ref{2-part}, we have $[\\rho(G)]_2=qr$. Therefore $|G|=2^{\\alp",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bhamed",
+          "reference_type": "internal",
+          "context": "ha } m$, where $m$ is an odd number.\n\tUsing Lemma \\ref{bhamed}, we derive $m$\tdivides  $[\\rho(G)]_2=qr$.\n\tOn the",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "111",
+          "reference_type": "internal",
+          "context": "$[\\rho(G)]_2=qr$.\n\tOn the other hand,\n\tby Lemma  \\ref{111}, $|\\pi(G)|\\geqslant 3$.\n\tTherefore $|G|=2^\\alpha\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        },
+        {
+          "target_id": "bbbhamed",
+          "reference_type": "internal",
+          "context": "e $|G|=2^\\alpha\\cdot q  \\cdot r$.   \n\tUsing Lemma \\ref{bbbhamed},\n\twe have $[\\rho(G)]_q=2r(q-1)$, $[\\rho(G)]_r=2q(",
+          "position": {
+            "line_start": 0,
+            "line_end": null,
+            "char_start": null,
+            "char_end": null
+          }
+        }
+      ]
+    },
+    {
+      "id": "yek",
+      "type": "unknown",
+      "content": "External reference to 'yek'",
+      "content_preview": "External reference to 'yek'",
+      "display_name": "Unknown",
+      "raw_content": "External reference to 'yek'",
+      "label": "yek",
+      "position": {
+        "line_start": 0,
+        "line_end": null,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    },
+    {
+      "id": "star",
+      "type": "unknown",
+      "content": "External reference to 'star'",
+      "content_preview": "External reference to 'star'",
+      "display_name": "Unknown",
+      "raw_content": "External reference to 'star'",
+      "label": "star",
+      "position": {
+        "line_start": 0,
+        "line_end": null,
+        "char_start": null,
+        "char_end": null
+      },
+      "references": []
+    }
+  ],
+  "edges": [
+    {
+      "source": "proof_11_19e6c235",
+      "target": "yek",
+      "type": "CITES",
+      "dependency": "Using $(\\ref{yek})$, we  have"
+    },
+    {
+      "source": "proof_11_19e6c235",
+      "target": "star",
+      "type": "CITES",
+      "dependency": "By $(\\ref{star})$"
+    },
+    {
+      "source": "proof_13_a94f6156",
+      "target": "yek",
+      "type": "CITES",
+      "dependency": "By $(\\ref{yek})$, we obtain that"
+    },
+    {
+      "source": "proof_15_d5d99e83",
+      "target": "yek",
+      "type": "CITES",
+      "dependency": "By $(\\ref{yek})$, we obtain that"
+    },
+    {
+      "source": "proof_15_d5d99e83",
+      "target": "star",
+      "type": "CITES",
+      "dependency": "using $(\\ref{star})$"
+    },
+    {
+      "source": "proof_17_7ec934b6",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "proof_17_7ec934b6",
+      "target": "bbhamed",
+      "type": null
+    },
+    {
+      "source": "proof_19_74de5376",
+      "target": "huppert",
+      "type": null
+    },
+    {
+      "source": "222",
+      "target": "mohasebe",
+      "type": null
+    },
+    {
+      "source": "222",
+      "target": "111",
+      "type": null
+    },
+    {
+      "source": "222",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "222",
+      "target": "karan",
+      "type": null
+    },
+    {
+      "source": "222",
+      "target": "bbbhamed",
+      "type": null
+    },
+    {
+      "source": "proof_23_a110c679",
+      "target": "mohasebe",
+      "type": null
+    },
+    {
+      "source": "proof_23_a110c679",
+      "target": "productdirect",
+      "type": null
+    },
+    {
+      "source": "proof_23_a110c679",
+      "target": "111",
+      "type": null
+    },
+    {
+      "source": "proof_23_a110c679",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "proof_23_a110c679",
+      "target": "karan",
+      "type": null
+    },
+    {
+      "source": "proof_23_a110c679",
+      "target": "bbbhamed",
+      "type": null
+    },
+    {
+      "source": "proof_25_57dcb1e2",
+      "target": "mohasebe",
+      "type": null
+    },
+    {
+      "source": "proof_25_57dcb1e2",
+      "target": "111",
+      "type": null
+    },
+    {
+      "source": "proof_25_57dcb1e2",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "proof_25_57dcb1e2",
+      "target": "karan",
+      "type": null
+    },
+    {
+      "source": "proof_25_57dcb1e2",
+      "target": "bbbhamed",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "mohasebe",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "productdirect",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "mid1",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "111",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "karan",
+      "type": null
+    },
+    {
+      "source": "proof_27_589f5ea0",
+      "target": "bbbhamed",
+      "type": null
+    },
+    {
+      "source": "proof_29_6c4d3ebc",
+      "target": "productdirect",
+      "type": null
+    },
+    {
+      "source": "proof_29_6c4d3ebc",
+      "target": "2-part",
+      "type": null
+    },
+    {
+      "source": "proof_29_6c4d3ebc",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "proof_29_6c4d3ebc",
+      "target": "111",
+      "type": null
+    },
+    {
+      "source": "proof_29_6c4d3ebc",
+      "target": "bbbhamed",
+      "type": null
+    },
+    {
+      "source": "proof_32_0b267c44",
+      "target": "productdirect",
+      "type": null
+    },
+    {
+      "source": "proof_32_0b267c44",
+      "target": "2-part",
+      "type": null
+    },
+    {
+      "source": "proof_32_0b267c44",
+      "target": "bhamed",
+      "type": null
+    },
+    {
+      "source": "proof_32_0b267c44",
+      "target": "111",
+      "type": null
+    },
+    {
+      "source": "proof_32_0b267c44",
+      "target": "bbbhamed",
+      "type": null
+    },
+    {
+      "source": "karan",
+      "target": "proof_23_a110c679",
+      "type": "USES_DEFINITION",
+      "dependency": "The Proof text explicitly mentions \"Using Lemma \\ref{karan},\" which refers to the definition or result in the Source Artifact labeled \"\\label{karan}\"."
+    },
+    {
+      "source": "karan",
+      "target": "proof_25_57dcb1e2",
+      "type": "CITES",
+      "dependency": "The Source Artifact cites \\\\[Lemma 2.2]{baniMal}\\\\ which is referred to in the Target Artifact as Lemma \\ref{karan}."
+    },
+    {
+      "source": "karan",
+      "target": "proof_27_589f5ea0",
+      "type": "CITES",
+      "dependency": "The Source Artifact mentions \"\\\\cite[Lemma 2.2]{baniMal} \\\\label{karan}\", which is also referenced in the Target Artifact as \"Using Lemma \\\\ref{karan},\"."
+    },
+    {
+      "source": "productdirect",
+      "target": "proof_23_a110c679",
+      "type": "CITES",
+      "dependency": "The Source Artifact contains a citation: `\\cite[Proposition 1.1]{TzbMATH06233336} \\label{productdirect}`. The Target Artifact explicitly references `Lemma \\ref{productdirect}`."
+    },
+    {
+      "source": "productdirect",
+      "target": "proof_27_589f5ea0",
+      "type": "CITES",
+      "dependency": "The Source Artifact contains the line 'cite[Proposition 1.1]{TzbMATH06233336} \\\\label{productdirect}' and the Target Artifact explicitly uses 'Lemma \\\\ref{productdirect}'."
+    },
+    {
+      "source": "productdirect",
+      "target": "proof_29_6c4d3ebc",
+      "type": "CITES",
+      "dependency": "The Source Artifact mentions \"Lemma \\ref{productdirect}\", which suggests that the Target Artifact is using this Lemma by referencing it by its labeled name."
+    },
+    {
+      "source": "productdirect",
+      "target": "proof_32_0b267c44",
+      "type": "CITES",
+      "dependency": "The Source Artifact is referred to in the Target Artifact as `Using Lemma \\ref{productdirect}`."
+    },
+    {
+      "source": "mid1",
+      "target": "proof_27_589f5ea0",
+      "type": "CITES",
+      "dependency": "The Source Artifact is labeled as `\\label{mid1}` and is directly cited in the Target Artifact: \"Using Lemma \\ref{mid1}, we obtain that...\""
+    },
+    {
+      "source": "huppert",
+      "target": "proof_19_74de5376",
+      "type": "PROVES",
+      "dependency": "The Source Artifact 'Lemma' content explicitly includes the label \\label{huppert}. The Target Artifact 'Proof' explicitly references this lemma by saying 'By Lemma \\ref{huppert} we get the result.' This forms a direct continuation as the Source is labeled and used within the Target."
+    },
+    {
+      "source": "111",
+      "target": "222",
+      "type": "PROVES",
+      "dependency": "The Source Artifact 'Lemma' is labeled with \\ref{111}, and the Target Artifact 'Proof' explicitly states \"Using Lemma \\ref{111}, |\\pi(G)|\\geqslant 4.\" This indicates that the Source provides the lemma that is used in the Proof."
+    },
+    {
+      "source": "111",
+      "target": "proof_23_a110c679",
+      "type": "PROVES",
+      "dependency": "By Lemma \\ref{111}, we have $|\\pi(G)|\\geqslant 3$."
+    },
+    {
+      "source": "111",
+      "target": "proof_25_57dcb1e2",
+      "type": "USES_DEFINITION",
+      "dependency": "\"By Lemma  \\ref{111}, |\\pi(G)|\\geqslant 3.\""
+    },
+    {
+      "source": "111",
+      "target": "proof_29_6c4d3ebc",
+      "type": "BUILDS_UPON",
+      "dependency": "The Source Artifact 'Lemma' uses the label '\\label{111}', which is explicitly referenced in the Target Artifact: 'by Lemma \\ref{111}, |\\pi(G)|\\geqslant 4'. This shows that the Target Artifact builds upon the Source by employing the result of the lemma."
+    },
+    {
+      "source": "111",
+      "target": "proof_32_0b267c44",
+      "type": "BUILDS_UPON",
+      "dependency": "The Source Artifact (Lemma) is explicitly cited in the Target Artifact (Proof) with \"by Lemma  \\ref{111}, |\\pi(G)|\\geqslant 3\"."
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_11_19e6c235",
+      "type": "PROVES",
+      "dependency": "The source artifact 'Lemma' states, \"$m$ divides $[\\rho(G)]_p$.\" The target artifact 'Proof' provides a detailed reasoning that concludes the same result: \"we conclude $m$ divides $[\\rho(G)]_p$.\" This indicates the source 'Lemma' is directly proved by the target 'Proof'."
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_17_7ec934b6",
+      "type": "PROVES",
+      "dependency": "The Source Artifact's content is the lemma labeled as \\ref{bhamed}, which is directly cited in the Target Artifact's proof: \"By Lemma \\ref{bhamed} and Lemma \\ref{bbhamed}, we obtain the result.\""
+    },
+    {
+      "source": "bhamed",
+      "target": "222",
+      "type": "CITES",
+      "dependency": "The Source Artifact is cited in the Target Artifact as \"By Lemma \\ref{bhamed}, we have...\" indicating an explicit citation dependency."
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_23_a110c679",
+      "type": "PROVES",
+      "dependency": "The Source Artifact contains the label `\\label{bhamed}`, and the Target Artifact references this label with \"By Lemma \\ref{bhamed}, we have...\"."
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_25_57dcb1e2",
+      "type": "USES_DEFINITION",
+      "dependency": "The Source Artifact's label \\ref{bhamed} is directly referenced in multiple instances within the Target Artifact: 'By Lemma \\ref{bhamed},', 'by lemma \\ref{bhamed},', and 'By Lemma \\ref{bhamed}, similarly, we have'."
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_27_589f5ea0",
+      "type": "CITES",
+      "dependency": "The Source Artifact is explicitly referred to in the Target Artifact with the sentence \"By Lemma \\ref{bhamed}, we have\" which is a direct citation."
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_29_6c4d3ebc",
+      "type": "BUILDS_UPON",
+      "dependency": "The source artifact, Lemma \\ref{bhamed}, is referenced in the target artifact's proof: \"Using Lemma \\ref{bhamed}, we deduce  $m$ divides  $[\\rho(G)]_2=15p$.\""
+    },
+    {
+      "source": "bhamed",
+      "target": "proof_32_0b267c44",
+      "type": "CITES",
+      "dependency": "The Source Artifact is referenced in the Target by the phrase 'Using Lemma \\ref{bhamed}, we derive m divides [\\rho(G)]_2=qr.'"
+    },
+    {
+      "source": "bbhamed",
+      "target": "proof_17_7ec934b6",
+      "type": "PROVES",
+      "dependency": "The source artifact is labeled as Lemma with \\label{bbhamed}, and the target artifact Proof directly references this Lemma as \\ref{bbhamed}."
+    },
+    {
+      "source": "bbhamed",
+      "target": "proof_23_a110c679",
+      "type": "CITES",
+      "dependency": "The source artifact labeled \"\\label{bbhamed}\" is directly referenced in the target artifact by \"By Lemma \\ref{bbbhamed},\" indicating a citation dependency."
+    },
+    {
+      "source": "bbbhamed",
+      "target": "proof_15_d5d99e83",
+      "type": "PROVES",
+      "dependency": "The Source Artifact states \"Then p \\nmid [\\rho(G)]_p\", which is exactly what the Target Artifact concludes through a proof, therefore proving the statement in the Source."
+    },
+    {
+      "source": "bbbhamed",
+      "target": "222",
+      "type": "PROVES",
+      "dependency": "The source artifact is a Lemma labeled \\ref{bbbhamed}. The target artifact contains a proof that explicitly states: \"By Lemma \\ref{bbbhamed}, we have $[\\rho(G)]_2=165$, $[\\rho(G)]_3=220$, $[\\rho(G)]_5=264$ and $[\\rho(G)]_{11}=120$ and so \\rho(G) = 2^{165}\\cdot3^{220}\\cdot5^{264}\\cdot11^{120}.\u201d This indicates that the Lemma from the source is used directly in the proof in the target artifact."
+    },
+    {
+      "source": "bbbhamed",
+      "target": "proof_23_a110c679",
+      "type": "PROVES",
+      "dependency": "The Source Artifact \"\\label{bbbhamed}\" is directly referenced in the Target Artifact with \"By Lemma \\ref{bbbhamed}, we have $[\\rho(G)]_2=15$, $[\\rho(G)]_3=20$ and $[\\rho(G)]_5=24$\" indicating that the Source is used as a justification for a statement in the Target."
+    },
+    {
+      "source": "bbbhamed",
+      "target": "proof_25_57dcb1e2",
+      "type": "CITES",
+      "dependency": "The Source Artifact is directly referenced in the Target Artifact using the phrase \"By Lemma \\ref{bbbhamed}, we have $[\\rho(G)]_2=105$, $[\\rho(G)]_7=48$.\" This indicates a citation link between the two artifacts."
+    },
+    {
+      "source": "bbbhamed",
+      "target": "proof_29_6c4d3ebc",
+      "type": "BUILDS_UPON",
+      "dependency": "The Source Artifact defines Lemma \\ref{bbbhamed}, which is explicitly referenced in the Target Artifact: \"Applying Lemma \\ref{bbbhamed}, we have...\""
+    },
+    {
+      "source": "bbbhamed",
+      "target": "proof_32_0b267c44",
+      "type": "BUILDS_UPON",
+      "dependency": "The Source Artifact is explicitly referenced in the statement \"Using Lemma \\ref{bbbhamed}, we have...\" within the Target Artifact."
+    },
+    {
+      "source": "2-part",
+      "target": "proof_29_6c4d3ebc",
+      "type": "PROVES",
+      "dependency": "By Corollary \\ref{2-part}, we have $[\\rho(G)]_2=15p$. Therefore $|G|=2^{\\alpha } m$, where $m$ is an odd number."
+    },
+    {
+      "source": "2-part",
+      "target": "proof_32_0b267c44",
+      "type": "PROVES",
+      "dependency": "The Source Artifact titled 'Corollary' and labeled as \\ref{2-part} is directly cited in the Target Artifact's proof: \"By Corollary \\ref{2-part}, we have $[\\rho(G)]_2=qr$.\" This indicates that the source explicitly contributes to the proof in the target."
+    },
+    {
+      "source": "mohasebe",
+      "target": "222",
+      "type": "CITES",
+      "dependency": "The Source Artifact uses \"Lemma \\\\ref{mohasebe}\" which is labeled in the Target Artifact, establishing a citation relationship between them."
+    },
+    {
+      "source": "mohasebe",
+      "target": "proof_23_a110c679",
+      "type": "CITES",
+      "dependency": "\"By Lemma \\ref{mohasebe}, we obtain\""
+    },
+    {
+      "source": "mohasebe",
+      "target": "proof_25_57dcb1e2",
+      "type": "USES_DEFINITION",
+      "dependency": "The Source Lemma is referenced in the Target proof with \"Using Lemma \\ref{mohasebe}, we have\\n\\t\\begin{align*}\\n\\t\\t\\rho({\\rm PSL}(2,7))={\\rho(\\mathbb{Z}_{3})}^{28} {\\rho(\\mathbb{Z}_{4})}^{21}  7^{56}=2^{105}\\cdot3^{56}\\cdot7^{48}.\\n\\t\\end{align*}\"."
+    },
+    {
+      "source": "mohasebe",
+      "target": "proof_27_589f5ea0",
+      "type": "CITES",
+      "dependency": "The Source Artifact with the label `\\label{mohasebe}` is explicitly referenced in the Target Artifact: \"Using Lemma \\ref{mohasebe}, we have...\""
+    },
+    {
+      "source": "theorem_24_f7e09a97",
+      "target": "proof_25_57dcb1e2",
+      "type": "PROVES",
+      "dependency": "The Source Artifact 'Theorem' states that \"$G \\cong {\\rm PSL}(2,7)$  if and only if  ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2,7))$\", which is directly established in the Target Artifact 'Proof' with the calculation and conclusion: \"Therefore $ {\\operatorname{Exp}}_{\\rho}(G) = \\{48, 56, 105\\}...By  \\cite[Theorem 4]{baniMal}, we see that $G \\cong {\\rm PSL}(2, 7)\"."
+    },
+    {
+      "source": "theorem_28_eefc52fb",
+      "target": "proof_29_6c4d3ebc",
+      "type": "PROVES",
+      "dependency": "The Source Artifact 'Theorem' states that $G \\cong {\\rm PSL}(2, 5) \\times \\mathbb{Z}_p$ if and only if ${\\operatorname{Exp}}_{\\rho}(G) = {\\operatorname{Exp}}_{\\rho}({\\rm PSL}(2, 5) \\times \\mathbb{Z}_p)$. The Target Artifact 'Proof' concludes by showing that $G \\cong {\\rm PSL}(2,5) \\times \\mathbb{Z}_p$ using this equivalence, thus providing a proof for the Theorem."
+    },
+    {
+      "source": "remark_30_f5c229da",
+      "target": "star",
+      "type": "CITES",
+      "dependency": "The Source artifact contains an external reference command to 'star': \\ref{star}."
+    }
+  ],
+  "stats": {
+    "node_count": 34,
+    "edge_count": 80,
+    "files_processed": 1,
+    "extractor_used": "hybrid-llm"
+  }
+}

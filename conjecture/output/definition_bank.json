@@ -1,0 +1,54 @@
+{
+  "union closed set system": {
+    "term": "union closed set system",
+    "aliases": [
+      "$\\F$"
+    ],
+    "definition_text": "A set system $\\F$ is \\emph{union closed} if for all $A,B \\in \\F$ we have $A \\cup B \\in \\F$.",
+    "source_artifact_id": "definition-1-271988a3"
+  },
+  "union closed": {
+    "term": "union closed",
+    "aliases": [],
+    "definition_text": "A set system is called union closed if for any two sets in the set system their union is also in the set system. A set system \\(\\F\\) is \\emph{union closed} if for all \\(A,B \\in \\F\\) we have \\(A \\cup B \\in \\F\\).",
+    "source_artifact_id": "synthesized_from_context_for_definition-1-271988a3"
+  },
+  "c-approximate union closed set system": {
+    "term": "c-approximate union closed set system",
+    "aliases": [
+      "\\F"
+    ],
+    "definition_text": "A set system $\\F$ is $c$-approximate union closed if for at least a $c$-fraction of the pairs $A,B \\in \\F$ we have $A \\cup B \\in \\F$.",
+    "source_artifact_id": "definition-2-258695de"
+  },
+  "F_1": {
+    "term": "\\F_1",
+    "aliases": [],
+    "definition_text": "\\F_1 = \\{x \\in \\{0,1\\}^n: |x|=\\psi n + n^{2/3}\\}",
+    "source_artifact_id": "synthesized_from_context_for_example-4-0ce9ee3c"
+  },
+  "F_2": {
+    "term": "\\F_2",
+    "aliases": [],
+    "definition_text": "\\F_2 = \\{x \\in \\{0,1\\}^n: |x| \\ge (1-\\psi) n\\}",
+    "source_artifact_id": "synthesized_from_context_for_example-4-0ce9ee3c"
+  },
+  "f": {
+    "term": "f",
+    "aliases": [],
+    "definition_text": "Let $f:[0,1]^2 \\to \\mathbb{R}_{\\ge 0}$ be defined as $$ f(x,y) := \\frac{h(xy)}{h(x)y + h(y)x} $$ for $(x,y) \\in (0,1)^2$ and extended (continuously) to $[0,1]^2$ by setting $f(x,y) = 1$ if $x \\in \\{0,1\\}$ or $y \\in \\{0,1\\}$. ",
+    "source_artifact_id": "synthesized_from_context_for_claim-6-05946fc5"
+  },
+  "varphi": {
+    "term": "\\varphi",
+    "aliases": [],
+    "definition_text": "Let $\\varphi = 1-\\psi =\\frac{\\sqrt{5}-1}{2}$ be the positive root of $x^2+x-1=0$. ",
+    "source_artifact_id": "synthesized_from_context_for_claim-6-05946fc5"
+  },
+  "h": {
+    "term": "h",
+    "aliases": [],
+    "definition_text": "Let $h(x) = -(x \\log x + (1-x) \\log (1-x))$ be the binary entropy function.",
+    "source_artifact_id": "synthesized_from_context_for_corollary-7-9c1f1580"
+  }
+}

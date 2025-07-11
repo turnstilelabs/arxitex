@@ -1,0 +1,13 @@
+{
+  "2507.02594v1": {
+    "processed_timestamp_utc": "2025-07-06T20:46:08.363213+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/conjecture/pipeline_output/graphs/2507.02594v1.json",
+    "stats": {
+      "node_count": 34,
+      "edge_count": 80,
+      "files_processed": 1,
+      "extractor_used": "hybrid-llm"
+    }
+  }
+}
