@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 import json
 import sys
+import aiofiles 
 
 from pydantic import ValidationError, TypeAdapter 
 from arxitex.graph.utils import ArtifactNode
@@ -87,4 +88,40 @@ def save_enhanced_artifacts(results: dict, output_path: Path):
     logger.info(f"Saving enhanced artifacts to {output_path}...")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
+    logger.success(f"Results saved successfully.")
+
+async def async_load_artifacts_from_json(file_path: Path) -> List["ArtifactNode"]:
+    if not file_path.exists():
+        logger.error(f"Artifact JSON file not found at: {file_path}")
+        sys.exit(1)
+        
+    logger.info(f"Loading artifacts from {file_path}...")
+    try:
+        ArtifactListAdapter = TypeAdapter(List["ArtifactNode"])
+        async with aiofiles.open(file_path, "r", encoding="utf-8") as f:
+            content = await f.read()
+            data = json.loads(content)
+            artifacts = ArtifactListAdapter.validate_python(data.get("nodes", []))
+        logger.success(f"Successfully loaded and validated {len(artifacts)} artifacts.")
+        return artifacts
+    except (ValidationError, json.JSONDecodeError) as e:
+        logger.error(f"Failed to load or validate artifacts from {file_path}: {e}")
+        sys.exit(1)
+
+async def async_load_latex_content(file_path: Path) -> str:
+    if not file_path.exists():
+        logger.error(f"LaTeX source file not found at: {file_path}")
+        sys.exit(1)
+    
+    logger.info(f"Loading LaTeX source from {file_path}...")
+    async with aiofiles.open(file_path, "r", encoding="utf-8") as f:
+        content = await f.read()
+    logger.success("LaTeX source loaded.")
+    return content
+
+async def async_save_enhanced_artifacts(results: dict, output_path: Path):
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Saving enhanced artifacts to {output_path}...")
+    async with aiofiles.open(output_path, "w", encoding="utf-8") as f:
+        await f.write(json.dumps(results, indent=2))
     logger.success(f"Results saved successfully.")

@@ -9,8 +9,11 @@ import tarfile
 import zipfile
 import gzip
 import tempfile
-from typing import Optional, Dict, Any
-from typing import List
+import shutil
+from typing import Optional, Dict, Any, List
+import asyncio
+import aiofiles
+import httpx
 
 DEFAULT_CONFIG = {
     'max_retries': 3,
@@ -30,10 +33,10 @@ class SourceDownloader:
         """Initialize downloader with cache directory and optional configuration."""
         self.cache_dir = cache_dir
         self.config = {**DEFAULT_CONFIG, **(config or {})}
-        self.session = requests.Session()
-        self.session.headers.update({
-            'User-Agent': 'ArxivConjectureScraper/1.0 (For academic research)',
-        })
+        self.http_client = httpx.AsyncClient(
+            timeout=self.config['timeout'],
+            follow_redirects=True
+        )
         
     def validate_arxiv_id(self, arxiv_id: str) -> str:
         """Validate and normalize arXiv ID format."""
@@ -311,3 +314,112 @@ class SourceDownloader:
                 logger.info(f"Cache directory doesn't exist: {self.cache_dir}")
         except Exception as e:
             logger.error(f"Error clearing cache: {e}")
+
+
+    async def async_download_and_read_latex(self, arxiv_id: str) -> Optional[str]:
+            """
+            Main async method to download, extract, and read the primary .tex file.
+            
+            Args:
+                arxiv_id: The arXiv identifier (e.g., '2305.12345').
+                
+            Returns:
+                The content of the main .tex file as a string, or None on failure.
+            """
+            download_dir = self.cache_dir / "downloads"
+            extract_dir = self.cache_dir / "source"
+            
+            try:
+                source_archive_path = await self._async_download_source(arxiv_id, download_dir)
+                if not source_archive_path:
+                    return None
+
+                await self._async_extract_source(source_archive_path, extract_dir)
+
+                main_tex_file = await self._async_find_main_tex_file(extract_dir)
+                if not main_tex_file:
+                    logger.error(f"Could not find a main .tex file in the extracted source for {arxiv_id}.")
+                    return None
+                
+                logger.info(f"Identified main LaTeX file: {main_tex_file.name}")
+
+                async with aiofiles.open(main_tex_file, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = await f.read()
+
+                return content
+
+            except Exception as e:
+                logger.error(f"An error occurred during the download/extraction process for {arxiv_id}: {e}")
+                return None
+            finally:
+                await self.http_client.aclose()
+
+    async def _async_download_source(self, arxiv_id: str, download_dir: Path) -> Optional[Path]:
+        url = f"https://arxiv.org/e-print/{arxiv_id}"
+        download_dir.mkdir(parents=True, exist_ok=True)
+        sanitized_id = arxiv_id.replace('/', '_')
+        download_path = download_dir / f"{sanitized_id}.tar.gz"
+
+        for attempt in range(self.config['max_retries']):
+            try:
+                logger.info(f"Downloading source for {arxiv_id} (Attempt {attempt + 1}/{self.config['max_retries']})...")
+                async with self.http_client.stream("GET", url) as response:
+                    response.raise_for_status()
+                    
+                    async with aiofiles.open(download_path, 'wb') as f:
+                        async for chunk in response.aiter_bytes(chunk_size=self.config['chunk_size']):
+                            await f.write(chunk)
+                
+                logger.success(f"Successfully downloaded source to {download_path}")
+                return download_path
+            
+            except (httpx.RequestError, httpx.HTTPStatusError) as e:
+                logger.warning(f"Download attempt {attempt + 1} failed for {arxiv_id}: {e}")
+                if attempt + 1 < self.config['max_retries']:
+                    wait_time = self.config['base_wait_time'] * (2 ** attempt)
+                    logger.info(f"Retrying in {wait_time} seconds...")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"All download attempts failed for {arxiv_id}.")
+                    return None
+        return None
+
+    def _blocking_extract(self, source_path: Path, extract_dir: Path):
+        extract_dir.mkdir(exist_ok=True, parents=True)
+        try:
+            if tarfile.is_tarfile(source_path):
+                with tarfile.open(source_path) as tar:
+                    tar.extractall(path=extract_dir)
+            elif zipfile.is_zipfile(source_path):
+                with zipfile.ZipFile(source_path, 'r') as zip_ref:
+                    zip_ref.extractall(extract_dir)
+            else:
+                target_path = extract_dir / f"{source_path.stem}.tex"
+                shutil.move(str(source_path), str(target_path))
+            logger.debug(f"Successfully extracted archive to {extract_dir}")
+        except Exception as e:
+            raise IOError(f"Failed to extract archive {source_path}: {e}")
+
+    async def _async_extract_source(self, source_path: Path, extract_dir: Path):
+        logger.info(f"Extracting {source_path.name} to {extract_dir}...")
+        await asyncio.to_thread(self._blocking_extract, source_path, extract_dir)
+
+    def _blocking_find_main_file(self, search_dir: Path) -> Optional[Path]:
+        tex_files = list(search_dir.rglob("*.tex"))
+        
+        if not tex_files: return None
+        if len(tex_files) == 1: return tex_files[0]
+        
+        for f_path in tex_files:
+            try:
+                head = f_path.read_text(encoding='utf-8', errors='ignore')[:1024]
+                if r"\documentclass" in head:
+                    return f_path
+            except Exception:
+                continue
+        
+        return min(tex_files, key=lambda p: len(str(p)))
+
+    async def _async_find_main_tex_file(self, search_dir: Path) -> Optional[Path]:
+        logger.info(f"Searching for main .tex file in {search_dir}...")
+        return await asyncio.to_thread(self._blocking_find_main_file, search_dir)

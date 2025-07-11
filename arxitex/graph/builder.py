@@ -41,8 +41,8 @@ async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool) -> Dict:
     temp_dir_name = f"arxiv_{arxiv_id.replace('/', '_')}_"
     with tempfile.TemporaryDirectory(prefix=temp_dir_name) as temp_dir:
         temp_path = Path(temp_dir)
-        downloader = SourceDownloader(cache_dir=str(temp_path))
-        latex_content, tex_files = downloader.download_and_read_latex(arxiv_id, str(temp_path))
+        downloader = SourceDownloader(cache_dir=temp_path)
+        latex_content = await downloader.async_download_and_read_latex(arxiv_id)
         
         if use_llm:
             logger.info("Using Hybrid (Regex + LLM) graph builder.")
@@ -78,7 +78,6 @@ async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool) -> Dict:
             "stats": {
                 "node_count": stats["total_nodes"],
                 "edge_count": stats["total_edges"],
-                "files_processed": len(tex_files),
                 "extractor_used": "hybrid-llm" if use_llm else "regex-only"
             }
         }

@@ -33,12 +33,13 @@ class AsyncArxivWorkflowRunner(abc.ABC):
         if not response_text: return None
 
         _, _, entries = self.components.arxiv_api.parse_response(response_text)
-        if not entries: return []
+        if not entries: return ([], False)
 
         papers_to_process = []
         for entry in entries:
             paper = self.components.arxiv_api.entry_to_paper(entry)
-            if not paper: continue
+            if not paper:
+                continue
 
             paper_id = paper['arxiv_id']
             if self.components.paper_index.is_paper_processed(paper_id):
@@ -49,9 +50,9 @@ class AsyncArxivWorkflowRunner(abc.ABC):
                     logger.info(f"Skipping {paper_id}: already processed. Use --force to override.")
             else:
                 papers_to_process.append(paper)
-        
-        logger.info(f"Found {len(papers_to_process)} new papers to process in this batch.")
-        return papers_to_process
+
+        logger.info(f"Found {len(papers_to_process)} new papers to process in this batch of {len(entries)}.")
+        return (papers_to_process, True)
 
     async def run(self, search_query: str, max_papers: int, batch_size: int = 20):
         """Main entry point to run the async workflow"""
@@ -66,21 +67,30 @@ class AsyncArxivWorkflowRunner(abc.ABC):
         semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
 
         while session_success_count < max_papers:
-            papers = self._get_papers_to_process(search_query, start_index, batch_size)
-            if papers is None:
+            result_tuple = self._get_papers_to_process(search_query, start_index, batch_size)
+            if result_tuple is None:
                 logger.warning("API did not return papers. Ending run.")
                 break
-            if not papers:
-                logger.info("No more new papers found in query range. Ending run.")
+            
+            papers_to_process, api_had_entries = result_tuple
+
+            if not api_had_entries:
+                logger.info("No more papers found from the API for this query. Ending run.")
                 break
 
-            tasks = [self._process_and_handle_paper(paper, semaphore) for paper in papers]
+            if not papers_to_process:
+                logger.info("This batch contained no new papers to process. Fetching next batch.")
+                start_index += batch_size
+                continue 
+            
+            tasks = [self._process_and_handle_paper(paper, semaphore) for paper in papers_to_process]
+            
             batch_results = await asyncio.gather(*tasks)
             self.results.extend(filter(None, batch_results))
 
             successes_in_batch = sum(1 for r in batch_results if r and r.get('status') == 'success')
             session_success_count += successes_in_batch
-            
+
             logger.info(
                 f"Batch complete. Successful in this run: {session_success_count}/{max_papers}"
             )
@@ -88,8 +98,8 @@ class AsyncArxivWorkflowRunner(abc.ABC):
             if session_success_count >= max_papers:
                 logger.info(f"Session goal of {max_papers} successful papers met.")
                 break
-            
-            start_index += len(papers)
+
+            start_index += batch_size
             
         logger.info(f"Workflow finished. Processed {session_success_count} new papers successfully in this run.")
         logger.info("Writing summary report for this run...")

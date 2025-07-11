@@ -1,6 +1,7 @@
 
 from typing import Any, List, Dict, Optional
 from loguru import logger
+import asyncio
 from arxitex.symdef.utils import Definition
 
 class DefinitionBank:
@@ -8,6 +9,7 @@ class DefinitionBank:
     def __init__(self):
         self._definitions: Dict[str, Definition] = {}
         self._alias_map: Dict[str, str] = {}
+        self._lock = asyncio.Lock()
 
     def _normalize_term(self, term: str) -> str:
         """
@@ -39,22 +41,21 @@ class DefinitionBank:
         else:
             return core_term.lower() # Lowercase 'varphi', 'f_1', 'union-closed', etc.
 
-    def register(self, definition: Definition):
+    async def register(self, definition: Definition):
         """Adds or updates a definition using its canonical form as the key."""
-        canonical_term = self._normalize_term(definition.term)
+        async with self._lock:
+            canonical_term = self._normalize_term(definition.term)
 
-        # If a definition for this canonical term already exists, we overwrite it.
-        # This is desired behavior, as later definitions in a paper are often more specific.
-        if canonical_term in self._definitions:
-            logger.debug(f"Overwriting definition for canonical term '{canonical_term}'. Original term: '{definition.term}'.")
-        
-        logger.info(f"Registering definition for '{definition.term}' (canonical: '{canonical_term}').")
-        self._definitions[canonical_term] = definition
+            if canonical_term in self._definitions:
+                logger.debug(f"Overwriting definition for canonical term '{canonical_term}'. Original term: '{definition.term}'.")
+            
+            logger.info(f"Registering definition for '{definition.term}' (canonical: '{canonical_term}').")
+            self._definitions[canonical_term] = definition
 
-        for alias in definition.aliases:
-            canonical_alias = self._normalize_term(alias)
-            if canonical_alias != canonical_term:
-                self._alias_map[canonical_alias] = canonical_term
+            for alias in definition.aliases:
+                canonical_alias = self._normalize_term(alias)
+                if canonical_alias != canonical_term:
+                    self._alias_map[canonical_alias] = canonical_term
 
     def find(self, term: str) -> Optional[Definition]:
         """Finds a definition by its canonical form, checking primary terms and aliases."""

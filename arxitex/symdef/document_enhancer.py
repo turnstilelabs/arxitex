@@ -1,15 +1,19 @@
 import argparse
 from typing import List, Dict
+import tempfile 
 from loguru import logger
 import json
 import re
 from pathlib import Path
+import asyncio
+import aiofiles
 
+from arxitex.source_downloader import SourceDownloader
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.graph.utils import ArtifactNode, ArtifactType
-from arxitex.symdef.utils import load_artifacts_from_json, load_latex_content, save_enhanced_artifacts
+from arxitex.symdef.utils import async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 class DocumentEnhancer:
     def __init__(self, artifacts: List[ArtifactNode], latex_content: str):
@@ -18,9 +22,10 @@ class DocumentEnhancer:
         self.artifact_end_positions = self._calculate_end_positions()
 
         self.bank = DefinitionBank()
+        #TODO remove llm_enhancer from here, use async version
         self.llm_enhancer = DefinitionBuilder()
         self.context_finder = ContextFinder()
-        self.enhanced_artifacts: Dict[str, str] = {}
+        self.enhanced_artifacts = asyncio.Queue()
 
     def _calculate_end_positions(self) -> Dict[str, int]:
         """Pre-calculates the character offset of the end of each artifact."""
@@ -36,6 +41,17 @@ class DocumentEnhancer:
         for artifact in self.artifacts:
             self._process_artifact(artifact)
         return self.enhanced_artifacts
+    
+    async def run(self):
+        """Processes all artifacts concurrently to build the definition bank and create enhanced content."""
+        tasks = [self._process_artifact(artifact) for artifact in self.artifacts]
+        await asyncio.gather(*tasks)
+
+        results = {}
+        while not self.enhanced_artifacts.empty():
+            artifact_id, enhanced_text = self.enhanced_artifacts.get_nowait()
+            results[artifact_id] = enhanced_text
+        return results
 
     def _validate_definition_in_context(self, definition_text: str, context: str) -> bool:
         """
@@ -126,6 +142,57 @@ class DocumentEnhancer:
         self.enhanced_artifacts[artifact.id] = enhanced_text
         logger.success(f"Successfully enhanced artifact '{artifact.id}'.")
             
+    async def _process_artifact(self, artifact: ArtifactNode):
+        logger.info(f"--- Starting processing for Artifact: {artifact.id} ({artifact.type.value}) ---")
+        
+        llm_enhancer = DefinitionBuilder() 
+
+        if artifact.type == ArtifactType.DEFINITION:
+            logger.info(f"Artifact {artifact.id} is a definition. Extracting...")
+            extracted_data = await llm_enhancer.aextract_definition(artifact.content)
+            if extracted_data:
+                new_def = Definition(
+                    term=extracted_data.defined_term,
+                    definition_text=extracted_data.definition_text,
+                    aliases=extracted_data.aliases,
+                    source_artifact_id=artifact.id
+                )
+                await self.bank.register(new_def)
+            else:
+                logger.error(f"Failed to extract definition from artifact {artifact.id}.")
+        
+        terms_in_artifact = await llm_enhancer.aextract_terms(artifact.content)
+        
+        for term in terms_in_artifact:
+            if self.bank.find(term) is None:
+                logger.warning(f"Term '{term}' is new in {artifact.id}. Synthesizing its definition...")
+                
+                end_pos = self.artifact_end_positions[artifact.id]
+                context_snippets = self.context_finder.find_prior_occurrences(term, self.latex_content, end_pos)
+                
+                if not context_snippets:
+                    logger.error(f"No prior context found for '{term}'. Cannot define.")
+                    continue
+                
+                base_definition = self.bank.find_best_base_definition(term)
+                logger.debug(f"Base definition for '{term}': {base_definition.term if base_definition else 'None'}")
+                synthesized_text = await llm_enhancer.asynthesize_definition(term, context_snippets, base_definition)
+                                    
+                if synthesized_text:
+                    logger.debug(f"Synthesized definition for '{term}': {synthesized_text}")
+                    new_def = Definition(
+                        term=term,
+                        definition_text=synthesized_text,
+                        source_artifact_id=f"synthesized_from_context_for_{artifact.id}",
+                        dependencies=[base_definition.term] if base_definition else []
+                    )
+                    await self.bank.register(new_def)
+        
+        definitions_needed = {t: self.bank.find(t) for t in terms_in_artifact if self.bank.find(t)}
+        enhanced_text = self._create_enhanced_content(artifact, definitions_needed)
+        await self.enhanced_artifacts.put((artifact.id, enhanced_text))
+        logger.success(f"Successfully finished processing artifact '{artifact.id}'.")
+        
     def _create_enhanced_content(self, artifact: ArtifactNode, definitions: Dict[str, Definition]) -> str:
         """
         Builds the final string for the self-contained artifact by concatenating
@@ -142,7 +209,7 @@ class DocumentEnhancer:
         return f"{definitions_block}\n\n{original_content_block}"
 
 
-def main():
+async def main():
     parser = argparse.ArgumentParser(
         description="Enhance mathematical artifacts from a LaTeX paper to make them self-contained.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
@@ -152,10 +219,16 @@ def main():
         type=Path,
         help="Path to the input JSON file containing the extracted artifacts (e.g., paper_artifacts.json)."
     )
-    parser.add_argument(
-        "latex_input",
+    source_group = parser.add_mutually_exclusive_group(required=True)
+    source_group.add_argument(
+        "--latex-file",
         type=Path,
         help="Path to the full LaTeX source file (.tex) for context searching."
+    )
+    source_group.add_argument(
+        "--arxiv-id",
+        type=str,
+        help="arXiv ID (e.g., '2305.12345') to download the source from."
     )
     parser.add_argument(
         "--output-path",
@@ -178,23 +251,39 @@ def main():
     
     args = parser.parse_args()
 
-    # --- 1. Load Inputs ---
-    artifacts = load_artifacts_from_json(args.json_input)
-    latex_content = load_latex_content(args.latex_input)
+    logger.info("Loading artifacts...")
+    artifacts = await async_load_artifacts_from_json(args.json_input)
+    latex_content = None
 
-    # --- 2. Run the Enhancement Process ---
+    if args.arxiv_id:
+        logger.info(f"Downloading LaTeX source for arXiv ID: {args.arxiv_id}...")
+        try:
+            temp_dir_name = f"arxiv_{args.arxiv_id.replace('/', '_')}_"
+            with tempfile.TemporaryDirectory(prefix=temp_dir_name) as temp_dir:
+                temp_path = Path(temp_dir)
+                downloader = SourceDownloader(cache_dir=temp_path)
+                latex_content = await downloader.async_download_and_read_latex(args.arxiv_id)
+        except Exception as e:
+            logger.error(f"Failed to download or process arXiv source for '{args.arxiv_id}': {e}")
+            return
+    elif args.latex_file:
+        logger.info(f"Loading LaTeX source from local file: {args.latex_file}...")
+        latex_content = await async_load_latex_content(args.latex_file)
+    
+    if not latex_content:
+        logger.error("Could not obtain LaTeX content. Exiting.")
+        return
+
+    # --- 2. Run the Enhancement Process (asynchronously) ---
     logger.info("Initializing document enhancer...")
-    enhancer = DocumentEnhancer(
-        artifacts=artifacts,
-        latex_content=latex_content
-    )
+    enhancer = DocumentEnhancer(artifacts=artifacts, latex_content=latex_content)
     
     logger.info("Starting artifact enhancement process. This may take some time...")
-    enhanced_results = enhancer.run()
+    enhanced_results = await enhancer.run()
 
-    # --- 3. Save the Results ---
+    # --- 3. Save the Results (asynchronously) ---
     if enhanced_results:
-        save_enhanced_artifacts(enhanced_results, args.output_path)
+        await async_save_enhanced_artifacts(enhanced_results, args.output_path)
     else:
         logger.warning("Enhancement process finished but produced no results.")
 
@@ -203,14 +292,12 @@ def main():
         try:
             args.bank_output_path.parent.mkdir(parents=True, exist_ok=True)            
             bank_dict = enhancer.bank.to_dict()
-
-            with open(args.bank_output_path, "w", encoding="utf-8") as f:
-                json.dump(bank_dict, f, indent=2, ensure_ascii=False)
-            
+            json_string = json.dumps(bank_dict, indent=2, ensure_ascii=False)
+            async with aiofiles.open(args.bank_output_path, "w", encoding="utf-8") as f:
+                await f.write(json_string)
             logger.info(f"Successfully saved definition bank to {args.bank_output_path}")
-
         except Exception as e:
             logger.error(f"Could not save the definition bank: {e}")
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
