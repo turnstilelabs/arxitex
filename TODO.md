@@ -5,3 +5,4 @@
 - [ ] Make statement self-sustained.
 - [ ] Write to disk when there is a match between new terms and terms in the bank
 - [ ] Make _validate_definition_in_context proof
+- [ ] Make graph_builder.build_graph_from_latex async
