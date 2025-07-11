@@ -1,12 +1,15 @@
+import argparse
 from typing import List, Dict
 from loguru import logger
+import json
 import re
+from pathlib import Path
 
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.graph.utils import ArtifactNode, ArtifactType
-
+from arxitex.symdef.utils import load_artifacts_from_json, load_latex_content, save_enhanced_artifacts
 
 class DocumentEnhancer:
     def __init__(self, artifacts: List[ArtifactNode], latex_content: str):
@@ -138,5 +141,78 @@ class DocumentEnhancer:
         
         return f"{definitions_block}\n\n{original_content_block}"
 
+
+def main():
+    """Main execution function."""
+
+    parser = argparse.ArgumentParser(
+        description="Enhance mathematical artifacts from a LaTeX paper to make them self-contained.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
+    parser.add_argument(
+        "json_input",
+        type=Path,
+        help="Path to the input JSON file containing the extracted artifacts (e.g., paper_artifacts.json)."
+    )
+    parser.add_argument(
+        "latex_input",
+        type=Path,
+        help="Path to the full LaTeX source file (.tex) for context searching."
+    )
+    parser.add_argument(
+        "--output-path",
+        "-o",
+        type=Path,
+        default="output/enhanced_artifacts.json",
+        help="Path to save the output JSON file with the enhanced content."
+    )
+
+    parser.add_argument(
+        "--bank-output-path",
+        "-b",
+        nargs='?',
+        const="output/definition_bank.json",
+        default=None,
+        type=Path,
+        help="Saves the final definition bank. If a path is given, saves there. "
+            "If only the flag is present, saves to 'output/definition_bank.json'."
+    )
     
+    args = parser.parse_args()
+
+    # --- 1. Load Inputs ---
+    artifacts = load_artifacts_from_json(args.json_input)
+    latex_content = load_latex_content(args.latex_input)
+
+    # --- 2. Run the Enhancement Process ---
+    logger.info("Initializing document enhancer...")
+    enhancer = DocumentEnhancer(
+        artifacts=artifacts,
+        latex_content=latex_content
+    )
     
+    logger.info("Starting artifact enhancement process. This may take some time...")
+    enhanced_results = enhancer.run()
+
+    # --- 3. Save the Results ---
+    if enhanced_results:
+        save_enhanced_artifacts(enhanced_results, args.output_path)
+    else:
+        logger.warning("Enhancement process finished but produced no results.")
+
+    if args.bank_output_path:
+        logger.info(f"Saving definition bank to {args.bank_output_path}...")
+        try:
+            args.bank_output_path.parent.mkdir(parents=True, exist_ok=True)            
+            bank_dict = enhancer.bank.to_dict()
+
+            with open(args.bank_output_path, "w", encoding="utf-8") as f:
+                json.dump(bank_dict, f, indent=2, ensure_ascii=False)
+            
+            logger.info(f"Successfully saved definition bank to {args.bank_output_path}")
+
+        except Exception as e:
+            logger.error(f"Could not save the definition bank: {e}")
+
+if __name__ == "__main__":
+    main()

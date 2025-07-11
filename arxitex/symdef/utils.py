@@ -4,6 +4,13 @@ from typing import List
 from loguru import logger
 import re
 
+from pathlib import Path
+import json
+import sys
+
+from pydantic import ValidationError, TypeAdapter 
+from arxitex.graph.utils import ArtifactNode
+
 
 @dataclass
 class Definition:
@@ -41,3 +48,44 @@ class ContextFinder:
         except re.error as e:
             logger.error(f"Regex error for term '{term}': {e}")
             return ""
+        
+def load_artifacts_from_json(file_path: Path) -> List[ArtifactNode]:
+    """Loads artifacts from a JSON file and validates them."""
+    if not file_path.exists():
+        logger.error(f"Artifact JSON file not found at: {file_path}")
+        sys.exit(1)
+        
+    logger.info(f"Loading artifacts from {file_path}...")
+    try:
+        # Use Pydantic's TypeAdapter for robust list validation
+        ArtifactListAdapter = TypeAdapter(List[ArtifactNode])
+        with open(file_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            # Assuming the artifacts are under a "nodes" key
+            artifacts = ArtifactListAdapter.validate_python(data.get("nodes", []))
+        logger.success(f"Successfully loaded and validated {len(artifacts)} artifacts.")
+        return artifacts
+    except (ValidationError, json.JSONDecodeError) as e:
+        logger.error(f"Failed to load or validate artifacts from {file_path}: {e}")
+        sys.exit(1)
+
+
+def load_latex_content(file_path: Path) -> str:
+    """Loads the full LaTeX source code from a file."""
+    if not file_path.exists():
+        logger.error(f"LaTeX source file not found at: {file_path}")
+        sys.exit(1)
+    
+    logger.info(f"Loading LaTeX source from {file_path}...")
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    logger.success("LaTeX source loaded.")
+    return content
+
+def save_enhanced_artifacts(results: dict, output_path: Path):
+    """Saves the enhanced artifact data to a JSON file."""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    logger.info(f"Saving enhanced artifacts to {output_path}...")
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2)
+    logger.success(f"Results saved successfully.")
