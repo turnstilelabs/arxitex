@@ -1,8 +1,8 @@
 import os
 import json
 from loguru import logger
-from conjecture.workflows.runner import ArxivPipelineComponents,AsyncArxivWorkflowRunner
-from conjecture.graph.builder import agenerate_artifact_graph
+from arxitex.workflows.runner import ArxivPipelineComponents,AsyncArxivWorkflowRunner
+from arxitex.graph.builder import agenerate_artifact_graph
 
 class AsyncGraphGeneratorWorkflow(AsyncArxivWorkflowRunner):
     

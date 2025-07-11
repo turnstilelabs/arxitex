@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel, Field
 
-from conjecture.graph.utils import DependencyType
+from arxitex.graph.utils import DependencyType
     
 class PairwiseDependencyCheck(BaseModel):
     """

@@ -1,6 +1,6 @@
 from typing import Optional
-from conjecture.symbol.utils import Definition
-from conjecture.llms.prompt import Prompt
+from arxitex.symdef.utils import Definition
+from arxitex.llms.prompt import Prompt
 
 class SymbolEnhancementPromptGenerator:
     """Generates specific prompts for the artifact enhancement tasks."""

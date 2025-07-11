@@ -3,9 +3,9 @@ import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 from loguru import logger
-from conjecture.llms import llms
-from conjecture.detectors.stupid_lemmas.stupid_lemmas_detection_models import StupidLemmaDetectionResult
-from conjecture.detectors.stupid_lemmas.stupid_lemmas_prompt import StupidLemmaDetectionPromptGenerator
+from arxitex.llms import llms
+from arxitex.detectors.stupid_lemmas.stupid_lemmas_detection_models import StupidLemmaDetectionResult
+from arxitex.detectors.stupid_lemmas.stupid_lemmas_prompt import StupidLemmaDetectionPromptGenerator
 
 
 class StupidLemmaDetector:

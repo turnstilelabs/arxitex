@@ -19,11 +19,11 @@ from pathlib import Path
 from typing import Dict
 from loguru import logger
 
-from conjecture.source_downloader import SourceDownloader
-from conjecture.graph import graph_builder
-from conjecture.graph import hybrid_graph_builder
-from conjecture.graph import visualization
-from conjecture.graph.utils import ArxivExtractorError
+from arxitex.source_downloader import SourceDownloader
+from arxitex.graph import graph_builder
+from arxitex.graph import hybrid_graph_builder
+from arxitex.graph import visualization
+from arxitex.graph.utils import ArxivExtractorError
 
 
 async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool) -> Dict:

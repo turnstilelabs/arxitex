@@ -5,8 +5,8 @@ import os
 from loguru import logger
 import json
 from datetime import datetime, timezone
-from conjecture.paper_index import PaperIndex
-from conjecture.arxiv_api import ArxivAPI
+from arxitex.paper_index import PaperIndex
+from arxitex.arxiv_api import ArxivAPI
 
 
 class ArxivPipelineComponents:

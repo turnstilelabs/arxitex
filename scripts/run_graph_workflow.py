@@ -4,8 +4,8 @@ import argparse
 import os
 os.environ["RICH_QUIET"] = "True"
 os.environ["TQDM_DISABLE"] = "1"
-from conjecture.workflows.runner import ArxivPipelineComponents
-from conjecture.workflows.graph_generator import AsyncGraphGeneratorWorkflow
+from arxitex.workflows.runner import ArxivPipelineComponents
+from arxitex.workflows.graph_generator import AsyncGraphGeneratorWorkflow
 
 async def main(args):
     """Initializes and runs the graph generation workflow."""

@@ -1,7 +1,7 @@
 
 from typing import Any, List, Dict, Optional
 from loguru import logger
-from conjecture.symbol.utils import Definition
+from arxitex.symdef.utils import Definition
 
 class DefinitionBank:
     """The 'working memory' holding all definitions found so far."""

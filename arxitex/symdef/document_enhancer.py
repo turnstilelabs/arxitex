@@ -2,10 +2,10 @@ from typing import List, Dict
 from loguru import logger
 import re
 
-from conjecture.symbol.utils import Definition, ContextFinder
-from conjecture.symbol.definition_bank import DefinitionBank
-from conjecture.symbol.symbol_extractor.symbol_enhancer import SymbolEnhancementInterface
-from conjecture.graph.utils import ArtifactNode, ArtifactType
+from arxitex.symdef.utils import Definition, ContextFinder
+from arxitex.symdef.definition_bank import DefinitionBank
+from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
+from arxitex.graph.utils import ArtifactNode, ArtifactType
 
 
 class DocumentEnhancer:
@@ -15,7 +15,7 @@ class DocumentEnhancer:
         self.artifact_end_positions = self._calculate_end_positions()
 
         self.bank = DefinitionBank()
-        self.llm_enhancer = SymbolEnhancementInterface()
+        self.llm_enhancer = DefinitionBuilder()
         self.context_finder = ContextFinder()
         self.enhanced_artifacts: Dict[str, str] = {}
 

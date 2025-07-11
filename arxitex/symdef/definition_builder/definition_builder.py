@@ -1,10 +1,10 @@
 from typing import List, Optional
 from loguru import logger
 
-from conjecture.symbol.symbol_extractor.definition_prompts import SymbolEnhancementPromptGenerator
-from conjecture.symbol.symbol_extractor.definition_models import TermExtractionResult, DefinitionSynthesisResult, ExtractedDefinition
-from conjecture.symbol.utils import Definition
-from conjecture.llms import llms
+from arxitex.symdef.definition_builder.definition_prompts import SymbolEnhancementPromptGenerator
+from arxitex.symdef.definition_builder.definition_models import TermExtractionResult, DefinitionSynthesisResult, ExtractedDefinition
+from arxitex.symdef.utils import Definition
+from arxitex.llms import llms
 
 
 class DefinitionBuilder:

@@ -8,7 +8,7 @@ import uuid
 from typing import Dict, List, Optional, Set, Tuple
 from loguru import logger
 
-from conjecture.graph.utils import (
+from arxitex.graph.utils import (
     ArtifactNode, Edge, DocumentGraph, Position, Reference,
     ArtifactType, ReferenceType
 )

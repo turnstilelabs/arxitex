@@ -10,10 +10,10 @@ import asyncio
 from itertools import combinations
 from loguru import logger
 
-from conjecture.graph.graph_builder import build_graph_from_latex
-from conjecture.graph.utils import (
+from arxitex.graph.graph_builder import build_graph_from_latex
+from arxitex.graph.utils import (
     Edge, DocumentGraph)
-from conjecture.graph.dependency_inference.dependency_inference import GraphDependencyInference
+from arxitex.graph.dependency_inference.dependency_inference import GraphDependencyInference
 
 
 async def build_graph_with_hybrid_model(latex_content: str) -> DocumentGraph:

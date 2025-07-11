@@ -8,8 +8,8 @@ from typing import List
 from loguru import logger
 from pydantic import TypeAdapter, ValidationError
 
-from conjecture.symbol.document_enhancer import DocumentEnhancer
-from conjecture.graph.utils import ArtifactNode
+from arxitex.symdef.document_enhancer import DocumentEnhancer
+from arxitex.graph.utils import ArtifactNode
 
 def load_artifacts_from_json(file_path: Path) -> List[ArtifactNode]:
     """Loads artifacts from a JSON file and validates them."""

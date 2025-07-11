@@ -1,10 +1,10 @@
 # dependency.py
 
 from loguru import logger
-from conjecture.llms import llms
+from arxitex.llms import llms
 
-from conjecture.graph.dependency_inference.dependency_prompt import DependencyInferencePromptGenerator
-from conjecture.graph.dependency_inference.dependency_models import PairwiseDependencyCheck
+from arxitex.graph.dependency_inference.dependency_prompt import DependencyInferencePromptGenerator
+from arxitex.graph.dependency_inference.dependency_models import PairwiseDependencyCheck
 
 class GraphDependencyInference:
     def __init__(self):

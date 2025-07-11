@@ -1,4 +1,4 @@
-from conjecture.llms.prompt import Prompt
+from arxitex.llms.prompt import Prompt
 
 
 class StupidLemmaDetectionPromptGenerator:
