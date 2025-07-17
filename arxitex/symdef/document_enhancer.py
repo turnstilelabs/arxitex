@@ -8,7 +8,7 @@ from pathlib import Path
 import asyncio
 import aiofiles
 
-from arxitex.source_downloader import SourceDownloader
+from arxitex.source_downloader import AsyncSourceDownloader
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
@@ -261,8 +261,8 @@ async def main():
             temp_dir_name = f"arxiv_{args.arxiv_id.replace('/', '_')}_"
             with tempfile.TemporaryDirectory(prefix=temp_dir_name) as temp_dir:
                 temp_path = Path(temp_dir)
-                downloader = SourceDownloader(cache_dir=temp_path)
-                latex_content = await downloader.async_download_and_read_latex(args.arxiv_id)
+                async with AsyncSourceDownloader(cache_dir=temp_path) as downloader:
+                    latex_content = await downloader.async_download_and_read_latex(args.arxiv_id)
         except Exception as e:
             logger.error(f"Failed to download or process arXiv source for '{args.arxiv_id}': {e}")
             return

@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Dict
 from loguru import logger
 
-from arxitex.source_downloader import SourceDownloader
+from arxitex.source_downloader import AsyncSourceDownloader
 from arxitex.graph import graph_builder
 from arxitex.graph import hybrid_graph_builder
 from arxitex.graph import visualization
@@ -41,46 +41,46 @@ async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool) -> Dict:
     temp_dir_name = f"arxiv_{arxiv_id.replace('/', '_')}_"
     with tempfile.TemporaryDirectory(prefix=temp_dir_name) as temp_dir:
         temp_path = Path(temp_dir)
-        downloader = SourceDownloader(cache_dir=temp_path)
-        latex_content = await downloader.async_download_and_read_latex(arxiv_id)
-        
-        if use_llm:
-            logger.info("Using Hybrid (Regex + LLM) graph builder.")
-            graph = await hybrid_graph_builder.build_graph_with_hybrid_model(latex_content)
-        else:
-            logger.info("Using Regex-only graph builder.")
-            graph = graph_builder.build_graph_from_latex(latex_content)
-        
-        # Convert DocumentGraph to dictionary format for output
-        nodes = []
-        for _, node in enumerate(graph.nodes, 1):
-            nodes.append(node.to_dict())
-        
-        edges = []
-        for edge in graph.edges:
-            edge_dict = {
-                "source": edge.source_id,
-                "target": edge.target_id,
-                "type": edge.dependency_type.value if edge.dependency_type is not None else None,
+        async with AsyncSourceDownloader(cache_dir=temp_path) as downloader:
+            latex_content = await downloader.async_download_and_read_latex(arxiv_id)
+            
+            if use_llm:
+                logger.info("Using Hybrid (Regex + LLM) graph builder.")
+                graph = await hybrid_graph_builder.build_graph_with_hybrid_model(latex_content)
+            else:
+                logger.info("Using Regex-only graph builder.")
+                graph = graph_builder.build_graph_from_latex(latex_content)
+            
+            # Convert DocumentGraph to dictionary format for output
+            nodes = []
+            for _, node in enumerate(graph.nodes, 1):
+                nodes.append(node.to_dict())
+            
+            edges = []
+            for edge in graph.edges:
+                edge_dict = {
+                    "source": edge.source_id,
+                    "target": edge.target_id,
+                    "type": edge.dependency_type.value if edge.dependency_type is not None else None,
+                }
+                if edge.dependency:
+                    edge_dict["dependency"] = edge.dependency
+                edges.append(edge_dict)
+            
+            logger.info("Finalizing graph statistics...")
+            stats = graph.get_statistics()
+            logger.info(f"Graph statistics: {stats}")
+            
+            return {
+                "arxiv_id": arxiv_id,
+                "nodes": nodes,
+                "edges": edges,
+                "stats": {
+                    "node_count": stats["total_nodes"],
+                    "edge_count": stats["total_edges"],
+                    "extractor_used": "hybrid-llm" if use_llm else "regex-only"
+                }
             }
-            if edge.dependency:
-                edge_dict["dependency"] = edge.dependency
-            edges.append(edge_dict)
-        
-        logger.info("Finalizing graph statistics...")
-        stats = graph.get_statistics()
-        logger.info(f"Graph statistics: {stats}")
-        
-        return {
-            "arxiv_id": arxiv_id,
-            "nodes": nodes,
-            "edges": edges,
-            "stats": {
-                "node_count": stats["total_nodes"],
-                "edge_count": stats["total_edges"],
-                "extractor_used": "hybrid-llm" if use_llm else "regex-only"
-            }
-        }
 
 async def run_async_pipeline(args):
     """Asynchronously runs the artifact generation and handles output."""
