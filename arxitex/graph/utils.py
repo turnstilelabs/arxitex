@@ -34,16 +34,12 @@ class Position:
     """Represents a position in the source document."""
     line_start: int
     line_end: Optional[int] = None
-    char_start: Optional[int] = None
-    char_end: Optional[int] = None
 
     def to_dict(self) -> Dict[str, Optional[int]]:
         """Converts the Position object to a JSON-serializable dictionary."""
         return {
             "line_start": self.line_start,
-            "line_end": self.line_end,
-            "char_start": self.char_start,
-            "char_end": self.char_end,
+            "line_end": self.line_end
         }
 
 @dataclass
