@@ -1,5 +1,3 @@
-# arxiv_graph_extractor/visualization.py
-
 import json
 from pathlib import Path
 from typing import Dict
@@ -59,7 +57,6 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         <div class="stats">
             <div class="stat"><strong>{node_count}</strong> artifacts</div>
             <div class="stat"><strong>{edge_count}</strong> references</div>
-            <div class="stat"><strong>{files_processed}</strong> TeX files processed</div>
         </div>
     </div>
     <div class="graph-container">
@@ -198,7 +195,6 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         timestamp=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         node_count=graph_data['stats']['node_count'],
         edge_count=graph_data['stats']['edge_count'],
-        files_processed=graph_data['stats']['files_processed'],
         graph_data_json=graph_data_json
     )
 

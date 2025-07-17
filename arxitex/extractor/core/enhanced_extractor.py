@@ -1,4 +1,3 @@
-# arxiv_graph_extractor/hybrid_graph_builder.py
 """
 Builds a graph using a robust, pairwise hybrid approach:
 1. Regex-based extraction of all artifacts and their full content.
@@ -10,10 +9,10 @@ import asyncio
 from itertools import combinations
 from loguru import logger
 
-from arxitex.graph.graph_builder import build_graph_from_latex
-from arxitex.graph.utils import (
+from arxitex.extractor.core.base_extractor import build_graph_from_latex
+from arxitex.extractor.utils import (
     Edge, DocumentGraph)
-from arxitex.graph.dependency_inference.dependency_inference import GraphDependencyInference
+from arxitex.extractor.dependency_inference.dependency_inference import GraphDependencyInference
 
 
 async def build_graph_with_hybrid_model(latex_content: str) -> DocumentGraph:

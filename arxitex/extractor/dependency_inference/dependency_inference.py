@@ -3,8 +3,8 @@
 from loguru import logger
 from arxitex.llms import llms
 
-from arxitex.graph.dependency_inference.dependency_prompt import DependencyInferencePromptGenerator
-from arxitex.graph.dependency_inference.dependency_models import PairwiseDependencyCheck
+from arxitex.extractor.dependency_inference.dependency_prompt import DependencyInferencePromptGenerator
+from arxitex.extractor.dependency_inference.dependency_models import PairwiseDependencyCheck
 
 class GraphDependencyInference:
     def __init__(self):

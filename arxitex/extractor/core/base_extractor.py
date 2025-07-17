@@ -8,7 +8,7 @@ import uuid
 from typing import Dict, List, Optional, Set, Tuple
 from loguru import logger
 
-from arxitex.graph.utils import (
+from arxitex.extractor.utils import (
     ArtifactNode, Edge, DocumentGraph, Position, Reference,
     ArtifactType, ReferenceType
 )
@@ -143,58 +143,70 @@ def build_graph_from_latex(latex_content: str, source_file: Optional[str] = None
     """
     Extract artifacts and build a document graph from LaTeX source.
     """
+    logger.debug("Starting LaTeX graph extraction.")
     graph = DocumentGraph(source_file=source_file)
     label_to_node_id_map: Dict[str, str] = {}
-    
+
     content = re.sub(r'(?<!\\)%.*', '', latex_content, flags=re.MULTILINE)
-    
+    logger.debug(f"Comments removed from LaTeX content with {len(content)}")
+
     # --- PASS 1: Parse all environments and create nodes ---
     nodes_to_process: List[ArtifactNode] = []
     artifact_types = '|'.join(ARTIFACT_TYPES)
     pattern = re.compile(rf'\\begin\{{({artifact_types})(\*?)\}}')
-    
+
     artifact_counter = 0
     cursor = 0
     while cursor < len(content):
         match = pattern.search(content, cursor)
-        if not match: break
-            
+        if not match:
+            logger.debug("No more environments found.")
+            break
+
         env_type, star = match.group(1).lower(), match.group(2) or ""
+        logger.debug(f"Found environment: \\begin{{{env_type}{star}}} at position {match.start()}")
+
         if env_type not in ARTIFACT_TYPE_MAP:
+            logger.warning(f"Unknown artifact type '{env_type}', skipping.")
             cursor = match.end()
             continue
-            
+
         block_start = match.end()
         end_tag_str = f"\\end{{{env_type}{star}}}"
         end_tag_pos = _find_matching_end(content, env_type, star, block_start)
-        
+
         if end_tag_pos == -1:
+            logger.warning(f"No matching \\end found for \\begin{{{env_type}{star}}} at position {block_start}")
             cursor = match.end()
             continue
-            
+
         next_cursor_pos = end_tag_pos + len(end_tag_str)
         raw_content = content[block_start:end_tag_pos].strip()
-        
+
         # --- Proof Extraction Logic ---
         proof_content: Optional[str] = None
         proof_pattern = re.compile(r'\s*\\begin\{proof(\*?)\}')
         proof_match = proof_pattern.match(content, next_cursor_pos)
         if proof_match:
             proof_star = proof_match.group(1) or ""
+            logger.debug(f"Found proof environment after {env_type} at position {proof_match.start()}")
             proof_content_start = proof_match.end()
             proof_end_pos = _find_matching_end(content, PROOF_ENV_TYPE, proof_star, proof_content_start)
             if proof_end_pos != -1:
                 proof_content = content[proof_content_start:proof_end_pos].strip()
                 proof_end_tag_str = f"\\end{{{PROOF_ENV_TYPE}{proof_star}}}"
                 next_cursor_pos = proof_end_pos + len(proof_end_tag_str)
+            else:
+                logger.warning(f"No matching \\end for proof environment after {env_type}")
 
         # --- ID and Label Handling ---
         artifact_counter += 1
         node_id = f"{env_type}-{artifact_counter}-{str(uuid.uuid4())[:8]}"
         label_match = re.search(r'\\label\s*\{([^}]+)\}', raw_content)
         label = label_match.group(1).strip() if label_match else None
-        
+
         if label:
+            logger.debug(f"Found label '{label}' for node ID {node_id}")
             if label in label_to_node_id_map:
                 logger.warning(f"Duplicate LaTeX label '{label}' found. References may be ambiguous.")
             label_to_node_id_map[label] = node_id
@@ -205,26 +217,31 @@ def build_graph_from_latex(latex_content: str, source_file: Optional[str] = None
             content=raw_content,
             label=label,
             position=Position(line_start=content[:match.start()].count('\n') + 1, line_end=content[:end_tag_pos].count('\n') + 1),
-            references=_extract_references_from_content(raw_content, proof_content), #SHOULD extract form content and proof
+            references=_extract_references_from_content(raw_content, proof_content),
             is_external=False,
             proof=proof_content
         )
+        logger.debug(f"Created node: {node.id} ({node.type}), label={label}, proof={'yes' if proof_content else 'no'}")
         nodes_to_process.append(node)
         cursor = next_cursor_pos
-        
+
     for node in nodes_to_process:
+        logger.debug(f"Adding node to graph: {node.id}")
         graph.add_node(node)
 
     # --- PASS 2: Resolve references and create all links (edges) ---
+    logger.debug("Resolving references and creating graph links.")
     edges_to_add, external_nodes_to_add = _resolve_and_create_graph_links(
         graph.nodes, 
         label_to_node_id_map
     )
-    
+
     for node in external_nodes_to_add:
+        logger.debug(f"Adding external reference node: {node.id}")
         graph.add_node(node)
     for edge in edges_to_add:
+        logger.debug(f"Adding edge: {edge.source_id} -> {edge.target_id}")
         graph.add_edge(edge)
-    
+
     logger.info(f"Graph extraction complete. Found {len(graph.nodes)} nodes, {len(graph.edges)} edges")
     return graph

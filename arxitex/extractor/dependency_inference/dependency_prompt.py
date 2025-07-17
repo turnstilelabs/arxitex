@@ -1,7 +1,7 @@
 from typing import Dict
 
 from arxitex.llms.prompt import Prompt
-from arxitex.graph.dependency_inference.dependency_models import DependencyType
+from arxitex.extractor.dependency_inference.dependency_models import DependencyType
 
 class DependencyInferencePromptGenerator:
     def make_dependency_prompt(self, source_artifact: Dict, target_artifact: Dict) -> Prompt:
