@@ -8,11 +8,11 @@ from pathlib import Path
 import asyncio
 import aiofiles
 
-from arxitex.source_downloader import AsyncSourceDownloader
+from arxitex.downloaders.async_downloader import AsyncSourceDownloader
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
-from arxitex.graph.utils import ArtifactNode, ArtifactType
+from arxitex.extractor.utils import ArtifactNode, ArtifactType
 from arxitex.symdef.utils import async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 class DocumentEnhancer:
