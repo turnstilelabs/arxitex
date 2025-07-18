@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Dict
 from loguru import logger
 
-from arxitex.source_downloader import AsyncSourceDownloader
+from arxitex.downloaders.async_downloader import AsyncSourceDownloader
 from arxitex.extractor.core import base_extractor
 from arxitex.extractor.core import enhanced_extractor
 from arxitex.extractor.visualization import graph_viz
