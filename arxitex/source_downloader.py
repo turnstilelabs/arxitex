@@ -355,13 +355,13 @@ class AsyncSourceDownloader:
 
     async def async_download_and_read_latex(self, arxiv_id: str) -> Optional[str]:
         """
-        Main async method to download, extract, and read the primary .tex file.
+        Main async method to download, extract, and read LaTeX files.
         
         Args:
             arxiv_id: The arXiv identifier (e.g., '2305.12345').
             
         Returns:
-            The content of the main .tex file as a string, or None on failure.
+            The combined content of all .tex files as a string, or None on failure.
         """
         if not self.http_client:
             raise RuntimeError("AsyncSourceDownloader must be used as an async context manager")
@@ -378,17 +378,17 @@ class AsyncSourceDownloader:
 
             await self._async_extract_source(source_archive_path, extract_dir, validated_id)
 
-            main_tex_file = await self._async_find_main_tex_file(extract_dir)
-            if not main_tex_file:
-                logger.error(f"Could not find a main .tex file in the extracted source for {arxiv_id}.")
+            # Find ALL .tex files
+            tex_files = await self.find_tex_files(extract_dir)
+            if not tex_files:
+                logger.error(f"No .tex files found in the extracted source for {arxiv_id}.")
                 return None
             
-            logger.info(f"Identified main LaTeX file: {main_tex_file.name}")
+            logger.info(f"Found {len(tex_files)} .tex files: {[f.name for f in tex_files]}")
 
-            async with aiofiles.open(main_tex_file, 'r', encoding='utf-8', errors='ignore') as f:
-                content = await f.read()
-
-            return content
+            # Read and combine content
+            combined_content = await self.read_latex_content(tex_files)
+            return combined_content
 
         except Exception as e:
             logger.error(f"An error occurred during the download/extraction process for {arxiv_id}: {e}")
