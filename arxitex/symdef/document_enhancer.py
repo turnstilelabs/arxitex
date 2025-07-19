@@ -233,6 +233,8 @@ async def main():
     parser.add_argument(
         "--output-path",
         "-o",
+        nargs='?',
+        default=None,
         type=Path,
         help="Path to save the output JSON file with the enhanced content."
     )
@@ -290,7 +292,10 @@ async def main():
     filename = file_id.replace('/', '_') + ".json"
     
     if enhanced_results:
-        output_path = output_dir / "enhanced_artifacts" / filename
+        if args.output_path:
+            output_path = args.output_path
+        else:
+            output_path = output_dir / "enhanced_artifacts" / filename
         await async_save_enhanced_artifacts(enhanced_results, output_path)
     else:
         logger.warning("Enhancement process finished but produced no results.")
