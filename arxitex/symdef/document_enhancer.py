@@ -234,7 +234,6 @@ async def main():
         "--output-path",
         "-o",
         type=Path,
-        default="output/enhanced_artifacts.json",
         help="Path to save the output JSON file with the enhanced content."
     )
 
@@ -242,7 +241,6 @@ async def main():
         "--bank-output-path",
         "-b",
         nargs='?',
-        const="output/definition_bank.json",
         default=None,
         type=Path,
         help="Saves the final definition bank. If a path is given, saves there. "
