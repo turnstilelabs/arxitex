@@ -301,16 +301,19 @@ async def main():
         logger.warning("Enhancement process finished but produced no results.")
 
     if args.bank_output_path:
+        bank_output_path = args.bank_output_path
+    else:
         bank_output_path = output_dir / "definition_banks"/ filename
-        logger.info(f"Saving definition bank to {bank_output_path}...")
-        try:
-            bank_dict = enhancer.bank.to_dict()
-            json_string = json.dumps(bank_dict, indent=2, ensure_ascii=False)
-            async with aiofiles.open(bank_output_path, "w", encoding="utf-8") as f:
-                await f.write(json_string)
-            logger.info(f"Successfully saved definition bank to {bank_output_path}")
-        except Exception as e:
-            logger.error(f"Could not save the definition bank: {e}")
+
+    logger.info(f"Saving definition bank to {bank_output_path}...")
+    try:
+        bank_dict = enhancer.bank.to_dict()
+        json_string = json.dumps(bank_dict, indent=2, ensure_ascii=False)
+        async with aiofiles.open(bank_output_path, "w", encoding="utf-8") as f:
+            await f.write(json_string)
+        logger.info(f"Successfully saved definition bank to {bank_output_path}")
+    except Exception as e:
+        logger.error(f"Could not save the definition bank: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
