@@ -286,15 +286,13 @@ async def main():
     output_dir = script_dir.parent.parent / "data"
     output_dir.mkdir(exist_ok=True)
 
-    (output_dir / "enhanced_artifacts").mkdir(exist_ok=True)
-    (output_dir / "definition_banks").mkdir(exist_ok=True)
-
     filename = file_id.replace('/', '_') + ".json"
     
     if enhanced_results:
         if args.output_path:
             output_path = args.output_path
         else:
+            (output_dir / "enhanced_artifacts").mkdir(exist_ok=True)
             output_path = output_dir / "enhanced_artifacts" / filename
         await async_save_enhanced_artifacts(enhanced_results, output_path)
     else:
@@ -303,6 +301,7 @@ async def main():
     if args.bank_output_path:
         bank_output_path = args.bank_output_path
     else:
+        (output_dir / "definition_banks").mkdir(exist_ok=True)
         bank_output_path = output_dir / "definition_banks"/ filename
 
     logger.info(f"Saving definition bank to {bank_output_path}...")
