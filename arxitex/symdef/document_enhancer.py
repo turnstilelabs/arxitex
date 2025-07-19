@@ -257,6 +257,7 @@ async def main():
 
     if args.arxiv_id:
         logger.info(f"Downloading LaTeX source for arXiv ID: {args.arxiv_id}...")
+        file_id = args.arxiv_id
         try:
             temp_dir_name = f"arxiv_{args.arxiv_id.replace('/', '_')}_"
             with tempfile.TemporaryDirectory(prefix=temp_dir_name) as temp_dir:
@@ -268,34 +269,43 @@ async def main():
             return
     elif args.latex_file:
         logger.info(f"Loading LaTeX source from local file: {args.latex_file}...")
+        file_id = Path(args.latex_file).stem
         latex_content = await async_load_latex_content(args.latex_file)
     
     if not latex_content:
         logger.error("Could not obtain LaTeX content. Exiting.")
         return
 
-    # --- 2. Run the Enhancement Process (asynchronously) ---
     logger.info("Initializing document enhancer...")
     enhancer = DocumentEnhancer(artifacts=artifacts, latex_content=latex_content)
     
     logger.info("Starting artifact enhancement process. This may take some time...")
     enhanced_results = await enhancer.run()
 
-    # --- 3. Save the Results (asynchronously) ---
+    script_dir = Path(__file__).parent
+    output_dir = script_dir.parent.parent / "data"
+    output_dir.mkdir(exist_ok=True)
+
+    (output_dir / "enhanced_artifacts").mkdir(exist_ok=True)
+    (output_dir / "definition_banks").mkdir(exist_ok=True)
+
+    filename = file_id.replace('/', '_') + ".json"
+    
     if enhanced_results:
-        await async_save_enhanced_artifacts(enhanced_results, args.output_path)
+        output_path = output_dir / "enhanced_artifacts" / filename
+        await async_save_enhanced_artifacts(enhanced_results, output_path)
     else:
         logger.warning("Enhancement process finished but produced no results.")
 
     if args.bank_output_path:
-        logger.info(f"Saving definition bank to {args.bank_output_path}...")
+        bank_output_path = output_dir / "definition_banks"/ filename
+        logger.info(f"Saving definition bank to {bank_output_path}...")
         try:
-            args.bank_output_path.parent.mkdir(parents=True, exist_ok=True)            
             bank_dict = enhancer.bank.to_dict()
             json_string = json.dumps(bank_dict, indent=2, ensure_ascii=False)
-            async with aiofiles.open(args.bank_output_path, "w", encoding="utf-8") as f:
+            async with aiofiles.open(bank_output_path, "w", encoding="utf-8") as f:
                 await f.write(json_string)
-            logger.info(f"Successfully saved definition bank to {args.bank_output_path}")
+            logger.info(f"Successfully saved definition bank to {bank_output_path}")
         except Exception as e:
             logger.error(f"Could not save the definition bank: {e}")
 

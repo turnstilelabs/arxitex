@@ -26,9 +26,8 @@ from arxitex.extractor.visualization import graph_viz
 from arxitex.extractor.utils import ArxivExtractorError
 
 def get_examples_dir():
-    """Get the examples directory path relative to this script's location."""
     script_dir = Path(__file__).parent
-    examples_dir = script_dir.parent / "examples"
+    examples_dir = script_dir.parent.parent / "data"
     examples_dir.mkdir(exist_ok=True)
     return examples_dir
 
@@ -103,7 +102,8 @@ async def run_async_pipeline(args):
 
             if args.output is True:
                 examples_dir = get_examples_dir()
-                output_path = examples_dir / f"{args.arxiv_id.replace('/', '_')}.json"
+                (examples_dir / "graphs").mkdir(exist_ok=True)
+                output_path = examples_dir / "graphs" / f"{args.arxiv_id.replace('/', '_')}.json"
             else:
                 output_path = Path(args.output)
 
@@ -115,7 +115,8 @@ async def run_async_pipeline(args):
                 viz_path = args.viz_output
             else:
                 examples_dir = get_examples_dir()
-                viz_path = examples_dir / f"arxiv_{args.arxiv_id.replace('/', '_')}_graph.html"
+                (examples_dir / "viz").mkdir(exist_ok=True)
+                viz_path = examples_dir / "viz" / f"arxiv_{args.arxiv_id.replace('/', '_')}_graph.html"
             
             graph_viz.create_visualization_html(graph_data, viz_path)
             try:

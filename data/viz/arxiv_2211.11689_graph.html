@@ -36,7 +36,7 @@
 <body>
     <div class="header">
         <h1>arXiv Paper Dependency Graph</h1>
-        <p><strong>Paper ID:</strong> 2211.11689 | <strong>Generated:</strong> 2025-07-17 22:36:32</p>
+        <p><strong>Paper ID:</strong> 2211.11689 | <strong>Generated:</strong> 2025-07-18 08:51:13</p>
         <div class="stats">
             <div class="stat"><strong>8</strong> artifacts</div>
             <div class="stat"><strong>2</strong> references</div>
@@ -56,85 +56,85 @@
         const graphData = {
   "nodes": [
     {
-      "id": "definition-1-b1234b0e",
+      "id": "definition-1-a0b7030f",
       "type": "definition",
       "content": "[Union closed set system]\nA set system $\\F$ is \\emph{union closed} if for all $A,B \\in \\F$ we have $A \\cup B \\in \\F$.",
       "content_preview": "[Union closed set system] A set system is if for all A,B we have A B .",
       "display_name": "Definition",
       "label": null,
       "position": {
-        "line_start": 45,
-        "line_end": 47
+        "line_start": 47,
+        "line_end": 49
       },
       "references": [],
       "proof": null
     },
     {
-      "id": "definition-2-d5f3fcf9",
+      "id": "definition-2-b8ad2932",
       "type": "definition",
       "content": "[Approximate union closed set system]\nLet $0 \\le c \\le 1$.\nA set system $\\F$ is $c$-approximate union closed if for at least a $c$-fraction of the pairs $A,B \\in \\F$ we have $A \\cup B \\in \\F$.",
       "content_preview": "[Approximate union closed set system] Let 0 c 1. A set system is c-approximate union closed if for at least a c-fraction of the pairs A,B we have A B...",
       "display_name": "Definition",
       "label": null,
       "position": {
-        "line_start": 51,
-        "line_end": 54
+        "line_start": 53,
+        "line_end": 56
       },
       "references": [],
       "proof": null
     },
     {
-      "id": "theorem-3-f8355001",
+      "id": "theorem-3-80f8ded2",
       "type": "theorem",
       "content": "\\label{thm:main}\nLet $\\F$ be a $(1-\\eps)$-approximate union closed set system, where $\\eps < 1/2$. Then there is an element which is contained in a $\\psi-\\delta$ fraction of sets in $\\F$, where $\\delta=2 \\eps \\left( 1 + \\frac{\\log(1/\\eps)}{\\log |\\F|} \\right)$.",
       "content_preview": "Let be a (1-)-approximate union closed set system, where < 1/2. Then there is an element which is contained in a - fraction of sets in , where =2 ( 1...",
       "display_name": "Theorem",
       "label": "thm:main",
       "position": {
-        "line_start": 58,
-        "line_end": 61
+        "line_start": 60,
+        "line_end": 63
       },
       "references": [],
       "proof": null
     },
     {
-      "id": "example-4-0fc870c5",
+      "id": "example-4-80e50419",
       "type": "example",
       "content": "Let $n$ be large enough, and define the following set systems over $[n]$:\n$$\n\\F_1 = \\{x \\in \\{0,1\\}^n: |x|=\\psi n + n^{2/3}\\}, \\qquad\n\\F_2 = \\{x \\in \\{0,1\\}^n: |x| \\ge (1-\\psi) n\\}, \\qquad\n\\F=\\F_1 \\cup \\F_2.\n$$\nOne can verify that: (i) $\\F$ is $1-o(1)$ approximate union closed (using the fact that $1-\\psi = 2\\psi-\\psi^2$); (ii) that $|\\F_2| = o( |\\F_1|)$; and (iii) that hence each element $i \\in [n]$ is in at most $\\psi+o(1)$ fraction of sets in $\\F$.",
       "content_preview": "Let n be large enough, and define the following set systems over [n]: _1 = x 0,1^n: |x|= n + n^2/3, _2 = x 0,1^n: |x| (1-) n, =_1 _2.",
       "display_name": "Example",
       "label": null,
       "position": {
-        "line_start": 65,
-        "line_end": 73
+        "line_start": 67,
+        "line_end": 75
       },
       "references": [],
       "proof": null
     },
     {
-      "id": "claim-5-c6070695",
+      "id": "claim-5-4854fb49",
       "type": "claim",
       "content": "\\label{h_frac_min}\nThe minimum of $\\frac{h(x^2)}{x h(x)}$ for $x \\in [0,1]$ is obtained at $x=\\varphi$.",
       "content_preview": "The minimum of for x [0,1] is obtained at x=.",
       "display_name": "Claim",
       "label": "h_frac_min",
       "position": {
-        "line_start": 83,
-        "line_end": 86
+        "line_start": 85,
+        "line_end": 88
       },
       "references": [],
       "proof": null
     },
     {
-      "id": "claim-6-dbac396b",
+      "id": "claim-6-755a2441",
       "type": "claim",
       "content": "\\label{f_min}\nThe function $f$ is minimized at $(\\varphi,\\varphi)$. At this point $f(\\varphi,\\varphi)=\\frac{1}{2 \\varphi}$.",
       "content_preview": "The function f is minimized at (,). At this point f(,)=.",
       "display_name": "Claim",
       "label": "f_min",
       "position": {
-        "line_start": 96,
-        "line_end": 99
+        "line_start": 98,
+        "line_end": 101
       },
       "references": [
         {
@@ -150,29 +150,29 @@
       "proof": "First, by routine calculations one can verify that $f$ is indeed continuous on $[0,1]^2$ and that $f(x,y)<1$ for $(x,y) \\in (0,1)^2$. Thus, the minimum of $f$ is attained in $(0,1)^2$. Next, let $g(x)=\\frac{h(x)}{x}$, which is defined on $(0,1)$, and note that\n$$\nf(x,y) = \\frac{g(xy)}{g(x)+g(y)}.\n$$\n\nWe first show that $f$ is minimized on the diagonal, namely at some point $(x,x)$. Assume that $f$ is minimized at some point $(x^*,y^*)$, and let $\\alpha = f(x^*,y^*)$. Define \n$$\nF(x,y) = g(xy) - \\alpha (g(x)+g(y)).\n$$\nThen $F(x,y) \\ge 0$ for all $x,y \\in (0,1)^2$ and $F(x^*, y^*)=0$. \nThus the partial derivatives of $F$ must be zero at the minimum point:\n$$\n\\frac{\\partial F}{\\partial x}(x^*,y^*)=\\frac{\\partial F}{\\partial y}(x^*,y^*)=0.\n$$\nEvaluating the derivatives gives\n$$\n\\frac{\\partial F}{\\partial x}(x,y) = g'(xy) \\cdot y - \\alpha g'(x), \\qquad\n\\frac{\\partial F}{\\partial y}(x,y) = g'(xy) \\cdot x - \\alpha g'(y).\n$$\nDefine $G(x)=x g'(x)$ and note that we obtained that $G(x^*)=G(y^*)$. A direct calculation gives $g'(x) = \\frac{\\log(1-x)}{x^2}$, which implies that $G$ is monotonically decreasing, and so we must have $x^*=y^*$.\n\nFinally, restricting to $x=y$, we have\n$$\nf(x,x) = \\frac{h(x^2)}{2xh(x)}.\n$$\n\\Cref{h_frac_min} gives that $f(x,x)$ is minimized at $x=\\varphi$. Since $\\varphi^2 = 1- \\varphi$ we have $h(\\varphi^2)=h(\\varphi)$ and hence\n$$\nf(\\varphi, \\varphi)=\\frac{1}{2 \\varphi}.\n$$"
     },
     {
-      "id": "corollary-7-0a96e995",
+      "id": "corollary-7-b833f746",
       "type": "corollary",
       "content": "\\label{h_analytic}\nFor $x,y \\in [0,1]$ we have\n$$\nh(xy) \\ge \\frac{1}{2 \\varphi} \\Big(x h(y) + y h(x) \\Big).\n$$",
       "content_preview": "For x,y [0,1] we have h(xy) (x h(y) + y h(x) ).",
       "display_name": "Corollary",
       "label": "h_analytic",
       "position": {
-        "line_start": 133,
-        "line_end": 139
+        "line_start": 135,
+        "line_end": 141
       },
       "references": [],
       "proof": null
     },
     {
-      "id": "claim-8-77f7f267",
+      "id": "claim-8-32e4f668",
       "type": "claim",
       "content": "\\label{h_union}\nLet $A,B$ be two independent random variables taking values in $\\{0,1\\}^n$. Assume for all $i \\in [n]$ that $\\Pr[A_i=0] \\ge p$ and $\\Pr[B_i=0] \\ge p$. Then \n$$\nH(A \\cup B) \\ge \\frac{p}{2 \\varphi}\\Big( H(A)+H(B)\\Big).\n$$",
       "content_preview": "Let A,B be two independent random variables taking values in 0,1^n. Assume for all i [n] that p and p. Then H(A B) ( H(A)+H(B)).",
       "display_name": "Claim",
       "label": "h_union",
       "position": {
-        "line_start": 143,
-        "line_end": 149
+        "line_start": 145,
+        "line_end": 151
       },
       "references": [
         {
@@ -190,13 +190,13 @@
   ],
   "edges": [
     {
-      "source": "claim-6-dbac396b",
-      "target": "claim-5-c6070695",
+      "source": "claim-6-755a2441",
+      "target": "claim-5-4854fb49",
       "type": null
     },
     {
-      "source": "claim-8-77f7f267",
-      "target": "corollary-7-0a96e995",
+      "source": "claim-8-32e4f668",
+      "target": "corollary-7-b833f746",
       "type": null
     }
   ]
