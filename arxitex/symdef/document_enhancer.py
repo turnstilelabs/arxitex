@@ -106,7 +106,8 @@ class DocumentEnhancer:
         
         # 2. For each term, ensure a definition exists in our bank
         for term in terms_in_artifact:
-            if self.bank.find(term) is None:
+            bank_hit = self.bank.find(term)
+            if bank_hit is None:
                 logger.warning(f"Term '{term}' is new in {artifact.id}. Synthesizing its definition...")
                 
                 # Search backwards from the end of the current artifact
@@ -135,6 +136,9 @@ class DocumentEnhancer:
                         dependencies=[base_definition.term] if base_definition else []
                     )
                     self.bank.register(new_def)
+            else:
+                logger.debug(f"Term '{term}' found in bank and matches with {bank_hit}")
+                pass
         
         # 3. Now that all terms are defined, create the enhanced artifact content
         definitions_needed = {t: self.bank.find(t) for t in terms_in_artifact if self.bank.find(t)}
