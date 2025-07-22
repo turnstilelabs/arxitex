@@ -1,4 +1,3 @@
-import os
 import asyncio
 import httpx
 import aiofiles
@@ -55,6 +54,47 @@ class AsyncSourceDownloader:
             raise ValueError(f"Invalid arXiv ID format: {arxiv_id}")
         return arxiv_id
 
+    async def download_and_extract_source(self, arxiv_id: str) -> Path:
+        """
+        Orchestrates the download and extraction of source files for a given arXiv ID.
+        This is the primary entry point for the DownloaderWorkflow.
+        
+        Args:
+            arxiv_id: The arXiv identifier to download.
+            
+        Returns:
+            The path to the directory containing the extracted source files.
+            
+        Raises:
+            ArxivExtractorError: If any step in the process fails.
+            RuntimeError: If not used within an async context manager.
+        """
+        if not self.http_client:
+            raise RuntimeError("AsyncSourceDownloader must be used as an async context manager.")
+            
+        # Define persistent, predictable paths
+        download_dir = self.cache_dir / "downloads"
+        extract_dir = self.cache_dir / "source" / arxiv_id.replace('/', '_')
+        
+        try:
+            validated_id = self.validate_arxiv_id(arxiv_id)
+            
+            # Step 1: Download the source archive
+            source_archive_path = await self._async_download_source(validated_id, download_dir)
+            if not source_archive_path:
+                raise ArxivExtractorError(f"Failed to download source for {arxiv_id} after multiple retries.")
+
+            # Step 2: Extract the archive
+            await self._async_extract_source(source_archive_path, extract_dir, validated_id)
+
+            logger.info(f"[{arxiv_id}] Source successfully extracted to: {extract_dir}")
+            return extract_dir
+
+        except Exception as e:
+            # Re-raise as our specific exception type to be handled by the workflow
+            logger.error(f"Error in download/extract for {arxiv_id}: {e}")
+            raise ArxivExtractorError(f"Error in download/extract for {arxiv_id}: {e}") from e
+    
     async def async_download_and_read_latex(self, arxiv_id: str) -> Optional[str]:
         """
         Main async method to download, extract, and read LaTeX files.

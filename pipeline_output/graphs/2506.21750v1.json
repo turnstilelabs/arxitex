@@ -1,0 +1,1625 @@
+{
+  "arxiv_id": "2506.21750v1",
+  "nodes": [
+    {
+      "id": "definition-1-5d50c800",
+      "type": "definition",
+      "content": "\\label{defIntro:QuantME}\n     Let $\\varphi, \\psi \\colon \\mathbb{R}_{\\geq 0}\\to \\mathbb{R}_{\\geq 0}\\cup\\{\\infty\\}$ be non-decreasing functions and let $S_G\\subset G$, $S_H\\subset H$ be finite generating sets for $G$ and $H$. We will say that a measure subgroup coupling from $G$ to $H$ is \\emph{$\\varphi$-integrable} if there is $\\delta>0$ such that for all $s\\in S_G$\n     \\[\n        \\int_{X_H} \\varphi\\left(\\delta|\\alpha(s,x)|_{S_H}\\right) d\\mu(x) < +\\infty.\n     \\]\n     We will say that the ME coupling from $G$ to $H$ is \\emph{$(\\varphi,\\psi)$-integrable} if, in addition,  there is $\\delta'>0$ such that for all $s\\in S_H$\n     \\[\n        \\int_{X_G} \\psi\\left(\\delta'|\\beta(s,x)|_{S_G}\\right) d\\mu(x) < +\\infty.        \n     \\]",
+      "content_preview": "Let , _ 0 _ 0 be non-decreasing functions and let S_G G, S_H H be finite generating sets for G and H. We will say that a measure subgroup coupling...",
+      "display_name": "Definition",
+      "label": "defIntro:QuantME",
+      "position": {
+        "line_start": 263,
+        "line_end": 272
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-98404dec",
+      "type": "theorem",
+      "content": "\\label{thmintroIsop}\n\t\tAssume that there exists either a $(\\varphi,L^0)$-integrable ME-coupling, or an injective\\footnote{Here injective means that we require that for a.e.\\ $x\\in X_H$, the map $\\alpha(\\cdot, x):G\\to H$ is injective.} $\\varphi$-integrable measure subgroup coupling from $G$ to $H$.  Then \n\t\t\\begin{itemize}\n\t\t\t\\item if $\\varphi(t)=t$ then \\[j_{G}\\succcurlyeq j_{H};\\]\n\t\t\t\\item if $\\varphi$ and $t\\mapsto t/\\varphi(t)$ are increasing then\n\t\t\t\\[\n\t\t\tj_{G}\\succcurlyeq \\varphi\\circ j_{H}.\n\t\t\t\\]\n\t\t\\end{itemize}",
+      "content_preview": "Assume that there exists either a (,L^0)-integrable ME-coupling, or an injective -integrable measure subgroup coupling from G to H.",
+      "display_name": "Theorem",
+      "label": "thmintroIsop",
+      "position": {
+        "line_start": 287,
+        "line_end": 296
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-b3c0870d",
+      "type": "theorem",
+      "content": "Let $G$ and $H$ be  two residually finite finitely generated groups $G$ and $H$, and let $(G_n)$ and $(H_n)$ be two sequences of finite quotients converging respectively to $G$ and $H$ for the marked groups topology. If $G_n$ and $H_n$  are uniformly quasi-isometric, then $G$ and $H$ are $L^\\infty$ measure equivalent.",
+      "content_preview": "Let G and H be two residually finite finitely generated groups G and H, and let (G_n) and (H_n) be two sequences of finite quotients converging...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 309,
+        "line_end": 311
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-4-98727ba5",
+      "type": "definition",
+      "content": "Let $G$ be a finitely generated group with a finite generating set $S_G$ and let $(\\mathcal{G}_n)_n$ be a sequence of directed, labeled graphs. Then $(\\mathcal{G}_n)_n$ is a sofic approximation of $(G,S_G)$ if for every $r>0$, the set $\\mathcal{G}_n^{(r)}$ of vertices $x\\in \\mathcal{G}_n$ such that $B_{\\mathcal{G}_n}(x,r)$ is  isomorphic to $B_G(e_G,r)$ as directed, labeled graphs satisfies \\[\\lim_{n\\to \\infty}\\frac{\\# \\mathcal{G}_n^{(r)}}{\\# \\mathcal{G}_n}=1.\\]",
+      "content_preview": "Let G be a finitely generated group with a finite generating set S_G and let (_n)_n be a sequence of directed, labeled graphs.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 314,
+        "line_end": 316
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-5-d823a411",
+      "type": "theorem",
+      "content": "\\label{thm:Subgroup}\nAssume we are given a sequence of injective maps $\\uu_n\\colon \\mathcal{G}_n\\to H$, which is $\\mathcal U$-statistically Lipschitz. Then there exists an injective measure subgroup coupling $(\\Omega,\\mu)$ from $G$ to $H$.",
+      "content_preview": "Assume we are given a sequence of injective maps _n _n H, which is U-statistically Lipschitz. Then there exists an injective measure subgroup...",
+      "display_name": "Theorem",
+      "label": "thm:Subgroup",
+      "position": {
+        "line_start": 364,
+        "line_end": 366
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-6-fa20644e",
+      "type": "theorem",
+      "content": "\\label{thm:ME}\nAssume that  the sequence of maps $\\uu_n\\colon \\mathcal{G}_n\\to \\mathcal{H}_n$ is $\\mathcal U$-statistically a coarse equivalence. Then there exists an ME coupling from $G$ to $H$. Moreover,\n\\begin{itemize}\n\\item if there exists $C>0$ such that every $\\uu_n$ has $C$-dense image, then the coupling is cobounded from $G$ to $H$; \n\\item  if there exists $C>0$ such that every $\\uu_n$ has point-preimages of diameter at most $C$, then the coupling is cobounded from $H$ to $G$;\n\\item if the maps $\\uu_n$ are bijective, then the coupling is an OE coupling.\n \\end{itemize}",
+      "content_preview": "Assume that the sequence of maps _n _n _n is U-statistically a coarse equivalence. Then there exists an ME coupling from G to H.",
+      "display_name": "Theorem",
+      "label": "thm:ME",
+      "position": {
+        "line_start": 375,
+        "line_end": 382
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-7-fc6d9948",
+      "type": "theorem",
+      "content": "\\label{thm:quantSubgroup}\n\tLet $\\varphi\\colon \\R^+\\to \\R^+$ be an unbounded non-decreasing map. Assume the maps $\\uu_n\\colon \\mathcal{G}_n\\to H$ are injective and satisfy the following:\n for every $s\\in S_G$ there exists $\\delta>0$ such that\n\\begin{equation}\\label{eq:quantLip}\n\t\\sum_{r=0}^\\infty \\varphi\\!\\left(\\delta r\\right) \\lim_\\mathcal U\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(x),\\uu_n(xs))=r\\right\\}\\right)<\\infty;\n\t\\end{equation}\n\tThen, there exists an injective measure subgroup coupling from $G$ to $H$ which is $\\varphi$-integrable.",
+      "content_preview": "Let ^+ ^+ be an unbounded non-decreasing map. Assume the maps _n _n H are injective and satisfy the following: for every s S_G there exists >0 such...",
+      "display_name": "Theorem",
+      "label": "thm:quantSubgroup",
+      "position": {
+        "line_start": 387,
+        "line_end": 394
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-8-0c834c07",
+      "type": "theorem",
+      "content": "\\label{thm:quantME}\n\tLet $\\varphi,\\psi\\colon \\R^+\\to \\R^+$ be two unbounded non-decreasing maps. Let $G$ and $H$ be two finitely generated groups with sofic approximations $(\\mathcal{G}_n)_n$ and $(\\mathcal{H}_n)_n$ and $\\uu_n\\colon \\mathcal{G}_n\\to \\mathcal{H}_n$ satisfy the following:\n\t\\begin{enumerate}\n\t\\item There exists $C>0$ such that every $\\uu_n$ has $C$-dense image and has point-preimages of diameter at most $C$;\n\t\\item For every $s\\in S_G$ there exists $\\delta>0$ such that (\\ref{eq:quantLip}) holds.\n\t\\item For every $h\\in H$ of length at most $2C+1$, there exists $\\delta>0$ such that\n\t\t\\begin{equation}\\label{eq:quantExp}\n\t\\sum_{r=0}^\\infty \\psi\\!\\left(\\delta r\\right)  \\lim_\\mathcal U \\PP_{\\mathcal{H}_n}\\left(\\left\\{y \\in \\uu_n(\\mathcal{G}_n) \\mid  \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh))=r\\right\\}\\right)<\\infty.\n\t\t\\end{equation}\n\t\\end{enumerate}\n\tThen, there exists a  measure equivalence coupling from $G$ to $H$ which  is $(\\varphi,\\psi)$-integrable and mutually cobounded (OE if the maps $\\uu_n$ are bijective).",
+      "content_preview": "Let , ^+ ^+ be two unbounded non-decreasing maps. Let G and H be two finitely generated groups with sofic approximations (_n)_n and (_n)_n and _n _n...",
+      "display_name": "Theorem",
+      "label": "thm:quantME",
+      "position": {
+        "line_start": 398,
+        "line_end": 408
+      },
+      "references": [
+        {
+          "target_id": "eq:quantLip",
+          "reference_type": "external",
+          "context": "ery $s\\in S_G$ there exists $\\delta>0$ such that (\\ref{eq:quantLip}) holds.\n\t\\item For every $h\\in H$ of length at mo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-9-02c1c704",
+      "type": "definition",
+      "content": "Let $G$ and $H$ be two finitely generated groups, \n$X$ be a finite measure space equipped with a measure preserving action of $G$, and  $c\\colon G\\times X\\to H$ be a cocycle. The cocycle $c$ is strongly exponentially integrable (denoted $\\exp^\\diamond$-integrable), if for every $\\varepsilon>0$ there exists a $\\delta>0$ and $C>0$ such that\n\t\\[\\int_{X}\\exp\\left(\\delta|c(g,x)|\\right)d\\mu(x) \\le C\\exp(\\varepsilon |g|)\\]\n\tfor every $g\\in G$.",
+      "content_preview": "Let G and H be two finitely generated groups, X be a finite measure space equipped with a measure preserving action of G, and c G X H be a cocycle.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 432,
+        "line_end": 437
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-10-993fab27",
+      "type": "theorem",
+      "content": "\\label{thm:SolvableExpME}\nThere exists a mutually cobounded $(\\exp^\\diamond,\\exp^\\diamond)$-integrable measure equivalence coupling between any two groups in $\\mathcal M$.",
+      "content_preview": "There exists a mutually cobounded (^,^)-integrable measure equivalence coupling between any two groups in M.",
+      "display_name": "Theorem",
+      "label": "thm:SolvableExpME",
+      "position": {
+        "line_start": 444,
+        "line_end": 446
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-11-79adf737",
+      "type": "definition",
+      "content": "Two infinite finitely generated groups $G$ and $H$ are said to be \\emph{measure equivalent} if there exists a standard Borel measure space $(\\Omega,\\mu)$ of infinite measure with commuting measure preserving actions of $G$ and $H$ with measure fundamental domains of finite measure, that is, there exist Borel sets $X_G, X_H \\subseteq \\Omega$ of finite measure for which\n\t\\begin{itemize}\n\t\t\\item $\\mu(g\\ast X_G \\cap X_G)= 0$ for all $g \\in G \\setminus \\lbrace e_G\\rbrace$ and $\\mu(\\Omega \\setminus G\\ast X_G) = 0$;\n\t\t\\item $\\mu(h\\ast X_H \\cap X_H)= 0$ for all $h \\in H \\setminus \\lbrace e_H\\rbrace$ and $\\mu(\\Omega \\setminus H\\ast X_H) = 0$.\n\t\\end{itemize}",
+      "content_preview": "Two infinite finitely generated groups G and H are said to be if there exists a standard Borel measure space (,) of infinite measure with commuting...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 473,
+        "line_end": 479
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-12-b4f2c2ae",
+      "type": "remark",
+      "content": "If $(\\Omega,X_G,X_H,\\mu)$ is a measure equivalence coupling and $\\mu(X_G \\triangle X_H)= 0$, then $X_G$ is a measure fundamental domain for $H$, and we can take $X_G$ as a common measure fundamental domain for both actions.",
+      "content_preview": "If (,X_G,X_H,) is a measure equivalence coupling and (X_G X_H)= 0, then X_G is a measure fundamental domain for H, and we can take X_G as a common...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 481,
+        "line_end": 483
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-13-a56dbecb",
+      "type": "definition",
+      "content": "Let $\\varphi\\colon \\R^+\\to \\R^+$ be a non-decreasing maps, let $X$ be a finite measure space and let $G$ and $H$ be two groups with a cocycle $c\\colon G\\times X\\to H$. The cocycle $c$ is $\\varphi$-integrable if there exists a $\\delta>0$ such that\n\t$$\\int_{X_H}\\varphi\\left(\\delta|c(g,x)|\\right)d\\mu(x)<+\\infty$$\n\tfor every $g\\in G$ and $c$ is strongly $\\varphi$-integrable (or $\\varphi^\\diamond$-integrable) if for every $\\varepsilon>0$ there exists a $\\delta>0$ and $C>0$ such that\n\t\\[\\int_{X_H}\\varphi\\left(\\delta|c(g,x)|\\right)d\\mu(x) \\le C\\varphi(\\varepsilon |g|)\\]\n\tfor every $g\\in G$.",
+      "content_preview": "Let ^+ ^+ be a non-decreasing maps, let X be a finite measure space and let G and H be two groups with a cocycle c G X H.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 488,
+        "line_end": 494
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-14-d56964db",
+      "type": "definition",
+      "content": "Let $\\varphi,\\psi\\colon \\R^+\\to \\R^+$ be non-decreasing maps, let $G$ and $H$ be two groups with a measure equivalence coupling $(\\Omega,X_G,X_H,\\mu)$ from $G$ to $H$, let $\\alpha\\colon G\\times X_H \\to H$ be the cocycle such that $g*x \\in \\alpha(g,x)^{-1}X_H$ and let $\\beta\\colon H\\times X_G \\to G$ be the cocycle such that $h*x \\in \\beta(h,x)^{-1}X_G$.\n\tThe measure equivalence coupling $(\\Omega,X_G,X_H,\\mu)$ from $G$ to $H$ is $(\\varphi,\\psi)$-integrable if $\\alpha$ is $\\varphi$-integrable and $\\beta$ is $\\psi$-integrable.",
+      "content_preview": "Let , ^+ ^+ be non-decreasing maps, let G and H be two groups with a measure equivalence coupling (,X_G,X_H,) from G to H, let G X_H H be the cocycle...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 503,
+        "line_end": 506
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-15-fd9f11a5",
+      "type": "definition",
+      "content": "Two infinite finitely generated groups $G$ and $H$ are said to be \\emph{orbit equivalent} if there exists a standard Borel probability space $(X,\\nu)$ with essentially free probability measure preserving actions $G \\curvearrowright (X,\\nu)$ and $H \\curvearrowright (X,\\nu)$ and a conull invariant Borel subset $X_0 \\subseteq X$ such that $G\\ast x = H\\ast x$ for all $x \\in X_0$.\n\tThe space $(X,\\mu)$ is called an orbit equivalence from $G$ to $H$.",
+      "content_preview": "Two infinite finitely generated groups G and H are said to be if there exists a standard Borel probability space (X,) with essentially free...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 509,
+        "line_end": 512
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-16-7d784b7f",
+      "type": "proposition",
+      "content": "[Folklore]\n\tLet $\\varphi,\\psi\\colon \\R^+\\to \\R^+$ be non-decreasing maps and let $G$ and $H$ be two infinite, finitely generated groups. There exists a measure equivalence coupling $(\\Omega,X,X,\\mu)$ from $G$ to $H$ that is $(\\varphi,\\psi)$-integrable if and only if there exists an orbit equivalence coupling $(X,\\nu)$ from $G$ to $H$ that is $(\\varphi,\\psi)$-integrable.",
+      "content_preview": "[Folklore] Let , ^+ ^+ be non-decreasing maps and let G and H be two infinite, finitely generated groups. There exists a measure equivalence coupling...",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 516,
+        "line_end": 518
+      },
+      "references": [],
+      "proof": "Let $(\\Omega,X,X,\\mu)$ be a measure equivalence coupling from $G$ to $H$. As previously, we write $\\alpha \\colon G \\times X \\rightarrow H$ and $\\beta \\colon H \\times X \\rightarrow G$ for the measure equivalence cocycles.\n\t\n\tFirst we need the action of $G\\times H$ to be essentially free as well. In general this is not the case. Therefore we make the following construction.\n\tLet $\\mathcal{B} = \\lbrace 0,1\\rbrace^{G \\times H}$ and equip it with the shift action $G \\times H \\curvearrowright \\mathcal{B}$. Considering each copy of $\\lbrace 0, 1\\rbrace$ with the equiprobability measure, we obtain a product measure $\\mu'$ on $\\mathcal{B}$ with respect to which the shift action is probability measure preserving and essentially free as the product group is infinite. Extending the action of $G$ and $H$ diagonally to $\\Omega \\times \\mathcal{B}$ we now obtain a new measure equivalence $(\\Omega \\times \\mathcal{B}, X \\times \\mathcal{B}, X \\times \\mathcal{B}, \\mu \\times \\mu')$ for $G$ and $H$ and where the action of $G\\times H$ is essentially free. Its measure equivalence cocycles are given by $\\alpha'' \\colon G \\times (X \\times \\mathcal{B}) \\rightarrow H$ where $\\alpha''(g,(x,z)) = \\alpha(g,x)$ and $\\beta'' \\colon H \\times (X \\times \\mathcal{B}) \\rightarrow G$ where $\\beta''(h,(x,z)) = \\beta(h,x)$ which are $\\varphi$-integrable and $\\psi$-integrable respectively. \n\t\n\tNow, the induced actions of $G$ and $H$ on $(X \\times \\mathcal{B}, \\mu_{X} \\times \\mu')$ are essentially free and probability measure preserving, where $\\mu_{X} = \\mu(X)^{-1}\\mu\\vert_{X}$.\n\tWe claim that these induced actions are orbit equivalent, and that their cocyles are given by the measure equivalence cocycles, which proves that $(X\\times \\mathcal{B},\\mu\\times \\mu')$ is a $(\\varphi,\\psi)$-integrable orbit equivalence coupling.\n\tFirst, we note that for all $g \\in G$, we have $g\\ast (x,z) \\in \\alpha(g,x)^{-1}\\ast X \\times \\mathcal{B}$ for a.e. $(x,z) \\in X \\times \\mathcal{B}$. Fixing $g \\in G$ and letting $h = \\alpha(g,x)$, we then have for the induced actions that $g \\cdot (x,z) = g\\ast \\alpha(g,x)\\ast (x,z)$ and $h \\cdot (x,z) = \\beta(\\alpha(g,x),x)\\ast \\alpha(g,x)\\ast (x,z)$ for a.e. $(x,z) \\in X \\times \\mathcal{B}$.\n\tNow, without loss of generality it suffices to show that $\\beta(\\alpha(g,x),x)=g$ for a.e.\\ $(x,z) \\in X \\times \\mathcal{B}$, as it proves that $G\\cdot x\\subseteq H\\cdot x$ and that its orbit equivalence cocycle $G\\times (X\\times \\mathcal{B})\\to H$ is the same as $\\alpha''$.\n\tThis is true since $\\alpha(g,x)\\ast (x,z) \\in \\beta(\\alpha(g,x),x)^{-1}\\ast X \\times \\mathcal{B}$ and $g\\ast (x,z) \\in \\alpha(g,x)^{-1}\\ast X_G \\times \\mathcal{B}$ for a.e. $(x,z) \\in X \\times \\mathcal{B}$ and $X\\times\\mathcal{B}$ is a measure fundamental domain. Moreover, for every $g \\in G$, we have $g \\cdot (x,z) = \\alpha''(g,(x,z)) \\cdot (x,z)$ for almost every $(x,z) \\in X \\times \\mathcal{B}$. This concludes the first implication.\n\t\\\\\n\t\n\tTowards proving the converse, let $(X,\\nu)$ be an orbit equivalence coupling from $G$ to $H$ that is $(\\varphi,\\psi)$-integrable. Now, take $\\Omega = X\\times G$ with $\\mu = \\nu\\times \\bar{\\mu}$, where $\\bar{\\mu}$ is the counting measure. Note that $X$ can be seen as the subset $X\\times \\{e_G\\}$ of $\\Omega$.\n\tNext, let $G\\times H$ act on $(\\Omega,\\mu)$ such that $(g,h)\\ast (x,g')= (h\\cdot x , gg'\\beta'(h,x)^{-1})$. Then $(\\Omega,X,X,\\mu)$ is a $(\\varphi,\\psi)$-integrable measure equivalence coupling.\n\tIndeed, $\\Omega$ is standard Borel, as it is the product of two standard Borel spaces. The space $X$ is a measure fundamental domain of $G$, since $G$ acts by left multiplication on the $G$-component in $\\Omega$. Towards proving that $X$ is also a fundamental domain for $H$, note that $h\\ast (x,e_G)\\in \\beta'(h,x)^{-1}\\ast X$ for every $h\\in H$ and $x\\in X$, note that $\\beta'(h,x)=e_G$ if and only if $h=e_H$ for almost every $x\\in X$ because the action of $H$ on $X$ is essentially free and note that $h\\mapsto \\beta'(h,x)$ is surjective for almost every $x\\in X$. Hence, $X$ is a fundamental domain for the $H$-action and $\\beta(h,(x,e_G))=\\beta'(h,x)$. Finally, note that $(g, \\alpha'(g,x))\\ast (x,e_G) \\in X$, since $\\beta'(\\alpha'(g,x),g\\cdot x)=g$ for every $g\\in G$ and almost every $x\\in X$. So, $\\alpha(g,(x,e_G))=\\alpha'(g,x)$.\n\tThus, $G$ and $H$ have commuting, measure preserving actions on $\\Omega$, both actions have $X$ as a fundamental domain with finite measure and the cocycles $\\alpha$ and $\\beta$ are $\\varphi$-integrable and $\\psi$-integrable respectively.\n\tThis concludes the proof."
+    },
+    {
+      "id": "theorem-17-c6d93711",
+      "type": "theorem",
+      "content": "Let $\\{(X_n,\\mu_n)\\}_{n\\in\\N}$ be a sequence of finite probability spaces and let $X_{\\mathcal{U}}$ be the ultraproduct of the sequence $\\{X_n\\}_n$. Then there exists a complete probability space $(X_{\\mathcal{U}},\\mathfrak{B}_{\\mathcal{U}},\\mu_{\\mathcal{U}})$ such that\n  \\begin{enumerate}\n  \\item for every sequence $\\{A_n\\subseteq X_n\\}_n$ of subsets, the set $[A_n]_{\\mathcal{U}}$ is measurable and $\\mu_{\\mathcal{U}}([A_n]_{\\mathcal{U}})=\\lim_{\\mathcal{U}}\\mu_n(A_n)$,\n  \\item for every measurable subset $A_{\\mathcal{U}}\\subseteq X_{\\mathcal{U}}$ there exists a sequence of subsets $\\{A_n\\subseteq X_n\\}_n$ such that $\\mu_{\\mathcal{U}}(A_{\\mathcal{U}}\\Delta [A_n]_{\\mathcal{U}})=0$.\n  \\end{enumerate}",
+      "content_preview": "Let (X_n,_n)_n be a sequence of finite probability spaces and let X_ be the ultraproduct of the sequence X_n_n.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 548,
+        "line_end": 554
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-18-53b8ad47",
+      "type": "definition",
+      "content": "\\label{def:statisticSet}\n\tLet $(Y_n)_n$ and $(Z_n)_n$ be two sequences of metric spaces and $\\uu_n\\colon Y_n\\to Z_n$ be a sequence of maps.\n\t\\begin{itemize}\n\t\t\\item Assume that $Y_n$ is finite. We say that the sequence $(\\uu_n)_n$ is \\emph{$\\mathcal{U}$-statistically coarsely injective} if\n\t\t\\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U}\\PP_{Y_n}\\left(\\left\\{y\\in Y_n \\mid \\diam_{Y_n}(\\uu_n^{-1}(\\uu_n(y)))\\geq C\\right\\}\\right)=0.\\]\n\t\n\t\t\\item Assume that $Z_n$ is finite. We say that the sequence $(\\uu_n)_n$ is \\emph{$\\mathcal{U}$-statistically coarsely surjective} if\n\t\t\\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U}\\PP_{Z_n}\\left(\\left\\{z\\in Z_n \\mid d_{Z_n}(z,\\uu_n(Y_n))\\ge C\\right\\}\\right)=0.\\]\n\t\t\\item Assume that $Y_n$ and $Z_n$ are finite.  The sequence $(\\uu_n)_n$ is \\emph{$\\mathcal{U}$-statistically coarsely bijective} if it is both $\\mathcal{U}$-statistically coarsely injective and $\\mathcal{U}$-statistically coarsely surjective.\n\t\\end{itemize}",
+      "content_preview": "Let (Y_n)_n and (Z_n)_n be two sequences of metric spaces and _n Y_n Z_n be a sequence of maps. Assume that Y_n is finite.",
+      "display_name": "Definition",
+      "label": "def:statisticSet",
+      "position": {
+        "line_start": 568,
+        "line_end": 578
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-19-4528979d",
+      "type": "proposition",
+      "content": "\\label{prop:compaireSize}\n\tLet $(Y_n)_n$ and $(Z_n)_n$ be two sequences of uniformly locally finite metric spaces and let $\\uu_n\\colon Y_n\\to Z_n$ be a sequence of maps, then\n\t\\begin{itemize}\n\t\t\\item If the sequence $(\\uu_n)_n$ is $\\mathcal{U}$-statistically coarsely surjective, then $\\lim_\\mathcal{U}\\# Z_n/\\# Y_n$ is finite.\n\t\t\\item If the sequence $(\\uu_n)_n$ is $\\mathcal{U}$-statistically coarsely injective, then  $\\lim_\\mathcal{U}\\# Y_n/\\# \\Im\\uu_n$ (so in particular $\\lim_\\mathcal{U}\\# Y_n/\\# Z_n$) is finite.\n\t\\end{itemize}",
+      "content_preview": "Let (Y_n)_n and (Z_n)_n be two sequences of uniformly locally finite metric spaces and let _n Y_n Z_n be a sequence of maps, then If the sequence...",
+      "display_name": "Proposition",
+      "label": "prop:compaireSize",
+      "position": {
+        "line_start": 583,
+        "line_end": 589
+      },
+      "references": [],
+      "proof": "When this sequence of maps is $\\mathcal{U}$-statistically coarsely surjective, then there exists $C>0$ such that $\\#\\{z\\in Z_n \\mid d_{Z_n}(z,\\uu_n(Y_n))\\le C\\}\\ge \\frac{1}{2}\\#Z_n$. As $(Z_n)_n$ is uniformly locally finite, for every $C$ there exists a constant $N_C$ such that every ball in $Z_n$ of radius $C$ has cardinality at most $N_C$ for any $n$. Hence, $\\frac{1}{2}\\#Z_n\\le N_C\\#\\uu_n(Y_n)\\le N_C\\#Y_n$. Therefore $\\# Z_n/\\# Y_n\\le 2N_C$, which proves the first claim.\n\t\n\tWhen this sequence of maps is $\\mathcal{U}$-statistically coarsely injective, then there exists $C>0$ such that \\[\\lim_\\mathcal{U}\\PP_{Y_n}\\left(\\{y\\in Y_n \\mid \\diam_{Y_n}(\\uu_n^{-1}(\\uu_n(y)))\\le C\\}\\right)\\ge \\frac{1}{2}.\\] As $(Y_n)_n$ is uniformly locally finite, for every $C$ there exists a constant $N'_C$ such that every ball in $Y_n$ of radius $C$ has cardinality at most $N'_C$ for any $n$. Hence, $\\frac{1}{2}\\#Y_n\\le N'_C\\#\\uu_n(Y_n)$. Therefore $\\# Y_n/\\#\\uu_n(Y_n)\\le 2N'_C$, which proves the second claim."
+    },
+    {
+      "id": "definition-20-79aa20f9",
+      "type": "definition",
+      "content": "\\label{def:statisticCoarseMetric}\n\tLet $(Y_n)_n$ and $(Z_n)_n$ be two sequences of finite metric spaces that are uniformly locally finite and $\\uu_n\\colon Y_n\\to Z_n$ be a sequence of maps.\n\t\\begin{itemize}\n\t\t\\item The sequence $(\\uu_n)_n$ is \\emph{$\\mathcal{U}$-statistically Lipschitz} if for every $r>0$,\n\t\t\\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U}\\PP_{Y_n}\\left(\\left\\{y\\in Y_n\\mid \\diam_{Z_n}(\\uu_n(B_{Y_n}(y,r))\\geq C\\right\\}\\right)= 0.\\]\n\n\t\t\\item The sequence $(\\uu_n)_n$ is \\emph{$\\mathcal{U}$-statistically expansive} if for every $r>0,$\n\n\t\t\\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U}\\PP_{Y_n}\\left(\\left\\{y\\in Y_n\\mid \\diam_{Y_n}(\\uu_n^{-1}(B_{Z_n}(\\uu_n(y),r))\\geq C\\right\\}\\right)= 0.\\]\n\n\t\t\n\t\t\\item The sequence $(\\uu_n)_n$ is \\emph{$\\mathcal{U}$-statistically a coarse equivalence} if it is $\\mathcal{U}$-statistically Lipschitz, $\\mathcal{U}$-statistically expansive and $\\mathcal{U}$-statistically coarsely bijective.\t\\end{itemize}",
+      "content_preview": "Let (Y_n)_n and (Z_n)_n be two sequences of finite metric spaces that are uniformly locally finite and _n Y_n Z_n be a sequence of maps.",
+      "display_name": "Definition",
+      "label": "def:statisticCoarseMetric",
+      "position": {
+        "line_start": 599,
+        "line_end": 611
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-21-33f504d0",
+      "type": "remark",
+      "content": "\\label{rem:expanImpliesInj}\nNote that $\\mathcal{U}$-statistically expansivity implies $\\mathcal{U}$-statistically coarse injectivity.",
+      "content_preview": "Note that -statistically expansivity implies -statistically coarse injectivity.",
+      "display_name": "Remark",
+      "label": "rem:expanImpliesInj",
+      "position": {
+        "line_start": 614,
+        "line_end": 616
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-22-57de1880",
+      "type": "proposition",
+      "content": "\\label{prop:coarseBij}\nLet $G$ and $H$ be two groups each with finite generating set $S_G$ and $S_H$, respectively, and let $(\\mathcal{G}_n)_n$ and $(\\mathcal{H}_n)_n$ be sequences of sofic approximations of the Cayley graphs $(G,S_G)$ and $(H,S_H)$ respectively.\nIf $\\uu_n: \\mathcal{G}_n\\to \\mathcal{H}_n$ is $\\mathcal{U}$-statistically coarsely bijective, then for all $r\\geq 0$\n\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n\\mid \\uu_n(x)\\in \\mathcal{H}_n^{(r)}\\right\\}\\right)=1. \\]",
+      "content_preview": "Let G and H be two groups each with finite generating set S_G and S_H, respectively, and let (_n)_n and (_n)_n be sequences of sofic approximations...",
+      "display_name": "Proposition",
+      "label": "prop:coarseBij",
+      "position": {
+        "line_start": 623,
+        "line_end": 627
+      },
+      "references": [
+        {
+          "target_id": "prop:compaireSize",
+          "reference_type": "internal",
+          "context": "cal U}\\#\\mathcal{H}_n/\\#\\mathcal{G}_n$, which by\n \\cref{prop:compaireSize} is finite. \n Since balls of bounded radius in $\\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\eta= \\lim_{\\mathcal U}\\#\\mathcal{H}_n/\\#\\mathcal{G}_n$, which by\n \\cref{prop:compaireSize} is finite. \n Since balls of bounded radius in $\\mathcal G_n$ have bounded size (because $\\mathcal G_n$ has bounded degree), $\\mathcal{U}$-statistical coarse injectivity implies that \n \\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U} \\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n\\mid \\#\\uu_n^{-1}(x)\\leq C\\right\\}\\right)=1. \\]\nHence it is enough to prove that for each $C$,\n\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n\\mid \\uu_n(x)\\notin \\mathcal{H}_n^{(r)},\\; \\#\\uu_n^{-1}(x)\\leq C\\right\\}\\right)=0\n\\]\nBut this quantity is at most \n\\[\\eta C\\lim_\\mathcal{U}\\PP_{\\mathcal{H}_n}\\left(\\left\\{y\\in\\mathcal{H}_n\\mid y\\notin \\mathcal{H}_n^{(r)}\\right\\}\\right), \n\\]\nwhich equals $0$ since $\\mathcal{H}_n$ is a sofic approximation."
+    },
+    {
+      "id": "proposition-23-bfe9256d",
+      "type": "proposition",
+      "content": "\\label{prop:StatBiLGroups}\nLet $G$ and $H$ be two groups each with finite generating set $S_G$ and $S_H$, respectively, and let $(\\mathcal{G}_n)_n$ and $(\\mathcal{H}_n)_n$ be sequences of sofic approximations of the Cayley graphs $(G,S_G)$ and $(H,S_H)$ respectively.\nLet $\\uu_n\\colon \\mathcal{G}_n\\to \\mathcal{H}_n$ be a sequence of maps.\nThe following are equivalent:\n\t\\begin{enumerate}\n\t\t\\item\\label{item:StatBiLGroup1a} for every $s\\in S_G$ we have\n\t\t\\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(y),\\uu_n(ys))\\le C\\right\\}\\right)= 1;\\]\n\n\t\t\\item\\label{item:StatBiLGroup1b} for every $g\\in G$ we have\n\t\t\\[\\lim_{C\\to \\infty}\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(y),\\uu_n(yg))\\le C\\right\\}\\right)= 1;\\]\n\t\t\\item\\label{item:StatBiLGroup1c} the sequence $\\uu_n$ is $\\mathcal{U}$-statistically Lipschitz\n\t\\end{enumerate}",
+      "content_preview": "Let G and H be two groups each with finite generating set S_G and S_H, respectively, and let (_n)_n and (_n)_n be sequences of sofic approximations...",
+      "display_name": "Proposition",
+      "label": "prop:StatBiLGroups",
+      "position": {
+        "line_start": 645,
+        "line_end": 657
+      },
+      "references": [
+        {
+          "target_id": "item:StatBiLGroup1b",
+          "reference_type": "external",
+          "context": "$-statistically Lipschitz\n\t\\end{enumerate}Clearly \\ref{item:StatBiLGroup1b} implies \\ref{item:StatBiLGroup1a}. The fact that",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1a",
+          "reference_type": "external",
+          "context": "umerate}Clearly \\ref{item:StatBiLGroup1b} implies \\ref{item:StatBiLGroup1a}. The fact that \\ref{item:StatBiLGroup1c} implies",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1c",
+          "reference_type": "external",
+          "context": "implies \\ref{item:StatBiLGroup1a}. The fact that \\ref{item:StatBiLGroup1c} implies \\ref{item:StatBiLGroup1b} results from th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1b",
+          "reference_type": "external",
+          "context": ". The fact that \\ref{item:StatBiLGroup1c} implies \\ref{item:StatBiLGroup1b} results from the following inequality \n\n\\[\\PP_{\\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1b",
+          "reference_type": "external",
+          "context": "y,|g|))) \\le C\\right\\}\\right),\\]\nwhich gives that \\ref{item:StatBiLGroup1b} implies \\ref{item:StatBiLGroup1c}.\n\n\nTo complete",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1c",
+          "reference_type": "external",
+          "context": "hich gives that \\ref{item:StatBiLGroup1b} implies \\ref{item:StatBiLGroup1c}.\n\n\nTo complete the proof of the proposition, it t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1a",
+          "reference_type": "external",
+          "context": "of the proposition, it thus remains to show that  \\ref{item:StatBiLGroup1a} implies \\ref{item:StatBiLGroup1b}. This simply fo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup1b",
+          "reference_type": "external",
+          "context": "s to show that  \\ref{item:StatBiLGroup1a} implies \\ref{item:StatBiLGroup1b}. This simply follows by writting $g=s_1\\ldots s_n",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Clearly \\ref{item:StatBiLGroup1b} implies \\ref{item:StatBiLGroup1a}. The fact that \\ref{item:StatBiLGroup1c} implies \\ref{item:StatBiLGroup1b} results from the following inequality \n\n\\[\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{H}_n}(\\uu_n(B_{\\mathcal{G}_n}(y,|g|))) \\le C\\right\\}\\right)\\le \\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(y),\\uu_n(yg))\\le C\\right\\}\\right). \n\\]\n\nConversely, we have\n\n\\[\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{H}_n}(\\uu_n(B_{\\mathcal{G}_n}(y,R))) \\ge C\\right\\}\\right)\\le \\sum_{|g|\\le R}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{H}_n}(\\uu_n(B_{\\mathcal{G}_n}(y,|g|))) \\le C\\right\\}\\right),\\]\nwhich gives that \\ref{item:StatBiLGroup1b} implies \\ref{item:StatBiLGroup1c}.\n\n\nTo complete the proof of the proposition, it thus remains to show that  \\ref{item:StatBiLGroup1a} implies \\ref{item:StatBiLGroup1b}. This simply follows by writting $g=s_1\\ldots s_n$ and arguing by triangle inequality. We leave the details to the reader."
+    },
+    {
+      "id": "proposition-24-1cb09aaa",
+      "type": "proposition",
+      "content": "\\label{prop:expsofic}\nLet $G$ and $H$ be two groups each with finite generating set $S_G$ and $S_H$, respectively, and let $(\\mathcal{G}_n)_n$ and $(\\mathcal{H}_n)_n$ be sequences of sofic approximations of the Cayley graphs $(G,S_G)$ and $(H,S_H)$ respectively.\nLet $\\uu_n\\colon \\mathcal{G}_n\\to \\mathcal{H}_n$ be a sequence of maps.\n\\begin{enumerate}\n\t\\item\\label{item:StatBiLGroup2} If the sequence $\\uu_n$ is $\\mathcal{U}$-statistically coarsely surjective, then it is $\\mathcal{U}$-statistically expansive if and only if for every $h\\in H$ we have\n\t\\[\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(\\uu_n(x))\\cup\\uu_n^{-1}(\\uu_n(x)h))\\ge C\\right\\}\\right)= 0.\\]\n\t\\item\\label{item:StatBiLGroup3} If the sequence $\\uu_n$  has $C'$-dense images, and  has preimages  of bounded diameter, then it is $\\mathcal{U}$-statistically expansive if and only if for every $h\\in B_H(e_H,2C'+1)$, \n\t\\[\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup\\uu_n^{-1}(yh))\\ge C\\right\\}\\right)= 0\\]\n\\end{enumerate}",
+      "content_preview": "Let G and H be two groups each with finite generating set S_G and S_H, respectively, and let (_n)_n and (_n)_n be sequences of sofic approximations...",
+      "display_name": "Proposition",
+      "label": "prop:expsofic",
+      "position": {
+        "line_start": 674,
+        "line_end": 683
+      },
+      "references": [
+        {
+          "target_id": "item:StatBiLGroup2",
+          "reference_type": "external",
+          "context": "al{U}$-statistical expansivity obviously implies (\\ref{item:StatBiLGroup2}), the useful implication being the converse one.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup2",
+          "reference_type": "external",
+          "context": "seful implication being the converse one.\nAssume (\\ref{item:StatBiLGroup2}) holds. Then by \\cref{prop:coarseBij}, we have\n\\[",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:coarseBij",
+          "reference_type": "internal",
+          "context": "Assume (\\ref{item:StatBiLGroup2}) holds. Then by \\cref{prop:coarseBij}, we have\n\\[\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup2",
+          "reference_type": "external",
+          "context": "(x)h))\\ge C\\right\\}\\right)\\]\nwhich equals $0$ by (\\ref{item:StatBiLGroup2}).\n\n\nLet us prove the second statement. \nFirst by",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:StatBiLGroup2",
+          "reference_type": "external",
+          "context": "t by our assumption on the diameter of preimages, \\ref{item:StatBiLGroup2} is equivalent to having for all $h\\in H$,\n\t\\[\\lim",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Note that $\\mathcal{U}$-statistical expansivity obviously implies (\\ref{item:StatBiLGroup2}), the useful implication being the converse one.\nAssume (\\ref{item:StatBiLGroup2}) holds. Then by \\cref{prop:coarseBij}, we have\n\\[\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(B(\\uu_n(x),r))\\ge C\\right\\}\\right)\\]\nis equal to \n\\[\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(B(\\uu_n(x),r))\\ge C,\\; \\uu_n(x)\\in \\mathcal{H}_n^{(r)}\\right\\}\\right).\\]\nAssuming that $\\uu_n(x)\\in \\mathcal{H}_n^{(r)}$ implies that the ball of radius $r$ around it are vertices of the form $\\uu_n(x)h$ for $h\\in H$ with $|h|\\leq r$.\nHence the latter is at most\n\\[\\sum_{h\\in H, |h|\\leq r}\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(\\uu_n(x))\\cup\\uu_n^{-1}(\\uu_n(x)h))\\ge C\\right\\}\\right)\\]\nwhich equals $0$ by (\\ref{item:StatBiLGroup2}).\n\n\nLet us prove the second statement. \nFirst by our assumption on the diameter of preimages, \\ref{item:StatBiLGroup2} is equivalent to having for all $h\\in H$,\n\t\\[\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in  \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup\\uu_n^{-1}(yh))\\ge C\\right\\}\\right)= 0.\\]\nNow assume that the latter holds for $|h|\\leq 2C'+1$.\nWe argue by contradiction, letting $h\\in H$ be the shortest element for which we do not have convergence. First, note that $|h|\\ge 2C'+2$. Thus, we can take $h_1,h_2\\in H$ with $h=h_1h_2$, $|h_1|,|h_2|\\ge C'+1$ and $|h_1|+|h_2|=|h|$. Next, for every $y\\in\\mathcal{H}_n$ there exists an $h_y\\in B_H(e_H,C')$ such that $zh_1h_y\\in \\Im(\\uu_n)$. Observe that $|h_z^{-1}h_1^{-1}h|=|h_z^{-1}h_2^{-1}|\\leq 2C'+1$. \nHence\n\\begin{align*}\n\t&\\lim_{C\\to \\infty}\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup\\uu_n^{-1}(yh))\\ge C\\right\\}\\right)\\\\\n\t& \\le \\lim_{C\\to \\infty}\\sum_{h'\\in B_H(e_H,C')} \\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup\\uu_n^{-1}(yh_1h'))\\ge \\frac{C}{2}\\right\\}\\right)\\\\\n\t& + \\lim_{C\\to \\infty}\\sum_{h'\\in B_H(e_H,C')} \\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid  \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(yh_1h')\\cup\\uu_n^{-1}(yh))\\ge \\frac{C}{2}\\right\\}\\right).\n\\end{align*}\nObserve that $|h'^{-1}h_1^{-1}h|\\leq 2C'+1$, hence both terms equal $0$, leading to a contradiction. This ends the proof."
+    },
+    {
+      "id": "definition-25-de52a9a3",
+      "type": "definition",
+      "content": "[Coupling space]\nLet $\\Omega = (H \\times \\N)^G = H^G\\times\\N^G$, endowed with the topology of pointwise convergence, which is a Polish space. We consider the natural (continuous) action of $G\\times H$: $(g,h)*(\\aaa_H (x),\\aaa_\\N(x)) = (h\\aaa_H(g^{-1}x), \\aaa_{\\N}(g^{-1}x))$ for $g,x\\in G$, $h\\in H$ and $(\\aaa_H,\\aaa_\\N)\\in (H \\times \\N)^G$.",
+      "content_preview": "[Coupling space] Let = (H )^G = H^G^G, endowed with the topology of pointwise convergence, which is a Polish space.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 749,
+        "line_end": 751
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-26-31a07433",
+      "type": "definition",
+      "content": "[Basis of the topology]\n Let $\\Sigma\\subseteq G$ be a finite subset, $\\aaa\\in \\Omega$. Then, we define $$W_{\\aaa,\\Sigma} = \\{\\cc \\in \\Omega \\mid \\forall g\\in \\Sigma\\colon \\aaa(g)=\\cc(g)\\}.$$ \n We denote by  $\\A_\\tau$ the collection of subsets  $W_{\\aaa,\\Sigma}$ and the emptyset.",
+      "content_preview": "[Basis of the topology] Let G be a finite subset, . Then, we define W_, = g (g)=(g). We denote by _ the collection of subsets W_, and the emptyset.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 754,
+        "line_end": 757
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-27-2a739080",
+      "type": "remark",
+      "content": "\\label{rem:Cone}\n\tFor all $g\\in G$, $h\\in H$ and $W_{\\aaa,\\Sigma}\\in \\A_\\tau$ we have that $$(g,h)*W_{\\aaa,\\Sigma}=W_{(g,h)*\\aaa,g\\Sigma}.$$",
+      "content_preview": "For all g G, h H and W_, _ we have that (g,h)*W_,=W_(g,h)*,g.",
+      "display_name": "Remark",
+      "label": "rem:Cone",
+      "position": {
+        "line_start": 764,
+        "line_end": 766
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-28-98005638",
+      "type": "definition",
+      "content": "Let $G$ and $H$ be two groups with sofic approximations $(\\mathcal{G}_n)_n$ and $(\\mathcal{H}_n)_n$, and let $\\uu_n:\\mathcal{G}_n\\to \\mathcal{H}_n$ (or $\\uu_n:\\mathcal{G}_n\\to H$) be a sequence of maps.\n\tFor any $n\\in\\N$, we define a map $T_n\\colon G\\times \\mathcal{G}_n\\to H\\cup\\{\\infty\\}$ as follows. \n\tIf the following conditions are satisfied  (in case $\\uu_n:\\mathcal{G}_n\\to H$, we omit the second condition): \n\t\\begin{itemize}\n\t\t\\item \t$x\\in \\mathcal{G}_n^{(|g|)}$, \n\t\t\\item\t$\\uu_n(x)\\in \\mathcal{H}_n^{(r)},$ where $r=d(\\uu_n(x),\\uu_n(xg))$,\t\\end{itemize}\n\t\tthen we let $T_n(g,x)=h$, where $h$ is the unique element of $H$ of length $r$ such that $\\uu_n(xg)=\\uu_n(x)h$ else we set $T_n(g,x)=\\infty$.",
+      "content_preview": "Let G and H be two groups with sofic approximations (_n)_n and (_n)_n, and let _n:_n _n (or _n:_n H) be a sequence of maps.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 785,
+        "line_end": 794
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-29-578c96af",
+      "type": "remark",
+      "content": "\\label{rem:C}\nWe start observing that $\\mathcal{C}_n(g,g')$ is contained in the set $x\\in \\mathcal{G}_n^{(|g|)}$ such that $\\uu_n(x)\\in \\mathcal{H}_n^{(r_n(x))},$ where $r_n(x)=\\max\\{d(\\uu_n(x),\\uu_n(xg)),d(\\uu_n(x),\\uu_n(xgg')\\}$.",
+      "content_preview": "We start observing that _n(g,g') is contained in the set x _n^(|g|) such that _n(x) _n^(r_n(x)), where r_n(x)=d(_n(x),_n(xg)),d(_n(x),_n(xgg').",
+      "display_name": "Remark",
+      "label": "rem:C",
+      "position": {
+        "line_start": 798,
+        "line_end": 800
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-30-5c378fa7",
+      "type": "proposition",
+      "content": "\\label{prop:approximatecocycle}\n\tAssuming \n\t\\begin{itemize}\n\t\\item either that $\\uu_n:\\mathcal{G}_n\\to H$ is {\\bf  $\\mathcal{U}$-statistically Lipschitz};  \t\n\t\\item or that $\\uu_n:\\mathcal{G}_n\\to \\mathcal{H}_n$ is {\\bf  $\\mathcal{U}$-statistically Lipschitz  and  $\\mathcal{U}$-statistically coarsely bijective},\n\\end{itemize}\t\nthen for every $g,g'\\in G$,\n\t\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\mathcal{C}_n(g,g')\\right)= 1,\\]\n\tand  \\[\\lim_{R\\to \\infty }\\PP_{\\mathcal{G}_n}\\left( \\left\\{|T_n(g,x)|_{S_H}\\leq R)\\right\\}\\right)=1.\\]",
+      "content_preview": "Assuming either that _n:_n H is -statistically Lipschitz; or that _n:_n _n is -statistically Lipschitz and -statistically coarsely bijective, then...",
+      "display_name": "Proposition",
+      "label": "prop:approximatecocycle",
+      "position": {
+        "line_start": 805,
+        "line_end": 814
+      },
+      "references": [
+        {
+          "target_id": "rem:C",
+          "reference_type": "internal",
+          "context": "the second case, which is more subtle.  By Remark \\ref{rem:C} the first statement follows if we can prove that",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:compaireSize",
+          "reference_type": "internal",
+          "context": "}$-statistically coarsely surjective, we have, by \\cref{prop:compaireSize}, that $\\# \\mathcal{G}_n\\le C\\# \\mathcal{H}_n$ for",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The first case is straightforward: the first statement directly stems from the fact that $\\mathcal{G}_n$ is a sofic approximation of $G$, and the second one from the $\\mathcal{U}$-statistical Lipschitz condition. Let us focus on the second case, which is more subtle.  By Remark \\ref{rem:C} the first statement follows if we can prove that \\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n^{(r)}\\mid \\uu_n(x)\\in \\mathcal{H}_n^{r_n(x)} \\right\\}\\right)= 1,\\]\n\twhere $r=\\max\\{g,gg'\\}$, and $r(x)=\\max\\{d(\\uu_n(x),\\uu_n(xg)),d(\\uu_n(x),\\uu_n(xgg')\\}$.\n\nSince $(\\uu_n)_n$ is statistically Lipschitz, we have \n\t\\[\\lim_{R\\to \\infty}\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n^{(r)}\\mid r_n(x)\\leq R \\right\\}\\right)= 1.\\]\n\t\n\t \nHence, it is enough to show that for every $R$, $\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n^{(r)}\\mid \\uu_n(x)\\notin \\mathcal{H}_n^{(R)} \\right\\}\\right)=0$, or simply that \n\t\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\uu_n(x)\\notin \\mathcal{H}_n^{(R)} \\right\\}\\right)= 0.\\]\n Now, since $\\uu_n$ is  $\\mathcal{U}$-statistically coarsely injective, we have that $\\# \\uu_n^{-1}(\\uu_n(x))$ is bounded up to an arbitrarily small proportion of $x\\in \\mathcal{G}_n$. Therefore we are left to show that \n\t\\[\\lim_\\mathcal{U}\\frac{\\#\\left(\\mathcal{H}_n^{(R)}\\right)^c}{\\# \\mathcal{G}_n}= 0,\\]\n\tFinally, since the sequence $(\\uu_n)_n$ is  $\\mathcal{U}$-statistically coarsely surjective, we have, by \\cref{prop:compaireSize}, that $\\# \\mathcal{G}_n\\le C\\# \\mathcal{H}_n$ for some constant $C>0$, so the result follows from the fact that $\\mathcal{H}_n$ is a sofic approximation. Thus, the first statement follows. The second statement results from the fact that for every $g$, with probability tending to $1$, $|T_n(g,x)|_{S_H}=d_{\\mathcal{H}_n}(\\uu_n(xg),\\uu_n(x))$, combined with the fact that $\\uu_n$ is $\\mathcal{U}$-statistically Lipschitz (we leave the straightforward details to the reader)."
+    },
+    {
+      "id": "proposition-31-15d7a11a",
+      "type": "proposition",
+      "content": "\\label{prop:rho}\n\tAssuming that the sequence $(\\uu_n)$ is {\\bf $\\mathcal{U}$-statistically coarsely injective}. Then, \n\t\\[\\lim_{N\\to \\infty}\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\rho_n(x)\\leq N\\right\\}\\right)= 1.\\]\nMoreover, for every $g\\in G\\setminus\\{e_G\\}$,\n\t\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\uu_n(xg)=\\uu_n(x) \\;{\\text and}\\; \\rho_n(xg)=\\rho_n(x)\\right\\}\\right)= 0,\\]\n\t and\n\t\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\exists g\\in G,\\; \\uu_n(x)=\\uu_n(xg) \\textnormal{ and }\\rho_n(xg)= 0\\right\\}\\right)= 1.\\]\n\tIn other words, \n\t\\[\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\exists g\\in G,\\; T_n(g,x)=e_H \\textnormal{ and }\\rho_n(xg)= 0\\right\\}\\right)= 1.\\]",
+      "content_preview": "Assuming that the sequence (_n) is -statistically coarsely injective. Then, [_N ___n(x _n _n(x) N)= 1.] Moreover, for every g Ge_G, [___n(x _n...",
+      "display_name": "Proposition",
+      "label": "prop:rho",
+      "position": {
+        "line_start": 834,
+        "line_end": 843
+      },
+      "references": [],
+      "proof": "By definition of $\\rho_n$, $\\rho_n(x)$ is at most the cardinality of $\\uu_n^{-1}(\\uu_n(x))$. Hence the first statement is an immediate consequence of $\\mathcal{U}$-statistical coarse injectivity. Let $r_n:=\\diam (\\uu_n^{-1}(\\uu_n(x)))$.\nThe second statement follows from the definition of $\\rho_n$ and the fact that  $\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\mathcal{G}_n^{(|g|)}\\right)=1$. Indeed, if $x\\in \\mathcal{G}_n^{(|g|)}$, then $xg$ exists and is distinct from $x$, which means that either $\\uu_n(x)\\neq \\uu_n(xg)$, or that  $\\rho_n(xg)\\neq \\rho_n(x)$.\n\n\tFor the last statement, note that if $x\\in \\mathcal{G}_n^{(C)}$ and $\\diam(\\uu_n^{-1}(\\uu_n(x)))\\le C$, then there exists $g\\in \\uu_n^{-1}(\\uu_n(x))$ of length $\\leq C$ such that $\\rho_n(xg)= 0$. Hence, the conclusion follows from the facts that $\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\mathcal{G}_n^{(C)}\\right)=1$, and the $\\mathcal{U}$-statistical coarse injectivity of $\\uu_n$."
+    },
+    {
+      "id": "proposition-32-b0df2c1c",
+      "type": "proposition",
+      "content": "\\label{prop:nonstandardCoupling}\nThe measure space $(\\overline{\\Omega},\\overline{\\mu})$ comes equipped with a free measure-preserving action of $G\\times H$, such that $\\overline{\\Omega}_0$ is a fundamental domain  of $H$ with measure $1$. The associated cocycle $\\overline{\\alpha}:\\overline{\\Omega}_0\\times G\\to H$, satisfies $\\overline{\\alpha}(g,x)=T(g^{-1},x)^{-1}$. Besides, for all $x\\in \\overline{\\Omega}_0$, $g\\to (T(g,x),\\rho(g^{-1}\\cdot x))$ is injective. Finally, for all $x\\in \\overline{\\Omega}_0$, there exists $g\\in G$ such that $T(g,x)=e_H$ and $\\rho(g^{-1}\\cdot x)=0$.",
+      "content_preview": "The measure space (,) comes equipped with a free measure-preserving action of G H, such that _0 is a fundamental domain of H with measure 1.",
+      "display_name": "Proposition",
+      "label": "prop:nonstandardCoupling",
+      "position": {
+        "line_start": 899,
+        "line_end": 901
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-33-cb624130",
+      "type": "lemma",
+      "content": "The map $J$ is measurable with respect to the $\\sigma$-algebras $\\mathcal{B}(\\Omega)$ and $\\mathcal{B}_0(\\overline{\\Omega})$, where the latter is the $H$-invariant $\\sigma$-algebra on $\\overline{\\Omega}$ spanned by subsets of the form  \n$[A_n]_\\mathcal{U}$, for any sequence $A_n\\in  \\mathcal{G}_n$.",
+      "content_preview": "The map J is measurable with respect to the -algebras () and _0(), where the latter is the H-invariant -algebra on spanned by subsets of the form...",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 926,
+        "line_end": 929
+      },
+      "references": [],
+      "proof": "To check measurability, it is enough to show that $J^{-1}({W_{\\aaa,\\Sigma}})\\in \\mathcal{B}_0(\\overline{\\Omega})$ for every $W_{\\aaa,\\Sigma}\\in \\B_\\tau$. On translating by a suitable element of $G\\times H$, we are reduced to the case where $e_G\\in \\Sigma$ and $\\aaa(e_G)=1$, in which case $W_{\\aaa,\\Sigma}\\in \\Omega_0$. It is then enough to check that $J_0^{-1}(W_{\\aaa,\\Sigma})\\in \\mathcal{B}_0(\\overline{\\Omega_0})$. But it follows from its definition that $x=[x_n]_\\mathcal{U}\\in J_0^{-1}(W_{\\aaa,\\Sigma})$ if and only if for all $b\\in \\Sigma$, $T(x,b)=\\aaa_H(b)$ and $\\rho(b\\cdot x)= \\aaa_\\N(b)$, which translates into: for all $b\\in \\Sigma$, and for $\\mathcal{U}$-almost all $n$, $T_n(x_n,b)=\\aaa_H(b)$ and $\\rho_n(b\\cdot x_n)= \\aaa_\\N(b)$. Hence,\n\\begin{multline*}\nJ^{-1}(W_{\\aaa,\\Sigma})=J_0^{-1}(W_{\\aaa,\\Sigma}) \\times \\{e_H\\} =   \\left\\{x\\in X \\mid T(b,x)=\\aaa_H(b), \\rho(x_nb)= \\aaa_\\N(b)\\right\\} \\times \\{e_H\\} \\\\\n= \\left[\\left\\{x_n\\in \\mathcal{G}_n\\mid T_n(b,x_n)=\\aaa_H(b), \\rho_n(x_nb) = \\aaa_\\N(b)\\right\\}\\right]_\\mathcal{U} \\times \\{e_H\\},\n\\end{multline*}                                                                                    \nwhich belongs to  $\\mathcal{B}_0(\\overline{\\Omega})$, so we are done."
+    },
+    {
+      "id": "proposition-34-7ffd6a0f",
+      "type": "proposition",
+      "content": "\\label{prop:existenceofmu}\n\tThere exists a Borel measure $\\mu$ on $\\Omega$ that is $G\\times H$-invariant and such that $\\mu(\\Omega_0)=1$. Moreover, $\\mu$ is supported on the Borel subset consisting of injective maps $\\aaa$ such that for all $g\\in G$, there exists $g'\\in G$ such that $\\aaa(g')=(\\aaa_H(g),0)$.",
+      "content_preview": "There exists a Borel measure on that is G H-invariant and such that (_0)=1. Moreover, is supported on the Borel subset consisting of injective maps...",
+      "display_name": "Proposition",
+      "label": "prop:existenceofmu",
+      "position": {
+        "line_start": 946,
+        "line_end": 948
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-35-d572184f",
+      "type": "lemma",
+      "content": "\\label{lem:computationsemiring}\t\n\tLet $W_i=W_{\\aaa^i,B_i}$ for $i=0,\\ldots, m$. Then $\\mu(W_0\\setminus \\bigcup_{i=1}^m W_i)$ is given by\n\t\\begin{multline*}\n\t\\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in \\mathcal{G}_n\\mid \\exists h\\in H \\text{ such that }\\\\\n\t\\forall b\\in B_0\\colon T_n(b,x)=h\\aaa_H^0(b), \\;\\rho_n(xb)= \\aaa^0_\\N(b)  \\text{ and }\\\\\n\t\\forall i\\in\\{1,\\ldots,m\\}\\colon \\exists b'\\in B_i\\colon T_n(b',x)\\neq h\\aaa^i_H(z) \\text{ or } \\rho_n(x b')\\neq \\aaa_\\N^i(b')\\Big\\}\\Big).\n\t\\end{multline*}",
+      "content_preview": "Let W_i=W_^i,B_i for i=0,, m. Then (W_0 _i=1^m W_i) is given by ___n(x _n h H b B_0 T_n(b,x)=h_H^0(b), ;_n(xb)= ^0_(b) i1,,m b' B_i T_n(b',x)...",
+      "display_name": "Lemma",
+      "label": "lem:computationsemiring",
+      "position": {
+        "line_start": 977,
+        "line_end": 984
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-36-4110755b",
+      "type": "proposition",
+      "content": "\\label{prop:SubgroupCoupling}\nAssume  that $\\uu_n:\\mathcal{G}_n\\to H$ are $\\mathcal{U}$-statistically Lipschitz  and $\\mathcal{U}$-statistically coarsely injective, or $\\uu_n:\\mathcal{G}_n\\to \\mathcal{H}_n$ are $\\mathcal{U}$-statistically Lipschitz  and $\\mathcal{U}$-statistically coarsely bijective. Then $(\\Omega'',\\mu)$ is a subgroup coupling from $G$ to $H$, where $X_H=\\Omega''_0$, and whose associated cocycle $\\alpha$ satisfies $\\alpha(g,\\aaa)=T(g^{-1},\\aaa_H)^{-1}=\\aaa_H(g^{-1})^{-1}$, for all $\\aaa=(\\aaa_H,\\aaa_\\N)\\in \\Omega''_0$.",
+      "content_preview": "Assume that _n:_n H are -statistically Lipschitz and -statistically coarsely injective, or _n:_n _n are -statistically Lipschitz and -statistically...",
+      "display_name": "Proposition",
+      "label": "prop:SubgroupCoupling",
+      "position": {
+        "line_start": 992,
+        "line_end": 994
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-37-b5b00869",
+      "type": "proposition",
+      "content": "\\label{prop:OECoupling}\nUnder the assumption  that $\\uu_n:\\mathcal{G}_n\\to \\mathcal{H}_n$ are $\\mathcal{U}$-statistically a coarse equivalence, then  $(\\Omega'',\\mu)$ defines an ME-coupling from $G$ to $H$. Besides, if $(\\uu_n)$ is $\\mathcal{U}$-statistically coarsely bijective, $(\\Omega'',\\mu)$ defines an OE coupling from $G$ to $H$, where $X_H=\\Omega''_0=X_G$.",
+      "content_preview": "Under the assumption that _n:_n _n are -statistically a coarse equivalence, then ('',) defines an ME-coupling from G to H.",
+      "display_name": "Proposition",
+      "label": "prop:OECoupling",
+      "position": {
+        "line_start": 999,
+        "line_end": 1001
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-38-51549dd1",
+      "type": "proposition",
+      "content": "\\label{prop:X_H}\n\t$X_G$ is a Borel fundamental domain for the action of $G$ on $\\Omega''$.",
+      "content_preview": "X_G is a Borel fundamental domain for the action of G on ''.",
+      "display_name": "Proposition",
+      "label": "prop:X_H",
+      "position": {
+        "line_start": 1015,
+        "line_end": 1017
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-39-c96e4f0d",
+      "type": "remark",
+      "content": "\\label{rem:Yi}\nIt follows from the previous discussion that \n\\begin{eqnarray*}\nY_i& = & \\{\\aaa\\in \\Omega'' \\mid  \\aaa(e_G)=(h_i,0),  \\;{\\text and }\\;\\forall j<i, \\;\\forall g\\in G,\\; \\aaa_H(g)\\neq h_j \\}\\\\\n     & = &  \\bigcap_{r\\geq 0}\\{\\aaa\\in \\Omega'' \\mid  \\aaa(e_G)=(h_i,0),  \\;{\\text and }\\;\\forall j<i,\\; \\forall g\\in B_G(e_G,r)  \\; \\aaa_H(g)\\neq h_j \\}.\n\\end{eqnarray*}\nReasoning as in \\S \\ref{sec:BasicSubsets}, we get\n\\[\\mu(Y_i) = \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0, \n \\forall j<i\\colon \\uu_n(x)h_i^{-1}h_j\\notin \\uu_n(B_{\\mathcal{G}_n}(x,r)) \\Big\\}\\Big).\\]\n\\iffalse\n\\begin{align*}\n\t\\mu(Y_i) \n\t& = \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0,\\;\\exists h\\in H\\colon T_n(x,e_G)=hh_i,  \\hspace{2cm}\\\\\n\t& \\AlignRight{ \\forall j<i\\colon \\forall g\\in B_G(e_G,r)\\colon T_n(g,x)\\neq hh_j\\Big\\}\\Big)}\\\\\n\t& =  \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n^{(r)}\\mid \\rho_n(x)=0, \\\\\n\t& \\AlignRight{ \\forall j<i\\colon \\forall g\\in B_G(e_G,r)\\colon T_n(g,x)\\neq h_i^{-1}h_j\\Big\\}\\Big)}\\\\\n\t& = \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n^{(r)}\\mid \\rho_n(x)=0, \\\\\n\t& \\AlignRight{ \\forall j<i\\colon \\uu_n(x)h_i^{-1}h_j\\notin \\uu_n(B_{\\mathcal{G}_n}(x,r)) \\Big\\}\\Big)},\n\t\t\\end{align*}\n\t\t\twhere for second equality, we have used that $T_n(e_G,x)=e_H$, and for third one, we used the definition of $T_n$ together with the fact that for $x\\in \\mathcal{G}_n^{(r)}$, $B_{\\mathcal{G}_n}(x,r)=xB(e_G,r)$.\n\\fi",
+      "content_preview": "It follows from the previous discussion that Y_i& = & '' (e_G)=(h_i,0), ; and ; j<i, ; g G,; _H(g) h_j & = & _r 0 '' (e_G)=(h_i,0), ; and ; j<i,; g...",
+      "display_name": "Remark",
+      "label": "rem:Yi",
+      "position": {
+        "line_start": 1041,
+        "line_end": 1062
+      },
+      "references": [
+        {
+          "target_id": "sec:BasicSubsets",
+          "reference_type": "external",
+          "context": "g)\\neq h_j \\}.\n\\end{eqnarray*}\nReasoning as in \\S \\ref{sec:BasicSubsets}, we get\n\\[\\mu(Y_i) = \\lim_{r\\to\\infty}\\lim_{\\math",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "proposition-40-bf5d8877",
+      "type": "proposition",
+      "content": "\\label{prop:fundDom}\n\tAssuming that  $\\uu_n:\\mathcal{G}_n\\to \\mathcal{H}_n$ are $\\mathcal{U}$-statistically Lipschitz  and $\\mathcal{U}$-statistically coarsely bijective, we have $\\mu(X_G)\\ge\\lim\\limits_{\\mathcal{U}}\\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n}$. If we assume, in addition, that $\\uu_n$ are $\\mathcal{U}$-statistically expansive (i.e.\\  is $\\mathcal{U}$-statistically a coarse equivalence), then the latter inequality becomes an equality.",
+      "content_preview": "Assuming that _n:_n _n are -statistically Lipschitz and -statistically coarsely bijective, we have (X_G)__n#_n.",
+      "display_name": "Proposition",
+      "label": "prop:fundDom",
+      "position": {
+        "line_start": 1065,
+        "line_end": 1067
+      },
+      "references": [],
+      "proof": "Recall that $H=\\{e_H=h_0,h_1,\\ldots\\}$, and assume without loss of generality that $|h_i|\\le|h_{i+1}|$ for every $i$. Thus, by our computation of $\\mu(Y_i)$ and the fact that they are pairwise disjoint, we have\n\t\\[\\mu(X_G) \n\t = \\sum_{i=0}^\\infty \\mu(Y_i)= \\lim_{R\\to \\infty}  \\sum_{h_i\\in B(e_H,R)} \\mu(Y_i).\\]\nHence $\\mu(X_G)$  is equal to\n\t\n\t\\begin{align*}\n\t& \\lim_{R\\to \\infty} \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}}\\sum_{h_i\\in B_H(e_H,R)} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0, \n \\forall j<i\\colon \\uu_n(x)h_i^{-1}h_j\\notin \\uu_n(B_{\\mathcal{G}_n}(x,r)) \\Big\\}\\Big)\\\\\n\t& \\ge \\lim_{R\\to \\infty}\\lim_{\\mathcal{U}}\\sum_{h_i\\in B_H(e_H,R)} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0, \\forall j<i\\colon \\uu_n(x)h_i^{-1}\\notin \\Im(\\uu_n)h_j^{-1} \\Big\\}\\Big).\n\t\\end{align*}\n\n\tRecall that for every $y\\in \\Im(\\uu_n)$ there exists a unique $x\\in \\mathcal{G}_n$ such that $\\rho_n(x)=0$ and $\\uu_n(x)=y$. So,\n\t\\begin{align*}\n\t\\mu(X_G) & \\ge \\lim_{R\\to \\infty} \\lim_{\\mathcal{U}}\\sum_{h_i\\in B_H(e_H,R)} \\frac{\\#(\\Im(\\uu_n)h_i^{-1}\\setminus \\bigcup_{j<i}\\Im(\\uu_n)h_j^{-1})}{\\#\\mathcal{G}_n}\n\t\\\\\n\t& = \\lim_{R\\to \\infty} \\lim_{\\mathcal{U}} \\frac{1}{\\#\\mathcal{G}_n}\\#\\big\\{y\\in\\mathcal{H}_n\\mid d_{\\mathcal{H}_n}(y,\\Im(\\uu_n))\\le R \\big\\}\\\\\n\t& =  \\lim_{\\mathcal{U}} \\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n},\n\t\\end{align*}\n\tas the maps $\\uu_n$ are $\\mathcal{U}$-statistically coarsely surjective.\n\t\n\t\n\tWe now turn to the upper bound:\n\t\n\t\\begin{align*}\n\t\\mu(X_G) \t\n\t& = \\lim_{R\\to \\infty} \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}}\\sum_{h_i\\in B_H(e_H,R)} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0, \\\\\n\t& \\AlignRight{ \\forall j<i\\colon \\uu_n(x)h_i^{-1}h_j\\notin \\uu_n(B_{\\mathcal{G}_n}(x,r)) \\Big\\}\\Big)}.\\\\\n\t& \\le \\lim_{R\\to \\infty} \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}}\\sum_{h_i\\in B_H(e_H,R)} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0, \\forall j<i\\colon \\uu_n(x)h_i^{-1}\\notin \\Im(\\uu_n)h_j^{-1}  \\Big\\}\\Big)\\\\\n\t& + \\lim_{R\\to \\infty} \\lim_{r\\to\\infty}\\lim_{\\mathcal{U}}\\sum_{h_i\\in B_H(e_H,R)}  \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n \\mid \\exists x'\\colon \\; d_{\\mathcal{G}_n}(x,x')>r,\\\\\n\t& \\AlignRight{\\exists j<i\\colon \\uu_n(x)h_i^{-1}= \\uu_n(x')h_j^{-1} \\Big\\}\\Big) }\\\\\n\t& = \\lim_{\\mathcal{U}} \\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n} + \\lim_{R\\to \\infty} \\sum_{h_i\\in B_H(e_H,R)}\\lim_{r\\to\\infty}\\lim_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n \\mid \\exists x'\\colon \\; d_{\\mathcal{G}_n}(x,x')>r,\\qquad\\\\\n\t& \\AlignRight{d_{\\mathcal{H}_n}(\\uu_n(x),\\uu_n(x')) \\le 2R \\Big\\}\\Big) }\\\\\n\t& = \\lim_{\\mathcal{U}} \\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n}.\n\t\\end{align*}\nLet us explain:  for the first equality, we considered two cases, depending on whether $\\uu_n(x)h_i^{-1}h_j$ is or not in $\\Im(\\uu_n)$. When it is  (the second term), then it equals $\\uu_n(x')$ for some $x'$ such that $d_{\\mathcal{G}_n}(x,x')>r$, which explains the inequality. The second equality follows from the computation we had performed just above. Finally we conclude thanks to the fact that the maps $\\uu_n$ are $\\mathcal{U}$-statistically expansive.\n\nThus, $\\mu(X_G)=\\lim\\limits_{\\mathcal{U}} \\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n}$ and we are done."
+    },
+    {
+      "id": "proposition-41-a7edb645",
+      "type": "proposition",
+      "content": "\\label{prop:ME}\n\tLet $G$ and $H$ be two finitely generated groups with sofic approximations $(\\mathcal{G}_n)_n$ and $(\\mathcal{H}_n)_n$. Assume that  the  sequence of maps $\\uu_n\\colon \\mathcal{G}_n\\to \\mathcal{H}_n$ is $\\mathcal{U}$-statistically a coarse equivalence. Then, there exists a measure equivalence coupling $(\\Omega,\\mu)$ between be the groups $G$ and $H$ such that \n\t\\[\\frac{\\mu(\\Omega/G)}{\\mu(\\Omega/H)}=\\lim_{\\mathcal{U}}\\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n}.\\]\t.",
+      "content_preview": "Let G and H be two finitely generated groups with sofic approximations (_n)_n and (_n)_n. Assume that the sequence of maps _n _n _n is -statistically...",
+      "display_name": "Proposition",
+      "label": "prop:ME",
+      "position": {
+        "line_start": 1108,
+        "line_end": 1111
+      },
+      "references": [
+        {
+          "target_id": "prop:existenceofmu",
+          "reference_type": "internal",
+          "context": ".This is an immediate consequence of Propositions \\ref{prop:existenceofmu}, \\ref{prop:X_H} and \\ref{prop:fundDom}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:X_H",
+          "reference_type": "internal",
+          "context": "equence of Propositions \\ref{prop:existenceofmu}, \\ref{prop:X_H} and \\ref{prop:fundDom}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:fundDom",
+          "reference_type": "internal",
+          "context": "ions \\ref{prop:existenceofmu}, \\ref{prop:X_H} and \\ref{prop:fundDom}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "This is an immediate consequence of Propositions \\ref{prop:existenceofmu}, \\ref{prop:X_H} and \\ref{prop:fundDom}."
+    },
+    {
+      "id": "proposition-42-c81ff1f3",
+      "type": "proposition",
+      "content": "\\label{prop:fundamentalDomainBis}\n\tAssume that $\\uu_n:\\mathcal{G}_n\\to \\mathcal{H}_n$ are $\\mathcal{U}$-statistically Lipschitz  and $\\mathcal{U}$-statistically coarsely bijective.\n\t\\begin{itemize}\n\t\t\\item If in addition the maps $\\uu_n$ have fibers with diameter at most $R$, then $\\mu(X_H\\setminus B_G(e_G,R)*X_G)=0$. In particular, if the maps are  injective, then $\\mu(X_H\\setminus X_G)=0$.\n\t\t\\item \n\t\tIf the maps $\\uu_n$ are $\\mathcal{U}$-statistically a coarse equivalence and have $C$-dense image, then $\\mu(X_G\\setminus B_H(e_H,C)*X_H)=0$. In particular, if the maps are surjective, then $\\mu(X_G\\setminus X_H)=0$. \n\t\t\\item if both conditions are satisfied, then the resulting coupling is mutually cobounded, and if $\\uu$ is  bijective, then $X_H=X_G$ a.e.\n\t\\end{itemize}",
+      "content_preview": "Assume that _n:_n _n are -statistically Lipschitz and -statistically coarsely bijective. If in addition the maps _n have fibers with diameter at most...",
+      "display_name": "Proposition",
+      "label": "prop:fundamentalDomainBis",
+      "position": {
+        "line_start": 1121,
+        "line_end": 1129
+      },
+      "references": [
+        {
+          "target_id": "rem:Yi",
+          "reference_type": "internal",
+          "context": "l{H}_n}{\\#\\mathcal{G}_n}$.\n\tRecall that by Remark \\ref{rem:Yi}, we have \n\t\\begin{align*}\n\t\\mu(Y_i) & = \\lim_{R\\t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The third item is simply a consequence of the first two. \n\tSo suppose that the diameters of the fibers of the maps $\\uu_n$ are at most $R$. Then, we get\n\t\\begin{align*}\n\t\\mu(X_H \\! \\setminus\\! B_G(e_G,R)*X_G) & \\le \\mu(X_H \\! \\setminus\\! B_G(e_G,R)*Y_0) \\\\\n\n\n\n\t& = \\lim\\limits_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in \\mathcal{G}_n\\mid \\forall g\\!\\in\\! B_G(e_G,R)\\colon \\uu_n(xg)\\neq \\uu_n(x) \\text{ or } \\rho_n(xg)\\neq 0 \\Big\\}\\Big)\\\\\n\t& = \\lim\\limits_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in \\mathcal{G}_n\\mid \\forall x'\\in \\uu_n^{-1}(\\uu_n(x))\\colon  \\rho_n(x')\\neq 0 \\Big\\}\\Big)\\\\\n\t& = 0,\n\t\\end{align*}\n\tas every fiber contains an element $x'$ such that $\\rho_n(x')=0$. \n\t\t\n\tTo show the second item, it suffices to show that $\\mu(Y_i)=0$ whenever $|h_i|>C$. We denote $\\eta= \\lim_{\\mathcal{U}} \\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n}$.\n\tRecall that by Remark \\ref{rem:Yi}, we have \n\t\\begin{align*}\n\t\\mu(Y_i) & = \\lim_{R\\to\\infty}\\lim_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\rho_n(x)=0, \\forall j<i\\colon \\uu_n(x)h_i^{-1}\\notin \\uu_n(B_{\\mathcal{G}_n}(x,R))h_j^{-1} \\Big\\}\\Big)\n\t\\\\\n\t& \\le \\lim_{R\\to\\infty}\\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid\\forall g\\in B_G(e_G,R)\\colon \\uu_n(x)h_i^{-1} \\notin\\uu_n(xg)B_H(e_H,C)\\Big\\}\\Big)\\\\\n\t& = \\lim_{R\\to\\infty}\\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid \\forall x' \\in B_{\\mathcal{G}_n}(x,R)\\colon \\uu_n(x)h_i^{-1}\\notin B_{\\mathcal{H}_n}(\\uu_n(x'),C) \\Big\\}\\Big)\\\\\n\t& \\le \\lim_{R\\to\\infty}\\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\Big(\\Big\\{x\\in\\mathcal{G}_n\\mid  \\exists x'' \\in B_{\\mathcal{G}_n}(x,R)^c\\colon \\uu_n(x)h_i^{-1}\\in B_{\\mathcal{H}_n}(\\uu_n(x''),C) \\Big\\}\\Big)\\\\\n\n\t& \\le \\lim_{R\\to\\infty} \\lim_\\mathcal{U}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid \\diam_{\\mathcal{G}_n}(\\uu^{-1}(B_{\\mathcal{H}_n}(\\uu_n(x),C+|h_i|))\\geq R\\right\\}\\right)\\\\\n\t& = 0,\n\t\\end{align*}\n\twhere we have used for the first inequality that $B_H(e_H,C)\\subset \\{y_j\\mid j<i\\}$. For the second inequality in the fourth line, we have used that $\\uu_n$ is $C$-dense. Indeed, this means that with proba tending to $1$, any $y\\in \\mathcal{H}_n$ lies in $B_{\\mathcal{H}_n}(\\uu_n(x''),C)$ for some $x''\\in \\mathcal{G}_n$. \n\tFinally, we concluded thanks to the assumption that $\\uu_n$ is $\\mathcal{U}$-statistically expansive."
+    },
+    {
+      "id": "proposition-43-3d2261b3",
+      "type": "proposition",
+      "content": "\\label{prop:QuantSubgroup}\n\tLet $\\varphi\\colon \\R^+\\to \\R^+$ be a non-decreasing map.\n\tLet $(\\Omega,X_H,\\mu)$ be a measure subgroup coupling from $G$ to $H$ as in \\cref{thm:ME} and let $\\alpha\\colon G\\times X_H\\to H$ be associated cocycle. \n\t Then, $\\alpha$ is $\\varphi$-integrable if  for every $g\\in S_G$ there exists a $\\delta>0$ such that\n\t\\begin{equation}\\label{eq:UQuantLip}\n\t\\sum_{r=0}^\\infty \\varphi\\!\\left(\\delta r\\right)\\lim_{\\mathcal{U}} \\PP_{ \\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(x),\\uu_n(xg^{-1}))=r\\right\\}\\right)<\\infty.\n\t\\end{equation}\n\tSimilarly, $\\alpha$ is strongly $\\varphi$-integrable (or $\\varphi^\\diamond$-integrable)  if for every $\\varepsilon>0$ there exists a $\\delta>0$ and $C>0$ such that for every $g \\in G$ we have that\n\t\\begin{equation}\\label{eq:UQuantLipStrong}\n\t\\sum_{r=0}^\\infty\\varphi\\!\\left(\\delta r\\right)\\lim_{\\mathcal{U}} \\PP_{ \\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(x),\\uu_n(xg^{-1}))=r\\right\\}\\right)\\le C\\varphi(\\varepsilon |g|).\n\t\\end{equation}",
+      "content_preview": "Let ^+ ^+ be a non-decreasing map. Let (,X_H,) be a measure subgroup coupling from G to H as in and let G X_H H be associated cocycle.",
+      "display_name": "Proposition",
+      "label": "prop:QuantSubgroup",
+      "position": {
+        "line_start": 1174,
+        "line_end": 1185
+      },
+      "references": [
+        {
+          "target_id": "thm:ME",
+          "reference_type": "internal",
+          "context": "a measure subgroup coupling from $G$ to $H$ as in \\cref{thm:ME} and let $\\alpha\\colon G\\times X_H\\to H$ be associ",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sec:BasicSubsets",
+          "reference_type": "external",
+          "context": "e for the fourth equality, we have used (as in \\S \\ref{sec:BasicSubsets}) that \\[\\mu\\left(\\left\\{\\aaa\\in X_H\\mid \\aaa_H(g)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "For all $h\\in H$, and $g\\in G$, we have\n\\begin{eqnarray*}\n\\mu\\left(\\left\\{\\aaa\\in X_H\\mid \\aaa_H(g)=h\\right\\}\\right) & = & \\mu\\left(X_H\\cap\\left\\{\\aaa\\in \\Omega \\mid \\aaa_H(g)=h\\right\\}\\right) \\\\\n& = & \\mu\\left(\\left\\{\\aaa\\in \\Omega''\\mid \\aaa_H(e_G)=e_H,\\;  \\aaa_H(g)=h\\right\\}\\right)\\\\\n&= &\\lim_{\\mathcal{U}} \\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n \\mid \\uu_n(xg)=\\uu_n(x)h\\right\\}\\right).\n\\end{eqnarray*}\n\n\nThen, for every $g\\in G$ we have:\n\t\\begin{align*}\n\t&\\int_{X_H} \\varphi\\!\\left(\\delta|\\alpha(g^{-1},\\aaa)^{-1}|\\right) d\\mu(\\aaa)\\\\\n\t& = \\int_{X_H} \\varphi\\!\\left(\\delta|\\aaa_H(g)|\\right) d\\mu(\\aaa)\\\\\n\t& = \\sum_{h\\in H} \\varphi\\!\\left(\\delta |h|\\right)\\mu\\left(\\left\\{\\aaa\\in X_H\\mid \\aaa_H(g)=h\\right\\}\\right)\\\\\n\t& =\\sum_{h\\in H} \\varphi\\!\\left(\\delta |h|\\right)\\mu\\left(\\left\\{\\aaa\\in X_H\\mid \\aaa_H(g)=h\\right\\}\\right)\\\\\n\t& = \\sum_{h\\in H}\\varphi\\!\\left(\\delta |h|\\right)\\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n \\mid \\uu_n(xg)=\\uu_n(x)h\\right\\}\\right)\\\\\n\t& = \\sum_{r=0}^{\\infty} \\sum_{|h|=r} \\varphi\\!\\left(\\delta |h|\\right)\\lim_{\\mathcal{U}}  \\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n \\mid \\uu_n(xg)=\\uu_n(x)h\\right\\}\\right)\\\\\n\t& =  \\sum_{r=0}^{\\infty}  \\varphi\\!\\left(\\delta r\\right) \\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n \\mid d_{\\mathcal{H}_n}(\\uu_n(xg),\\uu_n(x))=r\\right\\}\\right)\n\t\\end{align*}\nwhere for the fourth equality, we have used (as in \\S \\ref{sec:BasicSubsets}) that \\[\\mu\\left(\\left\\{\\aaa\\in X_H\\mid \\aaa_H(g)=h\\right\\}\\right)=\\overline{\\mu}\\left(\\Big\\{x\\in \\overline{\\Omega}_0\\mid T(g,x)=h\\Big\\}\\right),\\]\nwhich equals \\[\\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\left(\\left\\{x\\in\\mathcal{G}_n \\mid \\uu_n(xg)=\\uu_n(x)h\\right\\}\\right).\\]\nNow both claims follow from the definitions of $\\varphi$-integrable and strongly $\\varphi$-integrable."
+    },
+    {
+      "id": "proposition-44-8051cc79",
+      "type": "proposition",
+      "content": "\\label{prop:Cocycle}\nLet $\\varphi\\colon \\R^+\\to \\R^+$ be a non-decreasing map,\nlet $(\\Omega,X_G,X_H,\\mu)$ be a measure equivalence coupling from $G$ to $H$ as in \\cref{thm:ME} and let $\\beta\\colon H\\times X_G\\to G$ be the measure equivalence cocycle given by $h*\\aaa\\in\\beta(h,\\aaa)^{-1}*X_G$ for every $h\\in H$ and almost every $\\aaa\\in X_G$.\nSuppose there exists a $C>0$ such that the maps $\\uu_n$ are $C$-dense.\nThen, $\\beta$ is $\\varphi$-integrable if for every $h\\in B_H(e,2C+1)$ there exists a $\\delta>0$ such that\n\t\\begin{equation}\\label{eq:UQuantExp}\n\\sum_{r=0}^\\infty\\varphi(\\delta r) \\lim_{\\mathcal{U}} \\PP_{\\mathcal{H}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh))\\geq r\\right\\}\\right)<\\infty.\n\\end{equation}\nSimilarly, $\\beta$ is strongly $\\varphi$-integrable (or $\\varphi^\\diamond$-integrable) if  if for every $\\varepsilon>0$ there exists a $\\delta>0$ and $C'>0$ such that for every $h\\in H$ we have that\n\t\\begin{equation}\\label{eq:UQuantExpstrong}\n\t\\sum_{r=0}^\\infty \\varphi(\\delta r)\\lim_{\\mathcal{U}} \\PP_{\\mathcal{H}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh))\\geq r\\right\\}\\right)\\le C'\\varphi(\\varepsilon |h|).\n\t\\end{equation}\nBesides, if we assume that the point-preimages of $\\uu_n$ has diameter at most $C$, then these two conditions can respectively be relaxed to the following ones\\footnote{where the inequality for the diameter is replaced by an equality. Note that if $\\varphi$ is a quickly growing function (e.g.\\ a stretched exponential), then the two conditions are equivalent, so there is no gain in assuming the bound on the diameter of preimages.}\n\t\\begin{equation}\\label{eq:UQuantExpC}\n\\sum_{r=0}^\\infty\\varphi(\\delta r) \\lim_{\\mathcal{U}} \\PP_{\\mathcal{H}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh))= r\\right\\}\\right)<\\infty.\n\\end{equation}\nand \n\t\\begin{equation}\\label{eq:UQuantExpCstrong}\n\\sum_{r=0}^\\infty \\varphi(\\delta r)\\lim_{\\mathcal{U}} \\PP_{\\mathcal{H}_n}\\left(\\left\\{y\\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh))= r\\right\\}\\right)\\le C'\\varphi(\\varepsilon |h|).\n\\end{equation}",
+      "content_preview": "Let ^+ ^+ be a non-decreasing map, let (,X_G,X_H,) be a measure equivalence coupling from G to H as in and let H X_G G be the measure equivalence...",
+      "display_name": "Proposition",
+      "label": "prop:Cocycle",
+      "position": {
+        "line_start": 1211,
+        "line_end": 1231
+      },
+      "references": [
+        {
+          "target_id": "thm:ME",
+          "reference_type": "internal",
+          "context": "easure equivalence coupling from $G$ to $H$ as in \\cref{thm:ME} and let $\\beta\\colon H\\times X_G\\to G$ be the mea",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:fundamentalDomainBis",
+          "reference_type": "internal",
+          "context": "arepsilon |h|).\n\\end{equation}First, note that by \\cref{prop:fundamentalDomainBis} we have that $\\mu(X_G\\setminus B_H(e_H,C)*X_H)=0$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sec:BasicSubsets",
+          "reference_type": "external",
+          "context": "\\bigsqcup_{i=0}^\\infty Y_i$, and arguing as in \\S \\ref{sec:BasicSubsets}, we have, denoting $h_{ij}=h_j^{-1}h^{-1}h_i$:\n\\b",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:UQuantExp",
+          "reference_type": "external",
+          "context": "trong $\\varphi$-integrability under respectively (\\ref{eq:UQuantExp}) and (\\ref{eq:UQuantExpstrong}). Indeed, for inte",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:UQuantExpstrong",
+          "reference_type": "external",
+          "context": "lity under respectively (\\ref{eq:UQuantExp}) and (\\ref{eq:UQuantExpstrong}). Indeed, for integrability, we only need it for",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:UQuantExpC",
+          "reference_type": "external",
+          "context": "phi$, this implies $\\varphi$-integrability under (\\ref{eq:UQuantExpC}). Strong integrability follows from (\\ref{eq:UQua",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:UQuantExpCstrong",
+          "reference_type": "external",
+          "context": ":UQuantExpC}). Strong integrability follows from (\\ref{eq:UQuantExpCstrong}), combined with the fact that $|h|-2C\\leq |h_{ij}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First, note that by \\cref{prop:fundamentalDomainBis} we have that $\\mu(X_G\\setminus B_H(e_H,C)*X_H)=0$, so $\\mu(Y_i)=0$ for $|h_i|>C$. We let $I$ be the largest integer such that $|h_I|\\le C$.\n\nNext, note that for every $h\\in H$ and $\\aaa\\in X_G$ there exists an $i\\le I$ such that $h*\\aaa\\in \\beta(h,\\aaa)^{-1}*Y_i$. So, $\\aaa(\\beta(h,\\aaa)^{-1})=(h^{-1}h_i,0)$. \nBesides, recall that by definition of $Y_i$, we have \\[Y_i\\subset h_i*Y_0=\\{\\aaa\\in \\Omega''\\mid  \\aaa(e_G)=(h_i,0)\\}.\\]\nUsing $X_G=\\bigsqcup_{i=0}^\\infty Y_i$, and arguing as in \\S \\ref{sec:BasicSubsets}, we have, denoting $h_{ij}=h_j^{-1}h^{-1}h_i$:\n\\begin{align*}\n\\int_{X_G}\\hspace{-2pt} \\varphi\\!\\left(\\delta|\\beta(h,\\aaa)|\\right)d\\mu(\\aaa) & = \\sum_{g\\in G} \\varphi\\!\\left(\\delta|g|\\right)\\mu\\left(\\{\\aaa\\in X_G\\mid \\beta(h,\\aaa)=g\\}\\right)\\\\\n& = \\sum_{i,j\\leq I}\\sum_{g\\in G} \\varphi\\!\\left(\\delta|g|\\right) \\mu\\left(\\{\\aaa\\in Y_j\\mid \\aaa(g^{-1})=(h^{-1}h_i,0)\\}\\right)\\\\\n& \\le  \\sum_{i,j\\leq I}\\sum_{g\\in G} \\varphi\\!\\left(\\delta|g|\\right)\\mu\\left(\\{\\aaa\\in \\Omega''\\mid \\aaa(e_G)=(h_j,0),\\; \\aaa(g^{-1})=(h^{-1}h_i,0)\\}\\right)\\\\\n& =\\sum_{i,j\\leq I} \\sum_{g\\in G} \\varphi\\!\\left(\\delta|g|\\right) \\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\big(\\{x\\in\\mathcal{G}_n\\mid \\uu_n(xg^{-1})=\\uu_n(x)h_{ij}, \\\\\n&\\AlignRight{\\rho_n(x)=\\rho_n(xg^{-1})=0\\big\\}\\big)}\\\\\n& \\le \\sum_{i,j\\leq I}\\sum_{g\\in G} \\varphi\\!\\left(\\delta|g|\\right) \\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\big(\\{x\\in\\mathcal{G}_n\\mid \\uu_n(xg^{-1})=\\uu_n(x)h_{ij},\n\\rho_n(x)=0\\big\\}\\big)\\\\\n& =  \\sum_{i,j\\leq I} \\sum_{r=0}^{\\infty} \\varphi\\!\\left(\\delta r\\right)\\sum_{|g|=r} \\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\big(\\{x\\in\\mathcal{G}_n\\mid \\uu_n(xg^{-1})=\\uu_n(x)h_{ij},\n\\rho_n(x)=0\\big\\}\\big).\n\n\n\n\n\n\n\\end{align*}\n\n\n\nFor every $x$ such that $\\uu_n(xg^{-1})=\\uu_n(x)h_{ij}$ and \n$\\rho_n(x)=0$, denote $y=\\uu_n(x)$. \nNote that $x\\in \\uu_n^{-1}(y)$ and $xg^{-1}\\in \\uu_n^{-1}(yh_{ij})$. \nRestricting to $x\\in{\\mathcal{G}_n}^{(2r)}$ we can assume that $d(x,xg^{-1})=r$. Hence we get \n\\[r\\le \\diam(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh_{ij})).\\]\n If we assume that pre-images of $\\uu_n$ have diameter at lost $C$, we get by triangular inequality\n\\[r\\le \\diam(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh_{ij}))\\le r+2C.\\]\nRecall that $\\uu_n$ is injective in restriction  to $\\{x\\in\\mathcal{G}_n\\mid \n\\rho_n(x)=0\\big\\}$. \nHence denoting $\\eta= \\lim_{\\mathcal{U}} \\frac{\\#\\mathcal{H}_n}{\\#\\mathcal{G}_n}$, we deduce that\n\\begin{align*}\n& \\sum_{|g|=r} \\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\big(\\{x\\in\\mathcal{G}_n\\mid \\uu_n(xg^{-1})=\\uu_n(x)h_{ij}, \\;\n\\rho_n(x)=0\\big\\}\\big)\\\\\n& \\le\n\\eta \\lim_{\\mathcal{U}}\\PP_{\\mathcal{H}_n}\\big(\\{y\\in\\mathcal{H}_n \\mid r\\le \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh_{ij}))\\big\\}\\big),\n\\end{align*}\nand if we assume the diameter bound on the pre-images, this becomes:\n\\begin{align*}\n& \\sum_{|g|=r} \\lim_{\\mathcal{U}}\\PP_{\\mathcal{G}_n}\\big(\\{x\\in\\mathcal{G}_n\\mid \\uu_n(xg^{-1})=\\uu_n(x)h_{ij}, \\;\n\\rho_n(x)=0\\big\\}\\big)\\\\\n& \\le\n\\eta \\lim_{\\mathcal{U}}\\PP_{\\mathcal{H}_n}\\big(\\{y\\in\\mathcal{H}_n \\mid r\\le \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh_{ij}))\\le r+2C\\big\\}\\big).\n\\end{align*}\nWe deduce that \n\\begin{align*}\n& \\int_{X_G}\\hspace{-2pt} \\varphi\\!\\left(\\delta|\\beta(h,\\aaa)|\\right)d\\mu(\\aaa)\\\\ & \\le \\eta \\sum_{i,j\\leq I} \\sum_{r=0}^{\\infty} \\varphi\\!\\left(\\delta r \\right)\\lim_{\\mathcal{U}}\\PP_{\\mathcal{H}_n}\\big(\\{y\\in\\mathcal{H}_n \\mid r\\le \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh_{ij}))\\big\\}\\big),\n\\end{align*}\nwhich implies $\\varphi$-integrability and strong $\\varphi$-integrability under respectively (\\ref{eq:UQuantExp}) and (\\ref{eq:UQuantExpstrong}). Indeed, for integrability, we only need it for $h\\in S_H$, in which case each $h_{ij}$ has word length at most $2C+1$.\nUnder the diameter bound we get\n\\begin{align*}\n& \\int_{X_G}\\hspace{-2pt} \\varphi\\!\\left(\\delta|\\beta(h,\\aaa)|\\right)d\\mu(\\aaa)\\\\ & \\le \\eta \\sum_{i,j\\leq I} \\sum_{r=0}^{\\infty} \\varphi\\!\\left(\\delta r \\right)\\lim_{\\mathcal{U}}\\PP_{\\mathcal{H}_n}\\big(\\{y\\in\\mathcal{H}_n \\mid r\\le \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup \\uu_n^{-1}(yh_{ij}))\\le r+2C\\big\\}\\big). \n\\end{align*}\nBy monotonicity of $\\varphi$, this implies $\\varphi$-integrability under (\\ref{eq:UQuantExpC}). Strong integrability follows from (\\ref{eq:UQuantExpCstrong}), combined with the fact that $|h|-2C\\leq |h_{ij}|\\leq |h|+2C$."
+    },
+    {
+      "id": "remark-45-a808b567",
+      "type": "remark",
+      "content": "\\label{rem:Strong}\n\tIn \\cref{thm:quantSubgroup} (and \\cref{thm:quantME}), we obtain {\\bf strong} integrability if we assume the stronger version of (\\ref{eq:quantLip}): that for every $\\varepsilon>0$ there exists a $\\delta>0$ and $C'>0$ such that\n\t\\[\\sum_{r=0}^\\infty \\varphi\\!\\left(\\delta r\\right)\\lim_{\\mathcal U}\\PP_{\\mathcal{G}_n}\\left(\\{x\\in \\mathcal{G}_n\\mid d_{\\mathcal{H}_n}(\\uu_n(x),\\uu_n(xg))=r\\}\\right)\\le C'\\varphi(\\varepsilon|g|)\\]\n\tfor every $g\\in G$. Similarly the coupling is $(\\varphi,\\psi^\\diamond)$-integrable if for every $\\varepsilon>0$ there exists a $\\delta>0$ and $C'>0$ such that\n\t\\begin{equation}\\label{eq:quantExpStrong}\n\t\\sum_{r=0}^\\infty \\psi\\!\\left(\\delta r\\right)\\lim_{\\mathcal U} \\PP_{\\mathcal{H}_n}\\left(\\{y \\in \\uu_n(\\mathcal{G}_n)\\mid \\diam_{\\mathcal{G}_n}(\\uu_n^{-1}(y)\\cup\\uu_n^{-1}(yh)) = r\\}\\right)\\le C'\\psi(\\varepsilon |h|)\\end{equation}\n\tfor every $h\\in H$ and it is $(\\varphi^\\diamond,\\psi^\\diamond)$-integrable if both conditions are satisfied.",
+      "content_preview": "In (and ), we obtain strong integrability if we assume the stronger version of (): that for every >0 there exists a >0 and C'>0 such that [_r=0^ !",
+      "display_name": "Remark",
+      "label": "rem:Strong",
+      "position": {
+        "line_start": 1324,
+        "line_end": 1331
+      },
+      "references": [
+        {
+          "target_id": "thm:quantSubgroup",
+          "reference_type": "internal",
+          "context": "\\label{rem:Strong}\n\tIn \\cref{thm:quantSubgroup} (and \\cref{thm:quantME}), we obtain {\\bf strong}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:quantME",
+          "reference_type": "internal",
+          "context": "bel{rem:Strong}\n\tIn \\cref{thm:quantSubgroup} (and \\cref{thm:quantME}), we obtain {\\bf strong} integrability if we assu",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:quantLip",
+          "reference_type": "external",
+          "context": "tegrability if we assume the stronger version of (\\ref{eq:quantLip}): that for every $\\varepsilon>0$ there exists a $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-46-7e1fd203",
+      "type": "theorem",
+      "content": "\\label{thm:example}\n\tLet $k\\ge 2$ and  $A\\in \\GL_2(\\Z)$ has a real eigenvalue $\\lambda>1$. \n Then there exists a mutually cobounded $(\\LL^\\infty,\\exp^\\diamond)$-measure equivalence coupling from $\\Lamp_k$ to $\\SOL_A=\\Z^2\\rtimes_A\\Z$.",
+      "content_preview": "Let k 2 and A _2() has a real eigenvalue >1. Then there exists a mutually cobounded (^,^)-measure equivalence coupling from _k to _A=^2_A.",
+      "display_name": "Theorem",
+      "label": "thm:example",
+      "position": {
+        "line_start": 1338,
+        "line_end": 1341
+      },
+      "references": [
+        {
+          "target_id": "lem:psi",
+          "reference_type": "external",
+          "context": "uniformly discrete subset of $\\SOL_\\R$. By Lemma \\ref{lem:psi},  the preimage of any (left) $\\Gamma_0$-translate",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:psi",
+          "reference_type": "external",
+          "context": "he word metric of $\\SOL_\\R$.\nWe deduce from Lemma \\ref{lem:psi} and the previous discussion that $\\uu$ satisfies",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:phi",
+          "reference_type": "external",
+          "context": "ance to intrinsic distance.}\n\nNote that in Lemmas \\ref{lem:phi} and \\ref{lem:Last}, we use the distance in the gr",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Last",
+          "reference_type": "external",
+          "context": "distance.}\n\nNote that in Lemmas \\ref{lem:phi} and \\ref{lem:Last}, we use the distance in the groups and not the in",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Last",
+          "reference_type": "external",
+          "context": "tz.\n\nTo get a $\\mathcal U$-statistical version of \\cref{lem:Last} in intrinsic distance, we use the following lemma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Last",
+          "reference_type": "external",
+          "context": "al{G}_n^{r_y}\\right\\}\\right)=1.\n\\end{equation}\nBy \\cref{lem:Last}, we know that \n\\begin{equation}\\label{eq:r_y2}\n\\l",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:r_y2",
+          "reference_type": "external",
+          "context": "_n^{(r)}\\right\\}\\right)=1,\\]\nwhich combined with (\\ref{eq:r_y2}) implies (\\ref{eq:r_y1}). This proves the lemma.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:r_y1",
+          "reference_type": "external",
+          "context": "1,\\]\nwhich combined with (\\ref{eq:r_y2}) implies (\\ref{eq:r_y1}). This proves the lemma. \n\\end{proof}\n\n\nLet us co",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Last",
+          "reference_type": "external",
+          "context": "schitz, has $2L$-dense image. \nBesides, combining \\cref{lem:Last} and \\cref{lem:intrinsic}, we deduce that $\\uu_n$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:intrinsic",
+          "reference_type": "external",
+          "context": "se image. \nBesides, combining \\cref{lem:Last} and \\cref{lem:intrinsic}, we deduce that $\\uu_n$ satisfies \n\\[\\sum_{r\\geq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:example",
+          "reference_type": "internal",
+          "context": ".}\n\n We are now ready to end the proof of Theorem \\ref{thm:example}. \nThe conditions of \\cref{thm:quantME}  and Remar",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:quantME",
+          "reference_type": "internal",
+          "context": "of Theorem \\ref{thm:example}. \nThe conditions of \\cref{thm:quantME}  and Remark \\ref{rem:Strong} being satisfied\\foot",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "rem:Strong",
+          "reference_type": "internal",
+          "context": "The conditions of \\cref{thm:quantME}  and Remark \\ref{rem:Strong} being satisfied\\footnote{Recall that the $L^{\\inf",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:fundamentalDomainBis",
+          "reference_type": "internal",
+          "context": "ng ME coupling is mutually cobounded follows from \\cref{prop:fundamentalDomainBis} together with the fact that $\\uu_n$  is\ninjective",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Recall that according to our notation, $\\Lamp_k=\\Z/k\\Z\\wr \\Z$. Let $\\pi:\\Lamp_k\\to \\Z$ be the projection to $\\Z$. Given $q\\geq 1$, the pre-image of $q\\Z$ by $\\pi$ is isomorphic to $(\\Z/k\\Z)^q\\wr \\Z$, which itself is bi-Lipschitz equivalent to $\\Lamp_{k^q}$. In particular, $\\Lamp_{k^q}$ and $\\Lamp_k$ are quasi-isometric. Hence in order to prove the theorem, it is harmless to assume that $k$ is arbitrarily large. For reasons that will appear later (which are not essential), we will assume from now on that $k\\geq \\lambda$. \n\n\nWe will use the fact that $\\SOL_A$ is a uniform lattice in the group $\\SOL_\\R=\\R^2\\rtimes \\R$ where $\\R$ acts by $t\\cdot (x,y)=(k^tx,k^{-t}y)$. \n\nThe proof of the theorem goes in three steps: first we construct a sequence of maps between F\\o lner sequences of $\\Lamp_k$ and  $\\SOL_\\R$ (by far the main step of the proof). Actually we will construct a unique map between the groups and consider its restriction to a F\\o lner sequence. Second,  we will perturb this map slightly (at bounded distance) to have it land in a copy of $\\SOL_A$ embedded as a lattice in $\\SOL_\\R$. \nAlong the way all the metric estimates will be in terms of the word metrics of the groups. Hence a last technical step will be required to translate them in terms of the intrinsic graph distances of the F\\o lner sets.\n\n\\\n\n\\noindent{\\bf First step: constructing a map from $\\Lamp_k$ to $\\SOL_\\R$.}\n\nWe start defining generating sets for the groups $\\Lamp_k$ and $\\SOL_\\R$. \nWe let $S^\\Lamp=S_1^\\Lamp\\cup S_2^\\Lamp$, where $S_1^\\Lamp$ consists of elements $(x,0)$, where $x$ is supported at $0$, and $S_2^\\Lamp=\\{(0,\\pm 1\\}$.\nSimilarly we let $S^{\\SOL}=S_1^{\\SOL}\\cup S_2^{\\SOL}$, where $S_1^{\\SOL}$ consists of elements $(x,0)$, where $\\|x\\|_\\infty\\leq 1$, and $S_2^{\\SOL}=\\{(0,t\\}$, with $|t|\\leq 1$. We shall denote by $|g|$ the word length of an element of either $\\Lamp_k$ or $\\SOL_\\R$.\nWe shall use repeatedly the following easy estimates, whose verifications are left to the reader.\n For $g=(x,j)\\in \\Lamp_k$, \n\\[\\max \\left\\{\\diam(\\supp x\\cup \\{0\\}),|j|\\right\\} \\leq |g|\\leq 2\\diam(\\supp x\\cup \\{0\\})+|j|.\\]\nand for $g=(x,j)\\in \\SOL_\\R,$\n \\[\\max \\left\\{\\log_k\\|x\\|_{\\infty},|j|\\right\\} \\leq |g|\\leq 2\\log_k(1+ \\|x\\|_{\\infty})+2|j|.\\]\n\n\nWe consider the following F\\o lner sequences of $\\Lamp_k$ and $\\SOL_\\R$: \n\\[F_n^\\Lamp=\\left\\{(x,m)\\mid \\supp x\\subset [-n,n], \\; 0\\leq m\\leq n\\right\\},\\] \nand \n\\[F_n^{\\SOL}=\\left\\{(x,m)\\in \\R_+^2\\times \\R\\mid \\|x\\|_\\infty \\leq k^{n+1}, \\; 0\\leq m\\leq n\\right\\}.\\] \nLet us check that these are indeed right F\\o lner sequences. For both, almost invariance under right multiplication by $S_2^\\Lamp$ (resp.\\ $S_2^{\\SOL}$) is true because it only changes the second coefficient. For $F_n^\\Lamp$, we observe that it is invariant under right multiplication by $S_1^\\Lamp$, so it is duly a F\\o lner sequence. Note that right multiplication by $S_1^{\\SOL}$ preserves each coset of $\\R^2$. Besides, for every $j\\in \\R$, we have \n\\[([0,k^{n+1}]^2\\times\\{j\\}) S_1^{\\SOL}\\subset [-k^j,k^{n+1}+k^j]^2\\times\\{j\\}. \\]\nThe Haar measure $\\lambda$ on  $\\SOL_\\R$ is simply the product of the Lebesgue measure on $\\R^3$.\nTherefore, we have \n\\[\\lambda(([0,k^{n+1}]^2\\times\\{j\\}) S_1^{\\SOL})\\leq (k^{n+1}+2k^j)^2,\\]\nso\n\\[\\lambda(F_n^{\\SOL}S_1^{\\SOL})\\leq \\int_{0}^n (k^{n+1}+2k^j)^2dj=nk^{2n+2}+4k^{n+1}\\int_{0}^nk^jdj+2\\int_{0}^nk^{2j}dj\\leq (n+6)k^{2n+2},\\]\nAnd since $\\lambda(F_n^{\\SOL})=nk^{2n+2}$, we deduce that \n\\[\\frac{\\lambda(F_n^{\\SOL}S_1^{\\SOL})}{\\lambda(F_n^{\\SOL})}\\leq \\frac{n+6}{n},\\]\nwhich tends to $1$ as $n\\to \\infty$. Hence $F_n^{\\SOL}$ is a F\\o lner sequence.\n\n\\\n\nWe now define a map $\\vv:\\Lamp_k\\to \\SOL_\\R$  as follows. For $x=(\\eps_i)\\in \\oplus_\\Z \\Z/k\\Z$, we set\n\\[\\vv(x,m)=\\left(\\sum \\eps_i k^i, \\sum \\eps_i k^{-i},m\\right).\\]\n\nBefore analyzing the properties of this map, let us pause, and work out  the following baby case as a warmup. Consider the function $f:\\oplus_n \\Z/k\\Z\\to \\R_+$ defined  for each $x=(\\eps_i)$ by $f(x)=\\sum \\eps_i k^i$. Suppose we equip the group  $\\oplus_n \\Z/k\\Z$ with the length $|x|=\\max (\\supp x)$, and  $\\R_+$ is equipped with the distance $d(x,y)=\\log (1+|x-y|)$. Note that this is similar to the restriction of $\\vv$ to $\\bigoplus_\\Z \\Z/k\\Z$.  It is easy to see that the map $f$ is injective, Lipschitz, and takes values in $\\N$. Besides, for all $n\\in \\N$, $f$ maps bijectively $K_n=\\{x\\mid \\supp x\\subset [0,n]\\}$ to $I_n=[0, k^{n+1}-1]\\cap \\N$. By contrast, this map is not coarsely expansive. This results from the fact that $\\R$ is Archimedean, which manifests itself through carries: assume we add $1$ to $x=\\sum \\eps_i k^i$, and then write the $k$-adic decomposition of the resulting number, we get $x+1=\\sum_i \\eps_i'$, where $\\eps_i'\\neq \\eps_i$ for all $i\\leq m$, where $m$ is the smallest integer such that $\\eps_i\\neq k-1$. Hence the pre-image of $x+1$ lies at distance $m$ from $x$, and $m$ can be arbitrarily large. However, large values of $m$ happen ``exponentially rarely''. Let us indeed evaluate the proportion of elements of $x\\in K_n$ such that $d(x,f^{-1}(f(x)+1))\\geq m$: since it imposes that the first $m-1$ coordinates of $x$ are equal to $k-1$, this proportion is at most $k^{-m+1}$. \n\nWe are now ready to study our map $\\vv$, for which a similar phenomenon occurs, although in a more complicated way, as shown by the following lemma.\n\n\\begin{lemma}\\label{lem:psi}\nThe map $\\vv$ is $2$-Lipschitz, and maps $F_n^\\Lamp$ to a $(1+\\log_k (1+2k))$-coarsely dense subset of $F_n^{\\SOL}$. \nIt satisfies the following (statistic expansivity) property: for all integers $q,m\\geq 1$,\nthe proportion of points $g\\in F_n^\\Lamp$ such that $\\diam\\vv^{-1}(B_{\\SOL}(\\vv_n(g),q))\\geq 2m+3q$ is at most $4k^{-m+1}$. Finally, For every $r$, the preimage of balls of radius $q$ has cardinality at most $(2q+1)k^{2q+1}$.\n\\end{lemma}\n\n\\begin{proof}\nLet us prove Lipschitz: for this it is enough to consider neighboring vertices: for those who differ by their $\\Z$-coordinate, the statement is obvious, so consider the case of two elements $g,g'\\in \\Lamp_k$ such that $g'=gs$ for some $s\\in S_1^{\\Lamp}$. We then have $g=(x,j)$ and $gs=(x',j)$ where $x=(\\eps_i)$ and $x'=(\\eps'_i)$ only differ in their $j$-coordinate. We have $\\vv(g)=(y,j)$, where $y=(\\sum_i \\eps_i k^i, \\sum_i \\eps_i k^{-i})$ and $\\vv(g')=(y',j)$ with $y'=(\\sum_i \\eps'_i k^i, \\sum_i \\eps'_i k^{-i})$. So\n\\[\\vv(g)^{-1}\\vv(g')=\\left(\\sum_i(\\eps'_i-\\eps_i) k^{i-j},\\sum_i(\\eps'_i-\\eps_i) k^{j-i},0\\right)=(\\eps'_j-\\eps_j,\\eps_j-\\eps'_j,0),\\] \nwhich has length at most $2$. Hence the map is $2$-Lipschitz.\n\nLet us prove that $\\vv$ maps $F_n^\\Lamp$ to a coarsely dense subset of $F_n^{\\SOL}$. The fact that $\\vv(F_n^\\Lamp)\\subset F_n^{\\SOL}$ is obvious, so we focus on the coarse density. We shall prove that every element $h=(a,b,j)\\in F_n^{\\SOL}$ lies at bounded distance from $\\vv(F_n^\\Lamp)$. Perturbating $h$ at distance at most one, we can assume that $j\\in \\Z$. Let $g=(x,j)\\in \\Lamp_k$, with $x=(\\eps_i)$.\nWe have $\\vv(g)=\\left(\\sum_i\\eps_ik^i,\\sum_i \\eps_ik^{-i}, j\\right)$. Hence,\n\\[\\vv(g)^{-1}h=\\left(\\left(k^{-j}a-\\sum_i \\eps_ik^{i-j}\\right), \\left(k^jb-\\sum_i \\eps_ik^{-i+j}\\right), 0\\right).\\] \nSince $h\\in  F_n^{\\SOL}$, we have $\\lfloor k^{-j}a\\rfloor\\leq k^{n-j+1}$ and $\\lfloor k^{j-1}b\\rfloor\\leq k^{n+j}$, so their  $k$-adic decompositions are respectively supported in $[0,n-j]$ and $[0,n+j-1]$. Now, choose $\\eps_i$ be such that $\\sum_{i\\geq j} \\eps_ik^{i-j}$ is the $k$-adic decomposition of $\\lfloor k^{-j}a\\rfloor$, and  $\\sum_{i< j} \\eps_ik^{-i+j-1}$ is the $k$-adic decomposition of $\\lfloor k^{j-1}b\\rfloor$. It follows that $\\eps_i$ is supported on $[-n,n]$, hence that $g\\in F_n^\\Lamp$. \nBesides, \\[\\left|k^{-j}a-\\sum_{i\\geq j} \\eps_ik^{i-j}\\right|=k^{-j}a-\\lfloor k^{-j}a\\rfloor\n\\leq 1\\] and  \\[\\left|k^jb-\\sum_{i<j} \\eps_ik^{-i+j}\\right|=k\\left|k^{j-1}b-\\sum_{i<j} \\eps_ik^{-i+j-1}\\right|=k(k^{j-1}b-\\lfloor k^{j-1}b\\rfloor)\\leq k.\\]\nWe therefore have $\\left|k^{-j}a-\\sum_{i} \\eps_ik^{i-j}\\right|\\leq 2$ and $\\left|k^jb-\\sum_{i} \\eps_ik^{-i+j}\\right|\\leq 2k$, and so we have duly constructed an element $g\\in F_n^\\Lamp$ such that $d(\\vv(g),h)\\leq \\log_k (1+2k)$. \n\n\nWe now turn our attention to the last two properties, which will be proved all at once. \nFor this we fix some $g\\in F_n^\\Lamp$.\nLet $g'\\in \\Lamp_k$ such that $d(\\vv(g'), \\vv(g))\\leq q.$ Note that if $g=(x,j)$ and $g'=(x',j')$, we have \\[g^{-1}g' = ((-j)\\cdot (x'-x), j'-j).\\]\nWrite $x=(\\eps_i)$ and $x'=(\\eps'_i)$. We have\n\\[\\vv(g)^{-1}\\vv(g')=\\left(\\sum_i(\\eps'_i-\\eps_i) k^{i-j},\\sum_i(\\eps'_i-\\eps_i) k^{j-i},j'-j\\right).\\]\nThe condition that $d(\\vv(g'), \\vv(g))\\leq q$ implies that $|j-j'|\\leq q$. So $d(g,g')\\geq 2m+3q$ implies that $2\\diam((\\supp(x'-x)-j)\\cup \\{0\\})+q\\geq 2m+3q$, hence  $\\diam((\\supp(x'-x)-j)\\cup \\{0\\})\\geq m+q$.\nWe let $\\ell_+,\\ell_-$ be respectively the maximal, minimal integer such that $\\eps_{\\ell_+}\\neq \\eps'_{\\ell_+}$,  $\\eps_{\\ell_-}\\neq \\eps'_{\\ell_-}$.\nNote that either $\\ell_+\\geq  j+m+q$ or $\\ell_-\\leq j-m-q$.\nLet $J_-=[\\ell_-+1,j-q-1]$ and $J_+=[j+q+1,\\ell_+-1]$. Note that one of these intervals can possibly be empty, but one of them has size at least $m-1$.\n\\begin{clai}\\label{clai:J}\nIn each interval $J_-$ and $J_+$, either $\\eps_i$ is identically $0$, and $\\eps'_i$ is identically $k-1$, or vice versa.\n\\end{clai}\n\\begin{proof}\nBoth cases are treated similarly, so we only consider $J_+$, which we can assume to be non empty.  \nWe have\n\\[\\sum_i(\\eps'_i-\\eps_i) k^{i-j}=(\\eps'_{\\ell_+}-\\eps_{\\ell_+})k^{{\\ell_+}-j}+\\sum_{i<\\ell_+}(\\eps'_i-\\eps_i)k^{i-j}.\\]\nBy symmetry, we can assume without loss of generality that $\\eps'_{\\ell_+}>\\eps_{\\ell_+}$.\nTherefore,\n\\[\\left|\\sum_i(\\eps'_i-\\eps_i) k^{i-j}\\right|=\\sum_i(\\eps'_i-\\eps_i) k^{i-j}\\geq k^{\\ell_+-j}+\\sum_{i<\\ell_+}(\\eps'_i-\\eps_i)k^{i-j}.\\]\nWe let $t$ be the maximal integer  $<\\ell_+$ such that $\\eps'_{t}-\\eps_{t}\\neq -k+1$. We have\n\\[\\left|\\sum_i(\\eps'_i-\\eps_i) k^{i-j}\\right|\\geq k^{\\ell_+-j}-(k-1)\\sum_{i=t}^{\\ell_+-1}k^{i-j}=k^{t-j}.\\]\nOn the other hand, since $d(\\vv(g'), \\vv(g))\\leq q$, we have $t-j\\leq q$. In other words, $\\eps_i'-\\eps_i=-k+1$ for all $r+j<i< \\ell_+$, hence for all $r+j<i<m+q+j$. This imposes for such values of $i$ that $\\eps_i=k-1$ and $\\eps'_i=0$, and the claim is proven.\n\\end{proof}\nIt is now straightforward to deduce our two properties from the claim. First, since the coordinates of $x$ on $J_+$ and $J_-$ are prescribed, with two possible values, the proportion of such $g\\in F_n^\\Lamp$ is at most $4k^{-m+1}$. \nSecond, if $x$ is given, we see that the coordinates of $x'$ outside the interval $[j-q,j+q]$ are determined by those of $x$. This leaves $k^{2q+1}$ possibilities for choosing $x'$, and since $|j'-j|\\leq q$, we have $(2q+1)k^{2q+1}$ for the choice of $g$. This ends the proof of the lemma.\n\\end{proof}\n\n\\noindent{\\bf Second step: constructing a map from $\\Lamp_k$ and  $\\SOL_A$.} \n\nLet us describe an embedding of  $\\SOL_A$ in  $\\SOL_\\R$. We start with the obvious embedding of $\\SOL_A$ in the semi-direct product $\\R^2\\rtimes_A \\R$, where the notation means that $t\\in \\R$ acts by multiplication by the matrix $A^t$. Denote by $\\Gamma_0'$ the image of $\\SOL_A$. A relatively compact fundamental domain $D_0'$ for the action by left-translations of $\\Gamma_0$ on $\\R^2\\rtimes_A \\R$ is simply given by $[0,1)^3$.\nChoose a basis $(v_+,v_-)$ of eigenvectors of $A$ associated to the eigenvalues $\\lambda$ and $\\lambda^{-1}$. We have an isomorphism $ \\SOL_\\R\\to \\R^2\\rtimes_A \\R$ given by \\[(a,b,t)\\mapsto (av_++bv_-, \\frac{\\log \\lambda}{\\log k}t),\\]\nwhose inverse will be denoted by $\\mathfrak{p}$. Denote $\\Gamma_0=\\mathfrak{p}(\\Gamma_0')$ and  $D_0=\\mathfrak{p}(D_0')$.  By construction, $\\Gamma_0$ is a copy of $\\SOL_A$ embedded as a lattice in $\\SOL_\\R$, and $D_0$ is a fundamental domain for its action by left-translations. Note that $D_0$\n is relatively compact, and with no-empty interior and contains the neutral element.\n\nAlthough $\\vv$ is obviously injective, its image is a priori not uniformly discrete\\footnote{It is indeed  not the case as the elements  $(x,0)$ and $(x',0)$, where $x=(k-1)1_{[-m,m]}$ and $x'=1_{\\{-m-1,m+1\\}}$ are at distance  $O(q^{-m})$ from each other.}.\nWe start modifying $\\vv$ so that while remaining injective, its image is a uniformly discrete subset of $\\SOL_\\R$. By Lemma \\ref{lem:psi},  the preimage of any (left) $\\Gamma_0$-translate of $D_0$ has cardinality bounded above by some constant $N$. In other words, every such translate of $D_0$ contains at most $N$ elements of $\\Im\\vv$. Since $D_0$ has non-empty interior, we can therefore modify $\\vv$ to a map $\\vv_0$ such that for all $g$, $\\vv_0(g)$ belongs to the same $\\Gamma_0$-translate of $D_0$ as $\\vv(g)$, and such that $\\vv_0$ has uniformly discrete image.\n\nOur next step consists in modifying $\\vv'$ further to have it land in some (different) copy of $\\SOL_A$ in $\\SOL_\\R$.  Our goal is to do it in order to get an injective map from $\\Lamp_k$ to $\\SOL_A$. \nSince we have assumed (from the beginning) that $k\\geq \\lambda$, we already have that two elements of $D_0\\cap \\Im\\vv$ have same $\\R$-coordinate, which ensures that $\\vv_0$ is already injective in restriction to the $\\Z$ coordinates.  In order to obtain an injective map, we will replace $\\Gamma_0$ by a copy which is ``denser' in the $\\R^2$-coordinate.\n\nFor all $t>0$, consider the automorphism $\\theta_t$ which multiplies the $\\R^2$-coordinate by $t$. Let $\\tau_t=\\theta_t\\circ \\tau_0$, $\\Gamma_t=\\Im(\\tau_t)$ and let $D_t=\\theta_t(D_0)$. Observe that $D_t$ is a fundamental domain for the left $\\Gamma_t$ action on $\\SOL_\\R$. Hence by choosing $t$ small enough, we can assume that the euclidean diameter of $D_t\\cap \\R^2$ is arbitrarily small. Combined with the fact that $\\Im\\vv_0$ is uniformly discrete, and that  $\\theta_t$ does not affect the $\\R$ coordinate, we can choose $t\\leq 1$ small enough so  that  every $\\Gamma_t$-translate of $D_t$  contains at most one element of $\\Im\\vv_0$. From now on, we fix such $t$ and omit the subscript $t$.\n\nWe define a map $\\uu:\\Lamp_k\\to \\Gamma$ as follows: $\\uu(g)=\\gamma\\in \\Gamma$ where $\\gamma$ is the unique element such that $\\vv_0(g)\\in \\gamma D$. Since $\\gamma D$ contains at most one element of $\\Im\\vv_0$, the map $\\uu$ is injective.\n\nNow, let $C$ be such that $D_0\\subset B_{\\SOL_\\R}(e,C/2)$. Note that we also have  $D\\subset B_{\\SOL_\\R}(e,C/2)$. \nBy construction,  $d(\\uu(g),\\vv(g))\\leq C$ for all $g\\in \\Lamp_k$ (where the distance is measured with respect to the word metric of $\\SOL_\\R$). \n\nWe let $\\mathcal G_n=F_n^\\Lamp$ and $\\mathcal H_n=F_n^{\\SOL}B_{\\SOL_\\R}(e, C)\\cap \\Gamma$. Since $\\vv$ maps $F_n^\\Lamp$ to a coarsely dense subset of $F_n^{\\SOL}$, we have that $\\uu$ maps it to a coarsely dense subset of $\\mathcal H_n$. Restricting $\\uu$ to $\\mathcal G_n$, we therefore get a sequence of maps $\\uu_n: \\mathcal G_n\\to \\mathcal H_n$.\n\nLet us check that $\\mathcal H_n$ is a F\\o lner sequence of $\\Gamma$. Let $R$ be such that $T=B_{\\SOL_\\R}(e,R)\\cap \\Gamma$ defines a generating set of $\\Gamma$. Then it is enough to prove that $\\lim_{n\\to \\infty}\\frac{\\#\\mathcal{H}_nT}{\\#\\mathcal{H}_n}=1$.  Note that\n\\[\\frac{\\#\\mathcal{H}_nT}{\\#\\mathcal{H}_n}=\\frac{\\lambda(\\mathcal{H}_nTD)}{\\lambda(\\mathcal{H}_nD)}.\\]\nOn the other hand, suppose $g\\in \\SOL_\\R$, then it belongs to a unique $\\gamma D$, where $\\gamma\\in \\Gamma$. In particular we have $d(g,\\gamma)\\leq C.$ So if $g\\in F_n^{\\SOL}$, then $\\gamma\\in \\mathcal{H}_n$.\nHence,  $F_n^{\\SOL}\\subset \\mathcal{H}_nD$, which implies that $\\lambda(\\mathcal{H}_nD)\\geq \\lambda(F_n^{\\SOL})$.\nNow, we have that $TD\\subset B(e,R+C)$, hence $\\mathcal{H}_nTD\\subset F_n^{\\SOL}B(e,R+2C)$. We deduce that \n\\[\\frac{\\#\\mathcal{H}_nT}{\\#\\mathcal{H}_n}\\leq \\frac{\\lambda(F_n^{\\SOL}B(e,R+2C))}{\\lambda(F_n^{\\SOL})},\\]\nwhich converges to $1$ since $F_n^{\\SOL}$ is a F\\o lner sequence.\n\nWe fix an arbitrary finite generating set for $\\Gamma$.\nObserve that since $\\Gamma$ is a uniform lattice in $\\SOL_\\R$, its word metric is bi-Lischitz equivalent to the restriction the word metric of $\\SOL_\\R$.\nWe deduce from Lemma \\ref{lem:psi} and the previous discussion that $\\uu$ satisfies the following properties.\n\n\\begin{lemma}\\label{lem:phi}\nThere exists a constant $L\\geq 1$ such that $\\uu$ satisfies the following properties:\n\\begin{itemize}\n\\item[(i)] it is $L$-Lipschitz;\n\\item[(ii)] it is injective;\n\\item[(iii)] it has $L$-dense image;\n\\item[(iv)] for all integers $q,m\\geq 1$,\nthe proportion of points $g\\in \\mathcal G_n$ such that $\\diam\\uu^{-1}(B_{\\Gamma}(\\uu(g),q/L-L))\\geq 2m+3q$ is at most $4k^{-m+1}$.\n\\end{itemize}\n\\end{lemma}\nOur next step is the following consequence of (ii) and (iv) from the previous lemma.\n\\begin{lemma}\\label{lem:Last}\nThere exists a constant $C'$ such that for all $\\delta>0$, there exists $C'''$ such that for all $h\\in \\Gamma$,\n\\[\\sum_{r\\geq 0}e^{\\delta r}\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n) \\mid  \\diam(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))\\geq r \\right\\}\\right)\\leq C'''e^{C'\\delta |h|}.\\]\n\\end{lemma}\n\\begin{proof}\nReformulating (iv), we have \n\\[ \\PP_{ \\mathcal{G}_n}\\left(\\left\\{g \\mid \\diam\\uu^{-1}(B_{\\Gamma}(\\uu(g),q/L-L))\\geq 2m+3q\\right\\}\\right)\\leq 4 k^{-m+1}.  \\]\nBy (ii), this implies that \n\\[\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n)\\mid \\diam\\uu^{-1}(B_{\\Gamma}(y,q/L-L))\\geq 2m+3q\\right\\}\\right)\\leq 4 k^{-m+1}.\\]\nWe set $p=q/L-L$. Then the previous inequality implies the following one:\n\\[\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n)\\mid \\diam\\uu^{-1}(B_{\\Gamma}(y,p))\\geq 2m+3pL+L^2p\\right\\}\\right)\\leq 4 k^{-m+1}.\\]\nLetting $r=2m+3pL+L^2p$, and $C=(3L+L^2)/2$ and we deduce \n\\[\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n)\\mid \\diam\\uu^{-1}(B_{\\Gamma}(y,p))\\geq r \\right\\}\\right)\\leq 4 k^{-r/2+Cp+1}.\\]\nHence we deduce that for all $h\\in \\Gamma$, \n\\[\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n)\\mid  \\diam(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))\\geq r \\right\\}\\right)\\leq 4 k^{-r/2+C|h|+1}.\\]\nLet $r_0=4C|h|+4$.\nThen for $r\\geq r_0$, we have\n\\[\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n) \\mid  \\diam(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))\\geq r \\right\\}\\right)\\leq 4 k^{-r/4}.\\]\nBesides for all $\\delta>0$, $|h|\\geq 1$\n\\[\\sum_{r=0}^{r_0-1}e^{\\delta r}\\leq \\frac{e^{\\delta(4C|h|+4)}}{e^{\\delta}-1}\\leq C''e^{C'\\delta |h|},\\] where $C'=4C+4$, and $C''=1/(e^\\delta-1)$.\nWe can now conclude that for $\\delta\\leq (\\log k)/8$.\n\\begin{align*}\n\\sum_{r\\geq 0}e^{\\delta r}[\\PP_{ \\mathcal{H}_n}\\left(\\left\\{y\\in\\uu( \\mathcal{G}_n)\\mid  \\diam(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))\\geq r \\right\\}\\right)\n& \\leq C''e^{C'\\delta |h|} +4\\sum_{r=r_0}^{\\infty}k^{-r/4} e^{\\delta r}\\\\\n& \\leq C''e^{C'\\delta |h|} +4 e^{\\delta r_0} \\sum_{r=0}^{\\infty} k^{-r/4} e^{\\delta r}\\\\\n& \\leq C''e^{C'\\delta |h|} +4 e^{C'\\delta |h|} \\sum_{r=0}^{\\infty} k^{-r/8}\\\\\n& \\leq C'''e^{C'\\delta |h|},\n\\end{align*}\nwhere $C'''=C''+4 \\sum_{r=0}^{\\infty} k^{-r/8}$, and the lemma is proven.\n\\end{proof}\n\n\\noindent{\\bf Last step: from word distance to intrinsic distance.}\n\nNote that in Lemmas \\ref{lem:phi} and \\ref{lem:Last}, we use the distance in the groups and not the intrinsic graph distance in the F\\o lner sets. Obviously the last one is larger or equal than the first one, and it coincides for elements $x,y$ at distance at most $r$ in $\\mathcal{H}_n$, such that $x\\in \\mathcal{H}_n^{(r)}$. Actually here,  $\\mathcal{H}_n^{(r)}$ contains all vertices of $\\mathcal{H}_n$ which are at $\\Gamma$-distance at least $r+1$ from the complement of $\\mathcal{H}_n$. \n\nPassing to the intrinsic distance, we might loose $L$-density of the map $\\uu: \\mathcal{G}_n\\to \\mathcal{H}_n$. But it can be restored by modifying slightly $\\mathcal H_n$ as follows: replace it by $\\mathcal H_n'=\\mathcal H_nB_\\Gamma(e_\\Gamma,L)$ (which is still a F\\o lner seqence). Now $\\mathcal H_n$ lies in $\\mathcal{H}_n'^{(L)}$ and by  the previous remark,\n$\\uu(\\mathcal{G}_n)$ is $L$-dense in $\\mathcal H_n$ for the {\\it intrinsic distance} in $\\mathcal H_n'$. But by construction $\\mathcal H_n$ is $L$-dense in $\\mathcal H'_n$ for the intrinsic distance: indeed the latter equals $\\bigcup_{y\\in \\mathcal H_n}B_\\Gamma(y,L)$.\nHence we deduce that $\\uu(\\mathcal{G}_n)$ is $2L$-dense in $\\mathcal H_n'$ for the intrinsic distance of $\\mathcal H_n'$. \nA similar argument shows that $\\uu: \\mathcal{G}_n\\to \\mathcal{H}'_n$ is $L$-Lipschitz.\n\nTo get a $\\mathcal U$-statistical version of \\cref{lem:Last} in intrinsic distance, we use the following lemma.\n\\begin{lemma}\\label{lem:intrinsic}\nWe have\n\\[\\lim_{\\mathcal U}\\PP_{ \\mathcal{H}'_n}\\left(\\left\\{y\\in\\uu( \\mathcal{G}_n)\\mid  \\diam(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))= \\diam_{\\mathcal H_n'}(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))\\right\\}\\right)=1. \\]\n\\end{lemma}\n\\begin{proof}\nDenote $r_y= \\diam(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))$. \nBy the previous discussion it suffices to prove that \n\\begin{equation}\\label{eq:r_y1}\n\\lim_{\\mathcal U}\\PP_{ \\mathcal{H}'_n}\\left(\\left\\{y\\in\\uu( \\mathcal{G}_n)\\mid \\uu^{-1}(y)\\in \\mathcal{G}_n^{r_y}\\right\\}\\right)=1.\n\\end{equation}\nBy \\cref{lem:Last}, we know that \n\\begin{equation}\\label{eq:r_y2}\n\\lim_{r\\to \\infty}\\lim_{\\mathcal U}\\PP_{ \\mathcal{H}'_n}\\left(\\left\\{y\\in\\uu( \\mathcal{G}_n)\\mid  r_y\\leq r\\right\\}\\right)=1.\n\\end{equation}\nDenoting $\\eta=\\lim_{\\mathcal U}|\\mathcal G_n|/|\\mathcal H'_n|$, we have, for each $r\\geq 0$\n\\[\\lim_{\\mathcal U}\\PP_{ \\mathcal{H}'_n}\\left(\\left\\{y\\in\\uu( \\mathcal{G}_n)\\mid \\uu^{-1}(y)\\notin \\mathcal{G}_n^{(r)}\\right\\}\\right)=\\eta\\PP_{ \\mathcal{G}_n}\\left(\\left\\{x\\in \\mathcal{G}_n\\mid x\\notin \\mathcal{G}_n^{(r)}\\right\\}\\right)=0.\\]\nTherefore, \n\\[\\lim_{\\mathcal U}\\PP_{ \\mathcal{H}'_n}\\left(\\left\\{y\\in\\uu( \\mathcal{G}_n)\\mid \\uu^{-1}(y)\\in \\mathcal{G}_n^{(r)}\\right\\}\\right)=1,\\]\nwhich combined with (\\ref{eq:r_y2}) implies (\\ref{eq:r_y1}). This proves the lemma. \n\\end{proof}\n\n\nLet us consider the sequence of maps $\\uu_n: \\mathcal{G}_n\\to \\mathcal{H}'_n$, induced by $\\uu$. By the previous discussion, $\\uu_n$ is injective, $L$-Lipschitz, has $2L$-dense image. \nBesides, combining \\cref{lem:Last} and \\cref{lem:intrinsic}, we deduce that $\\uu_n$ satisfies \n\\[\\sum_{r\\geq 0}e^{\\delta r}\\lim_{\\mathcal U}\\PP_{ \\mathcal{H}'_n}\\left(\\left\\{y\\in \\uu( \\mathcal{G}_n) \\mid  \\diam_{\\mathcal H'_n}(\\uu^{-1}(y)\\cup \\uu^{-1}(yh))\\geq r \\right\\}\\right)\\leq C'''e^{C'\\delta |h|}.\\]\n\n\\noindent{\\bf Concluding step.}\n\n We are now ready to end the proof of Theorem \\ref{thm:example}. \nThe conditions of \\cref{thm:quantME}  and Remark \\ref{rem:Strong} being satisfied\\footnote{Recall that the $L^{\\infty}$ condition is formally equivalent to $\\varphi$-integrability for a function $\\varphi:\\R_+\\to \\R_+\\cup \\{+\\infty\\}$, where $\\varphi(t)=\\infty$ for $t\\geq 1$.}, we obtain the desired integrability conditions. The fact that the resulting ME coupling is mutually cobounded follows from \\cref{prop:fundamentalDomainBis} together with the fact that $\\uu_n$  is\ninjective, and has $2L$-dense image."
+    },
+    {
+      "id": "proposition-47-9891bf77",
+      "type": "proposition",
+      "content": "\\label{prop:bijec}\n\tLet $(Y_n)_n$ and $(Z_n)_n$ be two sequences of uniformly locally finite metric spaces, let $\\uu_n\\colon Y_n\\to Z_n$ be a sequence maps. There exists a sequence of  maps $\\vv_n\\colon Z_n\\to Y_n$ such that\n\t\\[d_{Z_n}(z,\\Im(\\uu_n))=d_{Z_n}(z,\\uu_n(\\vv_n(z))).\\]\n\nMoreover, if $(\\uu_n)$ is $\\mathcal{U}$-statistically coarsely injective (resp.\\ surjective), then $(\\vv_n)_n$ is  $\\mathcal{U}$-statistically coarsely surjective (resp.\\ injective).",
+      "content_preview": "Let (Y_n)_n and (Z_n)_n be two sequences of uniformly locally finite metric spaces, let _n Y_n Z_n be a sequence maps.",
+      "display_name": "Proposition",
+      "label": "prop:bijec",
+      "position": {
+        "line_start": 1570,
+        "line_end": 1575
+      },
+      "references": [],
+      "proof": "Set $\\uu_n:=\\theta_n\\circ \\pi_n$, where $\\theta_n:\\uu_n(Y_n)\\to Y_n$ is an injective right-inverse of $\\uu_n:Y_n\\to\\uu_n(Y_n)$, and where $\\pi_n$ is a projection from $Z$ to $\\uu_n(Y)$ such that $d_{Z_n}(z,\\pi_n(z))=d_{Z_n}(z,\\uu_n(Y))$\t\n(Note that such a map always exists).\n\nNote that for all $y\\in Y_n$, $\\vv_n(\\uu_n(y))$ belongs to $\\uu_n^{-1}(\\uu_n(y))$. Therefore,\n\\[d_{Y_n}(y,\\vv_n(Z_n))\\leq d_{Y_n}(y,\\vv_n(\\uu_n(y)))\\leq  \\diam(\\uu_n^{-1}(\\uu_n(y))). \\]\nHence the $\\mathcal{U}$-statistical coarse surjectivity of  $(\\vv_n)_n$ follows from the $\\mathcal{U}$-statistical coarse injectivity of $(\\uu_n)_n$.\n\nFor the other direction, \nit is enough to show that $\\pi_n$ is $\\mathcal{U}$-statistically coarsely injective. We let $\\eps>0$. Let $C_0$ be such that the proportion of $z\\in Z_n$ at distance at least $C_0$ from $\\uu_n(Y_n)$ is at most $\\eps/2$.\n\n\nWe then observe that for every $z\\in \\uu_n(Y_n)$ such that $\\diam(\\pi_n^{-1}(z))\\geq C$, there exists $z'\\in \\pi_n^{-1}(z)$ that lies at distance at least $C/2$ from $\\uu_n(Y_n)$. Let $A_n(C)$ be the subset of elements of $\\uu_n(Y_n)$ whose pre-images under $\\pi_n$ have diameter at least $C$. The previous argument, together with the $\\mathcal{U}$-statistical coarse surjectivity of $(\\uu_n)$ shows that $\\lim_\\mathcal{U}\\#A_n(C)/\\#Z_n$ tends to $0$ as $C$ tends to infinity.\nNote that the elements $z\\in Z_n$ that are at distance at most $C_0$ from $\\uu_n(Y_n)$ and satisfy $\\diam(\\pi_n^{-1}(\\pi_n(z)))\\geq C$ lie in the $C_0$-neighborhood of $A_n(C)$, whose size is at most $N\\#A_n(C)$ where $N$ is the maximal size of a ball of radius $C_0$ in $Z_n$ (for all $n$). Hence its proportion is $\\mathcal{U}$-a.e at most $\\eps/2$ for $C$ large enough. With our choice of $C_0$, we deduce that the proportion of points of $Z$ such that $\\diam(\\pi_n^{-1}(z))\\geq C$ is $\\mathcal{U}$-a.e. at most $\\eps$, so we are done."
+    },
+    {
+      "id": "proposition-48-dbf1e00e",
+      "type": "proposition",
+      "content": "\\label{prop:biLip}\n\tLet $(Y_n)_n$ and $(Z_n)_n$ be two sequences of finite metric spaces that are uniformly locally finite and $\\uu_n\\colon Y_n\\to Z_n$ be a sequence of $\\mathcal{U}$-statistically coarsely surjective maps, and let $(\\vv_n)_n$ be an ``inverse map'', as defined in \\cref{prop:bijec}.\n\t\\begin{itemize}\n\t\\item  If $(\\uu_n)_n$ is $\\mathcal{U}$-statistically expansive, then $(\\vv_n)_n$ is $\\mathcal{U}$-statistically Lipschitz,\n\t\\item  If $(\\uu_n)_n$ is $\\mathcal{U}$-statistically Lipschitz, then $(\\vv_n)_n$ is $\\mathcal{U}$-statistically expansive,\n\t\\item If $(\\uu_n)_n$ is $\\mathcal{U}$-statistically a coarse equivalence, then so is $(\\vv_n)_n$.\n\t\\end{itemize}",
+      "content_preview": "Let (Y_n)_n and (Z_n)_n be two sequences of finite metric spaces that are uniformly locally finite and _n Y_n Z_n be a sequence of -statistically...",
+      "display_name": "Proposition",
+      "label": "prop:biLip",
+      "position": {
+        "line_start": 1593,
+        "line_end": 1600
+      },
+      "references": [
+        {
+          "target_id": "prop:bijec",
+          "reference_type": "internal",
+          "context": "$(\\vv_n)_n$ be an ``inverse map'', as defined in \\cref{prop:bijec}.\n\t\\begin{itemize}\n\t\\item  If $(\\uu_n)_n$ is $\\mat",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:bijec",
+          "reference_type": "internal",
+          "context": "valence, then so is $(\\vv_n)_n$.\n\t\\end{itemize}By \\cref{prop:bijec}, the third statement follows from the two first o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:bijec",
+          "reference_type": "internal",
+          "context": "n}.\\]\nNote that, with the notation of Proposition \\ref{prop:bijec}, $\\vv_n(z)\\in \\uu_n^{-1}(\\pi_n(z))$, and recall t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:compaireSize",
+          "reference_type": "internal",
+          "context": "l coarse expansivity of $(\\uu_n)$ and Proposition \\ref{prop:compaireSize} (which allows us to replace $\\#Z_n$ by $\\#Y_n$),",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:statCoarLip",
+          "reference_type": "external",
+          "context": "ng $C$ large enough.\nThis concludes the proof of (\\ref{eq:statCoarLip}), and thus of the fact that $(\\vv_n)$ is $\\mathca",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:compaireSize",
+          "reference_type": "internal",
+          "context": "a constant, we can simply ignore it. Moreover, by \\cref{prop:compaireSize}, it is enough to show that \n\\[\\lim_{C\\to \\infty}\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By \\cref{prop:bijec}, the third statement follows from the two first ones. We start proving the first statement. In what follows, we let $r>0$. We start showing that they are $\\mathcal{U}$-statistically Lipschitz. We fix some $\\eps>0$.\nWe want to show that for $C$ large enough,\n\\begin{equation}\\label{eq:statCoarLip}\\lim_\\mathcal{U} \\frac{\\#\\left\\{(z,z')\\in Z_n^2\\mid d(z,z')\\le r, d(\\vv_n(z),\\vv_n(z'))\\ge C\\right\\}}{\\#Z_n}\\leq \\eps.\n\\end{equation}\nWe \ndistinguish two cases, whether $d(z',\\uu_n(Y_n))$ is larger or smaller than some suitable constant $C_0$. For every $R>0$ we let $N_R$ be the maximal cardinality of a ball of radius $R$ in $Z_n$ for all $n$. We have\n\\[ \\frac{\\#\\left\\{(z,z')\\in Z_n^2\\mid d(z,z')\\le r, d(z',\\Im(\\uu_n))\\ge C_0\\right\\}}{\\#Z_n}\\leq N_r\\frac{\\#\\left\\{z'\\in Z_n,   d(z',\\Im(\\uu_n))\\ge C_0\\right\\}}{\\#Z_n}.\\]\nUsing that $(\\uu_n)$ is $\\mathcal{U}$-statistically coarsely surjective, there exists $C_0$ such that the latter is $\\mathcal{U}$-a.e. at most $\\eps/2$.\n\nOn the other hand, by the property defining $\\vv$, the  two conditions $d(z,z')\\le r$ and $d(z',\\Im(\\uu_n))\\le C_0$ imply that $d(z,\\uu_n(\\vv_n(z')))\\le r+C_0$. \nHence the quantity\n\\[ \\frac{\\#\\left\\{(z,z')\\in Z_n^2\\mid d(z,z')\\le r, d(\\vv_n(z),\\vv_n(z'))\\ge C,  d(z',\\Im(\\uu_n))\\le C_0 \\right\\}}{\\#Z_n}\\]\nis at most \n\\[ \\frac{\\#\\left\\{(z,z')\\in Z_n^2\\mid d(\\vv_n(z),\\vv_n(z'))\\ge C, d(z,\\uu_n(\\vv_n(z')))\\le r+C_0, d(z',\\Im(\\uu_n))\\le C_0  \\right\\}}{\\#Z_n}.\\]\n\nNote that  the condition $d(z',\\Im(\\uu_n))\\le C_0$ implies that two such values of $z'$ with same image under $\\vv_n$ lie in the ball $B_{Z_n}(\\uu_n(y),C_0)$. Hence with a change of variable $y=\\vv_n(z')$, we obtain that the latter is at most\n\\[ \\sum_{y\\in Y_n}N_{C_0}\\frac{\\#\\left\\{z\\in Z_n\\mid d(z,\\uu_n(y))\\le r+C_0,d(\\vv_n(z),y)\\ge C \\right\\}}{\\#Z_n}.\\]\nNote that, with the notation of Proposition \\ref{prop:bijec}, $\\vv_n(z)\\in \\uu_n^{-1}(\\pi_n(z))$, and recall that $d(z,\\pi_n(z))=d(z,\\Im(\\uu_n)$. Hence the subset\n$\\left\\{z\\in Z_n\\mid d(z,\\uu_n(y))\\le r+C_0,d(\\vv_n(z),y)\\ge C \\right\\}$\n is contained in the $(r+C_0)$-neighborhood of elements $z''\\in \\Im(\\uu_n)$ such that $d(z'',\\uu_n(y))\\le 2r+2C_0$ and\n$\\diam(\\uu_n^{-1}(\\pi_n(z))\\cup \\{y\\})\\geq C$.\nIn other words the above expression is at most \n\\[ \\sum_{y\\in Y_n}N_{C_0}N_{r+C_0}\\frac{\\#\\left\\{z''\\in Z_n\\mid d(z'',\\uu_n(y))\\le 2r+2C_0,\\diam(\\uu_n^{-1}(z'')\\cup \\{y\\})\\geq C) \\right\\}}{\\#Z_n},\\]\nwhich by the $\\mathcal{U}$-statistical coarse expansivity of $(\\uu_n)$ and Proposition \\ref{prop:compaireSize} (which allows us to replace $\\#Z_n$ by $\\#Y_n$), can be made ($\\mathcal{U}$-a.e.) at most $\\eps/2$ by choosing $C$ large enough.\nThis concludes the proof of (\\ref{eq:statCoarLip}), and thus of the fact that $(\\vv_n)$ is $\\mathcal{U}$-statistically Lipschitz.\n\n\nLet us now assume that $(\\uu_n)_n$ is $\\mathcal{U}$-statistically Lipschitz. Note that we can deduce from the assumptions that $\\uu_n$, and therefore $\\vv_n$ are $\\mathcal{U}$-statistically coarsely bijective.  We need to show that the expression\n\\[\\frac{\\#\\left\\{(y,z)\\in Y_n\\times Z_n \\mid d_{Y_n}(y,\\vv_n(z))\\le r, \\diam(\\{z\\}\\cup\\vv^{-1}_n(y))\\ge C \\right\\}}{\\#Z_n}\\]\ntends to zero as $C\\to \\infty$.\nWe first note that we can assume that $d(z,\\Im\\uu_n)\\leq C_0$ for some large enough constant $C_0$. Indeed, the set  \n\\[\\frac{\\#\\left\\{(y,z)\\in Y_n\\times Z_n \\mid d_{Y_n}(y,\\vv_n(z))\\le r, d(z,\\Im\\uu_n)\\geq C_0 \\right\\}}{\\#Z_n}\\]\nis at most \n\\[N_r\\frac{\\#\\left\\{(z)\\in Z_n \\mid d(z,\\Im\\uu_n)\\geq C_0 \\right\\}}{\\#Z_n}\\]\nwhich can be made arbitrarily small  ($\\mathcal{U}$-a.e.) by choosing $C_0$ large enough, as $\\uu_n$ is $\\mathcal{U}$-statistically coarsely surjective. Hence  we are left to bound the expression\n\\[N_{C_0}\\frac{\\#\\left\\{(y,y')\\in Y_n^2 \\mid d_{Y_n}(y,\\vv_n(\\uu_n(y')))\\le r,  \\diam(\\{\\uu_n(y')\\}\\cup\\vv^{-1}_n(y))\\ge C \\right\\}}{\\#Z_n}.\\]\nSince $N_{C_0}$ is a constant, we can simply ignore it. Moreover, by \\cref{prop:compaireSize}, it is enough to show that \n\\[\\lim_{C\\to \\infty}\\left(\\lim_\\mathcal{U}\\frac{\\#\\left\\{(y,y')\\in Y_n^2 \\mid d_{Y_n}(y,\\vv_n(\\uu_n(y')))\\le r,  \\diam(\\{\\uu_n(y')\\}\\cup\\vv^{-1}_n(y))\\ge C \\right\\}}{\\#Y_n}\\right)=0.\\]\nNote that $\\vv_n(\\uu_n(y'))\\in \\uu_n^{-1}(\\uu_n(y'))$. So reasoning as before, using that $(\\uu_n)$ is $\\mathcal{U}$-statistically coarsely injective, we are left to show that\n\\[\\lim_\\mathcal{U}\\frac{\\#\\left\\{(y,y')\\in Y_n^2 \\mid d_{Y_n}(y,y'))\\le r+C_0,  \\diam(\\{\\uu_n(y')\\}\\cup\\vv^{-1}_n(y))\\ge C-C_0 \\right\\}}{\\#Y_n}\\]\ntends to zero as $C\\to \\infty$, for some given large enough constant $C_0$. \nif $C>0$, this forces $y$ to be in the image of $\\vv_n$, and by definition of $\\vv_n$, we have that $\\Im \\vv_n=\\Im\\vv_n\\circ \\uu_n$. \nHence there exists $y''\\in Y_n$ such that $y=\\vv_n(\\uu_n(y''))$. Again by definition of $\\vv_n$, this implies that $y\\in \\uu_n^{-1}(\\uu_n(y'')$ and therefore that $y=y''$. In conclusion we have that $\\uu_n(y)\\in \\vv_n^{-1}(y)$.\nHence the above expression is at most \n\\[\\lim_\\mathcal{U}\\frac{\\#\\left\\{(y,y')\\in Y_n^2 \\mid d_{Y_n}(y,y'))\\le r+C_0, d(\\uu_n(y'),\\uu_n(y)\\ge C-C_0 \\right\\}}{\\#Y_n},\\]\nwhich tends to zero as $C\\to \\infty$, independently of $n$, as $(\\uu_n)$ is $\\mathcal{U}$-statistically Lipschitz. This ends the proof the second statement, hence of the proposition."
+    },
+    {
+      "id": "proposition-49-79d47dcd",
+      "type": "proposition",
+      "content": "Let $\\uu:Y\\to Z$ be a map between two finite metric spaces and let $\\vv$ be the pseudo-inverse map of $\\uu$.\nWe let $K,L,C$ be positive integers, and $\\eps, \\delta$ be positive real numbers. Assume that:\n\t\\begin{itemize}\n\t\\item[(i)] $\\PP(y\\mid \\diam\\uu^{-1}(B(\\uu(y),2(K+L)))\\geq C)\\leq \\eps$;\t\n\t\\item[(ii)]  $\\PP(z\\mid d(z,\\uu(Y))\\geq K))\\leq \\delta$; \n\t\\end{itemize}\n\tThen \n\t\\[\\PP(z\\mid \\diam(\\vv(B(z,L) \\geq C)\\leq \\frac{\\#Y}{\\#Z}V_Z(K)\\eps+\\delta\\]",
+      "content_preview": "Let :Y Z be a map between two finite metric spaces and let be the pseudo-inverse map of . We let K,L,C be positive integers, and , be positive real...",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 1652,
+        "line_end": 1661
+      },
+      "references": [],
+      "proof": "We let $Z'=[\\uu(Y)]_K$. By (ii), we have $\\PP(Z\\setminus Z')\\leq \\delta$. \nSince for every $z\\in Z'$, there exists $z'\\in B(z,K)\\cap\\uu(Y)$, we deduce that the event \n$\\{z\\in Z'\\mid  \\diam(\\vv(B(z,L) \\geq C \\}$ is included in the event  $\\{z\\mid \\exists z'\\in B(z,K)\\cap\\uu(Y)\\mid \\diam(\\vv(B(z',K+L) \\geq C \\}$. We deduce that\n\\[ \\PP(z\\in Z'\\mid \\diam(\\vv(B(z,L) \\geq C)\\leq V_Z(K)\\PP(z\\in \\uu(Y)\\mid \\diam(\\vv(B(z,K+L) \\geq C). \\]\nOn the other hand, we have\n\\[\\PP(z\\in\\uu(Y)\\mid \\diam(\\vv(B(z,K+L) \\geq C)\\leq \\frac{\\#Y}{\\#Z}\\PP(y\\in Y \\mid \\diam(\\vv(B(\\uu(y),K+L) \\geq C) \\]\nNow observe that since $\\vv=\\vv\\circ\\theta$, where $\\theta$ is a minimal distance projection from $Z$ to $\\uu(Y)$,\nfor every $z\\in B(\\uu(y),K+L)$, we have $\\theta(z)\\in B(\\uu(y),2(K+L))\\cap \\uu(Y)$. Moreover, for every $y\\in Y$, we have $\\vv(\\uu(y))\\in \\uu^{-1}(\\uu(y)).$ Hence we deduce that\n\\[\\vv(B(\\uu(y),K+L)\\subset \\uu^{-1}(B(\\uu(y),2(K+L)))\\]\nHence we have\n\\[\\PP(y\\in Y \\mid \\diam(\\vv(B(\\uu(y),K+L) \\geq C) \\leq \\PP(y\\in Y\\mid \\diam\\uu^{-1}(B(\\uu(y),2(K+L)))\\geq C)\\leq \\eps.\\]\nThe conclusion follows by combining these inequalities."
+    },
+    {
+      "id": "external_eq:quantLip",
+      "type": "unknown",
+      "content": "External reference to 'eq:quantLip'",
+      "content_preview": "External reference to 'eq:quantLip'",
+      "display_name": "Unknown",
+      "label": "eq:quantLip",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:StatBiLGroup1b",
+      "type": "unknown",
+      "content": "External reference to 'item:StatBiLGroup1b'",
+      "content_preview": "External reference to 'item:StatBiLGroup1b'",
+      "display_name": "Unknown",
+      "label": "item:StatBiLGroup1b",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:StatBiLGroup1a",
+      "type": "unknown",
+      "content": "External reference to 'item:StatBiLGroup1a'",
+      "content_preview": "External reference to 'item:StatBiLGroup1a'",
+      "display_name": "Unknown",
+      "label": "item:StatBiLGroup1a",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:StatBiLGroup1c",
+      "type": "unknown",
+      "content": "External reference to 'item:StatBiLGroup1c'",
+      "content_preview": "External reference to 'item:StatBiLGroup1c'",
+      "display_name": "Unknown",
+      "label": "item:StatBiLGroup1c",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:StatBiLGroup2",
+      "type": "unknown",
+      "content": "External reference to 'item:StatBiLGroup2'",
+      "content_preview": "External reference to 'item:StatBiLGroup2'",
+      "display_name": "Unknown",
+      "label": "item:StatBiLGroup2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_sec:BasicSubsets",
+      "type": "unknown",
+      "content": "External reference to 'sec:BasicSubsets'",
+      "content_preview": "External reference to 'sec:BasicSubsets'",
+      "display_name": "Unknown",
+      "label": "sec:BasicSubsets",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:UQuantExp",
+      "type": "unknown",
+      "content": "External reference to 'eq:UQuantExp'",
+      "content_preview": "External reference to 'eq:UQuantExp'",
+      "display_name": "Unknown",
+      "label": "eq:UQuantExp",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:UQuantExpstrong",
+      "type": "unknown",
+      "content": "External reference to 'eq:UQuantExpstrong'",
+      "content_preview": "External reference to 'eq:UQuantExpstrong'",
+      "display_name": "Unknown",
+      "label": "eq:UQuantExpstrong",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:UQuantExpC",
+      "type": "unknown",
+      "content": "External reference to 'eq:UQuantExpC'",
+      "content_preview": "External reference to 'eq:UQuantExpC'",
+      "display_name": "Unknown",
+      "label": "eq:UQuantExpC",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:UQuantExpCstrong",
+      "type": "unknown",
+      "content": "External reference to 'eq:UQuantExpCstrong'",
+      "content_preview": "External reference to 'eq:UQuantExpCstrong'",
+      "display_name": "Unknown",
+      "label": "eq:UQuantExpCstrong",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lem:psi",
+      "type": "unknown",
+      "content": "External reference to 'lem:psi'",
+      "content_preview": "External reference to 'lem:psi'",
+      "display_name": "Unknown",
+      "label": "lem:psi",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lem:phi",
+      "type": "unknown",
+      "content": "External reference to 'lem:phi'",
+      "content_preview": "External reference to 'lem:phi'",
+      "display_name": "Unknown",
+      "label": "lem:phi",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lem:Last",
+      "type": "unknown",
+      "content": "External reference to 'lem:Last'",
+      "content_preview": "External reference to 'lem:Last'",
+      "display_name": "Unknown",
+      "label": "lem:Last",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:r_y2",
+      "type": "unknown",
+      "content": "External reference to 'eq:r_y2'",
+      "content_preview": "External reference to 'eq:r_y2'",
+      "display_name": "Unknown",
+      "label": "eq:r_y2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:r_y1",
+      "type": "unknown",
+      "content": "External reference to 'eq:r_y1'",
+      "content_preview": "External reference to 'eq:r_y1'",
+      "display_name": "Unknown",
+      "label": "eq:r_y1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lem:intrinsic",
+      "type": "unknown",
+      "content": "External reference to 'lem:intrinsic'",
+      "content_preview": "External reference to 'lem:intrinsic'",
+      "display_name": "Unknown",
+      "label": "lem:intrinsic",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:statCoarLip",
+      "type": "unknown",
+      "content": "External reference to 'eq:statCoarLip'",
+      "content_preview": "External reference to 'eq:statCoarLip'",
+      "display_name": "Unknown",
+      "label": "eq:statCoarLip",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-8-0c834c07",
+      "target": "external_eq:quantLip",
+      "type": null
+    },
+    {
+      "source": "proposition-22-57de1880",
+      "target": "proposition-19-4528979d",
+      "type": null
+    },
+    {
+      "source": "proposition-23-bfe9256d",
+      "target": "external_item:StatBiLGroup1b",
+      "type": null
+    },
+    {
+      "source": "proposition-23-bfe9256d",
+      "target": "external_item:StatBiLGroup1a",
+      "type": null
+    },
+    {
+      "source": "proposition-23-bfe9256d",
+      "target": "external_item:StatBiLGroup1c",
+      "type": null
+    },
+    {
+      "source": "proposition-24-1cb09aaa",
+      "target": "external_item:StatBiLGroup2",
+      "type": null
+    },
+    {
+      "source": "proposition-24-1cb09aaa",
+      "target": "proposition-22-57de1880",
+      "type": null
+    },
+    {
+      "source": "proposition-30-5c378fa7",
+      "target": "remark-29-578c96af",
+      "type": null
+    },
+    {
+      "source": "proposition-30-5c378fa7",
+      "target": "proposition-19-4528979d",
+      "type": null
+    },
+    {
+      "source": "remark-39-c96e4f0d",
+      "target": "external_sec:BasicSubsets",
+      "type": null
+    },
+    {
+      "source": "proposition-41-a7edb645",
+      "target": "proposition-34-7ffd6a0f",
+      "type": null
+    },
+    {
+      "source": "proposition-41-a7edb645",
+      "target": "proposition-38-51549dd1",
+      "type": null
+    },
+    {
+      "source": "proposition-41-a7edb645",
+      "target": "proposition-40-bf5d8877",
+      "type": null
+    },
+    {
+      "source": "proposition-42-c81ff1f3",
+      "target": "remark-39-c96e4f0d",
+      "type": null
+    },
+    {
+      "source": "proposition-43-3d2261b3",
+      "target": "theorem-6-fa20644e",
+      "type": null
+    },
+    {
+      "source": "proposition-43-3d2261b3",
+      "target": "external_sec:BasicSubsets",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "theorem-6-fa20644e",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "proposition-42-c81ff1f3",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "external_sec:BasicSubsets",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "external_eq:UQuantExp",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "external_eq:UQuantExpstrong",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "external_eq:UQuantExpC",
+      "type": null
+    },
+    {
+      "source": "proposition-44-8051cc79",
+      "target": "external_eq:UQuantExpCstrong",
+      "type": null
+    },
+    {
+      "source": "remark-45-a808b567",
+      "target": "theorem-7-fc6d9948",
+      "type": null
+    },
+    {
+      "source": "remark-45-a808b567",
+      "target": "theorem-8-0c834c07",
+      "type": null
+    },
+    {
+      "source": "remark-45-a808b567",
+      "target": "external_eq:quantLip",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "external_lem:psi",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "external_lem:phi",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "external_lem:Last",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "external_eq:r_y2",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "external_eq:r_y1",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "external_lem:intrinsic",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "theorem-8-0c834c07",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "remark-45-a808b567",
+      "type": null
+    },
+    {
+      "source": "theorem-46-7e1fd203",
+      "target": "proposition-42-c81ff1f3",
+      "type": null
+    },
+    {
+      "source": "proposition-48-dbf1e00e",
+      "target": "proposition-47-9891bf77",
+      "type": null
+    },
+    {
+      "source": "proposition-48-dbf1e00e",
+      "target": "proposition-19-4528979d",
+      "type": null
+    },
+    {
+      "source": "proposition-48-dbf1e00e",
+      "target": "external_eq:statCoarLip",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 66,
+    "edge_count": 38,
+    "extractor_used": "regex-only"
+  }
+}

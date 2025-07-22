@@ -1,0 +1,2319 @@
+{
+  "arxiv_id": "2507.02469v1",
+  "nodes": [
+    {
+      "id": "lemma-1-2935a0c3",
+      "type": "lemma",
+      "content": "\\label{lem: first majoration of decay of coefficients}\n    Let $B_G$ be the open neighborhood of $e\\in G$ given in \\autoref{lem: open nbhd B_G, shrink NMAN}.\n    For any $v_1,v_2\\in \\calV$ and any $\\varphi_1,\\varphi_2\\in \\Cc(G)$ whose supports $B_i:=\\supp\\varphi_i$ satisfy $B_iB_i^{-1}\\subset B_G$, let $f_i:=\\rmI(\\varphi_i,v_i)\\in \\Hil$ for $i=1,2$. Then there exists a constant $C>0$ such that\n    \\begin{equation*}\n        \\Modofinner{\\pi(g)f_1, f_2} \\leq C \\bigexp{-2\\rho\\kappa(g)} \\int_{H\\cap (B_2^{-1}g B_1)} \\Modinnerv{\\sigma(h)v_1, v_2} \\dif\\nu_H(h),\n    \\end{equation*}\n    uniformly for all $g\\in G$.",
+      "content_preview": "Let B_G be the open neighborhood of e G given in . For any v_1,v_2 and any _1,_2 (G) whose supports B_i:=_i satisfy B_iB_i^-1 B_G, let f_i:=(_i,v_i)...",
+      "display_name": "Lemma",
+      "label": "lem: first majoration of decay of coefficients",
+      "position": {
+        "line_start": 731,
+        "line_end": 738
+      },
+      "references": [
+        {
+          "target_id": "lem: open nbhd B_G",
+          "reference_type": "external",
+          "context": "_G$ be the open neighborhood of $e\\in G$ given in \\autoref{lem: open nbhd B_G, shrink NMAN}.\n    For any $v_1,v_2\\in \\calV$ and any $\\varphi_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "shrink NMAN",
+          "reference_type": "external",
+          "context": "_G$ be the open neighborhood of $e\\in G$ given in \\autoref{lem: open nbhd B_G, shrink NMAN}.\n    For any $v_1,v_2\\in \\calV$ and any $\\varphi_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: local volume decay in G",
+          "reference_type": "internal",
+          "context": "pplied to $\\tilde{\\varphi}_1, \\tilde{\\varphi}_2$, \\autoref{prop: local volume decay in G} yields\n    \\begin{equation*}\n        \\int_G \\tild",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: transform of Phi(h",
+          "reference_type": "external",
+          "context": "}\n    uniformly for all $g\\in G$. Feeding back to \\eqref{eq intm: transform of Phi(h,g)}, we deduce\n    \\begin{equation*}\n        \\norm{\\P",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "g)",
+          "reference_type": "external",
+          "context": "}\n    uniformly for all $g\\in G$. Feeding back to \\eqref{eq intm: transform of Phi(h,g)}, we deduce\n    \\begin{equation*}\n        \\norm{\\P",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq res: transform of pi coefficients",
+          "reference_type": "external",
+          "context": "n G$ and $h\\in H$. We conclude by feeding back to \\eqref{eq res: transform of pi coefficients}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $\\Phi(h,g)\\ne 0$, then there exists $x\\in G$ such that $g^{-1}x=:b_1\\in B_1$ and $xh^{-1}=:b_2\\in B_2$,\n    so $h=b_2^{-1}g b_1 \\in B_2^{-1}g B_1$.\n    By using the unimodularity of $G$, we deduce\n    \\begin{align}\n        \\Phi(h,g) &= \\int_G \\varphi_1(g^{-1}x) \\overline{\\varphi_2(xb_1^{-1}g^{-1}b_2)}\\left({\\delta(g^{-1}x)}{\\delta(xh^{-1})}\\right)^{\\frac{1}{2}} \\dif x\\nonumber\\\\\n        &= \\int_G \\varphi_1(g^{-1}ygb_1) \\overline{\\varphi_2(yb_2)} \\left({\\delta(g^{-1}ygb_1)}{\\delta(yb_2)}\\right)^{\\frac{1}{2}}\\dif y\\label{eq intm: transform of Phi(h,g)}\n    \\end{align}\n    by setting $y=xb_1^{-1}g^{-1} = x hb_2^{-1}$.\n    For $i=1,2$, define\n    \\begin{equation*}\n        \\tilde{\\varphi}_i(x) := \\sup_{b\\in B_i} \\norm{\\varphi_i(xb)}\\delta(xb)^{\\frac{1}{2}}.\n    \\end{equation*}\n    Then $\\tilde{\\varphi}_i \\in \\Cc(B_G)$ by the hypothesis on $B_i$. Applied to $\\tilde{\\varphi}_1, \\tilde{\\varphi}_2$, \\autoref{prop: local volume decay in G} yields\n    \\begin{equation*}\n        \\int_G \\tilde{\\varphi}_1(g^{-1}yg) \\tilde{\\varphi}_2(y) \\dif y \\leq C\\bigexp{-2\\rho\\kappa(g)}\n    \\end{equation*}\n    uniformly for all $g\\in G$. Feeding back to \\eqref{eq intm: transform of Phi(h,g)}, we deduce\n    \\begin{equation*}\n        \\norm{\\Phi(h,g)} \\leq C\\bigexp{-2\\rho\\kappa(g)} \\indicator_{B_2^{-1}gB_1}(h)\n    \\end{equation*}\n    uniformly for $g\\in G$ and $h\\in H$. We conclude by feeding back to \\eqref{eq res: transform of pi coefficients}."
+    },
+    {
+      "id": "proposition-2-da23f295",
+      "type": "proposition",
+      "content": "\\label{prop: theta <= delta}\n    $\\thetagh\\leq \\deltagh$.",
+      "content_preview": ".",
+      "display_name": "Proposition",
+      "label": "prop: theta <= delta",
+      "position": {
+        "line_start": 765,
+        "line_end": 767
+      },
+      "references": [
+        {
+          "target_id": "cor: I(varphi",
+          "reference_type": "external",
+          "context": "p: theta <= delta}\n    $\\thetagh\\leq \\deltagh$.By \\autoref{cor: I(varphi,1) spans Cc(GH)}, the subset\n    \\begin{equation*}\n        \\setdef",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "1) spans Cc(GH)",
+          "reference_type": "external",
+          "context": "p: theta <= delta}\n    $\\thetagh\\leq \\deltagh$.By \\autoref{cor: I(varphi,1) spans Cc(GH)}, the subset\n    \\begin{equation*}\n        \\setdef",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: first majoration of decay of coefficients",
+          "reference_type": "internal",
+          "context": "ion*}\n    spans the space $\\Cc(G/H)$. By applying \\autoref{lem: first majoration of decay of coefficients} to the induced representation $\\lambdagh=\\Ind_H^G",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: BgB volume growth in G",
+          "reference_type": "internal",
+          "context": "\\cup B_1$. By the definition of $\\deltagh$ and by \\autoref{prop: BgB volume growth in G}, given any number $\\delta>\\deltagh$, there exists",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By \\autoref{cor: I(varphi,1) spans Cc(GH)}, the subset\n    \\begin{equation*}\n        \\setdef{\\rmI(\\varphi,1): \\varphi\\in\\Cc(G) \\textup{ with } (\\supp\\varphi)(\\supp\\varphi)^{-1}\\subset B_G}\n    \\end{equation*}\n    spans the space $\\Cc(G/H)$. By applying \\autoref{lem: first majoration of decay of coefficients} to the induced representation $\\lambdagh=\\Ind_H^G 1_H$, we deduce for any $f_1,f_2\\in \\Cc(G/H)$ that\n    \\begin{equation*}\n        \\Modofinner{\\lambdagh(g)f_1, f_2} \\leq C_1\\bigexp{-2\\rho\\kappa(g)} \\nuh{H\\cap B_2^{-1}g B_1}\n    \\end{equation*}\n    uniformly for $g\\in G$, for some compacta $B_1,B_2$ of $G$.\n    Choose $B\\Subset G$ which contains $B_2^{-1} \\cup B_1$. By the definition of $\\deltagh$ and by \\autoref{prop: BgB volume growth in G}, given any number $\\delta>\\deltagh$, there exists a constant $C_1>0$ such that\n    \\begin{equation*}\n        \\nuh{H\\cap B_2^{-1}g B_1}\\leq \\nuh{H\\cap BgB} \\leq C_2 \\bigexp{2\\delta\\rho\\kappa(g)}\n    \\end{equation*}\n    for all $g\\in G$, whence\n    \\begin{equation*}\n        \\Modofinner{\\lambdagh(g)f_1, f_2} \\leq C_3 \\bigexp{-2(1-\\delta)\\rho\\kappa(g)}\n    \\end{equation*}\n    uniformly for $g\\in G$. \n    Since this is valid for any functions $f_1,f_2\\in \\Cc(G/H)$ and any number $\\delta>\\deltagh$, we have $\\deltagh \\geq \\thetagh$."
+    },
+    {
+      "id": "proposition-3-945c92a5",
+      "type": "proposition",
+      "content": "\\label{prop: p <= theta}\n    $p_{G/H} \\leq 1/(1-\\thetagh)$.",
+      "content_preview": "p_G/H 1/(1-).",
+      "display_name": "Proposition",
+      "label": "prop: p <= theta",
+      "position": {
+        "line_start": 797,
+        "line_end": 799
+      },
+      "references": [
+        {
+          "target_id": "mythm: theta and delta",
+          "reference_type": "external",
+          "context": "agh$ and any $f_1,f_2\\in\\Cc(G/H)$, we obtain from \\autoref{mythm: theta and delta} that\n    \\begin{equation*}\n        \\Modofinner{\\l",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: KAK Cartan integral",
+          "reference_type": "internal",
+          "context": "on*}\n    uniformly for $g\\in G$. Then by applying \\autoref{prop: KAK Cartan integral}, we have\n    \\begin{equation*}\n        \\int_G \\Mo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose $\\thetagh<1$.\n    For any $\\theta> \\thetagh$ and any $f_1,f_2\\in\\Cc(G/H)$, we obtain from \\autoref{mythm: theta and delta} that\n    \\begin{equation*}\n        \\Modofinner{\\lambdagh(g)f_1,f_2} \\leq C\\bigexp{(2\\theta-2)\\rho\\kappa(g)}\n    \\end{equation*}\n    uniformly for $g\\in G$. Then by applying \\autoref{prop: KAK Cartan integral}, we have\n    \\begin{equation*}\n        \\int_G \\Modofinner{\\lambdagh(g)f_1,f_2}^{p} \\dif g \\leq C \\int_{\\alie^+} \\bigexp{(2\\theta p-2p + 2)\\rho(X)} \\dif X,\n    \\end{equation*}\n    which is finite as long as $p>1/(1-\\theta)$. By the arbitrariness of $\\theta>\\thetagh$, we conclude that $p_{G/H} \\leq 1/(1-\\thetagh)$."
+    },
+    {
+      "id": "lemma-4-60725c5d",
+      "type": "lemma",
+      "content": "\\label{lem: transform of coefficient for 1B}\n    Let $B$ be a symmetric compact neighborhood of $e$ in $G$. For \n    \\begin{equation*}\n        f(xH) = \\int_H \\indicator_{B}(xh)\\delta(xh)^{-\\frac{1}{2}}\\dif h \\in \\Lspace_{\\mathrm{c}}^\\infty(G/H),\n    \\end{equation*}\n    we have for any $g\\in G$ that\n    \\begin{equation}\\label{eq res: transform}\n        \\int_{BBgBB} \\Innerprod{\\lambdagh(x)f, f} \\dif x = \\nug{B}^2\\, \\nuh{H\\cap BgB},\n    \\end{equation}\n    where $\\dif x$ denotes the Haar measure of $G$.",
+      "content_preview": "Let B be a symmetric compact neighborhood of e in G. For f(xH) = _H _B(xh)(xh)^- h _^(G/H), we have for any g G that _BBgBB x = ^2, , where x denotes...",
+      "display_name": "Lemma",
+      "label": "lem: transform of coefficient for 1B",
+      "position": {
+        "line_start": 815,
+        "line_end": 825
+      },
+      "references": [
+        {
+          "target_id": "subsec: transform",
+          "reference_type": "external",
+          "context": "$G$.Let us apply the preliminary computations in \\autoref{subsec: transform} to the induced representation $\\lambdagh = \\Ind_H",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq def: Phi(h",
+          "reference_type": "external",
+          "context": "$\n    so that the functions $f_1=f_2=f$.\n    Then \\eqref{eq def: Phi(h,g)} gives\n    $\\Phi(h,g) = \\nug{gB \\cap Bh}$\n    and",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "g)",
+          "reference_type": "external",
+          "context": "$\n    so that the functions $f_1=f_2=f$.\n    Then \\eqref{eq def: Phi(h,g)} gives\n    $\\Phi(h,g) = \\nug{gB \\cap Bh}$\n    and",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq res: transform of pi coefficients",
+          "reference_type": "external",
+          "context": "gives\n    $\\Phi(h,g) = \\nug{gB \\cap Bh}$\n    and \\eqref{eq res: transform of pi coefficients} gives\n    \\begin{align*}\n        \\Innerprod{\\lamb",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let us apply the preliminary computations in \\autoref{subsec: transform} to the induced representation $\\lambdagh = \\Ind_H^G 1_H$ and the functions\n    $$\\varphi_1(x) = \\varphi_2(x) = \\indicator_{B}(x) \\delta(x)^{-\\frac{1}{2}}\\in \\Lspace^\\infty_{\\mathrm{c}}(G),$$\n    so that the functions $f_1=f_2=f$.\n    Then \\eqref{eq def: Phi(h,g)} gives\n    $\\Phi(h,g) = \\nug{gB \\cap Bh}$\n    and \\eqref{eq res: transform of pi coefficients} gives\n    \\begin{align*}\n        \\Innerprod{\\lambdagh(g)f_1, f_2} = \\int_{H\\cap BgB} \\nug{gB\\cap Bh} \\dif\\nu_H(h).\n    \\end{align*}\n    Let $B_g:= BBgBB$ for $g\\in G$.\n    Then by Fubini's theorem,\n    \\begin{align*}\n        \\int_{B_g} \\Innerprod{\\lambdagh(x)f_1, f_2} \\dif x &= \\int_{H\\cap BgB} \\int_{B_g} \\nug{xB\\cap Bh} \\dif x \\dif\\nu_H(h).\n    \\end{align*}\n    Then Fubini's theorem further yields, for any $h\\in H\\cap BgB$ that\n    \\begin{align*}\n        &\\int_{B_g} \\nug{xB\\cap Bh} \\dif x = \\int_G \\int_G \\indicator_{B_g}(x) \\indicator_{xB}(y) \\indicator_{Bh}(y)\\dif x \\dif y\\\\\n        &= \\int_G \\int_G \\indicator_{B_g}(x) \\indicator_{xB}(zh) \\indicator_{B}(z) \\dif x \\dif z = \\int_{B} \\nug{B_g \\cap zh B} \\dif z = \\nug{B}^2,\n    \\end{align*}\n    where $z:=yh^{-1}$ and for the last equality we note that $B_g \\supset zh B$ for any $z\\in B$ and $h\\in BgB$. We conclude by combining the equations above."
+    },
+    {
+      "id": "proposition-5-f98da436",
+      "type": "proposition",
+      "content": "\\label{prop: p >= delta}\n    $p_{G/H} \\geq 1/(1-\\deltagh)$.",
+      "content_preview": "p_G/H 1/(1-).",
+      "display_name": "Proposition",
+      "label": "prop: p >= delta",
+      "position": {
+        "line_start": 849,
+        "line_end": 851
+      },
+      "references": [
+        {
+          "target_id": "rem: cofinal choice of B in relative exponent",
+          "reference_type": "internal",
+          "context": "\\deltagh)$.By the definition of $\\deltagh$ and by \\autoref{rem: cofinal choice of B in relative exponent}, for any number $\\delta < \\deltagh$ there exists",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: BgB volume growth in G",
+          "reference_type": "internal",
+          "context": "iformly for $n\\in\\bbN$, whence we can deduce from \\autoref{prop: BgB volume growth in G} that\n    \\begin{equation}\\label{eq intm: lower bo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: transform of coefficient for 1B",
+          "reference_type": "internal",
+          "context": "int.\n\n    Let $f\\in\\Lspace^2(G/H)$ be given as in \\autoref{lem: transform of coefficient for 1B}.\n    We proceed to study the integrability of the",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq res: transform",
+          "reference_type": "external",
+          "context": "dot)f,f}$. By applying the H\\\"older inequality to \\eqref{eq res: transform}, we obtain for $p>1$ that\n    \\begin{align*}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: BgB volume growth in G",
+          "reference_type": "internal",
+          "context": "lign*}\n    where the last inequality follows from \\autoref{prop: BgB volume growth in G}. By substituting $g=e^{X_n}$ and applying \\eqref{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: lower bound on volume growth xn",
+          "reference_type": "external",
+          "context": "h in G}. By substituting $g=e^{X_n}$ and applying \\eqref{eq intm: lower bound on volume growth xn}, we obtain\n    \\begin{equation*}\n        \\int_{BB",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By the definition of $\\deltagh$ and by \\autoref{rem: cofinal choice of B in relative exponent}, for any number $\\delta < \\deltagh$ there exists a symmetric, $K$-bi-invariant, compact neighborhood $B$ of $e$ in $G$, and a sequence $(X_n)$ in $\\alie^+$ going to infinity, such that\n    \\begin{equation*}\n        \\log \\nuh{H\\cap Be^{X_n}B} \\geq \\delta \\log \\nug{Be^{X_n} B} + c_1\n    \\end{equation*}\n    uniformly for $n\\in\\bbN$, whence we can deduce from \\autoref{prop: BgB volume growth in G} that\n    \\begin{equation}\\label{eq intm: lower bound on volume growth xn}\n        \\nuh{H\\cap Be^{X_n}B} \\geq c_2 \\bigexp{2\\delta\\rho(X_n)}\n    \\end{equation}\n    uniformly for $n\\in\\bbN$. By passing to a subsequence, we can assume that the subsets $BBe^{X_n} BB$ with $n\\in\\bbN$ are pairwise disjoint.\n\n    Let $f\\in\\Lspace^2(G/H)$ be given as in \\autoref{lem: transform of coefficient for 1B}.\n    We proceed to study the integrability of the matrix coefficient $\\Innerprod{\\lambdagh(\\cdot)f,f}$. By applying the H\\\"older inequality to \\eqref{eq res: transform}, we obtain for $p>1$ that\n    \\begin{align*}\n        \\int_{BBgBB} \\Modofinner{\\lambdagh(x)f,f}^p\\dif x &\\geq \\nug{BBgBB}^{1-p} \\left(\\int_{BBgBB}\\Innerprod{\\lambdagh(x)f, f}\\dif x\\right)^p\\\\\n        &\\geq c_3 \\bigexp{2(1-p)\\rho\\kappa(g)} \\,\\nuh{H\\cap BgB}^p,\n    \\end{align*}\n    where the last inequality follows from \\autoref{prop: BgB volume growth in G}. By substituting $g=e^{X_n}$ and applying \\eqref{eq intm: lower bound on volume growth xn}, we obtain\n    \\begin{equation*}\n        \\int_{BBe^{X_n}BB} \\Modofinner{\\lambdagh(x)f,f}^p\\dif x \\geq c_4 \\bigexp{(2-2p+2p\\delta)\\rho(X_n)}\n    \\end{equation*}\n    uniformly for $n\\in\\bbN$. Hence, for any $p>p_{G/H}$, from $\\Innerprod{\\lambdagh(\\cdot)f,f}\\in\\Lspace^p(G)$ we deduce\n    \\begin{equation*}\n        \\sum_{n\\in\\bbN} \\bigexp{2(1-p+p\\delta)\\rho(X_n)} < \\infty,\n    \\end{equation*}\n    which implies that $p>1/(1-\\delta)$. By the arbitrariness of $p>p_{G/H}$ and $\\delta<\\deltagh$, we conclude that $p_{G/H}\\geq 1/(1-\\deltagh)$."
+    },
+    {
+      "id": "definition-6-4ecd345a",
+      "type": "definition",
+      "content": "The \\emph{uniform decay} exponent $\\thetagh$ is defined to be the infimum of $\\theta \\in [0,1]$ such that for all $f_1,f_2\\in \\Cc(G/H)$, there exists a constant $C>0$ such that uniformly for all $g\\in G$, we have\n    \\begin{equation*}\n        \\Modofinner{\\lambdagh(g)f_1, f_2} \\leq C \\bigexp{2(\\theta-1)\\rho\\kappa(g)},\n    \\end{equation*}\n    where the map $\\kappa: G\\to \\alie^+$ is the Cartan projection to the positive Weyl chamber $\\alie^+$ of a Cartan subspace $\\alie$ of $\\glie$, and the linear form $\\rho: \\alie\\to \\bbR$ is the half sum of positive restricted roots of $(\\alie; \\glie)$. This number does not depend on the choice of the Cartan decomposition of $G$.",
+      "content_preview": "The exponent is defined to be the infimum of [0,1] such that for all f_1,f_2 (G/H), there exists a constant C>0 such that uniformly for all g G, we...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1018,
+        "line_end": 1024
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-7-10e80d97",
+      "type": "remark",
+      "content": "For a discrete subgroup $\\Gamma$, the exponent $\\theta_{G/\\Gamma}$ is related to the number $\\theta\\!\\left(\\Ltwoggamma\\right)$ defined in \\cite[\\S 1]{lutsko-weich2024polyhedral} via\n    \\begin{equation*}\n        \\theta\\!\\left(\\Ltwoggamma\\right) = \\maxof{2\\theta_{G/\\Gamma} - 1 ,\\, 0}.\n    \\end{equation*}",
+      "content_preview": "For a discrete subgroup , the exponent _G/ is related to the number !() defined in via !() = - 1 ,, 0.",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1025,
+        "line_end": 1030
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-8-5047a556",
+      "type": "definition",
+      "content": "The \\emph{optimal integrability} exponent $p_{G/H}$ of the homogeneous space $G/H$ is defined by the infimum of $p\\in[1,\\infty]$ such that for any compact subset $B$ of $G/H$, we have\n    \\begin{equation*}\n        \\Innerprod{\\lambda_{G/H}(\\cdot)\\indicator_{B}, \\indicator_{B}} \\in \\Lspace^p(G).\n    \\end{equation*}",
+      "content_preview": "The exponent p_G/H of the homogeneous space G/H is defined by the infimum of p such that for any compact subset B of G/H, we have ()_B, _B ^p(G).",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1031,
+        "line_end": 1036
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-9-a53d3327",
+      "type": "remark",
+      "content": "Our definition of $p_{G/H}$ coincides with the number $p_{G/H}$ defined in \\cite[\\S 4.2]{benoist-kobayashi2015tempered} when $H$ is a reductive subgroup.\n    Compared with the exponent $q(G; G/H)$ in \\cite[Def 7.12]{kobayashi2025proper}, our definition is more natural when the $G$-space $G/H$ only admits quasi-invariant measures.",
+      "content_preview": "Our definition of p_G/H coincides with the number p_G/H defined in when H is a reductive subgroup. Compared with the exponent q(G; G/H) in , our...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1038,
+        "line_end": 1041
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-10-f983376c",
+      "type": "definition",
+      "content": "[\\autoref{def: relative exponent of closed subgroups}]\n    The \\emph{volume growth} exponent $\\deltagh$ of $H$ inside $G$ is defined by\n    \\begin{equation*}\n        \\deltagh := \\maxde{0,\\,\\sup_{B\\Subset G} \\limsup_{g\\to \\infty} \\frac{\\log \\nuh{H\\cap BgB}}{\\log \\nug{BgB}}},\n    \\end{equation*}\n    where $B$ ranges over compacta of nonempty interior, the measure $\\nu_G$ is the Haar measure on $G$, and $\\dif \\nu_H(h) = \\left(\\det\\Ad_{H}h\\right)^{1/2} \\dif h$ is the symmetric measure on $H$ (cf.\\,\\autoref{subsec: measures on homogeneous spaces}). This number equals the abscissa of convergence for the following analogue of Dirichlet series (cf.\\,\\autoref{prop: deltagh as the abscissa of convergence})\n    \\begin{equation*}\n        [0,\\infty] \\ni t \\longmapsto \\int_H e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h).\n    \\end{equation*}",
+      "content_preview": "[] The exponent of H inside G is defined by := _g , where B ranges over compacta of nonempty interior, the measure _G is the Haar measure on G, and...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1043,
+        "line_end": 1052
+      },
+      "references": [
+        {
+          "target_id": "def: relative exponent of closed subgroups",
+          "reference_type": "internal",
+          "context": "[\\autoref{def: relative exponent of closed subgroups}]\n    The \\emph{volume growth} exponent $\\deltagh$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "subsec: measures on homogeneous spaces",
+          "reference_type": "external",
+          "context": "/2} \\dif h$ is the symmetric measure on $H$ (cf.\\,\\autoref{subsec: measures on homogeneous spaces}). This number equals the abscissa of convergence",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: deltagh as the abscissa of convergence",
+          "reference_type": "internal",
+          "context": "the following analogue of Dirichlet series (cf.\\,\\autoref{prop: deltagh as the abscissa of convergence})\n    \\begin{equation*}\n        [0,\\infty] \\ni t \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-11-8f54ffdd",
+      "type": "definition",
+      "content": "[\\autoref{def: betagh}]\n    The \\emph{local volume decay} exponent $\\betagh$, which is mainly of interest for connected subgroups, is defined by\n    \\begin{equation*}\n        \\rhogh := \\sup_{\\hlie} \\frac{\\rhoh}{\\rhog},\n    \\end{equation*}\n    where the functions $\\rhoh, \\rhog: \\hlie \\to \\bbR^+$ are respectively the half sum of absolute values of the real parts of complex eigenvalues for the adjoint action of $\\hlie$ on the Lie algebras $\\hlie, \\glie$, as defined in \\cite{benoist-kobayashi2022tempered2}. By convention, we set $0/0=0$.",
+      "content_preview": "[] The exponent , which is mainly of interest for connected subgroups, is defined by := _ , where the functions , : ^+ are respectively the half sum...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1053,
+        "line_end": 1059
+      },
+      "references": [
+        {
+          "target_id": "def: betagh",
+          "reference_type": "internal",
+          "context": "[\\autoref{def: betagh}]\n    The \\emph{local volume decay} exponent $\\bet",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "remark-12-81bdab10",
+      "type": "remark",
+      "content": "The results above carry through to $G$ being a real reductive group without modification for $\\thetagh, \\deltagh, \\betagh$, but for $p_{G/H}$ one needs to replace $\\Lspace^p(G)$ by $\\Lspace^p(G_{\\mathrm{ss}})$ in the definition.",
+      "content_preview": "The results above carry through to G being a real reductive group without modification for , , , but for p_G/H one needs to replace ^p(G) by ^p(G_)...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1136,
+        "line_end": 1138
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-13-146ef28c",
+      "type": "lemma",
+      "content": "[{\\cite[Lem B.1.3]{bekka-harpe2008kazhdans}}]\\label{lem: delta function and quasi-invariant measure on homogeneous space}\n    The homogeneous space $G/H$ always admits a $G$-quasi-invariant Radon measure. More precisely, the following data are equivalent:\n    \\begin{enumerate}\n        \\item a function $\\delta: G\\to \\bbR_{>0}$ which is continuous and satisfies\n        \\begin{equation}\\label{eq ppty: delta-function, measures on homogeneous spaces}\n            \\delta(gh) = \\frac{\\Delta_H(h)}{\\Delta_G(h)} \\delta(g)\n        \\end{equation}\n        for all $g\\in G$ and $h\\in H$;\n        \\item a quasi-invariant Radon measure $\\mu$ on $G/H$.\n    \\end{enumerate}\n    The connection between these two items is given by\n    \\begin{equation}\\label{eq ppty: integration on homogeneous space}\n        \\int_G f(g)\\delta(g) \\dif g = \\int_{G/H} \\int_H f(gh)\\dif h \\dif\\mu(gH)\n    \\end{equation}\n    for all $f\\in\\Cc(G)$. Moreover, the Radon-Nikodym derivative is given explicitly by\n    \\begin{equation*}\n        \\frac{\\drm(g_*\\mu)}{\\drm \\mu}(xH) = \\frac{\\delta(g^{-1}x)}{\\delta(x)}\n    \\end{equation*}\n    for all $g\\in G$ and $x\\in G$.\n    \\qed",
+      "content_preview": "[] The homogeneous space G/H always admits a G-quasi-invariant Radon measure. More precisely, the following data are equivalent: a function : G _>0...",
+      "display_name": "Lemma",
+      "label": "lem: delta function and quasi-invariant measure on homogeneous space",
+      "position": {
+        "line_start": 1184,
+        "line_end": 1204
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-603f122c",
+      "type": "lemma",
+      "content": "\\label{lem: haar measure from product of two closed subgroups}\n    Let $S,T$ be closed subgroups of $G$ so that the complement of $ST$ in $G$ has zero Haar measure, while $K=S\\cap T$ is a compact subgroup. Then we can normalize the Haar measures so that\n    $$ \\dif g = \\frac{\\Delta_G(t)}{\\Delta_T(t)} \\dif s \\dif t.$$\n    In other words, for all $f\\in\\Cc(G)$ we have\n    \\begin{equation*}\n        \\int_G f(g) \\dif g = \\int_S\\int_T f(st)\\frac{\\Delta_G(t)}{\\Delta_T(t)} \\dif s \\dif t.\n    \\end{equation*}",
+      "content_preview": "Let S,T be closed subgroups of G so that the complement of ST in G has zero Haar measure, while K=S T is a compact subgroup.",
+      "display_name": "Lemma",
+      "label": "lem: haar measure from product of two closed subgroups",
+      "position": {
+        "line_start": 1208,
+        "line_end": 1215
+      },
+      "references": [
+        {
+          "target_id": "eq ppty: delta-function",
+          "reference_type": "external",
+          "context": "t_1)=\\Delta_G(t_2)$.\n    Since $\\delta$ satisfies \\eqref{eq ppty: delta-function, measures on homogeneous spaces}, we obtain a quasi-invariant Radon measure $\\mu$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "measures on homogeneous spaces",
+          "reference_type": "external",
+          "context": "t_1)=\\Delta_G(t_2)$.\n    Since $\\delta$ satisfies \\eqref{eq ppty: delta-function, measures on homogeneous spaces}, we obtain a quasi-invariant Radon measure $\\mu$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: delta function and quasi-invariant measure on homogeneous space",
+          "reference_type": "internal",
+          "context": "ant.\n    With $K$ compact, another application of \\autoref{lem: delta function and quasi-invariant measure on homogeneous space} yields\n    \\begin{align*}\n        \\int_{S/K} \\int",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\delta(st) = \\Delta_T(t) / \\Delta_G(t)$. We claim that this is well defined on $G$. Indeed, since the group $K=S\\cap T$ is compact, the restrictions of both $\\Delta_G$ and $\\Delta_T$ to $K$ are trivial. If $s_1t_1=s_2t_2$, then $t_2^{-1}t_1\\in K$; hence $\\Delta_T(t_1)=\\Delta_T(t_2)$ and $\\Delta_G(t_1)=\\Delta_G(t_2)$.\n    Since $\\delta$ satisfies \\eqref{eq ppty: delta-function, measures on homogeneous spaces}, we obtain a quasi-invariant Radon measure $\\mu$ on $G/T = S/K$ with\n    \\begin{equation*}\n        \\int_G f(g)\\delta(g) \\dif g = \\int_{S/K} \\int_T f(st) \\dif t \\dif\\mu(sK).\n    \\end{equation*}\n    Since $\\delta$ is $S$-left-invariant, the left hand side is invariant if we replace $f(\\cdot)$ by $f(s_0\\cdot)$ for any $s_0\\in S$, whence the measure $\\mu$ is $S$-left-invariant.\n    With $K$ compact, another application of \\autoref{lem: delta function and quasi-invariant measure on homogeneous space} yields\n    \\begin{align*}\n        \\int_{S/K} \\int_T f(st) \\dif t \\dif\\mu(sK) &= \\int_{S/K} \\int_K \\int_T f(skt) \\dif t \\dif k \\dif\\mu(sK)\\\\\n        &= \\int_{S} \\int_T f(st) \\dif t \\dif s.\n        \\qedhere\n    \\end{align*}"
+    },
+    {
+      "id": "proposition-15-ea8d6a75",
+      "type": "proposition",
+      "content": "\\label{prop: KAN Iwasawa integral}\n    For any $f\\in \\Cc(G)$, we have\n    \\begin{equation*}\n        \\int_G f(g) \\dif g = \\int_K \\int_P f(kp)\\,e^{2\\rho\\eta(p)} \\dif k \\dif p.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "For any f (G), we have _G f(g) g = _K _P f(kp),e^2(p) k p.",
+      "display_name": "Proposition",
+      "label": "prop: KAN Iwasawa integral",
+      "position": {
+        "line_start": 1263,
+        "line_end": 1269
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-16-03f1fcd4",
+      "type": "proposition",
+      "content": "\\label{prop: KAK Cartan integral}\n    For any $f\\in \\Cc(G)$, we have\n    \\begin{equation*}\n        \\int_G f(g) \\dif g = \\int_K \\int_{\\alie^+} \\int_K f(k_1 e^X k_2) \\left(\\prod_{\\alpha\\in\\Sigma^+}\\sinh^{\\dim \\glie_\\alpha} \\alpha(X)\\right) \\dif k_1\\dif X\\dif k_2.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "For any f (G), we have _G f(g) g = _K _^+ _K f(k_1 e^X k_2) (_^+^ _ (X)) k_1 X k_2.",
+      "display_name": "Proposition",
+      "label": "prop: KAK Cartan integral",
+      "position": {
+        "line_start": 1274,
+        "line_end": 1280
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-17-ed9fb3a4",
+      "type": "theorem",
+      "content": "\\label{thm: Bruhat decomposition}\n    Write $N^w:=m_w N m_w^{-1}$. Then\n    \\begin{equation*}\\label{eq res: Bruhat decomposition}\n        G=\\bigsqcup_{w\\in W_G} Bm_w B = \\bigsqcup_{w\\in W_G}MANN^w m_w.\n    \\end{equation*}\n    Moreover, the term $Bm_{w^*}B=\\Nbar MAN$ is an open submanifold of $G$, while the other terms are submanifolds of strictly lower dimensions.\n    \\qed",
+      "content_preview": "Write N^w:=m_w N m_w^-1. Then G=_w W_G Bm_w B = _w W_GMANN^w m_w. Moreover, the term Bm_w^*B= MAN is an open submanifold of G, while the other terms...",
+      "display_name": "Theorem",
+      "label": "thm: Bruhat decomposition",
+      "position": {
+        "line_start": 1285,
+        "line_end": 1292
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-18-7e480c7d",
+      "type": "proposition",
+      "content": "\\label{prop: integration via Bruhat decomposition}\n    For any $f\\in \\Cc(G)$, we have\n    \\begin{equation*}\n        \\int_G f(g)\\dif g = \\int_{\\Nbar}\\int_M\\int_A\\int_N f(\\nbar man) \\,e^{2\\rho\\log a} \\dif\\nbar \\dif m \\dif a \\dif n.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "For any f (G), we have _G f(g) g = __M_A_N f( man) ,e^2 a m a n.",
+      "display_name": "Proposition",
+      "label": "prop: integration via Bruhat decomposition",
+      "position": {
+        "line_start": 1296,
+        "line_end": 1302
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-19-0bb2907b",
+      "type": "lemma",
+      "content": "\\label{lem: rhom=0 on aq, rhoq=0 on am}\n        For every $X\\in\\alie$, we have $\\rhoQ(X_M)=\\rhoM(X_Q)=0$.",
+      "content_preview": "For every X, we have (X_M)=(X_Q)=0.",
+      "display_name": "Lemma",
+      "label": "lem: rhom=0 on aq, rhoq=0 on am",
+      "position": {
+        "line_start": 1338,
+        "line_end": 1340
+      },
+      "references": [],
+      "proof": "That $\\rhoM(X_Q)=0$ follows directly from the definition. \n        To prove $\\rhoQ(X_M)=0$, let us assume that $\\Pi'\\ne\\emptyset$; otherwise, there is nothing to prove.\n        Dually, this is equivalent to $\\alpha \\perp \\rhoQ$ for all $\\alpha\\in \\Pi'$. But any $\\alpha\\in\\Pi'$ is a simple root, so the $\\alpha$-reflection $s_\\alpha$ preserves setwise $\\Sigma\\cap\\spanangle{\\Pi'}$ and hence also $\\Sigma^+\\setminus\\spanangle{\\Pi'}$. But that means $s_\\alpha(\\rhoQ)=\\rhoQ$, i.e.\\,$\\alpha\\perp\\rhoQ$."
+    },
+    {
+      "id": "proposition-20-15bb2968",
+      "type": "proposition",
+      "content": "\\label{prop: KQ integral, Q psg}\n        For any $f\\in \\Cc(G)$, we have\n        \\begin{equation*}\n            \\int_G f(g) \\dif g = \\int_K \\int_Q f(kq)\\, e^{2\\rhoQ\\eta(q)} \\dif k \\dif q.\n            \\qedineq\n        \\end{equation*}",
+      "content_preview": "For any f (G), we have _G f(g) g = _K _Q f(kq), e^2(q) k q.",
+      "display_name": "Proposition",
+      "label": "prop: KQ integral, Q psg",
+      "position": {
+        "line_start": 1360,
+        "line_end": 1366
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-21-58df2f04",
+      "type": "lemma",
+      "content": "[{\\cite[Prop 5.1]{benoist1996actions}}]\\label{lem: compact error in cartan projection}\n    For any compact subset $B$ of $G$, there exists $r>0$ such that $\\kappa(BgB)\\subset \\kappa(g) + \\alie(r)$ for all $g\\in G$.\\qed",
+      "content_preview": "[] For any compact subset B of G, there exists r>0 such that (BgB) (g) + (r) for all g G.",
+      "display_name": "Lemma",
+      "label": "lem: compact error in cartan projection",
+      "position": {
+        "line_start": 1388,
+        "line_end": 1390
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-22-5b31acfe",
+      "type": "lemma",
+      "content": "[{\\cite[Prop 7.15]{knapp1986representation}}]\\label{lem: W_G invariance, spherical functions}\n    For any $\\chi\\in\\alie^*$ and $w\\in W_G$, we have \\begin{equation*}\n        \\Xi_{\\chi}^G = \\Xi^G_{w\\chi}.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "[] For any ^* and w W_G, we have _^G = ^G_w.",
+      "display_name": "Lemma",
+      "label": "lem: W_G invariance, spherical functions",
+      "position": {
+        "line_start": 1400,
+        "line_end": 1405
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-23-6391f3ad",
+      "type": "lemma",
+      "content": "[{\\cite[Thm 3.4]{narayanan-pasquale2014asymptotics}}]\\label{lem: spherical functions}\n    For each $\\chi\\in (\\alie^*)^+$, there exists a polynomial $p(\\cdot)$ on $\\alie$ such that for all $g\\in G$, we have\n    \\begin{equation*}\n        \\bigexp{(\\chi-\\rho)\\kappa(g)} \\leq \\Xi^G_{\\chi}(g) \\leq p(\\kappa(g))\\bigexp{(\\chi-\\rho)\\kappa(g)}.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "[] For each (^*)^+, there exists a polynomial p() on such that for all g G, we have ^G_(g) p((g)).",
+      "display_name": "Lemma",
+      "label": "lem: spherical functions",
+      "position": {
+        "line_start": 1409,
+        "line_end": 1415
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-24-3411361d",
+      "type": "lemma",
+      "content": "[{\\cite[Lem 4.1]{benoist-kobayashi2022tempered2}}]\\label{lem: nice intermediate subgroups}\n    There exist two intermediate algebraic subgroups $H\\subset F\\subset Q\\subset G$ with the following properties:\n    \\begin{enumerate}\n        \\item $Q$ is a parabolic subgroup of $G$ of minimal dimension containing $H$.\n        \\item Let $U$ be the unipotent radical of $Q$. There exist a Levi decomposition $Q = LU$ such that $L$ is a maximal reductive subgroup of $Q$ and that $H = (L\\cap H)(U\\cap H)$.\n        \\item $S=L\\cap H$ is a maximal reductive subgroup of $H$ and $W=U\\cap H$ is the unipotent radical of $H$.\n        \\item $F= SU$.\n    \\end{enumerate}\n    That is to say, we have a chain of algebraic subgroups with compatible Levi decompositions\n    \\begin{equation*}\n        H=SW \\subset F=SU \\subset Q= LU \\subset G.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "[] There exist two intermediate algebraic subgroups H F Q G with the following properties: Q is a parabolic subgroup of G of minimal dimension...",
+      "display_name": "Lemma",
+      "label": "lem: nice intermediate subgroups",
+      "position": {
+        "line_start": 1435,
+        "line_end": 1448
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-25-c187d8a6",
+      "type": "lemma",
+      "content": "[{\\cite[Prop 4.4]{benoist-kobayashi2022tempered2}}]\\label{lem: domination of group action}\n    Let $U/W$ be equipped with a $U$-invariant Radon measure $\\Vol$.\n    Then for every compact subset $D\\subset U/W$, there exists a compact subset $D_0\\subset U/W$ such that for all $s\\in S$ and $u\\in U$, we have\n    \\begin{equation*}\n        \\Vol(suD\\cap D) \\leq \\Vol(sD_0\\cap D_0).\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "[] Let U/W be equipped with a U-invariant Radon measure . Then for every compact subset D U/W, there exists a compact subset D_0 U/W such that for...",
+      "display_name": "Lemma",
+      "label": "lem: domination of group action",
+      "position": {
+        "line_start": 1454,
+        "line_end": 1461
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-26-0ee2c2b2",
+      "type": "proposition",
+      "content": "\\label{prop: domination of Q/H}\n    For any $f_1, f_2\\in \\Cc(Q/H)$, there exist $\\varphi_1, \\varphi_2\\in \\Cc(L)$ and $D_1, D_2 \\Subset U/W$ such that\n    \\begin{equation*}\n        \\Modofinner{\\lambda_{Q/H}(q)f_1, f_2} \\leq \\Innerprod{\\pi_0(l_q)\\rmI_S^L(\\varphi_1, \\indicator_{D_1}), \\rmI_S^L(\\varphi_2,\\indicator_{D_2})}\n    \\end{equation*}\n    uniformly for all $q\\in Q$, where $l_q$ is the $L$-component of $q$.\n    \\qed",
+      "content_preview": "For any f_1, f_2 (Q/H), there exist _1, _2 (L) and D_1, D_2 U/W such that (q)f_1, f_2 ), _S^L(_2,_D_2) uniformly for all q Q, where l_q is the...",
+      "display_name": "Proposition",
+      "label": "prop: domination of Q/H",
+      "position": {
+        "line_start": 1468,
+        "line_end": 1475
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-27-5a1a96fb",
+      "type": "proposition",
+      "content": "\\label{prop: uniform decay of reductive induction}\n    Given any $\\varphi_1,\\varphi_2\\in \\Cc(L)$ and $D_1, D_2 \\Subset V$, we form $f_i = \\rmI_S^L(\\varphi_i, \\indicator_{D_i})$ for $i=1,2$. Then there exists a constant $C>0$ such that\n    \\begin{equation*}\n        \\Modofinner{\\pi_0(l)f_1, f_2} \\leq C \\bigexp{\\frac{1}{2}\\left(-\\rho_{\\llie} + (2\\rhogh-1)\\rhog\\right)\\!(\\kappa_L(l))}\n    \\end{equation*}\n    uniformly for all $l \\in L$.",
+      "content_preview": "Given any _1,_2 (L) and D_1, D_2 V, we form f_i = _S^L(_i, _D_i) for i=1,2. Then there exists a constant C>0 such that C (-_ + (2-1))!",
+      "display_name": "Proposition",
+      "label": "prop: uniform decay of reductive induction",
+      "position": {
+        "line_start": 1486,
+        "line_end": 1492
+      },
+      "references": [
+        {
+          "target_id": "lem: first majoration of decay of coefficients",
+          "reference_type": "internal",
+          "context": "igma_0|_S, \\Lspace^2(\\ulie/\\wlie))$, we can apply \\autoref{lem: first majoration of decay of coefficients} the induced representation $\\pi_0|_L = \\Ind_S^L(\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: decompose each CcG into small ones",
+          "reference_type": "internal",
+          "context": "$\\pi_0|_L = \\Ind_S^L(\\sigma_0|_S)$. Together with \\autoref{lem: decompose each CcG into small ones} applied to $\\varphi_1,\\varphi_2$, we have\n    \\be",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor: rho fun and volume decay",
+          "reference_type": "internal",
+          "context": "\\kappa_S: S \\to \\alie_\\slie/W_S$.\n    By applying \\autoref{cor: rho fun and volume decay} to the algebraic $S$-module $\\ulie/\\wlie$, we ded",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: kappa H of BgB",
+          "reference_type": "external",
+          "context": "of $\\alie$.\n    Write $X=\\kappa_L(l)$.\n    As in \\eqref{eq intm: kappa H of BgB} in the proof of \\autoref{lem: upper bound on volu",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: upper bound on volume growth in H",
+          "reference_type": "internal",
+          "context": "n \\eqref{eq intm: kappa H of BgB} in the proof of \\autoref{lem: upper bound on volume growth in H}, we have\n    for some uniform constant $r>0$ that",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: unif decay sigma0",
+          "reference_type": "external",
+          "context": "K_S.\n    \\end{equation*}\n    Combining this with \\eqref{eq intm: unif decay sigma0} yields the following uniform estimates\n    \\begin",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: KAK Cartan integral",
+          "reference_type": "internal",
+          "context": "lign*}\n    where the last inequality follows from \\autoref{prop: KAK Cartan integral}. \n    But since\n    \\begin{align*}\n        \\rho_\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: decay of induced S L U/W",
+          "reference_type": "external",
+          "context": "l\\in L$. We conclude the proof by feeding back to \\eqref{eq intm: decay of induced S L U/W}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By unipotency, the exponential map identifies the homogeneous space $U/W$ with the vector space $\\ulie/\\wlie$ equivariantly with respect to the adjoint action of $S$.\n    By identifying $(\\sigma_0|_S, \\Lspace^2(U/W))$ with $(\\sigma_0|_S, \\Lspace^2(\\ulie/\\wlie))$, we can apply \\autoref{lem: first majoration of decay of coefficients} the induced representation $\\pi_0|_L = \\Ind_S^L(\\sigma_0|_S)$. Together with \\autoref{lem: decompose each CcG into small ones} applied to $\\varphi_1,\\varphi_2$, we have\n    \\begin{equation}\\label{eq intm: decay of induced S L U/W}\n        \\Modofinner{\\pi_0(l)f_1, f_2} \\leq C_1 \\bigexp{-\\rho_\\llie\\kappa_L(g)} \\int_{S\\cap BlB} \\Modofinner{\\sigma_0(s)\\indicator_{D_1}, \\indicator_{D_2}} \\dif s\n    \\end{equation}\n    uniformly for all $l\\in L$, for some given $B\\Subset L$.\n\n    For the reductive group $S$, fix a Cartan decomposition $S=K_S A_S K_S$ with the Cartan projection $\\kappa_S: S \\to \\alie_\\slie/W_S$.\n    By applying \\autoref{cor: rho fun and volume decay} to the algebraic $S$-module $\\ulie/\\wlie$, we deduce that\n    \\begin{equation}\\label{eq intm: unif decay sigma0}\n        \\Modofinner{\\sigma_0(s)\\indicator_{D_1}, \\indicator_{D_2}} \\leq C_2 \\bigexp{-\\rho_{\\ulie/\\wlie}\\kappa_S(s)}\n    \\end{equation}\n    uniformly for all $s\\in S$.\n    \n    Since $L$ conjugates the subspace $\\alie_\\slie$ into its Cartan subspace $\\alie$, we can identify $\\alie_\\slie$ with a subspace of $\\alie$.\n    Write $X=\\kappa_L(l)$.\n    As in \\eqref{eq intm: kappa H of BgB} in the proof of \\autoref{lem: upper bound on volume growth in H}, we have\n    for some uniform constant $r>0$ that\n    \\begin{equation*}\n        S\\cap BlB \\subset \\bigcup_{w\\in W_L} K_S \\bigexp{\\left(wX+\\alie(r)\\right)\\cap \\alie_\\slie} K_S.\n    \\end{equation*}\n    Combining this with \\eqref{eq intm: unif decay sigma0} yields the following uniform estimates\n    \\begin{align*}\n        &\\int_{S\\cap BlB} \\Modofinner{\\sigma_0(s)\\indicator_{D_1}, \\indicator_{D_2}} \\dif s \n        \\leq C_2 \\int_{S \\cap BlB} \\bigexp{-\\rho_{\\ulie/\\wlie}\\kappa_S(s)}\\dif s\\\\\n        &\\leq C_2\\sum_{w\\in W_L} \\int_{K_S \\bigexp{\\left(wX+\\alie(r)\\right)\\cap \\alie_\\slie} K_S} \\bigexp{-\\rho_{\\ulie/\\wlie}\\kappa_S(s)} \\dif s\\\\\n        &\\leq C_3 \\sum_{w\\in W_L}\\int_{\\left(wX+\\alie(r)\\right)\\cap \\alie_\\slie}  \\bigexp{\\rho_\\slie(Y)-\\rho_{\\ulie/\\wlie}(Y)} \\dif Y,\n    \\end{align*}\n    where the last inequality follows from \\autoref{prop: KAK Cartan integral}. \n    But since\n    \\begin{align*}\n        \\rho_\\slie - \\rho_{\\ulie/\\wlie} = \\rho_\\slie +\\rho_{\\wlie} - \\rho_{\\ulie} = \\rho_{\\hlie} - \\left(\\rho_\\glie- \\rho_\\llie\\right)\\!/2 \\leq \\left(\\rhogh - 1/2\\right)\\!\\rhog + \\rho_\\llie/2,\n    \\end{align*}\n    we deduce, \n    by the uniform Lipschitz property of $\\rhog, \\rho_\\llie$ on $\\alie$, that\n    \\begin{multline*}\n        \\sum_{w\\in W_L}\\int_{\\left(wX+\\alie(r)\\right)\\cap \\alie_\\slie}  \\bigexp{\\rho_\\slie(Y)-\\rho_{\\ulie/\\wlie}(Y)} \\dif Y \\\\\n        \\leq C_4 \\bigexp{\\frac{1}{2}\\left(\\rho_\\llie+(2\\rhogh-1)\\rhog\\right)\\!(X)}\n    \\end{multline*}\n    uniformly for all $l\\in L$. We conclude the proof by feeding back to \\eqref{eq intm: decay of induced S L U/W}."
+    },
+    {
+      "id": "corollary-28-129ac585",
+      "type": "corollary",
+      "content": "\\label{cor: uniform decay of pi0}\n    Let $\\chi = (2\\rhogh-1)^+ \\rho := \\maxof{2\\betagh-1,0}\\!\\rho \\in \\alie^*$.\n    With the same assumptions as \\autoref{prop: uniform decay of reductive induction}, we have uniformly for $l\\in L$,\n    \\begin{equation*}\n        \\Modofinner{\\pi_0(l)f_1, f_2} \\leq C\\sum_{w\\in W_G} \\Xi^L_{w\\chi}(l).\n    \\end{equation*}",
+      "content_preview": "Let = (2-1)^+ := ! ^*. With the same assumptions as , we have uniformly for l L, C_w W_G ^L_w(l).",
+      "display_name": "Corollary",
+      "label": "cor: uniform decay of pi0",
+      "position": {
+        "line_start": 1541,
+        "line_end": 1547
+      },
+      "references": [
+        {
+          "target_id": "prop: uniform decay of reductive induction",
+          "reference_type": "internal",
+          "context": "ho \\in \\alie^*$.\n    With the same assumptions as \\autoref{prop: uniform decay of reductive induction}, we have uniformly for $l\\in L$,\n    \\begin{equat",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: uniform decay of reductive induction",
+          "reference_type": "internal",
+          "context": "(l).\n    \\end{equation*}If $\\rhogh\\leq 1/2$, then \\autoref{prop: uniform decay of reductive induction} implies that $\\pi_0|_L$ is tempered. We have $\\ch",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm: temperedness",
+          "reference_type": "external",
+          "context": "is tempered. We have $\\chi=0$ and we conclude by \\autoref{thm: temperedness, equivalent formulations}.\n\n    From now on assume $\\rhogh > 1/2$.\n    Sinc",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "equivalent formulations",
+          "reference_type": "external",
+          "context": "is tempered. We have $\\chi=0$ and we conclude by \\autoref{thm: temperedness, equivalent formulations}.\n\n    From now on assume $\\rhogh > 1/2$.\n    Sinc",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eg: rhoh in case of adjoint rep",
+          "reference_type": "internal",
+          "context": "ce $\\rhog = 2\\max_{w\\in W_G} w\\rho$ on $\\alie$ by \\autoref{eg: rhoh in case of adjoint rep}, the uniform estimates of \\autoref{prop: uniform",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: uniform decay of reductive induction",
+          "reference_type": "internal",
+          "context": "in case of adjoint rep}, the uniform estimates of \\autoref{prop: uniform decay of reductive induction} gives\n    \\begin{align*}\n        \\Modofinner{\\pi_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "subsec: parabolic subgroups",
+          "reference_type": "external",
+          "context": "e system $\\Sigma_M^+$ and $\\rho_L = \\rho_M$ as in \\autoref{subsec: parabolic subgroups}; we have also use the fact that $\\rho_\\llie\\circ\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: spherical functions",
+          "reference_type": "internal",
+          "context": "llie\\circ\\kappa_L = 2\\rho_L\\circ\\kappa^+_L$. Then \\autoref{lem: spherical functions} provides the uniform majoration by spherical func",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $\\rhogh\\leq 1/2$, then \\autoref{prop: uniform decay of reductive induction} implies that $\\pi_0|_L$ is tempered. We have $\\chi=0$ and we conclude by \\autoref{thm: temperedness, equivalent formulations}.\n\n    From now on assume $\\rhogh > 1/2$.\n    Since $\\rhog = 2\\max_{w\\in W_G} w\\rho$ on $\\alie$ by \\autoref{eg: rhoh in case of adjoint rep}, the uniform estimates of \\autoref{prop: uniform decay of reductive induction} gives\n    \\begin{align*}\n        \\Modofinner{\\pi_0(l)f_1, f_2} \\leq C \\max_{w\\in W_G} \\bigexp{\\left(-\\rho_L + (2\\rhogh-1)w\\rho\\right)\\!(\\kappa^+_L(l))},\n    \\end{align*}\n    where $\\kappa^+_L: L \\to \\alie$ is the Cartan projection for the positive system $\\Sigma_M^+$ and $\\rho_L = \\rho_M$ as in \\autoref{subsec: parabolic subgroups}; we have also use the fact that $\\rho_\\llie\\circ\\kappa_L = 2\\rho_L\\circ\\kappa^+_L$. Then \\autoref{lem: spherical functions} provides the uniform majoration by spherical functions\n    \\begin{equation*}\n        \\Modofinner{\\pi_0(l)f_1, f_2} \\leq C \\max_{w\\in W_G} \\Xi^L_{w\\chi}(l) \\leq C\\sum_{w\\in W_G}\\Xi^L_{w\\chi}(l).\n        \\qedhere\n    \\end{equation*}"
+    },
+    {
+      "id": "corollary-29-eb95a3bb",
+      "type": "corollary",
+      "content": "\\label{cor: major of q/h}\n    Let $\\chi = (2\\rhogh-1)^+ \\rho$. Then for any $\\xi_1,\\xi_2\\in \\Cc(Q/H)$, there exists a constant $C>0$ such that\n    \\begin{equation*}\n        \\Modofinner{\\lambda_{Q/H}(q)\\xi_1, \\xi_2} \\leq C \\sum_{w\\in W_G} \\Xi^L_{w\\chi}(l_q)\n    \\end{equation*}\n    uniformly for all $q\\in Q$, where $l_q$ is the $L$-component of $q$. \\qed",
+      "content_preview": "Let = (2-1)^+ . Then for any _1,_2 (Q/H), there exists a constant C>0 such that (q)_1, _2 C _w W_G ^L_w(l_q) uniformly for all q Q, where l_q is the...",
+      "display_name": "Corollary",
+      "label": "cor: major of q/h",
+      "position": {
+        "line_start": 1564,
+        "line_end": 1570
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-30-ad3c8474",
+      "type": "theorem",
+      "content": "\\label{thm: uniform decay of lambdagh}\n    Let $\\chi = (2\\rhogh-1)^+\\rho$. Then for any $f_1, f_2\\in \\Cc(G/H)$, there exists a constant $C>0$ such that uniformly for all $g\\in G$, we have\n    \\begin{equation*}\n        \\Modofinner{\\lambdagh(g)f_1, f_2} \\leq C\\,\\Xi^G_{\\chi}(g).\n    \\end{equation*}",
+      "content_preview": "Let = (2-1)^+. Then for any f_1, f_2 (G/H), there exists a constant C>0 such that uniformly for all g G, we have C,^G_(g).",
+      "display_name": "Theorem",
+      "label": "thm: uniform decay of lambdagh",
+      "position": {
+        "line_start": 1619,
+        "line_end": 1624
+      },
+      "references": [
+        {
+          "target_id": "lem: first majoration of decay of coefficients",
+          "reference_type": "internal",
+          "context": "n \\Cc(G)$ and $\\xi_1,\\xi_2\\in \\Cc(Q/H)$.\n    Then \\autoref{lem: first majoration of decay of coefficients} and \\autoref{lem: decompose each CcG into small o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: decompose each CcG into small ones",
+          "reference_type": "internal",
+          "context": "m: first majoration of decay of coefficients} and \\autoref{lem: decompose each CcG into small ones} yield\n    \\begin{equation*}\\label{eq intm: 1 majo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor: major of q/h",
+          "reference_type": "internal",
+          "context": "y for $g\\in G$, for some given $B\\Subset G$. Next \\autoref{cor: major of q/h} yields\n    \\begin{equation*}\n        \\Modofinner{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "subsec: parabolic subgroups",
+          "reference_type": "external",
+          "context": "rom $\\dif\\nu_Q(q) = e^{\\rhoQ\\eta(q)}\\dif q$ (cf.\\,\\autoref{subsec: parabolic subgroups}) we deduce\n    \\begin{multline}\\label{eq intm: 3'",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: KQ integral",
+          "reference_type": "external",
+          "context": "ft-invariant function.\n    \\end{itemize}\n    Then \\autoref{prop: KQ integral, Q psg} yields\n    \\begin{multline*}\n        \\int_{Q\\cap",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Q psg",
+          "reference_type": "external",
+          "context": "ft-invariant function.\n    \\end{itemize}\n    Then \\autoref{prop: KQ integral, Q psg} yields\n    \\begin{multline*}\n        \\int_{Q\\cap",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: compact error in cartan projection",
+          "reference_type": "internal",
+          "context": "hen with $BgB \\subset K e^{\\kappa(g)+\\alie(r)}K$ (\\autoref{lem: compact error in cartan projection}), \\autoref{prop: KAK Cartan integral} gives\n    \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: KAK Cartan integral",
+          "reference_type": "internal",
+          "context": "utoref{lem: compact error in cartan projection}), \\autoref{prop: KAK Cartan integral} gives\n    \\begin{align*}\n        &\\int_{BgB} \\int",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: W_G invariance",
+          "reference_type": "external",
+          "context": "{align*}\n    where the last equality follows from \\autoref{lem: W_G invariance, spherical functions}.\n    But any $Y\\in \\kappa(g)+\\alie(r)$ satisfies",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "spherical functions",
+          "reference_type": "external",
+          "context": "{align*}\n    where the last equality follows from \\autoref{lem: W_G invariance, spherical functions}.\n    But any $Y\\in \\kappa(g)+\\alie(r)$ satisfies",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: 3' major",
+          "reference_type": "external",
+          "context": "ll $Y\\in \\kappa(g)+\\alie(r)$.\n    Chasing back to \\eqref{eq intm: 3' major}, we have proven\n    \\begin{equation*}\n        \\Mo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Since $\\lambdagh = \\Ind_Q^G \\lambda_{Q/H}$, we can bound the coefficient on the left hand side from above by passing from $f_i$ to certain positive functions of the form $\\rmI_Q^G(\\varphi_i, \\xi_i)$, with $\\varphi_1,\\varphi_2\\in \\Cc(G)$ and $\\xi_1,\\xi_2\\in \\Cc(Q/H)$.\n    Then \\autoref{lem: first majoration of decay of coefficients} and \\autoref{lem: decompose each CcG into small ones} yield\n    \\begin{equation*}\\label{eq intm: 1 major of lambdagh}\n        \\Modofinner{\\lambdagh(g)f_1,f_2} \\leq C_1e^{-2\\rho\\kappa(g)} \\int_{Q\\cap BgB} \\Modofinner{\\xi_1, \\lambda_{Q/H}(q^{-1})\\xi_2} \\dif\\nu_Q(q)\n    \\end{equation*}\n    uniformly for $g\\in G$, for some given $B\\Subset G$. Next \\autoref{cor: major of q/h} yields\n    \\begin{equation*}\n        \\Modofinner{\\xi_1, \\lambda_{Q/H}(q^{-1})\\xi_2} \\leq C_2 \\sum_{w\\in W_G} \\Xi^L_{w\\chi}(l_q^{-1})\n    \\end{equation*}\n    uniformly for $q\\in Q$. By combining the two estimates above we obtain\n    \\begin{equation*}\\label{eq intm: 3 major lambdagh}\n        \\Modofinner{\\lambdagh(g)f_1,f_2} \\leq C_3 e^{-2\\rho\\kappa(g)} \\sum_{w\\in W_G} \\int_{Q\\cap BgB}  \\Xi^L_{w\\chi}(l_q^{-1}) \\dif\\nu_Q(q)\n    \\end{equation*}\n    uniformly for $g\\in G$.\n    Since $K_M$ normalizes $N_Q$ and since $\\eta(\\cdot)$ is $N_Q$-right-invariant, for $q \\in Q$ we always have\n    \\begin{align*}\n        \\Xi^L_{w\\chi}(l_q^{-1}) = \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(l_q k_M)} \\dif k_M= \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(qk_M)} \\dif k_M,\n    \\end{align*}\n    whence from $\\dif\\nu_Q(q) = e^{\\rhoQ\\eta(q)}\\dif q$ (cf.\\,\\autoref{subsec: parabolic subgroups}) we deduce\n    \\begin{multline}\\label{eq intm: 3' major}\n        \\Modofinner{\\lambdagh(g)f_1,f_2} \\\\\n        \\leq C_3 e^{-2\\rho\\kappa(g)} \\sum_{w\\in W_G} \\int_{Q\\cap BgB} \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(qk_M)+\\rhoQ\\eta(q)} \\dif k_M \\dif q.\n    \\end{multline}\n\n    Up to enlarging $B$, we can assume $B$ to be $K$-bi-invariant. Note that\n    \\begin{itemize}\n        \\item $K(Q\\cap BgB) = BgB$, and\n        \\item $x\\mapsto \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(xk_M)+\\rhoQ\\eta(x)} \\dif k_M$ is a $K$-left-invariant function.\n    \\end{itemize}\n    Then \\autoref{prop: KQ integral, Q psg} yields\n    \\begin{multline*}\n        \\int_{Q\\cap BgB} \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(qk_M)+\\rhoQ\\eta(q)} \\dif k_M \\dif q\\\\\n        = \\int_{BgB} \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(xk_M)-\\rhoQ\\eta(x)} \\dif k_M \\dif x,\n    \\end{multline*}\n    and then with $BgB \\subset K e^{\\kappa(g)+\\alie(r)}K$ (\\autoref{lem: compact error in cartan projection}), \\autoref{prop: KAK Cartan integral} gives\n    \\begin{align*}\n        &\\int_{BgB} \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(xk_M)-\\rhoQ\\eta(x)} \\dif k_M \\dif x\\\\\n        &\\leq \\int_K \\int_{\\kappa(g)+\\alie(r)} \\int_K \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(k_1 e^Y k_2 k_M)-\\rhoQ\\eta(k_1 e^Y k_2)+2\\rho(Y)}\\dif k_M\\dif k_2 \\dif Y \\dif k_1 \\\\\n        &= \\int_{\\kappa(g)+\\alie(r)} \\int_K \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(e^Y k k_M)-\\rhoQ\\eta(e^Y k)+2\\rho(Y)} \\dif k_M\\dif k\\dif Y  \\\\\n        &\\leq C_4 e^{2\\rho\\kappa(g)}\\int_{\\kappa(g)+\\alie(r)} \\int_K \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(e^Y k k_M)-\\rhoQ\\eta(e^Y k)} \\dif k_M\\dif k\\dif Y,\n    \\end{align*}\n    uniformly for all $g\\in G$. But since $K_M$ normalizes both $A_Q$ and $N_Q$, we have $\\rhoQ\\eta(xk_M) = \\rhoQ\\eta(x)$ for any $k_M \\in K_M$ and $x\\in G$, whence by Fubini,\n    \\begin{align*}\n        &\\int_K \\int_{K_M} e^{-(w\\chi+\\rho_L)\\eta(e^Y k k_M)-\\rhoQ\\eta(e^Y k)} \\dif k_M\\dif k\\\\\n        &= \\int_{K_M} \\int_{K} e^{-(w\\chi+\\rho_L)\\eta(e^Y k)-\\rhoQ\\eta(e^Y k k_M^{-1})} \\dif k \\dif k_M\\\\\n        &= \\int_{K} e^{-(w\\chi + \\rho_L + \\rho_Q)\\eta(e^Y k)} \\dif k = \\int_K e^{-(w\\chi+\\rho)\\eta(e^Y k)} \\dif k\\\\\n        & = \\Xi^G_{w\\chi}(e^Y) = \\Xi^G_{\\chi}(e^Y),\n    \\end{align*}\n    where the last equality follows from \\autoref{lem: W_G invariance, spherical functions}.\n    But any $Y\\in \\kappa(g)+\\alie(r)$ satisfies $\\eta(e^Y k) = \\eta(e^Z k') + \\eta(e^{\\kappa(g)}k)$ for some $Z\\in \\alie(r)$ and $k'\\in K$, whence\n    \\begin{equation*}\n        \\Xi^G_{\\chi}(e^Y) \\leq C_5\\, \\Xi^G_{\\chi}(e^{\\kappa(g)}) = C_5\\,\\Xi^G_{\\chi}(g)\n    \\end{equation*}\n    uniformly for all $Y\\in \\kappa(g)+\\alie(r)$.\n    Chasing back to \\eqref{eq intm: 3' major}, we have proven\n    \\begin{equation*}\n        \\Modofinner{\\lambdagh(g)f_1, f_2} \\leq C_6\\, \\Xi^G_{\\chi}(g)\n    \\end{equation*}\n    uniformly for all $g\\in G$."
+    },
+    {
+      "id": "example-31-668e6b72",
+      "type": "example",
+      "content": "Let $\\dif x$ be a left Haar measure on $G$. The convention for the $\\Lspace^2$-scalar product of functions is\n    $$ \\Innerprod{f_1, f_2}_{\\Lspace^2} = \\int_G f_1(x)\\overline{f_2(x)} \\dif x.$$\n    The \\emph{left regular representation} $\\lambda_G$ of $G$ on the Hilbert space $\\Lspace^2(G)$ acts by\n    $$ \\lambda_G(g)f : x \\mapsto f(g^{-1}x),\\;\\; \\textup{for } f\\in \\Lspace^2(G).$$\n    Then $(\\lambda_G, \\Lspace^2(G))$ is a unitary representation of $G$.\n    The right regular representation comes with an extra factor from the modular function and turns out equivalent to the left one.",
+      "content_preview": "Let x be a left Haar measure on G. The convention for the ^2-scalar product of functions is _^2 = _G f_1(x) x.",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 1739,
+        "line_end": 1746
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-32-74378018",
+      "type": "lemma",
+      "content": "[{\\cite[Lem B.1.2]{bekka-harpe2008kazhdans}}]\\label{lem: surjectivity of Cc(G) to Cc(GH)}\n    Let $\\sigma=1_H$. Then the map $\\Cc(G)\\to \\Cc(G/H)$ given by $\\varphi\\mapsto \\rmI(\\varphi, 1)$ is surjective.\n    \\qed",
+      "content_preview": "[] Let =1_H. Then the map (G) (G/H) given by (, 1) is surjective.",
+      "display_name": "Lemma",
+      "label": "lem: surjectivity of Cc(G) to Cc(GH)",
+      "position": {
+        "line_start": 1792,
+        "line_end": 1795
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-33-c44cb40d",
+      "type": "lemma",
+      "content": "\\label{lem: decompose each CcG into small ones}\n    Given any neighborhood $B_G$ of $e$ in $G$ and any $\\psi\\in \\Cc(G)$, there exists finitely many $\\varphi_i\\in \\Cc(G)$ with $(\\supp\\varphi_i)(\\supp\\varphi_i)^{-1}\\subset B_G$ such that\n    $ \\psi = \\sum_{i} \\varphi_i$.",
+      "content_preview": "Given any neighborhood B_G of e in G and any (G), there exists finitely many _i (G) with (_i)(_i)^-1 B_G such that = _i _i.",
+      "display_name": "Lemma",
+      "label": "lem: decompose each CcG into small ones",
+      "position": {
+        "line_start": 1797,
+        "line_end": 1800
+      },
+      "references": [],
+      "proof": "Since $B_G$ is a neighborhood of $e$, we can find a relatively compact open neighborhood $B$ of $e$ with $BB^{-1}\\subset B_G$. Now\n    $ \\setdef{Bg: g\\in \\supp\\psi} $\n    gives an open cover of $\\supp\\psi$. By the compactness of $\\supp\\psi$, there exists a finite subcover $\\setdef{Bg_i: i\\in I}$ for some finite index set $I$. Then we can find a finite partition of unity $\\setdef{\\chi_i\\in \\Cc(Bg_i)}_{i\\in I}$ subordinated to this cover, so that $1 = \\sum_{i\\in I} \\chi_i$ over $\\supp\\psi$.\n    Then $\\varphi_i:= \\psi\\chi_i\\in \\Cc(G)$ satisfies $(\\supp\\varphi_i)(\\supp\\varphi_i)^{-1}\\subset B_G$ and \n    $ \\psi = \\sum_{i} \\varphi_i$."
+    },
+    {
+      "id": "corollary-34-5c63092e",
+      "type": "corollary",
+      "content": "\\label{cor: I(varphi,1) spans Cc(GH)}\n    Let $\\sigma=1_H$.\n    For any neighborhood $B_G$ of $e$ in $G$, the set \n    $$\\setdef{\\rmI(\\varphi,1): \\varphi\\in\\Cc(G) \\textup{ with } (\\supp\\varphi)(\\supp\\varphi)^{-1}\\subset B_G}$$\n    spans $\\Cc(G/H)$ and hence is a total subset in $\\Ltwogh$.",
+      "content_preview": "Let =1_H. For any neighborhood B_G of e in G, the set ()()^-1 B_G spans (G/H) and hence is a total subset in .",
+      "display_name": "Corollary",
+      "label": "cor: I(varphi,1) spans Cc(GH)",
+      "position": {
+        "line_start": 1810,
+        "line_end": 1815
+      },
+      "references": [
+        {
+          "target_id": "lem: surjectivity of Cc(G) to Cc(GH)",
+          "reference_type": "internal",
+          "context": "al subset in $\\Ltwogh$.The corollary follows from \\autoref{lem: surjectivity of Cc(G) to Cc(GH)} and \\autoref{lem: decompose each CcG into small o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: decompose each CcG into small ones",
+          "reference_type": "internal",
+          "context": "autoref{lem: surjectivity of Cc(G) to Cc(GH)} and \\autoref{lem: decompose each CcG into small ones}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The corollary follows from \\autoref{lem: surjectivity of Cc(G) to Cc(GH)} and \\autoref{lem: decompose each CcG into small ones}."
+    },
+    {
+      "id": "definition-35-985a6e10",
+      "type": "definition",
+      "content": "Let $(\\sigma,\\calV)$ and $(\\pi, \\Hil)$ be two unitary representations of $G$.\n    Say that $\\sigma$ is \\emph{weakly contained} in $\\pi$, if every diagonal matrix coefficient $\\Innerprod{\\sigma(\\cdot)v,v}$ can be approximated, uniformly on compacta, by convex combinations of diagonal matrix coefficients of $\\pi$.",
+      "content_preview": "Let (,) and (, ) be two unitary representations of G. Say that is in , if every diagonal matrix coefficient can be approximated, uniformly on...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1825,
+        "line_end": 1828
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "fact-36-4467f9da",
+      "type": "fact",
+      "content": "Weak containment is preserved under induction and restriction of unitary representations.",
+      "content_preview": "Weak containment is preserved under induction and restriction of unitary representations.",
+      "display_name": "Fact",
+      "label": null,
+      "position": {
+        "line_start": 1832,
+        "line_end": 1834
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "fact-37-1257f798",
+      "type": "fact",
+      "content": "A locally compact group $G$ is amenable iff the trivial representation $1_G$ is weakly contained in the regular representation $\\lambda_G$.",
+      "content_preview": "A locally compact group G is amenable iff the trivial representation 1_G is weakly contained in the regular representation _G.",
+      "display_name": "Fact",
+      "label": null,
+      "position": {
+        "line_start": 1836,
+        "line_end": 1838
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-38-2a266e05",
+      "type": "example",
+      "content": "\\label{eq: L2(G/P)}\n    Let $G$ be a real semisimple algebraic group and $P$ be a minimal parabolic group. As $P$ is amenable, the trivial representation $1_P$ is weakly contained in the regular representation $\\lambda_P$. Hence, the quasi-regular representation $\\lambda_{G/P} = \\Ind_P^G 1_P$ is weakly contained in $\\Ind_P^G \\lambda_P = \\lambda_G$.",
+      "content_preview": "Let G be a real semisimple algebraic group and P be a minimal parabolic group. As P is amenable, the trivial representation 1_P is weakly contained...",
+      "display_name": "Example",
+      "label": "eq: L2(G/P)",
+      "position": {
+        "line_start": 1840,
+        "line_end": 1842
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-39-fb48ec7a",
+      "type": "definition",
+      "content": "A unitary representation $\\pi$ of $G$ is \\emph{tempered} if $\\pi$ is weakly contained in the regular representation $(\\lambda_G, \\Lspace^2(G))$.",
+      "content_preview": "A unitary representation of G is if is weakly contained in the regular representation (_G, ^2(G)).",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1847,
+        "line_end": 1849
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-40-35837d13",
+      "type": "theorem",
+      "content": "[{\\cite{cowling-haagerup1988almost}}]\\label{thm: temperedness, equivalent formulations}\n    Let $G$ be a real semisimple algebraic group and $K$ be a maximal compact subgroup of $G$.\n    Then for any unitary representation $(\\pi, \\Hil)$ of $G$, the following statements are equivalent:\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item $\\pi$ is tempered;\n        \\item for all $K$-finite vectors $v_1, v_2$ in $\\Hil$, we have\n        \\begin{equation*}\n            \\Modofinner{\\pi(g) v_1, v_2} \\leq \\sqrt{\\dim\\spanangle{Kv_1} \\dim\\spanangle{Kv_2}} \\Norm{v_1} \\Norm{v_2} \\Xi^G_0(g);\n        \\end{equation*}\n        \\item there exists a dense subspace $\\Hil_0$ of $\\Hil$, such that for all $v_1,v_2\\in\\Hil_0$, the coefficients $\\Innerprod{\\pi(\\cdot)v_1,v_2}\\in \\Lspace^{2+\\varepsilon}(G)$ for any $\\varepsilon>0$.\\qed\n    \\end{enumerate}",
+      "content_preview": "[] Let G be a real semisimple algebraic group and K be a maximal compact subgroup of G. Then for any unitary representation (, ) of G, the following...",
+      "display_name": "Theorem",
+      "label": "thm: temperedness, equivalent formulations",
+      "position": {
+        "line_start": 1853,
+        "line_end": 1864
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-41-41304cb7",
+      "type": "corollary",
+      "content": "\\label{cor: temperedness iff thetagh}\n    $\\Ltwogh$ is tempered iff $\\thetagh\\leq 1/2$. \\qed",
+      "content_preview": "is tempered iff 1/2.",
+      "display_name": "Corollary",
+      "label": "cor: temperedness iff thetagh",
+      "position": {
+        "line_start": 1869,
+        "line_end": 1871
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-42-aa6b44df",
+      "type": "lemma",
+      "content": "\\label{lem: volume decay in NMAN}\n    For any compact subset $B$ of $\\Nbar MAN$, there exists a constant $C>0$ such that for all $a\\in A^+$ we have $\\nug{a B a^{-1} \\cap B} \\leq C \\bigexp{-2\\rho \\log a}\\!.$",
+      "content_preview": "For any compact subset B of MAN, there exists a constant C>0 such that for all a A^+ we have B C !.",
+      "display_name": "Lemma",
+      "label": "lem: volume decay in NMAN",
+      "position": {
+        "line_start": 1880,
+        "line_end": 1882
+      },
+      "references": [
+        {
+          "target_id": "prop: integration via Bruhat decomposition",
+          "reference_type": "internal",
+          "context": "such that $B \\subset B_{\\Nbar}M B_A B_N$. From \\autoref{prop: integration via Bruhat decomposition} we deduce\n    \\begin{align*}\n        \\nug{a B a^{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By the Bruhat decomposition, there exist compact sets \n    $$B_{\\Nbar}\\subset \\Nbar,\\; B_A\\subset A,\\; B_N\\subset N$$\n    such that $B \\subset B_{\\Nbar}M B_A B_N$. From \\autoref{prop: integration via Bruhat decomposition} we deduce\n    \\begin{align*}\n        \\nug{a B a^{-1} \\cap B}\\leq \\int_{B_\\Nbar}\\int_M\\int_{B_A}\\int_{B_N}  \\indicator_{B}(a^{-1}\\nbar ma_1 n a)\\,e^{2\\rho\\log a_1} \\dif\\nbar \\dif m\\dif a_1 \\dif n.\n    \\end{align*}\n    Since $a$ normalizes both $\\Nbar$ and $N$, and since $MA$ centralizes $a$, we have furthermore\n    \\begin{align*}\n        & \\int_{B_\\Nbar}\\int_M\\int_{B_A}\\int_{B_N}  \\indicator_{B}(a^{-1}\\nbar ma_1 n a)\\,e^{2\\rho\\log a_1} \\dif\\nbar \\dif m\\dif a_1 \\dif n\\\\\n        &= \\int_{B_\\Nbar}\\int_M\\int_{B_A}\\int_{B_N}  \\indicator_{B}\\!\\left((a^{-1}\\nbar a) ma_1 (a^{-1} n a)\\right)\\,e^{2\\rho\\log a_1} \\dif\\nbar \\dif m\\dif a_1 \\dif n\\\\\n        &\\leq \\int_{B_{\\Nbar}\\cap a B_\\Nbar a^{-1}}\\dif \\nbar \\int_M \\dif m \\int_{B_A} e^{2\\rho\\log a_1} \\dif a_1 \\int_{B_{N}}\\dif n\\\\\n        &\\leq \\int_{a^{-1}B_\\Nbar a\\cap B_\\Nbar} e^{-2\\rho \\log a}\\dif \\nbar' \\,C(B_A, B_N)\\\\\n        &\\leq C(B_\\Nbar, B_A, B_N) \\bigexp{-2\\rho\\log a},\n    \\end{align*}\n    where we set $\\nbar'=a^{-1}\\nbar a$ and get $\\dif\\nbar' = e^{2\\rho\\log a} \\dif \\nbar$."
+    },
+    {
+      "id": "lemma-43-632944b6",
+      "type": "lemma",
+      "content": "\\label{lem: open nbhd B_G, shrink NMAN}\n    There exists an open neighborhood $B_G$ of $e$ in $G$, such that for all $k\\in K$ we have $kB_G k^{-1}\\subset \\Nbar MAN$.",
+      "content_preview": "There exists an open neighborhood B_G of e in G, such that for all k K we have kB_G k^-1 MAN.",
+      "display_name": "Lemma",
+      "label": "lem: open nbhd B_G, shrink NMAN",
+      "position": {
+        "line_start": 1901,
+        "line_end": 1903
+      },
+      "references": [],
+      "proof": "Since $\\Nbar MAN$ is an open neighborhood of $e$, and since the map\n    $$ K\\times G\\to G,\\;\\; (k,g)\\mapsto kgk^{-1}$$\n    is continuous, we deduce that for each $k\\in K$, there exists a neighborhood $V_k$ of $k$ in $K$ and an open neighborhood $U_k$ of $e$ in $G$, such that\n    $$ k_0 xk_0^{-1} \\in \\Nbar MAN, \\;\\; \\forall k_0\\in V_k,\\;\\forall x\\in U_k.$$\n    By the compactness of $K$, there exists a covering by a finite collection $V_{k_1},\\dots, V_{k_m}$ for some $k_1,\\dots,k_m\\in K$. Let $B_G$ be the intersection of all the $U_{k_i}$ for $i=1,\\dots,m$. Then $B_G$ is an open neighborhood of $e$ in $G$  which satisfies the statement of the lemma."
+    },
+    {
+      "id": "proposition-44-89c366d0",
+      "type": "proposition",
+      "content": "\\label{prop: local volume decay in G}\n    Let $B_G$ be given as in \\autoref{lem: open nbhd B_G, shrink NMAN}. Then for any $\\varphi_1,\\varphi_2\\in \\Cc(B_G)$, there exists a constant $C=C(\\varphi_1,\\varphi_2)$ such that \n    \\begin{equation*}\n        \\left|\\int_G \\varphi_1(g^{-1}x g)\\varphi_2(x)\\dif x\\right| \\leq C \\bigexp{-2\\rho\\kappa(g)}\n    \\end{equation*}\n    uniformly for all $g\\in G$.",
+      "content_preview": "Let B_G be given as in . Then for any _1,_2 (B_G), there exists a constant C=C(_1,_2) such that |_G _1(g^-1x g)_2(x) x| C uniformly for all g G.",
+      "display_name": "Proposition",
+      "label": "prop: local volume decay in G",
+      "position": {
+        "line_start": 1913,
+        "line_end": 1919
+      },
+      "references": [
+        {
+          "target_id": "lem: open nbhd B_G",
+          "reference_type": "external",
+          "context": "l volume decay in G}\n    Let $B_G$ be given as in \\autoref{lem: open nbhd B_G, shrink NMAN}. Then for any $\\varphi_1,\\varphi_2\\in \\Cc(B_G)$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "shrink NMAN",
+          "reference_type": "external",
+          "context": "l volume decay in G}\n    Let $B_G$ be given as in \\autoref{lem: open nbhd B_G, shrink NMAN}. Then for any $\\varphi_1,\\varphi_2\\in \\Cc(B_G)$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: open nbhd B_G",
+          "reference_type": "external",
+          "context": "s functions compactly supported in $\\Nbar MAN$ by \\autoref{lem: open nbhd B_G, shrink NMAN}.\n    For $g\\in G$, we can write $g=k_2 e^X k_1$ f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "shrink NMAN",
+          "reference_type": "external",
+          "context": "s functions compactly supported in $\\Nbar MAN$ by \\autoref{lem: open nbhd B_G, shrink NMAN}.\n    For $g\\in G$, we can write $g=k_2 e^X k_1$ f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: volume decay in NMAN",
+          "reference_type": "internal",
+          "context": "s bounded from above by $C \\bigexp{-2\\rho(X)}$ by \\autoref{lem: volume decay in NMAN}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "For $i=1,2$, define $\\tilde{\\varphi}_i(x) := \\sup_{k\\in K} \\left|\\varphi_i(kxk^{-1})\\right|$.\n    \n    \n    \n    Then $\\tilde{\\varphi}_1, \\tilde{\\varphi}_2$ are continuous functions compactly supported in $\\Nbar MAN$ by \\autoref{lem: open nbhd B_G, shrink NMAN}.\n    For $g\\in G$, we can write $g=k_2 e^X k_1$ for $X=\\kappa(g)$ and some $k_1,k_2\\in K$. By the unimodularity of $G$, we have\n    \\begin{align*}\n        \\norm{\\int_G \\varphi_1(g^{-1}x g)\\varphi_2(x)\\dif x}\n        &= \\norm{\\int_G \\varphi_1(k_1^{-1} e^{-X}k_2^{-1}x k_2 e^X k_1 )\\varphi_2(x)\\dif x}\\\\\n        &= \\norm{\\int_G \\varphi_1(k_1^{-1} e^{-X}y e^X k_1 )\\varphi_2(k_2 y k_2^{-1})\\dif y}\\\\\n        &\\leq \\int_G \\tilde{\\varphi}_1(e^{-X} y e^X) \\tilde{\\varphi}_2(y) \\dif y,\n    \\end{align*}\n    which is bounded from above by $C \\bigexp{-2\\rho(X)}$ by \\autoref{lem: volume decay in NMAN}."
+    },
+    {
+      "id": "definition-45-65d28197",
+      "type": "definition",
+      "content": "For each $Y\\in\\hlie$, the action of $\\tau(Y)$ on $V\\otimes \\bbC$ admits a Jordan normal form over $\\bbC$ with diagonal elements $\\lambda_1,\\dots,\\lambda_d$. We define\n    \\begin{equation*}\n        \\rho_V(Y) := \\frac{1}{2} \\sum_{i=1}^d \\norm{\\Re\\lambda_i}.\n    \\end{equation*}",
+      "content_preview": "For each Y, the action of (Y) on V admits a Jordan normal form over with diagonal elements _1,,_d. We define _V(Y) := _i=1^d .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1941,
+        "line_end": 1946
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-46-55918a73",
+      "type": "example",
+      "content": "\\label{eg: rhoh in case of adjoint rep}\n    Let $H$ be a reductive group and $(\\tau, V)=(\\Ad, \\hlie)$ be the adjoint representation. Fix a positive system $\\Sigma^+(\\alieh; \\hlie)$ and let $\\rhoH$ be the usual half sum of positive roots.\n    Then the convex function $\\rhoh$ coincides with the twice of the linear form $\\rhoH$ on the positive Weyl chamber $\\alieh^+$. If $W_H=W(\\alieh;\\hlie)$ denotes the Weyl group, then for all $X\\in\\alieh$,\n    $$\\rhoh(X) = \\max_{w\\in W_H} 2\\rhoH(wX).$$\n    In particular, $\\rhoh$ is $W_H$-invariant.",
+      "content_preview": "Let H be a reductive group and (, V)=(, ) be the adjoint representation. Fix a positive system ^+(; ) and let be the usual half sum of positive roots.",
+      "display_name": "Example",
+      "label": "eg: rhoh in case of adjoint rep",
+      "position": {
+        "line_start": 1955,
+        "line_end": 1960
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-47-51713e89",
+      "type": "lemma",
+      "content": "[{\\cite[Lem 2.8]{benoist-kobayashi2022tempered2}}]\\label{lem: rho fn and volume decay}\n    For any compact neighborhood $B$ of $0$ in $V$, there exist constants $c, C>0$ such that\n    \\begin{equation*}\n        c \\bigexp{-\\rho_V(X)} \\leq e^{-\\Tr \\tau(X)/2}\\Vol\\!\\left(\\tau(e^X) B\\cap B\\right) \\leq C \\bigexp{-\\rho_V(X)}\n    \\end{equation*}\n    uniformly for all $X\\in\\alieh$.\\qed",
+      "content_preview": "[] For any compact neighborhood B of 0 in V, there exist constants c, C>0 such that c e^- (X)/2!((e^X) B B) C uniformly for all X.",
+      "display_name": "Lemma",
+      "label": "lem: rho fn and volume decay",
+      "position": {
+        "line_start": 1963,
+        "line_end": 1969
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-48-9db75c5c",
+      "type": "corollary",
+      "content": "\\label{cor: rho fun and volume decay}\n    Let $H$ be a real reductive group and $\\tau: H\\to \\GL(V)$ be an algebraic representation. Consider the unitary representation $(T, \\Lspace^2(V))$ of the group $G$ induced by\n    \\begin{equation*}\n        T(g)f(v) = f(\\tau(g)^{-1}v) \\left(\\det\\tau(g)\\right)^{-\\frac{1}{2}},\n    \\end{equation*}\n    for $f\\in \\Lspace^2(V)$ and $v\\in V$. Then for any compact neighborhood $B$ of $0$ in $V$, there exist constants $c, C>0$ such that\n    \\begin{equation*}\n        c \\bigexp{-\\rho_V\\kappa_H(h)} \\leq \\Innerprod{T(h)\\indicator_{B}, \\indicator_{B}} \\leq C \\bigexp{-\\rho_V\\kappa_H(h)}\n    \\end{equation*}\n    uniformly for all $h\\in H$, where $\\kappa_H: H\\to \\alieh^+$ is the Cartan projection.",
+      "content_preview": "Let H be a real reductive group and : H (V) be an algebraic representation. Consider the unitary representation (T, ^2(V)) of the group G induced by...",
+      "display_name": "Corollary",
+      "label": "cor: rho fun and volume decay",
+      "position": {
+        "line_start": 1972,
+        "line_end": 1982
+      },
+      "references": [
+        {
+          "target_id": "lem: rho fn and volume decay",
+          "reference_type": "internal",
+          "context": "equation*}\n    whence we can conclude by applying \\autoref{lem: rho fn and volume decay}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $H=K_H A_H^+ K_H$ be the Cartan decomposition of $H$ associated with $\\kappa_H$. The subset $D:=\\tau(K_H)B$ is a $K_H$-left-invariant compact neighborhood of $0$ in $V$. Thus for any $k_1,k_2\\in K_H$ and $X\\in \\alieh$, we have\n    \\begin{equation*}\n        \\Innerprod{T(k_1e^X k_2)\\indicator_D, \\indicator_D} = e^{-\\Tr\\tau(X)/2} \\Vol\\!\\left(\\tau(e^X)D\\cap D\\right),\n    \\end{equation*}\n    whence we can conclude by applying \\autoref{lem: rho fn and volume decay}."
+    },
+    {
+      "id": "definition-49-30d94a12",
+      "type": "definition",
+      "content": "\\label{def: betagh}\n    Let $G$ be a real semisimple algebraic group and $H$ be an algebraic subgroup of $G$. The \\emph{relative decay exponent} $\\betagh$ is defined by\n    \\begin{equation*}\n        \\betagh := \\sup_{\\hlie} \\frac{\\rhoh}{\\rhog},\n    \\end{equation*}\n    where $\\glie, \\hlie$ are viewed as $\\hlie$-module through the adjoint action. We take $0/0=0$ by convention.",
+      "content_preview": "Let G be a real semisimple algebraic group and H be an algebraic subgroup of G. The is defined by := _ , where , are viewed as -module through the...",
+      "display_name": "Definition",
+      "label": "def: betagh",
+      "position": {
+        "line_start": 1993,
+        "line_end": 1999
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-50-a2354d06",
+      "type": "remark",
+      "content": "(1) By definition, the number $\\betagh$ lies in $[0,1]$.\n\n    (2) If $H$ is an algebraic subgroup of $G$, then the Jordan decomposition implies that\n    \\begin{equation*}\n        \\betagh = \\sup_{\\alieh} \\frac{\\rhoh}{\\rhog}.\n    \\end{equation*}",
+      "content_preview": "(1) By definition, the number lies in [0,1]. (2) If H is an algebraic subgroup of G, then the Jordan decomposition implies that = _ .",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 2000,
+        "line_end": 2007
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-51-4be4d3ce",
+      "type": "proposition",
+      "content": "\\label{prop: BgB volume growth in G}\n    For any $B\\Subset G$, there exist constants $c,C>0$ such that\n    \\begin{equation*}\n        c \\bigexp{2\\rho\\kappa(g)} \\leq \\nug{BgB} \\leq C\\bigexp{2\\rho\\kappa(g)}\n    \\end{equation*}\n    uniformly for all $g\\in G$.",
+      "content_preview": "For any B G, there exist constants c,C>0 such that c C uniformly for all g G.",
+      "display_name": "Proposition",
+      "label": "prop: BgB volume growth in G",
+      "position": {
+        "line_start": 2018,
+        "line_end": 2024
+      },
+      "references": [
+        {
+          "target_id": "lem: compact error in cartan projection",
+          "reference_type": "internal",
+          "context": "$X = \\kappa(g)$.\n    For the upper bound,\n    by \\autoref{lem: compact error in cartan projection}, there exists $r>0$ such that $\\kappa(BgB)\\subset",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: KAK Cartan integral",
+          "reference_type": "internal",
+          "context": "ence we have $BgB \\subset K e^{X+\\alie(r)} K$. By \\autoref{prop: KAK Cartan integral}, \n    \\begin{align*}\n        \\nug{BgB} \\leq \\int_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: compact error in cartan projection",
+          "reference_type": "internal",
+          "context": "G$.\n\n    For the lower bound, first note that by \\autoref{lem: compact error in cartan projection}, up to translation we can suppose that $B$ contai",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: open nbhd B_G",
+          "reference_type": "external",
+          "context": "with $kB'k^{-1}\\subset B$ for all $k\\in K$ (cf.\\,\\autoref{lem: open nbhd B_G, shrink NMAN}).\n    Write $g = k_1 e^X k_2$. By the unimodulari",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "shrink NMAN",
+          "reference_type": "external",
+          "context": "with $kB'k^{-1}\\subset B$ for all $k\\in K$ (cf.\\,\\autoref{lem: open nbhd B_G, shrink NMAN}).\n    Write $g = k_1 e^X k_2$. By the unimodulari",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm: Bruhat decomposition",
+          "reference_type": "internal",
+          "context": "et \\Nbar  MAN$. \n    By the Bruhat decomposition (\\autoref{thm: Bruhat decomposition}), there exist compact neighborhoods of $e$ in the",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: integration via Bruhat decomposition",
+          "reference_type": "internal",
+          "context": "right)}.\n    \\end{align*}\n    By further applying \\autoref{prop: integration via Bruhat decomposition}, we obtain\n    \\begin{align*}\n        \\nug{B'e^X",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $X = \\kappa(g)$.\n    For the upper bound,\n    by \\autoref{lem: compact error in cartan projection}, there exists $r>0$ such that $\\kappa(BgB)\\subset \\kappa(g) + \\alie(r)$ for all $g\\in G$, whence we have $BgB \\subset K e^{X+\\alie(r)} K$. By \\autoref{prop: KAK Cartan integral}, \n    \\begin{align*}\n        \\nug{BgB} \\leq \\int_K \\int_{X+\\alie(r)} \\int_K e^{2\\rho(Y)} \\dif k \\dif Y \\dif k'\n        \\leq C \\bigexp{2\\rho(X)}\n    \\end{align*}\n    uniformly for $g\\in G$.\n\n    For the lower bound, first note that by \\autoref{lem: compact error in cartan projection}, up to translation we can suppose that $B$ contains a neighborhood of $e \\in G$. Then we can find a small neighborhood $B'$ of $e$ with $kB'k^{-1}\\subset B$ for all $k\\in K$ (cf.\\,\\autoref{lem: open nbhd B_G, shrink NMAN}).\n    Write $g = k_1 e^X k_2$. By the unimodularity of $G$,\n    $$\\nug{BgB} = \\nug{(k_1^{-1}Bk_1) e^X (k_2 B k_2^{-1})}\\geq \\nug{B'e^X B'}.$$\n    Up to further shrinking $B'$, we can assume $B'\\subset \\Nbar  MAN$. \n    By the Bruhat decomposition (\\autoref{thm: Bruhat decomposition}), there exist compact neighborhoods of $e$ in the respective subgroups $B_{\\Nbar}\\Subset \\Nbar$, $B_M\\Subset M$, $B_A\\Subset A$, and $B_N\\Subset N$ such that $ B_{\\Nbar} B_M B_A B_N \\subset B'$.\n    Hence by the unimodularity of $G$, we deduce\n    \\begin{align*}\n        \\nug{B'e^X B'} &= \\nug{B'e^X B' e^{-X}}\\\\\n        & \\geq \\nug{B_{\\Nbar}\\left(e^X B_\\Nbar B_M B_A B_N e^{-X}\\right)}\\\\\n        &= \\nug{\\left(B_{\\Nbar}e^X B_{\\Nbar} e^{-X}\\right) B_M B_A \\left(e^X B_N e^{-X}\\right)}.\n    \\end{align*}\n    By further applying \\autoref{prop: integration via Bruhat decomposition}, we obtain\n    \\begin{align*}\n        \\nug{B'e^X B'} &\\geq c\\, \\nunbar{B_{\\Nbar}e^X B_{\\Nbar} e^{-X}} \\,\\nun{e^X B_N e^{-X}}\\\\\n        &\\geq c\\,\\nunbar{B_\\Nbar}\\, e^{2\\rho(X)} \\nun{B_N} = c' \\bigexp{2\\rho(X)},\n    \\end{align*}\n    uniformly for $g\\in G$."
+    },
+    {
+      "id": "definition-52-3a264600",
+      "type": "definition",
+      "content": "\\label{def: relative exponent of closed subgroups}\n    The \\emph{growth exponent} of $H$ inside $G$ is defined by\n    \\begin{equation*}\n        \\delta_{G/H} := \\maxde{0, \\,\\sup_{B\\Subset G} \\limsup_{g\\to\\infty} \\frac{\\log \\nu_H\\!\\left(H\\cap BgB\\right)}{\\log\\nu_G(BgB)}},\n    \\end{equation*}\n    where $B$ ranges over compacta of $G$ of nonempty interior.",
+      "content_preview": "The of H inside G is defined by _G/H := _g , where B ranges over compacta of G of nonempty interior.",
+      "display_name": "Definition",
+      "label": "def: relative exponent of closed subgroups",
+      "position": {
+        "line_start": 2062,
+        "line_end": 2068
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-53-ef347c17",
+      "type": "remark",
+      "content": "\\label{rem: cofinal choice of B in relative exponent}\n    In the definition of $\\deltagh$, we can restrict $B$ to a cofinal subfamily of subsets, for example by additionally requiring $B$ to be symmetric and $K$-bi-invariant.",
+      "content_preview": "In the definition of , we can restrict B to a cofinal subfamily of subsets, for example by additionally requiring B to be symmetric and...",
+      "display_name": "Remark",
+      "label": "rem: cofinal choice of B in relative exponent",
+      "position": {
+        "line_start": 2072,
+        "line_end": 2074
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-54-2096b73e",
+      "type": "proposition",
+      "content": "\\label{prop: deltagh as the abscissa of convergence}\n    For any closed subgroup $H$ of the real semisimple group $G$, we have\n    \\begin{equation*}\n        \\deltagh = \\inf\\setdef{t\\in [0,\\infty]: \\int_H e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h)<\\infty}.\n    \\end{equation*}",
+      "content_preview": "For any closed subgroup H of the real semisimple group G, we have = _H(h)<.",
+      "display_name": "Proposition",
+      "label": "prop: deltagh as the abscissa of convergence",
+      "position": {
+        "line_start": 2077,
+        "line_end": 2082
+      },
+      "references": [
+        {
+          "target_id": "lem: compact error in cartan projection",
+          "reference_type": "internal",
+          "context": "ow $\\deltagh\\leq \\tau$. Let $B\\Subset G$. Then by \\autoref{lem: compact error in cartan projection}, there exists $R>0$ such that $\\kappa(BgB)\\subset",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem: compact error in cartan projection",
+          "reference_type": "internal",
+          "context": "efine the subset $B= K e^{\\alie(r)} K \\Subset G$. \\autoref{lem: compact error in cartan projection} yields a constant $c>0$ such that whenever $h\\in",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: BgB volume growth in G",
+          "reference_type": "internal",
+          "context": "ut since $t-\\varepsilon>\\deltagh$, we deduce from \\autoref{prop: BgB volume growth in G} that\n    \\begin{equation*}\n        \\nuh{H\\cap Be^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Denote the right hand side by $\\tau$.\n    First show $\\deltagh\\leq \\tau$. Let $B\\Subset G$. Then by \\autoref{lem: compact error in cartan projection}, there exists $R>0$ such that $\\kappa(BgB)\\subset \\kappa(g) + \\alie(R)$ for all $g\\in G$, whence for all $h\\in H\\cap BgB$ we have\n    \\begin{equation*}\n        2\\rho\\kappa(h) \\leq 2\\rho\\kappa(g) + C_1,\n    \\end{equation*}\n    where the constant $C_1= \\sup_{\\alie(R)} 2\\rho$ is uniform. Since for any $t>\\tau$,\n    \\begin{equation*}\n        \\int_{H} e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h) < \\infty,\n    \\end{equation*}\n    we then have\n    \\begin{align*}\n        \\nuh{H\\cap BgB} &\\leq C_2 \\,e^{2t\\rho\\kappa(g)} \\int_{H\\cap BgB} e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h)\\\\\n        &\\leq C_2 \\,e^{2t\\rho\\kappa(g)} \\int_{H} e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h)\\\\\n        &\\leq C_3 \\, e^{2t\\rho\\kappa(g)},\n    \\end{align*}\n    uniformly for all $g\\in G$. From the definition of the growth exponent $\\deltagh$ we deduce that $t\\geq \\deltagh$, whence we have $\\tau\\geq \\deltagh$.\n\n    Next we show $\\deltagh\\geq \\tau$. \n    Let $\\calL$ be a lattice of $\\alie$ and $\\calL^+=\\calL\\cap \\alie^+$. Then there exists some $r>0$ such that $\\alie^+$ is covered by the balls of radius $r$ centered at elements in $L^+$. Fix any number $t> \\deltagh$ and then fix a small number $\\varepsilon>0$ so that $t-\\varepsilon > \\deltagh$.\n\n    Define the subset $B= K e^{\\alie(r)} K \\Subset G$. \\autoref{lem: compact error in cartan projection} yields a constant $c>0$ such that whenever $h\\in Be^X B$, we have $2\\rho(X) \\leq 2\\rho\\kappa(h) + c$, whence\n    \\begin{align*}\n        \\int_{H\\cap Be^X B} e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h) \\leq C_4\\, e^{-2t\\rho(X)} \\nuh{H\\cap Be^X B}\n    \\end{align*}\n    uniformly for all $X\\in \\alie^+$. But since $t-\\varepsilon>\\deltagh$, we deduce from \\autoref{prop: BgB volume growth in G} that\n    \\begin{equation*}\n        \\nuh{H\\cap Be^X B} \\leq C_5\\, e^{2(t-\\varepsilon)\\rho(X)}\n    \\end{equation*}\n    uniformly for $X\\in\\alie^+$, whence for all $X\\in\\alie^+$ we have\n    \\begin{equation*}\n        \\int_{H\\cap Be^X B} e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h) \\leq C_6\\, e^{-2\\varepsilon\\rho(X)}.\n    \\end{equation*}\n    Since the construction implies that the subset $B e^X B$ contains $K e^{X+\\alie(r)} K$ for all $X\\in\\alie^+$, we obtain\n    \\begin{align*}\n        \\int_H e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h) &\\leq \\sum_{X\\in\\calL^+} \\int_{H\\cap Be^X B} e^{-2t\\rho\\kappa(h)} \\dif\\nu_H(h)\\\\\n        & \\leq C_6 \\sum_{X\\in\\calL^+} e^{-2\\varepsilon\\rho(X)},\n    \\end{align*}\n    which is finite as the lattice $\\calL$ grows polynomially, so $t>\\tau$. We obtain $\\deltagh\\geq \\tau$ and thus conclude the proof."
+    },
+    {
+      "id": "proposition-55-23c7bd50",
+      "type": "proposition",
+      "content": "\\label{prop: delta=rho for reductive subgroups}\n    If $H$ is a reductive subgroup of $G$, then\n    \\begin{equation*}\n        \\deltagh = \\rhogh.\n    \\end{equation*}",
+      "content_preview": "If H is a reductive subgroup of G, then = .",
+      "display_name": "Proposition",
+      "label": "prop: delta=rho for reductive subgroups",
+      "position": {
+        "line_start": 2126,
+        "line_end": 2131
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-56-2eb42211",
+      "type": "lemma",
+      "content": "\\label{lem: upper bound on volume growth in H}\n    For any $B\\Subset G$, there exists a constant $C>0$ such that\n    \\begin{equation*}\n        \\nuh{H\\cap B g B } \\leq C\\bigexp{2\\rhogh\\rho\\kappa(g)}\n    \\end{equation*}\n    uniformly for all $g\\in G$.",
+      "content_preview": "For any B G, there exists a constant C>0 such that C uniformly for all g G.",
+      "display_name": "Lemma",
+      "label": "lem: upper bound on volume growth in H",
+      "position": {
+        "line_start": 2143,
+        "line_end": 2149
+      },
+      "references": [
+        {
+          "target_id": "lem: compact error in cartan projection",
+          "reference_type": "internal",
+          "context": "niformly for all $g\\in G$.Write $X=\\kappa(g)$. By \\autoref{lem: compact error in cartan projection}, there exists a constant $r>0$ such that\n    $ \\k",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq ppty: kappaH and kappa mod wg",
+          "reference_type": "external",
+          "context": "\\kappa(g) + \\alie(r)$ for all $g\\in G$. \n    Then \\eqref{eq ppty: kappaH and kappa mod wg} yields\n    \\begin{equation}\\label{eq intm: kappa",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop: KAK Cartan integral",
+          "reference_type": "internal",
+          "context": "cap \\alieh} K_H.\n    \\end{equation}\n    Hence, by \\autoref{prop: KAK Cartan integral} and \\autoref{eg: rhoh in case of adjoint rep}, we",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eg: rhoh in case of adjoint rep",
+          "reference_type": "internal",
+          "context": "Hence, by \\autoref{prop: KAK Cartan integral} and \\autoref{eg: rhoh in case of adjoint rep}, we have\n    \\begin{equation}\\label{eq intm: uppe",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq intm: upper bound of volume part in H",
+          "reference_type": "external",
+          "context": "formly for $Y\\in wX+\\alie(r)$. By feeding back to \\eqref{eq intm: upper bound of volume part in H}, we conclude the proof.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Write $X=\\kappa(g)$. By \\autoref{lem: compact error in cartan projection}, there exists a constant $r>0$ such that\n    $ \\kappa(BgB) \\subset \\kappa(g) + \\alie(r)$ for all $g\\in G$. \n    Then \\eqref{eq ppty: kappaH and kappa mod wg} yields\n    \\begin{equation}\\label{eq intm: kappa H of BgB}\n        H\\cap BgB \\subset \\bigcup_{w\\in W_G} K_H e^{(wX+\\alie(r)) \\cap \\alieh} K_H.\n    \\end{equation}\n    Hence, by \\autoref{prop: KAK Cartan integral} and \\autoref{eg: rhoh in case of adjoint rep}, we have\n    \\begin{equation}\\label{eq intm: upper bound of volume part in H}\n        \\nuh{H\\cap BgB} \\leq \\sum_{w\\in W_G} \\int_{(wX+\\alie(r))\\cap \\alieh} \\bigexp{\\rhoh(Y)} \\dif Y.\n    \\end{equation}\n    Since $\\rhoh\\leq \\rhogh \\rhog$ by the definition of $\\rhogh$, and since $\\rhog$ is $W_G$-invariant and uniformly Lipschitz on $\\alieh$,\n    we have \n    \\begin{align*}\n        \\bigexp{\\rhoh(Y)}&\\leq \\bigexp{\\rhogh\\rhog(Y)} \\leq C_1 \\bigexp{\\rhogh\\rhog(wX)}\\\\\n        &= C_1\\bigexp{\\rhogh\\rhog(X)} = C_1\\bigexp{2\\rhogh\\rho(X)}\n    \\end{align*}\n    uniformly for $Y\\in wX+\\alie(r)$. By feeding back to \\eqref{eq intm: upper bound of volume part in H}, we conclude the proof."
+    },
+    {
+      "id": "proposition-57-a4110deb",
+      "type": "proposition",
+      "content": "\\label{prop: delta = max of psi/rho, discrete subgroups}\n    If $\\Gamma$ is a discrete subgroup of $G$, then\n    \\begin{equation*}\n        \\deltaggamma = \\maxde{\\sup_{\\alie^+} \\frac{\\psi_\\Gamma}{2\\rho}, \\,0}.\n        \\qedineq\n    \\end{equation*}",
+      "content_preview": "If is a discrete subgroup of G, then = , ,0.",
+      "display_name": "Proposition",
+      "label": "prop: delta = max of psi/rho, discrete subgroups",
+      "position": {
+        "line_start": 2203,
+        "line_end": 2209
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-58-60eb18d4",
+      "type": "example",
+      "content": "When $\\Gamma$ is a discrete subgroup of $G=\\SL(2,\\bbR)$, the exponent $\\delta_{G/\\Gamma}$ coincides with the usual critical exponent $\\delta_\\Gamma$. In general, when the semisimple group $G$ is of real rank one, these two exponents coincide up to renormalization.",
+      "content_preview": "When is a discrete subgroup of G=(2,), the exponent _G/ coincides with the usual critical exponent _. In general, when the semisimple group G is of...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 2212,
+        "line_end": 2214
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lem: open nbhd B_G",
+      "type": "unknown",
+      "content": "External reference to 'lem: open nbhd B_G'",
+      "content_preview": "External reference to 'lem: open nbhd B_G'",
+      "display_name": "Unknown",
+      "label": "lem: open nbhd B_G",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_shrink NMAN",
+      "type": "unknown",
+      "content": "External reference to 'shrink NMAN'",
+      "content_preview": "External reference to 'shrink NMAN'",
+      "display_name": "Unknown",
+      "label": "shrink NMAN",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: transform of Phi(h",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: transform of Phi(h'",
+      "content_preview": "External reference to 'eq intm: transform of Phi(h'",
+      "display_name": "Unknown",
+      "label": "eq intm: transform of Phi(h",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_g)",
+      "type": "unknown",
+      "content": "External reference to 'g)'",
+      "content_preview": "External reference to 'g)'",
+      "display_name": "Unknown",
+      "label": "g)",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq res: transform of pi coefficients",
+      "type": "unknown",
+      "content": "External reference to 'eq res: transform of pi coefficients'",
+      "content_preview": "External reference to 'eq res: transform of pi coefficients'",
+      "display_name": "Unknown",
+      "label": "eq res: transform of pi coefficients",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_cor: I(varphi",
+      "type": "unknown",
+      "content": "External reference to 'cor: I(varphi'",
+      "content_preview": "External reference to 'cor: I(varphi'",
+      "display_name": "Unknown",
+      "label": "cor: I(varphi",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_1) spans Cc(GH)",
+      "type": "unknown",
+      "content": "External reference to '1) spans Cc(GH)'",
+      "content_preview": "External reference to '1) spans Cc(GH)'",
+      "display_name": "Unknown",
+      "label": "1) spans Cc(GH)",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_mythm: theta and delta",
+      "type": "unknown",
+      "content": "External reference to 'mythm: theta and delta'",
+      "content_preview": "External reference to 'mythm: theta and delta'",
+      "display_name": "Unknown",
+      "label": "mythm: theta and delta",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_subsec: transform",
+      "type": "unknown",
+      "content": "External reference to 'subsec: transform'",
+      "content_preview": "External reference to 'subsec: transform'",
+      "display_name": "Unknown",
+      "label": "subsec: transform",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq def: Phi(h",
+      "type": "unknown",
+      "content": "External reference to 'eq def: Phi(h'",
+      "content_preview": "External reference to 'eq def: Phi(h'",
+      "display_name": "Unknown",
+      "label": "eq def: Phi(h",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq res: transform",
+      "type": "unknown",
+      "content": "External reference to 'eq res: transform'",
+      "content_preview": "External reference to 'eq res: transform'",
+      "display_name": "Unknown",
+      "label": "eq res: transform",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: lower bound on volume growth xn",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: lower bound on volume growth xn'",
+      "content_preview": "External reference to 'eq intm: lower bound on volume growth xn'",
+      "display_name": "Unknown",
+      "label": "eq intm: lower bound on volume growth xn",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_subsec: measures on homogeneous spaces",
+      "type": "unknown",
+      "content": "External reference to 'subsec: measures on homogeneous spaces'",
+      "content_preview": "External reference to 'subsec: measures on homogeneous spaces'",
+      "display_name": "Unknown",
+      "label": "subsec: measures on homogeneous spaces",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq ppty: delta-function",
+      "type": "unknown",
+      "content": "External reference to 'eq ppty: delta-function'",
+      "content_preview": "External reference to 'eq ppty: delta-function'",
+      "display_name": "Unknown",
+      "label": "eq ppty: delta-function",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_measures on homogeneous spaces",
+      "type": "unknown",
+      "content": "External reference to 'measures on homogeneous spaces'",
+      "content_preview": "External reference to 'measures on homogeneous spaces'",
+      "display_name": "Unknown",
+      "label": "measures on homogeneous spaces",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: kappa H of BgB",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: kappa H of BgB'",
+      "content_preview": "External reference to 'eq intm: kappa H of BgB'",
+      "display_name": "Unknown",
+      "label": "eq intm: kappa H of BgB",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: unif decay sigma0",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: unif decay sigma0'",
+      "content_preview": "External reference to 'eq intm: unif decay sigma0'",
+      "display_name": "Unknown",
+      "label": "eq intm: unif decay sigma0",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: decay of induced S L U/W",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: decay of induced S L U/W'",
+      "content_preview": "External reference to 'eq intm: decay of induced S L U/W'",
+      "display_name": "Unknown",
+      "label": "eq intm: decay of induced S L U/W",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_thm: temperedness",
+      "type": "unknown",
+      "content": "External reference to 'thm: temperedness'",
+      "content_preview": "External reference to 'thm: temperedness'",
+      "display_name": "Unknown",
+      "label": "thm: temperedness",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_equivalent formulations",
+      "type": "unknown",
+      "content": "External reference to 'equivalent formulations'",
+      "content_preview": "External reference to 'equivalent formulations'",
+      "display_name": "Unknown",
+      "label": "equivalent formulations",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_subsec: parabolic subgroups",
+      "type": "unknown",
+      "content": "External reference to 'subsec: parabolic subgroups'",
+      "content_preview": "External reference to 'subsec: parabolic subgroups'",
+      "display_name": "Unknown",
+      "label": "subsec: parabolic subgroups",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_prop: KQ integral",
+      "type": "unknown",
+      "content": "External reference to 'prop: KQ integral'",
+      "content_preview": "External reference to 'prop: KQ integral'",
+      "display_name": "Unknown",
+      "label": "prop: KQ integral",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_Q psg",
+      "type": "unknown",
+      "content": "External reference to 'Q psg'",
+      "content_preview": "External reference to 'Q psg'",
+      "display_name": "Unknown",
+      "label": "Q psg",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lem: W_G invariance",
+      "type": "unknown",
+      "content": "External reference to 'lem: W_G invariance'",
+      "content_preview": "External reference to 'lem: W_G invariance'",
+      "display_name": "Unknown",
+      "label": "lem: W_G invariance",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_spherical functions",
+      "type": "unknown",
+      "content": "External reference to 'spherical functions'",
+      "content_preview": "External reference to 'spherical functions'",
+      "display_name": "Unknown",
+      "label": "spherical functions",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: 3' major",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: 3' major'",
+      "content_preview": "External reference to 'eq intm: 3' major'",
+      "display_name": "Unknown",
+      "label": "eq intm: 3' major",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq ppty: kappaH and kappa mod wg",
+      "type": "unknown",
+      "content": "External reference to 'eq ppty: kappaH and kappa mod wg'",
+      "content_preview": "External reference to 'eq ppty: kappaH and kappa mod wg'",
+      "display_name": "Unknown",
+      "label": "eq ppty: kappaH and kappa mod wg",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq intm: upper bound of volume part in H",
+      "type": "unknown",
+      "content": "External reference to 'eq intm: upper bound of volume part in H'",
+      "content_preview": "External reference to 'eq intm: upper bound of volume part in H'",
+      "display_name": "Unknown",
+      "label": "eq intm: upper bound of volume part in H",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-1-2935a0c3",
+      "target": "external_lem: open nbhd B_G",
+      "type": null
+    },
+    {
+      "source": "lemma-1-2935a0c3",
+      "target": "external_shrink NMAN",
+      "type": null
+    },
+    {
+      "source": "lemma-1-2935a0c3",
+      "target": "proposition-44-89c366d0",
+      "type": null
+    },
+    {
+      "source": "lemma-1-2935a0c3",
+      "target": "external_eq intm: transform of Phi(h",
+      "type": null
+    },
+    {
+      "source": "lemma-1-2935a0c3",
+      "target": "external_g)",
+      "type": null
+    },
+    {
+      "source": "lemma-1-2935a0c3",
+      "target": "external_eq res: transform of pi coefficients",
+      "type": null
+    },
+    {
+      "source": "proposition-2-da23f295",
+      "target": "external_cor: I(varphi",
+      "type": null
+    },
+    {
+      "source": "proposition-2-da23f295",
+      "target": "external_1) spans Cc(GH)",
+      "type": null
+    },
+    {
+      "source": "proposition-2-da23f295",
+      "target": "lemma-1-2935a0c3",
+      "type": null
+    },
+    {
+      "source": "proposition-2-da23f295",
+      "target": "proposition-51-4be4d3ce",
+      "type": null
+    },
+    {
+      "source": "proposition-3-945c92a5",
+      "target": "external_mythm: theta and delta",
+      "type": null
+    },
+    {
+      "source": "proposition-3-945c92a5",
+      "target": "proposition-16-03f1fcd4",
+      "type": null
+    },
+    {
+      "source": "lemma-4-60725c5d",
+      "target": "external_subsec: transform",
+      "type": null
+    },
+    {
+      "source": "lemma-4-60725c5d",
+      "target": "external_eq def: Phi(h",
+      "type": null
+    },
+    {
+      "source": "lemma-4-60725c5d",
+      "target": "external_g)",
+      "type": null
+    },
+    {
+      "source": "lemma-4-60725c5d",
+      "target": "external_eq res: transform of pi coefficients",
+      "type": null
+    },
+    {
+      "source": "proposition-5-f98da436",
+      "target": "remark-53-ef347c17",
+      "type": null
+    },
+    {
+      "source": "proposition-5-f98da436",
+      "target": "proposition-51-4be4d3ce",
+      "type": null
+    },
+    {
+      "source": "proposition-5-f98da436",
+      "target": "lemma-4-60725c5d",
+      "type": null
+    },
+    {
+      "source": "proposition-5-f98da436",
+      "target": "external_eq res: transform",
+      "type": null
+    },
+    {
+      "source": "proposition-5-f98da436",
+      "target": "external_eq intm: lower bound on volume growth xn",
+      "type": null
+    },
+    {
+      "source": "definition-10-f983376c",
+      "target": "definition-52-3a264600",
+      "type": null
+    },
+    {
+      "source": "definition-10-f983376c",
+      "target": "external_subsec: measures on homogeneous spaces",
+      "type": null
+    },
+    {
+      "source": "definition-10-f983376c",
+      "target": "proposition-54-2096b73e",
+      "type": null
+    },
+    {
+      "source": "definition-11-8f54ffdd",
+      "target": "definition-49-30d94a12",
+      "type": null
+    },
+    {
+      "source": "lemma-14-603f122c",
+      "target": "external_eq ppty: delta-function",
+      "type": null
+    },
+    {
+      "source": "lemma-14-603f122c",
+      "target": "external_measures on homogeneous spaces",
+      "type": null
+    },
+    {
+      "source": "lemma-14-603f122c",
+      "target": "lemma-13-146ef28c",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "lemma-1-2935a0c3",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "lemma-33-c44cb40d",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "corollary-48-9db75c5c",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "external_eq intm: kappa H of BgB",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "lemma-56-2eb42211",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "external_eq intm: unif decay sigma0",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "proposition-16-03f1fcd4",
+      "type": null
+    },
+    {
+      "source": "proposition-27-5a1a96fb",
+      "target": "external_eq intm: decay of induced S L U/W",
+      "type": null
+    },
+    {
+      "source": "corollary-28-129ac585",
+      "target": "proposition-27-5a1a96fb",
+      "type": null
+    },
+    {
+      "source": "corollary-28-129ac585",
+      "target": "external_thm: temperedness",
+      "type": null
+    },
+    {
+      "source": "corollary-28-129ac585",
+      "target": "external_equivalent formulations",
+      "type": null
+    },
+    {
+      "source": "corollary-28-129ac585",
+      "target": "example-46-55918a73",
+      "type": null
+    },
+    {
+      "source": "corollary-28-129ac585",
+      "target": "external_subsec: parabolic subgroups",
+      "type": null
+    },
+    {
+      "source": "corollary-28-129ac585",
+      "target": "lemma-23-6391f3ad",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "lemma-1-2935a0c3",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "lemma-33-c44cb40d",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "corollary-29-eb95a3bb",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "external_subsec: parabolic subgroups",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "external_prop: KQ integral",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "external_Q psg",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "lemma-21-58df2f04",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "proposition-16-03f1fcd4",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "external_lem: W_G invariance",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "external_spherical functions",
+      "type": null
+    },
+    {
+      "source": "theorem-30-ad3c8474",
+      "target": "external_eq intm: 3' major",
+      "type": null
+    },
+    {
+      "source": "corollary-34-5c63092e",
+      "target": "lemma-32-74378018",
+      "type": null
+    },
+    {
+      "source": "corollary-34-5c63092e",
+      "target": "lemma-33-c44cb40d",
+      "type": null
+    },
+    {
+      "source": "lemma-42-aa6b44df",
+      "target": "proposition-18-7e480c7d",
+      "type": null
+    },
+    {
+      "source": "proposition-44-89c366d0",
+      "target": "external_lem: open nbhd B_G",
+      "type": null
+    },
+    {
+      "source": "proposition-44-89c366d0",
+      "target": "external_shrink NMAN",
+      "type": null
+    },
+    {
+      "source": "proposition-44-89c366d0",
+      "target": "lemma-42-aa6b44df",
+      "type": null
+    },
+    {
+      "source": "corollary-48-9db75c5c",
+      "target": "lemma-47-51713e89",
+      "type": null
+    },
+    {
+      "source": "proposition-51-4be4d3ce",
+      "target": "lemma-21-58df2f04",
+      "type": null
+    },
+    {
+      "source": "proposition-51-4be4d3ce",
+      "target": "proposition-16-03f1fcd4",
+      "type": null
+    },
+    {
+      "source": "proposition-51-4be4d3ce",
+      "target": "external_lem: open nbhd B_G",
+      "type": null
+    },
+    {
+      "source": "proposition-51-4be4d3ce",
+      "target": "external_shrink NMAN",
+      "type": null
+    },
+    {
+      "source": "proposition-51-4be4d3ce",
+      "target": "theorem-17-ed9fb3a4",
+      "type": null
+    },
+    {
+      "source": "proposition-51-4be4d3ce",
+      "target": "proposition-18-7e480c7d",
+      "type": null
+    },
+    {
+      "source": "proposition-54-2096b73e",
+      "target": "lemma-21-58df2f04",
+      "type": null
+    },
+    {
+      "source": "proposition-54-2096b73e",
+      "target": "proposition-51-4be4d3ce",
+      "type": null
+    },
+    {
+      "source": "lemma-56-2eb42211",
+      "target": "lemma-21-58df2f04",
+      "type": null
+    },
+    {
+      "source": "lemma-56-2eb42211",
+      "target": "external_eq ppty: kappaH and kappa mod wg",
+      "type": null
+    },
+    {
+      "source": "lemma-56-2eb42211",
+      "target": "proposition-16-03f1fcd4",
+      "type": null
+    },
+    {
+      "source": "lemma-56-2eb42211",
+      "target": "example-46-55918a73",
+      "type": null
+    },
+    {
+      "source": "lemma-56-2eb42211",
+      "target": "external_eq intm: upper bound of volume part in H",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 86,
+    "edge_count": 73,
+    "extractor_used": "regex-only"
+  }
+}

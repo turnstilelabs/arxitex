@@ -18,5 +18,1025 @@
       "edge_count": 94,
       "extractor_used": "regex-only"
     }
+  },
+  "2507.10458v1": {
+    "processed_timestamp_utc": "2025-07-17T20:43:33.332572+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.10458v1.json",
+    "stats": {
+      "node_count": 25,
+      "edge_count": 26,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.13203v1": {
+    "processed_timestamp_utc": "2025-07-18T06:52:34.477152+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.13203v1.json",
+    "stats": {
+      "node_count": 6,
+      "edge_count": 1,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.13235v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:31.115241+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.13235v1.json",
+    "stats": {
+      "node_count": 77,
+      "edge_count": 38,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.13700v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:31.702043+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.13700v1.json",
+    "stats": {
+      "node_count": 2,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.13617v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:32.005245+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.13617v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14029v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:32.107736+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14029v1.json",
+    "stats": {
+      "node_count": 31,
+      "edge_count": 10,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14047v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:32.502170+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14047v1.json",
+    "stats": {
+      "node_count": 2,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14060v4": {
+    "processed_timestamp_utc": "2025-07-22T15:19:41.952792+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14060v4.json",
+    "stats": {
+      "node_count": 1991,
+      "edge_count": 3021,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14304v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:42.011619+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14304v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14324v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:42.504546+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14324v1.json",
+    "stats": {
+      "node_count": 6,
+      "edge_count": 3,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14509v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:42.563112+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14509v1.json",
+    "stats": {
+      "node_count": 70,
+      "edge_count": 36,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14666v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.018554+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14666v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.13219v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.064356+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.13219v1.json",
+    "stats": {
+      "node_count": 15,
+      "edge_count": 3,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14654v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.300311+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14654v1.json",
+    "stats": {
+      "node_count": 42,
+      "edge_count": 31,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.15250v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.403865+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.15250v1.json",
+    "stats": {
+      "node_count": 1,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.14940v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.472198+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.14940v1.json",
+    "stats": {
+      "node_count": 3,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.15257v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.695875+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.15257v1.json",
+    "stats": {
+      "node_count": 27,
+      "edge_count": 23,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.15336v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:43.835164+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.15336v1.json",
+    "stats": {
+      "node_count": 12,
+      "edge_count": 1,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.15494v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:44.163752+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.15494v1.json",
+    "stats": {
+      "node_count": 110,
+      "edge_count": 119,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.16536v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:44.194782+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.16536v1.json",
+    "stats": {
+      "node_count": 16,
+      "edge_count": 8,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.17069v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:44.561983+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.17069v1.json",
+    "stats": {
+      "node_count": 16,
+      "edge_count": 2,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.16321v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:44.665199+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.16321v2.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.16789v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:45.188206+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.16789v1.json",
+    "stats": {
+      "node_count": 164,
+      "edge_count": 32,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.17123v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:45.237036+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.17123v1.json",
+    "stats": {
+      "node_count": 39,
+      "edge_count": 36,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.17157v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:45.271359+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.17157v1.json",
+    "stats": {
+      "node_count": 15,
+      "edge_count": 13,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.17668v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:45.702956+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.17668v1.json",
+    "stats": {
+      "node_count": 7,
+      "edge_count": 2,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.17401v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:45.746260+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.17401v1.json",
+    "stats": {
+      "node_count": 36,
+      "edge_count": 37,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.18446v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:45.794338+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.18446v1.json",
+    "stats": {
+      "node_count": 63,
+      "edge_count": 24,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.18573v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:46.114640+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.18573v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.18784v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:46.162608+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.18784v1.json",
+    "stats": {
+      "node_count": 7,
+      "edge_count": 2,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.18618v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:46.204262+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.18618v1.json",
+    "stats": {
+      "node_count": 36,
+      "edge_count": 17,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19032v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:46.426050+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19032v2.json",
+    "stats": {
+      "node_count": 59,
+      "edge_count": 48,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.18861v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:46.622899+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.18861v2.json",
+    "stats": {
+      "node_count": 2,
+      "edge_count": 1,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.18837v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:46.626267+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.18837v1.json",
+    "stats": {
+      "node_count": 14,
+      "edge_count": 3,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19105v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:47.066455+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19105v1.json",
+    "stats": {
+      "node_count": 15,
+      "edge_count": 8,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19177v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:47.263787+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19177v2.json",
+    "stats": {
+      "node_count": 34,
+      "edge_count": 33,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19216v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:47.462824+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19216v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19195v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:47.631131+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19195v1.json",
+    "stats": {
+      "node_count": 19,
+      "edge_count": 4,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19264v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:47.862814+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19264v1.json",
+    "stats": {
+      "node_count": 40,
+      "edge_count": 34,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19371v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:47.945154+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19371v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19454v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:48.020417+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19454v1.json",
+    "stats": {
+      "node_count": 40,
+      "edge_count": 20,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19675v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:48.198211+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19675v1.json",
+    "stats": {
+      "node_count": 17,
+      "edge_count": 17,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19745v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:48.564046+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19745v1.json",
+    "stats": {
+      "node_count": 2,
+      "edge_count": 1,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19696v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:48.707645+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19696v1.json",
+    "stats": {
+      "node_count": 10,
+      "edge_count": 6,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19758v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:48.742410+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19758v1.json",
+    "stats": {
+      "node_count": 34,
+      "edge_count": 5,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.19765v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:48.976341+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.19765v1.json",
+    "stats": {
+      "node_count": 75,
+      "edge_count": 32,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.20029v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:49.075630+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.20029v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.20161v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:49.151027+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.20161v1.json",
+    "stats": {
+      "node_count": 32,
+      "edge_count": 19,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.20192v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:49.421354+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.20192v1.json",
+    "stats": {
+      "node_count": 56,
+      "edge_count": 24,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.20321v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:49.638752+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.20321v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.20843v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:49.857445+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.20843v1.json",
+    "stats": {
+      "node_count": 47,
+      "edge_count": 31,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.21105v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:50.333398+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.21105v1.json",
+    "stats": {
+      "node_count": 161,
+      "edge_count": 192,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.21163v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:50.362804+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.21163v1.json",
+    "stats": {
+      "node_count": 18,
+      "edge_count": 8,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.20692v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:50.788767+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.20692v1.json",
+    "stats": {
+      "node_count": 36,
+      "edge_count": 11,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.21340v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:50.820716+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.21340v1.json",
+    "stats": {
+      "node_count": 6,
+      "edge_count": 2,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.21350v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:50.852210+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.21350v1.json",
+    "stats": {
+      "node_count": 7,
+      "edge_count": 1,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.13673v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:51.212813+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.13673v1.json",
+    "stats": {
+      "node_count": 141,
+      "edge_count": 118,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.21652v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:51.281130+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.21652v1.json",
+    "stats": {
+      "node_count": 43,
+      "edge_count": 19,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.21750v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:51.334195+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.21750v1.json",
+    "stats": {
+      "node_count": 66,
+      "edge_count": 38,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.22268v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:51.417801+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.22268v1.json",
+    "stats": {
+      "node_count": 46,
+      "edge_count": 38,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23031v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:51.807145+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23031v2.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23047v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:51.969018+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23047v1.json",
+    "stats": {
+      "node_count": 55,
+      "edge_count": 62,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23048v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:52.026943+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23048v1.json",
+    "stats": {
+      "node_count": 68,
+      "edge_count": 89,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.22528v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:52.256921+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.22528v1.json",
+    "stats": {
+      "node_count": 52,
+      "edge_count": 29,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23265v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:52.523999+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23265v1.json",
+    "stats": {
+      "node_count": 187,
+      "edge_count": 222,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23585v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:52.650845+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23585v1.json",
+    "stats": {
+      "node_count": 19,
+      "edge_count": 4,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23222v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:52.683552+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23222v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.24029v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:52.937273+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.24029v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.00211v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:53.036392+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.00211v1.json",
+    "stats": {
+      "node_count": 17,
+      "edge_count": 14,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.00213v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:53.066553+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.00213v1.json",
+    "stats": {
+      "node_count": 18,
+      "edge_count": 2,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.00283v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:53.485014+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.00283v1.json",
+    "stats": {
+      "node_count": 36,
+      "edge_count": 29,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.00702v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:53.513412+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.00702v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.00346v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:53.562001+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.00346v1.json",
+    "stats": {
+      "node_count": 9,
+      "edge_count": 5,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01268v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:54.034656+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01268v1.json",
+    "stats": {
+      "node_count": 17,
+      "edge_count": 9,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01425v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:54.215983+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01425v1.json",
+    "stats": {
+      "node_count": 129,
+      "edge_count": 82,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2506.23175v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.066420+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2506.23175v1.json",
+    "stats": {
+      "node_count": 972,
+      "edge_count": 550,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01637v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.095868+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01637v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01639v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.135187+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01639v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01730v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.454933+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01730v2.json",
+    "stats": {
+      "node_count": 4,
+      "edge_count": 2,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01839v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.611540+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01839v1.json",
+    "stats": {
+      "node_count": 2,
+      "edge_count": 1,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01716v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.674129+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01716v1.json",
+    "stats": {
+      "node_count": 44,
+      "edge_count": 40,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.01898v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.730871+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.01898v1.json",
+    "stats": {
+      "node_count": 58,
+      "edge_count": 35,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.02440v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:56.841173+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.02440v1.json",
+    "stats": {
+      "node_count": 1,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.02594v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.162270+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.02594v2.json",
+    "stats": {
+      "node_count": 23,
+      "edge_count": 40,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.02441v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.193066+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.02441v1.json",
+    "stats": {
+      "node_count": 22,
+      "edge_count": 15,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.03100v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.375976+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.03100v2.json",
+    "stats": {
+      "node_count": 9,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.02469v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.440291+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.02469v1.json",
+    "stats": {
+      "node_count": 86,
+      "edge_count": 73,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.03309v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.548734+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.03309v1.json",
+    "stats": {
+      "node_count": 54,
+      "edge_count": 34,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.03667v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.579735+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.03667v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.03907v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.800694+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.03907v1.json",
+    "stats": {
+      "node_count": 15,
+      "edge_count": 8,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04065v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.836327+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04065v1.json",
+    "stats": {
+      "node_count": 20,
+      "edge_count": 15,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04120v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:57.960198+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04120v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04474v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:58.171854+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04474v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04486v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:58.474100+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04486v1.json",
+    "stats": {
+      "node_count": 13,
+      "edge_count": 4,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04519v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:58.539460+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04519v1.json",
+    "stats": {
+      "node_count": 43,
+      "edge_count": 58,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04577v2": {
+    "processed_timestamp_utc": "2025-07-22T15:19:58.569956+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04577v2.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04691v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:59.009473+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04691v1.json",
+    "stats": {
+      "node_count": 69,
+      "edge_count": 65,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04819v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:59.053938+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04819v1.json",
+    "stats": {
+      "node_count": 20,
+      "edge_count": 28,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.05033v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:59.128696+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.05033v1.json",
+    "stats": {
+      "node_count": 18,
+      "edge_count": 18,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.05437v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:59.536033+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.05437v1.json",
+    "stats": {
+      "node_count": 158,
+      "edge_count": 144,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.04347v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:59.748020+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.04347v1.json",
+    "stats": {
+      "node_count": 0,
+      "edge_count": 0,
+      "extractor_used": "regex-only"
+    }
+  },
+  "2507.05087v1": {
+    "processed_timestamp_utc": "2025-07-22T15:19:59.824266+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.05087v1.json",
+    "stats": {
+      "node_count": 8,
+      "edge_count": 3,
+      "extractor_used": "regex-only"
+    }
   }
 }

@@ -1,0 +1,566 @@
+{
+  "arxiv_id": "2506.19675v1",
+  "nodes": [
+    {
+      "id": "definition-1-4f74f6a6",
+      "type": "definition",
+      "content": "[Groups with Nontrivial Partitions, see \\cite{baer1}]\nA collection $\\mathrm{P}(G)$ of nontrivial subgroups of (a nontrivial group) $G$  is said to be \\textit{a partition of G} if every nontrivial element of $G$ belongs to a unique subgroup in $\\mathrm{P}(G)$. We say that  $\\mathrm{P}(G)$ is a \\textit{trivial partition} for $G$ if $|\\mathrm{P}(G)|=1$.",
+      "content_preview": "[Groups with Nontrivial Partitions, see ] A collection (G) of nontrivial subgroups of (a nontrivial group) G is said to be if every nontrivial...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 187,
+        "line_end": 188
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-99f6ee1d",
+      "type": "theorem",
+      "content": "\\label{l0} If $G$ is a group with nontrivial partition, then there exists a maximal cyclic subgroup $M$ of $G$ such that $\\mathbf{B}(G)=\\mathbf{b}_{|M|}(G).$",
+      "content_preview": "If G is a group with nontrivial partition, then there exists a maximal cyclic subgroup M of G such that (G)=_|M|(G).",
+      "display_name": "Theorem",
+      "label": "l0",
+      "position": {
+        "line_start": 194,
+        "line_end": 195
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-b3d1ceb4",
+      "type": "theorem",
+      "content": "\\label{maintheorem} There are groups with nontrivial partitions in $\\mathcal{H}$, namely\n\\begin{itemize}\n\\item[{\\rm (i)}.] The symmetric group $S_4$ on four elements belongs to $\\mathcal{H}$.   \n    \\item[{\\rm(ii)}.] If $q=3^n$ for $n\\ge 2$ or $q$ is a prime power for $q\\ge 5$ , then there is a constant $c \\ge 2 \\sqrt{2}$ such that\n$$|\\mathrm{PSL}(2,q)| \\le  c  \\ \\mathbf{B}(\\mathrm{PSL}(2,q)) \\ \\sqrt{\\mathbf{B}(\\mathrm{PSL}(2,q))}.$$ In particular, \n$\\mathrm{PSL}(2,q) \\in  \\mathcal{H}$ for all $q \\ge 4$. \n    \\item[{\\rm(iii).}] If $q=2^{2n+1}$ for all $n\\ge 1$, then there is a constant $c \\ge 2 \\sqrt{2}$ such that\n$$|\\mathrm{Sz}(q)| \\le  c  \\ \\mathbf{B}(\\mathrm{Sz}(q)) \\ \\sqrt{\\mathbf{B}(\\mathrm{Sz}(q))},$$\nand  $\\mathrm{Sz}(q) \\in  \\mathcal{H}$ for all $q \\ge 8$. \n\\item[{\\rm (iv).}] If $q$ is a prime power for $q\\ge 4$, then there is a constant $c \\ge 2 \\sqrt{2}$ such that\n$$|\\mathrm{PGL}(2,q)| \\le  c  \\ \\mathbf{B}(\\mathrm{PGL}(2,q)) \\ \\sqrt{\\mathbf{B}(\\mathrm{PGL}(2,q))}$$\n  and  $\\mathrm{PGL}(2,q) \\in  \\mathcal{H}$ for all $q \\ge 4$.\n\\end{itemize}",
+      "content_preview": "There are groups with nontrivial partitions in , namely The symmetric group S_4 on four elements belongs to .",
+      "display_name": "Theorem",
+      "label": "maintheorem",
+      "position": {
+        "line_start": 199,
+        "line_end": 213
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-52a8dee9",
+      "type": "theorem",
+      "content": "[See \\cite{mf},  Classification Theorem, pp.119-120]\\label{niceclassification}Let $G$ be a  group with\n a nontrivial partition. Then $G$ is isomorphic with exactly one of the following groups:\n\\begin{itemize}\n\\item [(i).] the symmetric group $S_4$ on four elements;\n\\item [(ii).] a $p$-group with $H_p(G) \\neq G$;\n\\item [(iii).] a group of Hughes-Thompson type;\n\\item [(iv).] a Frobenius group;\n\\item [(v).]  $\\mathrm{PSL}(2,q)$ for $q \\ge 4  $;\n\\item [(vi).]  $\\mathrm{PGL}(2,q)$ for $q \\ge 5$ odd prime power;\n\\item [(vii).] $\\mathrm{Sz}(2^{2n+1})$.\n\\end{itemize}",
+      "content_preview": "[See , Classification Theorem, pp.119-120]Let G be a group with a nontrivial partition. Then G is isomorphic with exactly one of the following...",
+      "display_name": "Theorem",
+      "label": "niceclassification",
+      "position": {
+        "line_start": 243,
+        "line_end": 254
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-5-6cb4c681",
+      "type": "definition",
+      "content": "[See \\cite{hr2}]\\label{refined} A group $G$ is said to be \\textit{refined} if we have  $\\mathbf{B}(G) \\neq \\mathbf{B}(G/N )$ for all proper normal subgroups $N$ of $G$.",
+      "content_preview": "[See ] A group G is said to be if we have (G) (G/N ) for all proper normal subgroups N of G.",
+      "display_name": "Definition",
+      "label": "refined",
+      "position": {
+        "line_start": 258,
+        "line_end": 259
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-6-8ec904d2",
+      "type": "theorem",
+      "content": "[See \\cite{hr2}, Theorem 3.1] \\label{anidea}\nLet  $G$ be a refined group of $\\mathbf{ B}(G) = m \\ge 2$. Then the following is true:\n\\begin{itemize}\n\\item[(i).]  $|G|$ is not divisible by primes $p > 2m-1$.\n\\item[(ii).] If a prime $p$ with $m < p \\le 2m-1$ divides $|G|$, then $G$ is a subgroup of  $\\mathrm{Hol}(C_p)$  and $p-m \\in  \\mathrm{Div} (m-1)$.\n\\item[(iii).] If $m$ is prime and $m \\in \\mathrm{Div}(G)$, then one of the following conditions  is satisfied:  \n\\begin{itemize}\n\\item[(1).] $G \\simeq C_m \\times C_m$; \n\\item[(2).] $G \\simeq C_m \\times U$, where $U$ is a nonabelian subgroup of $\\mathrm{Hol}(C_m)$;\n\\item[(3).] $m+1$ is a prime power and $G \\simeq \\mathrm{Aff}(\\mathbb{F}_{m+1})$.    \n\\end{itemize}\n\\item[(iv).] If $G$ is abelian, then $ \\exp(G) \\in \\mathrm{Div}(m)$. Furthermore there exists an abelian subgroup $R$ of $G$ such that $G/R \\simeq C_t \\times C_t$, where $t = \\exp(G)$.\n\\end{itemize}",
+      "content_preview": "[See , Theorem 3.1] Let G be a refined group of (G) = m 2. Then the following is true: |G| is not divisible by primes p > 2m-1.",
+      "display_name": "Theorem",
+      "label": "anidea",
+      "position": {
+        "line_start": 264,
+        "line_end": 277
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-7-001b83c9",
+      "type": "proposition",
+      "content": "[See \\cite{hr2}, Corollary 4.1]\\label{tek1}\nIf $s = p_1^{n_1}...p_r^{n_r}$ is a factorization in the  product of prime powers of the integer $s \\ge 1$ such that $p_i^{n_i} \\equiv 1 \\mod k$ for all $i=1,2,\\ldots, r$,  there is an abelian group $N$ of order $s$ and a \ncyclic subgroup $W \\subseteq \\mathrm{Aut}(N)$ such that $|W| = k$ and nontrivial elements of $W$ operate without fixed points on $N$. The extension $G$ of $N$ by $W$ satisfies the relation \\begin{equation}k \\cdot \\mathbf{ B}(G) = (k-1)s + 1;\n\\end{equation} in particular\n $2 \\cdot \\mathbf{ B}(G) > s$.",
+      "content_preview": "[See , Corollary 4.1] If s = p_1^n_1...p_r^n_r is a factorization in the product of prime powers of the integer s 1 such that p_i^n_i 1 k for all...",
+      "display_name": "Proposition",
+      "label": "tek1",
+      "position": {
+        "line_start": 283,
+        "line_end": 287
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-8-832f6934",
+      "type": "theorem",
+      "content": "[Refined Groups of Global Breadth 8, see \\cite{hr3}] \\label{classificationofbg8}\n\nLet $G$ be a refined group of $\\mathbf{B}(G) = 8$.\n\n\\begin{itemize}\n\\item[(i).] If $G$ is nilpotent, then $G$ is a $2$-group.\n\n\\item[(ii).] If $G$ possesses a noncyclic Sylow subgroup $S$ of odd order, then $|S| = 9$ and either $G \\simeq \\mathrm{Aff}(\\mathbb{F}_9)$ or  $G \\simeq D_6 \\times D_6$.\n\n\\item[(iii).] If $5 \\in \\pi(G)$, then either $G \\simeq D_{30}$, or $G \\simeq \\mathrm{Hol}(C_5) \\times C_2$, or  $G \\simeq A_5$.\n\n\\item[(iv).] If $7 \\in \\pi(G)$, then either $G \\simeq D_{14} \\times C_2$ or $G \\simeq \\mathrm{Aff}(\\mathbb{F}_8) \\times C_2$.\n\n\\item[(v).] If $\\pi(G)=\\{2,3\\}$ and $G$ is nonabelian with  cyclic Sylow $3$-subgroup $S$ and with Sylow $2$-subgroup $T$, then $|S|=3$ and one of the following conditions is satisfied:\n\\begin{itemize}\n\\item[(1)]  $S$ is  normal and either  $T \\simeq C_2 \\times C_2 \\times C_2$, or $T \\simeq C_4 \\times C_4$ ;\n\\item[(2)]$T$ is normal and either  $T \\simeq C_2 \\times C_2 \\times C_2 \\times C_2$, or  $T \\simeq Q_8 \\times C_4$;\n\\item[(3)] neither $S$ nor $T$  are  normal and $G=HK$ with $H \\simeq A_4$,  $K \\simeq C_4$ and $G/Z(G) \\simeq S_4$.\n\\end{itemize}\n\n\\item[(vi).] There is no $G$ such that $p \\in \\pi(G)$ and $p \\ge 11$.\n\\end{itemize}",
+      "content_preview": "[Refined Groups of Global Breadth 8, see ] Let G be a refined group of (G) = 8. If G is nilpotent, then G is a 2-group.",
+      "display_name": "Theorem",
+      "label": "classificationofbg8",
+      "position": {
+        "line_start": 405,
+        "line_end": 429
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-9-99f2e4f7",
+      "type": "corollary",
+      "content": "\\label{l1}For $q=3^n$ with $n \\ge 2$ or for all odd prime powers $q \\ge 5$\n \\begin{equation} \\label{pslodd}\n \\mathbf{B}(\\mathrm{PSL}(2,q)) + 2 = \\frac{q(q-1)}{2},\n \\end{equation} but in case $q=2^m$ (with $m \\ge 2$)\n \\begin{equation}\\mathbf{B}(\\mathrm{PSL}(2,q)) = 2^{2m-1}.\n \\end{equation}",
+      "content_preview": "For q=3^n with n 2 or for all odd prime powers q 5 ((2,q)) + 2 = , but in case q=2^m (with m 2) ((2,q)) = 2^2m-1.",
+      "display_name": "Corollary",
+      "label": "l1",
+      "position": {
+        "line_start": 497,
+        "line_end": 503
+      },
+      "references": [
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "showing that the argument of the proof of Theorem \\ref{l0} may be specialized in a significant way here. For",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "e argument of the first part of the proof Theorem \\ref{l0}. By the First Sylow Theorem $\\mathrm{PSL}(2,q)$ h",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "gain as in the first part of the proof of Theorem \\ref{l0}, we now look at  $e=p^s$ with $|\\mathrm{PSL}(2,q)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "ition of $\\mathrm{PSL}(2,q))$. Then using Theorem \\ref{l0}, it is more appropriate to focus on the set of ma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "phib",
+          "reference_type": "external",
+          "context": "rm{PSL}(2,q))$, which can be achieved by applying \\eqref{phib}.\n\n\nFirst of all consider $q=2^m$.  Note that $\\ma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "discussed in the argument of the proof of Theorem \\ref{l0}, namely\n$L_2(\\mathrm{PSL}(2,q))=L_{4}(\\mathrm{PSL",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "e above inequality holds true by applying Theorem \\ref{l0}.\nTherefore it is enough to check only $\\mathbf{b}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": ", we adapt the final step of the proof of Theorem \\ref{l0} also to the present situation. Now we assume $q=p",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First of all, we know that $|\\mathrm{PSL}(2,2^m)|=2^m \\ (2^{2m}-1)$ and $|\\mathrm{PSL}(2,q)|=q(q^2-1)/\\gcd(2,q-1)$. Counting the involutions in $\\mathrm{PSL}(2,2^m)$ we get \\begin{equation}|L_2(\\mathrm{PSL}(2,2^m))|=|\\{x \\in \\mathrm{PSL}(2,2^m) \\ | \\ x^2=1\\}|=2^{2m}.\n\\end{equation} This means that \\begin{equation}\\mathbf{b}_2(\\mathrm{PSL}(2,2^m))=2^{2m-1}.\n\\end{equation}\nCounting the elements of order $(q-1)/2$ in $\\mathrm{PSL}(2,q)$ when $q$ is odd, we get\n\\begin{equation}|L_{\\frac{q-1}{2}}(\\mathrm{PSL}(2,q))|=|\\{x \\in \\mathrm{PSL}(2,q) \\ | \\ x^{\\frac{q-1}{2}}=1\\}|=\\frac{q^3-2q^2-3q+4}{4}\n\\end{equation}\nand so \\begin{equation}\\mathbf{b}_\\frac{q-1}{2}(\\mathrm{PSL}(2,q))|=\\frac{q(q-1)}{2}-2.\n\\end{equation}\nWe want to give more details on the nature of these computations, showing that the argument of the proof of Theorem \\ref{l0} may be specialized in a significant way here. For the rest of this proof, let's denote by $q$ a power of a prime, which can be eventually $2$. We should check that among $\\mathbf{b}_e(\\mathrm{PSL}(2,q))$ with $e \\in \\mathrm{Div}(\\mathrm{PSL}(2,q))$ the value $\\mathbf{b}_2(\\mathrm{PSL}(2,q))$ indeed realizes the global breadth $\\mathbf{B}(\\mathrm{PSL}(2,q))$ when $q$ is even, and the above value $\\mathbf{b}_\\frac{q-1}{2}(\\mathrm{PSL}(2,q))$ indeed realizes the global breadth $\\mathbf{B}(\\mathrm{PSL}(2,q))$ when $q$ is odd.  This is going to support the relevance of the role of the cyclic maximal subgroups in these computations.\n\n\nOf course $\\mathrm{PSL}(2,q)$ is not simple group when $q=2$ and $q=3$. So, let $q=3^n$ for $n \\ge 2$ or $q$ be odd prime powers, with $q \\ge 5$ and in case $q=2^m$, with $m \\ge 2$.  \n\nAssume $e=p \\in \\pi(\\mathrm{PSL}(2,q))$. Then, we look at the number of Sylow subgroups in $\\mathrm{PSL}(2,q)$ and repeat the argument of the first part of the proof Theorem \\ref{l0}. By the First Sylow Theorem $\\mathrm{PSL}(2,q)$ has $p$-subgroup $P_i$ of size $p$ and with $n_p$  number of these $p$-subgroups we are able to find that $L_p(\\mathrm{PSL}(2,q))$ has $|L_p(\\mathrm{PSL}(2,q))|-1$ nontrivial elements of order $p$, each $P_i$ has $p-1$ nontrivial elements of order $p$ and $P_i\\cap P_j=\\{1\\}$ for all $i\\ne j$, by the presence of a nontrivial partition for $\\mathrm{PSL}(2,q)$.  Then \n\\begin{equation} \\label{np}\n|L_p(\\mathrm{PSL}(2,q))|= \\Big|\\bigcup_{i=0}^{n_p}P_i \\Big|= n_p(p-1)+1= |G : N_G(P_i)| \\ (p-1)+1=kp^2+kp+p+1.\n\\end{equation}\n\nArguing again as in the first part of the proof of Theorem \\ref{l0}, we now look at  $e=p^s$ with $|\\mathrm{PSL}(2,q)|=p^sr$ such that $\\gcd(p^s,r)=1$. Let $P$ is a Sylow $p$-subgroup of $\\mathrm{PSL}(2,q)$ and it is not normal. In \\cite [Example 3.5.1]{rs}, it is established that the set of maximal cyclic subgroups is a partition of $\\mathrm{PSL}(2,q))$. Then using Theorem \\ref{l0}, it is more appropriate to focus on the set of maximal cyclic subgroups rather than the Sylow $p$-subgroups of $\\mathrm{PSL}(2,q)$, when calculating the size of $ L_e(\\mathrm{PSL}(2,q))$, which can be achieved by applying \\eqref{phib}.\n\n\nFirst of all consider $q=2^m$.  Note that $\\mathrm{PSL}(2,q)$ does not have an element of order $e=2^r$ if $2\\le r \\leq n$. Then we still have a chain of equalities which we discussed in the argument of the proof of Theorem \\ref{l0}, namely\n$L_2(\\mathrm{PSL}(2,q))=L_{4}(\\mathrm{PSL}(2,q))= \\ldots = L_{2^t}(\\mathrm{PSL}(2,q))= \\ldots= L_{2^n}(\\mathrm{PSL}(2,q))$ and in particular for $e=4$ \n\\begin{equation}\n\\mathbf{b}_e(\\mathrm{PSL}(2,q))=\\frac{|L_e(\\mathrm{PSL}(2,q))|}{4} < \\frac{|L_e(\\mathrm{PSL}(2,q))|}{2}=\\mathbf{b}_{p}(\\mathrm{PSL}(2,q)).\n\\end{equation}\nHowever, if $q=2^m$, one can check that $\\mathrm{PSL}(2,q)$ has an element of order $e$ if $e=2$. This means that there is a maximal cyclic $2$-subgroup  $Q$ contained in the Sylow $2$-subgroup $P$ of $\\mathrm{PSL}(2,q)$.  Therefore, for $e=2^s$,   we have\n\\begin{equation}\n\\mathbf{b}_e(\\mathrm{PSL}(2,q))=\\frac{|L_e(\\mathrm{PSL}(2,q))|}{2^t}=\\frac{|L_2(\\mathrm{PSL}(2,q))|}{2^t} < \\frac{|L_2(\\mathrm{PSL}(2,q))|}{2}=\\mathbf{b}_{2}(\\mathrm{PSL}(2,q)).\n\\end{equation}\n\nAgain, since the maximal cyclic subgroups of $\\mathrm{PSL}(2,q)$ has order $2$, $\\frac{2^m-1}{2}$ and $\\frac{2^m+1}{2}$ for $q=2^m$, then, it is easy to check that for $e=p_1p_2$ with $e\\in \\mathrm{Div}(\\frac{2^m-1}{2})$ or $e\\in \\mathrm{Div}(\\frac{2^m+1}{2})$ we get   \n\\begin{equation} \\label{eqcompa2}\n     L_{p_1}(\\mathrm{PSL}(2,q))\\subseteq L_{e}(\\mathrm{PSL}(2,q)) \\ \\ \\mbox{and} \\ \\  L_{p_2}(\\mathrm{PSL}(2,q))\\subseteq L_{e}(\\mathrm{PSL}(2,q)) \n\\end{equation} and so\n\\begin{equation}\n\\mathbf{b}_{p_1}(\\mathrm{PSL}(2,q)) \\leq \\mathbf{b}_{e}(\\mathrm{PSL}(2,q)) \\ \\ \\mbox{and} \\ \\  \\mathbf{b}_{p_2}(\\mathrm{PSL}(2,q)) \\leq \\mathbf{b}_{e}(\\mathrm{PSL}(2,q)). \n\\end{equation}\nIn particular, if $e=2^m-1$  and $e=2^m+1$, then we have\n\\begin{equation}\n    \\mathbf{b}_{2^m-1}(\\mathrm{PSL}(2,q))= 2^{2m-1}-1\\leq 2^{2m-1}\n\\ \\ \\mathrm{and} \\ \\ \n    \\mathbf{b}_{2^m+1}(\\mathrm{PSL}(2,q))= 2^{2m-1}-(2^m+1)\\leq 2^{2m-1}.\n\\end{equation}\nNote that $(\\mathrm{PSL}(2,q)$ does not have also an element of order $e\\ge 2^{m}-1$ and $e\\ge 2^m+1$, and the above inequality holds true by applying Theorem \\ref{l0}.\nTherefore it is enough to check only $\\mathbf{b}_e(\\mathrm{PSL}(2,q))$ at $e=2$, $e=\\frac{2^m-1}{2}$ and $e=\\frac{2^m+1}{2}$ to obtain $\\mathbf{B}(\\mathrm{PSL}(2,2^m))$. \nTherefore, $\\mathbf{b}_e(\\mathrm{PSL}(2,q))$  reaches the maximum when $e=2$, in case $q=2^m$.\n\nFinally, we adapt the final step of the proof of Theorem \\ref{l0} also to the present situation. Now we assume $q=p^n$ for the odd prime $p$ with $n\\geq 1$ and, in the case $p=3$,  $n\\geq 2$. Similarly, $\\mathrm{PSL}(2,q)$ does not have an element of order $e=p^t$ for any odd prime $p$ if $2\\leq t \\leq n$. This implies,\n\\begin{equation}\n\\mathbf{b}_e(\\mathrm{PSL}(2,q))=\\frac{|L_e(\\mathrm{PSL}(2,q))|}{p^t} < \\frac{|L_e(\\mathrm{PSL}(2,q))|}{p}=\\mathbf{b}_{p}(\\mathrm{PSL}(2,q)) \\ \\ \\mbox{for} \\ \\ 2\\leq t\\leq n.\n\\end{equation}\nwith $\\mathbf{b}_{p}(\\mathrm{PSL}(2,q))=q.$    In addition, $\\mathrm{PSL}(2,q)$ has an element of order $e$ for all $e\\in \\mathrm{Div}((q-1)/2)$ and $e\\in \\mathrm{Div}((q+1)/2)$.  With the same argument of the previous case, it is important to compute $\\mathbf{b}_{e}(\\mathrm{PSL}(2,q))$ at $e=\\frac{q-1}{2}$ and $e=\\frac{q+1}{2}$. Thus, for $q\\geq 5$\n\\begin{equation}\n    \\mathbf{b}_{\\frac{q+1}{2}}(\\mathrm{PSL}(2,q))= \\frac{q^2-2(q+1)}{2}\\leq  \\frac{q^2-q-4}{2}=\\mathbf{b}_{\\frac{q-1}{2}}(\\mathrm{PSL}(2,q)). \n\\end{equation} \nTo end the proof, it remains to compute only $\\mathbf{b}_e(\\mathrm{PSL}(2,q))$ if $e\\geq q-1$ and $e\\ge q+1$, with $e\\in \\mathrm{Div}(\\mathrm{PSL}(2,q))$. In this case  $(\\mathrm{PSL}(2,q)$ has no element of order $e$, hence\n\\begin{equation}\n    \\mathbf{b}_e(\\mathrm{PSL}(2,q)) \\leq 2^{2m-1}.\n\\end{equation} \nTherefore, $\\mathbf{b}_e(\\mathrm{PSL}(2,q))$  reaches the maximum when $e=\\frac{q-1}{2}$, in case $q$ is a prime power except $q=3$.  The result follows completely."
+    },
+    {
+      "id": "corollary-10-360cc023",
+      "type": "corollary",
+      "content": "\\label{l2} Let $q=2^{2n+1}$ for $n \\ge 1$. Then,\n\\begin{equation}\\mathbf{B}(\\mathrm{Sz}(2^{2n+1}))= \\frac{q^4-q^3-2(q+1)}{2}.\n \\end{equation}",
+      "content_preview": "Let q=2^2n+1 for n 1. Then, ((2^2n+1))= .",
+      "display_name": "Corollary",
+      "label": "l2",
+      "position": {
+        "line_start": 571,
+        "line_end": 574
+      },
+      "references": [
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "\\end{equation}Arguing as in the proof of Theorem \\ref{l0}, we consider $q=2^{2n+1}$ for $n \\ge 0$ and know",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l1",
+          "reference_type": "internal",
+          "context": "llow the same procedure of the proof of Corollary \\ref{l1}, omitting the details. We just report the followi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Arguing as in the proof of Theorem \\ref{l0}, we consider $q=2^{2n+1}$ for $n \\ge 0$ and know that $|\\mathrm{Sz}(q)|= q^2(q^2+1)(q-1)$. Counting the elements of order $q-1$ in $\\mathrm{Sz}(q)$, we get\n\\begin{equation}\n|L_{q-1}(\\mathrm{Sz}(q))|=|\\{x \\in \\mathrm{Sz}(q) \\ | \\ x^{q-1}=1\\}|=(q-1) \\ \\ \\left(\\frac{q^4-q^3-2(q-1)}{2}\\right)\n\\end{equation}\nand so \\begin{equation}\\mathbf{b}_{q-1}(\\mathrm{Sz}(q))=\\frac{q^4-q^3-2(q+1)}{2}.\n\\end{equation}\nOf course if $n=0$, then $\\mathrm{Sz}(2)$ is a group of order 20, which is nonsimple. Assume $q=2^{2n+1}$ for $n \\ge 1$ and we should check that among $\\mathbf{b}_c(\\mathrm{Sz}(q))$ with $c\\in \\mathrm{Div}(\\mathrm{Sz}(q))$ the value $\\mathbf{b}_{q-1}(\\mathrm{Sz}(q))$ indeed realizes the global breadth $\\mathbf{B}(\\mathrm{Sz}(q))$. We follow the same procedure of the proof of Corollary \\ref{l1}, omitting the details. We just report the following computations, which are useful to identify the main local breadths that one needs. In fact we  only need to check the additional values $\\mathbf{b}_{c}(\\mathrm{Sz}(q))$ when $c=4$, $c=q+2^{n+1} + 1$ and $c=q-2^{n+1} + 1$, that is, \n\\begin{equation}\n    \\mathbf{b}_4(\\mathrm{Sz}(q))=  2^{6n+4}, \\ \\ \\ \\ \\ \\ \n    \\mathbf{b}_{q-2^{n+1}+1}(\\mathrm{Sz}(q))=  2^{6n+4}+2^{4n+3}+2^{2n+1}+2^{n+1}+1,\n\\end{equation}  \n\\begin{equation}\n\\mathbf{b}_{q+2^{n+1} + 1}(\\mathrm{Sz}(q))= 2^{6n+3}+2^{2n+1}-2^{n+1}+1.\n\\end{equation}\nTherefore we get what we claimed for $q=2^{2n+1}$  with $n \\geq 1$, namely \\begin{equation}\\mathbf{B}(\\mathrm{Sz}(q)) = \\frac{q^4-q^3-2(q+1)}{2}=\\:\\left(2^{2n+1}\\right)^4-\\left(2^{2n+1}\\right)^3-2\\left(2^{2n+1}+1\\right).\\end{equation}"
+    },
+    {
+      "id": "corollary-11-10934393",
+      "type": "corollary",
+      "content": "\\label{l3} For all odd prime powers $q \\ge 5$, we get\n \\begin{equation}\\mathbf{B}(\\mathrm{PGL}(2,q)) = \\frac{q^2+q-2}{2}, \n \\end{equation} \nand if $q=2^m$ for $m\\ge2$, then\n \\begin{equation} \\label{pgl2}\n\\mathbf{B}(\\mathrm{PGL}(2,q)) = 2^{2m-1}. \\end{equation}",
+      "content_preview": "For all odd prime powers q 5, we get ((2,q)) = , and if q=2^m for m2, then ((2,q)) = 2^2m-1.",
+      "display_name": "Corollary",
+      "label": "l3",
+      "position": {
+        "line_start": 596,
+        "line_end": 602
+      },
+      "references": [
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "overlap the same argument of the proof of Theorem \\ref{l0}, sketching the main ideas and omitting some detai",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Again we overlap the same argument of the proof of Theorem \\ref{l0}, sketching the main ideas and omitting some details on the computations. Since $|\\mathrm{PGL}(2,2^m)|=q(q-1)(q+1)$, counting the elements of order $q$ and $q-1$ in $\\mathrm{PGL}(2,q)$, we obtain for  $q=2^m$ and $m\\ge2$ that \n\\begin{equation}\n|L_2(\\mathrm{PGL}(2,q))| =|\\{x \\in \\mathrm{PGL}(2,q) \\  | \\ x^2=1\\}| = {q^{2}} \\end{equation} and so\n\\begin{equation} \n\\mathbf{B}(\\mathrm{PGL}(2,q)) = \\frac{q^2}{2} =2^{2m-1}.\n\\end{equation}\nWhen $q$ is an odd prime bigger than five, we get\n\\begin{equation} \n|L_{q-1}(\\mathrm{PGL}(2,q))|=|\\{x \\in \\mathrm{PGL}(2,q) \\ | \\ x^{q-1}=1\\}|=\\frac{(q-1)(q^2+q-2)}{2}\n\\end{equation}\nand so \\begin{equation} \n\\mathbf{b}_{q-1}(\\mathrm{PGL}(2,q))=\\frac{q^2+q-2}{2}.\n\\end{equation}\n The main idea is always the same, that is,  we should check that among all possible values of local breadth $\\mathbf{b}_f(\\mathrm{PGL}(2,q))$ with $f \\in \\mathrm{Div}(\\mathrm{PGL}(2,q))$, the global breadth $\\mathbf{B}(\\mathrm{PGL}(2,q))$ is reached by the value $\\mathbf{b}_{q-1}(\\mathrm{PGL}(2,q))$  when $q\\geq 3$ is odd and by the value $\\mathbf{b}_{2}(\\mathrm{PGL}(2,q))$  when $q=2^m$ with $m\\ge2$. Computational details are omitted (since the logic has been widely discussed)."
+    },
+    {
+      "id": "example-12-cdb8f51e",
+      "type": "example",
+      "content": "\\label{e1}Note that $\\mathrm{PGL}(2,3) \\simeq S_4$ and  $\\mathrm{PGL}(2,4) \\simeq A_5$ for which we have already seen that $\\mathbf{B}(S_4)=5$ and  $\\mathbf{B}(A_5)=8$, moreover $S_4, A_5 \\in \\mathcal{H}$. \n\n\nWe may use  GAP \\cite{gap}, in order to compute the orders of the elements of the group $\\mathrm{PGL}(2,2^m)$ for $ 2 \\le m \\leq 6$, confirming Theorems \\ref{l0} and \\ref{maintheorem}. First of all,  the maximal cyclic subgroups of $\\mathrm{PGL}(2,2^m)$ have order precisely $2$, $2^m-1$, and $2^m+1$.  In particular, if $m=6$, then we consider $\\mathrm{PGL}(2,64)$ of order $262080=2^{6} \\cdot 3^{2} \\cdot 5 \\cdot 7 \\cdot 13$, $d \\in \\mathrm{Div}(\\mathrm{PGL}(2,64))$, $\\pi(\\mathrm{PGL}(2,64))=\\{2,3,5,7,13\\} \\subseteq \\mathrm{Div}(\\mathrm{PGL}(2,64))$ and must observe that $\\mathbf{c}_d=|O_d|/\\phi(d)$, where\n$O_d=\\{x \\in \\mathrm{PGL}(2,64) \\mid o(x)=d\\}= \\{ \\mbox{Elements of } \\ \\mathrm{PGL}(2,64) \\ \\mbox{of order exactly} \\ d\\}.$ We find that\n\\begin{center}\n\\begin{tabular}{|c|l|c|c|}\n   \n\n        \n            \\hline\n        $d$ & $\\mathbf{c}_d$  & $|L_d(\\mathrm{PGL}(2,64))|$ & $\\mathbf{b}_d(\\mathrm{PGL}(2,64))$ \\\\\n    \\hline    \n    1  &   1      & 1  &  1 \\\\\n    2  & 4095     & 4096  &  2048 \\\\\n    3  & 2080     & 4161  &  1387 \\\\\n    5  & 2080     & 8065  &  1613 \\\\\n    7  & 2080    & 12481  &  1783 \\\\\n    9  & 2080    & 16641  &  1849 \\\\\n    13 & 2080    & 24193  &  1861 \\\\\n    21 & 2080    & 41601  &  1981 \\\\\n    63 & 2080    & 128961  & 2047 \\\\\n    65 & 2080   & 129025  & 1985 \\\\\n    4  & 0       & 4096  &  1024 \\\\\n    8  & 0       & 4096  &  512 \\\\\n    16 & 0       & 4096  &  256 \\\\\n    32 & 0       & 4096  &  128 \\\\\n    64 & 0       & 4096  &  64 \\\\\n    6  & 0       & 8256  &  1376 \\\\\n    12 & 0       & 8256  &  688 \\\\\n    15 & 0       & 12225 &  815 \\\\\n    18 & 0       & 20736  & 1152 \\\\\n    \\vdots &   \\vdots      &  \\vdots  &   \\vdots \\\\\n      262080 & 0    & 262080  &  1 \\\\\n    \\hline\n    \\end{tabular}\n\\end{center}\n\\centerline{Fig.1. Values of local breadth for $\\mathrm{PGL}\n(2,64)$ from \\eqref{lb} and \\eqref{phib}.}\n\n\\medskip\n\nNote that the maximal cyclic subgroups of $\\mathrm{PGL}(2,64)$ have order $2$, $63$ and $65$. Moreover $\\mathbf{B}(\\mathrm{PGL}(2,64))=2048=\\mathbf{b}_{2}(\\mathrm{PGL}\n(2,q))$, which occurs at the order of the maximal subgroup $M \\simeq C_2$ of $\\mathrm{PGL}(2,64)$. Here we appreciate the value of Theorem \\ref{l0}, which easily allows us to conclude that $\\mathbf{B}(\\mathrm{PGL}(2,64))=2^{2m-1}$ when $m=6$. See also  Corollary \\ref{l3}. The bounds of Theorem \\ref{maintheorem} (iv) can be easily checked  for $\\mathrm{PGL}(2,64)$.",
+      "content_preview": "Note that (2,3) S_4 and (2,4) A_5 for which we have already seen that (S_4)=5 and (A_5)=8, moreover S_4, A_5 .",
+      "display_name": "Example",
+      "label": "e1",
+      "position": {
+        "line_start": 789,
+        "line_end": 833
+      },
+      "references": [
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": ",2^m)$ for $ 2 \\le m \\leq 6$, confirming Theorems \\ref{l0} and \\ref{maintheorem}. First of all,  the maximal",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "maintheorem",
+          "reference_type": "internal",
+          "context": "2 \\le m \\leq 6$, confirming Theorems \\ref{l0} and \\ref{maintheorem}. First of all,  the maximal cyclic subgroups of $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lb",
+          "reference_type": "external",
+          "context": "s of local breadth for $\\mathrm{PGL}\n(2,64)$ from \\eqref{lb} and \\eqref{phib}.}\n\n\\medskip\n\nNote that the maxim",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "phib",
+          "reference_type": "external",
+          "context": "dth for $\\mathrm{PGL}\n(2,64)$ from \\eqref{lb} and \\eqref{phib}.}\n\n\\medskip\n\nNote that the maximal cyclic subgrou",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l0",
+          "reference_type": "internal",
+          "context": "}(2,64)$. Here we appreciate the value of Theorem \\ref{l0}, which easily allows us to conclude that $\\mathbf",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l3",
+          "reference_type": "internal",
+          "context": "(2,64))=2^{2m-1}$ when $m=6$. See also  Corollary \\ref{l3}. The bounds of Theorem \\ref{maintheorem} (iv) can",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "maintheorem",
+          "reference_type": "internal",
+          "context": "e also  Corollary \\ref{l3}. The bounds of Theorem \\ref{maintheorem} (iv) can be easily checked  for $\\mathrm{PGL}(2,6",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-13-cfe0f3f5",
+      "type": "example",
+      "content": "\\label{e2}\nWe focus on  $\\mathrm{PSL}(2,9) \\simeq A_6$, again using GAP \\cite{gap}. Here we have a  simple group of nontrivial partition of  $|\\mathrm{PSL}(2,9)|=360$ with $\\pi(\\mathrm{PSL}(2,9)) = \\{2,3,5\\}$.\n\n\nWith the same notations which have been used in the Example \\ref{e1}, we find for $d=6$ and $q=9$ that $\\mathbf{b}_{6}(\\mathrm{PSL}(2,9))< \\mathbf{b}_{2}(\\mathrm{PSL}(2,9))$ and $\\mathbf{b}_{6}(\\mathrm{PSL}(2,9))< \\mathbf{b}_{3}(\\mathrm{PSL}(2,9))$ even though $|L_6(\\mathrm{PSL}(2,9))| \\geq |L_2(\\mathrm{PSL}(2,9))|$ and $|L_6(\\mathrm{PSL}(2,9))| \\geq |L_3(\\mathrm{PSL}(2,9))|$. \n\n\nIn the present situation,  the maximal cyclic subgroups of $\\mathrm{PSL}(2,9)$ are of order $3$, $4$ and $5$,  and $\\mathbf{B}(\\mathrm{PSL}(2,9))=34=\\frac{ 9 \\cdot (9-1)}{2}-2=\\mathbf{b}_{4}(\\mathrm{PSL}(2,9))$, which can be calculated using Corollary \\ref{l1} of \\eqref{pslodd}  and it occurred at the order of the maximal subgroup $M\\simeq C_4=C_{\\frac{9-1}{2}}$ of $\\mathrm{PSL}(2,9)$. \n\\begin{center}\n\\begin{tabular}{|c|l|c|c|}\n   \n\n        \n            \\hline\n        $d$ & $\\mathbf{c}_d$  & $|L_d(\\mathrm{PSL}(2,9))|$ & $\\mathbf{b}_d(\\mathrm{PSL}(2,9))$ \\\\\n    \\hline \n    1  &   1    & 1    &  1 \\\\  \n    2  & 45     & 46   &  23 \\\\\n    3  & 40     & 81   &  27 \\\\\n    4  & 45     & 136  &  34 \\\\\n    5  & 36     & 145  &  29 \\\\\n    6  & 0    & 126  &  21 \\\\\n    8 & 0     & 136  &  17 \\\\\n    9 & 0     & 81  &  9 \\\\\n    10 & 0    & 190  & 19 \\\\\n    12 & 0    & 216  & 18 \\\\\n    15  & 0       & 225  &  15 \\\\\n    18  & 0       & 126  &  7 \\\\\n    20 & 0       &  280 & 14  \\\\\n    24 & 0       &  216 &  9 \\\\\n    30 & 0       &  270 &  9 \\\\\n    36  & 0       &  216 & 6 \\\\\n    40 & 0       & 280  &  7 \\\\\n    60 & 0       & 360 &  6 \\\\ \n    72 & 0       & 216  & 3 \\\\ \n    90 & 0       & 270  &  3 \\\\\n    120 & 0       & 360 &  3 \\\\\n    180 & 0       & 360  & 2 \\\\\n    360 & 0       & 360  & 1 \\\\\n   \\hline\n    \\end{tabular}\n\\end{center}\n\\medskip\n\\centerline{Fig.2. Values of local breadth for $\\mathrm{PSL}\n(2,9) \\simeq A_6$ from \\eqref{lb} and \\eqref{phib}.}\n\n\\medskip\n\nIt is now easy to check that the bound of Theorem \\ref{maintheorem} (ii) is satisfied.",
+      "content_preview": "We focus on (2,9) A_6, again using GAP . Here we have a simple group of nontrivial partition of |(2,9)|=360 with ((2,9)) = 2,3,5.",
+      "display_name": "Example",
+      "label": "e2",
+      "position": {
+        "line_start": 837,
+        "line_end": 886
+      },
+      "references": [
+        {
+          "target_id": "e1",
+          "reference_type": "internal",
+          "context": "ame notations which have been used in the Example \\ref{e1}, we find for $d=6$ and $q=9$ that $\\mathbf{b}_{6}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "l1",
+          "reference_type": "internal",
+          "context": "}(2,9))$, which can be calculated using Corollary \\ref{l1} of \\eqref{pslodd}  and it occurred at the order o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "pslodd",
+          "reference_type": "external",
+          "context": "ich can be calculated using Corollary \\ref{l1} of \\eqref{pslodd}  and it occurred at the order of the maximal subg",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lb",
+          "reference_type": "external",
+          "context": "breadth for $\\mathrm{PSL}\n(2,9) \\simeq A_6$ from \\eqref{lb} and \\eqref{phib}.}\n\n\\medskip\n\nIt is now easy to c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "phib",
+          "reference_type": "external",
+          "context": "mathrm{PSL}\n(2,9) \\simeq A_6$ from \\eqref{lb} and \\eqref{phib}.}\n\n\\medskip\n\nIt is now easy to check that the bou",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "maintheorem",
+          "reference_type": "internal",
+          "context": "It is now easy to check that the bound of Theorem \\ref{maintheorem} (ii) is satisfied.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "conjecture-14-9f8aa2e4",
+      "type": "conjecture",
+      "content": "The class of groups $\\mathcal{H}$ might contain all  groups in Theorem \\ref{niceclassification}. It might be possible that $\\mathcal{H}$ contains also  simple groups and nonsimple groups, which do not possess necessarily   a nontrivial partition.",
+      "content_preview": "The class of groups might contain all groups in Theorem . It might be possible that contains also simple groups and nonsimple groups, which do not...",
+      "display_name": "Conjecture",
+      "label": null,
+      "position": {
+        "line_start": 894,
+        "line_end": 895
+      },
+      "references": [
+        {
+          "target_id": "niceclassification",
+          "reference_type": "internal",
+          "context": "\\mathcal{H}$ might contain all  groups in Theorem \\ref{niceclassification}. It might be possible that $\\mathcal{H}$ contains",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "external_phib",
+      "type": "unknown",
+      "content": "External reference to 'phib'",
+      "content_preview": "External reference to 'phib'",
+      "display_name": "Unknown",
+      "label": "phib",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_lb",
+      "type": "unknown",
+      "content": "External reference to 'lb'",
+      "content_preview": "External reference to 'lb'",
+      "display_name": "Unknown",
+      "label": "lb",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_pslodd",
+      "type": "unknown",
+      "content": "External reference to 'pslodd'",
+      "content_preview": "External reference to 'pslodd'",
+      "display_name": "Unknown",
+      "label": "pslodd",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "corollary-9-99f2e4f7",
+      "target": "theorem-2-99f6ee1d",
+      "type": null
+    },
+    {
+      "source": "corollary-9-99f2e4f7",
+      "target": "external_phib",
+      "type": null
+    },
+    {
+      "source": "corollary-10-360cc023",
+      "target": "theorem-2-99f6ee1d",
+      "type": null
+    },
+    {
+      "source": "corollary-10-360cc023",
+      "target": "corollary-9-99f2e4f7",
+      "type": null
+    },
+    {
+      "source": "corollary-11-10934393",
+      "target": "theorem-2-99f6ee1d",
+      "type": null
+    },
+    {
+      "source": "example-12-cdb8f51e",
+      "target": "theorem-2-99f6ee1d",
+      "type": null
+    },
+    {
+      "source": "example-12-cdb8f51e",
+      "target": "theorem-3-b3d1ceb4",
+      "type": null
+    },
+    {
+      "source": "example-12-cdb8f51e",
+      "target": "external_lb",
+      "type": null
+    },
+    {
+      "source": "example-12-cdb8f51e",
+      "target": "external_phib",
+      "type": null
+    },
+    {
+      "source": "example-12-cdb8f51e",
+      "target": "corollary-11-10934393",
+      "type": null
+    },
+    {
+      "source": "example-13-cfe0f3f5",
+      "target": "example-12-cdb8f51e",
+      "type": null
+    },
+    {
+      "source": "example-13-cfe0f3f5",
+      "target": "corollary-9-99f2e4f7",
+      "type": null
+    },
+    {
+      "source": "example-13-cfe0f3f5",
+      "target": "external_pslodd",
+      "type": null
+    },
+    {
+      "source": "example-13-cfe0f3f5",
+      "target": "external_lb",
+      "type": null
+    },
+    {
+      "source": "example-13-cfe0f3f5",
+      "target": "external_phib",
+      "type": null
+    },
+    {
+      "source": "example-13-cfe0f3f5",
+      "target": "theorem-3-b3d1ceb4",
+      "type": null
+    },
+    {
+      "source": "conjecture-14-9f8aa2e4",
+      "target": "theorem-4-52a8dee9",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 17,
+    "edge_count": 17,
+    "extractor_used": "regex-only"
+  }
+}

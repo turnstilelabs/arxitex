@@ -1,0 +1,1228 @@
+{
+  "arxiv_id": "2506.17401v1",
+  "nodes": [
+    {
+      "id": "definition-1-765af205",
+      "type": "definition",
+      "content": "Let $G$ be an abelian group of order $n$.\n\\begin{itemize}\n    \\item Let $n$ be divisible by a prime $p\\equiv 2 \\pmod{3}$. Given the smallest such $p$, we  say that $G$ is \\emph{type \\rom{1}$(p)$}.\n    \\item If $n$ is not divisible by any prime $p\\equiv 2\\pmod{3}$, but $3|n$, then we say that $G$ is \\emph{type \\rom{2}}.\n    \\item Otherwise, $G$ is \\emph{type \\rom{3}}.\n\\end{itemize}",
+      "content_preview": "Let G be an abelian group of order n. Let n be divisible by a prime p 2 . Given the smallest such p, we say that G is (p).",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 117,
+        "line_end": 124
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-26101b2e",
+      "type": "theorem",
+      "content": "\\cite{yan, GR-g}\\label{thmcharacter}\nGiven any finite abelian group $G$, if $G$ is type \\rom{1}$(p)$ then $\\mu(G)=|G|\\left(\\frac{1}{3}+\\frac{1}{3p}\\right)$. Otherwise, if $G$ is type \\rom{2} then $\\mu(G)=\\frac{|G|}{3}$. Finally, if $G$ is type \\rom{3} then $\\mu(G)=|G|\\left(\\frac{1}{3}-\\frac{1}{3m}\\right)$ where $m$ is the exponent (largest order of any element) of $G$.",
+      "content_preview": "Given any finite abelian group G, if G is type (p) then (G)=|G|(+). Otherwise, if G is type then (G)=. Finally, if G is type then (G)=|G|(-) where m...",
+      "display_name": "Theorem",
+      "label": "thmcharacter",
+      "position": {
+        "line_start": 125,
+        "line_end": 127
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-cf62b85d",
+      "type": "theorem",
+      "content": "\\label{thmrandom}\nLet $ (G_n)_{n \\in \\mathbb N}$ be a sequence of finite abelian groups where $|G_i|<|G_j|$ and $\\mu (G_i)/|G_i|=\\mu (G_j)/|G_j|$\nfor all $i<j$. \nFor any  $\\eps >0$ there exists  $C>0$ such that the following holds.  If $p_n\\geq C|G_n|^{-1/2}$ for each $n \\in \\mathbb N$,\n    then\n    $$\\lim _{n \\rightarrow \\infty } \\mathbb P (\\text{the largest sum-free set in $G_{n,p_n}$ has size } (1\\pm \\eps)\\mu (G_n)\\cdot p_n) =1.$$ \\qed",
+      "content_preview": "Let (G_n)_n N be a sequence of finite abelian groups where |G_i|<|G_j| and (G_i)/|G_i|= (G_j)/|G_j| for all i<j.",
+      "display_name": "Theorem",
+      "label": "thmrandom",
+      "position": {
+        "line_start": 141,
+        "line_end": 147
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-b5136a16",
+      "type": "theorem",
+      "content": "\\cite{HT} \\label{thm23}\n  If $k \\in \\mathbb N$ and $n:=2^k$, then\n$\\fm (\\mathbb Z^k_2)= \\left (\\binom{n-1}{2}+o(1) \\right ) 2^{n/4}.$ Further,\nif $k\\in\\N$ and $n:=3^k$, then\n$\\fm(\\Z_3^k)=\\left(\\frac{(n-3)(n-1)}{3}+o(1)\\right) 3^{n/9}.$",
+      "content_preview": "If k N and n:=2^k, then ( Z^k_2)= (+o(1) ) 2^n/4. Further, if k and n:=3^k, then (_3^k)=(+o(1)) 3^n/9.",
+      "display_name": "Theorem",
+      "label": "thm23",
+      "position": {
+        "line_start": 186,
+        "line_end": 191
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "conjecture-5-2b1cceed",
+      "type": "conjecture",
+      "content": "\\label{conj5}\n    If $k \\in \\mathbb N$ and $n:=5^k$, then\n$\\fm (\\mathbb Z^k_5)= 3^{n/10+o(n)}.$",
+      "content_preview": "If k N and n:=5^k, then ( Z^k_5)= 3^n/10+o(n).",
+      "display_name": "Conjecture",
+      "label": "conj5",
+      "position": {
+        "line_start": 200,
+        "line_end": 203
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "conjecture-6-6453cc9b",
+      "type": "conjecture",
+      "content": "\\label{conj2}\nSuppose that  $G$ is a type $I$ abelian group of order $n$. Then $\\fms(G)=2^{\\mu (G)/2+o(n)}$.",
+      "content_preview": "Suppose that G is a type I abelian group of order n. Then (G)=2^ (G)/2+o(n).",
+      "display_name": "Conjecture",
+      "label": "conj2",
+      "position": {
+        "line_start": 247,
+        "line_end": 249
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-3ed1eedc",
+      "type": "lemma",
+      "content": "\\label{distinct containers}\nGiven any $\\delta>0$ there exists an $n_0 \\in \\mathbb N$ such that the following holds. If $G$ is a finite abelian group of order $n\\geq n_0$, then there is a family $\\mathcal{F}$ of subsets of $G$ with the following properties.\n\\begin{enumerate}[label = (\\roman*),itemsep=0pt]\n    \\item Every $F\\in\\mathcal{F}$ has at most $\\delta n^2$ distinct Schur triples.\n    \\item If $S\\subseteq G$ is distinct sum-free, then $S$ is contained in some $F\\in\\mathcal{F}$.\n    \\item $|\\mathcal{F}|\\leq 2^{\\delta n}$.\n    \\item Every $F\\in \\mathcal F$ is of the form $F= A \\cup B$ where $A$ is sum-free and $|B|\\leq \\delta n$. In particular, $|F| \\leq \\mu (G)+\\delta n$.\n\\end{enumerate} \\qed",
+      "content_preview": "Given any >0 there exists an n_0 N such that the following holds. If G is a finite abelian group of order n n_0, then there is a family of subsets of...",
+      "display_name": "Lemma",
+      "label": "distinct containers",
+      "position": {
+        "line_start": 327,
+        "line_end": 335
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-0411e65a",
+      "type": "lemma",
+      "content": "\\cite[Lemma 5.6]{GR-g}\\label{large sfs groups I(p)}\n    Suppose that $G$ is a type I($p$) group  and write $p=3k+2$. Let $A\\subseteq G$ be sum-free, and suppose that $|A|>\\left(\\frac{1}{3}+\\frac{1}{3(p+1)}\\right)n$. Then we may find a homomorphism $\\psi:G\\to\\Z_p$ such that $A$ is contained in $\\psi^{-1}(\\{k+1,\\ldots,2k+1\\})$.",
+      "content_preview": "Suppose that G is a type I(p) group and write p=3k+2. Let A G be sum-free, and suppose that |A|>(+)n. Then we may find a homomorphism :G_p such that...",
+      "display_name": "Lemma",
+      "label": "large sfs groups I(p)",
+      "position": {
+        "line_start": 342,
+        "line_end": 344
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "fact-9-140dbc56",
+      "type": "fact",
+      "content": "\\label{solutions 2x=g}\n    Let \n$G:=\\Z_{2^{\\alpha_1}}\\oplus\\Z_{2^{\\alpha_2}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_r}}\\oplus K $ where $K$ is an abelian group of odd order and $\\alpha _i \\in \\mathbb N$ for each $ i \\in [r]$. Fix $g\\in G$. Then there are at most $2^r$ solutions in $G$ to the equation $2x=g$.\\qed",
+      "content_preview": "Let G:=_2^_1_2^_2_2^_r K where K is an abelian group of odd order and _i N for each i [r]. Fix g G. Then there are at most 2^r solutions in G to the...",
+      "display_name": "Fact",
+      "label": "solutions 2x=g",
+      "position": {
+        "line_start": 351,
+        "line_end": 354
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-10-59c29aba",
+      "type": "lemma",
+      "content": "\\label{corr order index}\n    Let $G$ be a finite abelian group and $k\\in\\N$. The  number of subgroups of $G$ of order $k$ equals the number of subgroups of $G$ with index $k$. \\qed",
+      "content_preview": "Let G be a finite abelian group and k. The number of subgroups of G of order k equals the number of subgroups of G with index k.",
+      "display_name": "Lemma",
+      "label": "corr order index",
+      "position": {
+        "line_start": 358,
+        "line_end": 360
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "fact-11-45ea8fce",
+      "type": "fact",
+      "content": "\\label{nb order 2 elements}\n     Given $\\alpha_1\\geq\\ldots\\geq\\alpha_r\\geq1$, let $G:=\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_r}}$ be a group of rank $r$. If $H\\leq G$ is a subgroup of $G$, then $H$ has rank $r$ if and only if it contains every order 2 element of $G$.",
+      "content_preview": "Given _1_r1, let G:=_2^_1_2^_r be a group of rank r. If H G is a subgroup of G, then H has rank r if and only if it contains every order 2 element of...",
+      "display_name": "Fact",
+      "label": "nb order 2 elements",
+      "position": {
+        "line_start": 364,
+        "line_end": 366
+      },
+      "references": [],
+      "proof": "First note that the order 2 elements in $G$ are the non-zero elements of the set $\\{0,2^{\\alpha_1-1}\\}\\oplus\\ldots\\oplus\\{0,2^{\\alpha_r-1}\\}$, so there are $2^r-1$ of them. Since $H\\leq G$, there exist $\\beta_1\\geq\\ldots\\geq\\beta_{r'}\\geq1$ such that $H\\cong \\Z_{2^{\\beta_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\beta_{r'}}}$, with $r'\\leq r$ the rank of $H$. Thus, $H$ has $2^{r'}-1$ order 2 elements. So $H$ contains every order 2 element of $G$ if and only if $2^r-1=2^{r'}-1$, i.e., if and only if $r=r'$."
+    },
+    {
+      "id": "lemma-12-7f0dea15",
+      "type": "lemma",
+      "content": "\\label{nb subgroups of index 2 with fixed rank}\nLet $r_1$ and $r_2$ be non-negative integers such that $r:=r_1+r_2\\in \\mathbb N.$ \n    Let $G:=\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$ with $\\alpha_1\\geq\\ldots\\geq\\alpha_{r_1}\\geq2$. Then there are $2^{r_1}-1$ subgroups of index 2 of $G$ with rank $r$, and $2^r-2^{r_1}$ subgroups of index 2 of $G$ with rank $r-1$.",
+      "content_preview": "Let r_1 and r_2 be non-negative integers such that r:=r_1+r_2 N. Let G:=_2^_1_2^_r_1_2^r_2 with _1_r_12. Then there are 2^r_1-1 subgroups of index 2...",
+      "display_name": "Lemma",
+      "label": "nb subgroups of index 2 with fixed rank",
+      "position": {
+        "line_start": 373,
+        "line_end": 376
+      },
+      "references": [
+        {
+          "target_id": "corr order index",
+          "reference_type": "internal",
+          "context": "d $\\rho_{-1}(G):=|\\mathcal{R}_{-1}(G)|$. By Lemma \\ref{corr order index}, $|\\mathcal{I}_2(G)|$ is equal to the number of s",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb order 2 elements",
+          "reference_type": "internal",
+          "context": "$g-h \\in H$ since $H$ has rank $r$ and so by Fact \\ref{nb order 2 elements} it contains every element of $G$ of order 2; this",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb order 2 elements",
+          "reference_type": "internal",
+          "context": "it contains every order 2 element of $G$ by Fact \\ref{nb order 2 elements}; this means $h-h'\\in H'$, so $h\\in H'$. Thus, $H\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb order 2 elements",
+          "reference_type": "internal",
+          "context": "very  element in $G$ of order $2$, and so by Fact \\ref{nb order 2 elements} must have rank $r$; that is, $H\\in\\mathcal{R}(G)$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "corr order index",
+          "reference_type": "internal",
+          "context": "2G$ contains  $2^{r_1}-1$ order 2 elements, Lemma~\\ref{corr order index} implies that  $|\\mathcal{I}_2(2G)|=2^{r_1}-1$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Note that a subgroup of index 2 of $G$ has either rank $r$ or $r-1$. Let $\\mathcal{I}_2(G)$ be the set of all the subgroups of $G$ with index 2. Let $\\mathcal{R}(G)$ (resp.~$\\mathcal{R}_{-1}(G)$) be the set of the subgroups of index 2 of $G$ with rank $r$ (resp.~$r-1$). Set $\\rho(G):=|\\mathcal{R}(G)|$ and $\\rho_{-1}(G):=|\\mathcal{R}_{-1}(G)|$. By Lemma \\ref{corr order index}, $|\\mathcal{I}_2(G)|$ is equal to the number of subgroups of order 2 of $G$ (which is the number of order 2 elements in $G$), namely $2^r-1$.\n    Then, $\\rho(G)+\\rho_{-1}(G)=2^r-1$. \n\n     \n    We will now define a bijection $\\varphi$ between $\\mathcal{R}(G)$ and $\\mathcal{I}_2(2G)$. \n    \n    Let $H\\in\\mathcal{R}(G)$, and define $\\varphi(H):=2H$. Let us prove that $\\varphi(H)\\in\\mathcal{I}_2(2G)$. Consider the homomorphism $\\pi:G\\to 2G/2H$ defined by $\\pi(g)=2g+2H$. Then $g\\in\\ker(\\pi)$ if and only if $2g \\in 2H$, which is true precisely if  (i) $g \\in H$ or (ii) there exists $h\\in H$ such that $g-h$ has order 2. Note though that in case (ii), $g-h \\in H$ since $H$ has rank $r$ and so by Fact \\ref{nb order 2 elements} it contains every element of $G$ of order 2; this then implies $g \\in H$. So in fact $g\\in\\ker(\\pi)$ if and only if $g \\in H$ and thus\n     $\\ker(\\pi)=H$.\nBy the fundamental theorem on homomorphisms, this implies that \n    $2G/2H$ is isomorphic to $G/H$, proving that $2H\\in\\mathcal{I}_2(2G)$. This proves that $\\varphi$ is well-defined.\n\n    Let $H,H'\\in\\mathcal{R}(G)$, and suppose that $\\varphi(H)=\\varphi(H')$, i.e., $2H=2H'$. Then for every $h\\in H$, either $h \\in H'$ or there exists $h'\\in H'$ such that $h-h'$ has order 2. But since $H'\\in\\mathcal{R}(G)$, it contains every order 2 element of $G$ by Fact \\ref{nb order 2 elements}; this means $h-h'\\in H'$, so $h\\in H'$. Thus, $H\\subseteq H'$. Similarly $H'\\subseteq H$, so $H=H'$, and $\\varphi$ is injective.\n    \n    Conversely, let $\\Tilde{H}\\in\\mathcal{I}_2(2G)$. Then $H:=\\{g\\in G \\ | \\ 2g\\in\\Tilde{H}\\}$ is such that $\\varphi(H)=\\Tilde{H}$. Indeed, consider the homomorphism \n    $\\Tilde{\\pi}:G\\to 2G/\\Tilde{H}$ defined by  $\\Tilde{\\pi}(g)=2g+\\Tilde{H}$. Then by definition $H=\\ker(\\Tilde{\\pi})$, \n    so $H$ is an index 2 subgroup of $G$.\n    Further, $H$ contains every  element in $G$ of order $2$, and so by Fact \\ref{nb order 2 elements} must have rank $r$; that is, $H\\in\\mathcal{R}(G)$. This therefore shows $\\varphi$ is surjective. \n    \n    \n    This bijection $\\varphi$  proves that $\\rho(G)=|\\mathcal{I}_2(2G)|$. Note that $2G$ has rank $r_1$, and so since $2G$ contains  $2^{r_1}-1$ order 2 elements, Lemma~\\ref{corr order index} implies that  $|\\mathcal{I}_2(2G)|=2^{r_1}-1$.\n    Thus, $\\rho(G)=2^{r_1}-1$, and since $\\rho(G)+\\rho_{-1}(G)=2^r-1$ we also have that $\\rho_{-1}(G)=2^r-2^{r_1}$."
+    },
+    {
+      "id": "lemma-13-0c0455fa",
+      "type": "lemma",
+      "content": "\\cite[Equation (3)]{BLST}\\label{dense and regular graphs}\nLet $k\\geq 1$ and let $\\Gamma$ be a graph on $n$ vertices. Suppose that $\\Delta(\\Gamma)\\leq k\\delta(\\Gamma)$ and set $b:=\\sqrt{\\delta(\\Gamma)}$. Then\n$$\\mis(\\Gamma)\\leq \\sum_{0\\leq i\\leq n/b}\\binom{n}{i}\\cdot3^{\\left(\\frac{k}{k+1}\\right)\\frac{n}{3}+\\frac{2n}{3b}}.$$",
+      "content_preview": "Let k 1 and let be a graph on n vertices. Suppose that () k() and set b:=. Then () _0 i n/b3^()+.",
+      "display_name": "Lemma",
+      "label": "dense and regular graphs",
+      "position": {
+        "line_start": 424,
+        "line_end": 427
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-d070ffdc",
+      "type": "lemma",
+      "content": "\\cite[Corollary 3.3]{BLST2}\\label{almosttrianglefree}\n    Let $n,D\\in\\N$ and $k\\in\\R$. Suppose that $\\Gamma$ is a graph and $T$ is a set such that $\\Gamma':=\\Gamma\\setminus T$ is triangle-free. Suppose that $\\Delta(\\Gamma)\\leq D$, $v(\\Gamma')=n$ and $e(\\Gamma')\\geq n/2+k$. Then \n    $$\\mis(\\Gamma)\\leq 2^{n/2-k/(100D^2)+2|T|}.$$",
+      "content_preview": "Let n,D and k. Suppose that is a graph and T is a set such that ':= T is triangle-free. Suppose that () D, v(')=n and e(') n/2+k.",
+      "display_name": "Lemma",
+      "label": "almosttrianglefree",
+      "position": {
+        "line_start": 431,
+        "line_end": 434
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-15-afc0830a",
+      "type": "lemma",
+      "content": "\\cite[Lemma 3.5]{ls}\\label{stability}\nLet $k\\in\\Z$, $\\Delta\\in\\N$, and $C:= 3^{\\Delta/13}$. If $\\Gamma$ is an $n$-vertex graph with $n+k$ edges and maximum degree $\\Delta$, then\n$$\\mis(\\Gamma)\\leq C\\cdot 3^{\\frac{n}{3}-\\frac{k}{13\\Delta}}.$$",
+      "content_preview": "Let k, , and C:= 3^/13. If is an n-vertex graph with n+k edges and maximum degree , then () C 3^-.",
+      "display_name": "Lemma",
+      "label": "stability",
+      "position": {
+        "line_start": 436,
+        "line_end": 439
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-16-0aeaa284",
+      "type": "definition",
+      "content": "For subsets $B,S\\subseteq G$, let $L^{\\star}_S[B]$ be the \\emph{distinct link graph of $S$ on $B$} defined as follows. Its vertex set is $B$ and its edge set consists of the following edges:\n\n\\begin{enumerate}[label = (\\roman*),itemsep=0pt]\n    \\item two distinct vertices $x,y\\in B$ are adjacent if there exists $s\\in S$ such that $\\{x,y,s\\}$ is a distinct Schur triple;\n    \\item there is a loop at a vertex $x\\in B$ if there exist distinct $s,s'\\in S$  such that $\\{x,s,s'\\}$ is a distinct Schur triple.\n\\end{enumerate}\nWe call an edge $xy$ in $L^{\\star}_S[B]$ a \\emph{type 1} edge if $x-y=s$ for some $s\\in S\\cup (-S)$, and a \\emph{type 2} edge if it is not a type 1 edge and $x+y=s$ for some $s\\in S$. We denote by $d_i(x,L^{\\star}_S[B])$ the number of type $i$ edges incident to $x$ in $L^{\\star}_S[B]$. We write $e_i(L^{\\star}_S[B])$ for the number of types $i$ edges in $L^{\\star}_S[B]$.",
+      "content_preview": "For subsets B,S G, let L^_S[B] be the defined as follows. Its vertex set is B and its edge set consists of the following edges: [label =...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 443,
+        "line_end": 451
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-17-1be01c45",
+      "type": "lemma",
+      "content": "\\label{extension link graph}\nSuppose that $B,S\\subseteq G$ are both distinct sum-free. If $I\\subseteq B$ is such that $S\\cup I$ is a maximal distinct sum-free subset of $G$, then $I$ is a maximal independent set in $L_S^\\star[B]$.   \\qed",
+      "content_preview": "Suppose that B,S G are both distinct sum-free. If I B is such that S I is a maximal distinct sum-free subset of G, then I is a maximal independent...",
+      "display_name": "Lemma",
+      "label": "extension link graph",
+      "position": {
+        "line_start": 455,
+        "line_end": 457
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "claim-18-5605703f",
+      "type": "claim",
+      "content": "\\label{type 1}\n    If $|A|\\leq 4n/9$, then $\\mis(\\Gamma)\\leq 2^{(1/4-\\eps)n-2^{r-2}}$.",
+      "content_preview": "If |A| 4n/9, then () 2^(1/4-)n-2^r-2.",
+      "display_name": "Claim",
+      "label": "type 1",
+      "position": {
+        "line_start": 582,
+        "line_end": 584
+      },
+      "references": [
+        {
+          "target_id": "Moon-Moser",
+          "reference_type": "external",
+          "context": "^{(1/4-\\eps)n-2^{r-2}}$.By the Moon--Moser bound (\\ref{Moon-Moser}),\n    $$\\mis(\\Gamma)\\leq 3^{|A|/3}\\leq 3^{4n/27}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By the Moon--Moser bound (\\ref{Moon-Moser}),\n    $$\\mis(\\Gamma)\\leq 3^{|A|/3}\\leq 3^{4n/27}.$$\n    The choice of $\\eps$ and $C$ implies that $3^{4n/27}\\leq2^{(1/4-\\eps)n-2^{r-2}}$ since $n/2^r\\geq C$."
+    },
+    {
+      "id": "claim-19-eab21d59",
+      "type": "claim",
+      "content": "\\label{degree distinct link graph} Let $x\\in A$. Then,\n    \\begin{itemize}\n        \\item $d_1(x,\\Gamma)=|(S\\cup-S)\\setminus \\{0\\}|$;\n        \\item $d_2(x,\\Gamma)\\leq |S|$;\n        \\item $\\Gamma $ does not contain any loops.\n    \\end{itemize}\n    In particular, \n    $$|(S\\cup-S)\\setminus \\{0\\}|\\leq \\delta(\\Gamma)\\leq \\Delta(\\Gamma)\\leq |(S\\cup-S)\\setminus \\{0\\}| + |S|.$$\n    Consequently,\n    \\begin{enumerate}\n        \\item If $0\\in S$ and $S=-S$, then $\\Delta(\\Gamma)\\leq 2\\delta(\\Gamma)+1$.\n        \\item Otherwise, $\\Delta(\\Gamma)\\leq 2\\delta(\\Gamma)$.\n    \\end{enumerate}",
+      "content_preview": "Let x A. Then, d_1(x,)=|(S-S) 0|; d_2(x,) |S|; does not contain any loops. In particular, |(S-S) 0| () () |(S-S) 0| + |S|.",
+      "display_name": "Claim",
+      "label": "degree distinct link graph",
+      "position": {
+        "line_start": 598,
+        "line_end": 611
+      },
+      "references": [],
+      "proof": "For the first part, note that each element $s$ of $(S\\cup-S)\\setminus \\{0\\}$ generates a unique type 1 neighbour $y=x+s$. For the second part, we have that $x$ is incident to all edges of the form $(x,s-x)$, with $s\\in S$ such that $x\\ne s-x$; we have an upper bound because, e.g.,  some of those edges might be type 1. \n\n    Note that our assumptions ensure $A=g + H$ where $H$ is some index $2$ subgroup of $G$ and $g \\notin H$, and where $S \\subseteq H$. This, together with the definition of the distinct link graph, ensures $\\Gamma$ does not contain loops.\n    \n    The only possibility for $|(S\\cup-S)\\setminus \\{0\\}|+|S|$ to be greater than $2|(S\\cup-S)\\setminus \\{0\\}|$ is that $0\\in S$, and $S=-S$. Hence, (1) and (2) follow."
+    },
+    {
+      "id": "claim-20-3907f826",
+      "type": "claim",
+      "content": "\\label{nb edges distinct link graph}\n    $e(\\Gamma)\\geq \\frac{|(S\\cup -S)\\setminus \\{0\\}|+|S|}{2}|A|-|S|(|S\\cup -S|+1)2^r\\geq \\frac{\\Delta(\\Gamma)|A|}{2}-|S|(|S\\cup -S|+1)2^r$.",
+      "content_preview": "e() |+|S|2|A|-|S|(|S -S|+1)2^r -|S|(|S -S|+1)2^r.",
+      "display_name": "Claim",
+      "label": "nb edges distinct link graph",
+      "position": {
+        "line_start": 620,
+        "line_end": 622
+      },
+      "references": [
+        {
+          "target_id": "degree distinct link graph",
+          "reference_type": "internal",
+          "context": "lta(\\Gamma)|A|}{2}-|S|(|S\\cup -S|+1)2^r$.By Claim~\\ref{degree distinct link graph}, we only need to prove that $e_2(\\Gamma)\\geq \\fra",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "$x-(s-x)=s'$, or equivalently, $2x=s+s'$. By Fact~\\ref{solutions 2x=g}, we deduce there are at most $|S||S\\cup -S|2^r$ s",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "n $\\Gamma$.\n\nSimilarly, given any $s \\in S$, Fact~\\ref{solutions 2x=g} implies that there are at most $2^r$ solutions $x",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By Claim~\\ref{degree distinct link graph}, we only need to prove that $e_2(\\Gamma)\\geq \\frac{|S||A|}{2}-|S|(|S\\cup -S|+1)2^r$.\n    \nLet $X$ denote the number of  pairs $(x,s-x)$ where $x \\in A$ and $s \\in S$ such that either (i) $(x,s-x)$ is a type 1 edge in $\\Gamma$ or (ii) $x=s-x$. Note that $e_2 (\\Gamma) \\geq  \\frac{|S||A|}{2}-X$.\n\n    \n\n   \n   Let $x\\in A$ and $s\\in S$. Then $(x,s-x)$ is a type 1 edge in $\\Gamma$ if and only if there exists $s'\\in S\\cup -S$ such that $x-(s-x)=s'$, or equivalently, $2x=s+s'$. By Fact~\\ref{solutions 2x=g}, we deduce there are at most $|S||S\\cup -S|2^r$ such edges in $\\Gamma$.\n\nSimilarly, given any $s \\in S$, Fact~\\ref{solutions 2x=g} implies that there are at most $2^r$ solutions $x \\in A$ to $x=s-x$. Together with the last paragraph, this implies that $X \\leq |S||S\\cup -S|2^r +|S|2^r$, as required."
+    },
+    {
+      "id": "claim-21-ed180e6f",
+      "type": "claim",
+      "content": "\\label{type 2}\n    For any $S\\subseteq B$ with $|S|> 87^2$, we have $\\mis(\\Gamma)\\leq2^{(1/4-\\eps)n-2^{r-2}}$.",
+      "content_preview": "For any S B with |S|> 87^2, we have ()2^(1/4-)n-2^r-2.",
+      "display_name": "Claim",
+      "label": "type 2",
+      "position": {
+        "line_start": 637,
+        "line_end": 639
+      },
+      "references": [
+        {
+          "target_id": "degree distinct link graph",
+          "reference_type": "internal",
+          "context": "\\mis(\\Gamma)\\leq2^{(1/4-\\eps)n-2^{r-2}}$.By Claim \\ref{degree distinct link graph}, $\\Delta(\\Gamma)\\leq 3\\delta(\\Gamma)$. We apply L",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "dense and regular graphs",
+          "reference_type": "internal",
+          "context": "elta(\\Gamma)\\leq 3\\delta(\\Gamma)$. We apply Lemma \\ref{dense and regular graphs} with $k=3$. Noting that $v(\\Gamma)=n/2$ and $b:=\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By Claim \\ref{degree distinct link graph}, $\\Delta(\\Gamma)\\leq 3\\delta(\\Gamma)$. We apply Lemma \\ref{dense and regular graphs} with $k=3$. Noting that $v(\\Gamma)=n/2$ and $b:=\\sqrt{\\delta(\\Gamma)}\\geq 87$, we thus obtain that\n    $$\\mis(\\Gamma)\\leq\\sum_{0\\leq i\\leq n/174}\\binom{n/2}{i}3^{\\frac{n}{8}+\\frac{n}{261}}\\leq \\left(\\frac{n}{174}+1\\right)(87e)^{\\frac{n}{174}}3^{\\frac{n}{8}+\\frac{n}{261}}.$$\n    The choice of $C$ and $\\eps$, together with the fact that $n/2^r\\geq C$ and $n$ is sufficiently large, ensures that $\\left(\\frac{n}{174}+1\\right)(87e)^{\\frac{n}{174}}3^{\\frac{n}{8}+\\frac{n}{261}}\\leq 2^{(1/4-\\eps)n-2^{r-2}}$, as required."
+    },
+    {
+      "id": "claim-22-0c15ebee",
+      "type": "claim",
+      "content": "\\label{type 3}\n    Consider any distinct sum-free subset $S\\subseteq B$ with $2\\leq|S|\\leq 87^2$ and $S\\ne\\{0,s\\}$ for every order 2 element $s\\in G$.\n    Then $\\mis(\\Gamma)\\leq2^{(1/4-\\eps)n-2^{r-2}}$.",
+      "content_preview": "Consider any distinct sum-free subset S B with 2|S| 87^2 and S0,s for every order 2 element s G. Then ()2^(1/4-)n-2^r-2.",
+      "display_name": "Claim",
+      "label": "type 3",
+      "position": {
+        "line_start": 649,
+        "line_end": 652
+      },
+      "references": [
+        {
+          "target_id": "degree distinct link graph",
+          "reference_type": "internal",
+          "context": "amma)$.\nOne can check that in case (viii),  Claim~\\ref{degree distinct link graph} implies that $\\Delta\\geq |(S\\cup -S)\\setminus \\{0",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "degree distinct link graph",
+          "reference_type": "internal",
+          "context": "using that $S$ is distinct sum-free). Then Claim~\\ref{degree distinct link graph} ensures that $\\Delta\\geq 4$.\n\nWe can also check b",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "ote that such an $x \\in V(\\Gamma)$ exists by Fact~\\ref{solutions 2x=g}\nand as $|\\Gamma|=n/2 >4 \\cdot 2^r$. Then $x$ has",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "$; again such an $x \\in V(\\Gamma)$ exists by Fact~\\ref{solutions 2x=g}\nand as $|\\Gamma|=n/2 >4 \\cdot 2^r$. Then $x$ has",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb edges distinct link graph",
+          "reference_type": "internal",
+          "context": "d $s-x$ are distinct neighbours of $x$.\n\nBy Claim~\\ref{nb edges distinct link graph} we have $e(\\Gamma)\\geq \\frac{\\Delta n}{4}-|S|(|S\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "stability",
+          "reference_type": "internal",
+          "context": "Delta n}{4}-|S|(|S\\cup -S|+1)2^r$. Applying Lemma~\\ref{stability} with $k:=\\lceil{{(\\Delta-2)n}/{4}-|S|(|S\\cup -S|+",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "degree distinct link graph",
+          "reference_type": "internal",
+          "context": "87^2+1)$ and $4\\leq\\Delta\\leq3\\cdot87^2$ by Claim~\\ref{degree distinct link graph}, we have\n$$\\mis(\\Gamma)\\leq 3^{\\frac{3\\cdot87^2}{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let us state 8 sub-cases:\n\\begin{enumerate}[label=(\\roman*)]\n    \\item $|S|=4$ and \n    $S=\\{0,s_1,s_2,s_3\\}$ with $s_1,s_2,s_3$ having order 2.\n\n    \\item $|S|=3$ and \n    $S=\\{s_1,s_2,s_3\\}$ with $s_1,s_2,s_3$ having order 2.\n    \\item $|S|=3$ and \n    $S=\\{s_1,s_2,-s_2\\}$ with $s_1$ having order 2.\n    \\item $|S|=3$ and \n    $S=\\{0,s_1,s_2\\}$ with $s_1$ having order 2.\n    \\item $|S|=2$ and \n    $S=\\{s,-s\\}$.\n    \\item $|S|=2$ and \n    $S=\\{s_1,s_2\\}$ with $s_1$ having order 2 and $s_2 \\neq 0$.\n    \\item $|S|=2$ and \n    $S=\\{0,s\\}$ with $s\\ne -s$.\n    \\item Any other $S$ satisfying the hypothesis of the claim.\n\\end{enumerate} \nSet $\\Delta:= \\Delta (\\Gamma)$.\nOne can check that in case (viii),  Claim~\\ref{degree distinct link graph} implies that $\\Delta\\geq |(S\\cup -S)\\setminus \\{0\\}|\\geq 4$.\nFor example, if $|S|=4$ and $S$ does not satisfy (i), then  $0 \\notin S$ or $-S\\setminus S \\neq \\emptyset$   (note that here we are using that $S$ is distinct sum-free). Then Claim~\\ref{degree distinct link graph} ensures that $\\Delta\\geq 4$.\n\nWe can also check by hand that $\\Delta\\geq4$ in cases (i)--(vii). Indeed, in cases (i) and (ii) consider a vertex $x \\in V(\\Gamma)$ such that  $2x \\not\\in \\{s_1,s_1-s_2,s_1-s_3,0\\}$; note that such an $x \\in V(\\Gamma)$ exists by Fact~\\ref{solutions 2x=g}\nand as $|\\Gamma|=n/2 >4 \\cdot 2^r$. Then $x$ has \n degree at least $4$ in $\\Gamma$ since $x+s_1$, $x+s_2$, $x+s_3$ and $s_1-x$ are distinct neighbours of $x$ in $\\Gamma$.\n In case (iii) \n consider  an $x \\in V(\\Gamma)$ such that\n  $2x \\not\\in \\{s_1, s_1-s_2,s_1+s_2,0\\}$; again such an $x \\in V(\\Gamma)$ exists by Fact~\\ref{solutions 2x=g}\nand as $|\\Gamma|=n/2 >4 \\cdot 2^r$. Then $x$ has \n degree at least $4$ in $\\Gamma$ since $x+s_1$, $x+s_2$, $x-s_2$ and $s_1-x$ are distinct neighbours of $x$.\n In cases (iv) and (vi) \n consider  an $x \\in V(\\Gamma)$ such that\n $2x \\not\\in \\{0,s_1-s_2,s_2-s_1,  s_1, s_2\\}$; then $x+s_1$, $x+s_2$, $s_1-x$ and $s_2-x$ are distinct neighbours of $x$.\n In case (v) consider an $x \\in V(\\Gamma)$ such that\n  $2x\\not\\in \\{0,-2s,2s, s, -s\\}$; then $x+s$, $x-s$, $s-x$ and $-s-x$ are distinct neighbours. Finally, in case (vii)  consider  an $x \\in V(\\Gamma)$ such that $2x\\not\\in \\{2s,0,s,-s\\}$; then $x+s$, $x-s$, $-x$ and $s-x$ are distinct neighbours of $x$.\n\nBy Claim~\\ref{nb edges distinct link graph} we have $e(\\Gamma)\\geq \\frac{\\Delta n}{4}-|S|(|S\\cup -S|+1)2^r$. Applying Lemma~\\ref{stability} with $k:=\\lceil{{(\\Delta-2)n}/{4}-|S|(|S\\cup -S|+1)2^r} \\rceil $, we have\n$$\\mis(\\Gamma)\\leq 3^{\\frac{\\Delta}{13}}\\cdot 3^{\\frac{n}{6}-\\frac{(\\Delta-2)n}{52\\Delta}+\\frac{|S|(|S\\cup -S|+1)\\cdot2^r}{13\\Delta}}.$$\nSince $|S|(|S\\cup -S|+1)\\leq 87^2\\cdot(2\\cdot 87^2+1)$ and $4\\leq\\Delta\\leq3\\cdot87^2$ by Claim~\\ref{degree distinct link graph}, we have\n$$\\mis(\\Gamma)\\leq 3^{\\frac{3\\cdot87^2}{13}}\\cdot 3^{\\left(\\frac{49}{312}\\frac{n}{2^r}+\\frac{87^2\\cdot(2\\cdot 87^2+1)}{52}\\right) \\cdot2^r}.$$\nThe choice of $\\eps$ and $C$ implies that $\\mis(\\Gamma)\\leq2^{(1/4-\\eps)n-2^{r-2}}$, since $n/2^r\\geq C$.\\footnote{This is the  place in the argument where we use the precise choice of $C$.}"
+    },
+    {
+      "id": "claim-23-6471245e",
+      "type": "claim",
+      "content": "\\label{type 4}\n    Let $S=\\{s\\}$ with $s\\ne 0$. \n     Then $\\mis(\\Gamma)\\leq 2^{(1/4-\\eps)n-2^{r-2}}$.",
+      "content_preview": "Let S=s with s 0. Then () 2^(1/4-)n-2^r-2.",
+      "display_name": "Claim",
+      "label": "type 4",
+      "position": {
+        "line_start": 699,
+        "line_end": 702
+      },
+      "references": [
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": ":=\\{x\\in V(\\Gamma) \\ | \\ 2x\\in\\{0,s\\}\\}$. By Fact~\\ref{solutions 2x=g}, $|I_2|\\leq 2^{r+1}$. Then, $\\mis(\\Gamma)\\leq 2^{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "{x\\in V(\\Gamma) \\ | \\ 2x\\in\\{0,s,2s\\}\\}$. By Fact~\\ref{solutions 2x=g}, $|I_3|\\leq 3\\cdot2^r$. Noting that $C_3\\square K",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "degree distinct link graph",
+          "reference_type": "internal",
+          "context": "and let $\\Gamma':=\\Gamma\\setminus  A_t$. By Claim \\ref{degree distinct link graph}, every vertex in $\\Gamma$ has degree at most 3, a",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb edges distinct link graph",
+          "reference_type": "internal",
+          "context": "ex in $\\Gamma$ has degree at most 3, and by Claim \\ref{nb edges distinct link graph}, $e(\\Gamma)\\geq \\frac{3|A|}{2}-3\\cdot2^r$, and th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "almosttrianglefree",
+          "reference_type": "internal",
+          "context": "-3|A_t|\\geq \\frac{3|A|}{2}-6\\cdot 2^r.$$\nBy Lemma \\ref{almosttrianglefree}, with $D:=3$ and $k:=|A|-6\\cdot 2^r$, we obtain\n$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\ell$ denote the order of $s$. We first handle the case when $\\ell \\in\\{2,3\\}$.\n    \\begin{enumerate}[label=(\\roman*)]\n    \\item $\\ell=2$. In this case, if $x \\in V(\\Gamma)=A$ is such that $2x\\not \\in\\{0,s\\}$, then the component of $\\Gamma $ containing $x$ is precisely a \n     $4$-cycle $\\{x,x+s,-x,s-x\\}$.\n     If $x \\in V(\\Gamma)$ is such that $2x\\in\\{0,s\\}$,\n    the  component containing $x$ is  an edge $\\{x,x+s\\}$. \n    Let $I_2:=\\{x\\in V(\\Gamma) \\ | \\ 2x\\in\\{0,s\\}\\}$. By Fact~\\ref{solutions 2x=g}, $|I_2|\\leq 2^{r+1}$. Then, $\\mis(\\Gamma)\\leq 2^{\\frac{|A|-|I_2|}{4}}\\cdot 2^{|I_2|/2}\\leq 2^{n/8+2^{r-1}}$. The choice of $\\eps$ and $C$ implies that $\\mis(\\Gamma)\\leq 2^{(1/4-\\eps)n-2^{r-2}}$, since $n/2^r\\geq C$.\n    \n    \\item $\\ell=3$. In this case, \n    if $x \\in V(\\Gamma)$ is such that $2x\\not \\in\\{0,s, 2s\\}$, then the component of $\\Gamma $ containing $x$ is precisely a \n     $C_3\\square K_2$;  a perfect matching between the triangles $\\{x,x+s,x+2s\\}$ and $\\{-x+s,-x,-x+2s\\}$. If $x \\in V(\\Gamma)$ such that $2x\\in\\{0,s,2s\\}$, then the component of $\\Gamma $ containing $x$ is a triangle $\\{x,x+s,x+2s\\}$. Let $I_3:=\\{x\\in V(\\Gamma) \\ | \\ 2x\\in\\{0,s,2s\\}\\}$. By Fact~\\ref{solutions 2x=g}, $|I_3|\\leq 3\\cdot2^r$. Noting that $C_3\\square K_2$ contains precisely $6$ maximal independent sets, we have that\n     $$\\mis(\\Gamma)\\leq 6^{\\frac{|A|-|I_3|}{6}}\\cdot 3^{|I_3|/3}\\leq 6^{n/12-2^{r-1}}\\cdot3^{2^r}.$$\n    The choice of $\\eps$ and $C$ implies that $\\mis(\\Gamma)\\leq2^{(1/4-\\eps)n-2^{r-2}}$, since $n/2^r\\geq C$.\n\\end{enumerate}\nNow  assume $\\ell>3$. Then we can adapt \\cite[Claim 3.9]{ls} to our distinct sum-free set setting: there exists a subset $A_t\\subset A=V(\\Gamma)$ with $|A_t|\\leq 2^r$ that intersects all triangles in $\\Gamma$. The proof is exactly the same as in the non-distinct setting (see \\cite[Claim 3.9]{ls}), so we omit it.\nLet $A_t$ be such a set, and let $\\Gamma':=\\Gamma\\setminus  A_t$. By Claim \\ref{degree distinct link graph}, every vertex in $\\Gamma$ has degree at most 3, and by Claim \\ref{nb edges distinct link graph}, $e(\\Gamma)\\geq \\frac{3|A|}{2}-3\\cdot2^r$, and thus, \n$$e(\\Gamma')\\geq e(\\Gamma)-3|A_t|\\geq \\frac{3|A|}{2}-6\\cdot 2^r.$$\nBy Lemma \\ref{almosttrianglefree}, with $D:=3$ and $k:=|A|-6\\cdot 2^r$, we obtain\n$$\\mis(\\Gamma)\\leq 2^{\\frac{n}{4}-\\frac{n/2-6\\cdot2^r}{900}+2\\cdot2^r}=2^{\\frac{449}{1800}n+\\frac{301}{150}\\cdot2^r}.$$\nThe choice of $\\eps$ and $C$ implies that $\\mis(\\Gamma)\\leq2^{(1/4-\\eps)n-2^{r-2}}$, since $n/2^r\\geq C$."
+    },
+    {
+      "id": "claim-24-3dcf9a23",
+      "type": "claim",
+      "content": "\\label{upper bound type 0-4}\n    $f_{\\max}^{\\star,0}(G)+f_{\\max}^{\\star,1}(G)+f_{\\max}^{\\star,2}(G)+f_{\\max}^{\\star,3}(G)+f_{\\max}^{\\star,4}(G)\\leq \\eta\\cdot 2^{n/4-2^{r-2}}$.",
+      "content_preview": "f_^,0(G)+f_^,1(G)+f_^,2(G)+f_^,3(G)+f_^,4(G) 2^n/4-2^r-2.",
+      "display_name": "Claim",
+      "label": "upper bound type 0-4",
+      "position": {
+        "line_start": 727,
+        "line_end": 729
+      },
+      "references": [
+        {
+          "target_id": "distinct containers",
+          "reference_type": "internal",
+          "context": "_{\\max}^{\\star,0}(G)\\leq 2^{\\delta n}$.  By Lemma~\\ref{distinct containers}, there are at most $2^{\\delta n}$ containers $F\\i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 1",
+          "reference_type": "internal",
+          "context": "$ as in the definitions of types 1--4,\n    Claims~\\ref{type 1}, \\ref{type 2}, \\ref{type 3} and \\ref{type 4} impl",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 2",
+          "reference_type": "internal",
+          "context": "finitions of types 1--4,\n    Claims~\\ref{type 1}, \\ref{type 2}, \\ref{type 3} and \\ref{type 4} imply that $\\mis(\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 3",
+          "reference_type": "internal",
+          "context": "ypes 1--4,\n    Claims~\\ref{type 1}, \\ref{type 2}, \\ref{type 3} and \\ref{type 4} imply that $\\mis(\\Gamma)\\leq 2^{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 4",
+          "reference_type": "internal",
+          "context": "aims~\\ref{type 1}, \\ref{type 2}, \\ref{type 3} and \\ref{type 4} imply that $\\mis(\\Gamma)\\leq 2^{(1/4-\\eps)n-2^{r-",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "extension link graph",
+          "reference_type": "internal",
+          "context": "mma)\\leq 2^{(1/4-\\eps)n-2^{r-2}}$. Thus, by Lemma~\\ref{extension link graph},\n    $$f_{\\max}^{\\star,i}(G)\\leq 2^{\\delta n}\\cdo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We already saw that $f_{\\max}^{\\star,0}(G)\\leq 2^{\\delta n}$.  By Lemma~\\ref{distinct containers}, there are at most $2^{\\delta n}$ containers $F\\in \\mathcal F$. For each choice of $F$, there are at most $2^{\\delta n}$ choices for $S\\subseteq B$. \n    For any $S$ as in the definitions of types 1--4,\n    Claims~\\ref{type 1}, \\ref{type 2}, \\ref{type 3} and \\ref{type 4} imply that $\\mis(\\Gamma)\\leq 2^{(1/4-\\eps)n-2^{r-2}}$. Thus, by Lemma~\\ref{extension link graph},\n    $$f_{\\max}^{\\star,i}(G)\\leq 2^{\\delta n}\\cdot 2^{\\delta n}\\cdot  2^{(1/4-\\eps)n-2^{r-2}}=2^{(1/4+2\\delta-\\eps)n-2^{r-2}}$$ for each $i \\in [4]$. As $\\delta \\ll \\eps \\ll \\eta$, the claim now follows."
+    },
+    {
+      "id": "claim-25-6fd6f862",
+      "type": "claim",
+      "content": "\\label{upper bound type 5}\n    $f_{\\max}^{\\star,5}(G)\\leq (2^{r_1}-1)2^{n/4}+(2^r-2^{r_1})2^{n/4-2^{r-2}}$.",
+      "content_preview": "f_^,5(G) (2^r_1-1)2^n/4+(2^r-2^r_1)2^n/4-2^r-2.",
+      "display_name": "Claim",
+      "label": "upper bound type 5",
+      "position": {
+        "line_start": 738,
+        "line_end": 740
+      },
+      "references": [
+        {
+          "target_id": "nb subgroups of index 2 with fixed rank",
+          "reference_type": "internal",
+          "context": "2^{\\frac{|A|-|I|}{2}}= 2^{n/4-2^{r-2}}$. By Lemma \\ref{nb subgroups of index 2 with fixed rank}, there are $2^r-2^{r_1}$ such sets $\\Tilde{A}$; t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb subgroups of index 2 with fixed rank",
+          "reference_type": "internal",
+          "context": "ect matching and $\\mis(\\Gamma)=2^{n/4}$. By Lemma \\ref{nb subgroups of index 2 with fixed rank}, there are $2^{r_1}-1$ such sets $\\Tilde{A}$;  th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Recall we  assume that each relevant container is of the form $F=A\\cup B$ where $A=\\Tilde{A}\\oplus K$ with $\\Tilde{A}$ a coset (not containing the zero element) associated to a subgroup of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$.\n    Moreover, for type 5 maximal distinct sum-free sets, $S=\\{0\\}$; so to upper bound $f_{\\max}^{\\star,5}(G)$, it suffices to sum up the number of maximal independent sets in all distinct link graphs of the form $L_{\\{0\\}}^\\star[\\Tilde{A}\\oplus K]$. \n    Let $\\Tilde{A}$ be a coset (not containing the zero element) associated to a subgroup of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$, and set $\\Gamma:=L_{\\{0\\}}^\\star[\\Tilde{A}\\oplus K]$. We distinguish two cases depending on the structure of $\\Tilde{A}$.\n    \\begin{enumerate}[label=(\\roman*)]\n    \\item $\\Tilde{A}$ is a coset associated to a subgroup of index 2 with rank $r-1$. In this case, $\\Gamma$ consists of\n    a set of isolated vertices $I:=\\{x\\in A \\ | \\ 2x=0\\}$ together with \n    a matching where edges are of the form $\\{x, -x\\}$ for $2x\\ne0$. Since $\\Tilde{A}$ is a coset associated to a subgroup of index 2 with rank $r-1$, we have $|I|= 2^{r-1}$. Thus, $\\mis(\\Gamma)= 2^{\\frac{|A|-|I|}{2}}= 2^{n/4-2^{r-2}}$. By Lemma \\ref{nb subgroups of index 2 with fixed rank}, there are $2^r-2^{r_1}$ such sets $\\Tilde{A}$; thus such link graphs give rise to at most $(2^r-2^{r_1})2^{n/4-2^{r-2}}$ type~5 maximal distinct sum-free sets.\n    \n    \\item $\\Tilde{A}$ is a coset associated to a subgroup of index 2 with rank $r$. In this case, there are no elements in $A=\\Tilde{A}\\oplus K$ such that $2x=0$. Then, $\\Gamma$ is a perfect matching and $\\mis(\\Gamma)=2^{n/4}$. By Lemma \\ref{nb subgroups of index 2 with fixed rank}, there are $2^{r_1}-1$ such sets $\\Tilde{A}$;  thus such link graphs give rise to at most  $(2^{r_1}-1)2^{n/4}$ type 5 maximal distinct sum-free sets.\n\\end{enumerate}\nSumming over all the possible sets $A$, we obtain $f_{\\max}^{\\star,5}(G)\\leq (2^{r_1}-1)2^{n/4}+(2^r-2^{r_1})2^{n/4-2^{r-2}}$."
+    },
+    {
+      "id": "claim-26-9c3653e4",
+      "type": "claim",
+      "content": "\\label{upper bound type 6}\n    $f_{\\max}^{\\star,6}(G)\\leq (2^{2r-1}+2^{r+r_1-1}-2^{r+1}+1)2^{n/4}$.",
+      "content_preview": "f_^,6(G) (2^2r-1+2^r+r_1-1-2^r+1+1)2^n/4.",
+      "display_name": "Claim",
+      "label": "upper bound type 6",
+      "position": {
+        "line_start": 757,
+        "line_end": 759
+      },
+      "references": [
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "{2r-1}+2^{r+r_1-1}-2^{r+1}+1)2^{n/4}$.As in Claim~\\ref{upper bound type 5}, we  assume that each relevant container is of th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2c",
+          "reference_type": "external",
+          "context": "plus K]$. \n    We saw in the proof of Proposition~\\ref{fms even groups2c} that $\\mis(\\Gamma)=2^{n/4}$. Now let us count the",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb subgroups of index 2 with fixed rank",
+          "reference_type": "internal",
+          "context": "o a subgroup of index 2 with rank $r-1$. By Lemma \\ref{nb subgroups of index 2 with fixed rank}, there are $2^r-2^{r_1}$ such sets $\\Tilde{A}$. S",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nb subgroups of index 2 with fixed rank",
+          "reference_type": "internal",
+          "context": "group of index 2 with rank $r$. By \n        Lemma~\\ref{nb subgroups of index 2 with fixed rank}, there are $2^{r_1}-1$ such sets $\\Tilde{A}$. Sin",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "As in Claim~\\ref{upper bound type 5}, we  assume that each relevant container is of the form $F=A\\cup B$ where $A=\\Tilde{A}\\oplus K$ with $\\Tilde{A}$ a coset (not containing the zero element)  associated to a subgroup of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$, and where $A$ and $B$ are disjoint. \n    Moreover, for type 6 maximal distinct sum-free sets, $S=\\{0,s\\}$ for some order 2 element $s\\in B$; so to upper bound $f_{\\max}^{\\star,6}(G)$, it suffices to sum up the number of maximal independent sets in all distinct link graphs of the form $L_{\\{0,s\\}}^\\star[\\Tilde{A}\\oplus K]$ where $s \\notin \\Tilde{A}\\oplus K$ has order $2$. \n    Let $\\Tilde{A}$ be a coset (not containing the zero element) associated to a subgroup of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$, let $s\\notin \\Tilde{A}\\oplus K$ be an order 2 element, and set $\\Gamma:=L_{\\{0,s\\}}^\\star[\\Tilde{A}\\oplus K]$. \n    We saw in the proof of Proposition~\\ref{fms even groups2c} that $\\mis(\\Gamma)=2^{n/4}$. Now let us count the pairs $(\\Tilde{A},\\{0,s\\})$.\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item $\\Tilde{A}$ is a coset associated to a subgroup of index 2 with rank $r-1$. By Lemma \\ref{nb subgroups of index 2 with fixed rank}, there are $2^r-2^{r_1}$ such sets $\\Tilde{A}$. Since there are $2^{r-1}-1$ order 2 elements of $G$ not belonging to $A=\\Tilde{A}\\oplus K$, there are $2^{r-1}-1$ choices for $s$. Thus, such pairs $(\\Tilde{A},\\{0,s\\})$ contribute  at most $(2^r-2^{r_1})(2^{r-1}-1)2^{n/4}$ type 6 maximal distinct sum-free sets.\n        \n        \\item $\\Tilde{A}$ is a coset associated to a subgroup of index 2 with rank $r$. By \n        Lemma~\\ref{nb subgroups of index 2 with fixed rank}, there are $2^{r_1}-1$ such sets $\\Tilde{A}$. Since $A=\\Tilde{A}\\oplus K$ contains no order 2 elements, there are $2^r-1$ choices for $s$. Thus, such pairs $(\\Tilde{A},\\{0,s\\})$ contribute  at most $(2^{r_1}-1)(2^r-1)2^{n/4}$ type 6 maximal distinct sum-free sets.\n    \\end{enumerate}\nSumming over all the possible choices, we obtain \n\\begin{align*}\n    f_{\\max}^{\\star,6}(G)&\\leq \\left[(2^r-2^{r_1})(2^{r-1}-1)+(2^{r_1}-1)(2^r-1)\\right]2^{n/4}\\\\\n    &=(2^{2r-1}+2^{r+r_1-1}-2^{r+1}+1)2^{n/4}.\n\\end{align*}"
+    },
+    {
+      "id": "claim-27-e9e27813",
+      "type": "claim",
+      "content": "\\label{mdsfs generated by B}\n    Consider $A=\\Tilde{A}\\oplus K$ with $\\Tilde{A}$ a coset (not containing the zero element) of a subgroup $H$ of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$. \n    \\begin{enumerate}[label=(\\roman*)]\n        \\item If $H$ has rank $r-1$, then $(A,\\{0\\})$ generates at least $2^{n/4-2^{r-2}}-(n/2-2^{r-1})\\cdot2^{(1/4-\\eps)n-2^{r-2}}$ maximal distinct sum-free sets in $G$.\n        \\item If $H$ has rank $r$, then $(A,\\{0\\})$ generates at least $2^{n/4}-(n/2-2^r)\\cdot2^{(1/4-\\eps)n-2^{r-2}}$ maximal distinct sum-free sets in $G$.\n        \\item If $s\\in G\\setminus(A\\cup\\{0\\})$ has order 2, $(A,\\{0,s\\})$ generates at least $2^{n/4}-(n/2-2)\\cdot2^{(1/4-\\eps)n-2^{r-2}}$ maximal distinct sum-free sets in $G$.\n    \\end{enumerate}",
+      "content_preview": "Consider A= K with a coset (not containing the zero element) of a subgroup H of index 2 in _2^_1_2^_r_1_2^r_2.",
+      "display_name": "Claim",
+      "label": "mdsfs generated by B",
+      "position": {
+        "line_start": 800,
+        "line_end": 807
+      },
+      "references": [
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "ate}(i) We fix such an $A$. In the proof of Claim~\\ref{upper bound type 5} we saw that $L^\\star_{\\{0\\}}[A]$ has $2^{n/4-2^{r",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 3",
+          "reference_type": "internal",
+          "context": "e order 2.\n   By case (vii) in the proof of Claim~\\ref{type 3}, there are at most $2^{(1/4-\\eps)n-2^{r-2}}$ such",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "Now suppose that $s$ has order 2. We saw in Claim~\\ref{upper bound type 5} that $L^\\star_{\\{0\\}}[A]$ consists of a  matching",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2c",
+          "reference_type": "external",
+          "context": "On the other hand, in the proof of Proposition~\\ref{fms even groups2c}, we saw that $L^\\star_{\\{0,s\\}}[A]$ consists of t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "an $I$ cannot exist since $a(s)\\leq 2^r$ by Fact~\\ref{solutions 2x=g}. \n\nThus, all bad $I$s come from  $s$ that do not",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "\\smallskip\n   \n   (ii) \n   In the proof of Claim~\\ref{upper bound type 5} \n   we saw that $L^\\star_{\\{0\\}}[A]$ has $2^{n/4}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "\\setminus A$ has order 2. In the proof of\n Claim~\\ref{upper bound type 5} we saw  maximal independent sets in $L^\\star_{\\{0",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2c",
+          "reference_type": "external",
+          "context": "$|A|/2$. Meanwhile, \n in the proof of Proposition~\\ref{fms even groups2c} we saw that maximal independent sets in $L^\\star_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "=n/2 > n/C \\geq 2^r$, which is impossible by Fact~\\ref{solutions 2x=g}. The bound in the claim now follows by case (vii)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 3",
+          "reference_type": "internal",
+          "context": "now follows by case (vii) from the proof of Claim~\\ref{type 3} and the fact that there are $n/2-2^r$ elements in",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2c",
+          "reference_type": "external",
+          "context": "(iii) We saw in the proof of Proposition~\\ref{fms even groups2c} that $L^\\star_{\\{0,s\\}}[A]$ has $2^{n/4}$ maximal",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "type 3",
+          "reference_type": "internal",
+          "context": "0,s,s'\\}}[A]$. By case (iv) in the proof of Claim \\ref{type 3}, there are at most $2^{(1/4-\\eps)n-2^{r-2}}$ such",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "(i) We fix such an $A$. In the proof of Claim~\\ref{upper bound type 5} we saw that $L^\\star_{\\{0\\}}[A]$ has $2^{n/4-2^{r-2}}$ maximal independent sets. Let $I\\subseteq A$ be such a maximal independent set and suppose that $I\\cup \\{0\\}$ is not a maximal distinct sum-free set in $G$; call such an $I$ \\textit{bad}. Then there exists $s\\in G\\setminus (A\\cup \\{0\\})$ such that $\\{0,s\\}\\cup I$ is distinct sum-free. So $I$ is a maximal independent set in $L^\\star_{\\{0,s\\}}[A]$. \n   \n   Suppose first that $s$ does not have order 2.\n   By case (vii) in the proof of Claim~\\ref{type 3}, there are at most $2^{(1/4-\\eps)n-2^{r-2}}$ such sets $I$.\n   \n   Now suppose that $s$ has order 2. We saw in Claim~\\ref{upper bound type 5} that $L^\\star_{\\{0\\}}[A]$ consists of a  matching between $|A|-2^{r-1}$ elements, and has $2^{r-1}$ isolated vertices. So $|I|=(|A|-2^{r-1})/2+2^{r-1}=(|A|+2^{r-1})/2$. \n   On the other hand, in the proof of Proposition~\\ref{fms even groups2c}, we saw that $L^\\star_{\\{0,s\\}}[A]$ consists of the disjoint union of $(|A|-2^{r-1}-a(s))/4$ copies of $K_4$ and $(2^{r-1}+a(s))/2$ copies of $K_2$, where $a(s)$ is the number of $x\\in A$ such that $2x=s$. So $|I|=(|A|+2^{r-1}+a(s))/4$, which is possible only if $a(s)=|A|+2^{r-1}=n/2+2^{r-1}$. \n   Since  $n/2> n/C\\geq 2^r$,  such an $I$ cannot exist since $a(s)\\leq 2^r$ by Fact~\\ref{solutions 2x=g}. \n\nThus, all bad $I$s come from  $s$ that do not have order 2. The bound in the claim now follows as there are $n/2-2^{r-1}$ choices for $s \\in G \\setminus (A\\cup\\{0\\})$ that do not have order 2.\n\n   \\smallskip\n   \n   (ii) \n   In the proof of Claim~\\ref{upper bound type 5} \n   we saw that $L^\\star_{\\{0\\}}[A]$ has $2^{n/4}$ maximal  independent sets $I$. In this case, again \n   all bad $I$s come from  $s$ that do not have order 2. Indeed, suppose $s \\in G \\setminus A$ has order 2. In the proof of\n Claim~\\ref{upper bound type 5} we saw  maximal independent sets in $L^\\star_{\\{0\\}}[A]$ have size $|A|/2$. Meanwhile, \n in the proof of Proposition~\\ref{fms even groups2c} we saw that maximal independent sets in $L^\\star_{\\{0,s\\}}[A]$ have size $|A|/4+a(s)/4$. These sizes coincide only if $a(s)=n/2 > n/C \\geq 2^r$, which is impossible by Fact~\\ref{solutions 2x=g}. The bound in the claim now follows by case (vii) from the proof of Claim~\\ref{type 3} and the fact that there are $n/2-2^r$ elements in $G\\setminus (A\\cup\\{0\\})$ that do not have order 2.\n\n   \\smallskip \n   \n   (iii) We saw in the proof of Proposition~\\ref{fms even groups2c} that $L^\\star_{\\{0,s\\}}[A]$ has $2^{n/4}$ maximal independent sets $I$. If $I\\cup \\{0,s\\}$ is not a maximal sum-free subset of $G$, then there a  exists $s'\\in G\\setminus(A\\cup\\{0,s\\})$ such that $I$ is a maximal independent set in $L^\\star_{\\{0,s,s'\\}}[A]$. By case (iv) in the proof of Claim \\ref{type 3}, there are at most $2^{(1/4-\\eps)n-2^{r-2}}$ such sets $I$. The bound in the claim now follows as there are $n/2-2$ choices for $s'\\in G\\setminus(A\\cup\\{0,s\\})$."
+    },
+    {
+      "id": "claim-28-ad1027cc",
+      "type": "claim",
+      "content": "\\label{mdsfs generated by both A and A'}\n    Consider distinct sets $A=\\Tilde{A}\\oplus K$ and $A'=\\Tilde{A'}\\oplus K$, with $\\Tilde{A}$ and $\\Tilde{A'}$ cosets of  subgroups of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$. \n    Then there is at most one maximal distinct sum-free subset of $G$ generated by both $(A,\\{0\\})$ and $(A',\\{0\\})$.",
+      "content_preview": "Consider distinct sets A= K and A'= K, with and cosets of subgroups of index 2 in _2^_1_2^_r_1_2^r_2. Then there is at most one maximal distinct...",
+      "display_name": "Claim",
+      "label": "mdsfs generated by both A and A'",
+      "position": {
+        "line_start": 836,
+        "line_end": 839
+      },
+      "references": [
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "-2}$. Indeed, in this case, in the proof of Claim~\\ref{upper bound type 5} we saw that the link graph $L_{\\{0\\}}^\\star[A]$ c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "I|=\\mu(G)/2$. Indeed we saw in the proof of Claim~\\ref{upper bound type 5} that $L_{\\{0\\}}^\\star[A]$ is a perfect matching.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Note that $|A\\cap A'|=|\\Tilde{A}\\cap\\Tilde{A'}|\\leq \\mu(G)/2$. Let $D$ be a maximal distinct sum-free subset of $G$ and suppose that it is generated by both  $(A,\\{0\\})$ and $(A',\\{0\\})$. Then $D=\\{0\\}\\cup I$ with $I\\subseteq A\\cap A'$.\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item If $\\Tilde{A}$ and $\\Tilde{A}'$ are both cosets associated to subgroups of index 2 with rank $r-1$, then $|I|=\\mu(G)/2+2^{r-2}$. Indeed, in this case, in the proof of Claim~\\ref{upper bound type 5} we saw that the link graph $L_{\\{0\\}}^\\star[A]$ consists of a  matching containing $\\mu(G)-2^{r-1}$ vertices, as well as $2^{r-1}$ isolated vertices. So the size of a maximal independent set is $(\\mu(G)-2^{r-1})/2+2^{r-1}=\\mu(G)/2+2^{r-2}$. \n        In particular $|A\\cap A'|\\geq |I| \\geq \\mu(G)/2+2^{r-2}$, which is impossible.\n        \n        \\item If $\\Tilde{A}$ and $\\Tilde{A}'$ are both  cosets associated to  subgroups of index 2 with rank $r$, then $|I|=\\mu(G)/2$. Indeed we saw in the proof of Claim~\\ref{upper bound type 5} that $L_{\\{0\\}}^\\star[A]$ is a perfect matching. This is only possible if $I=A \\cap A'$.\nSo there is at most one possible set $D$ generated by both.\n        \n        \\item If we have one of each, then $|I|=\\mu(G)/2=\\mu(G)/2+2^{r-2}$, which is impossible.\n    \\end{enumerate}"
+    },
+    {
+      "id": "claim-29-ae831f75",
+      "type": "claim",
+      "content": "\\label{mdsfs generated by both A and (A',{0,s})}\n    Consider two sets $A=\\Tilde{A}\\oplus K$ and $A'=\\Tilde{A'}\\oplus K$, with $\\Tilde{A}$ and $\\Tilde{A'}$ cosets of  subgroups of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$, and $s\\in G\\setminus (A'\\cup\\{0\\})$ with order 2.\n    Then there is no maximal distinct sum-free set generated by both $(A,\\{0\\})$ and $(A',\\{0,s\\})$.",
+      "content_preview": ") Consider two sets A= K and A'= K, with and cosets of subgroups of index 2 in _2^_1_2^_r_1_2^r_2, and s G (A'0) with order 2.",
+      "display_name": "Claim",
+      "label": "mdsfs generated by both A and (A',{0,s",
+      "position": {
+        "line_start": 853,
+        "line_end": 856
+      },
+      "references": [
+        {
+          "target_id": "upper bound type 5",
+          "reference_type": "internal",
+          "context": "a subgroup with rank $r-1$. In the proof of Claim~\\ref{upper bound type 5} we saw that in this case we have $|I|=\\mu(G)/2+2^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2c",
+          "reference_type": "external",
+          "context": "$r-1$, then by the proof of \n        Proposition~\\ref{fms even groups2c}, $|I'|=(\\mu(G)+2^{r-1}+a(s))/4$. Since $|I|=|I'|+",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "solutions 2x=g",
+          "reference_type": "internal",
+          "context": "=n/2+2^{r-1}-4> 2^r$, which is impossible by Fact~\\ref{solutions 2x=g}.\n        \n        \\item If $\\Tilde{A}'$ is a cose",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2c",
+          "reference_type": "external",
+          "context": "rank $r$, then by the proof of Proposition~\\ref{fms even groups2c}, $|I'|=(\\mu(G)+a(s))/4$. It follows that $a(s)=n/",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $D$ be a maximal distinct sum-free set and suppose for a contradiction that it is generated by both  $(A,\\{0\\})$ and $(A',\\{0,s\\})$. Then $D=\\{0\\}\\cup I=\\{0,s\\}\\cup I'$ with $I\\subseteq A$ and $I'\\subseteq A'$. In particular, $|I|=|I'|+1$, and $s\\in I\\subseteq A$; so $A$ contains an order 2 element, and thus it is associated to a subgroup with rank $r-1$. In the proof of Claim~\\ref{upper bound type 5} we saw that in this case we have $|I|=\\mu(G)/2+2^{r-2}$.\n    \\begin{enumerate}[label=(\\roman*)]\n        \\item If $\\Tilde{A}'$ is a coset associated to a subgroup of index 2 with \n        rank $r-1$, then by the proof of \n        Proposition~\\ref{fms even groups2c}, $|I'|=(\\mu(G)+2^{r-1}+a(s))/4$. Since $|I|=|I'|+1$, this implies that  $a(s)=n/2+2^{r-1}-4> 2^r$, which is impossible by Fact~\\ref{solutions 2x=g}.\n        \n        \\item If $\\Tilde{A}'$ is a coset associated to a subgroup of index 2 with \n        rank $r$, then by the proof of Proposition~\\ref{fms even groups2c}, $|I'|=(\\mu(G)+a(s))/4$. It follows that $a(s)=n/2+2^r-4> 2^r$, which is again impossible.\n    \\end{enumerate}"
+    },
+    {
+      "id": "claim-30-f1c774fa",
+      "type": "claim",
+      "content": "\\label{mdsfs generated by both (A,{0,s}) and (A',{0,s'})}\n    Consider two sets $A=\\Tilde{A}\\oplus K$ and $A'=\\Tilde{A'}\\oplus K$, with $\\Tilde{A}$ and $\\Tilde{A'}$ cosets of  subgroups of index 2 in $\\Z_{2^{\\alpha_1}}\\oplus\\ldots\\oplus\\Z_{2^{\\alpha_{r_1}}}\\oplus\\Z_2^{r_2}$, and $s\\in G\\setminus (A\\cup\\{0\\})$, $s'\\in G\\setminus (A'\\cup\\{0\\})$ both with order 2.\n    Then there are at most $3^{n/12}$ maximal distinct sum-free sets generated by both $(A,\\{0,s\\})$ and $(A',\\{0,s'\\})$.",
+      "content_preview": ") and (A',0,s') Consider two sets A= K and A'= K, with and cosets of subgroups of index 2 in _2^_1_2^_r_1_2^r_2, and s G (A0), s' G (A'0) both with...",
+      "display_name": "Claim",
+      "label": "mdsfs generated by both (A,{0,s",
+      "position": {
+        "line_start": 869,
+        "line_end": 872
+      },
+      "references": [
+        {
+          "target_id": "extension link graph",
+          "reference_type": "internal",
+          "context": "Let $D':=D\\setminus\\{0,s,s'\\}$. Then by Lemma~\\ref{extension link graph}, $D'$ is a maximal independent set in $L_{\\{0,s,s",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Moon-Moser",
+          "reference_type": "external",
+          "context": "s'\\}}[A\\cap A']$. Since $|A\\cap A'|\\leq n/4$, by (\\ref{Moon-Moser}) there are at most $3^{n/12}$ choices for $D'$, a",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $D$ be a maximal distinct sum-free set generated by both $(A,\\{0,s\\})$ and $(A',\\{0,s'\\})$. \n    Then $D=\\{0,s\\}\\cup I=\\{0,s'\\}\\cup I'$ with $I\\subseteq A$ and $I'\\subseteq A'$.\n    Let $D':=D\\setminus\\{0,s,s'\\}$. Then by Lemma~\\ref{extension link graph}, $D'$ is a maximal independent set in $L_{\\{0,s,s'\\}}[A\\cap A']$. Since $|A\\cap A'|\\leq n/4$, by (\\ref{Moon-Moser}) there are at most $3^{n/12}$ choices for $D'$, and thus for $D$, as desired."
+    },
+    {
+      "id": "remark-31-e7843175",
+      "type": "remark",
+      "content": "Note that we did not try to optimise the value of $C$ in the proof of Theorem~\\ref{fms even groups2b}. With more careful analysis of the link graphs, it may be possible to reduce the value of $C$ to a single-digit number. Theorem~\\ref{fms even groups2} should also hold with a much smaller choice of $C$, although with our argument the choice of $C$ is essentially tight.",
+      "content_preview": "Note that we did not try to optimise the value of C in the proof of Theorem~. With more careful analysis of the link graphs, it may be possible to...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 901,
+        "line_end": 903
+      },
+      "references": [
+        {
+          "target_id": "fms even groups2b",
+          "reference_type": "external",
+          "context": "optimise the value of $C$ in the proof of Theorem~\\ref{fms even groups2b}. With more careful analysis of the link graphs, i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fms even groups2",
+          "reference_type": "external",
+          "context": "he value of $C$ to a single-digit number. Theorem~\\ref{fms even groups2} should also hold with a much smaller choice of $C",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "conjecture-32-056edd3d",
+      "type": "conjecture",
+      "content": "\\label{conj3}\nLet $\\Gamma$ be an $n$-vertex graph that contains a perfect matching. Then $\\Gamma$ contains at most $2^{n/2}$ maximal independent sets.",
+      "content_preview": "Let be an n-vertex graph that contains a perfect matching. Then contains at most 2^n/2 maximal independent sets.",
+      "display_name": "Conjecture",
+      "label": "conj3",
+      "position": {
+        "line_start": 931,
+        "line_end": 933
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_Moon-Moser",
+      "type": "unknown",
+      "content": "External reference to 'Moon-Moser'",
+      "content_preview": "External reference to 'Moon-Moser'",
+      "display_name": "Unknown",
+      "label": "Moon-Moser",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fms even groups2c",
+      "type": "unknown",
+      "content": "External reference to 'fms even groups2c'",
+      "content_preview": "External reference to 'fms even groups2c'",
+      "display_name": "Unknown",
+      "label": "fms even groups2c",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fms even groups2b",
+      "type": "unknown",
+      "content": "External reference to 'fms even groups2b'",
+      "content_preview": "External reference to 'fms even groups2b'",
+      "display_name": "Unknown",
+      "label": "fms even groups2b",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fms even groups2",
+      "type": "unknown",
+      "content": "External reference to 'fms even groups2'",
+      "content_preview": "External reference to 'fms even groups2'",
+      "display_name": "Unknown",
+      "label": "fms even groups2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-12-7f0dea15",
+      "target": "lemma-10-59c29aba",
+      "type": null
+    },
+    {
+      "source": "lemma-12-7f0dea15",
+      "target": "fact-11-45ea8fce",
+      "type": null
+    },
+    {
+      "source": "claim-18-5605703f",
+      "target": "external_Moon-Moser",
+      "type": null
+    },
+    {
+      "source": "claim-20-3907f826",
+      "target": "claim-19-eab21d59",
+      "type": null
+    },
+    {
+      "source": "claim-20-3907f826",
+      "target": "fact-9-140dbc56",
+      "type": null
+    },
+    {
+      "source": "claim-21-ed180e6f",
+      "target": "claim-19-eab21d59",
+      "type": null
+    },
+    {
+      "source": "claim-21-ed180e6f",
+      "target": "lemma-13-0c0455fa",
+      "type": null
+    },
+    {
+      "source": "claim-22-0c15ebee",
+      "target": "claim-19-eab21d59",
+      "type": null
+    },
+    {
+      "source": "claim-22-0c15ebee",
+      "target": "fact-9-140dbc56",
+      "type": null
+    },
+    {
+      "source": "claim-22-0c15ebee",
+      "target": "claim-20-3907f826",
+      "type": null
+    },
+    {
+      "source": "claim-22-0c15ebee",
+      "target": "lemma-15-afc0830a",
+      "type": null
+    },
+    {
+      "source": "claim-23-6471245e",
+      "target": "fact-9-140dbc56",
+      "type": null
+    },
+    {
+      "source": "claim-23-6471245e",
+      "target": "claim-19-eab21d59",
+      "type": null
+    },
+    {
+      "source": "claim-23-6471245e",
+      "target": "claim-20-3907f826",
+      "type": null
+    },
+    {
+      "source": "claim-23-6471245e",
+      "target": "lemma-14-d070ffdc",
+      "type": null
+    },
+    {
+      "source": "claim-24-3dcf9a23",
+      "target": "lemma-7-3ed1eedc",
+      "type": null
+    },
+    {
+      "source": "claim-24-3dcf9a23",
+      "target": "claim-18-5605703f",
+      "type": null
+    },
+    {
+      "source": "claim-24-3dcf9a23",
+      "target": "claim-21-ed180e6f",
+      "type": null
+    },
+    {
+      "source": "claim-24-3dcf9a23",
+      "target": "claim-22-0c15ebee",
+      "type": null
+    },
+    {
+      "source": "claim-24-3dcf9a23",
+      "target": "claim-23-6471245e",
+      "type": null
+    },
+    {
+      "source": "claim-24-3dcf9a23",
+      "target": "lemma-17-1be01c45",
+      "type": null
+    },
+    {
+      "source": "claim-25-6fd6f862",
+      "target": "lemma-12-7f0dea15",
+      "type": null
+    },
+    {
+      "source": "claim-26-9c3653e4",
+      "target": "claim-25-6fd6f862",
+      "type": null
+    },
+    {
+      "source": "claim-26-9c3653e4",
+      "target": "external_fms even groups2c",
+      "type": null
+    },
+    {
+      "source": "claim-26-9c3653e4",
+      "target": "lemma-12-7f0dea15",
+      "type": null
+    },
+    {
+      "source": "claim-27-e9e27813",
+      "target": "claim-25-6fd6f862",
+      "type": null
+    },
+    {
+      "source": "claim-27-e9e27813",
+      "target": "claim-22-0c15ebee",
+      "type": null
+    },
+    {
+      "source": "claim-27-e9e27813",
+      "target": "external_fms even groups2c",
+      "type": null
+    },
+    {
+      "source": "claim-27-e9e27813",
+      "target": "fact-9-140dbc56",
+      "type": null
+    },
+    {
+      "source": "claim-28-ad1027cc",
+      "target": "claim-25-6fd6f862",
+      "type": null
+    },
+    {
+      "source": "claim-29-ae831f75",
+      "target": "claim-25-6fd6f862",
+      "type": null
+    },
+    {
+      "source": "claim-29-ae831f75",
+      "target": "external_fms even groups2c",
+      "type": null
+    },
+    {
+      "source": "claim-29-ae831f75",
+      "target": "fact-9-140dbc56",
+      "type": null
+    },
+    {
+      "source": "claim-30-f1c774fa",
+      "target": "lemma-17-1be01c45",
+      "type": null
+    },
+    {
+      "source": "claim-30-f1c774fa",
+      "target": "external_Moon-Moser",
+      "type": null
+    },
+    {
+      "source": "remark-31-e7843175",
+      "target": "external_fms even groups2b",
+      "type": null
+    },
+    {
+      "source": "remark-31-e7843175",
+      "target": "external_fms even groups2",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 36,
+    "edge_count": 37,
+    "extractor_used": "regex-only"
+  }
+}

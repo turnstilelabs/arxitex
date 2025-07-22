@@ -1,0 +1,352 @@
+{
+  "arxiv_id": "2506.16536v1",
+  "nodes": [
+    {
+      "id": "definition-1-c3265465",
+      "type": "definition",
+      "content": "Let $X$ be a set, let $s:X\\to S_X$ be a map, and write $s_x:=s(x)$ for all elements $x\\in X$. We call the pair $R:=(X,s)$ a \\emph{rack} if \\begin{equation*}\n\t\ts_xs_y=s_{s_x(y)}s_x\n\t\\end{equation*}\n        for all $x,y\\in X$.  \n        If in addition $s_x(x)=x$ for all $x\\in X$, then we say that $R$ is a \\emph{quandle}.\n\t\tThe \\emph{order} of $R$ is the cardinality of $X$.",
+      "content_preview": "Let X be a set, let s:X S_X be a map, and write s_x:=s(x) for all elements x X. We call the pair R:=(X,s) a if s_xs_y=s_s_x(y)s_x for all x,y X.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 157,
+        "line_end": 164
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-2-017c3b7f",
+      "type": "example",
+      "content": "\\cite[Ex.\\ 99]{quandlebook}\n\t\tLet $X$ be a set, and fix a permutation $\\sigma\\in S_X$. Define $s:X\\rightarrow S_X$ by $x\\mapsto \\sigma$, so that $s_x(y)=\\sigma(y)$ for all $x,y\\in X$. Then $(X,\\sigma)\\perm:=(X,s)$ is a rack called a \\emph{permutation rack}, \\emph{cyclic rack}, or \\emph{constant action rack}.\n        \n        Note that $(X,\\sigma)\\perm$ is a quandle if and only if $\\sigma$ is the identity map $\\id_X$. In this case, we call $(X,\\id_X)\\perm$ a \\emph{trivial quandle}.",
+      "content_preview": "Let X be a set, and fix a permutation S_X. Define s:X S_X by x , so that s_x(y)=(y) for all x,y X. Then (X,):=(X,s) is a rack called a , , or .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 173,
+        "line_end": 177
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-3-4044a8ad",
+      "type": "example",
+      "content": "\\cite[Ex.\\ 2.13]{book}\n\tLet $X$ be a union of conjugacy classes in a group $G$, and define $c:X\\rightarrow S_X$ by sending any element $x\\in X$ to the conjugation map \\[c_x:=[y\\mapsto xyx\\inv].\\]\n\t\tThen $\\Conj X:=(X,c)$ is a quandle called a \\emph{conjugation quandle} or \\emph{conjugacy quandle}. \n        Note that $\\Conj G$ is a trivial quandle if and only if $G$ is abelian.",
+      "content_preview": "Let X be a union of conjugacy classes in a group G, and define c:X S_X by sending any element x X to the conjugation map [c_x:=[y xyx].",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 179,
+        "line_end": 183
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-4-abcbc810",
+      "type": "example",
+      "content": "\\cite[Ex.\\ 54]{quandlebook}\n\t\tLet $G$ be an abelian additive group. Define $s:G\\to S_G$ by setting \\[s_g(h):=2h-g\\] for all elements $g,h\\in G$. Then $T(G):=(G,s)$ is a quandle called a \\emph{Takasaki kei}. \n        \n        In particular, if $n\\in\\Z^+$ and $G=\\Zn$, then we call $T(\\Zn)$ the \\emph{dihedral quandle} of order $n$. We denote $T(\\Zn)$ by $R_n$.",
+      "content_preview": "Let G be an abelian additive group. Define s:G S_G by setting [s_g(h):=2h-g] for all elements g,h G. Then T(G):=(G,s) is a quandle called a .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 185,
+        "line_end": 189
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-5-6beeadb3",
+      "type": "definition",
+      "content": "Given two racks $(X,s)$ and $(Y,t)$, we say that a map $\\psi:X\\to Y$ is a \\emph{rack homomorphism} if \\[\\psi s_x=t_{\\psi(x)}\\psi\\] for all $x\\in X$. A \\emph{rack isomorphism} is a bijective rack homomorphism. \\emph{Automorphisms} of racks are isomorphisms from a rack to itself. \n        We denote the \\emph{automorphism group} of a rack $R$ by $\\Aut R$.",
+      "content_preview": "Given two racks (X,s) and (Y,t), we say that a map :X Y is a if [ s_x=t_(x)] for all x X. A is a bijective rack homomorphism.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 194,
+        "line_end": 197
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-6-7ac6db21",
+      "type": "definition",
+      "content": "A \\emph{virtual rack} is a pair $(R,f)$ where $R$ is a rack and $f\\in\\Aut R$ is a rack automorphism. We say that $f$ is a \\emph{virtual structure} on $R$.  \n    If in addition $R$ is a quandle, then we call $(R,f)$ a \\emph{virtual quandle}. We say that $R$ is the \\emph{underlying rack} (resp.\\ \\emph{underlying quandle}) of $(R,f)$.",
+      "content_preview": "A is a pair (R,f) where R is a rack and f R is a rack automorphism. We say that f is a on R. If in addition R is a quandle, then we call (R,f) a .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 199,
+        "line_end": 202
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-7-82932e7e",
+      "type": "example",
+      "content": "\\label{ex:perm} \n    Let $P=(X,\\sigma)\\perm$ be a permutation rack. Evidently, $\\Aut P=C_{S_X}(\\sigma)$, so a virtual structure on $P$ is precisely a permutation of $X$ that commutes with $\\sigma$.",
+      "content_preview": "Let P=(X,) be a permutation rack. Evidently, P=C_S_X(), so a virtual structure on P is precisely a permutation of X that commutes with .",
+      "display_name": "Example",
+      "label": "ex:perm",
+      "position": {
+        "line_start": 204,
+        "line_end": 206
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-8-ade8c1bc",
+      "type": "example",
+      "content": "Let $G$ be a group. We consider several virtual structures on $\\Conj G$. Fix an element $g\\in G$. \n    \\begin{itemize}\n        \\item Consider the left-multiplication map $m_g:=[h\\mapsto gh]$. Then $(\\Conj G,m_g)$ is a virtual quandle if and only if $g\\in Z(G)$~\\cite[Ex.\\ 3.6]{bi}.\n        \\item Consider the conjugation map $c_g:=[h\\mapsto ghg\\inv]$. Then $(\\Conj G,c_g)$ is a virtual quandle~\\cite[Lemma 1]{manturov}. More generally, given any rack $R=(X,s)$ and any element $x\\in X$, the pair $(R,s_x)$ is a virtual rack.\n    \\end{itemize}",
+      "content_preview": "Let G be a group. We consider several virtual structures on G. Fix an element g G. Consider the left-multiplication map m_g:=[h gh].",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 208,
+        "line_end": 214
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-9-5d7a156b",
+      "type": "example",
+      "content": "\\label{ex:dihedral}\n    Let $n\\in\\Z^+$ be a positive integer, and let $R_n$ be the dihedral quandle of order $n$. A result of Elhamdadi, Macquarrie, and Restrepo~\\cite[Thm.\\ 2.3]{aut} states that $\\Aut R_n$ is the group of affine transformations of $\\Zn$, which is isomorphic to the holomorph ${\\Zn\\rtimes\\Zx}$ of $\\Zn$. Hence, virtual structures on $R_n$ are precisely affine transformations\n    \\[\n    T_{a,u}:=[x\\mapsto a+ux]\n    \\]\n    with $a\\in \\Zn$ and $u\\in \\Zx$.",
+      "content_preview": "Let n^+ be a positive integer, and let R_n be the dihedral quandle of order n. A result of Elhamdadi, Macquarrie, and Restrepo~ states that R_n is...",
+      "display_name": "Example",
+      "label": "ex:dihedral",
+      "position": {
+        "line_start": 216,
+        "line_end": 222
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-10-5aca5dbf",
+      "type": "definition",
+      "content": "\\label{def:auto}\n    Let $V_1=(R_1,f_1)$ and $V_2=(R_2,f_2)$ be virtual racks. A \\emph{virtual rack homomorphism} from $V_1$ to $V_2$ is a rack homomorphism $\\psi$ from $R_1$ to $R_2$ that intertwines the virtual structures: \n        \\[\\psi f_1=f_2\\psi.\\] \n    \\emph{Virtual rack isomorphisms} are bijective virtual rack homomorphisms.",
+      "content_preview": "Let V_1=(R_1,f_1) and V_2=(R_2,f_2) be virtual racks. A from V_1 to V_2 is a rack homomorphism from R_1 to R_2 that intertwines the virtual...",
+      "display_name": "Definition",
+      "label": "def:auto",
+      "position": {
+        "line_start": 224,
+        "line_end": 228
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-11-59071c8d",
+      "type": "example",
+      "content": "\\label{ex:perm2}\n    Let $P=(X,\\sigma)\\perm$ be a permutation rack. By Example~\\ref{ex:perm} and Equation~\\eqref{eq:count}, \\[v(P)=k(\\Aut P)=k(C_{S_X}(\\sigma)).\\] \n    \n    For example, let $X$ be a finite set of cardinality $n\\in\\Z^+$. If $P$ is a trivial quandle, then $\\Aut P=S_X$, so $v(P)=p(n)$. If, instead, $\\sigma\\in S_n$ is an $n$-cycle, then $C_{S_X}(\\sigma)=\\langle\\sigma\\rangle \\cong \\Zn$, so $v(P)=n$.",
+      "content_preview": "Let P=(X,) be a permutation rack. By Example~ and Equation~, [v(P)=k( P)=k(C_S_X()).] For example, let X be a finite set of cardinality n^+.",
+      "display_name": "Example",
+      "label": "ex:perm2",
+      "position": {
+        "line_start": 271,
+        "line_end": 275
+      },
+      "references": [
+        {
+          "target_id": "ex:perm",
+          "reference_type": "internal",
+          "context": "X,\\sigma)\\perm$ be a permutation rack. By Example~\\ref{ex:perm} and Equation~\\eqref{eq:count}, \\[v(P)=k(\\Aut P)=k",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:count",
+          "reference_type": "external",
+          "context": "ation rack. By Example~\\ref{ex:perm} and Equation~\\eqref{eq:count}, \\[v(P)=k(\\Aut P)=k(C_{S_X}(\\sigma)).\\]",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-82a08a42",
+      "type": "lemma",
+      "content": "\\label{lemma:centerless}\n    Let $G$ be a group, and let $\\Aut_{\\mathsf{Grp}}(G)$ denote its automorphism group. Then $Z(G)=1$ if and only if \\[\\Aut_{\\mathsf{Grp}}(G)=\\Aut (\\Conj G).\\]",
+      "content_preview": "Let G be a group, and let _(G) denote its automorphism group. Then Z(G)=1 if and only if [_(G)= ( G).]",
+      "display_name": "Lemma",
+      "label": "lemma:centerless",
+      "position": {
+        "line_start": 285,
+        "line_end": 287
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-13-42056e0d",
+      "type": "example",
+      "content": "\\label{ex:sn}\n    Let $n\\in\\Z^+$ be a positive integer, and let $S_n$ denote the symmetric group on $n$ letters. We compute $v(\\Conj S_n)$ as follows. Since $\\Conj S_2$ is a trivial quandle, Example~\\ref{ex:perm2} yields $v(\\Conj S_2)=p(2)=2$. \n    If $n\\neq 2$, then $Z(S_n)=1$, so Lemma~\\ref{lemma:centerless} implies that\n    \\[\n    \\Aut (\\Conj S_n)=\\begin{cases}\n        S_n, &\\text{if $n\\neq 6$;}\\\\\n        S_6\\rtimes \\Z/2\\Z,&\\text{if $n=6$.}\n    \\end{cases}\n    \\]\n    Since $k(S_n)=p(n)$ for all $n\\in\\Z^+$ and $k(S_6\\rtimes\\Z/2\\Z)=13$, Equation~\\eqref{eq:count} and the above discussion yield \\[v(\\Conj S_n)=\\begin{cases}\n        p(n),&\\text{if $n\\neq 6$;}\\\\\n        13,&\\text{if $n=6$.}\n    \\end{cases}\\]",
+      "content_preview": "Let n^+ be a positive integer, and let S_n denote the symmetric group on n letters. We compute v( S_n) as follows.",
+      "display_name": "Example",
+      "label": "ex:sn",
+      "position": {
+        "line_start": 289,
+        "line_end": 302
+      },
+      "references": [
+        {
+          "target_id": "ex:perm2",
+          "reference_type": "internal",
+          "context": ". Since $\\Conj S_2$ is a trivial quandle, Example~\\ref{ex:perm2} yields $v(\\Conj S_2)=p(2)=2$. \n    If $n\\neq 2$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:centerless",
+          "reference_type": "internal",
+          "context": "=2$. \n    If $n\\neq 2$, then $Z(S_n)=1$, so Lemma~\\ref{lemma:centerless} implies that\n    \\[\n    \\Aut (\\Conj S_n)=\\begin{c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:count",
+          "reference_type": "external",
+          "context": "$n\\in\\Z^+$ and $k(S_6\\rtimes\\Z/2\\Z)=13$, Equation~\\eqref{eq:count} and the above discussion yield \\[v(\\Conj S_n)=\\be",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-14-7a5a8636",
+      "type": "example",
+      "content": "Let $n\\in\\Z^+$ be a positive integer, and let $A_n$ denote the alternating group on $n$ letters. An argument similar to that of Example~\\ref{ex:sn} yields\n    \\[\n    v(\\Conj A_n)=\\begin{cases}\n        p(n),&\\text{if $n\\neq 2,6$;}\\\\\n        1, & \\text{if $n=2$,}\\\\\n        13,&\\text{if $n=6$.}\n        \\end{cases}\n    \\]",
+      "content_preview": "Let n^+ be a positive integer, and let A_n denote the alternating group on n letters. An argument similar to that of Example~ yields [ v( A_n)=...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 304,
+        "line_end": 313
+      },
+      "references": [
+        {
+          "target_id": "ex:sn",
+          "reference_type": "internal",
+          "context": "$ letters. An argument similar to that of Example~\\ref{ex:sn} yields\n    \\[\n    v(\\Conj A_n)=\\begin{cases}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-15-0b317851",
+      "type": "example",
+      "content": "For all odd primes $p\\geq 3$, the projective special linear group $\\PSL(2,p)$ is centerless, and its automorphism group is isomorphic to the projective linear group $\\PGL(2,p)$. Hence, Lemma~\\ref{lemma:centerless} and Equation~\\eqref{eq:count} yield\n    \\[\n    v(\\Conj \\PSL(2,p)) =k(\\PGL(2,p))=(p-1)(p+1).\n    \\]\n    See OEIS sequence \\seqnum{A084920}~\\cite{OEIS}.",
+      "content_preview": "For all odd primes p 3, the projective special linear group (2,p) is centerless, and its automorphism group is isomorphic to the projective linear...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 315,
+        "line_end": 321
+      },
+      "references": [
+        {
+          "target_id": "lemma:centerless",
+          "reference_type": "internal",
+          "context": "projective linear group $\\PGL(2,p)$. Hence, Lemma~\\ref{lemma:centerless} and Equation~\\eqref{eq:count} yield\n    \\[\n    v(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:count",
+          "reference_type": "external",
+          "context": "Hence, Lemma~\\ref{lemma:centerless} and Equation~\\eqref{eq:count} yield\n    \\[\n    v(\\Conj \\PSL(2,p)) =k(\\PGL(2,p))",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "external_eq:count",
+      "type": "unknown",
+      "content": "External reference to 'eq:count'",
+      "content_preview": "External reference to 'eq:count'",
+      "display_name": "Unknown",
+      "label": "eq:count",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "example-11-59071c8d",
+      "target": "example-7-82932e7e",
+      "type": null
+    },
+    {
+      "source": "example-11-59071c8d",
+      "target": "external_eq:count",
+      "type": null
+    },
+    {
+      "source": "example-13-42056e0d",
+      "target": "example-11-59071c8d",
+      "type": null
+    },
+    {
+      "source": "example-13-42056e0d",
+      "target": "lemma-12-82a08a42",
+      "type": null
+    },
+    {
+      "source": "example-13-42056e0d",
+      "target": "external_eq:count",
+      "type": null
+    },
+    {
+      "source": "example-14-7a5a8636",
+      "target": "example-13-42056e0d",
+      "type": null
+    },
+    {
+      "source": "example-15-0b317851",
+      "target": "lemma-12-82a08a42",
+      "type": null
+    },
+    {
+      "source": "example-15-0b317851",
+      "target": "external_eq:count",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 16,
+    "edge_count": 8,
+    "extractor_used": "regex-only"
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "arxiv_id": "2506.17668v1",
+  "nodes": [
+    {
+      "id": "theorem-1-8a257d60",
+      "type": "theorem",
+      "content": "\\label{thrm:main}\n\t\tFor every $\\varepsilon>0$, there exists a transitive permutation group of degree $n$ such that\n\t\t$$\\mu(G)b(G)\\ge n^{2-\\varepsilon}.$$",
+      "content_preview": "For every >0, there exists a transitive permutation group of degree n such that (G)b(G) n^2-.",
+      "display_name": "Theorem",
+      "label": "thrm:main",
+      "position": {
+        "line_start": 102,
+        "line_end": 105
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-19c56e02",
+      "type": "lemma",
+      "content": "\\label{sec1:l1}\t\n\tLet $G = H \\wr T$ be a finite transitive permutation group acting on a set $\\Omega$ of size $n$ where $H$ is a primitive permutation group acting on a set $\\Sigma$ which is a block for $G$ in $\\Omega$ and where $T$ is a nontrivial transitive permutation group acting on the system of imprimitivity defined by $\\Sigma$. Then $\\mu(G) b(G) \\leq n \\log n$.",
+      "content_preview": "Let G = H T be a finite transitive permutation group acting on a set of size n where H is a primitive permutation group acting on a set which is a...",
+      "display_name": "Lemma",
+      "label": "sec1:l1",
+      "position": {
+        "line_start": 109,
+        "line_end": 112
+      },
+      "references": [],
+      "proof": "Put $n = |\\Omega|$ and $k = |\\Sigma|$. We have $b(G) \\leq b_{\\Sigma}(H) (n/k)$ and $\\mu(G) \\leq \\mu_{\\Sigma}(H)$ where $b_{\\Sigma}(H)$ denotes the minimal base size of $H$ acting on $\\Sigma$ and $\\mu_{\\Sigma}(H)$ denotes the minimal degree of $H$ acting on $\\Sigma$. If $H$ is different from the $5$-transitive Mathieu group of degree $24$, then $\\mu(G)b(G) \\leq (k \\log k)(n/k) = n \\log k \\leq n \\log n$, otherwise $\\mu(G)b(G) \\leq (16 \\cdot 7) (n/24) \\leq n \\log 48 \\leq n \\log n$ by~\\cite[Theorem~$1.2$]{fabio}"
+    },
+    {
+      "id": "lemma-3-602d0bbb",
+      "type": "lemma",
+      "content": "\\label{sec1:l2}\n\tLet $G$ be a permutation group acting on a finite set $\\Omega$ of size $n$. Let $G$ be different from the $5$-transitive Mathieu group of degree $24$. If $G$ \n\t\\begin{enumerate}\n\t\\item is quasiprimitive, or \n\t\n\t\\item is a Sylow subgroup of $ \\mathrm{Sym}(\\Omega) $ or \n\t\n\t\\item is a maximal subgroup therein, \n\t\\end{enumerate} \t\n\tthen $\\mu(G) b(G) \\leq n \\log n$.",
+      "content_preview": "Let G be a permutation group acting on a finite set of size n. Let G be different from the 5-transitive Mathieu group of degree 24.",
+      "display_name": "Lemma",
+      "label": "sec1:l2",
+      "position": {
+        "line_start": 118,
+        "line_end": 128
+      },
+      "references": [
+        {
+          "target_id": "sec1:l1",
+          "reference_type": "internal",
+          "context": "$ for some prime $p$, then (2) follows from Lemma \\ref{sec1:l1} by taking $H$ to be the cyclic group of order $p$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sec1:l1",
+          "reference_type": "internal",
+          "context": "then $\\mu(G) b(G) \\leq n \\log n$, again by Lemma~\\ref{sec1:l1} by taking both $H$ and $T$ to be symmetric groups",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First let $G$ be transitive. If $G$ is primitive, then the claim follows from~\\cite[Theorem~$1.2$]{fabio}. Let $G$ be different from a primitive group. Let $G$ be quasiprimitive. Let $\\mathcal{B}$ be a maximal system of blocks in $\\Omega$ defined from a nontrivial block $\\Sigma$. Let $k = |\\Sigma|$. Since $G$ is quasiprimitive, $b(G) \\leq b_{\\mathcal{B}}(G)$ and $\\mu(G) \\leq \\mu_{\\mathcal{B}}(G) k$. This gives $\\mu(G)b(G) \\leq (n/k) \\log(n/k) k$ by~\\cite[Theorem~$1.2$]{fabio}, which is at most $n \\log n$. This proves (1).\n\t\n\tWe continue to assume that $G$ is transitive. If $G$ is a (transitive) Sylow $p$-subgroup of $\\mathrm{Sym}(\\Omega)$ for some prime $p$, then (2) follows from Lemma \\ref{sec1:l1} by taking $H$ to be the cyclic group of order $p$ and $T$ a Sylow $p$-subgroup of the symmetric group of degree $n/p$. If $G$ is a maximal imprimitive subgroup of $\\mathrm{Sym}(\\Omega)$, then $\\mu(G) b(G) \\leq n \\log n$, again by Lemma~\\ref{sec1:l1} by taking both $H$ and $T$ to be symmetric groups. This completes the proof of (3) in case $G$ is transitive. \n\t\n    Let $G$ act intransitively on $\\Omega$. Let $G = G_{1} \\times \\cdots \\times G_r$ be a Sylow subgroup of $\\mathrm{Sym}(\\Omega)$ where each $G_i$ is a transitive Sylow subgroup of $\\mathrm{Sym}(\\Omega_{i})$ for subsets $\\Omega_i$ of $\\Omega$ partitioning $\\Omega$. We may assume that each $G_i$ is nontrivial. We have $\\mu(G) \\leq \\min_{i} \\{ \\mu_{\\Omega_i}(G_{i}) \\}$ and $b(G) \\leq \\sum_{i=1}^{r} b_{\\Omega_{i}}(G_{i})$. This and the previous paragraph give $\\mu(G)b(G) \\leq \\sum_{i=1}^{r} |\\Omega_i| \\log |\\Omega_i| \\leq \\sum_{i=1}^{r} |\\Omega_i| \\log n = n \\log n$. This completes the proof of (2). Similarly, if $G$ is maximal (and intransitive) in $\\mathrm{Sym}(\\Omega)$, then $\\mu(G)b(G) = 2 (n-2) \\leq n \\log n$, completing the proof of (3)."
+    },
+    {
+      "id": "lemma-4-203574cd",
+      "type": "lemma",
+      "content": "\\label{l:1}Let $b\\in \\{0,\\ldots,a(p-1)\\}$ and write $b=r(p-1)+s$, where $r,s\\in\\mathbb{N}$ and $0\\le s< p-1$. We have $\\mu(G_b)=(p-s)p^{a-r}$. In particular, if $b=r(p-1)$, then $\\mu(G_{r(p-1)})=p^{a-r+1}$.",
+      "content_preview": "Let b 0,,a(p-1) and write b=r(p-1)+s, where r,s and 0 s< p-1. We have (G_b)=(p-s)p^a-r. In particular, if b=r(p-1), then (G_r(p-1))=p^a-r+1.",
+      "display_name": "Lemma",
+      "label": "l:1",
+      "position": {
+        "line_start": 195,
+        "line_end": 196
+      },
+      "references": [
+        {
+          "target_id": "eq:0",
+          "reference_type": "external",
+          "context": "V$ and for some $f\\in B_0$ with $\\deg f\\le b$, by~\\eqref{eq:0}. If $v\\ne 0$, then $g$ acts fixed point freely. T",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $g\\in G_b$ such that the support of $g$ has cardinality $\\mu(G_b)$. As $g\\in B_0\\rtimes V$, we may write $g=fv$, for some $v\\in V$ and for some $f\\in B_0$ with $\\deg f\\le b$, by~\\eqref{eq:0}. If $v\\ne 0$, then $g$ acts fixed point freely. Therefore, we may suppose that $v=0$ and $g=f\\in B_{a(p-1)-b}$. \n\nLet $Z(f)=\\{v\\in V\\mid f(v)=0\\}$. Now, let $(x,v)$ be in the domain of $G_b$, from the definition of the wreath product we deduce that\n$$(x,v)^f=x+f(v).$$\nIn particular, if $v\\in Z(f)$, then $g=f$ fixes all the points of the form $(x,v)$; whereas, if $v\\in V\\setminus Z(f)$, then $f$ acts as a cycle of length $p$ on $\\{(x,v)\\mid x\\in\\mathbb{F}_p\\}$. \nThis shows that $$\\mu(G)=p(|V\\setminus Z(f)|).$$\nNow, the result follows from~\\cite[Theorem~5.11]{ffields}."
+    },
+    {
+      "id": "lemma-5-9e7c8bde",
+      "type": "lemma",
+      "content": "\\label{l:2}For every $b\\in \\{0,\\ldots,a(p-1)\\}$, $b(G_b)=\\sum_{k=0}^b{a\\choose k}^{(p-1)}$.",
+      "content_preview": "For every b 0,,a(p-1), b(G_b)=_k=0^ba k^(p-1).",
+      "display_name": "Lemma",
+      "label": "l:2",
+      "position": {
+        "line_start": 219,
+        "line_end": 220
+      },
+      "references": [],
+      "proof": "The stabilizer of a point in $G_b=B_{a(p-1)-b}\\rtimes V$ is a subgroup of $B_{a(p-1)-b}$ having index $p$, because the degree of the action is $n=p^{a+1}$ and $|V|=p^a$. Now, as all the orbits of $B_{a(p-1)-b}$ have cardinality $p$, we deduce that we need to fix $\\dim_{\\mathbb{F}_p}B_{a(p-1)-b}-1$ more points to obtain a basis."
+    },
+    {
+      "id": "lemma-6-841ad250",
+      "type": "lemma",
+      "content": "\\label{l:lemmanew}\nFor every $\\varepsilon>0$, there exists a transitive permutation $2$-group of degree $n$ such that\n$\\mu(G)b(G)\\ge n^{\\log(3)/\\log(2)-\\varepsilon}$.",
+      "content_preview": "For every >0, there exists a transitive permutation 2-group of degree n such that (G)b(G) n^(3)/(2)-.",
+      "display_name": "Lemma",
+      "label": "l:lemmanew",
+      "position": {
+        "line_start": 244,
+        "line_end": 247
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:0",
+      "type": "unknown",
+      "content": "External reference to 'eq:0'",
+      "content_preview": "External reference to 'eq:0'",
+      "display_name": "Unknown",
+      "label": "eq:0",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-3-602d0bbb",
+      "target": "lemma-2-19c56e02",
+      "type": null
+    },
+    {
+      "source": "lemma-4-203574cd",
+      "target": "external_eq:0",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 7,
+    "edge_count": 2,
+    "extractor_used": "regex-only"
+  }
+}

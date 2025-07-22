@@ -1,0 +1,797 @@
+{
+  "arxiv_id": "2507.10458v1",
+  "nodes": [
+    {
+      "id": "lemma-1-a8f95982",
+      "type": "lemma",
+      "content": "\\cite[Corollary 2.10]{amiri} \\label{amiri}\n\tLet $ G $ be a finite  group of order $ n $. Then there exists a bijection $ f $ from $ G $ onto $ C_n $\n\tsuch that $ o(x) | o(f(x)) $ for all $ x \\in G $.",
+      "content_preview": "Let G be a finite group of order n . Then there exists a bijection f from G onto C_n such that o(x) | o(f(x)) for all x G .",
+      "display_name": "Lemma",
+      "label": "amiri",
+      "position": {
+        "line_start": 153,
+        "line_end": 156
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-5be581ad",
+      "type": "lemma",
+      "content": "\\cite[Theorem 3]{PatassinizbMATH06708963} \\label{cyclic}\n\tLet $G$ be a finite group of order $n$. Then $\\rho(G) \\leq \\rho(C_n)$\n\twith equality if and only if $G$ is cyclic.",
+      "content_preview": "Let G be a finite group of order n. Then (G) (C_n) with equality if and only if G is cyclic.",
+      "display_name": "Lemma",
+      "label": "cyclic",
+      "position": {
+        "line_start": 157,
+        "line_end": 160
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-3-c76b6e2d",
+      "type": "lemma",
+      "content": "\\label{mid1}   \\cite[Lemma 2.6]{baniAust}\n\tLet $ G  $ be a finite group satisfying  $ G = P  \\rtimes F$, where $P$ is a cyclic $p$-group\n\tfor some prime $p$, $|F| > 1$ and $(p,|F|) = 1$. Then\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|}.\\]",
+      "content_preview": "Let G be a finite group satisfying G = P F, where P is a cyclic p-group for some prime p, |F| > 1 and (p,|F|) = 1. Then [(G) = (P)^|C_F(P)| (F)^|P|.]",
+      "display_name": "Lemma",
+      "label": "mid1",
+      "position": {
+        "line_start": 161,
+        "line_end": 165
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-64aa44f3",
+      "type": "lemma",
+      "content": "\\label{1sylowproductt}\t\\cite[Lemma 2.4]{baniAust}\n\tLet $P$ be a cyclic normal Sylow $p$-subgroup of a finite group $G$. Then\n\t\\[\\rho(G) \\mid\t\\rho(G/P)^{|P|}\\rho(P)^{|G/P|}\\]\n\twith equality if and only if $P$ is central in $G$.",
+      "content_preview": "Let P be a cyclic normal Sylow p-subgroup of a finite group G. Then [(G) (G/P)^|P|(P)^|G/P|] with equality if and only if P is central in G.",
+      "display_name": "Lemma",
+      "label": "1sylowproductt",
+      "position": {
+        "line_start": 166,
+        "line_end": 170
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-6ae45900",
+      "type": "lemma",
+      "content": "\\cite{hallzbMATH02575957} \\label{hall} \n\tAn integer $n = {p_1}^{\\alpha_1} \\dots {p_k}^{\\alpha_k}$\n\tis the number of Sylow $p$-subgroups of a\n\tfinite solvable group $G$ if and only if  ${p_i}^{\\alpha_i} \\equiv 1 \\pmod{p}$\n\tfor $i = 1, \\dots, k$.",
+      "content_preview": "An integer n = p_1^_1 p_k^_k is the number of Sylow p-subgroups of a finite solvable group G if and only if p_i^_i 1 for i = 1, , k.",
+      "display_name": "Lemma",
+      "label": "hall",
+      "position": {
+        "line_start": 171,
+        "line_end": 176
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-7f9f36e8",
+      "type": "lemma",
+      "content": "\\cite{huppert} \\label{huppert}\n\tLet $ G = L_2(q) $ where $ q $ is a ppower ($ p $ prime). Then\\\\\n\t(1) a Sylow $ p $-subgroup $ P $ of $ G $ is an elementary abelian group of\n\torder $ q $ and the number of Sylow $ p $-subgroup of $ G $ is $ q + 1 $,\\\\\n\t(2) $ G $ contains a cyclic subgroup $ A $ of order $\\dfrac{q-1}{2}  $ such that $ N_G(u) $\n\tis a dihedral group of order $ q - 1 $ for every nontrivial element\n\t$ u \\in A $,\\\\\n\t(3) $ G $ contains a cyclic subgroup $ B $ of order $ \\dfrac{q+1}{2} $ such that $ N_G(u) $\n\tis a dihedral group of order $ q + 1 $ for every nontrivial element\n\t$ u \\in B $,\\\\\n\t(4) the set $ \\{ P^x, A^x, B^x | x \\in G \\} $ is a partition of $ G $.",
+      "content_preview": "Let G = L_2(q) where q is a ppower ( p prime). Then (1) a Sylow p -subgroup P of G is an elementary abelian group of order q and the number of Sylow...",
+      "display_name": "Lemma",
+      "label": "huppert",
+      "position": {
+        "line_start": 178,
+        "line_end": 189
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-00e17edd",
+      "type": "lemma",
+      "content": "\\cite[Lemma 1]{Xu} \\label{seri}\n Let $G$ be a non-solvable group. Then $G$ has a normal series\n$1 \\unlhd H  \\unlhd K \\unlhd G$ such that $K/H$ is a direct product of isomorphic non-abelian simple groups\nand $|G/K|$ divides  $|Out(K/H)|$.",
+      "content_preview": "Let G be a non-solvable group. Then G has a normal series 1 H K G such that K/H is a direct product of isomorphic non-abelian simple groups and |G/K|...",
+      "display_name": "Lemma",
+      "label": "seri",
+      "position": {
+        "line_start": 190,
+        "line_end": 194
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-28efa8fb",
+      "type": "lemma",
+      "content": "\\cite[Lemma 2.2 and Lemma 2.4]{baniMalArab} \\label{mohem}  \n\t\tLet $G$ be a finite group of order $kp^{\\alpha}$ such that  $(k,p)=1$ and $p$ is a  prime  number. Then\n\t\t \\[\n\t\tk \\mid [\\rho(G)]_p \\quad \\text{and} \\quad \\phi(p) \\mid [\\rho(G)]_p.\n\t\t\\]",
+      "content_preview": "Let G be a finite group of order kp^ such that (k,p)=1 and p is a prime number. Then [ k [(G)]_p (p) [(G)]_p. ]",
+      "display_name": "Lemma",
+      "label": "mohem",
+      "position": {
+        "line_start": 204,
+        "line_end": 209
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-f169022a",
+      "type": "lemma",
+      "content": "\\cite[Corollary 2.6]{baniMalArab} \\label{2-part}\n\tFor a finite group $G$,  $[\\rho(G)]_p$ is even, where $p$ is an odd prime number and $p \\mid |G|$. \n\tMoreover, if $2 $ divides $|G|$, then $[\\rho(G)]_2$ is odd.",
+      "content_preview": "For a finite group G, [(G)]_p is even, where p is an odd prime number and p |G|. Moreover, if 2 divides |G|, then [(G)]_2 is odd.",
+      "display_name": "Lemma",
+      "label": "2-part",
+      "position": {
+        "line_start": 211,
+        "line_end": 214
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-10-db94fb44",
+      "type": "lemma",
+      "content": "Let $G$ be a finite group.\n\t\t\\begin{itemize}\n\t\t\t\\item If $H \\leqslant G$, then $\\Omega_{\\rho}(H) \\leq \\Omega_{\\rho}(G)$, \twith equality if and only if $H = G$. \n\t\t\t\\item  If $N \\unlhd G$, then $\\Omega_{\\rho}(G/N) \\leq \\Omega_{\\rho}(G)$, \twith equality if and only if $N = 1$.\n\t\t\\end{itemize}",
+      "content_preview": "Let G be a finite group. If H G, then _(H) _(G), with equality if and only if H = G. If N G, then _(G/N) _(G), with equality if and only if N = 1.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 216,
+        "line_end": 222
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-11-8335c84c",
+      "type": "lemma",
+      "content": "We have:\n\t\t\\begin{enumerate}\n\t\t\t\\item[(i)] $\\Omega_{\\rho}\\left(C_{p^\\alpha}\\right)=\\alpha p^{\\alpha}-\\dfrac{p^{\\alpha}-1}{p-1}={\\frac{\\alpha p^{\\alpha+1}-(\\alpha+1) p^\\alpha+1}{p-1}}$\n\t\t\t\\item[(ii)] \n\t\t\t$\\Omega_{\\rho}\\left(C_{p^\\alpha} \\times C_{p^\\beta}\\right)={\\frac{\\beta p^{\\alpha+\\beta+2}-p^{\\alpha+\\beta+1}-(\\beta+1) p^{\\alpha+\\beta}+p^{2 \\alpha+1}+1}{p^2-1}}$\n\t\t\t\\item[(iii)]\n\t\t\t$\\Omega_{\\rho}(L_2(q))={\\frac{q(q+1)}{2}}{\\Omega_{\\rho}(C_{\\frac{q-1}{2}})}+ {\\frac{q(q-1)}{2}} {\\Omega_{\\rho}(C_{\\frac{q+1}{2}})}+ {(q+1)(q-1)}.$\n\t\t\\end{enumerate}",
+      "content_preview": "We have: _(C_p^)= p^--1p-1=-(+1) p^+1p-1 _(C_p^ C_p^)=-p^++1-(+1) p^++p^2 +1+1p^2-1 _(L_2(q))=_(C_)+ _(C_)+ (q+1)(q-1).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 223,
+        "line_end": 231
+      },
+      "references": [
+        {
+          "target_id": "huppert",
+          "reference_type": "internal",
+          "context": "Example]{TzbMATH06233336}.\n\nFor part (iii), Lemma \\ref{huppert} implies that\n\t\t$$\\rho(L_2(q))={\\rho(C_{\\frac{q-1}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Parts (i) and (ii) follow directly from \\cite[Example]{TzbMATH06233336}.\n\nFor part (iii), Lemma \\ref{huppert} implies that\n\t\t$$\\rho(L_2(q))={\\rho(C_{\\frac{q-1}{2}})}^{\\frac{q(q+1)}{2}} {\\rho(C_{\\frac{q+1}{2}})}^{\\frac{q(q-1)}{2}}  p^{(q+1)(q-1)}.$$\n\t\tConsequently,\n\t\t$$\\Omega_{\\rho}(L_2(q))={\\frac{q(q+1)}{2}}{\\Omega_{\\rho}(C_{\\frac{q-1}{2}})}+ {\\frac{q(q-1)}{2}} {\\Omega_{\\rho}(C_{\\frac{q+1}{2}})}+ {(q+1)(q-1)}.$$"
+    },
+    {
+      "id": "lemma-12-3f37414b",
+      "type": "lemma",
+      "content": "\\label{prime}\n\t\tLet $G$  be a finite group. Then $|G| \\leq 1+\\Omega_{\\rho}(G)$, with equality holds if and only if \n\t\tevery non-trivial element of \\( G \\) has prime order.",
+      "content_preview": "Let G be a finite group. Then |G| 1+_(G), with equality holds if and only if every non-trivial element of ( G ) has prime order.",
+      "display_name": "Lemma",
+      "label": "prime",
+      "position": {
+        "line_start": 241,
+        "line_end": 244
+      },
+      "references": [],
+      "proof": "The proof is straightforward."
+    },
+    {
+      "id": "theorem-13-850b2bff",
+      "type": "theorem",
+      "content": "Let $G$ be a finite group of order $n$. Then $\\Omega_{\\rho}(G) \\leq \\Omega_{\\rho}(C_n)$\n\twith equality if and only if $G$ is cyclic.",
+      "content_preview": "Let G be a finite group of order n. Then _(G) _(C_n) with equality if and only if G is cyclic.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 248,
+        "line_end": 251
+      },
+      "references": [
+        {
+          "target_id": "amiri",
+          "reference_type": "internal",
+          "context": "th equality if and only if $G$ is cyclic.By Lemma \\ref{amiri}, there exists a bijection $ f $ from $ G $ onto $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cyclic",
+          "reference_type": "internal",
+          "context": ") \\leq \\Omega_{\\rho}(C_n).\n\t\\end{align*}\nBy Lemma \\ref{cyclic}, equality holds if and only if $ G=C_n $.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By Lemma \\ref{amiri}, there exists a bijection $ f $ from $ G $ onto $ C_n $\n\tsuch that $ o(x) | o(f(x)) $ for all $ x \\in G $. Therefore\n\t\\begin{align*}\n\t\t\\forall x \\in G; o(x) | o(f(x)) & \\Rightarrow \\prod_{x \\in G} o(x) \\mid \\prod_{x \\in G} o(f(x)) \\\\\n\t\t& \\Rightarrow \\rho(G) | \\rho(C_n) \\Rightarrow \\Omega_{\\rho}(G) \\leq \\Omega_{\\rho}(C_n).\n\t\\end{align*}\nBy Lemma \\ref{cyclic}, equality holds if and only if $ G=C_n $."
+    },
+    {
+      "id": "lemma-14-d3dddc33",
+      "type": "lemma",
+      "content": "\\label{directt}\n\tLet  $A$ and $B$ be finite groups. Then \n\t   \\begin{enumerate}\n\t\t\\item[(1)] \\( \\rho(A \\times B) \\mid \\rho(A)^{|B|} \\rho(B)^{|A|} \\). \\\\\n\t\tMoreover, \\( \\rho(A \\times B) = \\rho(A)^{|B|} \\rho(B)^{|A|} \\) if and only if \\( \\gcd(|A|, |B|) = 1 \\).\n\t\t\n\t\t\\item[(2)] \\( \\Omega_{\\rho}(A \\times B) \\leq \\Omega_{\\rho}(A) \\cdot |B| + \\Omega_{\\rho}(B) \\cdot |A| \\). \\\\\n\t\tEquality \\( \\Omega_{\\rho}(A \\times B) = \\Omega_{\\rho}(A) \\cdot |B| + \\Omega_{\\rho}(B) \\cdot |A| \\) holds if and only if \\( \\gcd(|A|, |B|) = 1 \\).\n\t\\end{enumerate}",
+      "content_preview": "Let A and B be finite groups. Then ( (A B) (A)^|B| (B)^|A| ). Moreover, ( (A B) = (A)^|B| (B)^|A| ) if and only if ( (|A|, |B|) = 1 ).",
+      "display_name": "Lemma",
+      "label": "directt",
+      "position": {
+        "line_start": 263,
+        "line_end": 272
+      },
+      "references": [],
+      "proof": "(1)\nFor any \\( (a, b) \\in A \\times B \\), we have\n$o((a, b)) = \\operatorname{lcm}(o(a), o(b)) \\mid o(a) o(b)$.\nThus,\n$$\n\t\\rho(A \\times B) = \\prod_{(a, b) \\in A \\times B}  o((a, b)) \n \\mid \\prod_{a \\in A} \\prod_{b \\in B} o(a) o(b)  =\\rho(A)^{|B|} \\rho(B)^{|A|}\n$$\n\n\nWe know that, $\\operatorname{gcd}(|A|,|B|)=1$ if and only if $\\operatorname{gcd}(o(a), o(b))=1$ for every $a \\in A$ and $b \\in B$, which is equivalent to\n $o((a, b))=o(a) o(b)$ for every $a \\in A$ and $b \\in B$. Therefore \n $\\rho(A \\times B) = \\rho(A)^{|B|} \\rho(B)^{|A|}$ if and only if $\\operatorname{gcd}(|A|,|B|)=1$. \\\\\n(2) From part (1), we deduce\n \\[\\Omega_{\\rho}(A\\times B) \\leqslant\n \\Omega_{\\rho}({\\rho(A)}^{|B|}{\\rho(B)}^{|A|}) = \\Omega_{\\rho}({\\rho(A)}^{|B|}) + \\Omega_{\\rho}({\\rho(B)}^{|A|}) = \n \\Omega_{\\rho}(A) \\cdot |B| + \\Omega_{\\rho}(B) \\cdot |A|.\n \\]\n Equality holds precisely when \\( \\gcd(|A|, |B|) = 1 \\), as established in part (1),\n as required."
+    },
+    {
+      "id": "lemma-15-b2d3bf53",
+      "type": "lemma",
+      "content": "\\label{nim}\n\tLet $G$ be a finite group satisfying $G=P\\rtimes F$, where $P$ is a\n\tcyclic $p$-group for some prime  $p$, $|F| > 1$ and $(p, |F|) = 1$. Then\n\t\\[\\Omega_{\\rho}(G)={|C_F(P)|}\\cdot {\\Omega_{\\rho}(P)} + {|P|} \\cdot {\\Omega_{\\rho}(F)}.  \\]",
+      "content_preview": "Let G be a finite group satisfying G=P F, where P is a cyclic p-group for some prime p, |F| > 1 and (p, |F|) = 1. Then [_(G)=|C_F(P)| _(P) + |P| _(F).",
+      "display_name": "Lemma",
+      "label": "nim",
+      "position": {
+        "line_start": 297,
+        "line_end": 301
+      },
+      "references": [
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": "+ {|P|} \\cdot {\\Omega_{\\rho}(F)}.  \\]Using Lemma \\ref{mid1}, we have\n\t\\begin{align*}\t\n\t\t\t\\Omega_{\\rho}(G)&=\\O",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Using Lemma \\ref{mid1}, we have\n\t\\begin{align*}\t\n\t\t\t\\Omega_{\\rho}(G)&=\\Omega_{\\rho}({\\rho(P)}^{|C_F(P)|}{\\rho(F)}^{|P|}) =\n\t\t\t\\Omega_{\\rho}({\\rho(P)}^{|C_F(P)|})+\\Omega_{\\rho}({\\rho(F)}^{|P|}) \\\\ &=\n\t\t{|C_F(P)|}\\cdot {\\Omega_{\\rho}(P)} + {|P|} \\cdot {\\Omega_{\\rho}(F)}.\n\t\\end{align*} \n\tas wanted."
+    },
+    {
+      "id": "lemma-16-52c657a2",
+      "type": "lemma",
+      "content": "\\label{sylowproduct}\t\n\tLet $P$ be a cyclic normal Sylow $p$-subgroup of a finite group $G$. Then\n\t\\[\\Omega_{\\rho}(G) \\leq\t|P| \\cdot \\Omega_{\\rho}(G/P) + |G/P| \\cdot  \\Omega_{\\rho}(P)\\]\n\twith equality if and only if $P$ is central in $G$.",
+      "content_preview": "Let P be a cyclic normal Sylow p-subgroup of a finite group G. Then [_(G) |P| _(G/P) + |G/P| _(P)] with equality if and only if P is central in G.",
+      "display_name": "Lemma",
+      "label": "sylowproduct",
+      "position": {
+        "line_start": 310,
+        "line_end": 314
+      },
+      "references": [
+        {
+          "target_id": "1sylowproductt",
+          "reference_type": "internal",
+          "context": "if and only if $P$ is central in $G$.Using Lemma \\ref{1sylowproductt}, we have:\n\t\t\\[\\rho(G) \\mid\t\\rho(G/P)^{|P|}\\rho(P)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Using Lemma \\ref{1sylowproductt}, we have:\n\t\t\\[\\rho(G) \\mid\t\\rho(G/P)^{|P|}\\rho(P)^{|G/P|}\\]\n\t\twith equality if and only if $P$ is central in $G$.\n\t\tTherefore\n\t\t\t\\begin{align*}\t\n\t\t\\Omega_{\\rho}(G) \\leq\t\\Omega_{\\rho}(\\rho(G/P)^{|P|}\\rho(P)^{|G/P|})& = \\Omega_{\\rho}(\\rho(G/P)^{|P|}) + \\Omega_{\\rho}(\\rho(P)^{|G/P|})  \\\\ & = |P| \\cdot \\Omega_{\\rho}(G/P) + |G/P| \\cdot  \\Omega_{\\rho}(P).\n\t\t\t\\end{align*} \n\t\twith equality if and only if $P$ is central in $G$."
+    },
+    {
+      "id": "corollary-17-87f2ce77",
+      "type": "corollary",
+      "content": "\\label{moshtaghkasri22}\n\tLet $P$ be a cyclic normal Sylow $p$-subgroup of a finite group $G$. Then\n\t\\[\\Omega_{\\rho}(G/P) \\geq \\dfrac{\\Omega_{\\rho}(G)\\cdot|P|-\\Omega_{\\rho}(P)\\cdot |G|}{{|P|}^2}.\\]",
+      "content_preview": "Let P be a cyclic normal Sylow p-subgroup of a finite group G. Then [_(G/P) (G)|P|-_(P) |G||P|^2.]",
+      "display_name": "Corollary",
+      "label": "moshtaghkasri22",
+      "position": {
+        "line_start": 325,
+        "line_end": 328
+      },
+      "references": [
+        {
+          "target_id": "sylowproduct",
+          "reference_type": "internal",
+          "context": "\\Omega_{\\rho}(P)\\cdot |G|}{{|P|}^2}.\\]Using Lemma \\ref{sylowproduct}, we have\n\t\\begin{align*}\n\t\t&\t\\Omega_{\\rho}(G) \\le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Using Lemma \\ref{sylowproduct}, we have\n\t\\begin{align*}\n\t\t&\t\\Omega_{\\rho}(G) \\leq\t|P| \\cdot \\Omega_{\\rho}(G/P) + |G/P| \\cdot  \\Omega_{\\rho}(P)\n\t\t\\Rightarrow  |P| \\cdot \\Omega_{\\rho}(G/P) \\geq \\Omega_{\\rho}(G) - |G/P| \\cdot  \\Omega_{\\rho}(P) \\\\\n\t\t& \\Rightarrow    \\Omega_{\\rho}(G/P) \\geq \\dfrac{\\Omega_{\\rho}(G) - |G/P| \\cdot  \\Omega_{\\rho}(P)}{|P|} \\Rightarrow    \\Omega_{\\rho}(G/P) \\geq \\dfrac{\\Omega_{\\rho}(G) \\cdot |P| -  \\Omega_{\\rho}(P) \\cdot  |G|  }{|P|^2}.\n\t\\end{align*}"
+    },
+    {
+      "id": "corollary-18-d9e006f5",
+      "type": "corollary",
+      "content": "\\label{moshtaghkasri}\nLet $P$ be a cyclic normal Sylow $p$-subgroup of a finite group $G$ with $P$  central in $G$. Then\n\\[\\Omega_{\\rho}(G/P)=\\dfrac{\\Omega_{\\rho}(G)\\cdot|P|-\\Omega_{\\rho}(P)\\cdot |G|}{{|P|}^2}.\\]",
+      "content_preview": "Let P be a cyclic normal Sylow p-subgroup of a finite group G with P central in G. Then [_(G/P)=(G)|P|-_(P) |G||P|^2.]",
+      "display_name": "Corollary",
+      "label": "moshtaghkasri",
+      "position": {
+        "line_start": 337,
+        "line_end": 340
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-19-9ab7a49c",
+      "type": "theorem",
+      "content": "\\label{A4}\n\tLet $G$ be a finite  group of order $12$. Then\n\t   \\begin{enumerate}\n\t\t\\item[(i)] \\( \\Omega_{\\rho}(A_4) \\leq \\Omega_{\\rho}(G) \\) for all such \\( G \\),\n\t\t\\item[(ii)] \\( \\Omega_{\\rho}(G) = 11 \\) if and only if \\( G \\cong A_4 \\).\n\t\\end{enumerate}",
+      "content_preview": "Let G be a finite group of order 12. Then ( _(A_4) _(G) ) for all such ( G ), ( _(G) = 11 ) if and only if ( G A_4 ).",
+      "display_name": "Theorem",
+      "label": "A4",
+      "position": {
+        "line_start": 342,
+        "line_end": 348
+      },
+      "references": [],
+      "proof": "Using GAP, we have\n   \\begin{align*}\n&\t\\rho(C_3 \\rtimes C_4) = 2^{15}3^4,  & \\Omega_{\\rho}(C_3 \\rtimes C_4) &= 19, \\\\\n&\t\\rho(C_{12}) = 2^{15}3^8,           & \\Omega_{\\rho}(C_{12}) &= 23, \\\\\n&\t\\rho(A_4) = 2^33^8,                 & \\Omega_{\\rho}(A_4) &= 11, \\\\\n&\t\\rho(D_{12}) = 2^93^4,              & \\Omega_{\\rho}(D_{12}) &= 13, \\\\\n&\t\\rho(C_6 \\times C_2) = 2^93^8,      & \\Omega_{\\rho}(C_6 \\times C_2) &= 17.\n\\end{align*}\nWe get the result."
+    },
+    {
+      "id": "theorem-20-9008ffc1",
+      "type": "theorem",
+      "content": "\\label{A5}\n\tLet $G$ be a finite  group of order $60$. Then $\\Omega_{\\rho}(A_5) \\leqslant \\Omega_{\\rho}(G)$ and\n\t $\\Omega_{\\rho}(G)=59$   if and only if $G  \\cong A_5$.",
+      "content_preview": "Let G be a finite group of order 60. Then _(A_5) _(G) and _(G)=59 if and only if G A_5.",
+      "display_name": "Theorem",
+      "label": "A5",
+      "position": {
+        "line_start": 360,
+        "line_end": 363
+      },
+      "references": [
+        {
+          "target_id": "mohem",
+          "reference_type": "internal",
+          "context": "G)={\\alpha_2}+{\\alpha_3}+{\\alpha_5}$. Using Lemma \\ref{mohem}, we have\n\\begin{align}\\label{1}\n\t15 \\mid \\alpha_2",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "1",
+          "reference_type": "external",
+          "context": "$ or $\\alpha_5 \\notin \\{15, 24\\}$ holds, then by (\\ref{1}) implies  $59 < \\Omega_{\\rho}(G)$ and we get the",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hall",
+          "reference_type": "internal",
+          "context": "ha_5}$, where $\\alpha_3 \\in \\{12, 24\\}$.\nBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $5$-subgroup,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": "here $F$ is a group of order $12$.\nApplying Lemma \\ref{mid1},\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|}\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "A4",
+          "reference_type": "internal",
+          "context": "ga_{\\rho}(F)=7$.\n\tHowever, this contradicts Lemma \\ref{A4}, which states that $\\Omega_{\\rho}(F) \\geq 11$ for",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "It is enough to show that $\\Omega_{\\rho}(A_5) < \\Omega_{\\rho}(G)$, when $G$ is\n\tsolvable. \nWe know $|G|=2^2\\cdot 3 \\cdot 5$ and $\\Omega_{\\rho}(A_5)=59$. Therefore $\\rho(G)=2^{\\alpha_2}3^{\\alpha_3}5^{\\alpha_5}$ and $\\Omega_{\\rho}(G)={\\alpha_2}+{\\alpha_3}+{\\alpha_5}$. Using Lemma \\ref{mohem}, we have\n\\begin{align}\\label{1}\n\t15 \\mid \\alpha_2; \\qquad 20 \\mid \\alpha_3; \\qquad 12 \\mid \\alpha_5.\n\\end{align}\nIf any of  $\\alpha_2\\neq 15$,  $\\alpha_3 \\neq 15$ or $\\alpha_5 \\notin \\{15, 24\\}$ holds, then by (\\ref{1}) implies  $59 < \\Omega_{\\rho}(G)$ and we get the result.\nThus, we may assume $\\rho(G)=2^{15}3^{20}5^{\\alpha_5}$, where $\\alpha_3 \\in \\{12, 24\\}$.\nBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $5$-subgroup, say $P$. Since $G$ is solvable, $G \\cong P \\rtimes F$, where $F$ is a group of order $12$.\nApplying Lemma \\ref{mid1},\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|}\\Rightarrow 2^{15}3^{20}5^{\\alpha_5}=(5^4)^{|C_{F}(P)|} \\rho(F)^{5}.\\]\n\tTherefore $\\rho(F)=2^{3}3^{4}$ and consequently $\\Omega_{\\rho}(F)=7$.\n\tHowever, this contradicts Lemma \\ref{A4}, which states that $\\Omega_{\\rho}(F) \\geq 11$ for groups $F$ of order 12."
+    },
+    {
+      "id": "theorem-21-48d96617",
+      "type": "theorem",
+      "content": "Let $G$ be a finite  group of order $660$. Then $\\Omega_{\\rho}(L_2(11)) \\leqslant \\Omega_{\\rho}(G)$ and\n\t$\\Omega_{\\rho}(G)=769$   if and only if $G  \\cong L_2(11)$.",
+      "content_preview": "Let G be a finite group of order 660. Then _(L_2(11)) _(G) and _(G)=769 if and only if G L_2(11).",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 379,
+        "line_end": 382
+      },
+      "references": [
+        {
+          "target_id": "mohem",
+          "reference_type": "internal",
+          "context": "{\\alpha_3}+{\\alpha_5}+{\\alpha_{11}}$. Using Lemma \\ref{mohem}, we have\n\t\\begin{align}\\label{22}\n\t165 \\mid \\alph",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "22",
+          "reference_type": "external",
+          "context": "{align}\n\n\n\n\n\n\n\n\n\n\tIf $\\alpha_2\\neq 165$, then by (\\ref{22}) and Lemma \\ref{2-part}, $\\alpha_2\\geqslant495$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "2-part",
+          "reference_type": "internal",
+          "context": "$\\alpha_2\\neq 165$, then by (\\ref{22}) and Lemma \\ref{2-part}, $\\alpha_2\\geqslant495$. Thus\n\t$\\Omega_{\\rho}(G)=",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "22",
+          "reference_type": "external",
+          "context": "220$ or $\\alpha_5 \\notin \\{132, 264\\}$, then by (\\ref{22}),  $769 < \\Omega_{\\rho}(G)$ and we get the result",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hall",
+          "reference_type": "internal",
+          "context": "}}$, where $\\alpha_5 \\in \\{132, 264\\}$.\n\tBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $11$-subgroup",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": "where $F$ is a group of order $60$.\n\tUsing Lemma \\ref{mid1},\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|}\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "A5",
+          "reference_type": "internal",
+          "context": "nd so $\\Omega_{\\rho}(F)\\leqslant 59$.\n\tBy Theorem \\ref{A5}, we have $F \\cong A_5$. Thus $F$ is not solvable",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "seri",
+          "reference_type": "internal",
+          "context": "on-solvable.\n\n \n Since $G$ is non-solvable, Lemma \\ref{seri} implies the existence of a normal series:\n \\[ 1 \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "directt",
+          "reference_type": "internal",
+          "context": "that $G \\cong C_{11} \\times A_5$.\n Applying Lemma \\ref{directt}, we compute:\n \\[\n \\Omega_{\\rho}(C_{11} \\times A_5",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We first show that for solvable groups $G$,  $\\Omega_{\\rho}(L_2(11)) < \\Omega_{\\rho}(G)$.\n\tWe know $|G|=2^2\\cdot 3 \\cdot 5 \\cdot 11$ and $\\Omega_{\\rho}(L_2(11))=769$. Let  $\\rho(G)=2^{\\alpha_2}3^{\\alpha_3}5^{\\alpha_5}5^{\\alpha_{11}}$ with $\\Omega_{\\rho}(G)={\\alpha_2}+{\\alpha_3}+{\\alpha_5}+{\\alpha_{11}}$. Using Lemma \\ref{mohem}, we have\n\t\\begin{align}\\label{22}\n\t165 \\mid \\alpha_2; \\qquad  220 \\mid \\alpha_3; \\qquad   132 \\mid  \\alpha_5; \\qquad  60 \\mid  \\alpha_{11}.\n\t\\end{align}\n\n\n\n\n\n\n\n\n\n\tIf $\\alpha_2\\neq 165$, then by (\\ref{22}) and Lemma \\ref{2-part}, $\\alpha_2\\geqslant495$. Thus\n\t$\\Omega_{\\rho}(G)={\\alpha_2}+{\\alpha_3}+{\\alpha_5}+{\\alpha_{11}}\\geqslant 495+220+132+60>769,$\n\t and so we get the result. Therefore, we assume that $\\alpha_2 = 165$.\n\t \n\tIf  $\\alpha_3 \\neq 220$ or $\\alpha_5 \\notin \\{132, 264\\}$, then by (\\ref{22}),  $769 < \\Omega_{\\rho}(G)$ and we get the result.\n\tTherefore $\\rho(G)=2^{165}3^{220}5^{\\alpha_5}11^{\\alpha_{11}}$, where $\\alpha_5 \\in \\{132, 264\\}$.\n\tBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $11$-subgroup, say $P$. Since $G$ is solvable, $G \\cong P \\rtimes F$, where $F$ is a group of order $60$.\n\tUsing Lemma \\ref{mid1},\n\t\\[\\rho(G) = \\rho(P)^{|C_{F}(P)|} \\rho(F)^{|P|}\\Rightarrow 2^{165}3^{220}5^{\\alpha_5}11^{\\alpha_{11}}=(11^{10})^{|C_{F}(P)|} \\rho(F)^{11}.\\]\n\tTherefore $\\rho(F)=2^{15}3^{20}5^{t_5}$, where $t_5={\\alpha_5}/11 \\in \\{12,24\\}$ and so $\\Omega_{\\rho}(F)\\leqslant 59$.\n\tBy Theorem \\ref{A5}, we have $F \\cong A_5$. Thus $F$ is not solvable and so $G$ is not solvable, which is a contradiction.\n\tTherefore $G$ is non-solvable.\n\n \n Since $G$ is non-solvable, Lemma \\ref{seri} implies the existence of a normal series:\n \\[ 1 \\unlhd H \\unlhd K \\unlhd G \\]\n where the quotient $K/H$ is isomorphic to either $A_5$ or $L_2(11)$, and $|G/K|$ divides $|\\operatorname{Out}(K/H)|$.\n \n \\noindent\\textbf{Case 1:} $K/H \\cong A_5$.\n In this case, we have $|H| = 11$ and $G = K$, making $G$ an extension of $C_{11}$ by $A_5$. We know that $G / C_G(H) \\hookrightarrow \\operatorname{Aut}(H)$ and \n $(G / H) /\\left(C_G(H) / H\\right) \\cong G / C_G(H)$.\n  So $G$ is a central extension of $H$ by $A_5$.\n Since the Schur multiplier of $A_5$ is $C_2$, we get that $G \\cong C_{11} \\times A_5$.\n Applying Lemma \\ref{directt}, we compute:\n \\[\n \\Omega_{\\rho}(C_{11} \\times A_5) = \\Omega_{\\rho}(C_{11}) \\cdot |A_5| + \\Omega_{\\rho}(A_5) \\cdot |C_{11}| = 10 \\cdot 60 + 59 \\cdot 11 = 1249\n \\]\n This establishes that $\\Omega_{\\rho}(C_{11} \\times A_5) > \\Omega_{\\rho}(L_2(11))$.\n \n \\noindent\\textbf{Case 2:} $K/H \\cong L_2(11)$.\n  In this case, we immediately obtain \n $ G \\cong L_2(11) $.\n \n The proof is now complete."
+    },
+    {
+      "id": "theorem-22-0939c7cf",
+      "type": "theorem",
+      "content": "Let $G$ be a finite  group of order $1092$. Then $\\Omega_{\\rho}(L_2(13)) \\leqslant \\Omega_{\\rho}(G)$ and\n\t$\\Omega_{\\rho}(G)=1273$   if and only if $G  \\cong L_2(13)$.",
+      "content_preview": "Let G be a finite group of order 1092. Then _(L_2(13)) _(G) and _(G)=1273 if and only if G L_2(13).",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 433,
+        "line_end": 436
+      },
+      "references": [
+        {
+          "target_id": "mohem",
+          "reference_type": "internal",
+          "context": "{\\alpha_3}+{\\alpha_7}+{\\alpha_{13}}$. Using Lemma \\ref{mohem}, we have\n\\begin{align}\\label{333}\n\t273 \\mid \\alph",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "333",
+          "reference_type": "external",
+          "context": "{13}.\n\\end{align}\nIf $\\alpha_2\\neq 273$, then by (\\ref{333}) and Lemma \\ref{2-part}, $\\alpha_2\\geqslant 819$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "2-part",
+          "reference_type": "internal",
+          "context": "$\\alpha_2\\neq 273$, then by (\\ref{333}) and Lemma \\ref{2-part}, $\\alpha_2\\geqslant 819$. Thus\n$\\Omega_{\\rho}(G)=",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "333",
+          "reference_type": "external",
+          "context": "$.\\\\\nIf  $\\alpha_3 \\notin \\{364, 728\\}$, then by (\\ref{333}),  $1273 < \\Omega_{\\rho}(G)$ and we get the resul",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hall",
+          "reference_type": "internal",
+          "context": "3}}$, where $\\alpha_3 \\in \\{364, 728\\}$.\nBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $13$-subgroup",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": ", where $H$ is a group of order $84$.\nUsing Lemma \\ref{mid1},\n\\[\\rho(G) = \\rho(P)^{|C_{H}(P)|} \\rho(H)^{|P|}\\R",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hall",
+          "reference_type": "internal",
+          "context": "in \\{28,56\\}$ and $t_7={\\alpha_7}/13$.\n\n\nBy Lemma \\ref{hall}, we get that $H$ has a unique Sylow $7$-subgroup,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": ", where $F$ is a group of order $12$.\nUsing Lemma \\ref{mid1},\n\\[\\rho(H) = \\rho(Q)^{|C_{F}(Q)|} \\rho(F)^{|Q|}\\R",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "A4",
+          "reference_type": "internal",
+          "context": "where $r_3={t_3}/7 \\in \\{4, 8\\}$. \nUsing Theorem \\ref{A4}, we have $\\Omega_{\\rho}(F) \\geqslant12 $. Thus  $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "333",
+          "reference_type": "external",
+          "context": "pha_7 \\neq 156$ or $\\alpha_{13}\\neq 84$, then by (\\ref{333}) $\\alpha_7 > 312$ or $\\alpha_{13}> 168$. Thus $\\O",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hall",
+          "reference_type": "internal",
+          "context": "$\\rho(G)=2^{273}3^{728}7^{156}13^{84}$.\n\nBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $7$-subgroup,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "mid1",
+          "reference_type": "internal",
+          "context": "where $T$ is a group of order $156$.\nUsing Lemma \\ref{mid1},\n\\[\\rho(G) = \\rho(R)^{|C_{T}(R)|} \\rho(T)^{|R|}\\R",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prime",
+          "reference_type": "internal",
+          "context": "12}$. Thus $|T|=1+\\Omega_{\\rho}(T)$.\nUsing Lemma  \\ref{prime}, $ T $ is a group with\nnon-trivial elements of pr",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We first prove that for solvable groups $G$ of order $2^2 \\cdot 3 \\cdot 7 \\cdot 13$,\n\t\\[ \\Omega_{\\rho}(L_2(13)) < \\Omega_{\\rho}(G). \\]\nWe know $|G|=2^2\\cdot 3 \\cdot 7 \\cdot 13$ and $\\Omega_{\\rho}(L_2(13))=1273$. Let $\\rho(G)=2^{\\alpha_2}3^{\\alpha_3}7^{\\alpha_7}13^{\\alpha_{13}}$ with $\\Omega_{\\rho}(G)={\\alpha_2}+{\\alpha_3}+{\\alpha_7}+{\\alpha_{13}}$. Using Lemma \\ref{mohem}, we have\n\\begin{align}\\label{333}\n\t273 \\mid \\alpha_2; \\qquad  364 \\mid \\alpha_3; \\qquad   156 \\mid  \\alpha_7; \\qquad  84 \\mid  \\alpha_{13}.\n\\end{align}\nIf $\\alpha_2\\neq 273$, then by (\\ref{333}) and Lemma \\ref{2-part}, $\\alpha_2\\geqslant 819$. Thus\n$\\Omega_{\\rho}(G)={\\alpha_2}+{\\alpha_3}+{\\alpha_5}+{\\alpha_{11}}\\geqslant 813+364+156+84>1273,$\nand so we get the result. Therefore, we assume that $\\alpha_2 = 273$.\\\\\nIf  $\\alpha_3 \\notin \\{364, 728\\}$, then by (\\ref{333}),  $1273 < \\Omega_{\\rho}(G)$ and we get the result.\\\\\nTherefore $\\rho(G)=2^{273}3^{\\alpha_3}7^{\\alpha_7}13^{\\alpha_{13}}$, where $\\alpha_3 \\in \\{364, 728\\}$.\nBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $13$-subgroup, say $P$. Since $G$ is solvable, $G \\cong P \\rtimes H$, where $H$ is a group of order $84$.\nUsing Lemma \\ref{mid1},\n\\[\\rho(G) = \\rho(P)^{|C_{H}(P)|} \\rho(H)^{|P|}\\Rightarrow 2^{273}3^{\\alpha_3}7^{\\alpha_7}13^{\\alpha_{13}}=(13^{12})^{|C_{H}(P)|} \\rho(H)^{13}.\\]\nTherefore $|H|=2^2\\cdot 3 \\cdot 7$ and $\\rho(H)=2^{21}3^{t_3}7^{t_7}$, where $t_3={\\alpha_3}/13 \\in \\{28,56\\}$ and $t_7={\\alpha_7}/13$.\n\n\nBy Lemma \\ref{hall}, we get that $H$ has a unique Sylow $7$-subgroup, say $Q$. Since $H$ is solvable, $H \\cong Q \\rtimes F$, where $F$ is a group of order $12$.\nUsing Lemma \\ref{mid1},\n\\[\\rho(H) = \\rho(Q)^{|C_{F}(Q)|} \\rho(F)^{|Q|}\\Rightarrow 2^{21}3^{t_3}7^{t_7}=(7^{6})^{|C_{F}(Q)|} \\rho(F)^{7}.\\]\nTherefore $|F|=2^2\\cdot 3$ and $\\rho(F)=2^{3}3^{r_3}$, where $r_3={t_3}/7 \\in \\{4, 8\\}$. \nUsing Theorem \\ref{A4}, we have $\\Omega_{\\rho}(F) \\geqslant12 $. Thus  $r_3=8$ and so $t_3=56$ and ${\\alpha_3}=728$.\nTherefore $\\rho(G)=2^{273}3^{720}7^{\\alpha_7}13^{\\alpha_{13}}$.\nIf $\\alpha_7 \\neq 156$ or $\\alpha_{13}\\neq 84$, then by (\\ref{333}) $\\alpha_7 > 312$ or $\\alpha_{13}> 168$. Thus $\\Omega_{\\rho}(F)> 1273$ and we get the result.\nTherefore $\\rho(G)=2^{273}3^{728}7^{156}13^{84}$.\n\nBy Lemma \\ref{hall}, we get that $G$ has a unique Sylow $7$-subgroup, say $R$. Since $G$ is solvable, $G \\cong R \\rtimes T$, where $T$ is a group of order $156$.\nUsing Lemma \\ref{mid1},\n\\[\\rho(G) = \\rho(R)^{|C_{T}(R)|} \\rho(T)^{|R|}\\Rightarrow 2^{21}3^{t_3}7^{t_7}=(7^{6})^{|C_{T}(R)|} \\rho(T)^{7}.\\]\nTherefore $|T|=2^2\\cdot 3 \\cdot 13$ and $\\rho(T)=2^{39}3^{104}13^{12}$. Thus $|T|=1+\\Omega_{\\rho}(T)$.\nUsing Lemma  \\ref{prime}, $ T $ is a group with\nnon-trivial elements of prime orders. \nBy \\cite[Theorem]{prime}, $T$ is a $p$-group of exponent $p$ or $T$ is a Frobenius  group of order $p^nq$ or $T \\cong A_5$, which is a contradiction.\n\nTherefore $G$ is non-solvable, and so $G \\cong L_2(13)$. This completes the proof."
+    },
+    {
+      "id": "external_1",
+      "type": "unknown",
+      "content": "External reference to '1'",
+      "content_preview": "External reference to '1'",
+      "display_name": "Unknown",
+      "label": "1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_22",
+      "type": "unknown",
+      "content": "External reference to '22'",
+      "content_preview": "External reference to '22'",
+      "display_name": "Unknown",
+      "label": "22",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_333",
+      "type": "unknown",
+      "content": "External reference to '333'",
+      "content_preview": "External reference to '333'",
+      "display_name": "Unknown",
+      "label": "333",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-11-8335c84c",
+      "target": "lemma-6-7f9f36e8",
+      "type": null
+    },
+    {
+      "source": "theorem-13-850b2bff",
+      "target": "lemma-1-a8f95982",
+      "type": null
+    },
+    {
+      "source": "theorem-13-850b2bff",
+      "target": "lemma-2-5be581ad",
+      "type": null
+    },
+    {
+      "source": "lemma-15-b2d3bf53",
+      "target": "lemma-3-c76b6e2d",
+      "type": null
+    },
+    {
+      "source": "lemma-16-52c657a2",
+      "target": "lemma-4-64aa44f3",
+      "type": null
+    },
+    {
+      "source": "corollary-17-87f2ce77",
+      "target": "lemma-16-52c657a2",
+      "type": null
+    },
+    {
+      "source": "theorem-20-9008ffc1",
+      "target": "lemma-8-28efa8fb",
+      "type": null
+    },
+    {
+      "source": "theorem-20-9008ffc1",
+      "target": "external_1",
+      "type": null
+    },
+    {
+      "source": "theorem-20-9008ffc1",
+      "target": "lemma-5-6ae45900",
+      "type": null
+    },
+    {
+      "source": "theorem-20-9008ffc1",
+      "target": "lemma-3-c76b6e2d",
+      "type": null
+    },
+    {
+      "source": "theorem-20-9008ffc1",
+      "target": "theorem-19-9ab7a49c",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "lemma-8-28efa8fb",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "external_22",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "lemma-9-f169022a",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "lemma-5-6ae45900",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "lemma-3-c76b6e2d",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "theorem-20-9008ffc1",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "lemma-7-00e17edd",
+      "type": null
+    },
+    {
+      "source": "theorem-21-48d96617",
+      "target": "lemma-14-d3dddc33",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "lemma-8-28efa8fb",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "external_333",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "lemma-9-f169022a",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "lemma-5-6ae45900",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "lemma-3-c76b6e2d",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "theorem-19-9ab7a49c",
+      "type": null
+    },
+    {
+      "source": "theorem-22-0939c7cf",
+      "target": "lemma-12-3f37414b",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 25,
+    "edge_count": 26,
+    "extractor_used": "regex-only"
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "arxiv_id": "2506.17069v1",
+  "nodes": [
+    {
+      "id": "theorem-1-78faf773",
+      "type": "theorem",
+      "content": "{\\rm a)} The map $Q\\mapsto [Q]_\\alpha$\nis constant on double cosets $S_n\\cdot g\\cdot S_n$\nand is an injective map \n\\begin{equation}\nS_n\\backslash S_{\\alpha+n}/S_n\\to \\Pi_\\alpha.\n\\end{equation}\n\n\\sm\n\n{\\rm b)} If $n\\ge \\alpha$, when this map is a bijection.\nIf $n<\\alpha$, then the image consists of elements\nof $\\Pi_\\alpha$ of rank $\\ge\\alpha-n$.",
+      "content_preview": "a) The map Q [Q]_ is constant on double cosets S_n g S_n and is an injective map S_n S_+n/S_n _. b) If n , when this map is a bijection.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 669,
+        "line_end": 682
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-2-f867bb1f",
+      "type": "proposition",
+      "content": "\\label{pr:isomorphic}\nFor fixed $\\alpha$ and\n $n\\ge\\alpha$ all algebras $\\C[S_n\\backslash S_{\\alpha+n}/S_n]$\n are\\footnote{Noncanonically.} isomorphic.",
+      "content_preview": "For fixed and n all algebras are isomorphic.",
+      "display_name": "Proposition",
+      "label": "pr:isomorphic",
+      "position": {
+        "line_start": 694,
+        "line_end": 699
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-52262d34",
+      "type": "theorem",
+      "content": "\\label{th:homomorphism}\n{\\rm a)} $\\dim  \\bbO[\\alpha,\\nu]=\\#\\Pi_\\alpha$.\n\n\\sm \n\n{\\rm b)} Let $n\\ge 0$ be integer. \nAssign for any $g\\in S_\\alpha$ the element\n$$\n a(g):=\n\\frac1{n!}\\sum_{\\sigma\\in S_n}\\delta_{g\\times \\sigma}\n\\in \\C[S_n\\backslash S_{\\alpha+n}/S_n].\n$$ \n For any $i\\le \\alpha$ denote\n $$\n \\theta_i:=\\frac{1}{n!}\\sum_{h\\in K(i(\\alpha+1))K}\n \\delta_h\\in \\C[S_n\\backslash S_{\\alpha+n}/S_n].\n $$\n Then the map\n $$\n \\Theta_i\\mapsto \\theta_i, \\qquad A(g)\\mapsto a(g) \n $$\n determines a homomorphism $\\bbO[\\alpha;n]\\to \\C[S_n\\backslash S_{\\alpha+n}/S_n]$.\n \n \\sm\n \n {\\rm c)} If $n\\ge \\alpha$, then this homomorphism is an isomorphism.\n If $0\\le n<\\alpha$, then it is surjective.\n \n\\sm  \n \n {\\rm d)} For all $\\nu\\in \\C$ except finite collection\n of values, the algebras $\\bbO[\\alpha;\\nu]$ are\n \\footnote{Noncanonically.}  isomorphic\n (and are direct sums of matrix algebras).",
+      "content_preview": "a) =#_. b) Let n 0 be integer. Assign for any g S_ the element a(g):= 1n!_ S_n_g . For any i denote _i:=_h K(i(+1))K _h .",
+      "display_name": "Theorem",
+      "label": "th:homomorphism",
+      "position": {
+        "line_start": 738,
+        "line_end": 773
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-136ff406",
+      "type": "lemma",
+      "content": "\\label{l:A-1}\nLet $h\\in S_\\alpha$ be a permutation supported by the set\n$\\{i_1,\\dots,i_k\\}$, where all $i_m$ are distinct. Then\n$$\\deg_\\Theta\\Bigl(\\bigl((A(h)-A(1)\\bigr)\\,\n\\Theta_{i_1}\\dots \\Theta_{i_k}\\Bigr)<k.$$",
+      "content_preview": "Let h S_ be a permutation supported by the set i_1,,i_k, where all i_m are distinct. Then _(((A(h)-A(1)), _i_1 _i_k)<k.",
+      "display_name": "Lemma",
+      "label": "l:A-1",
+      "position": {
+        "line_start": 798,
+        "line_end": 804
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-5-1d488f7b",
+      "type": "theorem",
+      "content": "\\label{th:basis}\nThe following elements form a basis in the algebra\n$\\bbO[\\alpha;\\nu]$:\n\\begin{equation}\nA(g)\\, \\Theta_{i_1}\\dots \\Theta_{i_k},\n\\label{eq:basis}\n\\end{equation}\nwhere\n\n\\sm\n\n--- $i_1<i_2<\\dots<i_k$;\n\n\\sm\n\n--- $g(i_1)<g(i_2)<\\dots<g(i_k)$.",
+      "content_preview": "The following elements form a basis in the algebra : A(g), _i_1 _i_k, where --- i_1<i_2<<i_k; --- g(i_1)<g(i_2)<<g(i_k).",
+      "display_name": "Theorem",
+      "label": "th:basis",
+      "position": {
+        "line_start": 806,
+        "line_end": 823
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-6-8a39cc03",
+      "type": "proposition",
+      "content": "\\label{pr:trace}\n\\begin{equation}\n\\Tr(H_1 H_2)=\\Tr(H_2 H_1)\n\\end{equation}",
+      "content_preview": "(H_1 H_2)=(H_2 H_1)",
+      "display_name": "Proposition",
+      "label": "pr:trace",
+      "position": {
+        "line_start": 836,
+        "line_end": 841
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-7-837991a9",
+      "type": "proposition",
+      "content": "\\label{pr:positivity}\nFor sufficiently large $\\nu\\in \\R$ this form is positive definite.",
+      "content_preview": "For sufficiently large this form is positive definite.",
+      "display_name": "Proposition",
+      "label": "pr:positivity",
+      "position": {
+        "line_start": 856,
+        "line_end": 859
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-8-6916f879",
+      "type": "theorem",
+      "content": "The limit algebra $\\bbO[\\alpha]$ is the semigroup\nalgebra $\\C[\\Pi_\\alpha]$.",
+      "content_preview": "The limit algebra is the semigroup algebra .",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 924,
+        "line_end": 927
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-9-e1a00f98",
+      "type": "proposition",
+      "content": "\\label{pr:limit}\nThe algebra $\\bbO[\\alpha]$ is\n\\footnote{Noncanonically.} isomorphic to the algebras\n$\\bbO[\\alpha;n]$ for $n\\ge \\alpha$.",
+      "content_preview": "The algebra is isomorphic to the algebras for n .",
+      "display_name": "Proposition",
+      "label": "pr:limit",
+      "position": {
+        "line_start": 937,
+        "line_end": 942
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-10-774689f8",
+      "type": "corollary",
+      "content": "Denote by $\\frt(i_1,\\dots,i_k)$ the double\ncoset $S_nT_{i_1,\\dots,i_k}S_n$. Then \n$$\\iota(\\delta_{\\frt(i_1,\\dots,i_k)})=n(n-1)\\dots(n-r+1).$$",
+      "content_preview": "Denote by (i_1,,i_k) the double coset S_nT_i_1,,i_kS_n. Then (_(i_1,,i_k))=n(n-1)(n-r+1).",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 1002,
+        "line_end": 1005
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-11-4797c535",
+      "type": "proposition",
+      "content": "The collection of dimensions of nontrivial spaces of \n$S_n$-fixed vectors in irreducible representations of\n$S_{n+\\alpha}$ is\n\\begin{equation}\n\\Bigl\\{ \\frac{\\alpha!}{t!\\,(\\alpha-t)!}\\,\n \\dim\\rho(\\alpha-t;\\lambda')\n\\Bigr\\}, \n\\label{eq:multi}\n\\end{equation}\nwhere $t$ ranges in the set $\\{0,1,\\dots,\\alpha\\}$\nand $\\lambda'$ ranges in the set of Young diagrams of size\n $\\alpha-t$.",
+      "content_preview": "The collection of dimensions of nontrivial spaces of S_n-fixed vectors in irreducible representations of S_n+ is , (-t;') , where t ranges in the set...",
+      "display_name": "Proposition",
+      "label": "eq:multi",
+      "position": {
+        "line_start": 1077,
+        "line_end": 1090
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-d90b29a3",
+      "type": "lemma",
+      "content": "For each $m$ the linear subspace $\\bbO[\\alpha;\\nu]_m$\nis generated by elements \\eqref{eq:basis} with  $k\\le m$.",
+      "content_preview": "For each m the linear subspace _m is generated by elements with k m.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 1271,
+        "line_end": 1274
+      },
+      "references": [
+        {
+          "target_id": "eq:basis",
+          "reference_type": "external",
+          "context": "ace $\\bbO[\\alpha;\\nu]_m$\nis generated by elements \\eqref{eq:basis} with  $k\\le m$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "corollary-13-40aef7a6",
+      "type": "corollary",
+      "content": "\\label{cor:dim-less}\n$\\dim \\bbO[\\alpha;\\nu]\\le \\#\\Pi_\\alpha$.",
+      "content_preview": "#_.",
+      "display_name": "Corollary",
+      "label": "cor:dim-less",
+      "position": {
+        "line_start": 1299,
+        "line_end": 1302
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-4b973b6b",
+      "type": "lemma",
+      "content": "For each $r\\ge 0$ the image of $\\bbO[\\alpha; n]_r$\n consists of all elements of $\\C[S_n\\backslash S_{\\alpha+n}/S_n]$\nsupported by the set of all $Q\\in S_{\\alpha+n}$\n such that $\\rk [Q]_\\alpha\\ge\\alpha-r$.",
+      "content_preview": "For each r 0 the image of _r consists of all elements of supported by the set of all Q S_+n such that [Q]_-r.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 1324,
+        "line_end": 1329
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-15-33488cac",
+      "type": "corollary",
+      "content": "\\label{cor:dim-ravno}\nIf integer $n$ is $\\ge \\alpha$, then $\\dim \\bbO[\\alpha;n]= \\#\\Pi_\\alpha$.\nSo, elements \\eqref{eq:basis} form a basis in\n$\\bbO[\\alpha;n]$",
+      "content_preview": "If integer n is , then = #_. So, elements form a basis in",
+      "display_name": "Corollary",
+      "label": "cor:dim-ravno",
+      "position": {
+        "line_start": 1357,
+        "line_end": 1362
+      },
+      "references": [
+        {
+          "target_id": "eq:basis",
+          "reference_type": "external",
+          "context": "$\\dim \\bbO[\\alpha;n]= \\#\\Pi_\\alpha$.\nSo, elements \\eqref{eq:basis} form a basis in\n$\\bbO[\\alpha;n]$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "external_eq:basis",
+      "type": "unknown",
+      "content": "External reference to 'eq:basis'",
+      "content_preview": "External reference to 'eq:basis'",
+      "display_name": "Unknown",
+      "label": "eq:basis",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-12-d90b29a3",
+      "target": "external_eq:basis",
+      "type": null
+    },
+    {
+      "source": "corollary-15-33488cac",
+      "target": "external_eq:basis",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 16,
+    "edge_count": 2,
+    "extractor_used": "regex-only"
+  }
+}

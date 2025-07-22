@@ -1,0 +1,347 @@
+{
+  "arxiv_id": "2506.19105v1",
+  "nodes": [
+    {
+      "id": "definition-1-213f1792",
+      "type": "definition",
+      "content": "\\label{slim}\nA combinatorial $2$-complex $X$ is called slim if its universal cover $\\tilde X$ satisfies the following conditions.\n\\begin{enumerate}\n    \\item There is a $\\pi_1 X$-invariant preorder on the set $E(\\Tilde{X})$ of edges of $\\tilde X$.\n    \\item For each $2$-cell $\\Tilde{R}$ of $\\Tilde{X}$,   the set of edges of its boundary $E(\\partial \\Tilde{R})$ has a unique strictly minimal $1$-cell $\\min(\\Tilde{R})$. Moreover, the attaching path of $\\Tilde{R}$ traverses $\\min(\\Tilde{R})$ exactly once.\n    \\item If $\\Tilde{R}_1 \\neq \\Tilde{R}_2$ are $2$-cells of $\\Tilde{X}$ and $\\min(\\Tilde{R}_1)$ appears on $\\partial \\Tilde{R}_2$, then $\\min(\\Tilde{R}_1) > \\min(\\Tilde{R}_2)$.\n\\end{enumerate}",
+      "content_preview": "A combinatorial 2-complex X is called slim if its universal cover X satisfies the following conditions. There is a _1 X-invariant preorder on the set...",
+      "display_name": "Definition",
+      "label": "slim",
+      "position": {
+        "line_start": 176,
+        "line_end": 183
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-2-3a7500c6",
+      "type": "definition",
+      "content": "A pair of combinatorial $2$-complexes $(X,Y)$ is said to be an elementary reduction if $X$ is obtained from $Y$ by attaching a $1$-cell $e$ and at most one $2$-cell $R$, and the attaching path of $R$ is not homotopic in $Y \\cup \\{e\\}$ to a path in $Y$. We will also refer to the pair $(X,Y)$ as an $e$-elementary reduction (if only a $1$-cell $e$ is attached) or an $(R,e)$-elementary reduction (if also a $2$-cell $R$ is attached). We say that an $(R,e)$-elementary reduction is simple (or without proper powers) if the attaching map of $R$ is not a proper power in $\\pi_1(Y\\cup \\{e\\})$.",
+      "content_preview": "A pair of combinatorial 2-complexes (X,Y) is said to be an elementary reduction if X is obtained from Y by attaching a 1-cell e and at most one...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 189,
+        "line_end": 191
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-3-79a4be45",
+      "type": "remark",
+      "content": "Note that the notion of reduction that we use is Howie's original one \\cite{h1,h2}, which is more general than the one used by Helfer and Wise in \\cite{hewi}. For instance, the infinite cyclic coverings associated to the generalized Wirtinger presentations of Proposition \\ref{weak} and Theorem \\ref{coro} are reducible in the sense of Howie, but not necessarily reducible in the sense of Helfer and Wise.",
+      "content_preview": "Note that the notion of reduction that we use is Howie's original one , which is more general than the one used by Helfer and Wise in .",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 195,
+        "line_end": 197
+      },
+      "references": [
+        {
+          "target_id": "weak",
+          "reference_type": "internal",
+          "context": "eneralized Wirtinger presentations of Proposition \\ref{weak} and Theorem \\ref{coro} are reducible in the sense",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "coro",
+          "reference_type": "external",
+          "context": "esentations of Proposition \\ref{weak} and Theorem \\ref{coro} are reducible in the sense of Howie, but not nece",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-4-896dcff2",
+      "type": "definition",
+      "content": "Let $X$ be a combinatorial $2$-complex and let $G$ be a group. We say that $X$ is weakly $G$-slim if there exists a $G$-covering $Z\\to X$ which satisfies the following conditions.\n\\begin{enumerate}\n    \\item There is a $G$-invariant preorder on the set $E(Z)$ of edges of $Z$.\n    \\item For each $2$-cell $R$ of $Z$, the set $E(\\partial R)$ has a unique strictly minimal $1$-cell $\\min(R)$. Moreover, there exists a simple $(R,\\min(R))$-elementary reduction $(W,T)$, where $W\\subseteq Z$ is a simple reduction.\n    \\item If $R_1 \\neq R_2$ are $2$-cells of $Z$ and $\\min(R_1)$ appears in $\\partial R_2$, then $\\min(R_1) > \\min(R_2)$.\n\\end{enumerate}",
+      "content_preview": "Let X be a combinatorial 2-complex and let G be a group. We say that X is weakly G-slim if there exists a G-covering Z X which satisfies the...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 199,
+        "line_end": 206
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-48d25fa6",
+      "type": "lemma",
+      "content": "\\label{essential}\n\tLet $(X,Y)$ be an $(R,e)$-elementary reduction with $\\pi_1Y$ locally indicable. Suppose that $\\partial_pR= P_1P_2$, with $P_i$ a closed path in $X$ that traverses $e$. Then each $P_i$ is essential in $X$.",
+      "content_preview": "Let (X,Y) be an (R,e)-elementary reduction with _1Y locally indicable. Suppose that _pR= P_1P_2, with P_i a closed path in X that traverses e.",
+      "display_name": "Lemma",
+      "label": "essential",
+      "position": {
+        "line_start": 212,
+        "line_end": 214
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-ba22412c",
+      "type": "lemma",
+      "content": "\\label{injective}\n\tLet $Y$ be a simple reduction of $X$. Suppose that $\\pi_1(Y,y)$ is locally indicable for each base point $y\\in Y$. Then $Y \\hookrightarrow X$ is $\\pi_1$-injective on each component of $Y$.",
+      "content_preview": "Let Y be a simple reduction of X. Suppose that _1(Y,y) is locally indicable for each base point y Y. Then Y X is _1-injective on each component of Y.",
+      "display_name": "Lemma",
+      "label": "injective",
+      "position": {
+        "line_start": 218,
+        "line_end": 220
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-7-288e4be8",
+      "type": "proposition",
+      "content": "\\label{onetime}\n\tLet $(X,Y)$ be a (simple) $(R,e)$-elementary reduction and $\\rho:\\Tilde{X} \\to X$ be the universal covering of $X$. If $\\pi_1Y$ is locally indicable, the attaching path of any $2$-cell $\\Tilde{R} \\in \\rho^{-1}(R)$ traverses each $1$-cell $\\Tilde{e} \\in \\rho^{-1}(e)$ at most once.",
+      "content_preview": "Let (X,Y) be a (simple) (R,e)-elementary reduction and : X be the universal covering of X. If _1Y is locally indicable, the attaching path of any...",
+      "display_name": "Proposition",
+      "label": "onetime",
+      "position": {
+        "line_start": 226,
+        "line_end": 228
+      },
+      "references": [
+        {
+          "target_id": "essential",
+          "reference_type": "internal",
+          "context": "P_1)\\rho(P_2)$. This cannot occur since, by Lemma \\ref{essential}, each $\\rho(P_i)$ should be essential in $X$. In",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "injective",
+          "reference_type": "internal",
+          "context": "$Y$ and $\\rho_{*}([P_1]) = 1_{\\pi_1X}$, by  Lemma \\ref{injective} $\\partial_pR$ is homotopic in $Y \\cup \\{e\\}$ to $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "essential",
+          "reference_type": "internal",
+          "context": "})$. This is also a contradiction since, by Lemma \\ref{essential}, the closed paths $\\rho(\\Tilde{e}^{-1}P_1\\Tilde{e",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose that the attaching path of a $2$-cell $\\Tilde{R} \\in \\rho^{-1}(R)$ traverses an edge $\\Tilde{e} \\in \\rho^{-1}(e)$ more than once. Then, we can either write the attaching path of $\\Tilde{R}$ as $P_1\\Tilde{e}P_2\\Tilde{e}^{-1}$ where $P_1$ and $P_2$ are closed paths in $\\Tilde{R}$, or we can write it as $P_1P_2$ where $P_1$ and $P_2$ are closed paths in $\\Tilde{R}$ that traverse $\\Tilde{e}$. In both cases we will use the fact that, since $\\Tilde{X}$ is simply connected, $\\rho_{*}([P_1])=\\rho_{*}([P_2])=1_{\\pi_1X}$. Now, for the latter case, note that $\\partial_pR = \\rho(P_1P_2) = \\rho(P_1)\\rho(P_2)$. This cannot occur since, by Lemma \\ref{essential}, each $\\rho(P_i)$ should be essential in $X$. In the first case, we have two possible situations. If neither $P_1$ nor $P_2$ traverses an edge in $\\rho^{-1}(e)$, then $\\partial_pR = \\rho(P_1P_2) = \\rho(P_1)e\\rho(P_2)e^{-1}$. Since $\\rho(P_1)$ is a closed path on $Y$ and $\\rho_{*}([P_1]) = 1_{\\pi_1X}$, by  Lemma \\ref{injective} $\\partial_pR$ is homotopic in $Y \\cup \\{e\\}$ to $\\rho(P_2)$, a path that does not traverse $e$. This contradicts the definition of elementary reduction. On the other hand, if $P_2$ traverse an edge $\\Tilde{e}_2 \\in \\rho^{-1}(e)$, we can write $\\partial_p\\Tilde{R} = P_1\\Tilde{e}P_2^{1}\\Tilde{e}_2P_2^{2}\\Tilde{e}^{-1}$ with $P_2^{1},P_2^{2}$ subpaths of $P_2$. Up to cyclic conjugation, we get that $\\partial_pR = \\rho(\\Tilde{e}^{-1}P_1\\Tilde{e})\\rho(P_2^{1}\\Tilde{e}_2P_2^{2})$. This is also a contradiction since, by Lemma \\ref{essential}, the closed paths $\\rho(\\Tilde{e}^{-1}P_1\\Tilde{e})$ and $\\rho(P_2^{1}\\Tilde{e}_2P_2^{2})$ should be essential in $X$, but $[\\rho(\\Tilde{e}^{-1}P_1\\Tilde{e})]=\\rho_{*}([\\Tilde{e}^{-1}P_1\\Tilde{e}])=1_{\\pi_1X}$."
+    },
+    {
+      "id": "corollary-8-9cc1b58a",
+      "type": "corollary",
+      "content": "\\label{onetimecor}\n\tLet $X,Y,Z$ be combinatorial $2$-complexes where $Y$ is a connected simple reduction of $X$, and $(Y,Z)$ is a simple $(R,e)$-elementary reduction. Let $\\rho:\\Tilde{X} \\to X$ be the universal covering of $X$. If $\\pi_1Z$ is locally indicable, the attaching path of any $2$-cell $\\Tilde{R} \\in \\rho^{-1}(R)$ traverses each $1$-cell $\\Tilde{e} \\in \\rho^{-1}(e)$ at most once.",
+      "content_preview": "Let X,Y,Z be combinatorial 2-complexes where Y is a connected simple reduction of X, and (Y,Z) is a simple (R,e)-elementary reduction.",
+      "display_name": "Corollary",
+      "label": "onetimecor",
+      "position": {
+        "line_start": 235,
+        "line_end": 237
+      },
+      "references": [
+        {
+          "target_id": "injective",
+          "reference_type": "internal",
+          "context": "le (see also \\cite[Corollary 3.2]{li}).  By Lemma \\ref{injective}, the inclusion $Y \\hookrightarrow X$ is $\\pi_1$-i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "onetime",
+          "reference_type": "internal",
+          "context": "ilde{X}$. The result now follows from Proposition \\ref{onetime} applied to the pair $(Y,Z)$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Since $\\pi_1Z$ is locally indicable and $(Y,Z)$ is a simple elementary reduction, by \\cite[Theorem 4.2]{h1} $\\pi_1Y$ is also locally indicable (see also \\cite[Corollary 3.2]{li}).  By Lemma \\ref{injective}, the inclusion $Y \\hookrightarrow X$ is $\\pi_1$-injective. If $\\rho': \\Tilde{Y} \\to Y$ is the universal covering of $Y$, we can identify $\\Tilde{Y}$ with a subcomplex $\\Tilde{Y} \\subset \\Tilde{X}$. The result now follows from Proposition \\ref{onetime} applied to the pair $(Y,Z)$."
+    },
+    {
+      "id": "proposition-9-8754281c",
+      "type": "proposition",
+      "content": "\\label{esreducible}\n\tLet $\\mathcal{P}$ be a group presentation. Let $X = K_{\\mathcal{P}}$ and let $\\hat{X} \\to X$ be an $H$-covering. If $X$ is weakly $H$-slim, then any subcomplex $Y\\subseteq \\hat X$ is reducible without proper powers. In particular, $\\pi_1Y$ is locally indicable.",
+      "content_preview": "Let be a group presentation. Let X = K_ and let X be an H-covering. If X is weakly H-slim, then any subcomplex Y X is reducible without proper powers.",
+      "display_name": "Proposition",
+      "label": "esreducible",
+      "position": {
+        "line_start": 243,
+        "line_end": 245
+      },
+      "references": [],
+      "proof": "It suffices to show that any finite subcomplex $K\\subset \\hat X$ of dimension $2$ has a simple elementary reduction (see \\cite[Section 2]{h1}). Given such a subcomplex $K$, take a $2$-cell $R$ of $K$ such that $\\min(R)$ is minimal in the set of $1$-cells of $K$. By definition, there is a simple $(R,\\min(R))$-elementary reduction $(W,T)$ where $W$ is a simple reduction of $\\hat X$. If $K\\subseteq W$, we are done. If not, since $W\\subset \\hat X$ is a simple reduction, there exists a minimal simple reduction $W\\subset Y$ containing $K$. Then $Y$ has a simple elementary reduction which is also a  simple elementary reduction in $K$."
+    },
+    {
+      "id": "remark-10-f0361ff9",
+      "type": "remark",
+      "content": "\\label{skipleftord}\nNote that, in the statement of Theorem \\ref{principal}, the condition on the left- orderability of $\\pi_1 X$ can be dropped if we require the group $H$ to be locally indicable. In that case, $\\pi_1X$ is automatically locally indicable (and, in particular, left-orderable). This follows from the short exact sequence $1\\to \\ker \\varphi \\to \\pi_1X\\to H\\to 1$ and Proposition \\ref{esreducible}.",
+      "content_preview": "Note that, in the statement of Theorem , the condition on the left- orderability of _1 X can be dropped if we require the group H to be locally...",
+      "display_name": "Remark",
+      "label": "skipleftord",
+      "position": {
+        "line_start": 268,
+        "line_end": 270
+      },
+      "references": [
+        {
+          "target_id": "principal",
+          "reference_type": "external",
+          "context": "ipleftord}\nNote that, in the statement of Theorem \\ref{principal}, the condition on the left- orderability of $\\pi_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "esreducible",
+          "reference_type": "internal",
+          "context": "ker \\varphi \\to \\pi_1X\\to H\\to 1$ and Proposition \\ref{esreducible}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-11-f72bb0e5",
+      "type": "definition",
+      "content": "\\label{weakconca}\n\tA family of relators $\\{r_1,\\ldots, r_k\\}$ is weakly concatenable (with respect to $\\varphi : G \\to \\mathbb{Z}$), if there is an ordering $m_{\\varphi}(r_{i_1}), \\ldots , m_{\\varphi}(r_{i_k})$ of their multisets of minima such that, for every $1 \\leq j \\leq k$, there exists an element $x \\in m_{\\varphi}(r_{i_j})$ such that $x \\notin \\cup_{s=1}^{j-1} m_{\\varphi}(r_{i_s})$ and the number of positive and negative copies of $x$ in $m_{\\varphi}(r_{i_j})$ are different.",
+      "content_preview": "A family of relators r_1,, r_k is weakly concatenable (with respect to : G ), if there is an ordering m_(r_i_1), , m_(r_i_k) of their multisets of...",
+      "display_name": "Definition",
+      "label": "weakconca",
+      "position": {
+        "line_start": 280,
+        "line_end": 282
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-12-431f414a",
+      "type": "proposition",
+      "content": "\\label{weak}\nLet $\\mathcal{P} = \\langle a_1, \\ldots, a_n \\mid  r_1, \\ldots, r_k \\rangle$ be a presentation of a group $G$, with cyclically reduced relators and such that $H_1(G)$ is a nontrivial free abelian group of rank $n-k$. Let $\\varphi : G \\to \\mathbb{Z}$ be a surjective homomorphism. If $\\{r_1, \\ldots , r_k\\}$ is weakly concatenable with respect to $\\varphi$, then $\\mathcal{K}_{\\mathcal{P}}$ is weakly $\\mathbb{Z}$-slim.",
+      "content_preview": "Let = a_1, , a_n r_1, , r_k be a presentation of a group G, with cyclically reduced relators and such that H_1(G) is a nontrivial free abelian group...",
+      "display_name": "Proposition",
+      "label": "weak",
+      "position": {
+        "line_start": 287,
+        "line_end": 289
+      },
+      "references": [],
+      "proof": "Let $X = \\mathcal{K}_{\\mathcal{P}}$ and let $\\hat X\\to X$ be the cyclic covering of $X$ determined by $\\varphi$. We denote  by $a_{j,i}$ the lift of the edge $a_i$ beginning at the vertex $j$. Let $R_i$ be the $2$-cell of $X$ corresponding to the relator $r_i$ and denote by $R_{j,i}$ the $2$-cell of $\\hat{X}$ that covers $R_i$ for which the minimum $0$-cell is $j$.\n\n\nWe define a total ordering on the edges  $a_{j,i}$ of $\\hat{X}$ as follows. First, for simplicity, we reindex the $k$  relators of $\\pe$ (and the $2$-cells of $ \\mathcal{K}_{\\mathcal{P}}$) as $ r_{n-k+1}, \\ldots, r_n$ (and $R_{n-k+1}, \\ldots, R_n$). By reordering the relators of $\\pe$ if necessary, we can assume that the weak concatenability occurs in such a way that $\\min(R_{j,i})=a_{j,i}$. The ordering on the edges  $a_{j,i}$ is the lexicographic order on the pairs $(j,i)$. The first coordinate with the usual order of $\\Z$, and the second one with the inverse of the usual order on $\\{1,2,\\ldots,n\\}$. It is immediate to check that it is a $\\mathbb{Z}$-invariant ordering.  Given $(j,i)$,  we consider the full subcomplex of $\\hat X$ containing all the $0$-cells $t \\geq j$, and remove from it the $2$-cells $R_{j,s}$ for $s\\geq i+1$ and the $1$-cells $a_{j,s}$ for $s\\geq i+1$. Note that we obtain a well defined subcomplex, which we denote by $\\hat{X}_{j,i}$, since the  $1$-cells $a_{j,s}$ removed do not lie in the boundaries of the remaining $2$-cells $R_{j,l}$. Note also that  $(\\hat{X}_{j,i},\\hat{X}_{j,i-1})$  is an $(R_{j,i},a_{j,i})$-elementary reduction if $i\\geq n-k+1$, since $\\hat{X}_{j,i}$ is obtained from $\\hat{X}_{j,i-1}$ by attaching the $2$-cell $R_{j,i}$ and the $1$-cell $a_{i}$, which is properly involved by definition of weak concatenability. For $1\\leq i\\leq n-k$, $(\\hat{X}_{j,i},\\hat{X}_{j,i-1})$ is just an $(a_{j,i})$-elementary reduction. All the reductions involved are without proper powers since the presentation complex has the homology of a wedge of circles and $\\Z$ is conservative \\cite [Section 5]{h2} (see also \\cite [Theorem 2.5]{bam1}). If $R_1 \\neq R_2$ are $2$-cells of $\\hat{X}$, then $R_1 = R_{j_1,i_1}$ and $R_2 = R_{j_2,i_2}$ for some pairs of integers $(j_1,i_1) \\neq (j_2,i_2)$. Clearly $\\min(R_1)=a_{j_1,i_1} \\neq a_{j_2,i_2} = \\min(R_2)$."
+    },
+    {
+      "id": "corollary-13-18859651",
+      "type": "corollary",
+      "content": "\\label{corolot}\n    Let $\\Gamma$ be a reduced LOF. If $I(\\Gamma)$ or $T(\\Gamma)$ has no cycles, then the associated $2$-complex $\\k_{\\mathcal{P}_\\Gamma}$ has the non-positive immersion property.",
+      "content_preview": "Let be a reduced LOF. If I() or T() has no cycles, then the associated 2-complex __ has the non-positive immersion property.",
+      "display_name": "Corollary",
+      "label": "corolot",
+      "position": {
+        "line_start": 372,
+        "line_end": 374
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_coro",
+      "type": "unknown",
+      "content": "External reference to 'coro'",
+      "content_preview": "External reference to 'coro'",
+      "display_name": "Unknown",
+      "label": "coro",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_principal",
+      "type": "unknown",
+      "content": "External reference to 'principal'",
+      "content_preview": "External reference to 'principal'",
+      "display_name": "Unknown",
+      "label": "principal",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "remark-3-79a4be45",
+      "target": "proposition-12-431f414a",
+      "type": null
+    },
+    {
+      "source": "remark-3-79a4be45",
+      "target": "external_coro",
+      "type": null
+    },
+    {
+      "source": "proposition-7-288e4be8",
+      "target": "lemma-5-48d25fa6",
+      "type": null
+    },
+    {
+      "source": "proposition-7-288e4be8",
+      "target": "lemma-6-ba22412c",
+      "type": null
+    },
+    {
+      "source": "corollary-8-9cc1b58a",
+      "target": "lemma-6-ba22412c",
+      "type": null
+    },
+    {
+      "source": "corollary-8-9cc1b58a",
+      "target": "proposition-7-288e4be8",
+      "type": null
+    },
+    {
+      "source": "remark-10-f0361ff9",
+      "target": "external_principal",
+      "type": null
+    },
+    {
+      "source": "remark-10-f0361ff9",
+      "target": "proposition-9-8754281c",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 15,
+    "edge_count": 8,
+    "extractor_used": "regex-only"
+  }
+}

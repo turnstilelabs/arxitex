@@ -1,0 +1,338 @@
+{
+  "arxiv_id": "2506.23585v1",
+  "nodes": [
+    {
+      "id": "theorem-1-4a3eb422",
+      "type": "theorem",
+      "content": "[Main result] \\label{3}\n    Let $d \\geq 4$ and $\\mathscr{X}_p= \\{ \\Gamma(I_i)\\backslash \\mathcal{B}_p \\}_i$ be an infinite family of Ramanujan complexes built from the Euclidean building $\\cal{B}_p$ of $\\mathrm{PGL}_d(\\mathbb{F}_p((y))$ as above. For distinct primes $p$ and $q$, $\\mathscr{X}_p$ does not quasi-isometrically embed in $\\mathscr{X}_q$.",
+      "content_preview": "[Main result] Let d 4 and _p= (I_i) _p _i be an infinite family of Ramanujan complexes built from the Euclidean building _p of _d(_p((y)) as above.",
+      "display_name": "Theorem",
+      "label": "3",
+      "position": {
+        "line_start": 299,
+        "line_end": 301
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-74d8b74b",
+      "type": "theorem",
+      "content": "\\label{kvmain} \\cite[Theorem C-($1$)]{khukhro2017expanders}\n    Let $X_p$ be a box space of $\\mathrm{SL}_2(\\mathbb{Z}[\\sqrt{p}])$.\n    For distinct primes $p$ and $q$, $X_p$ is not coarse equivalent\\footnote{Coarse equivalence is defined similarly to quasi-isometry whose control functions in (\\ref{qi}) need not be affine but diverge} to $X_q$.",
+      "content_preview": "Let X_p be a box space of _2([]). For distinct primes p and q, X_p is not coarse equivalent) need not be affine but diverge to X_q.",
+      "display_name": "Theorem",
+      "label": "kvmain",
+      "position": {
+        "line_start": 307,
+        "line_end": 310
+      },
+      "references": [
+        {
+          "target_id": "qi",
+          "reference_type": "external",
+          "context": "rly to quasi-isometry whose control functions in (\\ref{qi}) need not be affine but diverge} to $X_q$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "corollary-3-9847a24e",
+      "type": "corollary",
+      "content": "[to Proposition \\ref{1}] \\label{sym vs euc}\n    Let $n \\geq 4$ and $p$ be a prime.\n    Let $X$ be the symmetric space of $\\mathrm{SL}_n(\\mathbb{R})$ and $Y_p$ be the Euclidean building of $\\mathrm{SL}_n(\\mathbb{Q}_p)$.\n    \\begin{enumerate}\n        \\item  There is no quasi-isometric embedding $X \\to Y_p$ nor $Y_p \\to X$.\n        \\item There is no quasi-isometric embedding\n        $Y_p \\to Y_q$ for distinct primes $p$ and $q$.\n    \\end{enumerate}",
+      "content_preview": "[to Proposition ] Let n 4 and p be a prime. Let X be the symmetric space of _n() and Y_p be the Euclidean building of _n(_p).",
+      "display_name": "Corollary",
+      "label": "sym vs euc",
+      "position": {
+        "line_start": 319,
+        "line_end": 327
+      },
+      "references": [
+        {
+          "target_id": "1",
+          "reference_type": "external",
+          "context": "[to Proposition \\ref{1}] \\label{sym vs euc}\n    Let $n \\geq 4$ and $p$ be",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "corollary-4-7764f815",
+      "type": "corollary",
+      "content": "[to Theorem \\ref{kvmain}] \\label{kvmain2}\n    Let $X_p$ be a box space of $\\mathrm{SL}_2(\\mathbb{Z}[\\sqrt{p}])$.\n    As primes $p$ vary, $X_p$'s form infinite families of expander graphs which are not coarse equivalent to each other.",
+      "content_preview": "[to Theorem ] Let X_p be a box space of _2([]). As primes p vary, X_p's form infinite families of expander graphs which are not coarse equivalent to...",
+      "display_name": "Corollary",
+      "label": "kvmain2",
+      "position": {
+        "line_start": 340,
+        "line_end": 343
+      },
+      "references": [
+        {
+          "target_id": "kvmain",
+          "reference_type": "internal",
+          "context": "[to Theorem \\ref{kvmain}] \\label{kvmain2}\n    Let $X_p$ be a box space of",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-5-3ff37bf2",
+      "type": "theorem",
+      "content": "[geometric high dimensional expanders \\cite{fox2012overlap, evra2017finite}] \\label{geo}\n    Let $\\mathscr{X}_p= \\{ \\Gamma(I_i)\\backslash \\mathcal{B}_p \\}_i$ be an infinite family of Ramanujan complexes built from the Euclidean building $\\mathcal{B}_p$ of $\\mathrm{PGL}_d(\\mathbb{F}_p((y))$.\n    For each $d \\geq 3$, there exists $p_0=p_0(d) > 0$ such that $\\mathscr{X}_p$ forms an infinite family of Gromov geometric high dimensional expanders for every prime $p > p_0$.",
+      "content_preview": "[geometric high dimensional expanders ] Let _p= (I_i) _p _i be an infinite family of Ramanujan complexes built from the Euclidean building _p of...",
+      "display_name": "Theorem",
+      "label": "geo",
+      "position": {
+        "line_start": 378,
+        "line_end": 381
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-6-4a4b67b6",
+      "type": "theorem",
+      "content": "[topological high dimensional expanders \\cite{kaufman2016isoperimetric, evra2024bounded}] \\label{top}\n    Let $\\mathscr{X}_p= \\{ \\Gamma(I_i)\\backslash \\mathcal{B}_p \\}_i$ be an infinite family of Ramanujan complexes built from the Euclidean building $\\mathcal{B}_p$ of $\\mathrm{PGL}_d(\\mathbb{F}_p((y))$. For each $d \\geq 4$, there exists $p_0=p_0(d) > 0$ such that the family of $(d-2)$-skeleta of the $(d-1)$-dimensional simiplicial complexes of $\\mathscr{X}_p$ forms an infinite family of Gromov topological high dimensional expanders for every prime $p > p_0$.",
+      "content_preview": "[topological high dimensional expanders ] Let _p= (I_i) _p _i be an infinite family of Ramanujan complexes built from the Euclidean building _p of...",
+      "display_name": "Theorem",
+      "label": "top",
+      "position": {
+        "line_start": 383,
+        "line_end": 385
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-7-4bd37468",
+      "type": "corollary",
+      "content": "[to Theorem \\ref{3}] \\label{coro} \n    For each $d \\geq 4$, there exists $p_0 =p_0(d)>0$ such that $\\mathscr{X}_p$'s (resp.\\@ the codimension one skeleta of $\\mathscr{X}_p$'s) form infinite families of Gromov geometric (resp.\\@ topological) high dimensional expanders \n    which do not quasi-isometrically embed into one another \n    for every prime $p > p_0$.",
+      "content_preview": "[to Theorem ] For each d 4, there exists p_0 =p_0(d)>0 such that _p's (resp.@ the codimension one skeleta of _p's) form infinite families of Gromov...",
+      "display_name": "Corollary",
+      "label": "coro",
+      "position": {
+        "line_start": 391,
+        "line_end": 395
+      },
+      "references": [
+        {
+          "target_id": "3",
+          "reference_type": "internal",
+          "context": "[to Theorem \\ref{3}] \\label{coro} \n    For each $d \\geq 4$, there exi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-8-e874e075",
+      "type": "definition",
+      "content": "\\label{def}\n    Let $X$ and $Y$ be metric spaces. For $L\\geq1$ and $C\\geq 0$, a map $\\phi: X \\to Y$ is a \\textit{$(L,C)$-quasi-isometric embedding} if \n    \n    \\begin{equation}\\label{qi}\n       \\frac{1}{L}d(a,b)-C \\leq d(\\phi(a),\\phi(b)) \\leq Ld(a,b)+C \n    \\end{equation}\n    for every $a,b \\in X$. \n    The map $\\phi$ is a \\textit{$(L,C)$-quasi-isometry} if it is a $(L,C)$-quasi-isometric embedding and \\textit{coarsely surjective}, that is, for every $y \\in Y$, there exists $x \\in X$ such that $d(y,\\phi(x))\\leq C$. \n\n    Let $\\mathscr{X}=\\{X_i\\}_i$ and $\\mathscr{Y}=\\{Y_i\\}_i$ be infinite families of metric spaces. We say that $\\mathscr{X}$ \\textit{quasi-isometrically embeds} in (resp.\\@ is \\textit{quasi-isometric} to) $\\mathscr{Y}$ if there exist $L \\geq 1$, $C \\geq 0$, and $f_i: X_i \\to Y_i$ such that $f_i$ is a $(L,C)$-quasi-isometric embedding (resp.\\@ $(L,C)$-quasi-isometry) for every $i$.",
+      "content_preview": "Let X and Y be metric spaces. For L1 and C 0, a map : X Y is a if d(a,b)-C d((a),(b)) Ld(a,b)+C for every a,b X.",
+      "display_name": "Definition",
+      "label": "def",
+      "position": {
+        "line_start": 420,
+        "line_end": 430
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-9-1d844825",
+      "type": "definition",
+      "content": "Let $X$ be a building. A subcomplex $X'$ of $X$ is a \\textit{subbuilding} of $X$ if it is a building itself and every apartment of $X'$ is an apartment in $X$.",
+      "content_preview": "Let X be a building. A subcomplex X' of X is a of X if it is a building itself and every apartment of X' is an apartment in X.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 453,
+        "line_end": 455
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-10-94d62bce",
+      "type": "definition",
+      "content": "A building is said to be \\textit{thick} if every codimension one simplex called \\textit{panel} of chambers is a face of at least three chambers.",
+      "content_preview": "A building is said to be if every codimension one simplex called of chambers is a face of at least three chambers.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 487,
+        "line_end": 489
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-11-3cdecef0",
+      "type": "theorem",
+      "content": "[Classification of buildings] \\label{classify} \nWe have the following one-to-one correspondences up to isomorphisms:\n\\begin{itemize}\n    \\item Every thick irreducible spherical building of rank at least $3$ corresponds to a classical group, a simple algebraic group, or a mixed group defined over a field.\n    \n    \\item Every thick irreducible Euclidean building of rank at least $4$ \n    corresponds to a classical group, an absolutely simple algebraic group, or a mixed group defined over a field that is complete with respect to a discrete valuation.\n\n\\end{itemize}",
+      "content_preview": "[Classification of buildings] We have the following one-to-one correspondences up to isomorphisms: Every thick irreducible spherical building of rank...",
+      "display_name": "Theorem",
+      "label": "classify",
+      "position": {
+        "line_start": 491,
+        "line_end": 500
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-12-b88f31c6",
+      "type": "proposition",
+      "content": "For a building $X$, the action of the associated group $G$ on $X$ is simplicial (i.e., sending $i$-simplices to $i$-simplices), isometric, and continuous.",
+      "content_preview": "For a building X, the action of the associated group G on X is simplicial (i.e., sending i-simplices to i-simplices), isometric, and continuous.",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 507,
+        "line_end": 509
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-13-33d4ee35",
+      "type": "definition",
+      "content": "\\label{root}\n    Let \\(\\Delta\\) be a spherical building.\n    A \\emph{root} in \\(\\Delta\\) is a half-apartment in \\(\\Delta\\) bounded by the wall of a reflection of the Coxeter group.\n    Given a root \\(\\alpha\\) in \\(\\Delta\\), \n    we define the \\emph{root group} \\(U_{\\alpha}\\) of \\(\\alpha\\) by\n      \\[\n    U_{\\alpha} = \\left\\{ g \\in \\mathrm{Aut}(\\Delta) \\ \\middle| \\\n    \\begin{array}{l}\n    g \\text{ fixes every chamber having a panel} \\\\\n    \\text{in the interior of } \\alpha \\text{ pointwise}.\n    \\end{array}\n    \\right\\}.\n    \\]",
+      "content_preview": "Let () be a spherical building. A in () is a half-apartment in () bounded by the wall of a reflection of the Coxeter group.",
+      "display_name": "Definition",
+      "label": "root",
+      "position": {
+        "line_start": 543,
+        "line_end": 556
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-14-519aff26",
+      "type": "example",
+      "content": "Let $G=\\rm{SL}_3(\\mathbb{R})$ which is a Lie group of type $A_2$.\n    Then $G$ has six roots in $A \\cong \\mathbb{R}^2$ with the root groups:\n    $$\n    \\begin{pmatrix} 1 & * & 0\\\\ 0 & 1 &0 \\\\ 0& 0& 1\\end{pmatrix}, \n    \\begin{pmatrix} 1 & 0 & *\\\\ 0 & 1 &0 \\\\ 0& 0& 1\\end{pmatrix},\n    \\begin{pmatrix} 1 & 0 & 0\\\\ 0 & 1 &* \\\\ 0& 0& 1\\end{pmatrix},\n    \\begin{pmatrix} 1 & 0 & 0\\\\ * & 1 &0 \\\\ 0& 0& 1\\end{pmatrix},\n    \\begin{pmatrix} 1 & 0 & 0\\\\ 0 & 1 &0 \\\\ *& 0& 1\\end{pmatrix},\n    \\begin{pmatrix} 1 & 0 & 0\\\\ 0 & 1 &0 \\\\ 0& *& 1\\end{pmatrix}.\n    $$",
+      "content_preview": "Let G=_3() which is a Lie group of type A_2. Then G has six roots in A ^2 with the root groups: 1 & * & 0 0 & 1 &0 0& 0& 1, 1 & 0 & * 0 & 1 &0 0& 0&...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 567,
+        "line_end": 579
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-15-888e2b7e",
+      "type": "proposition",
+      "content": "The root groups of any $F$-split algebraic group $G$ are isomorphic to the additive group of $F$.",
+      "content_preview": "The root groups of any F-split algebraic group G are isomorphic to the additive group of F.",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 582,
+        "line_end": 584
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-16-2a5886d7",
+      "type": "proposition",
+      "content": "\\cite[Corollary 5.5.10, Appendix C]{morris2015introduction}\n    If $G^\\sigma$ is compact for some $\\sigma$, then the diagonally embedded $\\Ga$ is a cocompact arithmetic lattice in $\\prod_{\\sigma}G^\\sigma$.",
+      "content_preview": "If G^ is compact for some , then the diagonally embedded is a cocompact arithmetic lattice in _G^.",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 594,
+        "line_end": 596
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-17-47fc6ee2",
+      "type": "lemma",
+      "content": "\\label{skeleton}\n    Let $\\cal{B}$ be a Euclidean building and $\\cal{B}(0)$ be the set of all vertices equipped with the graph metric i.e., the length of shortest paths in the $1$-skeleton graph of $\\cal{B}$.\n    Then $\\cal{B}(0)$ is $(3,c)$-quasi isometric to $\\cal{B}$, where $c$ is the diameter of a chamber in $\\cal{B}$.",
+      "content_preview": "Let be a Euclidean building and (0) be the set of all vertices equipped with the graph metric i.e., the length of shortest paths in the 1-skeleton...",
+      "display_name": "Lemma",
+      "label": "skeleton",
+      "position": {
+        "line_start": 701,
+        "line_end": 704
+      },
+      "references": [],
+      "proof": "We will show that the inclusion map $i: \\cal{B}(0) \\hookrightarrow \\cal{B}$ is a $(3,c)$-quasi-isometry.\n    Denote by $d$ and $d_{g}$ the metric on $\\cal{B}$ and the graph metric on $\\cal{B}(0)$, respectively.\n    Since any point in $B$ is contained in a chamber, $i$ is $c$-coarsely surjective.\n    The right inequality of the following is also obvious as $d(u,v) \\leq d_g(u,v)$ for all $u,v \\in \\cal{B}(0)$.\n    $$\n    \\frac{1}{3}d_g(u,v)-c \\leq d(i(u),i(v)) \\leq 3d_g(u,v)+c \n    $$\n    What remains is to show the left inequality. Given $u$, $v \\in \\cal{B}(0)$, set $N$ to be the smallest positive integer such that $d(u,v)+c < N$.\n    Consider a path $\\ga$ from $u$ to $v$ in $\\cal{B}$ whose length is $d(u,v)$.  Pick $N$ distinct points $p_1, \\dots ,p_N $ on $\\ga$ with $p_1=u$ and $p_{N}=v$. Since the set of all chambers forms a partition of $\\cal{B}$, for each $p_i$, there exists $q_i \\in \\cal{B}(0)$ such that $p_i$ and $q_i$ are in the same chamber so that $d(p_i,q_i)<c$.\n    Then we have \n    $$\n    d(q_i,q_{i+1}) \\leq d(q_i,p_i)+d(p_i,p_{i+1})+d(p_{i+1},q_{i+1})\n    \\leq 2c + \\frac{d(u,v)}{N} \\leq 3c \n    $$\n    for every $i$. We remark that $c \\geq 1$ by setting the length of the edges (i.e., 1-simplices) to be 1 with respect to $d$.\n    Since $c$ is the diameter of the chambers,\n    for the vertices $q_i$ and $q_{i+1}$, there exist consecutively adjacent three chambers $C_1$, $C_2$, and $C_3$ (not necessarily distinct) such that $q_i \\in C_1$ and $q_{i+1} \\in C_3$.\n    This implies that $d_g(q_i,q_{i+1}) \\leq 3 $ \n    \n    and hence we obtain $d_g(u,v)\\leq 3(N-1)$ by taking $q_1=u$ and $q_{N}=v$.\n    By the minimality of $N$, $d_g(u,v) \\leq 3(d(u,v)+c)$, as desired."
+    },
+    {
+      "id": "external_qi",
+      "type": "unknown",
+      "content": "External reference to 'qi'",
+      "content_preview": "External reference to 'qi'",
+      "display_name": "Unknown",
+      "label": "qi",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_1",
+      "type": "unknown",
+      "content": "External reference to '1'",
+      "content_preview": "External reference to '1'",
+      "display_name": "Unknown",
+      "label": "1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-2-74d8b74b",
+      "target": "external_qi",
+      "type": null
+    },
+    {
+      "source": "corollary-3-9847a24e",
+      "target": "external_1",
+      "type": null
+    },
+    {
+      "source": "corollary-4-7764f815",
+      "target": "theorem-2-74d8b74b",
+      "type": null
+    },
+    {
+      "source": "corollary-7-4bd37468",
+      "target": "theorem-1-4a3eb422",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 19,
+    "edge_count": 4,
+    "extractor_used": "regex-only"
+  }
+}

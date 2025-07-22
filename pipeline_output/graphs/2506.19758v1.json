@@ -1,0 +1,562 @@
+{
+  "arxiv_id": "2506.19758v1",
+  "nodes": [
+    {
+      "id": "lemma-1-087f58f2",
+      "type": "lemma",
+      "content": "\\label{z} \nLet $A$ be an ideal of the nilpotent Lie algebra $L$. Then $A\\cap Z(L)\\neq 0$.",
+      "content_preview": "Let A be an ideal of the nilpotent Lie algebra L. Then A Z(L) 0.",
+      "display_name": "Lemma",
+      "label": "z",
+      "position": {
+        "line_start": 249,
+        "line_end": 251
+      },
+      "references": [],
+      "proof": "Since $L$ is nilpotent, there exists $k\\geq 1$ such that $L^{k+1}\\cap A=0$ but $L^k\\cap A\\neq 0$. Then $0\\neq L^k\\cap A\\subseteq A\\cap Z(L)$."
+    },
+    {
+      "id": "theorem-2-b220b24c",
+      "type": "theorem",
+      "content": "Over a field of characteristic zero, $E(L)$ is a characteristic ideal of $L$, and so $E(L)\\subseteq N(L)$, the nilradical of $L$.",
+      "content_preview": "Over a field of characteristic zero, E(L) is a characteristic ideal of L, and so E(L) N(L), the nilradical of L.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 263,
+        "line_end": 265
+      },
+      "references": [],
+      "proof": "Let $\\theta$ be an automorphism of $L$. If $y\\in E_L(x)$, then $\\theta(y)\\in E_L(\\theta(x))$, so $E(L)$ is invariant under all automorhisms of $L$. It follows from \\cite[Corollary 3.2]{frat} that it is invariant under all derivations of $L$ and hence is a characteristic ideal of $L$."
+    },
+    {
+      "id": "definition-3-4c99d657",
+      "type": "definition",
+      "content": "Let $L$ be a finite-dimensional Lie algebra over a field $F$. \n\\begin{enumerate}\n    \\item For $h\\in L$ we set \n\\begin{equation*}\n\\nil_L(h) := \\{x\\in L\\mid  \\langle h,x\\rangle \\ \\text{is a nilpotent subalgebra of} \\  L \\}.\n\\end{equation*}\nThis set is called the \\emph{nilpotentiser} of $h$ in $L$.\n\n\n\\item We define the nilpotentizer of $L$ as follows:\n\\begin{equation*}\n\\nil(L) := \\{x\\in L\\mid  \\langle h,x\\rangle \\ \\text{is nilpotent for all} \\ h\\in L\\}.\n\\end{equation*}\n\\end{enumerate}",
+      "content_preview": "Let L be a finite-dimensional Lie algebra over a field F. For h L we set _L(h) := x L h,x L . This set is called the of h in L.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 278,
+        "line_end": 293
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-954bdb7a",
+      "type": "lemma",
+      "content": "For any Lie algebra $L$ and any $x\\in L$, the following are equivalent:\n\\begin{itemize}\n\\item[(i)]  $\\nil_L(x)$ is a subspace of $L$;\n\\item[(ii)]  $ \\nil_L(x)$  is a maximal nilpotent subalgebra of $L$;\n\\item[(iii)]  $x$ is contained in just one maximal nilpotent subalgebra.\n\\end{itemize}",
+      "content_preview": "For any Lie algebra L and any x L, the following are equivalent: _L(x) is a subspace of L; _L(x) is a maximal nilpotent subalgebra of L; x is...",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 307,
+        "line_end": 314
+      },
+      "references": [],
+      "proof": "Simply note that if $U$, $V$ are subspaces of $L$, then $U\\cup V$ is a subspace if and only if $U\\subseteq V$ or $V\\subseteq U$."
+    },
+    {
+      "id": "lemma-5-ed99c591",
+      "type": "lemma",
+      "content": "Let $L$ be a Lie algebra, $J$ an ideal of $L$ and $x,y\\in L$. Then\n\\begin{itemize}\n\\item[(i)] $\\nil(L)\\subseteq \\nil_L(x)$;\n\\item[(ii)] $\\frac{\\nil_L(x)+J}{J}\\subseteq \\nil_L(x+J)$;\n\\item[(iii)] $\\nil_{L/J}(x+J)=\\frac{\\nil_L(x)}{J}$ whenever $J\\subseteq Z^*(L)$;\n\\item[(iv)] the nilpotentiser of every element of $L$ is a subalgebra if and only if the same is true for $L/J$ for some ideal $J$ of $L$ with $J\\subseteq Z^*(L)$;\n\\item[(v)] if $\\nil_L(x)$ is a subalgebra of $L$ and $y\\in \\nil_L(x)$, then $\\nil_L(y)=\\nil_L(x)$;\n\\item[(vi)] if $\\theta$ is an automorphism of $L$, then $\\theta(\\nil_L(x))=\\nil_L(\\theta(x))$.\n\\end{itemize}",
+      "content_preview": "Let L be a Lie algebra, J an ideal of L and x,y L. Then (L) _L(x); _L(x+J); _L/J(x+J)= whenever J Z^*(L); the nilpotentiser of every element of L is...",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 320,
+        "line_end": 329
+      },
+      "references": [],
+      "proof": "These are straightforward."
+    },
+    {
+      "id": "lemma-6-b12bb67a",
+      "type": "lemma",
+      "content": "For every Lie algebra $L$, $\\nil(L)\\subseteq E(L)$.",
+      "content_preview": "For every Lie algebra L, (L) E(L).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 358,
+        "line_end": 360
+      },
+      "references": [],
+      "proof": "Let $y \\in \\nil(L)$ and $x\\in L$. Then $\\langle x,y\\rangle$ is nilpotent, and so $y\\in E_L(x)$."
+    },
+    {
+      "id": "theorem-7-75285a5b",
+      "type": "theorem",
+      "content": "\\label{z*} \nLet $L$ be a $n$-dimensional  Lie algebra over a field $F$. Then the following holds:\n\\begin{itemize}\n\\item[(i)] $\\langle x, Z^*(L)\\rangle$ is nilpotent for all $x\\in L$; and\n\\item[(ii)] if $F$ has characteristic zero, then $Z^*(L)= \\nil(L)$.\n\\end{itemize}",
+      "content_preview": "Let L be a n-dimensional Lie algebra over a field F. Then the following holds: x, Z^*(L) is nilpotent for all x L; and if F has characteristic zero,...",
+      "display_name": "Theorem",
+      "label": "z*",
+      "position": {
+        "line_start": 366,
+        "line_end": 372
+      },
+      "references": [
+        {
+          "target_id": "z",
+          "reference_type": "internal",
+          "context": "non-trivial intersection with $Z(C^*)$, by Lemma \\ref{z}, whence $Z(L^*)\\cap L\\neq 0$. But $Z(L^*)\\cap L\\n",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "(i) Let $x\\in L$ and put $S=\\langle x, Z^*(L)\\rangle$. Then $Z^*(L)\\subseteq Z^*(S)\\subseteq S$, so $S=Z^*(S)+Fx$ and $S$ is nilpotent.\n\\medskip\n\n\\noindent (ii) It follows from (i) that $Z^*(L)\\subseteq \\nil(L)$. So, it suffices to show that there is no non-trivial element in $\\nil(L/Z^*(L))$; in other words we may assume that $Z(L)=0$ and we must show that $\\nil(L)=0$. Let $0\\neq x\\in \\nil(L)$. Let $\\theta$ be a faithful matrix representation of $L$, which exists by Ado's Theorem and let $L^*$ be the algebraic hull of $\\theta(L)$ (see \\cite{chev} for existence and properties of the algebraic hull) and identify $L$ with $\\theta(L)$..  Let $C^*$ be a Cartan subalgebra of $L^*$. Then $C^*=E_{L^*}(u)$, where $E_{L^*}(u)$ is minimal in the set $\\{E_{L^*}(y) : y\\in L^*\\}$, by \\cite[Theorem 1]{barnes}.\n\\par\n\nNow the algebraic hull is almost algebraic (see \\cite{ab}), so let $u=u_s+u_n$ be the Jordan decomposition of $u$. Then $E_{L^*}(u_s)\\subseteq E_{L^*}(u)$, so we have that $u$ is semisimple and $E_{L^*}(u)=C_{L^*}(u)$.  Let $c\\in C^*$. Then $[u,[x,c]]=[x,[u,c]]=0$, so $[x,c]\\in C_L^*(u)=C^*$. Hence $x\\in N_{L^*}(C^*)=C^*$ and $[x,u]=0$. Write $L^*=C^*\\dot{+} L^*_1$ where $L^*_1$ is the Fitting one-component of ad\\,$u$, by \\cite{barnes}. \n\\par\n\nBy passing to the algebraic closure we can suppose that $F$ is algebraically closed. Let $y_i,\\ldots,y_r$ be a basis for $L^*_1$ and suppose that $[y_i,u]=\\alpha_iy_i$ where $\\alpha_i\\in F$. Note that $L^*_1=[u,L^*_1]\\subseteq [L^*,L^*]=[L,L]\\subseteq L$ (see \\cite[Proposition 1]{chev}. So $\\langle x,y_i\\rangle$ is nilpotent and there is a $k$ such that $(\\ad\\, y_i)^{k+1}(x)=0$, but $(\\ad\\, y_i)^k(x)\\neq 0$. Put $S^*=\\langle x,u+y_i\\rangle$. Then $[[x,y_i],u]=[[y_i,u],x]=\\alpha_i[x,y_i]$ and a straightforward induction proof shows that $[(\\ad\\, y_i)^n(x),u]=n\\alpha_i(\\ad\\, y_i)^n(x)$. Now $[[[x,y_i],u+y_i]=\\alpha_i[x,y_i]+[[x,y_i]y_i]$, whence $[[x,y_i]y_i]\\in S^*$. Similarly, $(\\ad\\, y_i)^t(x)\\in S^*$ for all $t$.  Now\n\\[ (\\ad\\, (u+y_i))^n((\\ad\\, y_i)^k(x))=(\\ad\\, u)^n(\\ad\\, y_i)^k(x)),\n\\]\nso $(\\ad\\, y_i)^k(x)\\in C^*$. It follows that \n\\[ 0=[(\\ad\\, y_i)^k(x),u]=k\\alpha_i(\\ad\\, y_i)^k(x).\n\\]\nBut, $\\alpha_i=0$ implies that $y_i\\in C^*\\cap L^*_1=0$, so $k=0$ and $[y_i,x]=0$. Hence $x\\in Z_{C^*}(L^*_1)\\cap L$ and $ Z_{C^*}(L^*_1)\\cap L$ is a non-trivial ideal of $C^*$. It must, therefore have non-trivial intersection with $Z(C^*)$, by Lemma \\ref{z}, whence $Z(L^*)\\cap L\\neq 0$. But $Z(L^*)\\cap L\\neq 0\\subseteq Z(L)$, contradiction."
+    },
+    {
+      "id": "lemma-8-51f64a54",
+      "type": "lemma",
+      "content": "let $L$ be a completely solvable Lie algebra over any field $F$. Then $\\nil(L)\\subseteq N(L)$, the nilradical of $L$.",
+      "content_preview": "let L be a completely solvable Lie algebra over any field F. Then (L) N(L), the nilradical of L.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 395,
+        "line_end": 396
+      },
+      "references": [],
+      "proof": "Let $x\\in \\nil(L)$. Then $Fx+N(L)$ is nilpotent. Moreover, it is an ideal of $L$, since $L^2\\subseteq N(L)$. Hence $x\\in N(L)$."
+    },
+    {
+      "id": "lemma-9-cb109c09",
+      "type": "lemma",
+      "content": "Let $L$ be a classical simple Lie algebra over an infinite field of characteristic $p > 3$, or a semisimple\n Lie algebra in characteristic 0. Then $\\nil(L)=0$.",
+      "content_preview": "Let L be a classical simple Lie algebra over an infinite field of characteristic p > 3, or a semisimple Lie algebra in characteristic 0. Then (L)=0.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 400,
+        "line_end": 402
+      },
+      "references": [],
+      "proof": "This follows from \\cite[Theorem B and section 1.2.2]{bois}."
+    },
+    {
+      "id": "remark-10-04b188a9",
+      "type": "remark",
+      "content": "Let $L$ be a reductive Lie algebra over a field $F$ of characteristic zero. Then $L$ decomposes as:\n\\[L = S \\oplus Z(L),\\]\nwhere $S = [L, L]$ is semisimple and $Z(L)$ is the center of $L$.",
+      "content_preview": "Let L be a reductive Lie algebra over a field F of characteristic zero. Then L decomposes as: [L = S Z(L),] where S = [L, L] is semisimple and Z(L)...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 418,
+        "line_end": 422
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-11-95d71e02",
+      "type": "lemma",
+      "content": "Let $L$ be a reductive Lie algebra over a field $F$ of characteristic zero. Then $\\nil(L) = Z(L)$.",
+      "content_preview": "Let L be a reductive Lie algebra over a field F of characteristic zero. Then (L) = Z(L).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 424,
+        "line_end": 426
+      },
+      "references": [],
+      "proof": "Let $x \\in Z(L)$. Then for any $y \\in L$, we have $[x, y] = 0$, so $\\langle x, y\\rangle$ is abelian, hence nilpotent. Thus, $x \\in \\nil(L)$.\n\nReciprocally, let $x \\in \\nil(L)$. Write $x = s + z$ with $s \\in S$, and $z \\in Z(L)$. Suppose $s \\neq 0$. \n\n\nSince $S$ is semisimple and the field has characteristic zero, there exists $y \\in S \\subseteq L$ such that the subalgebra $\\langle s, y \\rangle$ is not nilpotent. But $z \\in Z(L)$, so for all $y \\in L$, we have:\n\\[[x, y] = [s + z, y] = [s, y] + [z, y] = [s, y].\\]\nHence \\( \\langle x, y \\rangle = \\langle s, y \\rangle \\), which is not nilpotent, a contradiction. Therefore, $s = 0$, and $x = z \\in Z(L)$. Since $S$ is semisimple and the field has characteristic zero, there exists \\( y \\in S \\subseteq L \\) such that the subalgebra \\( \\langle s, y \\rangle \\) is not nilpotent."
+    },
+    {
+      "id": "definition-12-5f58e0d5",
+      "type": "definition",
+      "content": "Let $L$ be a finite-dimensional non-nilpotent Lie algebra. The nilpotent graph of $L$, denoted by $\\Gamma_{\\mathfrak{N}}(L)$, is a simple undirected graph whose vertex set is $L\\setminus \\nil(L)$, and two vertices $x$ and $y$ are adjacent if and only if $\\langle x, y\\rangle$ is a nilpotent subalgebra of $L$.",
+      "content_preview": "Let L be a finite-dimensional non-nilpotent Lie algebra. The nilpotent graph of L, denoted by _(L), is a simple undirected graph whose vertex set is...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 443,
+        "line_end": 445
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-13-8bfc9a1a",
+      "type": "example",
+      "content": "The nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_2)$ consists of three connected components and each one of them is $K_{2}$\n    \\begin{figure}[H]\n    \\centering\n    \\begin{tikzpicture}\n        \\GraphInit[vstyle=Shade]\n        \\tikzset{VertexStyle/.append style={minimum size=1pt, inner sep=1pt}}\n        \\renewcommand*{\\EdgeLineWidth}{0.5pt}\n        \\Vertex{1}\n        \\Vertex[x=4 , y=0, ]{2}    \n        \\Vertex[x=4 , y=2]{6}  \n        \\Vertex[x=2 , y=0]{3} \n        \\Vertex[x=0 , y=2]{4}   \n        \\Vertex[x=2 , y=2]{5}  \n        \\Edges(3,5)\n        \\Edges(1,4)\n        \\Edges(2,6)\n    \\end{tikzpicture}\n    \\caption{Nilpotent Graph of $\\mathfrak{t}(2,\\mathbb{F}_2)$}\n    \\end{figure}\n    \n    \\begin{table}[H]\n    \\centering\n    \\begin{tabular}{||c|c||c|c||} \n        \\hline\n         Index & Matrix & Index & Matrix \\\\ [0.5ex] \n         \\hline\\hline\n         1 & $\\begin{pmatrix}\n             0&0\\\\ 0 &1\\\\\n         \\end{pmatrix}$ &  4 & $\\begin{pmatrix}\n             1&0\\\\ 0 &0\\\\\n         \\end{pmatrix}$\\\\ \n         \\hline\n         2 & $\\begin{pmatrix}\n             0&1\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 5 & $\\begin{pmatrix}\n             1&1\\\\ 0 &0\\\\\n         \\end{pmatrix}$ \\\\\n         \\hline\n         3 & $\\begin{pmatrix}\n             0&1\\\\ 0 &1\\\\\n         \\end{pmatrix}$ & 6 & $\\begin{pmatrix}\n             1&1\\\\ 0 &1\\\\\n         \\end{pmatrix}$ \\\\ [1ex] \n         \\hline\n    \\end{tabular}\n    \\caption{Index and matrix representation}\n    \\label{tab:index_matrix}\n    \\end{table}\n\n    In $\\mathfrak{t}(2,\\mathbb{F}_2)$ there are only two invertible matrices:\n    $$ id = \\begin{pmatrix}\n             1&0\\\\ 0 &1\\\\\n         \\end{pmatrix} \\quad A = \\begin{pmatrix}\n             1&1\\\\ 0 &1\\\\\n         \\end{pmatrix} $$",
+      "content_preview": "The nilpotent graph of (2,_2) consists of three connected components and each one of them is K_2 [H] (3,5) (1,4) (2,6) (2,_2) [H] Index & Matrix &...",
+      "display_name": "Example",
+      "label": "tab:index_matrix",
+      "position": {
+        "line_start": 447,
+        "line_end": 503
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-14-49f0ed37",
+      "type": "example",
+      "content": "The nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_3)$ consists of four connected components, and each one of them is $K_{6}$\n    \\begin{figure}[H]\n\\begin{center}\n    \\begin{tikzpicture}\n        \\GraphInit[vstyle=Shade]\n        \\tikzset{VertexStyle/.append style={minimum size=1pt, inner sep=1pt}}\n        \\renewcommand*{\\EdgeLineWidth}{0.5pt}\n        \\Vertex[x=-8.5,y=1]{1}\n        \\Vertex[x=-8 , y=0]{2}    \n        \\Vertex[x=-7 , y=0]{9} \n        \\Vertex[x=-6.5 , y=1]{10}   \n        \\Vertex[x=-7 , y=2]{17}  \n        \\Vertex[x=-8 , y=2]{18}  \n        \\Edges(1,2)\n        \\Edges(1,9)\n        \\Edges(1,10)\n        \\Edges(1,17)\n        \\Edges(1,18)\n        \\Edges(2,9)\n        \\Edges(2,10)\n        \\Edges(2,17)\n        \\Edges(2,18)\n        \\Edges(9,10)\n        \\Edges(9,17)\n        \\Edges(9,18)\n        \\Edges(10,17)\n        \\Edges(10,18)\n        \\Edges(17,18)        \n\\end{tikzpicture}\n\\hskip0.5cm\n\\begin{tikzpicture}\n        \\GraphInit[vstyle=Shade]\n        \\tikzset{VertexStyle/.append style={minimum size=1pt, inner sep=1pt}}\n        \\renewcommand*{\\EdgeLineWidth}{0.5pt}\n        \\Vertex[x=-4.5,y=1]{5}\n        \\Vertex[x=-4 , y=0]{7}    \n        \\Vertex[x=-3 , y=0]{11} \n        \\Vertex[x=-2.5 , y=1]{16}   \n        \\Vertex[x=-3 , y=2]{20}  \n        \\Vertex[x=-4, y=2]{22}\n        \\Edges(5,7)\n        \\Edges(5,11)\n        \\Edges(5,16)\n        \\Edges(5,20)\n        \\Edges(5,22)\n        \\Edges(7,11)\n        \\Edges(7,16)\n        \\Edges(7,20)\n        \\Edges(7,22)\n        \\Edges(11,16)\n        \\Edges(11,20)\n        \\Edges(11,22)\n        \\Edges(16,20)\n        \\Edges(16,22)\n        \\Edges(20,22)       \n\\end{tikzpicture}\n\\hskip0.5cm\n\\begin{tikzpicture}\n        \\GraphInit[vstyle=Shade]\n        \\tikzset{VertexStyle/.append style={minimum size=1pt, inner sep=1pt}}\n        \\renewcommand*{\\EdgeLineWidth}{0.5pt}\n        \\Vertex[x=-0.5,y=1]{4}\n        \\Vertex[x=0 , y=0]{8}    \n        \\Vertex[x=1 , y=0]{13} \n        \\Vertex[x=1.5 , y=1]{14}   \n        \\Vertex[x=1 , y=2]{19}  \n        \\Vertex[x=0, y=2]{23} \n        \\Edges(4,8)\n        \\Edges(4,13)\n        \\Edges(4,14)\n        \\Edges(4,19)\n        \\Edges(4,23)\n        \\Edges(8,13)\n        \\Edges(8,14)\n        \\Edges(8,19)\n        \\Edges(8,23)\n        \\Edges(13,14)\n        \\Edges(13,19)\n        \\Edges(13,23)\n        \\Edges(14,19)\n        \\Edges(14,23)\n        \\Edges(19,23)\n\\end{tikzpicture}\n\\hskip0.5cm\n\\begin{tikzpicture}\n        \\GraphInit[vstyle=Shade]\n        \\tikzset{VertexStyle/.append style={minimum size=1pt, inner sep=1pt}}\n        \\renewcommand*{\\EdgeLineWidth}{0.5pt}\n        \\Vertex[x=-4.5,y=-2]{3}\n        \\Vertex[x=-4 , y=-3]{6}    \n        \\Vertex[x=-3 , y=-3]{12} \n        \\Vertex[x=-2.5 , y=-2]{15}   \n        \\Vertex[x=-4 , y=-1]{21}\n        \\Vertex[x=-3 , y=-1]{24}\n        \\Edges(3,6)\n        \\Edges(3,12)\n        \\Edges(3,15)\n        \\Edges(3,21)\n        \\Edges(3,24)\n        \\Edges(6,12)\n        \\Edges(6,15)\n        \\Edges(6,21)\n        \\Edges(6,24)\n        \\Edges(12,15)\n        \\Edges(12,21)\n        \\Edges(12,24)\n        \\Edges(15,21)\n        \\Edges(15,24)\n        \\Edges(21,24)\n    \\end{tikzpicture}\n\\end{center}\n    \\caption{Nilpotent Graph of $\\mathfrak{t}(2,\\mathbb{F}_3)$}\n    \\end{figure}\n\n    \\begin{table}[H]\n    \\centering\n    \\begin{tabular}{||c|c||c|c||c|c||c|c||} \n        \\hline\n         Index & Matrix & Index & Matrix & Index & Matrix & Index & Matrix \\\\ [0.5ex] \n         \\hline\\hline\n         1 & $\\begin{pmatrix}\n             0&0\\\\ 0 &1\\\\\n         \\end{pmatrix}$ & 7 & $\\begin{pmatrix}\n             0&2\\\\ 0 &1\\\\\n         \\end{pmatrix}$ & 13 & $\\begin{pmatrix}\n             1&1\\\\ 0 &2\\\\\n         \\end{pmatrix}$ & 19 & $\\begin{pmatrix}\n             2&1\\\\ 0 &0\\\\\n         \\end{pmatrix}$ \\\\ \n         \\hline\n         2 & $\\begin{pmatrix}\n             0&0\\\\ 0 &2\\\\\n         \\end{pmatrix}$ & 8 & $\\begin{pmatrix}\n             0&2\\\\ 0 &2\\\\\n         \\end{pmatrix}$ & 14 & $\\begin{pmatrix}\n             1&2\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 20 & $\\begin{pmatrix}\n             2&1\\\\ 0 &1\\\\\n         \\end{pmatrix}$ \\\\\n         \\hline\n         3 & $\\begin{pmatrix}\n             0&1\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 9 & $\\begin{pmatrix}\n             1&0\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 15 & $\\begin{pmatrix}\n             1&2\\\\ 0 &1\\\\\n         \\end{pmatrix}$  & 21 & $\\begin{pmatrix}\n            2&1\\\\ 0 &2\\\\\n         \\end{pmatrix}$ \\\\\n         \\hline\n         4 & $\\begin{pmatrix}\n             0&1\\\\ 0 &1\\\\\n         \\end{pmatrix}$ & 10 & $\\begin{pmatrix}\n             1&0\\\\ 0 &2\\\\\n         \\end{pmatrix}$ & 16 & $\\begin{pmatrix}\n             1&2\\\\ 0 &2\\\\\n         \\end{pmatrix}$ & 22 & $\\begin{pmatrix}\n             2&2\\\\ 0 &0\\\\\n         \\end{pmatrix}$ \\\\\n         \\hline\n         5 & $\\begin{pmatrix}\n             0&1\\\\ 0 &2\\\\\n         \\end{pmatrix}$ & 11 & $\\begin{pmatrix}\n             1&1\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 17 & $\\begin{pmatrix}\n             2&0\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 23 & $\\begin{pmatrix}\n             2&2\\\\ 0 &1\\\\\n         \\end{pmatrix}$ \\\\ \n         \\hline\n         6 & $\\begin{pmatrix}\n             0&2\\\\ 0 &0\\\\\n         \\end{pmatrix}$ & 12 & $\\begin{pmatrix}\n             1&1\\\\ 0 &1\\\\\n         \\end{pmatrix}$ & 18 & $\\begin{pmatrix}\n             2&0\\\\ 0 &1\\\\\n         \\end{pmatrix}$ & 24 & $\\begin{pmatrix}\n             2&2\\\\ 0 &2\\\\\n         \\end{pmatrix}$  \\\\\n         \\hline\n    \\end{tabular}\n    \\caption{Index and matrix representation}\n    \\label{tab:index_matrix2}\n    \\end{table}\n\n    In $\\mathfrak{t}(2,\\mathbb{F}_3)$, there exist 12 invertible matrices. The only one that does not live in one of the components is \n    $$A = \\begin{pmatrix}\n        2&0\\\\\n        0&2\n    \\end{pmatrix}$$",
+      "content_preview": "The nilpotent graph of (2,_3) consists of four connected components, and each one of them is K_6 [H] (1,2) (1,9) (1,10) (1,17) (1,18) (2,9) (2,10)...",
+      "display_name": "Example",
+      "label": "tab:index_matrix2",
+      "position": {
+        "line_start": 506,
+        "line_end": 697
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-15-16b2d9db",
+      "type": "remark",
+      "content": "\\begin{enumerate}    \n    \\item The nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_4)$ consists of five connected components, and each one of them is $K_{12}$\n\n    \\item The nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_5)$ consists of six connected components, and each one of them is $K_{20}$\n\\end{enumerate}",
+      "content_preview": "The nilpotent graph of (2,_4) consists of five connected components, and each one of them is K_12 The nilpotent graph of (2,_5) consists of six...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 700,
+        "line_end": 706
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-16-302ffcde",
+      "type": "lemma",
+      "content": "If $x\\notin Z(L)$, then $\\nil_L(x)$ is a two-dimensional abelian subalgebra of $L$.",
+      "content_preview": "If x Z(L), then _L(x) is a two-dimensional abelian subalgebra of L.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 746,
+        "line_end": 748
+      },
+      "references": [],
+      "proof": "Certainly, $\\langle x,z\\rangle$ is a two-dimensional subalgebra which is contained in $\\nil_L(x)\\subseteq E_L(x)$. Now $E_L(x)$ is a subalgebra of $L$. If $E_L(x)$ is two-dimensional, then $\\nil_L(x)=Fx+Fz$. \n\\par\n\nSo suppose $E_L(x)=L$. Let $w\\in L\\setminus \\langle x,z\\rangle$, so $L=Fz+Fx+Fw$. Then $[x,w]=\\lambda y$  and $[x,y]=\\mu y$ for some $\\lambda, \\mu\\in F$. Since $w\\in E_L(x)$, $\\lambda\\mu=0$. If $\\lambda=0$, then $L$ is abelian, a contradiction, so $\\mu=0$. Let $[w,y]=\\nu y$. Then $\\nu\\neq 0$, since, otherwise, $L$ is nilpotent. Hence $\\nil_L(x)=Fx+Fz$."
+    },
+    {
+      "id": "theorem-17-a27de846",
+      "type": "theorem",
+      "content": "The nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_q)$ consist of $q+1$ connected components, and each one of them is $K_{q(q-1)}$.",
+      "content_preview": "The nilpotent graph of (2,_q) consist of q+1 connected components, and each one of them is K_q(q-1).",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 757,
+        "line_end": 759
+      },
+      "references": [],
+      "proof": "Now $\\nil(L)$ is the set of scalar matrices with elements in $F_q$ and there are $q$ of these. Since $L$ has $q^3$ elements, the number of vertices in the graph is $ q^3-q$. If $x\\notin Z(L)$, $\\nil_L(x)$ is two-dimensional, and so has $q^2$ elements. Thus, the component of the graph containing $x$ has $q^2-q$ vertices; as $\\nil_L(x)$ is abelian, that component will be $K_{q(q-1)}$. If $\\nil_L(x)\\neq \\nil_L(y)$ we have that $L=\\nil_L(x)+\\nil_L(y)$, so $\\dim (\\nil_L(x)\\cap \\nil_L(y)=1$, whence  $\\nil_L(x)\\cap \\nil_L(y)=\\nil(L)$. Hence, the total number of components in the graph is $(q^3 - q)/(q^2 - q) = q + 1$."
+    },
+    {
+      "id": "corollary-18-52c9ad40",
+      "type": "corollary",
+      "content": "The nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_q)$ is $(q^2-q-1)$-regular.",
+      "content_preview": "The nilpotent graph of (2,_q) is (q^2-q-1)-regular.",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 768,
+        "line_end": 770
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-19-0a5010fd",
+      "type": "lemma",
+      "content": "\\label{grado}\nLet $L$ be a finite-dimensional Lie algebra over $F_q$. \n\\begin{enumerate}[(i)]\n    \\item Then for every $h\\in L\\setminus \\nil(L)$ we have\n\\begin{equation}\\label{grado2}\n  \\deg(h) = |\\nil_L(h)| - |\\nil(L)| - 1.  \n\\end{equation}\n    \\item The nilpotent graph of $L$ is never a star graph.\n\\end{enumerate}",
+      "content_preview": "Let L be a finite-dimensional Lie algebra over F_q. [(i)] Then for every h L (L) we have (h) = |_L(h)| - |(L)| - 1.",
+      "display_name": "Lemma",
+      "label": "grado",
+      "position": {
+        "line_start": 776,
+        "line_end": 785
+      },
+      "references": [],
+      "proof": "(i) Since $h\\in \\nil_L(h)$, we see that $|\\nil_L(h)| - 1$ is exactly the number of vertices that are adjacent to $h$. Due to the vertex set being $L\\setminus \\nil(L)$, it follows that $ \\deg(h) = |\\nil_L(h)| - |\\nil(L)| - 1$. \n\n(ii) Suppose that the nilpotent graph of $L$ is a star. Then there exists $x\\in L\\setminus \\nil(L)$ such that $\\deg(x) = |L- \\nil(G)| - 1 =  |L|-|\\nil(G)|-1$. Thus,  $|\\nil_L(x)| = |L|$ and so $x\\in \\nil(L)$, which is a contradiction."
+    },
+    {
+      "id": "corollary-20-f541fb95",
+      "type": "corollary",
+      "content": "Let $L$ be a finite-dimensional solvable Lie algebra over $F_q$. If $\\dim(\\nil(L))$ is even and divides $\\dim (\\nil_L(x))$ for all $x\\in L$, then $\\Gamma_\\mathfrak{N}(L)$ is not Eulerian.",
+      "content_preview": "Let L be a finite-dimensional solvable Lie algebra over F_q. If ((L)) is even and divides (_L(x)) for all x L, then _(L) is not Eulerian.",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 794,
+        "line_end": 796
+      },
+      "references": [
+        {
+          "target_id": "grado2",
+          "reference_type": "external",
+          "context": "$ is not Eulerian.It follows straightforward from \\eqref{grado2}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "It follows straightforward from \\eqref{grado2}."
+    },
+    {
+      "id": "lemma-21-5a2a969c",
+      "type": "lemma",
+      "content": "Let $U$ be a nilpotent subalgebra of a finite-dimensional Lie algebra $L$, such that $U\\not\\subseteq \\nil(G)$. Then the set \n$U\\setminus (U\\cap \\nil(L))$ forms a clique in $\\Gamma_\\mathfrak{N}(L)$.",
+      "content_preview": "Let U be a nilpotent subalgebra of a finite-dimensional Lie algebra L, such that U (G). Then the set U (U (L)) forms a clique in _(L).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 803,
+        "line_end": 806
+      },
+      "references": [],
+      "proof": "For all $x,y\\in U\\setminus (U\\cap \\nil(L))$ we have that $\\langle x,y\\rangle$ is nilpotent. Thus, the subgraph of $\\Gamma_\\mathfrak{N}(L)$  having $U- (U\\cap \\nil(L))$ as its set of vertices is a clique."
+    },
+    {
+      "id": "lemma-22-676db0c9",
+      "type": "lemma",
+      "content": "\\label{ComponentsNilAdjacency}\nLet $L_1$ and $L_2$ be Lie algebras over a field $F$, $a_1, a_2\\in L_1$ and $b_1, b_2\\in L_2$, Then $\\langle (a_1, b_1), (a_2, b_2) \\rangle$ is a nilpotent Lie subalgebra of $L_1\\oplus L_2$ if and only if $\\langle a_1, a_2 \\rangle$ and $\\langle b_1, b_2 \\rangle$ are nilpotent Lie subalgebras of $L_1$ and $L_2$ respectively.",
+      "content_preview": "Let L_1 and L_2 be Lie algebras over a field F, a_1, a_2 L_1 and b_1, b_2 L_2, Then (a_1, b_1), (a_2, b_2) is a nilpotent Lie subalgebra of L_1 L_2...",
+      "display_name": "Lemma",
+      "label": "ComponentsNilAdjacency",
+      "position": {
+        "line_start": 816,
+        "line_end": 818
+      },
+      "references": [],
+      "proof": "It is clear that if $(x,y) \\in \\langle(a,b),(c,d)\\rangle$ then $x \\in \\langle a,c\\rangle$ and $y \\in \\langle b,d\\rangle$ (a simple induction would give a formal proof), so $\\langle(a,b),(c,d)\\rangle \\subseteq \\langle a,c\\rangle \\oplus \\langle b,d\\rangle$. Hence $\\langle a,c\\rangle$ and $\\langle b,d\\rangle$ nilpotent implies that $\\langle(a,b),(c,d)\\rangle$ is nilpotent. For the converse, note that there must be an n such that every product of n elements of $\\langle(a,b),(c,d)\\rangle$ must be zero. But every product of n elements of $\\langle a,c\\rangle$ occurs as the first coordinate of such a product, and so is zero. Similarly, for $\\langle b,d\\rangle$."
+    },
+    {
+      "id": "corollary-23-8bbba5fe",
+      "type": "corollary",
+      "content": "Let $L_1$ and $L_2$ be Lie algebras over a field $F$. Then $\\nil(L_1\\oplus L_2) = \\nil(L_1) \\oplus \\nil(L_2)$.",
+      "content_preview": "Let L_1 and L_2 be Lie algebras over a field F. Then (L_1 L_2) = (L_1) (L_2).",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 832,
+        "line_end": 834
+      },
+      "references": [],
+      "proof": "\\begin{align*}\n(g, h) \\in \\nil(L_1) \\oplus \\nil(L_2) & \\Leftrightarrow \\langle g, x \\rangle, \\langle h, y \\rangle \\in \\mathfrak{N} \\ \\ \\forall x \\in L_1 \\ \\ \\forall y \\in L_2\\\\\n& \\Leftrightarrow \\langle (g, h), (x, y) \\rangle \\ \\in\\mathfrak{N} \\ \\  \\forall  (x, y) \\in L_1\\oplus L_2\\\\\n& \\Leftrightarrow (g, h) \\in \\nil(L_1\\oplus L_2).\n\\end{align*}"
+    },
+    {
+      "id": "proposition-24-5617f0c3",
+      "type": "proposition",
+      "content": "Let $L_1$ and $L_2$ be non-nilpotent finite-dimensional Lie algebra over a field $F$. Then $\\Gamma_{\\mathfrak{N}}(L_1\\oplus L_2)$ is connected.",
+      "content_preview": "Let L_1 and L_2 be non-nilpotent finite-dimensional Lie algebra over a field F. Then _(L_1 L_2) is connected.",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 860,
+        "line_end": 862
+      },
+      "references": [],
+      "proof": "Let $(x_1, y_1), \\, (x_2, y_2) \\in L_1\\oplus L_2 \\setminus \\nil(L_1\\oplus L_2)$. Then $x_1 \\notin \\nil(L_1)$ or $y_1 \\notin \\nil(L_2)$ and $x_2 \\notin \\nil(L_1)$ or $y_2 \\notin \\nil(L_2)$. Consider the following cases:\n\n\\noindent \\textbf{Case 1.} $x_1 \\notin \\nil(L_1)$ and $y_2 \\notin \\nil(L_2)$. In this case the path $(x_1, y_1)$, $(x_1,0)$, $(0, y_2)$, $(x_2, y_2)$ connecting the vertices $(x_1, y_1), (x_2, y_2)$. \n\n\\noindent \\textbf{Case 2.} $x_1 \\in \\nil(L_1)$ and $x_2 \\in \\nil(L_1)$. Since $L_1$ is non-nilpotent, there exists $z \\in L_1\\setminus  \\nil(L_1)$. Then $(x_1, y_1)$, $(z, 0)$, $(x_2, y_2)$ is a path connecting   $(x_1, y_1)$ and $(x_2, y_2)$. \n\nThe remaining cases are analogous to one of the above."
+    },
+    {
+      "id": "theorem-25-7f99b8d6",
+      "type": "theorem",
+      "content": "\\label{KappaProductNilpotent}\nLet $L_1$ be a finite dimensional non-nilpotent Lie algebra. For every finite dimensional nilpotent Lie algebra $L$, it holds $ \\kappa(L_1\\oplus L) = \\kappa(L_1)$. In particular, $\\Gamma_{\\mathfrak{N}}(L_1)$ is connected if and only if $\\Gamma_{\\mathfrak{N}}(L_1\\oplus L)$ is connected for every finite dimenional nilpotent  Lie algebra $L$.",
+      "content_preview": "Let L_1 be a finite dimensional non-nilpotent Lie algebra. For every finite dimensional nilpotent Lie algebra L, it holds (L_1 L) = (L_1).",
+      "display_name": "Theorem",
+      "label": "KappaProductNilpotent",
+      "position": {
+        "line_start": 877,
+        "line_end": 880
+      },
+      "references": [
+        {
+          "target_id": "ComponentsNilAdjacency",
+          "reference_type": "internal",
+          "context": "L_1\\oplus L) = \\nil(L_1)\\oplus L$. Thus, by Lemma \\ref{ComponentsNilAdjacency},  \n$(z,w), (x,y)$ are adjacent in $\\Gamma_{\\mathf",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $L$ be any finite dimensional nilpotent Lie algebra. Then $\\nil(L) = L$ and $\\nil(L_1\\oplus L) = \\nil(L_1)\\oplus L$. Thus, by Lemma \\ref{ComponentsNilAdjacency},  \n$(z,w), (x,y)$ are adjacent in $\\Gamma_{\\mathfrak{N}}(L_1\\oplus L)$ if and only if $z$ and $x$ are adjacent in $\\Gamma_{\\mathfrak{N}}(L_1)$. Then, there is no path from $z$ to $x$ if and only if there is no path from $(z,w)$ to $(x,y)$, for all $w, y \\in L$. This implies that $\\kappa(L_1\\oplus L) = \\kappa(L_1)$."
+    },
+    {
+      "id": "definition-26-415270b6",
+      "type": "definition",
+      "content": "A subalgebra $U$ of $L$ is said to be strongly self-centralizing if $C_L(x) = U$ for all $0\\neq x\\in U$.",
+      "content_preview": "A subalgebra U of L is said to be strongly self-centralizing if C_L(x) = U for all 0 x U.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 892,
+        "line_end": 894
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-27-b3b4e09a",
+      "type": "example",
+      "content": "Let $L$ be the two-dimensional non-abelian Lie algebra. The $L$ has basis $\\{x, y\\}$ with $[x,y]=-[y,x]=y$. Put $U = Fx$. Then $U$ is a strongly self-centralising Lie subalgebra of $L$.",
+      "content_preview": "Let L be the two-dimensional non-abelian Lie algebra. The L has basis x, y with [x,y]=-[y,x]=y. Put U = Fx.",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 896,
+        "line_end": 898
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-28-1af0077b",
+      "type": "example",
+      "content": "Let $L$ be three-dimensional with basis $\\{e, f, g\\}$ and products $[e,f] = 0, [e,g] = e, [f,g] = f$. Then $U := Fe + Ff$ is strongly self-centralising Lie subalgebra of $L$.",
+      "content_preview": "Let L be three-dimensional with basis e, f, g and products [e,f] = 0, [e,g] = e, [f,g] = f. Then U := Fe + Ff is strongly self-centralising Lie...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 901,
+        "line_end": 903
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-29-1a85f12b",
+      "type": "example",
+      "content": "Let $L=\\mathfrak{sl}_n(F_q)$ be the Lie algebra of $n\\times n$ traceless matrices over the finite field $F_q$, and let $U$ be the subalgebra of all diagonal matrices in $\\mathfrak{sl}_n(F_q)$, with $q= p^a$ and $p\\nmid n$. Then $C_L(x)=U$ for all $0\\neq x\\in U$.",
+      "content_preview": "Let L=_n(F_q) be the Lie algebra of n n traceless matrices over the finite field F_q, and let U be the subalgebra of all diagonal matrices in...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 906,
+        "line_end": 908
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-30-cdaf3de7",
+      "type": "lemma",
+      "content": "\\label{omega}\n Let $U$ be a nilpotent subalgebra of $L$ such that $U \\not \\subseteq \\nil(L)$. Then\n $U\\setminus (U\\cap \\nil(L))$ is the set of vertices of a clique of $\\Gamma_\\mathfrak{N}(L)$. Moreover, if $N$ is a nilpotent ideal of $L$ and $L$ is finite, $|N\\setminus (N\\cap \\nil(L))| \\leq \\omega(\\Gamma_\\mathfrak{N} (L))$. In\n particular, $|N(L) \\setminus (N(L)\\cap \\nil(L))|\\leq \\omega(\\Gamma_\\mathfrak{N} (L))$.",
+      "content_preview": "Let U be a nilpotent subalgebra of L such that U (L). Then U (U (L)) is the set of vertices of a clique of _(L).",
+      "display_name": "Lemma",
+      "label": "omega",
+      "position": {
+        "line_start": 912,
+        "line_end": 916
+      },
+      "references": [],
+      "proof": "Since any subalgebra of a nilpotent Lie algebra is nilpotent, $\\langle x,y\\rangle$ is nilpotent for all $x, y \\in U \\setminus (U \\cap \\nil(L))$. Thus the subgraph of $\\Gamma_\\mathfrak{N} (L)$ having $U \\setminus (U\\cap \\nil(L))$ as its set of vertices is a clique. Moreover, if $N$ is a nilpotent ideal of $L$, then\n \\begin{align*}\n |N\\setminus(N\\cap \\nil(L))| &\\leq \\max\\{|U \\setminus(U\\cap \\nil(L))| : U \\hbox{ is a nilpotent ideal of } L\\} \\\\\n &\\leq \\max\\{|U \\setminus(U\\cap \\nil(L))| : U \\hbox{ is a nilpotent subalgebra of } L\\} \\\\\n &\\leq \\omega(\\Gamma_\\mathfrak{N}(L)).\n\\end{align*}\n\nThe rest follows from the fact that the nilradical $N(L)$ is the largest  nilpotent subgroup of $L$."
+    },
+    {
+      "id": "theorem-31-958738b9",
+      "type": "theorem",
+      "content": "\\label{ProperCentralizer2}\n If there exists a strongly self-centralizing subalgebra $U$ of $L$, then:\n \\begin{enumerate}\n     \\item $\\nil_L(x) = U$ for all $0\\neq x\\in U$.\n     \n     \\item $\\Gamma_\\mathfrak{N} (L)$ is a disconnected graph.\n\n    \\item  if $L$ is finite, $|\\mathrm{N}(L)|-1\\leq \\omega(\\Gamma_\\mathfrak{N} (L))$.\n \\end{enumerate}",
+      "content_preview": "If there exists a strongly self-centralizing subalgebra U of L, then: _L(x) = U for all 0 x U. _ (L) is a disconnected graph.",
+      "display_name": "Theorem",
+      "label": "ProperCentralizer2",
+      "position": {
+        "line_start": 932,
+        "line_end": 942
+      },
+      "references": [
+        {
+          "target_id": "z*",
+          "reference_type": "internal",
+          "context": "dge from $y$ to $x$.\n\n(3) By part (1) and Theorem \\ref{z*},  $\\nil(L) = Z^*(L) = 0$. Therefore $|N(L)|-1 \\le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "omega",
+          "reference_type": "internal",
+          "context": "1 \\leq \\omega(\\Gamma_\\mathfrak{N} (L))$ (by Lemma \\ref{omega}).",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "(1) Let $0\\neq x\\in U$. Clearly, $U=C_L(x)\\subseteq \\nil_L(x)$. So let $y\\in \\nil_L(x)$. Then there exists $z\\in Z(\\langle x,y\\rangle)$ and so $z\\in C_L(x)=U$. It follows that $y\\in C_L(z)=U$, whence $\\nil_L(x)\\subseteq U$ and equality results.\n\n(2) As in (1), for every $y\\in L\\setminus U$, $y\\notin \\nil_L(x)$, so $\\langle x,y\\rangle$ is not nilpotent and there is no edge from $y$ to $x$.\n\n(3) By part (1) and Theorem \\ref{z*},  $\\nil(L) = Z^*(L) = 0$. Therefore $|N(L)|-1 \\leq \\omega(\\Gamma_\\mathfrak{N} (L))$ (by Lemma \\ref{omega})."
+    },
+    {
+      "id": "definition-32-26b7523e",
+      "type": "definition",
+      "content": "Let $L$ be a finite-dimensional non-nilpotent Lie algebra. The non-nilpotent graph of $L$, denoted by $\\Gamma_{\\mathfrak{N}}(L)^c$, is a simple undirected graph whose vertex set is $L\\setminus \\nil(L)$, and two vertices $x$ and $y$ are adjacent if and only if $\\langle x, y\\rangle$ is a non-nilpotent subalgebra of $L$.",
+      "content_preview": "Let L be a finite-dimensional non-nilpotent Lie algebra. The non-nilpotent graph of L, denoted by _(L)^c, is a simple undirected graph whose vertex...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 956,
+        "line_end": 958
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-33-a0cb9a21",
+      "type": "example",
+      "content": "\\begin{enumerate}\n    \\item The Non-nilpotent graph of $\\mathfrak{t}(2,\\mathbb{F}_2)$ consists of one connected component\n    \\begin{figure}[H]\n    \\centering\n    \\begin{tikzpicture}\n        \\GraphInit[vstyle=Shade]\n        \\tikzset{VertexStyle/.append style={minimum size=1pt, inner sep=1pt}}\n        \\renewcommand*{\\EdgeLineWidth}{0.5pt}\n        \\Vertex[x=1, y=0]{1}\n        \\Vertex[x=1 , y=2]{4}    \n        \\Vertex[x=2.5 , y=0]{6}  \n        \\Vertex[x=3 , y=1]{3} \n        \\Vertex[x=2.5 , y=2]{2}   \n        \\Vertex[x=0.5 , y=1]{5}  \n        \\Edges(1,6)\n        \\Edges(1,5)\n        \\Edges(1,2)\n        \\Edges(6,3)\n        \\Edges(6,4)\n        \\Edges(5,4)\n        \\Edges(5,6)\n        \\Edges(5,2)\n        \\Edges(4,2)\n        \\Edges(3,4)\n        \\Edges(3,2)\n        \\Edges(3,1)\n    \\end{tikzpicture}\n    \\caption{Non-nilpotent Graph of $\\mathfrak{t}(2,\\mathbb{F}_2)$}\n    \\end{figure}\n\\end{enumerate}",
+      "content_preview": "The Non-nilpotent graph of (2,_2) consists of one connected component [H] (1,6) (1,5) (1,2) (6,3) (6,4) (5,4) (5,6) (5,2) (4,2) (3,4) (3,2) (3,1)...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 960,
+        "line_end": 991
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_grado2",
+      "type": "unknown",
+      "content": "External reference to 'grado2'",
+      "content_preview": "External reference to 'grado2'",
+      "display_name": "Unknown",
+      "label": "grado2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-7-75285a5b",
+      "target": "lemma-1-087f58f2",
+      "type": null
+    },
+    {
+      "source": "corollary-20-f541fb95",
+      "target": "external_grado2",
+      "type": null
+    },
+    {
+      "source": "theorem-25-7f99b8d6",
+      "target": "lemma-22-676db0c9",
+      "type": null
+    },
+    {
+      "source": "theorem-31-958738b9",
+      "target": "theorem-7-75285a5b",
+      "type": null
+    },
+    {
+      "source": "theorem-31-958738b9",
+      "target": "lemma-30-cdaf3de7",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 34,
+    "edge_count": 5,
+    "extractor_used": "regex-only"
+  }
+}

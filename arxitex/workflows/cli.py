@@ -1,4 +1,6 @@
 import asyncio
+import json
+from pathlib import Path
 from loguru import logger
 import argparse
 import os
@@ -7,122 +9,154 @@ os.environ["RICH_QUIET"] = "True"
 os.environ["TQDM_DISABLE"] = "1"
 
 from arxitex.workflows.runner import ArxivPipelineComponents
-from arxitex.workflows.graph_generator import AsyncGraphGeneratorWorkflow
+from arxitex.workflows.discover import DiscoveryWorkflow
+from arxitex.workflows.processor import ProcessingWorkflow
+from arxitex.extractor.core.pipeline import agenerate_artifact_graph
 
 async def process_single_paper(arxiv_id: str, args):
-    paper = {"arxiv_id": arxiv_id}
+    """
+    Handles a single paper by running the temporary download and processing logic
+    end-to-end, providing immediate feedback. This is ideal for testing.
+    """
+    logger.info(f"Starting end-to-end processing for single paper: {arxiv_id}")
     
-    logger.info("Initializing workflow components...")
-    pipeline_components = ArxivPipelineComponents(output_dir=args.output_dir)
+    components = ArxivPipelineComponents(output_dir=args.output_dir)
     
-    graph_workflow = AsyncGraphGeneratorWorkflow(
-        components=pipeline_components,
-        use_llm=args.use_llm,
-        max_concurrent_tasks=1,
-        force=args.force
-    )
-    
-    result = await graph_workflow.process_single_paper(paper)    
-    return result
+    if not args.force and components.processing_index.is_paper_processed(arxiv_id):
+        logger.warning(f"Paper {arxiv_id} already exists in the processing index. Use --force to override.")
+        return {"status": "skipped"}
 
-async def process_batch(args):
-    """Process papers using search query."""
-    logger.info("Initializing workflow components...")
-    
-    pipeline_components = ArxivPipelineComponents(output_dir=args.output_dir)
+    try:
+        temp_base_dir = Path(components.output_dir) / "temp_processing"
+        
+        graph_data = await agenerate_artifact_graph(
+            arxiv_id=arxiv_id,
+            use_llm=args.use_llm,
+            source_dir=temp_base_dir
+        )
 
-    graph_workflow = AsyncGraphGeneratorWorkflow(
-        components=pipeline_components,
-        use_llm=args.use_llm,
-        max_concurrent_tasks=args.workers,
-        force=args.force
-    )
+        graphs_output_dir = os.path.join(components.output_dir, "graphs")
+        os.makedirs(graphs_output_dir, exist_ok=True)
+        safe_paper_id = arxiv_id.replace('/', '_')
+        graph_filename = f"{safe_paper_id}.json"
+        graph_filepath = Path(graphs_output_dir) / graph_filename
+        with open(graph_filepath, 'w', encoding='utf-8') as f:
+            json.dump(graph_data, f, indent=2)
 
-    await graph_workflow.run(
-        search_query=args.query,
-        max_papers=args.max_papers,
-        batch_size=args.batch_size
-    )
+        components.processing_index.update_processed_papers_index(
+            arxiv_id, status='success', output_path=str(graph_filepath), stats=graph_data.get("stats", {})
+        )
+        logger.info(f"SUCCESS: Processed {arxiv_id} and saved graph to {graph_filepath}")
+        return {"status": "success"}
 
-async def main(args):
-    """Main entry point that handles both single papers and batch processing."""
-    if args.arxiv_id:
-        result = await process_single_paper(args.arxiv_id, args)
-        if result["status"] == "failure":
-            logger.error(f"Failed to process {args.arxiv_id}: {result['reason']}")
-            return 1
-        else:
-            logger.info(f"Successfully processed {args.arxiv_id}")
-            return 0
-    else:
-        await process_batch(args)
-        logger.info("Workflow has completed.")
-        return 0
+    except Exception as e:
+        reason = f"End-to-end processing failed for {arxiv_id}: {e}"
+        logger.error(reason, exc_info=True)
+        components.processing_index.update_processed_papers_index(
+            arxiv_id, status='failure', reason=str(e)
+        )
+        return {"status": "failure", "reason": reason}
 
-if __name__ == '__main__':
+
+async def main():
+    """Parses command-line arguments and runs the selected workflow."""
     parser = argparse.ArgumentParser(
-        description="ArXiv Artifact Graph Generation - Single paper or batch processing",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-        epilog="""
-Examples:  
-  # Process single paper with LLM enhancement
-  python arxitex.workflows.cli --arxiv-id 2305.15334 --use-llm
-  
-  # Batch processing with search query
-  python arxitex.workflows.cli --query "cat:math.GR" --max-papers 10 --workers 3
-"""
+        description="ArxiTex: A pipeline for discovering and processing ArXiv papers.",
+        formatter_class=argparse.RawTextHelpFormatter
     )
-    
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument(
-        '--arxiv-id',
-        type=str,
-        help="Process a single arXiv paper by ID (e.g., '2103.14030', 'math.AG/0601001')"
+    parser.add_argument(
+        '-o', '--output-dir', type=str, default="pipeline_output",
+        help="Directory for all outputs (indices, logs, graphs)"
     )
-    group.add_argument(
+
+    subparsers = parser.add_subparsers(dest="command", required=True, help="Available commands")
+
+    # --- 'single' command ---
+    parser_single = subparsers.add_parser(
+        "single", 
+        help="Temporarily download and process a single paper by its ID."
+    )
+    parser_single.add_argument("arxiv_id", help="The arXiv ID to process (e.g., '2305.15334').")
+    parser_single.add_argument('--use-llm', action='store_true', help="Use the LLM-based extractor.")
+    parser_single.add_argument('--force', action='store_true', help="Force re-processing even if it's in the index.")
+
+    # --- 'discover' command ---
+    parser_discover = subparsers.add_parser(
+        "discover", 
+        help="Find new paper IDs from ArXiv and add them to the processing queue."
+    )
+    parser_discover.add_argument(
         '-q', '--query', 
         type=str, 
-        default="cat:math.GR",
-        help="ArXiv API search query (for batch processing)"
+        required=True, 
+        help="ArXiv API search query (e.g., 'cat:cs.AI AND all:conjecture')."
     )
-    parser.add_argument(
+    parser_discover.add_argument(
         '-n', '--max-papers', 
         type=int, 
-        default=1, 
-        help="Target number of papers to successfully process (batch mode)"
+        default=1000, 
+        help="Target number of papers to discover in this run."
     )
-    parser.add_argument(
+    parser_discover.add_argument(
         '-b', '--batch-size', 
         type=int, 
-        default=1, 
-        help="Number of papers to fetch from the API in each batch"
+        default=100, 
+        help="Number of papers to fetch from the API in each batch."
     )
-    parser.add_argument(
+
+    # --- 'process' command ---
+    parser_process = subparsers.add_parser(
+        "process", 
+        help="Process papers from the queue (downloads temporarily to generate graphs)."
+    )
+    parser_process.add_argument(
+        '-n', '--max-papers', 
+        type=int, 
+        default=500, 
+        help="Maximum number of papers from the queue to process in this run."
+    )
+    parser_process.add_argument(
         '-w', '--workers', 
         type=int, 
-        default=1, 
-        help="Number of concurrent processing tasks"
+        default=4, 
+        help="Number of concurrent processing tasks (match to CPU cores)."
     )
-    
-    # Common arguments
-    parser.add_argument(
-        '-o', '--output-dir', 
-        type=str, 
-        default="pipeline_output", 
-        help="Directory to store outputs and the persistent index"
-    )
-    parser.add_argument(
+    parser_process.add_argument(
         '--use-llm', 
         action='store_true', 
-        help="Use the LLM-based extractor (requires OPENAI_API_KEY)"
+        help="Use the LLM-based extractor (requires OPENAI_API_KEY)."
     )
-    parser.add_argument(
-        '--force', 
-        action='store_true', 
-        help="Force re-processing of papers already in the index"
-    )
-    
+
     args = parser.parse_args()
+        
+    exit_code = 0
+    if args.command == "single":
+        result = await process_single_paper(args.arxiv_id, args)
+        if result.get("status") == "failure":
+            exit_code = 1
     
-    exit_code = asyncio.run(main(args))
+    elif args.command == "discover":
+        components = ArxivPipelineComponents(output_dir=args.output_dir)
+        workflow = DiscoveryWorkflow(components)
+        await workflow.run(
+            search_query=args.query,
+            max_papers=args.max_papers,
+            batch_size=args.batch_size
+        )
+
+    elif args.command == "process":
+        components = ArxivPipelineComponents(output_dir=args.output_dir)
+        workflow = ProcessingWorkflow(
+            components=components,
+            use_llm=args.use_llm,
+            max_concurrent_tasks=args.workers
+        )
+        await workflow.run(max_papers=args.max_papers)
+
+    logger.info(f"Command '{args.command}' has completed.")
+    return exit_code
+
+
+if __name__ == '__main__':
+    exit_code = asyncio.run(main())
     exit(exit_code)

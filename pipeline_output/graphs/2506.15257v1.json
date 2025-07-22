@@ -1,0 +1,820 @@
+{
+  "arxiv_id": "2506.15257v1",
+  "nodes": [
+    {
+      "id": "definition-1-3d495545",
+      "type": "definition",
+      "content": "Let $(a_n)$ be a sequence of integers, the subgroup\n$$\nt_{(a_n)}(\\T) := \\{x\\in \\T: a_nx \\to 0\\mbox{ in } \\T\\}\n$$\nof $\\T$ is called {\\em a characterized} $($by $(a_n))$ {\\em subgroup} of $\\T$.",
+      "content_preview": "Let (a_n) be a sequence of integers, the subgroup t_(a_n)() := x : a_nx 0 of is called a characterized (by (a_n)) subgroup of .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 136,
+        "line_end": 142
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "fact-2-ac15fbb3",
+      "type": "fact",
+      "content": "\\label{lemmanew}\\cite{DI1}\nFor any arithmetic sequence $(a_n)$ and $x\\in\\T$, we can find a unique sequence $c_n\\in [0,q_n-1]$ such that\n\\begin{equation}\\label{canonical:repr}\nx=\\sum\\limits_{n=1}^{\\infty}\\frac{c_n}{a_n},\n\\end{equation}\nwhere $c_n<q_n-1$ for infinitely many $n$.",
+      "content_preview": "For any arithmetic sequence (a_n) and x, we can find a unique sequence c_n [0,q_n-1] such that x=_n=1^, where c_n<q_n-1 for infinitely many n.",
+      "display_name": "Fact",
+      "label": "lemmanew",
+      "position": {
+        "line_start": 203,
+        "line_end": 209
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-3-59b01c54",
+      "type": "lemma",
+      "content": "\\label{uconlmain}\\cite[Lemma 3.1]{DR}\nFor $x\\in\\T$ with canonical representation (\\ref{canonical:repr}), for every natural $n > 1$ and every non-negative integer $t$,\n\\begin{equation}\\label{eqlemain1}\n\\{a_{n-1}x\\}=\\frac{c_n}{q_n}+\\frac{c_{n+1}}{q_nq_{n+1}}+\\ldots+\\frac{c_{n+t}}{q_n\\ldots q_{n+t}}+\\frac{\\{a_{n+t}x\\}}{q_n\\ldots q_{n+t}}.\n\\end{equation}\nIn particular, for $t=1$, we get\n\\begin{equation}\\label{eqlemain2}\n\\{a_{n-1}x\\}=\\frac{c_n}{q_n}+\\frac{c_{n+1}}{q_nq_{n+1}}+\\frac{\\{a_{n+1}x\\}}{q_nq_{n+1}}.\n\\end{equation}",
+      "content_preview": "For x with canonical representation (), for every natural n > 1 and every non-negative integer t, a_n-1x=+q_nq_n+1++q_n q_n+t+xq_n q_n+t.",
+      "display_name": "Lemma",
+      "label": "uconlmain",
+      "position": {
+        "line_start": 226,
+        "line_end": 235
+      },
+      "references": [
+        {
+          "target_id": "canonical:repr",
+          "reference_type": "external",
+          "context": "]{DR}\nFor $x\\in\\T$ with canonical representation (\\ref{canonical:repr}), for every natural $n > 1$ and every non-negativ",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "remark-4-d213c918",
+      "type": "remark",
+      "content": "\\label{uconr1}\nSince $(a_n)$ is a subsequence of $(e_n)$, we can write $a_k=e_{n_k}$. More precisely, we can write $e_{(n_{k-1}+i-1)}=r^k_ia_{k-1}$ where $1\\leq i \\leq n_{k}-n_{k-1}$ and $r^k_i\\in [1,q_{k}-1]$ with $r^k_1=1$. In particular, if $(e_n)=(d_n)$ then $n_{k}-n_{k-1}=q_{k}-1$ and $d_{(n_{k-1}+i-1)}=ia_{k-1}.$ We simply denote $r^k_i$ by $r(e)$ when there is no confusion in the indexing.",
+      "content_preview": "Since (a_n) is a subsequence of (e_n), we can write a_k=e_n_k. More precisely, we can write e_(n_k-1+i-1)=r^k_ia_k-1 where 1 i n_k-n_k-1 and r^k_i...",
+      "display_name": "Remark",
+      "label": "uconr1",
+      "position": {
+        "line_start": 251,
+        "line_end": 253
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-5-56bccb79",
+      "type": "remark",
+      "content": "\\label{uconr2}\nLet $a_k=e_{n_k}$ and $A\\subseteq \\N$. We define\n$$\nL(A)=\\bigcup\\limits_{k\\in A} [n_{k-1},n_{k}-1].\n$$\nThen, in view of Remark \\ref{uconr1}, for any subsequence $(e_n)_{n\\in B}$ of $(e_n)$ there exists a unique $A\\subseteq\\N$ such that $B\\subseteq L(A)$ and if $A_1\\subsetneq A$ then $B\\not\\subseteq L(A_1)$.",
+      "content_preview": "Let a_k=e_n_k and A . We define L(A)=_k A [n_k-1,n_k-1]. Then, in view of Remark , for any subsequence (e_n)_n B of (e_n) there exists a unique A...",
+      "display_name": "Remark",
+      "label": "uconr2",
+      "position": {
+        "line_start": 255,
+        "line_end": 261
+      },
+      "references": [
+        {
+          "target_id": "uconr1",
+          "reference_type": "internal",
+          "context": "A} [n_{k-1},n_{k}-1].\n$$\nThen, in view of Remark \\ref{uconr1}, for any subsequence $(e_n)_{n\\in B}$ of $(e_n)$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-6-8702bd73",
+      "type": "theorem",
+      "content": "\\label{main theorem DGT1}\\cite[Theorem 2.5]{DGT1}\nSuppose $x\\in\\T$ and $(e_n)$ is an arithmetic-type sequence. Then $x\\in t_{(e_n)}(\\mathbb{T})$ if and only if $supp(x)$ is finite or if $supp(x)$ is infinite and for each infinite $A\\subseteq \\mathbb{N}$ the following holds:\n\\begin{itemize}\n\\item[$(a)$] If $A$ is $q$-bounded then :\n\\begin{itemize}\n\\item[$(a1)$]  If $A\\subset^*supp(x)$ then $(A+1)\\subset^* supp(x)$, $A\\subset^*supp^q(x)$ and $\\lim\\limits_{n\\in A}$$\\frac{c_{n+1}+1}{q_{n+1}}=1$.\\\\\nMoreover, if $A+1$ is $q$-bounded then $(A+1)\\subset^*supp^q(x)$.\n\\item[$(a2)$] If $A\\cap supp(x)$ is finite then $\\lim\\limits_{n\\in A}\\frac{c_{n+1}}{q_{n+1}}=0$.\\\\\nMoreover, if $A+1$ is $q$-bounded then $(A+1)\\cap supp(x)$ is finite.\n\\end{itemize}\n\\item[$(b)$]  If $A$ is $q$-divergent then :\n\\begin{itemize}\n\\item[$(b1)$] If $(A+1)\\subset^* supp(x)$ and\n\\begin{itemize}\n\\item[$(i)$] if $A+1$ is $q$-bounded then $\\lim\\limits_{n\\in A}\\|\\frac{r_{n}(e)}{q_n}(c_{n}+1)\\|=0$.\n\\item[$(ii)$] if $A+1$ is $q$-divergent then $\\lim\\limits_{n\\in A}\\|\\frac{r_{n}(e)}{q_n}(c_{n}+\\frac{c_{n+1}}{q_{n+1}})\\|=0$.\n\\end{itemize}\n\\item[$(b2)$] If $(A+1)\\cap supp(x)$ is finite then $\\lim\\limits_{n\\in A}\\|\\frac{r_{n}(e)c_n}{q_n}\\|=0$.\t\n\\end{itemize}\n\\end{itemize}",
+      "content_preview": "Suppose x and (e_n) is an arithmetic-type sequence. Then x t_(e_n)() if and only if supp(x) is finite or if supp(x) is infinite and for each infinite...",
+      "display_name": "Theorem",
+      "label": "main theorem DGT1",
+      "position": {
+        "line_start": 269,
+        "line_end": 289
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-61346caa",
+      "type": "lemma",
+      "content": "\\label{leuncoun1}\nConsider $x\\in\\T$ with $supp(x)=A$. If $A$ is an infinite subset of $\\N$ then $|\\mathcal{G}_A(\\T)|=\\mathfrak{c}$.",
+      "content_preview": "Consider x with supp(x)=A. If A is an infinite subset of then |_A()|=.",
+      "display_name": "Lemma",
+      "label": "leuncoun1",
+      "position": {
+        "line_start": 293,
+        "line_end": 295
+      },
+      "references": [],
+      "proof": "Let us write $A=\\{l_1<l_2<\\ldots<l_k<\\ldots\\}$. We fix a sequence $(\\delta_i)\\in \\{0,1\\}^\\N$ and define $B^\\delta = \\bigcup\\limits_{k=1}^{\\infty}l_{2k+ \\delta_k}$ (it is to be noted that $B^\\delta $ is actually obtained from $A$ by taking at each stage $k$ either $l_{2k}$ or $l_{2k+1}$ depending on the choice imposed by $(\\delta_i)$). Clearly $B^\\delta \\ne B^\\gamma$ for distinct $\\delta, \\gamma \\in \\{0,1\\}^\\N$. Consequently, this provides an injective map given by\n$$\n\\{0,1\\}^\\N \\ni \\delta \\to B^\\delta.\n$$\nNow, for each $x_\\delta\\in\\T$ with $supp (x_\\delta)=B^\\delta$ and $c_n(x_\\delta)=c_n(x)$ for each $n\\in supp(x_\\delta)$, we have $x_\\delta\\in G_A(\\T)$. Since $|\\{0,1\\}^\\N| = \\mathfrak c$, it readily follows that $|\\mathcal{G}_A(\\T)|=\\mathfrak{c}$."
+    },
+    {
+      "id": "theorem-8-a5d3115f",
+      "type": "theorem",
+      "content": "\\label{thuncoun1}\nSuppose $x\\in t_{(e_n)}(\\T)$ and $supp(x)$ is infinite. Then $|t_{(e_n)}(\\T)|=\\mathfrak{c}$.",
+      "content_preview": "Suppose x t_(e_n)() and supp(x) is infinite. Then |t_(e_n)()|=.",
+      "display_name": "Theorem",
+      "label": "thuncoun1",
+      "position": {
+        "line_start": 306,
+        "line_end": 308
+      },
+      "references": [
+        {
+          "target_id": "eqnorm",
+          "reference_type": "external",
+          "context": "}{q_n}\\|.\n\\end{equation}\nTherefore, in view of Eq(\\ref{eqnorm}), Eq(\\ref{eqnoncofin2}) ensures that\n$$\n\\lim\\limi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnoncofin2",
+          "reference_type": "external",
+          "context": "ation}\nTherefore, in view of Eq(\\ref{eqnorm}), Eq(\\ref{eqnoncofin2}) ensures that\n$$\n\\lim\\limits_{n\\in supp(y)}\\|\\fra",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "leuncoun1",
+          "reference_type": "internal",
+          "context": "}_B(\\T)\\subseteq t_{(e_n)}(\\T)$. In view of Lemma \\ref{leuncoun1}, it is evident that $|t_{(e_n)}(\\T)|=\\mathfrak{c}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemmanew",
+          "reference_type": "internal",
+          "context": "$$\nSince $supp^q(x)$ is not cofinite (see Remark \\ref{lemmanew}), we must have $B_0'$ is infinite. Also observe t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq2ai2",
+          "reference_type": "external",
+          "context": "{c_{n+1}(x)}{q_{n+1}}\\|=0.\n\\end{equation}\nThen Eq(\\ref{eq2ai2}) and Eq(\\ref{eq2aii2}) entails that there exists",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq2aii2",
+          "reference_type": "external",
+          "context": "\\|=0.\n\\end{equation}\nThen Eq(\\ref{eq2ai2}) and Eq(\\ref{eq2aii2}) entails that there exists $\\epsilon_n\\in [0,1]$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqepsilon",
+          "reference_type": "external",
+          "context": "nd{equation}\nIn particular, taking $r(e)=1$ in Eq(\\ref{eqepsilon}), we have\n$$\n\\lim\\limits_{n\\in B'}\\|\\frac{c_{n}(x",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnorm",
+          "reference_type": "external",
+          "context": ")} \\frac{c_n(y)}{q_n}=0.\n$$\nIndeed, in view of Eq(\\ref{eqnorm}), Eq(\\ref{eqepsilon}) ensures that\n$$\n\\lim\\limits",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqepsilon",
+          "reference_type": "external",
+          "context": "_n}=0.\n$$\nIndeed, in view of Eq(\\ref{eqnorm}), Eq(\\ref{eqepsilon}) ensures that\n$$\n\\lim\\limits_{n\\in supp(y)}\\|\\fra",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "leuncoun1",
+          "reference_type": "internal",
+          "context": "me way as the non-cofinite case, in view of Lemma \\ref{leuncoun1}, we conclude that $|t_{(e_n)}(\\T)|=\\mathfrak{c}$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose $x\\in t_{(e_n)}(\\T)$ and $supp(x)$ is an infinite non-cofinite set. Let us write\n$$\n B=supp(x)\\setminus (supp(x)-1).\n$$\nSince $supp(x)$ is not cofinite, we must have $B$ is infinite. Also observe that $B\\subseteq supp(x)$ and $(B+1)\\cap supp(x)=\\emptyset$. If possible assume that there exists an infinite set $B_1\\subseteq B$ such that $B_1$ is $q$-bounded. Then item $(a1)$ of \\cite[Theorem 2.5]{DGT1} entails that $(B_1+1)\\subseteq^* supp(x)$ which contradicts the fact that $(B+1)\\cap supp(x)=\\emptyset$. Indeed we conclude that $B$ is $q$-divergent. As a consequence, item $(b2)$ of \\cite[Theorem 2.5]{DGT1} holds true. Therefore, for each $r(e)\\in[1,q_{k}-1]$ we have\n\\begin{equation}\\label{eqnoncofin2}\n\\lim\\limits_{n\\in B}\\|\\frac{r(e)c_{n}(x)}{q_n}\\|=0.\n\\end{equation}\nIn particular, taking $r(e)=1$ we have\n$$\n\\lim\\limits_{n\\in B}\\|\\frac{c_{n}(x)}{q_n}\\|=0.\n$$\nNow consider $y\\in\\T$ such that $supp(y)\\subseteq B$ and for each $n\\in supp(y)$,\n$$\nc_n(y) = \\begin{cases}\n   c_n(x) & \\text{for}\\ c_n(x)\\leq \\frac{q_{n}}{2} \\\\\n   q_n- c_n(x) & \\text{otherwise}.\n  \\end{cases}\n$$\nThen it is evident that $supp(y)\\cap (supp(y)+1)=\\emptyset$ and\n$$\n\\lim\\limits_{n\\in supp(y)} \\frac{c_n(y)}{q_n} =0.\n$$\nNote that for each $n\\in\\N$, we have\n\\begin{equation}\\label{eqnorm}\n\\|\\frac{r(e)(q_n - c_{n}(x))}{q_n}\\|=\\|\\frac{r(e)c_{n}(x)}{q_n}\\|.\n\\end{equation}\nTherefore, in view of Eq(\\ref{eqnorm}), Eq(\\ref{eqnoncofin2}) ensures that\n$$\n\\lim\\limits_{n\\in supp(y)}\\|\\frac{r(e)c_{n}(y)}{q_n}\\|=\\lim\\limits_{n\\in supp(y)\\subseteq B}\\|\\frac{r(e)c_{n}(x)}{q_n}\\|=0.\n$$\nSince $B$ is $q$-divergent and $supp(y)\\subseteq B$, \\cite[Corollary 3.2]{DGT1} ensures that $y\\in t_{(e_n)}(\\T)$. Therefore, for each $A\\subseteq B$, we can construct an element $y_A\\in\\T$ such that $supp(y_A)=A$ with $c_n(y_A)=c_n(y_B)$ for each $n\\in supp(y_A)$ and $y_A\\in t_{(e_n)}(\\T)$. Indeed we conclude that $\\mathcal{G}_B(\\T)\\subseteq t_{(e_n)}(\\T)$. In view of Lemma \\ref{leuncoun1}, it is evident that $|t_{(e_n)}(\\T)|=\\mathfrak{c}$.\n\nSo, let us consider $supp(x)$ is cofinite. We set\n$$\nB_0'=supp(x)\\setminus supp^q(x).\n$$\nSince $supp^q(x)$ is not cofinite (see Remark \\ref{lemmanew}), we must have $B_0'$ is infinite. Also observe that $B_0'\\subseteq supp(x)$ and $B_0' \\cap supp^q(x)=\\emptyset$. If possible assume that there exists an infinite set $B_1'\\subseteq B_0'$ such that $B_1'$ is $q$-bounded. Then item $(a1)$ of \\cite[Theorem 2.5]{DGT1} entails that $B_1'\\subseteq^* supp^q(x)$ which contradicts the fact that $B_0'\\cap supp^q(x)=\\emptyset$. Indeed we conclude that $B_0'$ is $q$-divergent. Let us write\n$$\nB_0'=\\{n_k: k\\in\\N\\} \\ \\mbox{ and set } \\ B'=\\{n_{2k}:k\\in\\N\\}.\n$$\nThen $B'$ is again $q$-divergent and $B'\\cap (B'+1) =\\emptyset$. Since $supp(x)$ is cofinite, we also have $B'+1\\subseteq^* supp(x)$. Consequently, item $(b1)$ of \\cite[Theorem 2.5]{DGT1} holds true, i.e., if $B'+1$ is $q$-bounded then for each $r(e)\\in[1,q_{k}-1]$ we have\n\\begin{equation}\\label{eq2ai2}\n\\lim\\limits_{n\\in B'}\\|\\frac{r(e)}{q_n}(c_{n}(x)+1)\\|=0 ,\n\\end{equation}\nand, if $B'+1$ is $q$-divergent then for each $r(e)\\in[1,q_{k}-1]$ we have\n\\begin{equation}\\label{eq2aii2}\n \\lim\\limits_{n\\in B'}\\|\\frac{r(e)}{q_n}(c_{n}(x)+\\frac{c_{n+1}(x)}{q_{n+1}})\\|=0 \\mbox{ and } \\lim\\limits_{n\\in B'}\\|\\frac{c_{n+1}(x)}{q_{n+1}}\\|=0.\n\\end{equation}\nThen Eq(\\ref{eq2ai2}) and Eq(\\ref{eq2aii2}) entails that there exists $\\epsilon_n\\in [0,1]$ such that\n\\begin{equation}\\label{eqepsilon}\n\\lim\\limits_{n\\in B'}\\|\\frac{r(e)}{q_n}(c_{n}(x)+\\epsilon_n)\\|=0 \\mbox{ and } \\lim\\limits_{n\\in B'}\\|\\epsilon_n\\|=0.\n\\end{equation}\nIn particular, taking $r(e)=1$ in Eq(\\ref{eqepsilon}), we have\n$$\n\\lim\\limits_{n\\in B'}\\|\\frac{c_{n}(x)}{q_n}\\|=\\lim\\limits_{n\\in B'}\\|\\frac{c_{n}(x)+1}{q_n}\\|=0.\n$$\nSince $B'\\cap supp^q(x)=\\emptyset$, for each $n\\in B'$ we have $c_n(x) \\leq q_n-2$. Now consider $y\\in\\T$ such that $supp(y)\\subseteq B'$ and for each $n\\in supp(y)$\n$$\nc_n(y) = \\begin{cases}\n   q_n-c_n(x) -1 & \\text{for}\\ c_n(x)\\geq \\frac{q_{n}}{2} \\text{and}\\ \\epsilon_n\\geq \\frac{1}{2} \\\\\n   q_n-c_n(x)    & \\text{for}\\ c_n(x)\\geq \\frac{q_{n}}{2} \\text{and}\\ \\epsilon_n\\leq \\frac{1}{2} \\\\\n   c_n(x)        & \\text{for}\\ c_n(x)\\leq \\frac{q_{n}}{2} \\text{and}\\ \\epsilon_n\\leq \\frac{1}{2} \\\\\n   c_n(x)+1      & \\text{for}\\ c_n(x)\\leq \\frac{q_{n}}{2} \\text{and}\\ \\epsilon_n\\geq \\frac{1}{2}.\n  \\end{cases}\n$$\nThen it is evident that $supp(y)\\cap (supp(y)+1)=\\emptyset$ and\n$$\n\\lim\\limits_{n\\in supp(y)} \\frac{c_n(y)}{q_n}=0.\n$$\nIndeed, in view of Eq(\\ref{eqnorm}), Eq(\\ref{eqepsilon}) ensures that\n$$\n\\lim\\limits_{n\\in supp(y)}\\|\\frac{r(e)c_{n}(y)}{q_n}\\|=0.\n$$\nTherefore, from \\cite[Corollary 3.2]{DGT1}, we conclude that $y\\in t_{(e_n)}(\\T)$. Then proceeding exactly same way as the non-cofinite case, in view of Lemma \\ref{leuncoun1}, we conclude that $|t_{(e_n)}(\\T)|=\\mathfrak{c}$."
+    },
+    {
+      "id": "corollary-9-c3c66a60",
+      "type": "corollary",
+      "content": "\\label{corotorcountable}\nFor any arithmetic-type sequence $(e_n)$, $t_{(e_n)}(\\T)$ is torsion if and only if it is countable.",
+      "content_preview": "For any arithmetic-type sequence (e_n), t_(e_n)() is torsion if and only if it is countable.",
+      "display_name": "Corollary",
+      "label": "corotorcountable",
+      "position": {
+        "line_start": 388,
+        "line_end": 390
+      },
+      "references": [
+        {
+          "target_id": "thuncoun1",
+          "reference_type": "internal",
+          "context": "T)$ such that $supp(x)$ is infinite. Then Theorem \\ref{thuncoun1} ensures that $t_{(e_n)}(\\T)$ is uncountable.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First we assume that $t_{(e_n)}(\\T)$ is torsion. Then $t_{(e_n)}(\\T)$ is countable follows from the fact that $t_{(e_n)}(\\T)\\subseteq t(\\T)=\\Q/\\Z$. Now, on the contrary, assume that $t_{(e_n)}(\\T)$ is not torsion. Then there exists $x\\in t_{(e_n)}(\\T)$ such that $supp(x)$ is infinite. Then Theorem \\ref{thuncoun1} ensures that $t_{(e_n)}(\\T)$ is uncountable."
+    },
+    {
+      "id": "example-10-a414fa73",
+      "type": "example",
+      "content": "\\label{excounter}\nConsider any irrational number $\\gamma\\in (0,1)$. Then Corollary \\ref{corotorcountable} ensures that the cyclic subgroup of $\\T$ generated by $\\gamma$ (i.e., $\\langle\\gamma + \\Z \\rangle$) cannot be characterized by arithmetic-type sequences.",
+      "content_preview": "Consider any irrational number (0,1). Then Corollary ensures that the cyclic subgroup of generated by (i.e.",
+      "display_name": "Example",
+      "label": "excounter",
+      "position": {
+        "line_start": 395,
+        "line_end": 397
+      },
+      "references": [
+        {
+          "target_id": "corotorcountable",
+          "reference_type": "internal",
+          "context": "rational number $\\gamma\\in (0,1)$. Then Corollary \\ref{corotorcountable} ensures that the cyclic subgroup of $\\T$ generate",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "corollary-11-8175b488",
+      "type": "corollary",
+      "content": "\\label{coronontor}\nFor any arithmetic-type sequence $(e_n)$, the followings are equivalent:\n\\begin{itemize}\n\\item[$(i)$] $t_{(e_n)}(\\T)\\not= t_{(d_n)}(\\T)$.\n\\item[$(ii)$] $t_{(e_n)}(\\T)$ contains non-torsion elements.\n\\item[$(iii)$] $t_{(e_n)}(\\T)$ is uncountable.\n\\item[$(iv)$] $|t_{(e_n)}(\\T)|=\\mathfrak{c}$\n\\item[$(v)$] $|t_{(e_n)}(\\T)\\setminus t_{(d_n)}(\\T)|=\\mathfrak{c}$.\n\\end{itemize}",
+      "content_preview": "For any arithmetic-type sequence (e_n), the followings are equivalent: t_(e_n)()= t_(d_n)(). t_(e_n)() contains non-torsion elements.",
+      "display_name": "Corollary",
+      "label": "coronontor",
+      "position": {
+        "line_start": 399,
+        "line_end": 408
+      },
+      "references": [
+        {
+          "target_id": "thuncoun1",
+          "reference_type": "internal",
+          "context": "ent. $(ii) \\Rightarrow (iv)$ follows from Theorem \\ref{thuncoun1}. $(iv) \\Rightarrow (v)$ follows from \\cite[(iii)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "$(i) \\Rightarrow (ii)$ follows from \\cite[Theorem 2.7]{DG8}. $(iii)$ and $(iv)$ are equivalent. $(ii) \\Rightarrow (iv)$ follows from Theorem \\ref{thuncoun1}. $(iv) \\Rightarrow (v)$ follows from \\cite[(iii) Corollary 2.4]{DG8}. $(v) \\Rightarrow (i)$ is trivial."
+    },
+    {
+      "id": "theorem-12-1291001d",
+      "type": "theorem",
+      "content": "\\label{thcountabletor}\nAny infinite torsion subgroup of $\\T$ can be characterized by an arithmetic-type sequence of integers with bounded ratio.",
+      "content_preview": "Any infinite torsion subgroup of can be characterized by an arithmetic-type sequence of integers with bounded ratio.",
+      "display_name": "Theorem",
+      "label": "thcountabletor",
+      "position": {
+        "line_start": 415,
+        "line_end": 417
+      },
+      "references": [
+        {
+          "target_id": "thuncoun1",
+          "reference_type": "internal",
+          "context": ", consider any $x\\in t_{(e_n)}(\\T)$. Then Theorem \\ref{thuncoun1} ensures that $supp_{(a_n)}(x)$ is finite. Let us",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $G$ be an infinite torsion subgroup of $\\T$. Therefore, we need to show that there exists an arithmetic-type sequence $(e_n)$ with bounded ratio (i.e., the sequence $(\\frac{e_{n+1}}{e_n})$ is bounded) such that $G=t_{(e_n)}(\\T)$. Note that any countable subgroup $G$ of $\\T$ can be written as the countable increasing union of finitely generated abelian groups, i.e.,\n$$\nG=\\bigcup\\limits_{k=1}^\\infty H_k, \\mbox{ where each } H_k \\mbox{ are finitely generated and } H_k\\subsetneq H_{k+1}.\n$$\nIndeed, $H_k$ is torsion and finitely generated for each $k\\in\\N$. Therefore, we conclude that $H_k$ is a finite cyclic subgroup of $\\T$ for each $k\\in\\N$. Let order of $H_k$ be $a_k$. Then observe that $a_k$ properly divides $a_{k+1}$ for each $k\\in\\N$, i.e., $(a_k)$ is an arithmetic sequence. Now, consider any arithmetic-type sequence $(e_n)$ corresponding to the arithmetic sequence $(a_n)$ with bounded ratio. Since the ratio sequence $(\\frac{e_{n+1}}{e_n})$ is bounded, \\cite[Theorem 16]{E} entails that $t_{(e_n)}(\\T)$ is countable. Now, consider any $x\\in t_{(e_n)}(\\T)$. Then Theorem \\ref{thuncoun1} ensures that $supp_{(a_n)}(x)$ is finite. Let us write\n$$\nx=\\frac{c_{n_1}}{a_{n_1}}+\\frac{c_{n_2}}{a_{n_2}}+ \\ldots + \\frac{c_{n_i}}{a_{n_i}}.\n$$\nSince $H_k$ is the unique cyclic subgroup of order $a_k$ for each $k\\in\\N$, it is easy to see that $x\\in H_{n_i}\\subseteq G$. Also, note that for each $k\\in\\N$, $a_k$ divides $e_l$ for each $l\\geq n_k$. Therefore, it is clear that $G\\subseteq t_{(e_n)}(\\T)$. Thus, we conclude that $G=t_{(e_n)}(\\T)$."
+    },
+    {
+      "id": "corollary-13-539cbb08",
+      "type": "corollary",
+      "content": "Every countable subgroups of $\\T$ can be characterized by an arithmetic-type sequence if and only if it is torsion.",
+      "content_preview": "Every countable subgroups of can be characterized by an arithmetic-type sequence if and only if it is torsion.",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 430,
+        "line_end": 432
+      },
+      "references": [
+        {
+          "target_id": "corotorcountable",
+          "reference_type": "internal",
+          "context": "ed by an arithmetic-type sequence. Then Corollary \\ref{corotorcountable} ensures that $G$ is torsion. Conversely, we consi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thcountabletor",
+          "reference_type": "internal",
+          "context": "t $G$ is a torsion subgroup of $\\T$. Then Theorem \\ref{thcountabletor} ensues that $G$ can be characterized by an arithm",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $G$ be a countable subgroup of $\\T$. First we assume that $G$ is characterized by an arithmetic-type sequence. Then Corollary \\ref{corotorcountable} ensures that $G$ is torsion. Conversely, we consider that $G$ is a torsion subgroup of $\\T$. Then Theorem \\ref{thcountabletor} ensues that $G$ can be characterized by an arithmetic-type sequence."
+    },
+    {
+      "id": "theorem-14-b4fc8453",
+      "type": "theorem",
+      "content": "\\label{Dicho}\nFor any arithmetic sequence $(a_n)$ with unbounded ratio, there exist an arithmetic-type sequence $(e_n)$ with unbounded ratio such that $t_{(e_n)}(\\T)$ is countable.",
+      "content_preview": "For any arithmetic sequence (a_n) with unbounded ratio, there exist an arithmetic-type sequence (e_n) with unbounded ratio such that t_(e_n)() is...",
+      "display_name": "Theorem",
+      "label": "Dicho",
+      "position": {
+        "line_start": 445,
+        "line_end": 447
+      },
+      "references": [
+        {
+          "target_id": "eqA1t",
+          "reference_type": "external",
+          "context": "\\rfloor+1,q_{k}-1\\big].\n  \\end{cases}\n$$\nThen Eq (\\ref{eqA1t}) entails that\n$$\n\\frac{3}{40}<\\frac{1}{5}-\\frac{c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnoncofin",
+          "reference_type": "external",
+          "context": "}\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eqnoncofin})).\n\\item[\\underline{Case-1b} :] Let us consider $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqB1t",
+          "reference_type": "external",
+          "context": "\\rfloor+1,q_{k}-1\\big].\n  \\end{cases}\n$$\nThen Eq (\\ref{eqB1t}) entails that\n$$\n\\frac{3}{40}<\\frac{1}{5}-\\frac{q",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnoncofin",
+          "reference_type": "external",
+          "context": ".\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eqnoncofin})).\n\\end{itemize}\nSo, we conclude that Case-1 is n",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemmanew",
+          "reference_type": "internal",
+          "context": "$$\nSince $supp^q(x)$ is not cofinite (see Remark \\ref{lemmanew}), we must have $B$ is infinite. Also observe that",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqA1t",
+          "reference_type": "external",
+          "context": "]$, we set $r(e)$ exactly as in Case-1a. Then Eq (\\ref{eqA1t}) entails that\n$$\n\\frac{3}{40}=\\frac{1}{5}-\\frac{1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq2ai",
+          "reference_type": "external",
+          "context": "}\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eq2ai})).\\\\\nSo, let us consider $B+1$ is $q$-divergent.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqA1t",
+          "reference_type": "external",
+          "context": "]$, we set $r(e)$ exactly as in Case-1a. Then Eq (\\ref{eqA1t}) entails that\n$$\n\\frac{3}{40}<\\frac{1}{5}-\\frac{c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnormequal",
+          "reference_type": "external",
+          "context": "+1}{5c_n}\\leq \\frac{2}{5}.\n$$\nNow, in view of Eq (\\ref{eqnormequal}), observe that for each $n\\in B_1\\setminus [1,n_\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq2aii",
+          "reference_type": "external",
+          "context": "}\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eq2aii})).\n\\end{itemize}\n\\item[\\underline{Case-2b} :]  Le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqB1t",
+          "reference_type": "external",
+          "context": "]$, we set $r(e)$ exactly as in Case-1b. Then Eq (\\ref{eqB1t}) entails that\n$$\n\\frac{t(q_n - c_n- 1)}{q_{n}} \\l",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq2ai",
+          "reference_type": "external",
+          "context": "ay*}\n$-$ which is a contradiction (in view of Eq (\\ref{eq2ai})). \\\\\nSo, let us consider $B+1$ is $q$-divergent.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqB1t",
+          "reference_type": "external",
+          "context": "]$, we set $r(e)$ exactly as in Case-1b. Then Eq (\\ref{eqB1t}) and Eq (\\ref{eqnormgrt}) ensure that\n$$\n\\frac{1}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnormgrt",
+          "reference_type": "external",
+          "context": "ctly as in Case-1b. Then Eq (\\ref{eqB1t}) and Eq (\\ref{eqnormgrt}) ensure that\n$$\n\\frac{1}{30}<\\frac{t(q_n - c_n-1)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqnormequal",
+          "reference_type": "external",
+          "context": "}{q_{n}} \\leq \\frac{1}{5}.\n$$\nNow, in view of Eq (\\ref{eqnormequal}), observe that for each $n\\in B_1'\\setminus [1,n_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq2aii",
+          "reference_type": "external",
+          "context": "ay*}\n$-$ which is a contradiction (in view of Eq (\\ref{eq2aii})).\n\\end{itemize}\nSo, we conclude that Case-2 is n",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(a_n)$ be an arithmetic sequence with unbounded ratio. Therefore, there exists $D\\subseteq \\N$ such that $(q_n)_{n\\in D}$ is divergent. We define the sequence $(e_n)$ by the elements of the following set\n$$\n\\bigg\\{ra_{k-1} \\ : \\ r\\in \\{1\\} \\cup \\bigg[\\bigg\\lfloor\\frac{q_k}{3}\\bigg\\rfloor+1,q_k-1\\bigg]\\bigg\\}.\n$$\nSince $(a_n)$ is a subsequence of $(e_n)$ we write $e_{n_k}=a_k$ for each $k\\in\\N$. Now observe that for each $k\\in D-1$, we have\n\\begin{equation*}\n\\frac{e_{n_k+1}}{e_{n_k}} = \\frac{\\bigg(\\bigg\\lfloor\\frac{q_{k+1}}{3}\\bigg\\rfloor+1\\bigg)a_k}{a_k} \\geq \\frac{q_{k+1}}{3}.\n\\end{equation*}\nIndeed we have $(e_n)$ has unbounded ratio. So it is left to show that $t_{(e_n)}(\\T)$ is countable.\n\nFirst we will show that if $supp(x)$ is infinite then $x\\notin t_{(e_n)}(\\T)$. On the contrary let us assume that $supp(x)$ is infinite and $x\\in t_{(e_n)}(\\T)$. Now two cases can arise, i.e., either $supp(x)$ is cofinite or $supp(x)$ is not cofinite.\n\\begin{itemize}\n\\item[\\underline{Case-1} :] Here we assume that $supp(x)$ is not cofinite. Let us write\n$$\nA=supp(x)\\setminus (supp(x)-1).\n$$\nSince $supp(x)$ is not cofinite, we must have $A$ is infinite. Also observe that $A\\subseteq supp(x)$ and $(A+1)\\cap supp(x)=\\emptyset$. If possible assume that there exists an infinite set $A_1\\subseteq A$ such that $A_1$ is $q$-bounded. Then item $(a1)$ of \\cite[Theorem 2.5]{DGT1} entails that $(A_1+1)\\subseteq^* supp(x)$ which contradicts the fact that $(A+1)\\cap supp(x)=\\emptyset$. Indeed we conclude that $A$ is $q$-divergent. As a consequence, item $(b2)$ of \\cite[Theorem 2.5]{DGT1} holds true. Therefore, for each $r(e)\\in[1,q_{k}-1]$ we have\n\\begin{equation}\\label{eqnoncofin}\n\\lim\\limits_{n\\in A}\\|\\frac{r(e)c_{n}}{q_n}\\|=0.\n\\end{equation}\nIn particular, taking $r(e)=1$ we have\n$$\n\\lim\\limits_{n\\in A}\\|\\frac{c_{n}}{q_n}\\|=0, \\mbox{ i.e.,}\n$$\n\\begin{itemize}\n    \\item[(1a)] either there exists an infinite subset $A_1$ of $A$ such that $\\lim\\limits_{n\\in B_1}\\frac{c_{n}}{q_n}=0$,\n    \\item[(1b)] or there exists an infinite subset $A_1'$ of $A$ such that $\\lim\\limits_{n\\in B_2}\\frac{c_{n}}{q_n}=1$.\n\\end{itemize}\n\\begin{itemize}\n\\item[\\underline{Case-1a} :] First we consider $\\lim\\limits_{n\\in A_1}\\frac{c_{n}}{q_n}=0$. Now, for $\\epsilon\\in (0,\\frac{1}{8})$ there exists $n_\\epsilon$ such that for each $n\\in A_1\\setminus [1,n_\\epsilon]$, we have\n$$\n0<\\frac{c_{n}}{q_{n}}<\\epsilon \\mbox{    (since $c_n\\geq 1$)}.\n$$\nFor each $n\\in A_1\\setminus [1,n_\\epsilon]$, we set\n\\begin{equation}\\label{eqA1t}\nt=\\bigg\\lfloor \\frac{q_{n}}{5c_{n}}\\bigg\\rfloor,\\ \\mbox{ i.e., }\\ \\frac{q_{n}}{5c_{n}}-1<t \\leq \\frac{q_{n}}{5c_{n}}\n\\end{equation}\nand,\n$$\nr(e)=\\begin{cases}\n   t & \\text{for}\\ t\\in\\big[\\big\\lfloor\\frac{q_{k}}{3}\\big\\rfloor+1,q_{k}-1\\big]\\\\\n   q_k-t & \\text{for}\\ t\\notin\\big[\\big\\lfloor\\frac{q_{k}}{3}\\big\\rfloor+1,q_{k}-1\\big].\n  \\end{cases}\n$$\nThen Eq (\\ref{eqA1t}) entails that\n$$\n\\frac{3}{40}<\\frac{1}{5}-\\frac{c_{n}}{q_{n}}<\\frac{tc_{n}}{q_{n}} \\leq \\frac{1}{5}.\n$$\nTherefore, observe that for each $n\\in A_1\\setminus [1,n_\\epsilon]\\subseteq A$,\n$$\n\\big\\|\\frac{r(e) c_n}{q_n}\\big\\|= \\big\\|\\frac{(q_n - t)c_n}{q_n}\\big\\|=\\big\\|\\frac{t c_n}{q_n}\\big\\|\\geq \\frac{3}{40}\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eqnoncofin})).\n\\item[\\underline{Case-1b} :] Let us consider $\\lim\\limits_{n\\in A_1'}\\frac{c_{n}}{q_n}=1$, i.e., $\\lim\\limits_{n\\in A_1'}\\frac{q_n - c_n}{q_n}=0$. Now, for $\\epsilon\\in (0,\\frac{1}{8})$ there exists $n_\\epsilon$ such that for each $n\\in A_1'\\setminus [1,n_\\epsilon]$, we have\n$$\n0<\\frac{q_n- c_{n}}{q_{n}}<\\epsilon \\mbox{    (since $1\\leq c_n\\leq q_n-1$)}.\n$$\nFor each $n\\in A_1'\\setminus [1,n_\\epsilon]$, we set\n\\begin{equation}\\label{eqB1t}\nt=\\bigg\\lfloor \\frac{q_{n}}{5(q_n-c_{n})}\\bigg\\rfloor,\\ \\mbox{ i.e., }\\ \\frac{q_{n}}{5(q_n-c_{n})}-1<t \\leq \\frac{q_{n}}{5(q_n-c_{n})}\n\\end{equation}\nand,\n$$\nr(e)=\\begin{cases}\n   t & \\text{for}\\ t\\in\\big[\\big\\lfloor\\frac{q_{k}}{3}\\big\\rfloor+1,q_{k}-1\\big]\\\\\n   q_k-t & \\text{for}\\ t\\notin\\big[\\big\\lfloor\\frac{q_{k}}{3}\\big\\rfloor+1,q_{k}-1\\big].\n  \\end{cases}\n$$\nThen Eq (\\ref{eqB1t}) entails that\n$$\n\\frac{3}{40}<\\frac{1}{5}-\\frac{q_n-c_{n}}{q_{n}}<\\frac{t(q_n-c_{n})}{q_{n}} \\leq \\frac{1}{5}.\n$$\nTherefore, observe that for each $n\\in A_1'\\setminus [1,n_\\epsilon]\\subseteq A$,\n$$\n\\big\\|\\frac{r(e) c_n}{q_n}\\big\\|= \\big\\|\\frac{r(e)(q_n-c_{n})}{q_n}\\big\\|= \\big\\|\\frac{(q_n - t)(q_n-c_{n})}{q_n}\\big\\|=\\big\\|\\frac{t (q_n-c_{n})}{q_n}\\big\\|\\geq \\frac{3}{40}.\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eqnoncofin})).\n\\end{itemize}\nSo, we conclude that Case-1 is not possible.\n\\item[\\underline{Case-2} :] Now, let us assume that $supp(x)$ is cofinite. We write\n$$\nB=supp(x)\\setminus supp^q(x).\n$$\nSince $supp^q(x)$ is not cofinite (see Remark \\ref{lemmanew}), we must have $B$ is infinite. Also observe that $B\\subseteq supp(x)$ and $B \\cap supp^q(x)=\\emptyset$. If possible assume that there exists an infinite set $B_1\\subseteq B$ such that $B_1$ is $q$-bounded. Then item $(a1)$ of \\cite[Theorem 2.5]{DGT1} entails that $B_1\\subseteq^* supp^q(x)$ which contradicts the fact that $B\\cap supp^q(x)=\\emptyset$. Indeed we conclude that $B$ is $q$-divergent. Since $supp(x)$ is cofinite, we also have $B+1\\subseteq^* supp(x)$. Consequently, item $(b1)$ of \\cite[Theorem 2.5]{DGT1} holds true, i.e., if $B+1$ is $q$-bounded then for each $r(e)\\in[1,q_{k}-1]$ we have\n\\begin{equation}\\label{eq2ai}\n\\lim\\limits_{n\\in B}\\|\\frac{r(e)}{q_n}(c_{n}+1)\\|=0 ,\n\\end{equation}\nand, if $B+1$ is $q$-divergent then for each $r(e)\\in[1,q_{k}-1]$ we have\n\\begin{equation}\\label{eq2aii}\n \\lim\\limits_{n\\in B}\\|\\frac{r(e)}{q_n}(c_{n}+\\frac{c_{n+1}}{q_{n+1}})\\|=0 .\n\\end{equation}\nIn particular, taking $r(e)=1$ in item $(b1)$ of \\cite[Theorem 2.5]{DGT1}, we have\n$$\n\\lim\\limits_{n\\in B}\\|\\frac{c_{n}}{q_n}\\|=\\lim\\limits_{n\\in B}\\|\\frac{c_{n}+1}{q_n}\\|=0 , \\mbox{ i.e.,}\n$$\n\\begin{itemize}\n    \\item[(2a)] either there exists an infinite subset $B_1$ of $B$ such that $\\lim\\limits_{n\\in B_1}\\frac{c_{n}+1}{q_n}=0$,\n    \\item[(2b)] or there exists an infinite subset $B_1'$ of $B$ such that $\\lim\\limits_{n\\in B_1'}\\frac{c_{n}+1}{q_n}=1$.\n\\end{itemize}\n\\begin{itemize}\n\\item[\\underline{Case-2a} :] First we consider $\\lim\\limits_{n\\in B_1}\\frac{c_{n}+1}{q_n}=0$. For $\\epsilon\\in (0,\\frac{1}{8})$ there exists $n_\\epsilon$ such that for each $n\\in B_1\\setminus [1,n_\\epsilon]$, we have\n$$\n0<\\frac{c_{n}}{q_{n}}<\\frac{c_{n}+1}{q_{n}}<\\epsilon \\mbox{    (since } c_n\\geq 1).\n$$\nLet $B+1$ is $q$-bounded. For each $n\\in B_1\\setminus [1,n_\\epsilon]$, we set $r(e)$ exactly as in Case-1a. Then Eq (\\ref{eqA1t}) entails that\n$$\n\\frac{3}{40}=\\frac{1}{5}-\\frac{1}{8}<\\frac{c_n+1}{5c_n}-\\frac{c_n+1}{q_{n}}<\\frac{t(c_n+1)}{q_{n}} \\leq \\frac{c_n+1}{5c_n}\\leq \\frac{2}{5}.\n$$\nNow observe that for each $n\\in B_1\\setminus [1,n_\\epsilon]\\subseteq B$,\n$$\n\\big\\|\\frac{r(e) (c_n+1)}{q_n}\\big\\|= \\big\\|\\frac{(q_n - t)(c_n+1)}{q_n}\\big\\|=\\big\\|\\frac{t (c_n+1)}{q_n}\\big\\|\\geq \\frac{3}{40}\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eq2ai})).\\\\\nSo, let us consider $B+1$ is $q$-divergent. Therefore, we also have\n\\begin{equation}\\label{eqnormequal}\n\\lim\\limits_{n\\in B}\\|\\frac{c_{n+1}}{q_{n+1}}\\|=0 .\n\\end{equation}\nFor each $n\\in B_1\\setminus [1,n_\\epsilon]$, we set $r(e)$ exactly as in Case-1a. Then Eq (\\ref{eqA1t}) entails that\n$$\n\\frac{3}{40}<\\frac{1}{5}-\\frac{c_{n}}{q_{n}}<\\frac{t c_n}{q_{n}}\\leq\\frac{t(c_n+\\frac{c_{n+1}}{q_{n+1}})}{q_{n}}\\leq \\frac{t(c_n+1)}{q_{n}} \\leq \\frac{c_n+1}{5c_n}\\leq \\frac{2}{5}.\n$$\nNow, in view of Eq (\\ref{eqnormequal}), observe that for each $n\\in B_1\\setminus [1,n_\\epsilon]\\subseteq B$,\n$$\n\\big\\|\\frac{r(e) (c_n+\\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\|= \\big\\|\\frac{(q_n - t)(c_n+\\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\|=\\big\\|\\frac{t (c_n+\\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\|\\geq \\frac{3}{40}\n$$\n$-$ which is a contradiction (in view of Eq (\\ref{eq2aii})).\n\\end{itemize}\n\\item[\\underline{Case-2b} :]  Let us consider $\\lim\\limits_{n\\in B_1'}\\frac{c_n}{q_n}=\\lim\\limits_{n\\in B_1'}\\frac{c_{n}+1}{q_n}=1$, i.e., $\\lim\\limits_{n\\in B_1'}\\frac{q_n - c_n-1}{q_n}=\\lim\\limits_{n\\in B_1'}\\frac{q_n - c_n}{q_n}=0$. For $\\epsilon\\in (0,\\frac{1}{15})$ there exists $n_\\epsilon$ such that for each $n\\in B_1'\\setminus [1,n_\\epsilon]$, we have\n$$\n0<\\frac{q_n- c_{n}-1}{q_{n}}<\\frac{q_n- c_{n}}{q_{n}}<\\epsilon \\mbox{  (since } 1\\leq c_n\\leq q_n-2).\n$$\nLet $B+1$ is $q$-bounded. For each $n\\in B_1'\\setminus [1,n_\\epsilon]$, we set $r(e)$ exactly as in Case-1b. Then Eq (\\ref{eqB1t}) entails that\n$$\n\\frac{t(q_n - c_n- 1)}{q_{n}} \\leq \\frac{q_n - c_n- 1}{5(q_n - c_n)}\\leq \\frac{1}{5}\n$$\nand,\n\\begin{equation}\\label{eqnormgrt}\n\\frac{t(q_n - c_n- 1)}{q_{n}}>\\frac{q_n - c_n- 1}{5(q_n - c_n)}- \\frac{q_n - c_n- 1}{q_{n}}>\\frac{1}{10}-\\frac{1}{15}=\\frac{1}{30}.\n\\end{equation}\nNow observe that for each $n\\in B_1'\\setminus [1,n_\\epsilon]\\subseteq B$,\n\\begin{eqnarray*}\n\\big\\|\\frac{r(e) (c_n+1)}{q_n}\\big\\| = \\big\\|\\frac{r(e) (q_n - c_n- 1)}{q_n}\\big\\| &=& \\big\\|\\frac{(q_n - t)(q_n - c_n- 1)}{q_n}\\big\\| \\\\ &=&\\big\\|\\frac{t (q_n - c_n- 1)}{q_n}\\big\\|\\geq \\frac{1}{30}\n\\end{eqnarray*}\n$-$ which is a contradiction (in view of Eq (\\ref{eq2ai})). \\\\\nSo, let us consider $B+1$ is $q$-divergent.  For each $n\\in B_1'\\setminus [1,n_\\epsilon]$, we set $r(e)$ exactly as in Case-1b. Then Eq (\\ref{eqB1t}) and Eq (\\ref{eqnormgrt}) ensure that\n$$\n\\frac{1}{30}<\\frac{t(q_n - c_n-1)}{q_{n}}\\leq \\frac{t (q_n - c_n- \\frac{c_{n+1}}{q_{n+1}})}{q_n} \\leq \\frac{t(q_n - c_n)}{q_{n}} \\leq \\frac{1}{5}.\n$$\nNow, in view of Eq (\\ref{eqnormequal}), observe that for each $n\\in B_1'\\setminus [1,n_\\epsilon]\\subseteq B$,\n\\begin{eqnarray*}\n\\big\\|\\frac{r(e) (c_n+\\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\| &=& \\big\\|\\frac{r(e) (q_n - c_n- \\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\| \\\\ &=& \\big\\|\\frac{(q_n - t)(q_n - c_n- \\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\| \\\\ &=&\\big\\|\\frac{t (q_n - c_n- \\frac{c_{n+1}}{q_{n+1}})}{q_n}\\big\\|\\geq \\frac{1}{30}.\n\\end{eqnarray*}\n$-$ which is a contradiction (in view of Eq (\\ref{eq2aii})).\n\\end{itemize}\nSo, we conclude that Case-2 is not possible. Therefore, it is evident that if $supp(x)$ is infinite then $x\\not\\in t_{(e_n)}(\\T)$. As a consequence, \\cite[Theorem 2.3]{DG8} ensures that $t_{(e_n)}(\\T)\\subseteq  t_{(d_n)}(\\T)$. Finally, in view of \\cite[Corollary 2.4, (iii)]{DG8}, we conclude that $t_{(e_n)}(\\T)$ is countable."
+    },
+    {
+      "id": "external_canonical:repr",
+      "type": "unknown",
+      "content": "External reference to 'canonical:repr'",
+      "content_preview": "External reference to 'canonical:repr'",
+      "display_name": "Unknown",
+      "label": "canonical:repr",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqnorm",
+      "type": "unknown",
+      "content": "External reference to 'eqnorm'",
+      "content_preview": "External reference to 'eqnorm'",
+      "display_name": "Unknown",
+      "label": "eqnorm",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqnoncofin2",
+      "type": "unknown",
+      "content": "External reference to 'eqnoncofin2'",
+      "content_preview": "External reference to 'eqnoncofin2'",
+      "display_name": "Unknown",
+      "label": "eqnoncofin2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq2ai2",
+      "type": "unknown",
+      "content": "External reference to 'eq2ai2'",
+      "content_preview": "External reference to 'eq2ai2'",
+      "display_name": "Unknown",
+      "label": "eq2ai2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq2aii2",
+      "type": "unknown",
+      "content": "External reference to 'eq2aii2'",
+      "content_preview": "External reference to 'eq2aii2'",
+      "display_name": "Unknown",
+      "label": "eq2aii2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqepsilon",
+      "type": "unknown",
+      "content": "External reference to 'eqepsilon'",
+      "content_preview": "External reference to 'eqepsilon'",
+      "display_name": "Unknown",
+      "label": "eqepsilon",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqA1t",
+      "type": "unknown",
+      "content": "External reference to 'eqA1t'",
+      "content_preview": "External reference to 'eqA1t'",
+      "display_name": "Unknown",
+      "label": "eqA1t",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqnoncofin",
+      "type": "unknown",
+      "content": "External reference to 'eqnoncofin'",
+      "content_preview": "External reference to 'eqnoncofin'",
+      "display_name": "Unknown",
+      "label": "eqnoncofin",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqB1t",
+      "type": "unknown",
+      "content": "External reference to 'eqB1t'",
+      "content_preview": "External reference to 'eqB1t'",
+      "display_name": "Unknown",
+      "label": "eqB1t",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq2ai",
+      "type": "unknown",
+      "content": "External reference to 'eq2ai'",
+      "content_preview": "External reference to 'eq2ai'",
+      "display_name": "Unknown",
+      "label": "eq2ai",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqnormequal",
+      "type": "unknown",
+      "content": "External reference to 'eqnormequal'",
+      "content_preview": "External reference to 'eqnormequal'",
+      "display_name": "Unknown",
+      "label": "eqnormequal",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq2aii",
+      "type": "unknown",
+      "content": "External reference to 'eq2aii'",
+      "content_preview": "External reference to 'eq2aii'",
+      "display_name": "Unknown",
+      "label": "eq2aii",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqnormgrt",
+      "type": "unknown",
+      "content": "External reference to 'eqnormgrt'",
+      "content_preview": "External reference to 'eqnormgrt'",
+      "display_name": "Unknown",
+      "label": "eqnormgrt",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-3-59b01c54",
+      "target": "external_canonical:repr",
+      "type": null
+    },
+    {
+      "source": "remark-5-56bccb79",
+      "target": "remark-4-d213c918",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "external_eqnorm",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "external_eqnoncofin2",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "lemma-7-61346caa",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "fact-2-ac15fbb3",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "external_eq2ai2",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "external_eq2aii2",
+      "type": null
+    },
+    {
+      "source": "theorem-8-a5d3115f",
+      "target": "external_eqepsilon",
+      "type": null
+    },
+    {
+      "source": "corollary-9-c3c66a60",
+      "target": "theorem-8-a5d3115f",
+      "type": null
+    },
+    {
+      "source": "example-10-a414fa73",
+      "target": "corollary-9-c3c66a60",
+      "type": null
+    },
+    {
+      "source": "corollary-11-8175b488",
+      "target": "theorem-8-a5d3115f",
+      "type": null
+    },
+    {
+      "source": "theorem-12-1291001d",
+      "target": "theorem-8-a5d3115f",
+      "type": null
+    },
+    {
+      "source": "corollary-13-539cbb08",
+      "target": "corollary-9-c3c66a60",
+      "type": null
+    },
+    {
+      "source": "corollary-13-539cbb08",
+      "target": "theorem-12-1291001d",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eqA1t",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eqnoncofin",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eqB1t",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "fact-2-ac15fbb3",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eq2ai",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eqnormequal",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eq2aii",
+      "type": null
+    },
+    {
+      "source": "theorem-14-b4fc8453",
+      "target": "external_eqnormgrt",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 27,
+    "edge_count": 23,
+    "extractor_used": "regex-only"
+  }
+}

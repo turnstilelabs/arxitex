@@ -1,0 +1,1270 @@
+{
+  "arxiv_id": "2507.01716v1",
+  "nodes": [
+    {
+      "id": "theorem-1-06240f0e",
+      "type": "theorem",
+      "content": "\\label{thm:main}\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tThere is a one-to-one correspondence between rotary maps with underlying graph $\\operatorname{C}(p,r,s)$ and \n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item multiplicity-free representations $\\psi$ of $\\operatorname{D}_{2r}$ over $\\mathbb{F}_p$ such that $\\deg(\\psi) = s+1$ if $r$ is odd;\\vskip0.1in\n   \n\t\t\t\\item multiplicity-free representations $\\psi$ of $\\operatorname{D}_{2r}$ over $\\mathbb{F}_p$ such that $\\deg(\\psi) = s+1$ and $\\gamma_{-1,1}$ is not a constituent of $\\psi$ if $r$ is even.\n\t\t\\end{enumerate}",
+      "content_preview": "There is a one-to-one correspondence between rotary maps with underlying graph (p,r,s) and [ (i)] multiplicity-free representations of _2r over _p...",
+      "display_name": "Theorem",
+      "label": "thm:main",
+      "position": {
+        "line_start": 354,
+        "line_end": 367
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-2-31c9c39b",
+      "type": "corollary",
+      "content": "\\label{cor:faithful}\n\t\tLet $s$ be a positive integer and let $r\\ge \\max\\{3,s+1\\}$ be a prime such that $p\\ne r$. Let $d$ be the least positive integer such that $r\\mid p^d-1$.\n        Let \\[\\zeta=\\left\\{\\begin{aligned}\n            d&,\\ \\mbox{$d$ is even and $p^{d/2}\\equiv -1\\pmod{r}$},\\\\\n            2d&,\\ \\mbox{otherwise}.\n        \\end{aligned}\\right.\\]\n        Then there is a rotary map with underlying graph isomorphic to $\\operatorname{C}(p,r,s)$ if and only if $s\\equiv -1,0,1\\pmod{\\zeta}$.",
+      "content_preview": "Let s be a positive integer and let r 3,s+1 be a prime such that p r. Let d be the least positive integer such that r p^d-1. Let [= d&, -1, 2d&, . .",
+      "display_name": "Corollary",
+      "label": "cor:faithful",
+      "position": {
+        "line_start": 372,
+        "line_end": 384
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-3-01b0e9c1",
+      "type": "definition",
+      "content": "Let $p$, $r$, $s$ be positive integers such that $p\\ge 2$ and $r\\ge 3$.\n\t\tDefine a simple graph $\\operatorname{C}(p,r,s)=(V,E)$ as follows:\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item  the vertex set $V$ is $\\mathbb{Z}_r\\times\\mathbb{Z}^s_p$;\\vskip0.1in\n   \n\t\t\t\\item  the edge set $E$ is defined to be the set of all pairs of the form \\[\\{(i,x_0,x_1,\\ldots,x_{s-1}),(i+1,x_1,\\ldots,x_{s-1},x_s)\\}\\] for every $i\\in\\mathbb{Z}_r$ and $x_0,x_1,\\ldots,x_{s-1},x_s\\in \\mathbb{Z}_p$.\n\t\t\\end{enumerate}\n\t\tThe graph $\\operatorname{C}(p,r,s)$ is called a \\emph{Praeger-Xu graph}, or simply, a PX graph.",
+      "content_preview": "Let p, r, s be positive integers such that p 2 and r 3. Define a simple graph (p,r,s)=(V,E) as follows: [ (i)] the vertex set V is _r^s_p;0.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 401,
+        "line_end": 410
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-1192d3d1",
+      "type": "theorem",
+      "content": "[{\\cite[Theorem 1]{praeger1989Characterization}}]\\label{thm:PX-equiv}\n\t\tLet $\\Gamma$ be a connected, simple, $G$-arc-transitive  graph of valency $2p$.\n\t\tIf $G$ contains an abelian normal $p$-subgroup $M$ which is not semiregular on the vertices of $\\Gamma$, then $\\Gamma=\\operatorname{C}(p,r,s)$ for some $r\\ge\\max\\{3,s+1\\}$ and $s\\ge 1$.",
+      "content_preview": "[] Let be a connected, simple, G-arc-transitive graph of valency 2p. If G contains an abelian normal p-subgroup M which is not semiregular on the...",
+      "display_name": "Theorem",
+      "label": "thm:PX-equiv",
+      "position": {
+        "line_start": 427,
+        "line_end": 430
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-5-bc59ff9b",
+      "type": "definition",
+      "content": "\\label{def:quot-RotaMap}\n\t\tLet $\\mathcal{M} = \\RM(G, \\rho, \\tau)$. \n\t\tFor a normal subgroup $M \\trianglelefteq G$ with $\\rho , \\tau \\notin M$, \n\t\tthe map $\\RM(G/M, \\rho M, \\tau M)$ is the \\emph{quotient map} of $\\mathcal{M}$~\\cite{alge-quotient}, denoted $\\mathcal{M}/M$.\n\t\t\n\t\tFor $n$ rotary maps $\\mathcal{M}_i = \\RM(G_i, \\rho_i, \\tau_i)$ ($i = 1, \\dots, n$), \n\t\tlet $H = \\langle (\\rho_1,\\dots,\\rho_n), (\\tau_1,\\dots,\\tau_n) \\rangle \\leq \\prod_{i=1}^n G_i$. \n\t\tThe \\emph{direct product} $\\prod_{i=1}^n \\mathcal{M}_i$ is defined as \n\t\t$\\RM\\left( H, (\\rho_1,\\dots,\\rho_n), (\\tau_1,\\dots,\\tau_n) \\right)$.",
+      "content_preview": "Let = (G, , ). For a normal subgroup M G with , M, the map (G/M, M, M) is the of ~, denoted /M. For n rotary maps _i = (G_i, _i, _i) (i = 1, , n),...",
+      "display_name": "Definition",
+      "label": "def:quot-RotaMap",
+      "position": {
+        "line_start": 489,
+        "line_end": 498
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-6-acba43f5",
+      "type": "proposition",
+      "content": "\\label{prop:iso-RotaMap}\n            Two maps $\\RM(G,\\rho,\\tau)$ and $\\RM(H,\\rho',\\tau')$ are isomorphic if there is a group isomorphism $f:G\\to H$ such that $f(\\rho)=\\rho'$ and $f(\\tau)=\\tau'$.",
+      "content_preview": "Two maps (G,,) and (H,',') are isomorphic if there is a group isomorphism f:G H such that f()=' and f()='.",
+      "display_name": "Proposition",
+      "label": "prop:iso-RotaMap",
+      "position": {
+        "line_start": 500,
+        "line_end": 502
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-7-f1082101",
+      "type": "proposition",
+      "content": "\\label{lem:quotient-maps}\n\t\tFor  $i\\in\\{1,2\\}$, let $\\mathcal{M}_i=\\RM(G_i,\\rho_i,\\tau_i)$.\n\t\tThen $\\mathcal{M}_2$ is isomorphic to a quotient map of $\\mathcal{M}_1$ if and only if there exists a homomorphism $\\psi:G_1\\rightarrow G_2$ such that $\\psi(\\rho_1)=\\rho_2$ and $\\psi(\\tau_1)=\\tau_2$.",
+      "content_preview": "For i1,2, let _i=(G_i,_i,_i). Then _2 is isomorphic to a quotient map of _1 if and only if there exists a homomorphism :G_1 G_2 such that (_1)=_2 and...",
+      "display_name": "Proposition",
+      "label": "lem:quotient-maps",
+      "position": {
+        "line_start": 504,
+        "line_end": 507
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-93fa0736",
+      "type": "lemma",
+      "content": "\\label{lem:direct-product-rotary-map}\n\t\tLet $\\mathcal{M}=\\RM(G,\\rho,\\tau)$ and let $V_1,\\ldots,V_n$ be normal subgroups of $G$ with $\\bigcap_iV_i=1$. \n\t\tThen $\\mathcal{M}\\cong \\prod_{i=1}^n\\mathcal{M}/V_i$.",
+      "content_preview": "Let =(G,,) and let V_1,,V_n be normal subgroups of G with _iV_i=1. Then _i=1^n/V_i.",
+      "display_name": "Lemma",
+      "label": "lem:direct-product-rotary-map",
+      "position": {
+        "line_start": 510,
+        "line_end": 513
+      },
+      "references": [],
+      "proof": "Define a function $\\Lambda:G\\rightarrow \\prod_{i=1}^n G/V_i$ by $g\\mapsto (gV_1,\\ldots,gV_n)$. \n\t\tIt is straightforward to check that $\\Lambda$ is a homomorphism.\n\t\tSince $\\bigcap_i V_i = 1$, $\\Lambda$ is injective and is thus an isomorphism $G\\cong\\Lambda(G)$.\n\t\t\n\t\tSince $\\Lambda(G)=\\l \\Lambda(\\rho),\\Lambda(\\tau) \\r$, we have that \n\t\t\\[\\prod_{i=1}^n\\mathcal{M}/V_i=\\RM(\\Lambda(G),\\Lambda(\\rho),\\Lambda(\\tau)).\\] \n\t\tIt follows from $\\Lambda(G)\\cong G$ that $\\mathcal{M}$ is isomorphic to $\\prod_{i=1}^n\\mathcal{M}/V_i$."
+    },
+    {
+      "id": "definition-9-7e773007",
+      "type": "definition",
+      "content": "Let $D=\\operatorname{D}_{2r}$ be a dihedral group and let $F$ be a field.\n\t\tWrite $D=\\langle a,b\\rangle$ where $a,b\\in D$ are involutions.\n\t\tLet $1$ denote the unit element of $F$.\n\t\tDefine a representation $\\gamma_{-1,-1}:D\\rightarrow F^\\times$ of degree $1$ by $\\gamma_{-1,-1}(a)=-1$ and $\\gamma_{-1,-1}(b)=-1$. Let $\\gamma_{1,1}$ be the trivial representation.\n\t\tIf $r$ is even, then define a representation $\\gamma_{1,-1}:D\\rightarrow F^\\times$ of degree $1$ by $\\gamma_{1,-1}(a)=1$ and $\\gamma_{1,-1}(b)=-1$\n\t\tand a representation $\\gamma_{-1,1}:D\\rightarrow F^\\times$ of degree $1$ by $\\gamma_{-1,1}(a)=-1$ and $\\gamma_{-1,1}(b)=1$.",
+      "content_preview": "Let D=_2r be a dihedral group and let F be a field. Write D= a,b where a,b D are involutions. Let 1 denote the unit element of F.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 545,
+        "line_end": 552
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-10-53a9a26e",
+      "type": "lemma",
+      "content": "\\label{lem:irreducible-representation-dihedral}\n\t\tLet $D=D_{2r}$ and\n\t\tlet $z\\in D$ be an involution which does not lie in the center of $D$.\n\t\tLet $\\psi:D\\rightarrow\\operatorname{GL}(V)$ be an irreducible representation of $D$ of degree $d$ over $\\mathbb{F}_p$.\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item  If $d=1$ and $r$ is odd, then $\\psi\\in\\{\\gamma_{1,1},\\gamma_{-1,-1}\\}$.\\vskip0.1in\n   \n\t\t\t\\item  If $d=1$ and $r$ is even, then $\\psi\\in\\{\\gamma_{1,1},\\gamma_{-1,-1},\\gamma_{1,-1},\\gamma_{-1,1}\\}$.\\vskip0.1in\n   \n\t\t\t\\item  If $d\\ge 2$, then $d$ is even and $\\dim(E_{1}(z))=\\dim(E_{-1}(z))=d/2$.\n\t\t\\end{enumerate}",
+      "content_preview": "Let D=D_2r and let z D be an involution which does not lie in the center of D. Let :D(V) be an irreducible representation of D of degree d over _p.",
+      "display_name": "Lemma",
+      "label": "lem:irreducible-representation-dihedral",
+      "position": {
+        "line_start": 558,
+        "line_end": 569
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-11-3265bfc4",
+      "type": "lemma",
+      "content": "\\label{lem:module-homomorphism}\n\t\tLet $D=\\operatorname{D}_{2r}=\\langle c\\rangle\\rtimes\\langle b\\rangle$ and let $M$ be a simple $D$-module over the finite field $\\mathbb{F}_p$ of even dimension $d$.\n\t\t\n\t\tThen\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\n\t\t\t\\item $\\operatorname{End}_D(M)\\cong \\mathbb{F}_{p^{d/2}}$; in particular, $(\\operatorname{End}_D(M))^\\times\\cong \\mathbb{Z}_{p^{d/2}-1}$;\\vskip0.1in\n   \n\t\t\t\\item for every $0\\ne m,n\\in E_1(b)$, there exists $f\\in \\operatorname{End}_D(M)$ such that $f(m)=n$.  \n\t\t\\end{enumerate}",
+      "content_preview": "Let D=_2r= c b and let M be a simple D-module over the finite field _p of even dimension d. Then [ (i)] _D(M) _p^d/2; in particular, (_D(M))^...",
+      "display_name": "Lemma",
+      "label": "lem:module-homomorphism",
+      "position": {
+        "line_start": 571,
+        "line_end": 581
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-8182ee6b",
+      "type": "lemma",
+      "content": "\\label{lem:faith-rep}\n\t\tLet $D=\\operatorname{D}_{2r}=\\langle c\\rangle\\rtimes\\langle b\\rangle$. Let $C=\\langle c\\rangle$ and let $d$ be the degree of a faithful irreducible representation of $C$ over $\\mathbb{F}_p$. \n\t\tThen $d$ is the least positive integer such that $r\\mid p^d-1$.\n            If $\\psi$ is a faithful irreducible representation of $D$ over $\\mathbb{F}_p$,\n            then \\[\\operatorname{deg}(\\psi)=\\left\\{\\begin{aligned}\n            d&,\\ \\mbox{$d$ is even and $p^{d/2}\\equiv -1\\pmod{r}$},\\\\\n            2d&,\\ \\mbox{otherwise}.\n        \\end{aligned}\\right.\\]\n        Moreover, there are $\\varphi(r)/\\operatorname{deg}(\\psi)$ such representations.",
+      "content_preview": "Let D=_2r= c b. Let C= c and let d be the degree of a faithful irreducible representation of C over _p. Then d is the least positive integer such...",
+      "display_name": "Lemma",
+      "label": "lem:faith-rep",
+      "position": {
+        "line_start": 593,
+        "line_end": 607
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-13-432e6f57",
+      "type": "example",
+      "content": "\\label{irreducible-PX-map-example}\n\t\tLet $r=p-1$,  and let $\\omega$ be a primitive $r$-th root of unity over $\\mathbb{F}_p$.  \n\t\tLet $d=2$ and let $\\psi$ be given by \n\t\t$$\\psi(c)=\\begin{bmatrix}\n\t\t\t\\omega^{-1}&0\\\\\n\t\t\t0&\\omega\n\t\t\\end{bmatrix}\\text{ and }\n\t\t\\psi(b)=\\begin{bmatrix}\n\t\t\t0&1\\\\\n\t\t\t1&0\n\t\t\\end{bmatrix}.$$\n\t\tLet $v=(\\omega,-1)^{\\top}\\in V$.\n\t\tThen $v\\in \\operatorname{C}_V(cb)$ and $G$ is generated by $vcb$ and $b$ as $\\psi$ is irreducible. \n\t\tLet $\\rho=vcb$ and $\\tau=b$.\n\t\tThen $(\\rho,\\tau)$ is a rotary pair of $G$.\n            Let $\\Gamma$ be the underlying graph of $\\RM(G,\\rho,\\tau)$.\n            Recall that $G\\le\\Aut(\\Gamma)$ and $G_\\alpha=\\l\\rho\\r$.\n\t\tSince $\\l\\rho\\r\\cap V=\\ZZ_p$, we have that $\\Gamma$ is a PX graph by Theorem~\\ref{thm:PX-equiv}. \n\t\tTherefore, $\\RM(G,\\rho,\\tau)$ is a rotary PX map with face length $|\\rho\\tau|=|vc|=p-1$.",
+      "content_preview": "Let r=p-1, and let be a primitive r-th root of unity over _p. Let d=2 and let be given by (c)= ^-1&0 0& (b)= 0&1 1&0 . Let v=(,-1)^ V.",
+      "display_name": "Example",
+      "label": "irreducible-PX-map-example",
+      "position": {
+        "line_start": 627,
+        "line_end": 646
+      },
+      "references": [
+        {
+          "target_id": "thm:PX-equiv",
+          "reference_type": "internal",
+          "context": "$, we have that $\\Gamma$ is a PX graph by Theorem~\\ref{thm:PX-equiv}. \n\t\tTherefore, $\\RM(G,\\rho,\\tau)$ is a rotary PX",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "proposition-14-fc34193a",
+      "type": "proposition",
+      "content": "\\label{prop:equivalence-ggMap}\n\t\tUsing the notation in Construction~\\ref{Cons:PX-map}, let $1\\ne v'\\in\\operatorname{C}_V(x)$. \n\t\tThen  $\\RM(G,vx,y)\\cong\\RM(G,v'x,y)$.",
+      "content_preview": "Using the notation in Construction~, let 1 v'_V(x). Then (G,vx,y)(G,v'x,y).",
+      "display_name": "Proposition",
+      "label": "prop:equivalence-ggMap",
+      "position": {
+        "line_start": 649,
+        "line_end": 652
+      },
+      "references": [
+        {
+          "target_id": "Cons:PX-map",
+          "reference_type": "external",
+          "context": "lence-ggMap}\n\t\tUsing the notation in Construction~\\ref{Cons:PX-map}, let $1\\ne v'\\in\\operatorname{C}_V(x)$. \n\t\tThen",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:quotient-maps",
+          "reference_type": "internal",
+          "context": "Then  $\\RM(G,vx,y)\\cong\\RM(G,v'x,y)$.By Lemma~\\ref{lem:quotient-maps}, $\\RM(G,vx,y)\\cong\\RM(G,v'x,y)$ if and only if th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:module-homomorphism",
+          "reference_type": "internal",
+          "context": ")=y$.\n\t\tSince $v,v'\\in \\mathrm{C}_V(x)$, by Lemma~\\ref{lem:module-homomorphism} (ii), there exists an $l\\in (\\mathrm{End}_D(V))^\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By Lemma~\\ref{lem:quotient-maps}, $\\RM(G,vx,y)\\cong\\RM(G,v'x,y)$ if and only if there exists an automorphism $f$ of $G$ such that $f(vx)=v'x,f(y)=y$.\n\t\tSince $v,v'\\in \\mathrm{C}_V(x)$, by Lemma~\\ref{lem:module-homomorphism} (ii), there exists an $l\\in (\\mathrm{End}_D(V))^\\times$ such that $l(v)=v'$.\n\t\t\n\t\tLet $f$ be a function given by\n\t\t$f(wg)=l(w)g$ for every $w\\in V$, $g\\in D$.\n\t\tWe claim that $f$ is an automorphism. Suppose that $w_1g_1,w_2g_2$ are two elements of $G$. Then \n\t\t$$\\begin{aligned}\n\t\t\tf(w_1g_1w_2g_2) & =f(w_1w_2^{g_1^{-1}}g_1g_2)\\\\\n\t\t\t& =l(w_1)l(w_2^{g_1^{-1}})g_1g_2\\\\\n\t\t\t& =l(w_1)(l(w_2))^{g_1^{-1}}g_1g_2\\\\\n\t\t\t& =l(w_1)g_1l(w_2)g_2\\\\\n\t\t\t& =f(w_1g_1)f(w_2g_2).\n\t\t\\end{aligned}$$\n\t\tThis implies that $f$ is bijective; therefore, $f$ is an automorphism.   \n\t\t\n\t\tIt follows that $f(vx)=v'x$ and $f(y)=y$ which implies that $\\RM(G,vx,y) \\cong \\RM(G,v'x,y)$."
+    },
+    {
+      "id": "example-15-0741447c",
+      "type": "example",
+      "content": "\\label{examp:reducible}\n\t\tAssume that $r\\ge 5$ is a primitive prime divisor of $p^2-1$.\n\t\tFor example, $(p,r)=(11,5)$.\n\t\tThen $r$ is an odd prime and $r\\mid p+1$.\n\t\tTherefore, every representation of $\\operatorname{D}_{2r}$ of degree greater than $1$ are faithful.\n\t\tBy Lemma~\\ref{lem:faith-rep}, there are $(r-1)/2$ different irreducible representations of $\\operatorname{D}_{2r}$ of degree $2$. \n\t\t\n\t\tNote that $(r-1)/2\\ge 2$.\n\t\tLet $\\psi_1$ and $\\psi_2$ be two irreducible representations of $\\operatorname{D}_{2r}$ of degree $2$ such that $\\psi_1\\not\\cong\\psi_2$ and let\n\t\t$G=(V_1\\times V_2)\\rtimes_{\\psi_1\\times\\psi_2}\\operatorname{D}_{2r}$ \n\t\twhere $\\operatorname{D}_{2r}=\\langle c \\rangle\\rtimes\\langle b \\rangle=\\mathbb{Z}_{r}\\rtimes\\mathbb{Z}_2$.\n\t\tLet $1\\ne v_1\\in \\operatorname{C}_{V_1}(cb)$ and let \n\t\t$1\\ne v_2\\in\\operatorname{C}_{V_2}(cb)$.\n            By an analogous method in the proof of Theorem~\\ref{thm:existence-decomposition},\n            one can derive that\n\t\t$G$ is generated by $v_1v_2cb$ and $b$.\n\t\tLet $\\rho=v_1v_2cb$ and let $\\tau=b$.\n            Let $\\Gamma$ be the underlying graph of $\\RM(G,\\rho,\\tau)$.\n            Recall that $G\\le\\Aut(\\Gamma)$ and $G_\\alpha=\\l\\rho\\r$.\n\t\tSince $\\l\\rho\\r\\cap V=\\ZZ_p$, we have that $\\Gamma$ is a PX graph by Theorem~\\ref{thm:PX-equiv}. \n\t\tTherefore, $\\RM(G,\\rho,\\tau)$ is a rotary PX map.\n\t\tWe point out that if $\\psi_1\\cong\\psi_2$, then $\\langle \\rho,\\tau\\rangle\\cong V_1\\rtimes_{\\psi_1}\\operatorname{D}_{2r}\\not\\cong G$,\n\t\tso the condition $\\psi_1\\not\\cong\\psi_2$ is essential here.\n\t\t\n\t\tWe now present an alternative method for constructing a $G$-rotary PX map.\n\t\tObserve that for every $i\\in\\{1,2\\}$, $G/V_i\\cong V_i\\rtimes_{\\psi_i}\\operatorname{D}_{2r}$.\n\t\tLet $G_i=V_i\\rtimes_{\\psi_i}\\operatorname{D}_{2r}$ for every $i\\in\\{1,2\\}$.\n\t\tLet $1\\ne v_i\\in\\operatorname{C}_{V_i}(ab)$, \n\t\tlet $\\rho_i=v_icb$ and let $\\tau_i=b$.\n\t\tAs we discussed above, $(\\rho_i,\\tau_i)$ is a rotary pair of $G_i$, and $\\RM(G_i,\\rho_i,\\tau_i)$ is a rotary PX map.\n\t\tLet $H=\\langle (\\rho_1,\\rho_2),(\\tau_1,\\tau_2)\\rangle\\le G_1\\times G_2$.\n\t\tThen one can check that $V_1\\times V_2\\le H$ and $\\langle(\\rho_1,\\rho_2)\\rangle\\cap (V_1\\times V_2)\\cong\\mathbb{Z}_p$.\n\t\tTherefore, $\\RM(H,(\\rho_1,\\rho_2),(\\tau_1,\\tau_2))$ is a rotary PX map.\n\t\tAlso note that $H\\cong G$.\n\t\tThis gives a $G$-rotary PX map as well.",
+      "content_preview": "Assume that r 5 is a primitive prime divisor of p^2-1. For example, (p,r)=(11,5). Then r is an odd prime and r p+1.",
+      "display_name": "Example",
+      "label": "examp:reducible",
+      "position": {
+        "line_start": 681,
+        "line_end": 716
+      },
+      "references": [
+        {
+          "target_id": "lem:faith-rep",
+          "reference_type": "internal",
+          "context": "degree greater than $1$ are faithful.\n\t\tBy Lemma~\\ref{lem:faith-rep}, there are $(r-1)/2$ different irreducible repres",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:existence-decomposition",
+          "reference_type": "internal",
+          "context": "By an analogous method in the proof of Theorem~\\ref{thm:existence-decomposition},\n            one can derive that\n\t\t$G$ is generat",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:PX-equiv",
+          "reference_type": "internal",
+          "context": "$, we have that $\\Gamma$ is a PX graph by Theorem~\\ref{thm:PX-equiv}. \n\t\tTherefore, $\\RM(G,\\rho,\\tau)$ is a rotary PX",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-16-7add945c",
+      "type": "definition",
+      "content": "\\label{def:augPXgraph}\n\t\tLet $s\\geq 0$ be an integer, and let $\\delta\\in\\{1,-1\\}$.\n\t\tWe define an \\emph{augmented PX graph} $\\operatorname{C}^*(p,r,s,\\delta)$ as follows:\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item  $\\operatorname{C}^*(p,r,s,\\delta)=\\operatorname{C}(p,r,s)$ if $s\\ge 1$;\\vskip0.1in\n   \n\t\t\t\\item $\\operatorname{C}^*(p,r,0,1)=\\C^{(p)}_r$ is a multicycle of length $r$ in which every pair of adjacent vertices is joined by $p$ parallel edges; \\vskip0.1in\n   \n\t\t\t\\item [\\rm (iii)] $\\operatorname{C}^*(p,r,0,-1)=\\operatorname{C}_{pr}$.\n\t\t\\end{enumerate}\n\t\tThe integer \\( r \\) is called the \\emph{length} of \\( \\operatorname{C}^*(p,r,s,\\delta) \\). \n\t\tFor convenience, we use \\( \\operatorname{C}^*(p,r,s) \\) instead of \\( \\operatorname{C}^*(p,r,s,\\delta) \\) \n\t\twhen \\( s \\geq 1 \\) or \\( \\delta = 1 \\).\n\t\tAn \\emph{augmented PX map} of length $r$ is a map  whose underlying graph is an augmented PX graph of length $r$.",
+      "content_preview": "Let s 0 be an integer, and let 1,-1. We define an ^*(p,r,s,) as follows: [ (i)] ^*(p,r,s,)=(p,r,s) if s 1;0.",
+      "display_name": "Definition",
+      "label": "def:augPXgraph",
+      "position": {
+        "line_start": 730,
+        "line_end": 744
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-17-fc47458c",
+      "type": "theorem",
+      "content": "\\label{thm:arc-regular-PX-graph}\n\t\tLet $s\\geqslant 0$ be an integer, let $\\delta\\in\\{1,-1\\}$ and let $r$ be an integer such that $r\\ge \\max\\{3,s+1\\}$.\n\t\tLet $G$ be an arc-regular group of automorphisms of $\\operatorname{C}^*(p,r,s,\\delta)$.\n\t\tThen $G\\cong \\mathbb{Z}_p^{s+1}\\rtimes\\operatorname{D}_{2r}$.",
+      "content_preview": "Let s 0 be an integer, let 1,-1 and let r be an integer such that r 3,s+1. Let G be an arc-regular group of automorphisms of ^*(p,r,s,).",
+      "display_name": "Theorem",
+      "label": "thm:arc-regular-PX-graph",
+      "position": {
+        "line_start": 752,
+        "line_end": 756
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-18-6d691600",
+      "type": "corollary",
+      "content": "\\label{cor:aut-map}\n\t\tLet $\\mathcal{M}$ be a $G$-rotary map with underlying graph isomorphic to $\\operatorname{C}^*(p,r,s,\\delta)$.\n\t\tThen $G$ is isomorphic to $\\mathbb{Z}_p^{s+1}\\rtimes\\operatorname{D}_{2r}$.",
+      "content_preview": "Let be a G-rotary map with underlying graph isomorphic to ^*(p,r,s,). Then G is isomorphic to _p^s+1_2r.",
+      "display_name": "Corollary",
+      "label": "cor:aut-map",
+      "position": {
+        "line_start": 758,
+        "line_end": 761
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-19-941aed60",
+      "type": "definition",
+      "content": "\\label{def:irr-PXmap}                                                    \n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tA $G$-arc-regular augmented PX map $\\calM$ is \\emph{irreducible} if the group $G\\cong\\operatorname{Z}_p^{s+1}\\rtimes_\\psi \\operatorname{D}_{2r}$ where $\\psi$ is irreducible.",
+      "content_preview": "A G-arc-regular augmented PX map is if the group G_p^s+1_ _2r where is irreducible.",
+      "display_name": "Definition",
+      "label": "def:irr-PXmap",
+      "position": {
+        "line_start": 764,
+        "line_end": 772
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-20-bb43342a",
+      "type": "lemma",
+      "content": "\\label{lem:ArcReg-Auto-PXGraph-2}\n\t\tLet $\\Gamma=\\operatorname{C}(p,r,s)$, where $s\\geq 0$, $r\\geqslant \\max\\{s+1,3\\}$.\n\t\tSuppose that $G$ is an arc-regular subgroup of $\\Aut(\\Gamma)$, and $(r,s)\\neq (4,1)$.\n\t\tThen $G\\cong \\ZZ_p^{s+1}\\rtimes\\D_{2r}$.",
+      "content_preview": "Let =(p,r,s), where s 0, r s+1,3. Suppose that G is an arc-regular subgroup of (), and (r,s) (4,1). Then G _p^s+1_2r.",
+      "display_name": "Lemma",
+      "label": "lem:ArcReg-Auto-PXGraph-2",
+      "position": {
+        "line_start": 780,
+        "line_end": 784
+      },
+      "references": [],
+      "proof": "By \\cite[Theorem 2.13]{praeger1989Characterization},  $G\\le\\operatorname{S}_p\\wr_{\\Omega}\\operatorname{D}_{2r}$.\n\t\tAlso note that the quotient graph $\\Gamma_{\\operatorname{S}_p^\\Omega}=\\operatorname{C}_r$, the cycle of length $r$.\n\t\tLet $K$ be the kernel of $G$ acting on $\\C_r$.\n\t\tThen $K\\geqslant\\S_p^{\\Omega}$ and\n\t\t$|G/G\\cap \\S_p^{\\Omega}|\\leqslant |G/G\\cap K|$.\t\n\t\tLet $\\bar{G}=GK/K\\le\\Aut(\\operatorname{C}_r)$ be the induced group of $G$.\n\t\tSince $G$ is arc-regular, the induced group $\\bar{G}$ on $\\operatorname{C}_r$ is also arc-transitive, which implies that $\\bar{G}=\\Aut(\\operatorname{C}_r)=\\operatorname{D}_{2r}$.\n\t\tTherefore, $\\operatorname{S}_p\\wr_\\Omega\\operatorname{D}_{2r}=G\\operatorname{S}_p^{\\Omega}$.\n\t\tAnd we have $2r=|G/(G\\cap \\operatorname{S}_p^{\\Omega})|\\leq|\\bar{G}|=2r$ which implies that $G/(G\\cap \\operatorname{S}_p^{\\Omega})\\cong \\D_{2r}$.\n\t\tThen $G\\cap\\operatorname{S}_p^\\Omega$ is a $p$-group of order $p^{s+1}$ as $|G|=2rp^{s+1}$.\n\t\tSince a Sylow $p$-subgroup of $\\operatorname{S}_p^{\\Omega}$ is isomorphic to $\\mathbb{Z}_p^\\Omega$,\n\t\twe have that $G\\cap\\operatorname{S}_p^\\Omega\\cong\\mathbb{Z}_p^{s+1}$.\n\t\tTherefore, $G\\cong\\mathbb{Z}_p^{s+1}.\\operatorname{D}_{2r}$. \n\t\tBy the Schur-Zassenhaus theorem, this extension is split and $G\\cong\\mathbb{Z}_p^{s+1}\\rtimes\\operatorname{D}_{2r}$."
+    },
+    {
+      "id": "lemma-21-2cdc478b",
+      "type": "lemma",
+      "content": "\\label{lem:ArcReg-Auto-PXGraph-3}\n\t\tLet $\\Gamma=\\operatorname{C}(p,4,1)$.\n\t\tSuppose that $G$ is an arc-regular subgroup of $\\Aut(\\Gamma)$.\n\t\tThen $G$ is isomorphic to $\\ZZ_p^{2}\\rtimes\\D_{8}$.",
+      "content_preview": "Let =(p,4,1). Suppose that G is an arc-regular subgroup of (). Then G is isomorphic to _p^2_8.",
+      "display_name": "Lemma",
+      "label": "lem:ArcReg-Auto-PXGraph-3",
+      "position": {
+        "line_start": 806,
+        "line_end": 810
+      },
+      "references": [],
+      "proof": "We have that $G$ is an arc-regular group on the complete bipartite graph $K_{2p,2p}$ according to \\cite[Theorem 2.13]{praeger1989Characterization}.\n\t\tIt follows that $|G|=8p^2$.\n\t\t\n\t\t\n\t\tLet $U$ and $V$ be the two parts of $K_{2p,2p}$, let $\\alpha\\in U$ and let $\\beta\\in V$.\n\t\tThen there exists a unique involution $z\\in G$ such that $z(\\alpha)=\\beta$ and $z(\\beta)=\\alpha$, as $G$ is arc-regular.\n\t\tTherefore, $G_\\alpha^z=G_\\beta$.\n\t\tLet $G^+$ be the subgroup of $G$ which consists of automorphisms fixing $U$ and $V$.\n\t\tThen $G^+$ is a normal subgroup of $G$ and $G=G^+\\rtimes\\langle z\\rangle$.\n\t\tSince $G_\\alpha$ is transitive on $V$, we have that $G^+=G_\\alpha G_\\beta$ by the Frattini argument.\n\t\tSince $G$ is arc-regular, we have that $G_\\alpha$ is regular on $V$.\n\t\tTherefore, $G_\\beta\\cong\\mathbb{Z}_{2p}\\mbox{ or }\\operatorname{D}_{2p}$.\n\t\tNote that $G_\\alpha\\cong G_\\beta$. We also have $G_\\alpha\\cong\\mathbb{Z}_{2p}\\mbox{ or }\\operatorname{D}_{2p}$.\n\t\tTherefore, $G^+$ has at least two subgroups of order $p$, which implies that the Sylow $p$-subgroup of $G^+$ is isomorphic to $\\mathbb{Z}_p^2$.\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tWe claim that $G^+$ has a unique Sylow $p$-subgroup $(G^+)_p$,\n\t\thence $(G^+)_p$ is characteristic in $G^+$.\n\t\tBy Sylow's theorem, if $p\\ge 5$, then $G^+$ has a unique Sylow $p$-subgroup $(G^+)_p$.\n\t\tNow suppose that $p=3$ and \n\t\tthere is more than one Sylow $p$-subgroup of $G^+$.\n\t\tNote that a group of order $p^2$ is abelian.\n\t\tBy Brodkey's theorem (\\cite[Theorem 1.37]{isaacs2008Finite}), there are two Sylow $p$-subgroups $P$ and $Q$ of $G^+$ such that $P\\cap Q=\\operatorname{O}_p(G^+)$.\n\t\tSince $P$ is not normal in $G$, we have that $P\\ne Q$.\n\t\tObserve that $|P||Q|/(|P\\cap Q|)=|PQ|\\le |G^+|=36$. \n\t\tWe deduce that $|\\operatorname{O}_p(G^+)|=|P\\cap Q|=3$.\n\t\tLet $H:=G^+/\\operatorname{O}_p(G^+)$.\n\t\tThen $H$ is a group of order $12$ and $\\operatorname{O}_p(H)=1$.\n\t\t\n\t\tBy the classification of groups of order $12$, $H\\cong\\operatorname{A}_4$.\n\t\tRecall that $G^+=G_\\alpha G_\\beta$.\n\t\tLet $H_\\alpha$ and $H_\\beta$ be quotients of $G_\\alpha$ and $G_\\beta$\n\t\twith respect to $\\operatorname{O}_p(G^+)$ respectively.\n\t\tThen $H=H_\\alpha H_\\beta$ and $H_\\alpha,H_\\beta\\in \\{\\mathbb{Z}_2,\\mathbb{Z}_{2p} ,\\D_{2p}\\}$.\n\t\tSince $\\operatorname{A}_4$ does not have subgroups isomorphic to $\\mathbb{Z}_{2p}$ or $\\D_{2p}$, we have that $H_\\alpha\\cong H_\\beta\\cong \\mathbb{Z}_2$. Then $12=|H|=|H_\\alpha H_\\beta|\\le 4$, a contradiction.\n\t\tThus, the claim is proved.\n\t\t\n\t\n\t\t\n\t\t\n\t\tNote that $(G^+)_p$ is also a Sylow $p$-subgroup of $G$.\n\t\tWrite $(G^+)_p=G_p$.\n\t\tThen, $G_p$ is also normal in $G$.\n\t\tLet $\\bar{G}=G/G_p$. \n\t\tWe have $\\bar{G}\\cong (\\bar{G}_\\a\\bar{G}_\\b)\\rtimes\\langle\\bar{z}\\rangle$.\n\t\tSince $\\bar{G}_\\alpha\\cong\\bar{G}_\\beta\\cong\\mathbb{Z}_2$ and $\\bar{G}\\alpha^{\\bar{z}}=\\bar{G}_\\beta$,\n\t\twe have that $\\bar{G}\\cong \\mathbb{Z}_2^2\\rtimes\\mathbb{Z}_2\\cong\\operatorname{D}_8$.\n\t\tTherefore, $G\\cong\\mathbb{Z}_p^2\\rtimes\\operatorname{D}_8$. \n\t\tThis completes the proof."
+    },
+    {
+      "id": "example-22-df9fc275",
+      "type": "example",
+      "content": "\\label{example:p|r}\n\t\tLet $$G=\\l d\\r\\times(\\l a\\r\\rtimes(\\l b\\r\\times\\l c\\r))\\cong \\ZZ_2\\times (\\ZZ_{p^2}\\rtimes(\\ZZ_2\\times\\ZZ_p))$$ \n\t\twhere $a^b=a^{-1}$ and $a^c=a^{1-p}$.\n\t\t\n\t\tWe claim that $G\\cong \\ZZ_p^2.\\D_{4p}$. Let $M=\\l a^p,c\\r$. Since $a^c=a^{1-p}$, we have that \n\t\t$$\\begin{aligned}\n\t\t\t&(a^{p})^{c}=a^{p-p^2}=a^p \\text{ and }\\\\\n\t\t\t&c^a=a^{-1}c a=c(a^{-1})^{c}a=ca^{p-1}a=ca^p.\n\t\t\\end{aligned}$$\n\t\tNote that $M^d=M$ and $M^b=M$. We have that $\\ZZ_p^2\\cong M\\trianglelefteq G$. Let $\\Bar{G}=G/M$. We now show that $\\Bar{G}\\cong \\D_{4p}$. Since $G=\\l d\\r\\times(\\l a\\r\\rtimes(\\l b\\r\\times\\l c\\r))$, we have that \n\t\t$$\\Bar{G}=\\l \\Bar{d}\\r\\times (\\l \\Bar{a}\\r\\rtimes\\l \\Bar{b}\\r)\\cong \\ZZ_2\\times \\D_{2p}\\cong \\D_{4p}.$$ \n\t\t\n\t\t\n\t\n\t\t\n\t\tWe claim that the extension of $G\\cong \\ZZ_p^2.\\D_{4p}$ is non-split. First, one can check that $M$ is the unique elementary abelian normal $p$-subgroup of order $p^2$. \n\t\tNow suppose that this extension is split, which means that there exists a subgroup $H\\cong \\D_{4p}$ such that $H\\cap M=1$. \n        Assume that $h\\in H$ has order $p$. \n        Note that $M$ consists of elements of order $p$.\n        We have that $h\\in M$.\n        This contradicts the condition that $H\\cap M=1$.\n        \n        \n\t\t\n\t\tLet $\\rho=bc$ and $\\tau=dab$, then $|\\rho|=2p$ and $|\\tau|=2$. We claim that $\\l \\rho,\\tau\\r=G$. Let $K=\\l \\rho,\\tau\\r$. Since $\\rho=bc$ and $[b,c]=1$, we obtain that $\\rho^2=c^2$ and $\\rho^p=b$ which implies $b,c\\in K$. Note that $(\\tau b)^2=dada=a^2\\in K$, we conclude that $a\\in K$. It follows that $d=\\tau b a^{-1}\\in K$. Therefore, $K=\\l \\rho,\\tau\\r=G$.\n\t\t\n\t\tNow, we construct a rotary map $\\mathcal{M}$ by $(G,\\rho,\\tau)$. Let \\[\\mathcal{M}=\\mathrm{RotaMap}(G,\\rho,\\tau)\\] and \n\t\tlet $\\Gamma$ be the underlying graph of $\\mathcal{M}$. \n\t\tRecall that $\\ZZ_p^2\\cong M=\\l  a^p,c\\r\\trianglelefteq G$. By definition, the vertex stabilizer $G_v=\\l \\rho\\r=\\l bc\\r$. Therefore, \n\t\t$$G_v\\cap M=\\l \\rho^2\\r=\\l c^2\\r\\cong \\ZZ_p.$$ \n\t\tBy Theorem~\\ref{thm:PX-equiv}, we conclude that $\\Gamma$ is a PX graph. Consequently, $\\mathcal{M}$ is a $G$-rotary PX map where $G=\\ZZ_p^2.\\D_{4p}$ is non-split.",
+      "content_preview": "Let G= d( a( b c)) _2 (_p^2(_2_p)) where a^b=a^-1 and a^c=a^1-p. We claim that G _p^2._4p. Let M= a^p,c. Since a^c=a^1-p, we have that...",
+      "display_name": "Example",
+      "label": "example:p|r",
+      "position": {
+        "line_start": 869,
+        "line_end": 900
+      },
+      "references": [
+        {
+          "target_id": "thm:PX-equiv",
+          "reference_type": "internal",
+          "context": "=\\l \\rho^2\\r=\\l c^2\\r\\cong \\ZZ_p.$$ \n\t\tBy Theorem~\\ref{thm:PX-equiv}, we conclude that $\\Gamma$ is a PX graph. Consequ",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-23-5f7cefe5",
+      "type": "lemma",
+      "content": "\\label{lem:arc-regular-PX-map}\n\t\t\n\t\t\n\t\t\n\t\tLet $G = \\mathbb{Z}_p^{s+1} \\rtimes \\operatorname{D}_{2r}$ with $ s \\geqslant 0 $, and let \\( \\mathcal{M} \\) be a $G$-arc-regular map.\n\t\tIf $|G_\\a|=2p$, \n\t\tthen the underlying graph $\\Gamma$ is isomorphic to  $ \\operatorname{C}^*(p,r,s) $.",
+      "content_preview": "Let G = _p^s+1 _2r with s 0 , and let ( ) be a G-arc-regular map. If |G_|=2p, then the underlying graph is isomorphic to ^*(p,r,s) .",
+      "display_name": "Lemma",
+      "label": "lem:arc-regular-PX-map",
+      "position": {
+        "line_start": 906,
+        "line_end": 913
+      },
+      "references": [
+        {
+          "target_id": "thm:PX-equiv",
+          "reference_type": "internal",
+          "context": "that $\\Gamma=\\operatorname{C}(p,r,s)$ by Theorem~\\ref{thm:PX-equiv}.\n\t\t\n\t\tLet $\\tau$ be the generator of $G_e$.\n\t\tThe",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:arc-regular-PX-graph",
+          "reference_type": "internal",
+          "context": "{C}^*(p,r_1,0)$ for some $r_1\\ge 3$.\n\t\tBy Theorem~\\ref{thm:arc-regular-PX-graph}, $G\\cong\\mathbb{Z}_p\\rtimes\\operatorname{D}_{2r_1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(\\alpha,e,\\beta)$ be an arc of $\\Gamma$.\n\t\tSince $\\mathcal{M}$ is $G$-arc-regular, we have that $\\Gamma$ is $G$-arc-regular.\n\t\tTherefore, the vertex valency of $\\Ga$ equals $|G_\\a| = 2p$.\n\t\tRecall that $p\\nmid r$.\n\t\tWe have that $V\\cong \\ZZ_p^{s+1}$ is the unique normal Sylow $p$-subgroup of $G$ which  implies $|G_\\alpha\\cap V|=p$.\n\t\tTherefore $V$ is not semiregular on the vertices of $\\Gamma$.\n\t\t\n\t\t\n\t\tBy \\cite[Theorem 1.2]{LiPraegerS-A}, the edge multiplicity of $\\Gamma$ is $|G_{\\alpha\\beta}|$.\n\t\tFirst, if $|G_{\\alpha\\beta}|=1$, then $\\Gamma$ is a  $G$-arc-regular simple graph of valency $2p$.\n\t\tSince $V$ is not semiregular on the vertices of $\\Gamma$, we have that $\\Gamma=\\operatorname{C}(p,r,s)$ by Theorem~\\ref{thm:PX-equiv}.\n\t\t\n\t\tLet $\\tau$ be the generator of $G_e$.\n\t\tThen $(G_\\a)^{\\tau}=G_\\beta$, and so $G_{\\alpha\\beta}=G_\\alpha\\cap (G_\\alpha)^\\tau$.\n\t\tThus $G_{\\alpha\\beta}^\\tau=G_{\\alpha\\beta}$.\n\t\t\n\t\tNow, suppose that $|G_{\\alpha\\beta}|=2$.\n\t\tTake the generator $\\tau_1$ of $G_{\\alpha\\beta}$.\n\t\tThen by $G_{\\alpha\\beta}^\\tau=G_{\\alpha\\beta}$, $\\tau$ centralizes $\\tau_1$.\n\t\tSince $|G_\\a|=2p$ and $|G_e|=2$, we have that $G_\\alpha V/V=\\langle \\tau_1 V\\rangle$ and $G_e V / V=\\langle \\tau V \\rangle$.\n\t\tThen $G / V =\\l G_\\a, G_e\\r/V= \\langle \\tau_1 V, \\tau V \\rangle \\cong \\mathbb{Z}_2^2$.\n\t\tAlso note that $ G / V \\cong \\operatorname{D}_{2r}$ which implies that $r=2$.\n        This contradicts to our assumption that $r\\ge 3$.\n\t\t\n\t\t\n\t\tAssume  that $|G_{\\alpha\\beta}|=p$, equivalently, the edge multiplicity of $\\Gamma$ is $p$.\n\t\tThen the simple base graph of $\\Gamma$ is of valency $2$. \n\t\tTherefore, $\\Gamma$ is a cycle with\n\t\t$p$ multiple edges between each adjacent pair of vertices.\n\t\tHence $\\Gamma=\\operatorname{C}^*(p,r_1,0)$ for some $r_1\\ge 3$.\n\t\tBy Theorem~\\ref{thm:arc-regular-PX-graph}, $G\\cong\\mathbb{Z}_p\\rtimes\\operatorname{D}_{2r_1}$,\n\t\twhich implies that $r=r_1$ and $\\Gamma=\\operatorname{C}^*(p,r,0)$.\n\t\t\n\t\tIf $|G_{\\alpha\\beta}|=2p$, then $G_\\alpha=G_{\\alpha\\beta}$ which implies that $\\tau$ normalizes $G_{\\alpha}$.\n\t\tBy $G=\\l G_\\a,\\tau\\r$, $G=G_\\alpha\\rtimes\\langle\\tau\\rangle$, and so $|G|=4p$.\n\t\tSince $G=\\mathbb{Z}_p^{s+1}\\rtimes\\operatorname{D}_{2r}$, we have that $s=0$ and $r=2$.\n\t\tHowever, this contradicts our assumption that $r\\ge 3$. This completes the proof."
+    },
+    {
+      "id": "lemma-24-c31418bc",
+      "type": "lemma",
+      "content": "\\label{lem:fram-Auto-AutM}\n\t\tLet $G=V\\rtimes_\\psi D$ where $V=\\mathbb{Z}_p^d$, $p\\nmid |D|$, and $\\psi$ is irreducible and non-trivial.\n\t\tSet $A = \\operatorname{Aut}(G)$. \n\t\tThen \\[A = \\operatorname{Inn}_G(V) \\rtimes \\operatorname{N}_A(D)\\] with $\\operatorname{Inn}_G(V) \\cong V$.",
+      "content_preview": "Let G=V_ D where V=_p^d, p |D|, and is irreducible and non-trivial. Set A = (G). Then [A = _G(V) _A(D)] with _G(V) V.",
+      "display_name": "Lemma",
+      "label": "lem:fram-Auto-AutM",
+      "position": {
+        "line_start": 977,
+        "line_end": 982
+      },
+      "references": [],
+      "proof": "Let $N=\\operatorname{N}_G(D)$.\n\t\tWe claim that $N=D$. \n\t\tSince $N\\ge D$, we have that\n\t\t$N=\\operatorname{N}_V(D)D$.\n\t\tSince $V$ is normal in $G$, $\\operatorname{N}_V(D)$ is normal in $N$.\n\t\tAlso note that $D$ is normal in $N$ and $\\operatorname{N}_V(D)\\cap D=1$.\n\t\tTherefore, $\\operatorname{N}_V(D)$ is centralized by $D$.\n\t\tSince $\\psi$ is irreducible, $\\operatorname{N}_V(D)=1\\mbox{ or }V$.\n\t\tIf $\\operatorname{N}_V(D)=V$, then $\\varphi$ is trivial.\n\t\tHence $\\operatorname{N}_V(D)=1$ and $N=D$.\n\t\t\n\t\tNote that for every $g\\in A$, $g(D)$ is a complement of $V$. \n\t\tBy the Schur-Zassenhaus theorem and Frattini's argument, \\[A=\\operatorname{Inn}_G(V)\\operatorname{N}_A(D).\\]\n\t\tSince $\\Inn_G(V)$ is the unique Sylow $p$-subgroup of $\\Inn_G(G)$,\n\t\twe have that $\\Inn_G(V)$ is a characteristic subgroup of $\\Inn_G(G)$\n\t\twhich implies that $\\Inn_G(V)$ is normal in $A$.\n\t\tHence, it is sufficient to show that $\\operatorname{Inn}_G(V)\\cap \\operatorname{N}_A(D)=1$ and $\\operatorname{Inn}_G(V)$ is normal in $A$.\n\t\tLet $1\\ne l\\in V$. If $\\tilde{l}\\in \\operatorname{N}_A(D)$, \t\t\t\n\t\tthen $l\\in \\operatorname{N}_G(D)=D$.\n\t\tTherefore, $l\\le D\\cap V=1$ which implies that $\\operatorname{Inn}_G(V)\\cap \\operatorname{N}_A(D)=1$. \n\t\tSince $N=D$, we have that $\\operatorname{Z}(G)\\le D$ which implies that $V\\cap\\operatorname{Z}(G)=1$.\n\t\tNote that $\\operatorname{Inn}_G(V)\\cong V/(V\\cap\\operatorname{Z}(G))$. We have that $\\operatorname{Inn}_G(V)\\cong V$. This completes the proof."
+    },
+    {
+      "id": "lemma-25-58f53c17",
+      "type": "lemma",
+      "content": "\\label{Iso-rep&groups-2}\n\t\tFor $i\\in \\{1,2\\}$, let $G_i=\\ZZ_p^{d_i}\\rtimes_{\\psi_i}D_i$, where $p\\nmid |D_1||D_2|$. \n\t\tThen the following are equivalent:\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item $G_1\\cong G_2$; \\vskip0.1in\n   \n\t\t\t\\item there exists an isomorphism $\\sigma:D_1\\to D_2$ such that $\\psi_2\\circ\\sigma\\cong \\psi_1$.\n\t\t\\end{enumerate} \n\t\tMoreover, if~{\\rm (ii)} holds, there exists an isomorphism $f:G_1\\rightarrow G_2$ such that $f(D_1)=D_2$ and $f|_{D_1}=\\sigma$.",
+      "content_preview": "For i 1,2, let G_i=_p^d_i__iD_i, where p |D_1||D_2|. Then the following are equivalent: [ (i)] G_1 G_2; 0.1in there exists an isomorphism :D_1 D_2...",
+      "display_name": "Lemma",
+      "label": "Iso-rep&groups-2",
+      "position": {
+        "line_start": 1009,
+        "line_end": 1018
+      },
+      "references": [],
+      "proof": "Let $f:G_1\\to G_2$ be an isomorphism.\n\t\tThen $d_1=d_2$. Write $d=d_1$.\n\t\tSince $p\\nmid |D_1||D_2|$, we have that \n\t\tthere exists an element $v$ in the Sylow $p$-subgroup of $ G_2$ such that $f(D_1)^v=D_2$.\n\t\tLet $\\sigma=\\tilde{v}\\circ f|_{D_1}$.\n\t\tObserve that $\\sigma$ is an isomorphism from $D_1$ to $D_2$.\n\t\tNow we show that $\\psi_2\\circ\\sigma\\cong\\psi_1$.\n\t\t\n\t\n\t\tFor $i\\in\\{1,2\\}$, let $ V_i $ be the unique Sylow $p$-subgroup of $G_i$.\n\t\tThen $V_1$ is a $D_1$-module with respect to $\\psi_1$\n\t\tand $V_2$ is a $D_1$-module with respect to $\\psi_2\\circ\\sigma$.\n\t\tLet $f|_{V_1}:V_1\\rightarrow V_2$ be the restriction of $f$ on $ V_1 $.\n\t\tFor each $ w\\in V_1 $ and $ b\\in D_1 $, we have that\n\t\t\\[ \\begin{aligned}\n\t\t\tf|_{V_1}(\\psi_1(b)(w))=& f|_{V_1}(b^{-1}wb)\\\\\n\t\t\t=&f(b)^{-1}f(w)f(b)\\\\\n\t\t\\end{aligned} \\]\n\t\tSince $f(w)\\in V_2$ and $V_2$ is abelian, \n\t\t\\[\\begin{aligned}\n\t\t\tf(b)^{-1}f(w)f(b)&=(f(b)^{v})^{-1}f(w)f(b)^v\\\\\n\t\t\t&=\\psi_2(f(b)^v)(f|_{V_1}(w))\\\\\n\t\t\t&=\\psi_2\\circ\\sigma(f|_{V_1}(w))\n\t\t\\end{aligned}\\]\n\t\tTherefore, $f|_{V_1}$ serves as the isomorphism between representations $\\psi_1$ and $\\psi_2\\circ\\sigma$.\n\t\t\n\t\t\n\t\t\n\t\tConversely, let $\\sigma:D_1\\to D_2$ be an isomorphism such that $\\psi_1\\cong \\psi_2\\circ \\sigma$.\n\t\tFor $i\\in\\{1,2\\}$, let $ V_i $ be the unique Sylow $p$-subgroup of $G_i$.\n\t\tThen $V_1$ is a $D_1$-module with respect to $\\psi_1$\n\t\tand $V_2$ is a $D_1$-module with respect to $\\psi_2\\circ\\sigma$.\n\t\tSince $\\psi_1\\cong \\psi_2\\circ \\sigma$, there exists a $D_1$-module isomorphism $f_0:V_1\\to V_2$.\n\t\t\n\t\tDefine $f:G_1\\to G_2$ by \n\t\t\\[vb\\mapsto f_0(v)\\sigma(b),\\]\n\t\tfor each $v\\in V_1$ and $b\\in D_1$.\n\t\tThen $f(D_1)=D_2$ and $f|_{D_1}=\\sigma$.\n\t\tClearly, $f$ is bijective and one can check that $f$ is a homomorphism. \n\t\tHence $f$ is an isomorphism.\n\t\tThis completes the proof."
+    },
+    {
+      "id": "lemma-26-d852521c",
+      "type": "lemma",
+      "content": "\\label{Aut(D)_phi}\n\t\tUsing notation in Lemma~\\ref{lem:fram-Auto-AutM}, and let $N=\\N_A(D)$.\n\t\tDefine a homomorphism\n\t\t$\\kappa:N\\to\\Aut(D)$ by $f\\mapsto f|_{D}$.\n\t\tThen $\\ker(\\kappa )\\cong \\mathrm{End}_{D}(V)^\\times$ and \n\t\t\\[\\mbox{$\\mathrm{im}(\\kappa)= \\Aut(D)_{\\psi}$},\\] \n\t\twhere $\\Aut(D)_{\\psi}=\\{\\sigma\\in \\Aut(D)\\ \\mid \\ \\psi\\circ\\sigma\\cong \\psi\\}$.",
+      "content_preview": "Using notation in Lemma~, and let N=_A(D). Define a homomorphism :N(D) by f f|_D. Then ( ) _D(V)^ and [()= (D)_,] where (D)_= (D) .",
+      "display_name": "Lemma",
+      "label": "Aut(D)_phi",
+      "position": {
+        "line_start": 1064,
+        "line_end": 1071
+      },
+      "references": [
+        {
+          "target_id": "lem:fram-Auto-AutM",
+          "reference_type": "internal",
+          "context": "\\label{Aut(D)_phi}\n\t\tUsing notation in Lemma~\\ref{lem:fram-Auto-AutM}, and let $N=\\N_A(D)$.\n\t\tDefine a homomorphism\n\t\t$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Iso-rep&groups-2",
+          "reference_type": "internal",
+          "context": "Let $ \\sigma\\in \\Aut(D)_{\\psi} $.\n\t\tLemma~\\ref{Iso-rep&groups-2} shows that there exists an automorphism $f\\in N$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We first determine $\\ker(\\kappa)$.\n\t\tLet $f\\in \\ker(\\kappa)$, i.e. the restriction $f\\mid_{D}=\\mathrm{id}_{D}$.\n\t\tIt is clear that $f(V)=V$ as $V$ is characteristic in $G$.\n\t\tNote that $V$ is a $D$-module with respect to $\\psi$.\n\t\tWe claim that $f|_V$ is a $D$-module endomorphism.\n\t\tLet $v\\in V$ and $b\\in D$.\n\t\tWe have $f|_V(\\psi(b)(v))=f(v^b)=f(v)^{f(b)}=\\psi(f(b))(f(v))$.\n\t\tIt follows from $f\\mid_{D}=\\mathrm{id}_{D}$ that  $\\psi(f(b))(f(v))=\\psi(b)(f(v))$, and so \n\t\t\\[f|_V(\\psi(b)(v))=\\psi(b)(f|_V(v)).\\]\n\t\tThe claim is hence proved.\n\t\tMoreover, $f|_V$ is a $D$-module isomorphism by  definition.\n\t\tTherefore, we can define $\\xi:\\ker(\\kappa)\\to \\mathrm{End}_{D}(V)^{\\times}$ by $f\\mapsto f|_V$.\n\t\tSince $f\\mid_{D}=\\mathrm{id}_{D}$,  we have that the homomorphism $\\xi$ is injective.\n\t\tWe next show that $\\xi$ is surjective.\n\t\tFor each $g\\in \\mathrm{End}_{D}(V)^{\\times}$, define $f_g:G\\to G$ by $vb\\mapsto g(v)b$, where $v\\in V$ and $b\\in D$.\n\t\tOne can check that $f_g$ is a homomorphism, and it is clear that $f_g\\in N$.\n\t\tWe therefore prove that $\\xi$ is an isomorphic since $\\xi(f_g)=g$.\n\t\t\n\t\t\n\t\tNow, we determine the image of $\\kappa$.\n\t\t\n\t\tLet $f\\in N$ and let $\\sigma=\\kappa(f)$.\n\t\tLet $U_1$ be the $D$-module with respect to $\\psi$\n\t\tand let $U_2$ be the $D$-module with respect to $\\psi\\circ \\sigma$.\n\t\tThis means that $U_1$ and $U_2$ share the same base space $V$ but they are different $D$-modules.\n\t\tWe show that $f|_V$ serves as a $D$-module isomorphism from $U_1$ to $U_2$.\n\t\tFor each $u\\in U_1$ and $b\\in D$, we have that\n\t\t\\[ \\begin{aligned}\n\t\t\tf|_{V}(\\psi(b)(w))=& f|_{V}(b^{-1}wb)\\\\\n\t\t\t=&f(b)^{-1}f(w)f(b)\\\\\n\t\t\t=&\\sigma(b)^{-1}f(w)\\sigma(b)\\\\\n\t\t\t=&\\psi(\\sigma(b))f|_V(w).\n\t\t\\end{aligned} \\]\n\t\tTherefore, $\\psi\\circ\\sigma\\cong\\psi$, which implies that $\\sigma\\in\\Aut(D)_\\psi$.\n\t\t\n\t\t\n\t\t\n\t\tLet $ \\sigma\\in \\Aut(D)_{\\psi} $.\n\t\tLemma~\\ref{Iso-rep&groups-2} shows that there exists an automorphism $f\\in N$ such that $\\kappa(f)=\\sigma$.\n\t\tTherefore $\\sigma\\in\\mathrm{im}(\\kappa)$.\n\t\tThus, we conclude that $\\mathrm{im}(\\kappa)=\\Aut(D)_\\psi$."
+    },
+    {
+      "id": "lemma-27-5f66e8c1",
+      "type": "lemma",
+      "content": "\\label{lem:number}\n\t\tLet $G=V\\rtimes_\\psi D=\\ZZ_p^d\\rtimes_\\psi \\D_{2r} $, where  $\\psi$ is irreducible.\n\t\tThen $G$ has a rotary pair $(\\rho,\\tau)$ such that $|\\rho|=2p$ if $\\psi\\ne\\gamma_{-1,-1}$ and $|\\rho|=2$ if $\\psi=\\gamma_{-1,-1}$. \n\t\tMoreover, the number of such rotary pairs of $G$ is\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item  $(p-1)r\\varphi(r)$ if $\\psi=\\gamma_{1,1}$;\\vskip0.1in\n\t\t\t\n\t\t\t\\item $(p-1)pr\\varphi(r)/2$ if  $\\psi=\\gamma_{1,-1}\\mbox{ or }\\gamma_{-1,1}$;\\vskip0.1in\n\t\t\t\n\t\t\t\\item  $pr\\varphi(pr)$ if $\\psi=\\gamma_{-1,-1}$;\\vskip0.1in\n\t\t\t\n\t\t\t\\item  $p^d(p^{d/2}-1)r\\varphi(r)$ if $d\\ge 2$.\n\t\t\\end{enumerate}",
+      "content_preview": "Let G=V_ D=_p^d_ _2r , where is irreducible. Then G has a rotary pair (,) such that ||=2p if _-1,-1 and ||=2 if =_-1,-1.",
+      "display_name": "Lemma",
+      "label": "lem:number",
+      "position": {
+        "line_start": 1124,
+        "line_end": 1137
+      },
+      "references": [
+        {
+          "target_id": "lem:irreducible-representation-dihedral",
+          "reference_type": "internal",
+          "context": "$ if and only if $\\psi(c)v\\ne v^{-1}$.\n\t\tBy Lemma~\\ref{lem:irreducible-representation-dihedral}, the $(-1)$-eigenspace of $c$ has dimension $d/2$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:irreducible-representation-dihedral",
+          "reference_type": "internal",
+          "context": "giving $p^{d/2}$ choices for $w$ again by Lemma~\\ref{lem:irreducible-representation-dihedral}.\n\t\tSince $\\langle \\rho, \\tau \\rangle = G$, there",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $\\psi=\\gamma_{1,1}$, then $G = \\ZZ_p \\times \\D_{2r}$.\n\t\tThe set of elements of order $2p$ in $G$ is $\\{ vx \\mid v \\in V \\setminus \\{1\\},\\ x \\in D \\text{ with } |x| = 2 \\}$.\n\t\tThis set has $(p-1)r$ elements when $r$ is odd or $(p-1)(r+1)$ elements when $r$ is even.\n\t\tFor an element $\\rho = vx \\in G$ of order $2p$, given that $\\l \\rho, \\tau \\r = G$ for some involution $\\tau$, the involution $x$ must not lie in $Z(D)$.\n\t\tThus, there are always $(p-1)r$ elements of order $2p$ that can serve as the rotation $\\rho$ in a rotary pair $(\\rho, \\tau)$ of $G$.\n\t\tNote that all involutions of $G$ are contained in the subgroup $\\D$.\n\t\tFor each such $\\rho = vx$ with $x \\notin Z(\\D)$, an involution $\\tau$ satisfying $\\l \\rho, \\tau \\r = G$ also satisfies $\\l x, \\tau \\r = \\D$.\n\t\tTherefore, there are $\\varphi(r)$ choices for $\\tau$ with a given $\\rho$.\n\t\tHence, there are $(p-1)r\\varphi(r)$ rotary pairs of $G = \\ZZ_p \\times \\D$, which proves statement~(i).\n\t\t\n\t\tNow, let $r$ be even and $\\psi = \\gamma_{1,-1}$ or $\\gamma_{-1,1}$.\n\t\tFirst, assume $\\psi = \\gamma_{1,-1}$, which is equivalent to $\\psi(a)=1$ and $\\psi(b)=-1$. \n\t\tThere are $(p-1)r$ choices for $\\rho$, as each order $2p$ element has the form $va^{(ab)^i}$ or $v(ab)^{r/2}$ for some $v \\in \\ZZ_p \\setminus \\{1\\}$. \n\t\tGiven that $\\l \\rho, \\tau \\r = G$ with $|\\tau|=2$, there are $p\\varphi(r)/2$ choices for $\\tau$, as $\\tau$ has the form $wb^{(ab)^{i}}$ for some $w\\in \\mathbb{Z}_p$. \n\t\tThus, the number of rotary pairs of $G$ is $(p-1) p r \\varphi(r)/2$. \n\t\tSimilarly, when $\\psi = \\gamma_{-1,1}$, the number of rotary pairs is also $(p-1) p r \\varphi(r)/2$. \n\t\tThis completes case~(ii).\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tIf $\\psi=\\gamma_{-1,-1}$, then $G=\\D_{2pr}$ is a dihedral group.\n\t\tSince $|\\rho|=2$, we have that there are $pr$ ways to choose $\\rho$. \n\t\tSince $\\l \\rho,\\tau\\r=G$ and $|\\tau|=2$, we conclude that we have $\\varphi(pr)$ choices of $\\tau$. \n\t\tTherefore, the number of rotary pairs of $G$ is $pr\\varphi(pr)$. \n\t\tThis completes case~(iii).\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tNow, assume $d \\geq 2$. \n\t\tLet $c\\in \\D$ and let $v\\in \\mathbb{Z}_p^d$. \n\t\tNote that $\\rho = vc$ has order $2p$ if and only if $\\psi(c)v\\ne v^{-1}$.\n\t\tBy Lemma~\\ref{lem:irreducible-representation-dihedral}, the $(-1)$-eigenspace of $c$ has dimension $d/2$. \n\t\tTherefore, there are $(p^d - p^{d/2})r$ choices for $\\rho$. \n\t\tWrite $\\tau = wz$ where $w \\in \\mathbb{Z}_p^d$ and $z \\in \\D$. \n\t\tThe condition $|\\tau| = 2$ implies that $|z| = 2$ and $\\psi(z)w = w^{-1}$, \n\t\tgiving $p^{d/2}$ choices for $w$ again by Lemma~\\ref{lem:irreducible-representation-dihedral}.\n\t\tSince $\\langle \\rho, \\tau \\rangle = G$, there are $\\varphi(r)$ choices for $z$. \n\t\tThus, the number of rotary pairs $(\\rho, \\tau)$ in case~(iv) is $p^d (p^{d/2} - 1) r \\varphi(r)$."
+    },
+    {
+      "id": "lemma-28-0d574067",
+      "type": "lemma",
+      "content": "\\label{lem-|RPairs|=|IrrReps|}\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tLet $G=V\\rtimes_\\psi D=\\ZZ_p^d\\rtimes_\\psi \\D_{2r} $, where $\\psi$ is irreducible.\n\t\tThen the number of $G$-rotary augmented PX maps is $1$ if $d=1$; $|\\psi^{\\Aut(\\D_{2r})}|$ if $d\\geqslant 2$.",
+      "content_preview": "Let G=V_ D=_p^d_ _2r , where is irreducible. Then the number of G-rotary augmented PX maps is 1 if d=1; |^(_2r)| if d 2.",
+      "display_name": "Lemma",
+      "label": "lem-|RPairs|=|IrrReps|",
+      "position": {
+        "line_start": 1213,
+        "line_end": 1221
+      },
+      "references": [
+        {
+          "target_id": "lem:number",
+          "reference_type": "internal",
+          "context": "ame to the number of rotary pairs of $G$ by Lemma~\\ref{lem:number} {\\rm (i)}.\n\t\tHence there is a unique $G$-rotary a",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:number",
+          "reference_type": "internal",
+          "context": "quals  the number of rotary pairs of $G$ by Lemma~\\ref{lem:number} {\\rm (iii)}.\n\t\tAgain there is a unique $G$-rotary",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:number",
+          "reference_type": "internal",
+          "context": "y pairs of $G$ is $(p-1)pr\\varphi(r)/2$, by Lemma~\\ref{lem:number} {\\rm (ii)}.\n\t\tThe automorphism group is $A\\cong \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:fram-Auto-AutM",
+          "reference_type": "internal",
+          "context": "hism group is $A\\cong \\ZZ_p^d\\rtimes N$, by Lemma~\\ref{lem:fram-Auto-AutM}. Since $\\Aut(G)$ acts semiregularly on the set of",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:number",
+          "reference_type": "internal",
+          "context": "e number of rotary pairs of $G$ is given by Lemma~\\ref{lem:number} {\\rm (iv)}, as below:\n\t\t\\[p^d(p^{d/2}-1)r\\varphi(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:fram-Auto-AutM",
+          "reference_type": "internal",
+          "context": "is  $A\\cong \\ZZ_p^d\\rtimes N$ according to Lemma~\\ref{lem:fram-Auto-AutM}.\n\t\tSince $A$ acts semiregularly on the set of rot",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Aut(D)_phi",
+          "reference_type": "internal",
+          "context": "}-1)r\\varphi(r)/|N|.\n\t\t\\end{equation*}\n\t\tBy Lemma~\\ref{Aut(D)_phi}, we have that $N/\\mathrm{End}_{\\D_{2r}}(\\ZZ_p^d)^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:module-homomorphism",
+          "reference_type": "internal",
+          "context": "_p^d)^\\times\\cong \\Aut(\\D_{2r})_\\psi$.\n\t\tBy Lemma~\\ref{lem:module-homomorphism} {\\rm (i)}, $\\mathrm{End}_{\\D_{2r}}(\\ZZ_p^d)^\\time",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $A=\\Aut(G)$ and let $N=\\operatorname{N}_A(D)$.\n\t\t\n\t\tFirst we discuss the cases where $d=1$.\n\t\tSuppose that $\\psi=\\gamma_{1,1}$, equivalently, $G=\\mathbb{Z}_p\\times\\operatorname{D}_{2r}$. \n\t\tThen $\\Aut(G)=\\Aut(\\mathbb{Z}_p)\\times\\Aut(\\operatorname{D}_{2r})$ since $p\\nmid r$, and so $|\\Aut(G)|=(p-1)r\\varphi(r)$ is same to the number of rotary pairs of $G$ by Lemma~\\ref{lem:number} {\\rm (i)}.\n\t\tHence there is a unique $G$-rotary augmented PX map.\n\t\tAssume that $\\psi=\\gamma_{-1,-1}$ yielding that $G\\cong\\operatorname{D}_{2pr}$ is dihedral.\n\t\tThen $|\\Aut(G)|=pr\\varphi(pr)$ equals  the number of rotary pairs of $G$ by Lemma~\\ref{lem:number} {\\rm (iii)}.\n\t\tAgain there is a unique $G$-rotary augmented PX map.\n\t\t\n\t\tIf $\\psi=\\gamma_{1,-1}\\mbox{ or }\\gamma_{-1,1}$, then the number of rotary pairs of $G$ is $(p-1)pr\\varphi(r)/2$, by Lemma~\\ref{lem:number} {\\rm (ii)}.\n\t\tThe automorphism group is $A\\cong \\ZZ_p^d\\rtimes N$, by Lemma~\\ref{lem:fram-Auto-AutM}. Since $\\Aut(G)$ acts semiregularly on the set of rotary pairs of $G$, the number of isomorphism classes is \n\t\t\\[(p-1)r\\varphi(r)/2|N|. \\] It is clear that $\\operatorname{End}_{\\operatorname{D}_{2r}}(\\mathbb{Z}_p)^{\\times}\\cong\\mathbb{Z}_{p-1}$.\n\t\tSince $\\gamma_{1,-1}\\circ\\sigma=\\gamma_{-1,1}\\circ\\sigma=\\gamma_{-1,1}\\mbox{ or }\\gamma_{1,-1}$ for every $\\sigma\\in\\Aut(\\operatorname{D}_{2r})$, we have that $|\\Aut(\\operatorname{D}_{2r})_\\psi|=|\\Aut(\\operatorname{D}_{2r})|/2$.\n\t\tTherefore, $|N|=(p-1)r\\varphi(r)/2$. It follows that the number of the maps is $1$. \n\t\t\n\t\tNow, we suppose that $d\\ge 2$.\n\t\tThe number of rotary pairs of $G$ is given by Lemma~\\ref{lem:number} {\\rm (iv)}, as below:\n\t\t\\[p^d(p^{d/2}-1)r\\varphi(r).\\] \n\t\tThere is  $A\\cong \\ZZ_p^d\\rtimes N$ according to Lemma~\\ref{lem:fram-Auto-AutM}.\n\t\tSince $A$ acts semiregularly on the set of rotary pairs of $G$, the number of the maps is \n\t\t\\begin{equation*}\\label{equation:number}\n\t\t\t(p^{d/2}-1)r\\varphi(r)/|N|.\n\t\t\\end{equation*}\n\t\tBy Lemma~\\ref{Aut(D)_phi}, we have that $N/\\mathrm{End}_{\\D_{2r}}(\\ZZ_p^d)^\\times\\cong \\Aut(\\D_{2r})_\\psi$.\n\t\tBy Lemma~\\ref{lem:module-homomorphism} {\\rm (i)}, $\\mathrm{End}_{\\D_{2r}}(\\ZZ_p^d)^\\times\\cong \\ZZ_{p^{d/2}-1}$.\n\t\tIt follows that the number of the maps is\n\t\t\\[r\\varphi(r)/|\\Aut(\\D_{2r})_\\psi|=|\\Aut(\\D_{2r})|/|\\Aut(\\D_{2r})_\\psi|=|\\psi^{\\Aut(\\D_{2r})}|.\\]"
+    },
+    {
+      "id": "corollary-29-aba0896f",
+      "type": "corollary",
+      "content": "\\label{coro:trivial-PX-map}\n\t\tThere is a unique rotary map whose underlying graph is $\\C^*(p,r,0,-1)$.\n\t\tMoreover, this map is $(\\ZZ_p\\rtimes_{\\gamma_{-1,-1}} \\D_{2r})$-rotary.\n\t\t\n\t\tThe number of rotary maps whose underlying graph is $\\C^*(p,r,0,1)$ is $1$  if $r$ is odd and $2$ if $r$ is even.\n\t\tMoreover, these maps are either $(\\ZZ_p\\rtimes_{\\gamma_{1,1}}\\D_{2r})$-rotary or $(\\ZZ_p\\rtimes_{\\gamma_{1,-1}}\\D_{2r})$-rotary.",
+      "content_preview": "There is a unique rotary map whose underlying graph is ^*(p,r,0,-1). Moreover, this map is (_p__-1,-1 _2r)-rotary.",
+      "display_name": "Corollary",
+      "label": "coro:trivial-PX-map",
+      "position": {
+        "line_start": 1256,
+        "line_end": 1262
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-30-fb0d899e",
+      "type": "theorem",
+      "content": "\\label{|RPairs|=|IrrReps|}\n\t\tThe number of irreducible rotary augmented PX map of length $r$ is\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item  $|\\mathrm{Irr}(D_{2r})|$ if $r$ is odd;\\vskip0.1in\n\t\t\t\n\t\t\t\\item $|\\mathrm{Irr}(D_{2r})|-1$ if $r$ is even.\n\t\t\\end{enumerate}",
+      "content_preview": "The number of irreducible rotary augmented PX map of length r is [ (i)] |(D_2r)| if r is odd;0.1in |(D_2r)|-1 if r is even.",
+      "display_name": "Theorem",
+      "label": "|RPairs|=|IrrReps|",
+      "position": {
+        "line_start": 1292,
+        "line_end": 1299
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-31-79c5671f",
+      "type": "proposition",
+      "content": "\\label{prop:bijection-ggmap-reporbits}\n\t\tLet $x_1,y_1,x_2,y_2\\in D$ be involutions such that $D=\\langle x_1,y_1\\rangle=\\langle x_2,y_2\\rangle$.\n\t\tLet $\\sigma\\in\\Aut(D)$ be given by $\\sigma(x_1)=x_2$ and $\\sigma(y_1)=y_2$.\n\t\tThen\n\t\t\\begin{enumerate}[{\\rm (i)}]\n\t\t\t\\item  $\\RM(G,\\rho_{x_1},y_1)\\cong\\RM(G,\\rho_{x_2},y_2)$\n\t\t\tif and only if $\\psi\\cong\\psi\\circ \\sigma$; in particular, $|\\mathcal{RM}_G|=|\\psi^{\\Aut(D)}|$; \\vskip0.1in\n   \n\t\t\t\\item  the mapping \\[\\begin{aligned}\n\t\t\t\t\\psi^{\\Aut(\\D_{2r})}&\\rightarrow \\mathcal{RM}_G,\\\\\n\t\t\t\t\\psi\\circ\\eta &\\mapsto \\RM(G,\\rho_{\\eta(x_1)},\\eta(y_1))\n\t\t\t\\end{aligned}\\]\n\t\t\tis a one-to-one correspondence.\n\t\t\\end{enumerate}",
+      "content_preview": "Let x_1,y_1,x_2,y_2 D be involutions such that D= x_1,y_1= x_2,y_2. Let (D) be given by (x_1)=x_2 and (y_1)=y_2.",
+      "display_name": "Proposition",
+      "label": "prop:bijection-ggmap-reporbits",
+      "position": {
+        "line_start": 1315,
+        "line_end": 1329
+      },
+      "references": [
+        {
+          "target_id": "Aut(D)_phi",
+          "reference_type": "internal",
+          "context": "plies that $f(D)=D$ and $f|_D=\\sigma$.\n\t\tBy Lemma~\\ref{Aut(D)_phi}, $f|_D\\in\\Aut(D)_\\psi$\n\t\twhich means that $\\psi\\c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:equivalence-ggMap",
+          "reference_type": "internal",
+          "context": ",y_1)\\cong\\RM(G,f(v_1)x_2,y_2)$.\n\t\tBy Proposition~\\ref{prop:equivalence-ggMap}, $\\RM(G,\\rho_{x_1},y_1)\\cong\\RM(G,\\rho_{x_2},y_2)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose that these two rotary maps are isomorphic.\n\t\tThen there is a $f\\in \\Aut(G)$ such that $f(v_1x_1)=v_2x_2$ and $f(y_1)=y_2$.\n\t\tTherefore, \\[f(x_1^p)=f((v_1x_1)^p)=(v_2x_2)^p=x_2^p.\\]\n\t\tSince $|x_1|=|x_2|=2$, we have that $f(x_1)=x_2$\n\t\twhich implies that $f(D)=D$ and $f|_D=\\sigma$.\n\t\tBy Lemma~\\ref{Aut(D)_phi}, $f|_D\\in\\Aut(D)_\\psi$\n\t\twhich means that $\\psi\\cong\\psi\\circ\\sigma$.\n\t\tNow suppose that $\\psi\\cong\\psi\\circ\\sigma$.\n\t\tDenote by $U\\cong\\mathbb{Z}_p^d$ the $D$-module induced by $\\psi\\circ\\sigma$.\n\t\tThen there exists $D$-module isomorphism $f_0:V\\rightarrow U$.\n\t\tDefine $f:G\\rightarrow G$ by \\[vb\\mapsto f_0(v)\\sigma(b).\\]\n\t\tOne can check that $f$ is an automorphism.\n\t\tMoreover, $f(x_1)=x_2$ and $f(y_1)=y_2$.\n\t\tNote that $1\\ne f(v_1)\\in\\operatorname{C}_V(x_2)$.\n\t\tHence $f(v_1x_1)=f(v_1)x_2$.\n\t\tWe have that $\\RM(G,v_1x_1,y_1)\\cong\\RM(G,f(v_1)x_2,y_2)$.\n\t\tBy Proposition~\\ref{prop:equivalence-ggMap}, $\\RM(G,\\rho_{x_1},y_1)\\cong\\RM(G,\\rho_{x_2},y_2)$. \n\t\tTherefore, $|\\mathcal{RM}_G|=|\\Aut(G)|/|\\Aut(G)_\\psi|=|\\psi^{\\Aut(\\D_{2r})}|$ and\n\t\tthis completes the proof."
+    },
+    {
+      "id": "corollary-32-3997901f",
+      "type": "corollary",
+      "content": "\\label{coro:isomorphic-ggMap}\n\t\t\n\t\t\n\t\tEach $G$-rotary PX map lies in $\\mathcal{RM}_G$, and\t\t\n\t\tthe mapping in Proposition~\\ref{prop:equivalence-ggMap} is a one-to-one correspondence between $G$-rotary PX maps and $\\psi^{\\Aut(\\D_{2r})}$.",
+      "content_preview": "Each G-rotary PX map lies in _G, and the mapping in Proposition~ is a one-to-one correspondence between G-rotary PX maps and ^(_2r).",
+      "display_name": "Corollary",
+      "label": "coro:isomorphic-ggMap",
+      "position": {
+        "line_start": 1378,
+        "line_end": 1387
+      },
+      "references": [
+        {
+          "target_id": "prop:equivalence-ggMap",
+          "reference_type": "internal",
+          "context": "athcal{RM}_G$, and\t\t\n\t\tthe mapping in Proposition~\\ref{prop:equivalence-ggMap} is a one-to-one correspondence between $G$-rotary",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "|RPairs|=|IrrReps|",
+          "reference_type": "internal",
+          "context": "rho,\\tau)$ where $|\\rho|=2p$, as given by Theorem~\\ref{|RPairs|=|IrrReps|}.\n\t\tThis completes the proof.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Recall that $\\RM(G,\\rho_x,y)$ such that $x$ and $y$ are two involutions generating $D$ equals\n\t\t\\[|\\Aut(\\operatorname{D}_{2r})|/|\\Aut(\\operatorname{D}_{2r})_\\psi|=|\\psi^{\\Aut(\\operatorname{D}_{2r})}|.\\]\n  This count matches the number of isomorphism classes of rotary maps $\\RM(G,\\rho,\\tau)$ where $|\\rho|=2p$, as given by Theorem~\\ref{|RPairs|=|IrrReps|}.\n\t\tThis completes the proof."
+    },
+    {
+      "id": "remark-33-1296fa94",
+      "type": "remark",
+      "content": "Corollary \\ref{coro:isomorphic-ggMap} actually gives a one-to-one correspondence between irreducible rotary PX maps of length $r$ and irreducible representations of $\\D_{2r}$ of degree greater than $1$.\n\t\tTogether with Corollary \\ref{coro:trivial-PX-map}, we have that\n\t\tthere is a one-to-one correspondence between irreducible rotary augmented PX maps of length $r$ and irreducible representations of $\\D_{2r}$ except $\\gamma_{-1,1}$.",
+      "content_preview": "Corollary actually gives a one-to-one correspondence between irreducible rotary PX maps of length r and irreducible representations of _2r of degree...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1421,
+        "line_end": 1425
+      },
+      "references": [
+        {
+          "target_id": "coro:isomorphic-ggMap",
+          "reference_type": "internal",
+          "context": "Corollary \\ref{coro:isomorphic-ggMap} actually gives a one-to-one correspondence betwee",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "coro:trivial-PX-map",
+          "reference_type": "internal",
+          "context": "egree greater than $1$.\n\t\tTogether with Corollary \\ref{coro:trivial-PX-map}, we have that\n\t\tthere is a one-to-one corresponde",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-34-0986e3b9",
+      "type": "lemma",
+      "content": "\\label{lem:G-AT-QuoMap}\n\t\tLet $\\mathcal{M}$ be a $G$-rotary map whose underlying graph is $\\operatorname{C}(p,r,s)$.\n\t\tSuppose that $V$ is a normal $p$-subgroup of $G$ satisfying $|V|<p^{s+1}$.\n\t\tThen $\\mathcal{M}/V$ is a $G/V$-rotary augmented PX map of length $r$.",
+      "content_preview": "Let be a G-rotary map whose underlying graph is (p,r,s). Suppose that V is a normal p-subgroup of G satisfying |V|<p^s+1.",
+      "display_name": "Lemma",
+      "label": "lem:G-AT-QuoMap",
+      "position": {
+        "line_start": 1445,
+        "line_end": 1449
+      },
+      "references": [
+        {
+          "target_id": "lem:arc-regular-PX-map",
+          "reference_type": "internal",
+          "context": "ap V|=1$, then $|\\bar{G}_\\alpha|=2p$. \n\t\tBy Lemma~\\ref{lem:arc-regular-PX-map}, the underlying graph of $\\mathcal{M}/V$ is $\\ope",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(\\alpha,e,\\beta)$ be an arc of $\\mathcal{M}$.\n\t\tThe valency of $\\operatorname{C}(p,r,s)$ is $2p$ and since $G$ is arc-regular, it follows that $|G_\\alpha|=2p$.\n\t\tAs $p$ is odd, $G_\\alpha\\nleq V$ and $G_e\\nleq V$.\n\t\tSo the quotient $\\mathcal{M}/V$ is well defined.\t\n\t\tLet $|V|=p^t$ for some integer $t$ with $0 \\le t < s+1$.\n\t\tThen $G/V\\cong\\mathbb{Z}_p^{s-t+1}\\rtimes_\\psi\\operatorname{D}_{2r}$.\n\t\tObserve that $|G_\\alpha\\cap V|\\in\\{1, p\\}$.\n\t\t\n\t\tLet $\\bar G_\\a=G_\\a/G_\\a\\cap V$.\n\t\tIf $|G_\\alpha\\cap V|=1$, then $|\\bar{G}_\\alpha|=2p$. \n\t\tBy Lemma~\\ref{lem:arc-regular-PX-map}, the underlying graph of $\\mathcal{M}/V$ is $\\operatorname{C}^*(p,r,s-t,\\delta)$. \n\t\tIf $|G_\\alpha\\cap V|=p$, then $|\\bar{G}_\\alpha|=2$ and $G/V$ is dihedral.\n\t\tHence $G/V\\cong\\operatorname{D}_{2pr}$, and $\\mathcal{M}/V$ has underlying graph $\\operatorname{C}^*(p,r,0,-1)$."
+    },
+    {
+      "id": "theorem-35-b80b92e0",
+      "type": "theorem",
+      "content": "\\label{thm:existence-decomposition}\n\t\tLet $\\mathcal{M}$ be a rotary augmented PX map of length $r$.\n\t\tThen $\\mathcal{M}$ is isomorphic to a direct product of irreducible rotary augmented PX maps of length $r$.\n\t\t\n\t\tConversely, every direct product of irreducible rotary augmented PX maps of length $r$\n\t\tis a rotary augmented PX map whose underlying graph is of length $r$.",
+      "content_preview": "Let be a rotary augmented PX map of length r. Then is isomorphic to a direct product of irreducible rotary augmented PX maps of length r.",
+      "display_name": "Theorem",
+      "label": "thm:existence-decomposition",
+      "position": {
+        "line_start": 1470,
+        "line_end": 1476
+      },
+      "references": [
+        {
+          "target_id": "thm:arc-regular-PX-graph",
+          "reference_type": "internal",
+          "context": "\\mathcal{M}$ is not a PX graph, then\n\t\tby Theorem~\\ref{thm:arc-regular-PX-graph}, we have that $\\mathcal{M}$ is an irreducible rot",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:arc-regular-PX-graph",
+          "reference_type": "internal",
+          "context": "c-regular and $\\calM$ is $G$-rotary.\n\t\tBy Theorem~\\ref{thm:arc-regular-PX-graph}, $G=\\mathbb{Z}_p^{s+1}\\rtimes_{\\psi}\\operatorname",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:G-AT-QuoMap",
+          "reference_type": "internal",
+          "context": "oup of $G$ and $\\bigcap_i U_i=1$.\n\t\tThen by Lemma~\\ref{lem:G-AT-QuoMap}, $\\mathcal{M}/U_i$ is a $G/U_i$-rotary augmented",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:direct-product-rotary-map",
+          "reference_type": "internal",
+          "context": "that $\\mathcal{M}/U_i$ is irreducible.\n\t\tBy Lemma~\\ref{lem:direct-product-rotary-map}, $\\mathcal{M}\\cong\\prod_i\\mathcal{M}/U_i$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:arc-regular-PX-map",
+          "reference_type": "internal",
+          "context": "regular on the vertex set of $\\Gamma$.\n\t\tBy Lemma~\\ref{lem:arc-regular-PX-map}, $\\Gamma=\\operatorname{C}^{*}(p,r,d-1)$, which co",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If the underlying graph of $\\mathcal{M}$ is not a PX graph, then\n\t\tby Theorem~\\ref{thm:arc-regular-PX-graph}, we have that $\\mathcal{M}$ is an irreducible rotary augmented PX map. \n\t\tThis completes the case.\n\t\t\n\t\tNow suppose that $\\mathcal{M}$ is a rotary PX map.\n\t\tLet $G$ be the orientation preserving automorphism group of $\\calM$.\n\t\tThen $G$ is arc-regular and $\\calM$ is $G$-rotary.\n\t\tBy Theorem~\\ref{thm:arc-regular-PX-graph}, $G=\\mathbb{Z}_p^{s+1}\\rtimes_{\\psi}\\operatorname{D}_{2r}$.\n\t\tIdentify $\\mathbb{Z}_p^{s+1}$ with $\\mathbb{F}_p^{s+1}$.\n\t\tNote that the odd prime $p$ is coprime to $r$.\n\t\tBy Maschke's theorem, there are minimal normal subgroups $V_1,\\ldots,V_n\\le\\mathbb{Z}_p^{s+1}$ of $G$ such that $\\mathbb{Z}_p^{s+1}=V_1\\times\\cdots\\times V_n$.\n\t\tFor every $i\\in\\{1,\\ldots,n\\}$, let $U_i=\\prod_{j\\ne i}V_j$. \n\t\tThen $U_i$ is a normal subgroup of $G$ and $\\bigcap_i U_i=1$.\n\t\tThen by Lemma~\\ref{lem:G-AT-QuoMap}, $\\mathcal{M}/U_i$ is a $G/U_i$-rotary augmented PX map of length $r$.\n\t\t\n\t\t\n\t\tSince $G/U_i\\cong V_i\\rtimes_{\\psi|_{V_i}}\\operatorname{D}_{2r}$,\n\t\twe have that $\\mathcal{M}/U_i$ is irreducible.\n\t\tBy Lemma~\\ref{lem:direct-product-rotary-map}, $\\mathcal{M}\\cong\\prod_i\\mathcal{M}/U_i$.\n\t\t\n\t\t\n\t\tNow we study the other direction.\n\t\tFor every $i\\in\\{1,\\ldots,n\\}$, let \\[\\mathcal{M}_i=\\RM(G_i,\\rho_i,\\tau_i),\\]\n\t\twhere $G_i=\\mathbb{Z}_p^{s_i}\\rtimes\\mathrm{D}_{2r}$.\n\t\tLet \n\t\t$\\rho=(\\rho_1,\\ldots,\\rho_n),\\ \\tau=(\\tau_1,\\ldots,\\tau_n)\\in \\prod_{i\\in\\{1,\\ldots,n\\}} G_i$, let $H=\\langle \\rho , \\tau \\rangle$ and let $\\mathcal{M}=\\prod_{i\\in\\{1,\\ldots,n\\}}\\mathcal{M}_i$.\n\t\tThen $\\mathcal{M}=\\RM(H,\\rho , \\tau)$.\n\t\tBy our definition, either $|\\rho|=2$ or $|\\rho|=2p$.\n\t\tIf $|\\rho|=2$, it is clear that $\\mathcal{M}\\cong\\mathcal{M}_1\\cong\\cdots\\cong\\mathcal{M}_n$ whose underlying graph is $\\operatorname{C}_{pr}$.\n\t\t\n\t\tNow suppose that $|\\rho|=2p$.\n\t\tWe claim that $H\\cong \\mathbb{Z}_p^d\\rtimes\\mathrm{D}_{2r}$ for some $1\\le d\\le s_1+\\cdots+s_n$.\n\t\tFor every $i\\in\\{1,\\ldots,n\\}$, let $\\pi_i$ be the natural projection from $G_i$ to $\\operatorname{D}_{2r}$, that is,  $\\pi_i((x,y))=y$ for every $(x,y)\\in G_i$.\n\t\tLet $\\pi:\\prod_{i\\in\\{1,\\ldots,n\\}}G_i\\rightarrow \\operatorname{D}_{2r}^n$ be a homomorphism given by $\\pi(g_1,\\ldots,g_n)=(\\pi_1(g_1),\\ldots,\\pi_n(g_n))$.\n\t\tLet $K=\\ker(\\pi)$. Then \n\t\t\\[K= \\prod_{i\\in\\{1,\\ldots,n\\}}\\mathbb{Z}_p^{s_i}\\trianglelefteq \\prod_{i\\in\\{1,\\ldots,n\\}}G_i\\]\n\t\tis the unique Sylow $p$-subgroup of $\\prod_{i\\in\\{1,\\ldots,n\\}}G_i$.\n\t\tSince $\\rho$ is of order $2p$ and $\\tau$ is of order $2$, we have that both $\\pi(\\rho)$ and $\\pi(\\tau)$ are of order $2$.\n\t\tTherefore, $\\pi(H)=\\langle\\pi(\\rho),\\pi(\\tau)\\rangle$ is dihedral.\n\t\tSince for every $i\\in\\{1,\\ldots,n\\}$, $G_i=\\langle \\rho_i,\\tau_i\\rangle$,\n\t\twe have that $\\langle\\pi_i(\\rho_i),\\pi_i(\\tau_i)\\rangle=\\operatorname{D}_{2r}$, which implies that $\\pi_i(\\rho_i)\\pi_i(\\tau_i)$ is of order $r$ for every $i\\in\\{1,\\ldots,n\\}$.\n\t\tHence $\\pi(\\rho)\\pi(\\tau)=(\\pi_1(\\rho_1)\\pi_1(\\tau_1),\\ldots,\\pi_n(\\rho_n)\\pi_n(\\tau_n))$ is of order $r$. \n\t\tThis implies that $\\pi(H)\\cong\\operatorname{D}_{2r}$.\n\t\tBy the homomorphism theorem, $\\pi(H)\\cong H/(H\\cap K)$.\n\t\tWrite $H\\cap K\\cong \\mathbb{Z}_p^d$. \n\t\tThen by the Schur-Zassenhaus theorem, $H\\cong\\mathbb{Z}_p^d\\rtimes\\operatorname{D}_{2r}$.\n\t\t\n\t\tLet $\\Gamma$ be the underlying graph of $\\mathcal{M}$. \n\t\tSince $\\langle\\rho\\rangle$ is the vertex stabilizer and $|\\rho|=2p$, it follows that $\\mathbb{Z}_p^{d}\\cap \\langle\\rho\\rangle=\\mathbb{Z}_p$. \n\t\tTherefore, $\\mathbb{Z}_p^{d}$ is not semi-regular on the vertex set of $\\Gamma$.\n\t\tBy Lemma~\\ref{lem:arc-regular-PX-map}, $\\Gamma=\\operatorname{C}^{*}(p,r,d-1)$, which completes the proof."
+    },
+    {
+      "id": "lemma-36-0065889c",
+      "type": "lemma",
+      "content": "\\label{lem:quotient-map}\n\t\tLet $\\mathcal{M}$ be a $G$-rotary map, and let $V_1,V_2$ be normal subgroups of $G$. \n\t\tThen $\\mathcal{M}/V_1\\cong\\mathcal{M}/V_2$ if and only if $V_1=V_2$.",
+      "content_preview": "Let be a G-rotary map, and let V_1,V_2 be normal subgroups of G. Then /V_1/V_2 if and only if V_1=V_2.",
+      "display_name": "Lemma",
+      "label": "lem:quotient-map",
+      "position": {
+        "line_start": 1534,
+        "line_end": 1537
+      },
+      "references": [],
+      "proof": "If $V_1=V_2$, then it is clear that $\\calM/V_1\\cong \\calM/V_2$.\n\t\t\n\t\tWrite $\\mathcal{M}=\\RM(G,\\rho,\\tau)$.\n\t\tIf $\\mathcal{M}/V_1\\cong\\mathcal{M}/V_2$, then there is an isomorphism $\\sigma: G/V_1 \\to G/V_2$ such that $\\sigma(\\rho V_1)=\\rho V_2$ and $\\sigma(\\tau V_1)=\\tau V_2$.\n\t\tLet $\\pi_{V_1}:G\\rightarrow G/V_1$ and $\\pi_{V_2}:G\\rightarrow G/V_2$ be natural projections from $G$ onto $G/V_1$ and $G/V_2$, respectively.\n\t\tThen $\\pi_{V_2}(\\rho)=\\sigma\\circ\\pi_{V_1}(\\rho)$ and $\\pi_{V_2}(\\tau)=\\sigma\\circ\\pi_{V_1}(\\tau)$.\n\t\tSince $G=\\langle \\rho , \\tau \\rangle$, we have that $\\pi_{V_2}=\\sigma\\circ\\pi_{V_1}$.\n\t\tSince $\\ker(\\pi_{V_2})=V_2$ and $\\ker(\\sigma\\circ\\pi_{V_1})=V_1$, we conclude $V_1=V_2$.\n\t\tThis completes the proof."
+    },
+    {
+      "id": "lemma-37-a8ebc689",
+      "type": "lemma",
+      "content": "\\label{lem:unqiue-minimal-normal-subgroup}\n\t\tLet $V_1=\\mathbb{Z}_p^{d_1}$ and let $V_2=\\mathbb{Z}_p^{d_2}$.\n\t\tLet $G=(V_1\\times V_2)\\rtimes_{(\\psi_1,\\psi_2)} \\operatorname{D}_{2r}$\n\t\twhere $\\psi_i:\\operatorname{D}_{2r}\\rightarrow \\operatorname{GL}(V_i)$ is irreducible for every $i\\in\\{1,2\\}$.\n\t\tIf $G$ has a rotary pair $(\\rho,\\tau)$ such that $|\\rho|=2p$ and $|\\tau|=2$,\n\t\tthen $\\psi_1\\not\\cong\\psi_2$.",
+      "content_preview": "Let V_1=_p^d_1 and let V_2=_p^d_2. Let G=(V_1 V_2)_(_1,_2) _2r where _i:_2r (V_i) is irreducible for every i1,2.",
+      "display_name": "Lemma",
+      "label": "lem:unqiue-minimal-normal-subgroup",
+      "position": {
+        "line_start": 1551,
+        "line_end": 1557
+      },
+      "references": [
+        {
+          "target_id": "lem:irreducible-representation-dihedral",
+          "reference_type": "internal",
+          "context": "orem, $V_1\\cong V_2\\cong\\mathbb{Z}_p$.\n\t\tBy Lemma~\\ref{lem:irreducible-representation-dihedral} {\\rm (i)} and {\\rm (ii)},\n\t\t$\\psi_1\\in\\{\\gamma_{1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:module-homomorphism",
+          "reference_type": "internal",
+          "context": "$y'\\in V_1$ such that $f^{-1}(y)=y'$.\n\t\tBy Lemma~\\ref{lem:module-homomorphism} {\\rm (ii)}, there exists $\\zeta'\\in \\mathrm{End}_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Assume that $\\psi_1\\cong\\psi_2$. We prove that this leads to a contradiction.\n\t\tNote that $p\\nmid r$.\n\t\tBy the Schur-Zassenhaus theorem, all subgroups of order $2r$ are conjugate in $G$.\n\t\tWithout loss of generality, we can assume that $\\tau\\in \\operatorname{D}_{2r}$.\n\t\tWrite $\\rho=v\\tau_1$, where $v\\in V_1\\times V_2$ and $\\tau_1\\in\\operatorname{D}_{2r}$.\n\t\tThen $\\operatorname{D}_{2r}=\\langle\\tau,\\tau_1\\rangle$.\n\t\tLet $v'=\\rho^2$ and let $\\tau'=\\rho^p$.\n\t\tThen $\\langle \\rho\\rangle=\\langle v'\\rangle\\times\\langle \\tau'\\rangle$.\n\t\t\n\t\tLet $D=\\langle \\tau',\\tau\\rangle$.\n\t\tThen $D$ is a dihedral group. \n\t\tSince $G=\\langle v',\\tau',\\tau\\rangle$,\n\t\twe have that $G=(V_1\\times V_2)D$.\n\t\tTherefore, either $D\\cong\\operatorname{D}_{2r}\\mbox{ or }\\operatorname{D}_{2pr}$.\n\t\t\n\t\tIn the latter case, $D\\cap (V_1\\times V_2)$ is of order $p$ and normal in $D$.\n\t\tTreat $V_1\\times V_2$ as a $D_{2r}$-module.\n\t\tThen $D\\cap (V_1\\times V_2)$ is a simple $D_{2r}$-submodule.\n\t\tBy Maschke's theorem, $V_1\\cong V_2\\cong\\mathbb{Z}_p$.\n\t\tBy Lemma~\\ref{lem:irreducible-representation-dihedral} {\\rm (i)} and {\\rm (ii)},\n\t\t$\\psi_1\\in\\{\\gamma_{1,1},\\gamma_{-1,-1},\\gamma_{-1,1},\\gamma_{1,-1}\\}$ (if possible).\n\t\tIf $\\psi_1$ is trivial, then $G\\cong\\mathbb{Z}_p^2\\times\\operatorname{D}_{2r}$.\n\t\tThis leads to a contradiction: $\\mathbb{Z}_p^2$ is isomorphic to the cyclic group $G/\\operatorname{D}_{2r} = \\langle \\rho \\operatorname{D}_{2r}\\rangle$.\n\t\t\n\t\t\n\t\tIf $\\psi_1=\\gamma_{-1,-1}$, then $G$ does not contain any element of order $2p$, which is also a contradiction.\n\t\tIf $\\psi_1\\in\\{\\gamma_{1,-1},\\gamma_{-1,1}\\}$, then $v'=vv^{\\tau_1}\\ne 1$.\n\t\tTherefore, $v^{\\tau_1}\\ne v^{-1}$, which\n\t\timplies that $\\tau_1$ centralizes $V_1\\times V_2$.\n\t\tHence $\\tau'=\\tau_1$ and $D=\\operatorname{D}_{2r}\\not\\cong\\operatorname{D}_{2pr}$.\n\t\t\n\t\tWe therefore deduce that $D\\cong\\operatorname{D}_{2r}$ and $G=(V_1\\times V_2)\\rtimes_{(\\eta_1,\\eta_2)} D$.\n\t\tSince $D$ is conjugate to $\\operatorname{D}_{2r}$, then there is an isomorphism $\\sigma:D\\rightarrow \\operatorname{D}_{2r}$\n\t\tsuch that $\\eta_1=\\psi_1\\circ \\sigma$ and $\\eta_2=\\psi_2\\circ\\sigma$.\n\t\tThen $\\eta_1\\cong\\eta_2$, and denote by $f$ the $D$-module isomorphism from $V_1$ to $V_2$.\n\t\tSince $v'\\in V_1\\times V_2$,\n\t\twe have that $\\langle (v')^D\\rangle\\le V_1\\times V_2$.\n\t\tAlso since $G=\\langle v',D\\rangle$, we have that $G=\\langle (v')^D\\rangle D$.\n\t\tTherefore, $\\langle (v')^D\\rangle=V_1\\times V_2$.\n\t\tLet $v'=(x,y)$ where $x\\in V_1$ and $y\\in V_2$. \n\t\tNote that $v'\\in\\operatorname{C}_{V_1\\times V_2}(\\tau')$.\n\t\tWe have that $x\\in\\operatorname{C}_{V_1}(\\tau')$ and $y\\in\\operatorname{C}_{V_2}(\\tau')$.\n\t\tThen there exists $y'\\in V_1$ such that $f^{-1}(y)=y'$.\n\t\tBy Lemma~\\ref{lem:module-homomorphism} {\\rm (ii)}, there exists $\\zeta'\\in \\mathrm{End}_D(V_1)$ such that \n\t\t\\[\\zeta'(x)=y'=f^{-1}(y).\\]\n\t\tDefine $\\zeta=f\\circ \\zeta'$.\n\t\t\n\t\t\t\n\t\t\t\n\t\t\t\n\t\t\n\t\tThen  $\\zeta:V_1\\rightarrow V_2$ is a $D$-module isomorphism such that  $\\zeta(x)=y$.\n\t\t\n\t\tTherefore, $v'\\in\\{(w,\\zeta(w))\\mid w\\in V_1\\}$.\n\t\tNote that $\\{(w,\\zeta(w))\\mid w\\in V_1\\}\\cong \\ZZ_p^{d_1}$ is normal in $G$. \n\t\tWe have that $\\langle (v')^D\\rangle\\le\\{(w,\\zeta(w))\\mid w\\in V_1\\}$.\n\t\tHowever, this is impossible because $\\{(w,\\zeta(w))\\mid w\\in V_1\\}\\ne V_1\\times V_2$.\n\t\tTherefore, we have that $\\psi_1\\not\\cong\\psi_2$."
+    },
+    {
+      "id": "corollary-38-e796b61f",
+      "type": "corollary",
+      "content": "\\label{cor:unique-minimal-normal-subgroup}\n\t\tFor every $i\\in\\{1,\\ldots,n\\}$, let $V_i=\\mathbb{Z}_p^{d_i}$.\n\t\tLet $G=(V_1\\times \\cdots\\times V_n)\\rtimes_{(\\psi_1,\\ldots,\\psi_n)} \\operatorname{D}_{2r}$\n\t\twhere $\\psi_i:\\operatorname{D}_{2r}\\rightarrow \\operatorname{GL}(V_i)$ is irreducible for every $i\\in\\{1,\\ldots,n\\}$.\n\t\tIf $G$ has a rotary pair $(\\rho,\\tau)$ such that $|\\rho|=2p$ and $|\\tau|=2$,\n\t\tthen $\\psi_i\\not\\cong\\psi_j$ for every $1\\le i<j\\le n$.",
+      "content_preview": "For every i1,,n, let V_i=_p^d_i. Let G=(V_1 V_n)_(_1,,_n) _2r where _i:_2r (V_i) is irreducible for every i1,,n.",
+      "display_name": "Corollary",
+      "label": "cor:unique-minimal-normal-subgroup",
+      "position": {
+        "line_start": 1661,
+        "line_end": 1667
+      },
+      "references": [
+        {
+          "target_id": "lem:unqiue-minimal-normal-subgroup",
+          "reference_type": "internal",
+          "context": "ssible.\n\t\tTherefore, $|\\rho V_{ij}|=2p$. By Lemma~\\ref{lem:unqiue-minimal-normal-subgroup}, we have that $\\psi_i\\not\\cong\\psi_j$.\n\t\tSince $i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $V_{i,j}=\\prod_{k\\ne i,k\\ne j}V_k$.\n\t\tThen $G/V_{ij}\\cong (V_i\\times V_j)\\rtimes_{(\\psi_i,\\psi_j)}\\operatorname{D}_{2r}$.\n\t\tSince $G$ is generated by $\\rho$ and $\\tau$, we have that $G/V_{i,j}$\n\t\tis generated by $\\rho V_{ij}$ and $\\tau V_{ij}$.\n\t\tIf $|\\rho V_{ij}|=2$, then $G/V_{ij}$ is a dihedral group, which implies that the Sylow $p$-subgroup $V_1\\times V_2$ of $G/V_{ij}$ is cyclic. \n\t\tHowever, this is impossible.\n\t\tTherefore, $|\\rho V_{ij}|=2p$. By Lemma~\\ref{lem:unqiue-minimal-normal-subgroup}, we have that $\\psi_i\\not\\cong\\psi_j$.\n\t\tSince $i,j$ are arbitrary, we have that $\\psi_i\\not\\cong\\psi_j$ for every $1\\le i<j\\le n$."
+    },
+    {
+      "id": "corollary-39-3a9b5859",
+      "type": "corollary",
+      "content": "\\label{coro:auto-ProducMap}\n\t\tLet $\\mathcal{M}_1,\\ldots,\\mathcal{M}_m$ be irreducible $\\mathbb{Z}_p^{d_i}\\rtimes\\operatorname{D}_{2r}$-rotary augmented PX maps. If $\\mathcal{M}_{i}\\not\\cong\\mathcal{M}_j$ for $i\\ne j$,\n\t\tthen the orientation preserving automorphism group $G$ of $\\mathcal{M}_1\\times\\cdots\\times\\mathcal{M}_m$ is $ (\\mathbb{Z}_p^{d_1}\\times\\cdots\\times\\mathbb{Z}_p^{d_m})\\rtimes \\operatorname{D}_{2r}$.",
+      "content_preview": "Let _1,,_m be irreducible _p^d_i_2r-rotary augmented PX maps. If _i_j for i j, then the orientation preserving automorphism group G of _1_m is...",
+      "display_name": "Corollary",
+      "label": "coro:auto-ProducMap",
+      "position": {
+        "line_start": 1679,
+        "line_end": 1682
+      },
+      "references": [
+        {
+          "target_id": "thm:existence-decomposition",
+          "reference_type": "internal",
+          "context": "_m),(\\tau_1,\\ldots,\\tau_m)\\rangle.\\]\n\t\tBy Theorem~\\ref{thm:existence-decomposition} and Corollary~\\ref{cor:aut-map},\n\t\t$G\\cong\\mathbb",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor:aut-map",
+          "reference_type": "internal",
+          "context": "m~\\ref{thm:existence-decomposition} and Corollary~\\ref{cor:aut-map},\n\t\t$G\\cong\\mathbb{Z}_p^{d}\\rtimes\\operatorname{D}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor:unique-minimal-normal-subgroup",
+          "reference_type": "internal",
+          "context": "ontained in $\\mathbb{Z}_p^d$.\n\t\tThen by Corollary~\\ref{cor:unique-minimal-normal-subgroup},\n\t\t$G=(V_1\\times\\cdots\\times V_n)\\rtimes_{(\\eta_1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:quotient-map",
+          "reference_type": "internal",
+          "context": "_i\\not\\cong\\mathcal{M}_j$ when $i\\ne j$, by Lemma~\\ref{lem:quotient-map}, we have that\n\t\t$\\ker(p_i)\\neq \\ker(p_j)$ when $i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $m=1$, it is clear that $\\mathcal{N}\\cong \\mathcal{M}_1$. \n\t\t\n\t\tNow we suppose that $m\\ge 2$.\n\t\tLet $G_i=\\mathbb{Z}_p^{d_1}\\rtimes_{\\psi_i}\\operatorname{D}_{2r}$ and let $G$ be the orientation preserving automorphism group of $\\calM=\\mathcal{M}_1\\times\\cdots\\times\\mathcal{M}_m$.\n\t\tWrite $\\mathcal{M}_i=\\RM(\\mathbb{Z}_p^{d_1}\\rtimes_{\\psi_i}\\operatorname{D}_{2r},\\rho_i,\\tau_i)$ and\n\t\tthen \\[G=\\langle (\\rho_1,\\ldots,\\rho_m),(\\tau_1,\\ldots,\\tau_m)\\rangle.\\]\n\t\tBy Theorem~\\ref{thm:existence-decomposition} and Corollary~\\ref{cor:aut-map},\n\t\t$G\\cong\\mathbb{Z}_p^{d}\\rtimes\\operatorname{D}_{2r}$ for some integer $d$.\n\t\tLet $V_1,\\ldots,V_n$ be all minimal normal subgroups of $G$ contained in $\\mathbb{Z}_p^d$.\n\t\tThen by Corollary~\\ref{cor:unique-minimal-normal-subgroup},\n\t\t$G=(V_1\\times\\cdots\\times V_n)\\rtimes_{(\\eta_1,\\ldots,\\eta_n)}\\operatorname{D}_{2r}$\n\t\twhere $\\eta_i\\not\\cong\\eta_j$ for every $i,j\\in\\{1,\\ldots,n\\}$ with $i\\ne j$.\n\t\tLet $p_i$ be the natural projection from $G$ to $G_i$.\n\t\tThen $\\ker(p_i)\\le V_1\\times\\cdots\\times V_n$ which implies that\n\t\t$\\ker(p_i)=V_{i_1}\\times\\cdots V_{i_k}$ for some $1\\le i_1<i_2<\\cdots<i_k\\le n$.\n\t\tSince $G_i\\cong G/\\ker(p_i)\\cong\\prod_{i\\in\\{1,\\ldots,n\\}{\\setminus}\\{ i_1,\\ldots,i_k\\}} V_i\\rtimes\\operatorname{D}_{2r}$,\n\t\twe have that $\\prod_{i\\in\\{1,\\ldots,n\\}{\\setminus}\\{i_1,\\ldots,i_k\\}} V_i$ is minimal normal in $G_i$.\n\t\tTherefore, $k=n-1$ and $V_j\\cong\\mathbb{Z}_p^{d_j}$ where \\[j\\in\\{1,\\ldots,n\\}{\\setminus}\\{i_1,\\ldots,i_{n-1}\\}.\\] \n\t\tSince $\\mathcal{M}/\\ker(p_i)\\cong\\mathcal{M}_i$ and $\\mathcal{M}_i\\not\\cong\\mathcal{M}_j$ when $i\\ne j$, by Lemma~\\ref{lem:quotient-map}, we have that\n\t\t$\\ker(p_i)\\neq \\ker(p_j)$ when $i\\ne j$.\n\t\tTherefore, $n=m$ and $G\\cong (\\mathbb{Z}_p^{d_1}\\times\\cdots\\times\\mathbb{Z}_p^{d_m})\\rtimes\\operatorname{D}_{2r}$."
+    },
+    {
+      "id": "corollary-40-2dcc61c7",
+      "type": "corollary",
+      "content": "\\label{iso}\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tUsing notation in Corollary~\\ref{coro:auto-ProducMap}.\n\t\tSuppose  that an irreducible rotary augmented PX map $\\calN$ of length $r$ is isomorphic to a quotient map of $\\mathcal{M}_1\\times\\cdots\\times\\mathcal{M}_m$.\n\t\tThen $\\calN\\cong \\calM_i$ for some $i\\in \\{1,\\ldots,m\\}$.",
+      "content_preview": "Using notation in Corollary~. Suppose that an irreducible rotary augmented PX map of length r is isomorphic to a quotient map of _1_m.",
+      "display_name": "Corollary",
+      "label": "iso",
+      "position": {
+        "line_start": 1707,
+        "line_end": 1723
+      },
+      "references": [
+        {
+          "target_id": "coro:auto-ProducMap",
+          "reference_type": "internal",
+          "context": "el{iso}\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tUsing notation in Corollary~\\ref{coro:auto-ProducMap}.\n\t\tSuppose  that an irreducible rotary augmented",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $L$ be the orientation preserving automorphism group of $\\calN$.\n\t\tSince $L\\cong\\mathbb{Z}_p^{d'}\\rtimes\\operatorname{D}_{2r}$ for some ${d'}$, there exists a subgroup $V\\le V_1\\times\\cdots\\times V_m$ such that $\\mathcal{M}/V\\cong\\mathcal{N}$.\n\t\tSince $\\mathcal{N}$ is irreducible, we have that $V=V_{i_1}\\times\\cdots\\times V_{i_{m-1}}$ for some $1\\le i_1<\\cdots<i_{m-1}\\le m$.\n\t\tHence $V=\\ker(p_j)$ where $j\\in\\{1,\\ldots,m\\}$ is the integer not equal to any of $i_1,\\ldots,i_{m-1}$.\n\t\tThis implies that $\\mathcal{N}\\cong\\mathcal{M}_j$."
+    },
+    {
+      "id": "theorem-41-4a5ab4ab",
+      "type": "theorem",
+      "content": "\\label{ud}\n\t\tLet $\\mathcal{M}_1,\\ldots,\\mathcal{M}_m,\\mathcal{N}_1,\\ldots,\\mathcal{N}_n$ be irreducible rotary augmented PX maps\n\t\twhose underlying graph is of length $r$.\n\t\tLet $\\mathcal{M}_{i}\\not\\cong\\mathcal{M}_j$ for $i\\ne j$ and let $\\mathcal{N}_i\\not\\cong\\mathcal{N}_j$ for $i\\ne j$.\n\t\tThen $\\mathcal{M}_1\\times\\cdots\\times\\mathcal{M}_m\\cong\\mathcal{N}_1\\times\\cdots\\times\\mathcal{N}_n$ if and only if $m=n$ and there is a permutation $\\sigma$ of $\\{1,\\ldots,n\\}$ such that $\\mathcal{M}_i\\cong\\mathcal{N}_{\\sigma(i)}$ for all $i$.",
+      "content_preview": "Let _1,,_m,_1,,_n be irreducible rotary augmented PX maps whose underlying graph is of length r. Let _i_j for i j and let _i_j for i j.",
+      "display_name": "Theorem",
+      "label": "ud",
+      "position": {
+        "line_start": 1737,
+        "line_end": 1742
+      },
+      "references": [
+        {
+          "target_id": "iso",
+          "reference_type": "internal",
+          "context": "to a quotient map of $\\mathcal{M}$. By Corollary~\\ref{iso}, for every $i\\in\\{1,\\ldots,n\\}$,\n\t\tthere exists $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\mathcal{M}=\\mathcal{M}_1\\times\\cdots\\times\\mathcal{M}_m$.\n\t\tSince $\\mathcal{M}_1\\times\\cdots\\times\\mathcal{M}_m\\cong\\mathcal{N}_1\\times\\cdots\\times\\mathcal{N}_n$, we have that $\\mathcal{N}_i$ is isomorphic to a quotient map of $\\mathcal{M}$. By Corollary~\\ref{iso}, for every $i\\in\\{1,\\ldots,n\\}$,\n\t\tthere exists $j\\in\\{1,\\ldots,m\\}$ such that $\\mathcal{N}_i\\cong \\mathcal{M}_j$. We thereby conclude that $n\\leq m$ because $\\mathcal{N}_i$ are pairwise non-isomorphic.\n\t\t\n\t\tIn a similar way, we obtain that $m\\leq n$ and $\\mathcal{M}_i\\cong \\mathcal{N}_j$ for all $1\\leq i\\leq m$. Therefore, $n=m$ and there is a permutation $\\sigma$ of $\\{1,\\ldots,n\\}$ such that $\\mathcal{M}_i\\cong\\mathcal{N}_{\\sigma(i)}$ for all $i$."
+    },
+    {
+      "id": "theorem-42-cabc1d26",
+      "type": "theorem",
+      "content": "\\label{fenjie}\n\t\tLet $\\mathcal{M}$ be a $G$-rotary augmented PX map of length $r$.\n\t\tThen \n\t\t$$\\mathcal{M}=\\mathcal{M}_1\\times\\dots\\times \\mathcal{M}_k,$$\n\t\twhere $\\mathcal{M}_i$ is an irreducible $G_i$-rotary augmented PX map of length $r$, $\\mathcal{M}_i\\ncong\\mathcal{M}_j$ for $1\\leq i\\neq j\\leq k$. Moreover, this decomposition is unique up to isomorphism and $$G\\cong (\\mathbb{Z}_p^{d_1}\\times\\cdots\\times\\mathbb{Z}_p^{d_k})\\rtimes \\operatorname{D}_{2r}$$ where $G_i=\\mathbb{Z}_p^{d_i}\\rtimes \\operatorname{D}_{2r}$.",
+      "content_preview": "Let be a G-rotary augmented PX map of length r. Then =_1 _k, where _i is an irreducible G_i-rotary augmented PX map of length r, _i_j for 1 i j k.",
+      "display_name": "Theorem",
+      "label": "fenjie",
+      "position": {
+        "line_start": 1751,
+        "line_end": 1756
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-43-f8d97c1d",
+      "type": "example",
+      "content": "Let $p=13$ , let $r=7$ and let $s\\in\\{1,\\ldots,6\\}$.\n\t\tThen $d=2$ is the least positive integer such that $r\\mid p^d-1$.\n\t\tNote that $d$ is even and $p^{d/2}\\equiv -1\\pmod{r}$.\n\t\tThen by Lemma~\\ref{lem:faith-rep} {\\rm (ii)}, there are $\\varphi(r)/d=3$ distinct faithful irreducible representations and these representations are all of degree $d$.\n\t\tSince $7$ is a prime, all irreducible representations of $\\operatorname{D}_{14}$ of degree greater than $1$ is faithful.\n\t\tTherefore, $\\operatorname{D}_{14}$ has five irreducible representations of degree $1,1,2,2,2$ respectively.\n\t\tBy Corollary~\\ref{cor:faithful}, there is a rotary map with underlying graph isomorphic to $\\operatorname{C}(p,r,s)$.\n\t\tWrite $s+1=2k+m$ where $0\\le m\\le 1$.\n\t\tIf $s$ is odd, then $m=0$.\n\t\t\n          By Theorem~\\ref{thm:main}, to achieve a sum of degrees equal to $s+1=2k$, we must select an even number of the  representations of degree $1$. \n          This means we select either both of them or neither of them.\n          Therefore, there are $\\binom{3}{k-1}+\\binom{3}{k}$ rotary PX maps with underlying graph isomorphic to $\\operatorname{C}(p,r,s)$.\n\t\tIf $s$ is even, then $m=1$.\n\t\tBy Theorem~\\ref{thm:main}, we select one of the representations of degree $1$.\n\t\tTherefore, there are $2\\binom{3}{k}$\n\t\trotary PX maps with underlying graph isomorphic to $\\operatorname{C}(p,r,s)$.",
+      "content_preview": "Let p=13 , let r=7 and let s1,,6. Then d=2 is the least positive integer such that r p^d-1. Note that d is even and p^d/2 -1.",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 1815,
+        "line_end": 1833
+      },
+      "references": [
+        {
+          "target_id": "lem:faith-rep",
+          "reference_type": "internal",
+          "context": "n and $p^{d/2}\\equiv -1\\pmod{r}$.\n\t\tThen by Lemma~\\ref{lem:faith-rep} {\\rm (ii)}, there are $\\varphi(r)/d=3$ distinct f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor:faithful",
+          "reference_type": "internal",
+          "context": "f degree $1,1,2,2,2$ respectively.\n\t\tBy Corollary~\\ref{cor:faithful}, there is a rotary map with underlying graph isom",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:main",
+          "reference_type": "internal",
+          "context": "f $s$ is odd, then $m=0$.\n\t\t\n          By Theorem~\\ref{thm:main}, to achieve a sum of degrees equal to $s+1=2k$, w",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:main",
+          "reference_type": "internal",
+          "context": "r,s)$.\n\t\tIf $s$ is even, then $m=1$.\n\t\tBy Theorem~\\ref{thm:main}, we select one of the representations of degree $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "external_Cons:PX-map",
+      "type": "unknown",
+      "content": "External reference to 'Cons:PX-map'",
+      "content_preview": "External reference to 'Cons:PX-map'",
+      "display_name": "Unknown",
+      "label": "Cons:PX-map",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "example-13-432e6f57",
+      "target": "theorem-4-1192d3d1",
+      "type": null
+    },
+    {
+      "source": "proposition-14-fc34193a",
+      "target": "external_Cons:PX-map",
+      "type": null
+    },
+    {
+      "source": "proposition-14-fc34193a",
+      "target": "proposition-7-f1082101",
+      "type": null
+    },
+    {
+      "source": "proposition-14-fc34193a",
+      "target": "lemma-11-3265bfc4",
+      "type": null
+    },
+    {
+      "source": "example-15-0741447c",
+      "target": "lemma-12-8182ee6b",
+      "type": null
+    },
+    {
+      "source": "example-15-0741447c",
+      "target": "theorem-35-b80b92e0",
+      "type": null
+    },
+    {
+      "source": "example-15-0741447c",
+      "target": "theorem-4-1192d3d1",
+      "type": null
+    },
+    {
+      "source": "example-22-df9fc275",
+      "target": "theorem-4-1192d3d1",
+      "type": null
+    },
+    {
+      "source": "lemma-23-5f7cefe5",
+      "target": "theorem-4-1192d3d1",
+      "type": null
+    },
+    {
+      "source": "lemma-23-5f7cefe5",
+      "target": "theorem-17-fc47458c",
+      "type": null
+    },
+    {
+      "source": "lemma-26-d852521c",
+      "target": "lemma-24-c31418bc",
+      "type": null
+    },
+    {
+      "source": "lemma-26-d852521c",
+      "target": "lemma-25-58f53c17",
+      "type": null
+    },
+    {
+      "source": "lemma-27-5f66e8c1",
+      "target": "lemma-10-53a9a26e",
+      "type": null
+    },
+    {
+      "source": "lemma-28-0d574067",
+      "target": "lemma-27-5f66e8c1",
+      "type": null
+    },
+    {
+      "source": "lemma-28-0d574067",
+      "target": "lemma-24-c31418bc",
+      "type": null
+    },
+    {
+      "source": "lemma-28-0d574067",
+      "target": "lemma-26-d852521c",
+      "type": null
+    },
+    {
+      "source": "lemma-28-0d574067",
+      "target": "lemma-11-3265bfc4",
+      "type": null
+    },
+    {
+      "source": "proposition-31-79c5671f",
+      "target": "lemma-26-d852521c",
+      "type": null
+    },
+    {
+      "source": "proposition-31-79c5671f",
+      "target": "proposition-14-fc34193a",
+      "type": null
+    },
+    {
+      "source": "corollary-32-3997901f",
+      "target": "proposition-14-fc34193a",
+      "type": null
+    },
+    {
+      "source": "corollary-32-3997901f",
+      "target": "theorem-30-fb0d899e",
+      "type": null
+    },
+    {
+      "source": "remark-33-1296fa94",
+      "target": "corollary-32-3997901f",
+      "type": null
+    },
+    {
+      "source": "remark-33-1296fa94",
+      "target": "corollary-29-aba0896f",
+      "type": null
+    },
+    {
+      "source": "lemma-34-0986e3b9",
+      "target": "lemma-23-5f7cefe5",
+      "type": null
+    },
+    {
+      "source": "theorem-35-b80b92e0",
+      "target": "theorem-17-fc47458c",
+      "type": null
+    },
+    {
+      "source": "theorem-35-b80b92e0",
+      "target": "lemma-34-0986e3b9",
+      "type": null
+    },
+    {
+      "source": "theorem-35-b80b92e0",
+      "target": "lemma-8-93fa0736",
+      "type": null
+    },
+    {
+      "source": "theorem-35-b80b92e0",
+      "target": "lemma-23-5f7cefe5",
+      "type": null
+    },
+    {
+      "source": "lemma-37-a8ebc689",
+      "target": "lemma-10-53a9a26e",
+      "type": null
+    },
+    {
+      "source": "lemma-37-a8ebc689",
+      "target": "lemma-11-3265bfc4",
+      "type": null
+    },
+    {
+      "source": "corollary-38-e796b61f",
+      "target": "lemma-37-a8ebc689",
+      "type": null
+    },
+    {
+      "source": "corollary-39-3a9b5859",
+      "target": "theorem-35-b80b92e0",
+      "type": null
+    },
+    {
+      "source": "corollary-39-3a9b5859",
+      "target": "corollary-18-6d691600",
+      "type": null
+    },
+    {
+      "source": "corollary-39-3a9b5859",
+      "target": "corollary-38-e796b61f",
+      "type": null
+    },
+    {
+      "source": "corollary-39-3a9b5859",
+      "target": "lemma-36-0065889c",
+      "type": null
+    },
+    {
+      "source": "corollary-40-2dcc61c7",
+      "target": "corollary-39-3a9b5859",
+      "type": null
+    },
+    {
+      "source": "theorem-41-4a5ab4ab",
+      "target": "corollary-40-2dcc61c7",
+      "type": null
+    },
+    {
+      "source": "example-43-f8d97c1d",
+      "target": "lemma-12-8182ee6b",
+      "type": null
+    },
+    {
+      "source": "example-43-f8d97c1d",
+      "target": "corollary-2-31c9c39b",
+      "type": null
+    },
+    {
+      "source": "example-43-f8d97c1d",
+      "target": "theorem-1-06240f0e",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 44,
+    "edge_count": 40,
+    "extractor_used": "regex-only"
+  }
+}

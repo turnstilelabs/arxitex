@@ -1,0 +1,1223 @@
+{
+  "arxiv_id": "2506.22268v1",
+  "nodes": [
+    {
+      "id": "lemma-1-0467c682",
+      "type": "lemma",
+      "content": "\\label{gr1}\nLet $G$ be a group and let $x,y,z$ be elements of $G$.\n\n\n$(1)$  $e(xy) \\leq \\mbox{l.c.m.}(o(x),o(y))$.\n\n$(2)$   If $o(x)=2$ and $y^a=y^{-1}$ for some $a \\in $G, then $e(xy) \\leq 4$.\n\n$(3)$   If $o(x)=o(y)=o(z)=2$, then $e(xyz) \\leq 4$.",
+      "content_preview": "Let G be a group and let x,y,z be elements of G. (1) e(xy) (o(x),o(y)). (2) If o(x)=2 and y^a=y^-1 for some a G, then e(xy) 4.",
+      "display_name": "Lemma",
+      "label": "gr1",
+      "position": {
+        "line_start": 486,
+        "line_end": 496
+      },
+      "references": [],
+      "proof": "(1). Let $g=xy$ and let $o(x)=n$, $o(y)=m$. Then \n$$h:= g \\cdot g^x \\cdot g^{x^2} \\cdots g^{x^{m-1}} = x \\cdot y^m \\cdot x^{m-1} = x^m.$$ \nWriting $l = \\mbox{l.c.m.}(n,m)=m \\cdot s$, we obtain that $h^s = x^{ms} = x^l = 1$, therefore $e(g) \\leq l$.\n\n(2). Let $g=xy$. Then $g \\cdot g^x \\cdot g^a \\cdot g^{xa} = 1$.\n\n(3). Let $g=xyz$. Then\n$g \\cdot g^z \\cdot g^x \\cdot g^{zx} = 1$."
+    },
+    {
+      "id": "lemma-2-80987398",
+      "type": "lemma",
+      "content": "\\label{xy8}\nDenote by $e_G(g)$ the generalized order of $g$ in $G$. Let $x,y \\in G$ be such that $xy=yx$. Let $m := e_{C_G(x)}(y)$, $n:=e_G(x^m)$. Then $e_G(xy) \\leq n \\cdot m$.",
+      "content_preview": "Denote by e_G(g) the generalized order of g in G. Let x,y G be such that xy=yx. Let m := e_C_G(x)(y), n:=e_G(x^m). Then e_G(xy) n m.",
+      "display_name": "Lemma",
+      "label": "xy8",
+      "position": {
+        "line_start": 509,
+        "line_end": 511
+      },
+      "references": [],
+      "proof": "We have $\\prod_{i=1}^m y^{t_i} = 1$ with $t_i \\in C_G(x)$ for all $i$. Then $\\prod_{i=1}^m (xy)^{t_i} = \\prod_{i=1}^m x \\cdot y^{t_i} = x^m$. We have $\\prod_{j=1}^n (x^m)^{r_j} = 1$ with $r_j \\in G$ for all $j$. Therefore \n$$\\prod_{j=1}^n \\left( \\prod_{i=1}^m (xy)^{t_ir_j} \\right) = \\prod_{j=1}^n \\left( \\prod_{i=1}^m (xy)^{t_i} \\right)^{r_j} = \\prod_{j=1}^n (x^m)^{r_j} = 1$$\nhence $e_G(xy) \\leq n \\cdot m$."
+    },
+    {
+      "id": "lemma-3-c58882ab",
+      "type": "lemma",
+      "content": "\\label{eq} Let G be a finite group and let $\\mbox{{\\rm Irr}}(G)$ denote the set of all the complex irreducible characters of $G$. If  C is the conjugacy class and $g\\in G$  then $1\\in C^{k}$  if and only if\n\n\n\\begin{equation}\\label{eq1}\\sum_{\\chi \\in \\mbox{{\\rm Irr}}(G)} \\frac{\\chi(x)^k}{\\chi(1)^{k-2}}=1+\\sum_{\\chi\\neq 1}\\frac{\\chi(x)^k}{\\chi(1)^{k-2}}  \\neq 0.\\end{equation}",
+      "content_preview": "Let G be a finite group and let (G) denote the set of all the complex irreducible characters of G. If C is the conjugacy class and g G then 1 C^k if...",
+      "display_name": "Lemma",
+      "label": "eq",
+      "position": {
+        "line_start": 519,
+        "line_end": 523
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-a4ad5396",
+      "type": "lemma",
+      "content": "\\label{Lev} {\\rm \\cite{Lev1996}} Let $G=\\PSL_n(q), q>3$. Then $\\cn(G)=n$.",
+      "content_preview": "Let G=_n(q), q>3. Then (G)=n.",
+      "display_name": "Lemma",
+      "label": "Lev",
+      "position": {
+        "line_start": 546,
+        "line_end": 546
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-7dc91b3e",
+      "type": "lemma",
+      "content": "\\label{ma3} \\cite[Lemma 2.3, Propositions 3.5, 3.6, 3.7]{Malcolm21} Let $G$ be one of the groups $A_n, n>4$, $\\PSL_3(q)$, $\\PSU_3(q)$, $(3,q+1)=1$, ${^2}G_2(3^{2m+1})$, $m>0$. Then every element of $G$ is a product of two elements of order $3$. Consequently, $e(G)\\leq 3$ for these groups.",
+      "content_preview": "Let G be one of the groups A_n, n>4, _3(q), _3(q), (3,q+1)=1, ^2G_2(3^2m+1), m>0. Then every element of G is a product of two elements of order 3.",
+      "display_name": "Lemma",
+      "label": "ma3",
+      "position": {
+        "line_start": 549,
+        "line_end": 549
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-b6e5d60f",
+      "type": "lemma",
+      "content": "\\label{u5n} {\\rm \\cite[Theorem 1.5]{TZ04}} Let $\\mathbf{G}$ be a simple algebraic group in characteristic $p>0$, F a Frobenius endomorphism of $\\mathbf{G}$ and $G=\\mathbf{G}^F$ be a finite group of \nLie type. Suppose that G is not a Suzuki group, and $p> 2$ if $\\mathbf{G}$ is of type   \n$F_4,E_7$ and $p\\neq 2,5$ if $\\mathbf{G}$ is of type   \n$E_8$. Let $g=su\\in G$, where $u$ is a p-element, s is a $p'$-element and $us=su$.\nThen the elements $u^i$ with $(i,p)=1$ lie in at most two $C_G(s)$-conjugacy classes.",
+      "content_preview": "Let be a simple algebraic group in characteristic p>0, F a Frobenius endomorphism of and G=^F be a finite group of Lie type.",
+      "display_name": "Lemma",
+      "label": "u5n",
+      "position": {
+        "line_start": 553,
+        "line_end": 558
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-05bf1bbf",
+      "type": "lemma",
+      "content": "\\label{Gow}  Let $G$ be a simple group of Lie type,\n$g\\in G$ a regular semisimple element and let $C$ be the conjugacy class containing g. Then $C^2$ contains all non-identity semisimple elements of $G$. Consequently, $e(g)\\leq 3$.",
+      "content_preview": "Let G be a simple group of Lie type, g G a regular semisimple element and let C be the conjugacy class containing g.",
+      "display_name": "Lemma",
+      "label": "Gow",
+      "position": {
+        "line_start": 565,
+        "line_end": 567
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-dc317134",
+      "type": "lemma",
+      "content": "\\label{GuT1}   Let $(G,S)$ be one of the following pairs of groups: \n\n$(1)$ $G=\\GL_n(q)$, $n\\geq 2$,  $(n,q)\\neq (2,2),(2,3)$ and $S=\\SL_n(q);$\n\n$(2)$ $G=\\U_n(q)$, $n\\geq 2$,  $(n,q)\\neq (2,2),(2,3),(3,2)$ and $S=\\SU_n(q).$\n\n\\noindent Let $h\\in G$ be a regular semisimple element and let $g\\in G$ be a non-central semisimple element such that $g\\in h^2S$. Then $g$ is a product of two conjugates of $h$.",
+      "content_preview": "Let (G,S) be one of the following pairs of groups: (1) G=_n(q), n 2, (n,q) (2,2),(2,3) and S=_n(q); (2) G=_n(q), n 2, (n,q) (2,2),(2,3),(3,2) and...",
+      "display_name": "Lemma",
+      "label": "GuT1",
+      "position": {
+        "line_start": 571,
+        "line_end": 579
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-05a10a40",
+      "type": "lemma",
+      "content": "\\label{5eg} {\\rm \\cite[Theorem H, p.344]{egh}}\nLet $G$ be a simple group of Lie type in defining characteristic $p>0$, and $g\\in G$. Then $g$ is a product of two unipotent elements. Consequently, $e(G)\\leq d$, where $d$ is the exponent of \na Sylow p-subgroup of $G$.",
+      "content_preview": "Let G be a simple group of Lie type in defining characteristic p>0, and g G. Then g is a product of two unipotent elements.",
+      "display_name": "Lemma",
+      "label": "5eg",
+      "position": {
+        "line_start": 591,
+        "line_end": 594
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-10-a1dd3abb",
+      "type": "lemma",
+      "content": "\\label{un2} Let $G$ be one of the groups $\\PSL_n(q)$, $\\PSU_n(q)$ with $n>1$. Suppose that $(n,q)=1$. \nThen every semisimple element $s\\in G$ is a product of two elements of order $n$. \nConsequently, $e(s)\\leq n$.",
+      "content_preview": "Let G be one of the groups _n(q), _n(q) with n>1. Suppose that (n,q)=1. Then every semisimple element s G is a product of two elements of order n.",
+      "display_name": "Lemma",
+      "label": "un2",
+      "position": {
+        "line_start": 598,
+        "line_end": 600
+      },
+      "references": [
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "q)=1$.\nTherefore, $g$ is regular in $G$. By Lemma \\ref{Gow}, $s$ is a product of two conjugates of $h$. By Le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gr1",
+          "reference_type": "internal",
+          "context": "$ is a product of two conjugates of $h$. By Lemma \\ref{gr1}(1), $e(g)\\leq n$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We consider only the case of $G=\\PSU_n(q)$, the other case is similar.\n\nLet $H=\\SU_n(q)=\\SU(V)$    and let $h\\in \\U(V)$\nbe a matrix  permuting cyclically the elements of an orthonormal basis of $V$.\nIf $n$ is odd then $\\det h=1$. If $n$ is even then $q$ is odd and $t:=\\diag(-1,\\Id_{n-1})\\in \\U(V)$ (under the same basis). Then $(th)^n=-\\Id$ is scalar. Let $g\\in G$ be the projection of \n$ h$. Then $|g|=n$. Note that  $h$ is regular in $H$ as $h$ has $n$ distinct eigenvalues, since $(n,q)=1$.\nTherefore, $g$ is regular in $G$. By Lemma \\ref{Gow}, $s$ is a product of two conjugates of $h$. By Lemma \\ref{gr1}(1), $e(g)\\leq n$."
+    },
+    {
+      "id": "lemma-11-309b0b44",
+      "type": "lemma",
+      "content": "\\label{u42} Let $G=\\PSU_n(q),n>1$. Suppose that    $(n,q)>1$.  \nThen every semisimple element $s\\in G$ is a product of two elements of order   $n+1$. \nConsequently, $e(s)\\leq n+1$.",
+      "content_preview": "Let G=_n(q),n>1. Suppose that (n,q)>1. Then every semisimple element s G is a product of two elements of order n+1. Consequently, e(s) n+1.",
+      "display_name": "Lemma",
+      "label": "u42",
+      "position": {
+        "line_start": 611,
+        "line_end": 613
+      },
+      "references": [
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "ection of $h$ in $G$. Then $|g|=n+1$.   \nBy Lemma \\ref{Gow}, $s$ is a product of two conjugates of $g$. By Le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gr1",
+          "reference_type": "internal",
+          "context": "$ is a product of two conjugates of $g$. By Lemma \\ref{gr1}, $e(s)\\leq n+1$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Note that $(n+ 1,q)=1$. Let $x\\in \\U_{n+1}(q) = \\U_{n+1}(V)$ be the matrix permuting cyclically an orthonormal basis of $V$. Then $x\\in S_{n+1}$, the group of all permutations of the basis. \nLet $\\mu=(-1)^{n}. $ As $(n+1,q)=1$, \nthe multiplicity of the eigenvalue $\\mu$ of $x$ equals 1. So the $\\mu$-eigenspace $W$ of $x$ is non-degenerate, and hence $V=W^\\perp\\oplus W$. \n\nAs $\\det x=\\mu$, we have $x=\\diag(h,\\mu)$,\nwhere $h\\in \\SU_n(q)$. Since $h$ has $n$ distinct eigenvalues over $F$, $h$ is regular.\nLet $g$ be the projection of $h$ in $G$. Then $|g|=n+1$.   \nBy Lemma \\ref{Gow}, $s$ is a product of two conjugates of $g$. By Lemma \\ref{gr1}, $e(s)\\leq n+1$."
+    },
+    {
+      "id": "lemma-12-d23e5142",
+      "type": "lemma",
+      "content": "\\label{sn2} {\\rm \\cite[Proposition  3.1(ii)]{TZ05}} Let $G$ be a simple group of Lie type.\nSuppose that $G\\notin\\{\\PSL_n(q),n>2,\\PSU_n(q),n>2,\\Omega^\\pm_{2n}(q)$, n odd, $E_6(q), {}^2E_6(q)\\}$. Then every semisimple element of G is real.",
+      "content_preview": "Let G be a simple group of Lie type. Suppose that G_n(q),n>2,_n(q),n>2,^_2n(q), n odd, E_6(q), ^2E_6(q). Then every semisimple element of G is real.",
+      "display_name": "Lemma",
+      "label": "sn2",
+      "position": {
+        "line_start": 630,
+        "line_end": 631
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-13-ab0435c7",
+      "type": "lemma",
+      "content": "\\label{ev1} {\\rm \\cite[Theorem 1.8]{TZ04}} Suppose that q is even and let  $G\\in\\{ \\SL_n(q),\\SU_n(q),\\\\ \\Sp_{2n}(q),\\Omega^\\pm _{2n}(q), {}^3D_4(q)$, $ E_6(q),{}^2E_6(q),G_2(q)\\}$. Then the unipotent elements of $G$ are rational.",
+      "content_preview": "Suppose that q is even and let G _n(q),_n(q), _2n(q),^ _2n(q), ^3D_4(q), E_6(q),^2E_6(q),G_2(q). Then the unipotent elements of G are rational.",
+      "display_name": "Lemma",
+      "label": "ev1",
+      "position": {
+        "line_start": 635,
+        "line_end": 635
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-bd04f71b",
+      "type": "lemma",
+      "content": "\\label{ru5} Let $G$ be a simple group of Lie type in defining characteristic $p>0$, and $g\\in G$. Suppose\nthat $e(g)>3$. Then $g\\in P$ for some maximal parabolic subgroup P of G and $O_p(\\langle g\\rangle)\\subseteq O_p(P)$. In addition, the elements of $O_p(P)$ are not regular unipotent\nunless $G\\in\\{\\PSL_2(q),\\ \\Sz(q) = {^2}B_2(q),\\ {^2}G_2(q)\\}$.",
+      "content_preview": "Let G be a simple group of Lie type in defining characteristic p>0, and g G. Suppose that e(g)>3. Then g P for some maximal parabolic subgroup P of G...",
+      "display_name": "Lemma",
+      "label": "ru5",
+      "position": {
+        "line_start": 637,
+        "line_end": 640
+      },
+      "references": [
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "q),\\ \\Sz(q) = {^2}B_2(q),\\ {^2}G_2(q)\\}$.By Lemma \\ref{Gow},  $g$ is not a regular semisimple element of $G$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By Lemma \\ref{Gow},  $g$ is not a regular semisimple element of $G$. \nTherefore, $C_G(g)$ contains a unipotent element $u\\neq 1$, say, and we choose $u$ to be a generator of $ O_p(\\langle g\\rangle)$ whenever    \nthis group is non-trivial.\n\n Set $K= \\langle g\\rangle$. By a Borel-Tits theorem \\cite[Theorem 26.5]{MTe}, \n$K$ is contained in a parabolic subgroup \n$P$, say, of $G$, and $O_p(K)\\subseteq O_p(P)$. In particular, $u\\in O_p(P)$.\n\nFor the additional claim, suppose the contrary, that $v\\in U:=O_p(P)$ for some regular unipotent element $v$ of $G$.  If $L:=P/U$ contains no unipotent element then $P$ is a Borel subgroup of $G$ \\cite[\\S 26.1]{MTe}.  In this case $G$ is of BN-pair rank 1, and hence\n $G\\in \\{\\PSL_2(q), \\Sz(q) = {^2}B_2(q), {^2}G_2(q)\\}$.\nOtherwise,  the projection of $v$ into $P/U$ is non-trivial by \\cite[Lemma 2.6]{tz13},\nwhich is a contradiction."
+    },
+    {
+      "id": "lemma-15-2cbe4b50",
+      "type": "lemma",
+      "content": "\\label{in3} Let $H=\\GL_n(q)=\\GL(V)$ and let $h=su\\in H$ be indecomposable. \nThen $h$ is contained in a subgroup $M = M_1 M_2$, $[M_1,M_2] = 1$, $M_1 \\cong \\GL_k(q)$, $M_2 \\cong \\GL_l(q)$ for some integers $k,l$ with $kl=n$, and $s\\in M_1,u\\in M_2$. (In fact, $M=\\GL_k(q)\\otimes \\GL_l(q)$, the Kronecker product.) In addition, $s$ is irreducible as an element of $\\GL_k(q)$ and $u$ represents a Jordan block $J_l$ in $\\GL_l(q)$.",
+      "content_preview": "Let H=_n(q)=(V) and let h=su H be indecomposable. Then h is contained in a subgroup M = M_1 M_2, [M_1,M_2] = 1, M_1 _k(q), M_2 _l(q) for some...",
+      "display_name": "Lemma",
+      "label": "in3",
+      "position": {
+        "line_start": 656,
+        "line_end": 657
+      },
+      "references": [],
+      "proof": "Let $V = \\bigoplus_{i=1}^t V_i$, where $V_1,\\ldots,V_t$ are homogeneous components of $s$ on $V$, i.e. each $V_i$ is the maximal direct sums of pairwise $\\mathbb{F}_q \\langle s \\rangle$-isomorphic irreducible components. Then $uV_i=V_i$ for $i=1,\\ldots, t$. As $h$ is indecomposable, we have $t=1$.\nTherefore, $V$ is a direct sum of pairwise isomorphic irreducible ${\\mathbb F}_q\\langle s\\rangle $-submodules of equal dimension $k$, say. It is well known (by Clifford theory and Schur's lemma) that $C_H(s)\\cong \\GL_l(q^k)$, where\n$l$ is the composition length of $V$ and $k=n/l$. Then the conjugacy class of $u$  in $\\GL_l(q^k)$ meets $\\GL_l(q)$, since $u$ can be taken to its canonical Jordan form. We denote this group by $M_2$ and set $M_1=C_{\\GL(V)}(M_2)$. We can view $M_1$ as the group $\\diag(A,\\ldots,  A)$ with $A \\in \\GL_k(q)$ and $M_2$ as $C_{\\GL(V)}(M_1)$. A conjugate of $h$ lies in $M = M_1M_2$."
+    },
+    {
+      "id": "lemma-16-aab8506f",
+      "type": "lemma",
+      "content": "\\label{i1i2i}\nLet $g \\in G$ be a semirational element of order $n$. Let \n$$\\begin{array}{l}\nI=\\{m\\ |\\ 1 \\leq m \\leq n,\\ (m,n)=1\\}, \\\\\nI_1=\\{m \\in I\\ |\\ g \\sim g^m\\}, \\\\\nI_2=\\{m \\in I\\ |\\ g^{-1} \\sim g^m\\}.\n\\end{array}$$\nWe identify each integer with its reduction modulo $n$. Then $1 \\in I_1$, $-1 \\in I_2$ and $I_1 \\cup I_2 = I$. If $h$ is a positive integer such that $e(g) > h+1$ then, for every $m_1,\\ldots,m_h \\in I_1$ such that $m_1+\\ldots+m_h \\in I$, we have $m_1+\\ldots+m_h \\in I_1$.",
+      "content_preview": "Let g G be a semirational element of order n. Let I=m | 1 m n, (m,n)=1, I_1=m I | g g^m, I_2=m I | g^-1 g^m.",
+      "display_name": "Lemma",
+      "label": "i1i2i",
+      "position": {
+        "line_start": 686,
+        "line_end": 694
+      },
+      "references": [],
+      "proof": "Assume $m_1,\\ldots,m_h \\in I_1$ satisfy $m_1+\\ldots+m_h \\in I \\setminus I_1$. By assumption $m_1+\\ldots+m_h \\in I_2$ so $m=-m_1-\\ldots-m_h \\in I_1$ and $g^{m_1} \\cdots g^{m_h} g^m = 1$. Since $m_1,\\ldots,m_h,m \\in I_1$, this implies $e(g) \\leq h+1$, a contradiction."
+    },
+    {
+      "id": "lemma-17-14adc6bc",
+      "type": "lemma",
+      "content": "\\label{ee7} Let $G$ be a finite simple group of Lie type in characteristic $p>2$. Then $e(G) \\leq 6$ unless possibly one of the following holds: \n\n\n\n$(1)$ $G = E_6(q)$, ${^2}E_6(q);$\n\n$(2)$ $G=E_8(q)$, $p=5;$\n\n\n\n\n\n$(3)$ $G=\\PSL_n(q)$, $n > 2;$\n\n$(4)$ $G=\\PSU_n(q)$, $n > 2$.\n\n\n\n\\noindent\nIn particular,  if $q$ is odd and\n$G$ is $\\Omega^\\pm_{2n}(q)$ with $n$ even, $\\Omega_{2n+1}(q)$ or $\\PSp(2n,q)$,   \n\nthen $e(G)\\leq 6$.",
+      "content_preview": "Let G be a finite simple group of Lie type in characteristic p>2. Then e(G) 6 unless possibly one of the following holds: (1) G = E_6(q), ^2E_6(q);...",
+      "display_name": "Lemma",
+      "label": "ee7",
+      "position": {
+        "line_start": 757,
+        "line_end": 780
+      },
+      "references": [
+        {
+          "target_id": "sn2",
+          "reference_type": "internal",
+          "context": "nipotent and $s,u\\in \\langle g \\rangle$. By Lemma \\ref{sn2},\n$s$ is real. \nRecall that $p>2$ is almost good f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "u5n",
+          "reference_type": "internal",
+          "context": "xcept $p=5$ for $E_8(q)$. \n\n\n\n\n\n Then,  by  Lemma \\ref{u5n}, \nthe generators of $\\langle u \\rangle$ lie in at",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor881",
+          "reference_type": "external",
+          "context": "t two conjugacy classes of $C_G(s)$. By Corollary \\ref{cor881}, the generalized order of $u$ in $C_G(s)$ is at m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "xy8",
+          "reference_type": "internal",
+          "context": "$. Since $s$ is real, $s^3$ is real too, so Lemma \\ref{xy8} implies that $e(g) \\leq 2 \\cdot 3 = 6$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $g=su$, where $s$ is semisimple, $u$ is unipotent and $s,u\\in \\langle g \\rangle$. By Lemma \\ref{sn2},\n$s$ is real. \nRecall that $p>2$ is almost good for $G$ except $p=5$ for $E_8(q)$. \n\n\n\n\n\n Then,  by  Lemma \\ref{u5n}, \nthe generators of $\\langle u \\rangle$ lie in at most two conjugacy classes of $C_G(s)$. By Corollary \\ref{cor881}, the generalized order of $u$ in $C_G(s)$ is at most $3$. Since $s$ is real, $s^3$ is real too, so Lemma \\ref{xy8} implies that $e(g) \\leq 2 \\cdot 3 = 6$."
+    },
+    {
+      "id": "lemma-18-b39f7c7b",
+      "type": "lemma",
+      "content": "\\label{444} For q even   let $G\\in\\{\\PSL_4(q),\\PSU_4(q),\\Sp_4(q), \\Sz(q) ={^2}B_2(q)\\}$. Then $e(G)\\leq 4$.",
+      "content_preview": "For q even let G_4(q),_4(q),_4(q), (q) =^2B_2(q). Then e(G) 4.",
+      "display_name": "Lemma",
+      "label": "444",
+      "position": {
+        "line_start": 815,
+        "line_end": 816
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-19-cacaa399",
+      "type": "lemma",
+      "content": "\\label{u26}\nUnder the assumptions of Lemma {\\rm \\ref{u5n}}, suppose that $p>2$. Then $e_{C_G(s)}(u)\\leq 3$ and $e_G(u)\\leq 3$.",
+      "content_preview": "Under the assumptions of Lemma , suppose that p>2. Then e_C_G(s)(u) 3 and e_G(u) 3.",
+      "display_name": "Lemma",
+      "label": "u26",
+      "position": {
+        "line_start": 818,
+        "line_end": 820
+      },
+      "references": [
+        {
+          "target_id": "u5n",
+          "reference_type": "internal",
+          "context": "\\label{u26}\nUnder the assumptions of Lemma {\\rm \\ref{u5n}}, suppose that $p>2$. Then $e_{C_G(s)}(u)\\leq 3$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "u5n",
+          "reference_type": "internal",
+          "context": "$e_G(u)\\leq 3$.The result follows from Lemma {\\rm \\ref{u5n}} and Corollary \\ref{cor881}.\nFor the second concl",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cor881",
+          "reference_type": "external",
+          "context": "follows from Lemma {\\rm \\ref{u5n}} and Corollary \\ref{cor881}.\nFor the second conclusion of the lemma take $s=1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The result follows from Lemma {\\rm \\ref{u5n}} and Corollary \\ref{cor881}.\nFor the second conclusion of the lemma take $s=1$."
+    },
+    {
+      "id": "lemma-20-7de35150",
+      "type": "lemma",
+      "content": "\\label{u3q1} Let $G=\\PSU_3(q)$,  $3|(q+1)$, $q> 2$. Then $e(G)=3$.",
+      "content_preview": "Let G=_3(q), 3|(q+1), q> 2. Then e(G)=3.",
+      "display_name": "Lemma",
+      "label": "u3q1",
+      "position": {
+        "line_start": 842,
+        "line_end": 843
+      },
+      "references": [
+        {
+          "target_id": "eq",
+          "reference_type": "internal",
+          "context": "We show that $e(g)=3$. For this we use Lemma \\ref{eq} for $k=3$, specifically,  \nthe fact that $e(g)=3$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $g=su$. If $u=1$ or $s=1$ then $e(g)\\leq 3$.  Suppose that $s\\neq 1$ and $u\\neq 1$. Then $s$ is not regular. Let $h\\in H=\\SU_3(q)$ be such that    $g= Z(H)h$. (Note that $|Z(H)|=3.$) One easily observes that the Jordan form of $h$ is \n$\\begin{pmatrix}a&1&0\\\\ 0&a&0\\\\0 &0&a^{-2}\\end{pmatrix}$.  It follows that $h$ lies in a conjugacy class $C_5^{(k)}$ in \\cite[Table 2]{Si}, which provides the character table of $G$. \n(See \\cite[Table 1.1, p.565]{Ge} for the corrections.) In particular, $|u|=p$,\nwhere $p|q$ is a prime, and $|s|\\neq 3$ divides $q+1$. Note that $g,g^{-1}$ are not conjugate so $e(g)>2$. \n\n  \nWe show that $e(g)=3$. For this we use Lemma \\ref{eq} for $k=3$, specifically,  \nthe fact that $e(g)=3$ if and only if\n\n$$\\sum_{\\chi \\in \\mbox{Irr}(G)} \\frac{\\chi(g)^3}{\\chi(1)}\\neq 0.$$\n\nFor $\\chi \\in \\mbox{Irr}(G)$ set $A_{\\chi}=\\{\\psi \\in \\mbox{Irr}(G)\\ |\\ \\psi(1)=\\chi(1)\\}$. Using the character table of $G$, we observe that the following holds. \n\n\\begin{itemize}\n\\item If $\\chi(1)=q^2-q$ then $|\\chi(g)| \\leq 1$ and $|A_{\\chi}|=1$.\n\\item If $\\chi(1)=q^2-q+1$ then $|\\chi(g)| <2$ and $|A_{\\chi}| = (q-2)/3$.\n\\item If $\\chi(1)=q^3$ then $\\chi(g)=0$.\n\\item If $\\chi(1)=(q+1)^2(q-1)/3$ then $\\chi(g)=0$.\n\\item If $\\chi(1)=q(q^2-q+1)$ then $|\\chi(g)|=1$ and $|A_{\\chi}|=(q-2)/3$.\n\\item If $\\chi(1)=q^3+1$ then $|\\chi(g)|=1$ and $|A_{\\chi}|=(q^2-q-2)/6$\nsee \\cite[Table 2]{Si}. \n\\item If $\\chi(1)=(q-1)(q^2-q+1)/3$ then $|\\chi(g)|=1$ and $|A_{\\chi}|=3$.\n\\item If $\\chi(1)=(q-1)(q^2-q+1)$ then $|\\chi(g)| \\leq 3$ and $|A_{\\chi}| \\leq (q-2)(q+1)/6$. This is the number of pairs $(u,v)$ with $1\\leq u\\leq (q+1)/3$ and $u<v<2(q+1)/3$ \\cite[Table 3.1]{Ge}. \n\\end{itemize}\nIn the above discussion, all the possible irreducible character degrees were mentioned. Therefore \n\\begin{align*}\n\\left| \\sum_{1 \\neq \\chi \\in \\mbox{Irr}(G)} \\frac{\\chi(g)^3}{\\chi(1)} \\right| \\leq & \\frac{1}{q^2-q} + \\frac{8(q-2)}{3(q^2-q+1)} + \\frac{(q-2)}{3q(q^2-q+1)} + \\frac{q^2-q-2}{6(q^3+1)} \\\\\n& + \\frac{9}{(q-1)(q^2-q+1)} + \\frac{27(q-2)(q+1)}{6(q-1)(q^2-q+1)}.\n\\end{align*}\n\nThis is strictly less than $1$ if $q \\geq 8$. The case $q=5$ can be checked by \\cite{gap}."
+    },
+    {
+      "id": "lemma-21-3ee64fe2",
+      "type": "lemma",
+      "content": "\\label{rr2} Let $G=\\PGL_2(q)$ or $\\PU_2(q)$. Then every semisimple element of $G$ is real.",
+      "content_preview": "Let G=_2(q) or _2(q). Then every semisimple element of G is real.",
+      "display_name": "Lemma",
+      "label": "rr2",
+      "position": {
+        "line_start": 880,
+        "line_end": 880
+      },
+      "references": [],
+      "proof": "Note that the groups $\\PGL_2(q)$ and $\\PU_2(q)$ are isomorphic (see \\cite[Lemma 4.9]{DZ8}). So it suffices to deal with $\\PGL_2(q)$. Let $H=\\GL_2(q)$ and let $g\\in H$. Let $V$ be the underlying space for $H$. Suppose first that $g$ is reducible on $V$. Then, under some basis of $V$, we can express $g=\\diag(a,b)$. \nThen  $g'=\\diag(b,a)$ is conjugate to $g$  and $gg'$ is scalar. Whence the result in this case.\n \nSuppose that $g$ is irreducible.  Then the centralizer of $g$ in ${\\rm Mat}_2(q)$ is a field\nby Schur's lemma,  which is isomorphic to $\\mathbb{F}_{q^2}$. The nontrivial Galois automorphism $\\gamma$ of $\\mathbb{F}_{q^2}/\\mathbb{F}_q$ sends $x\\in \\mathbb{F}_{q^2}$ to $x^q$. By the Skolem-Noether theorem, $\\gamma$ is realized via an inner \nautomorphism of $\\GL_2(q)$, and hence $g^q = hgh^{-1}$ for some   $h \\in \\GL_2(q)$.\nThen $gg^q\\in \\mathbb{F}_q$ is scalar in $\\GL_2(q)$. So again $g$ is real in $\\PGL_2(q)$."
+    },
+    {
+      "id": "lemma-22-901e2669",
+      "type": "lemma",
+      "content": "\\label{6ps} Let $ G=\\PSU_4(q)$, q odd,  and let $s\\in G$ be a semisimple element. Then $e(s)\\leq 4$. In addition, $e(G)\\leq 6$ and $e(\\PSU_4(2))=e(\\PSU_4(3))= 3$.",
+      "content_preview": "Let G=_4(q), q odd, and let s G be a semisimple element. Then e(s) 4. In addition, e(G) 6 and e(_4(2))=e(_4(3))= 3.",
+      "display_name": "Lemma",
+      "label": "6ps",
+      "position": {
+        "line_start": 899,
+        "line_end": 900
+      },
+      "references": [
+        {
+          "target_id": "un2",
+          "reference_type": "internal",
+          "context": "\\cite{gap}. Now we prove the first part. By Lemma \\ref{un2},  $e(g)\\leq 4$ if $g\\in G$ is semisimple, and $e(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "u26",
+          "reference_type": "internal",
+          "context": "ple, and $e(g)\\leq 3$ if $g$ is unipotent (Lemma  \\ref{u26}).   \n Let $H=\\SU_4(q)=\\SU(V)$, let $h\\in H$ be su",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "centsem",
+          "reference_type": "external",
+          "context": "$. In the following discussion we use Observation \\ref{centsem}.\n\nIf $J=\\diag(J_3,1)$ then $h=\\diag(\\mu\\cdot J_3,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": ", and hence $y$ is regular semisimple.  \nBy Lemma \\ref{Gow}, some product of $3$ conjugates of $y$ is scalar.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "rr2",
+          "reference_type": "internal",
+          "context": "ee for instance \\cite[Lemma 4.8]{ez1}).\n By Lemma \\ref{rr2}, the product of two conjugates of $s_1$ by an ele",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The result for $\\PSU_4(3)$ and $\\PSU_4(3)$ follows by \\cite{gap}. Now we prove the first part. By Lemma \\ref{un2},  $e(g)\\leq 4$ if $g\\in G$ is semisimple, and $e(g)\\leq 3$ if $g$ is unipotent (Lemma  \\ref{u26}).   \n Let $H=\\SU_4(q)=\\SU(V)$, let $h\\in H$ be such that $g=hZ(H)$ and $h=su$,\nwhere $s\\neq 1$ is semisimple, $u\\neq 1$ is unipotent and $su=us $. Let $C$ be the conjugacy class of $h$ in $H$.\n\n  Let $J$ be the Jordan form of $u$ in $\\GL_4(q^2)$. Then $J\\in\\{J_4,\\diag(J_3,1),\\diag(J_2,J_2)\\}$. In the former case $su=us$ implies $s$ is scalar, so $e(g)\\leq 3$. In the following discussion we use Observation \\ref{centsem}.\n\nIf $J=\\diag(J_3,1)$ then $h=\\diag(\\mu\\cdot J_3,\\mu^{-3})$.\nIn the notation of \\cite{Si} (see also \\cite{Ge, Or}), $J_3\\in \\PSU_3(q)$ belongs to one of  $d=(3,q+1)$ conjugacy classes \n$C_3^{(0,k)}$, where $0 \\leq k < d$ (which glue in $\\PU_3(q)$).\nSo, let $D$ be any of these classes,  and let $D'$ be the conjugacy\nclass of $C_8^{(1)}$. Then, $D'$ consists of elements of order\n$(q^2-q+1)/d$. Using the character table of $\\PSU_3(q)$, one concludes that $D'\\subset D^2$. So there  exists $x \\in \\PSU_3(q)$ such that\nthe product $t:=J_3\\cdot xJ_3x^{-1}$ has order $(q^2- q +1)/d$. It follows that $C^2$ \ncontains an element $y=\\diag(\\mu^2t,\\mu^{-6})$. As $t$ is irreducible in $\\U_3(q)$, $t$ does not  have an eigenvalue in $\\mathbb{F}_{q^2}$, and hence $y$ is regular semisimple.  \nBy Lemma \\ref{Gow}, some product of $3$ conjugates of $y$ is scalar. So $e(g)\\leq 6$. \n\n \nAssume now that $J=\\diag(J_2,J_2)$. \nThen $W=(\\Id-u)V$ is a totally isotropic space of dimension 2. Let $s_1\\in \\GL_2(q^2)$\nbe the restriction of $s$ on $W$. Then  the action of $s$ on $V/W$ is $s_2:={}^t\\gamma(s^{-1}_1)$, where $\\gamma$ is the nontrivial Galois automorphism \nof $\\mathbb{F}_{q^2}/\\mathbb{F}_{q}$ extended to $\\GL_2(q^2)$  (see for instance \\cite[Lemma 4.8]{ez1}).\n By Lemma \\ref{rr2}, the product of two conjugates of $s_1$ by an element of $\\SL_2(q^2)$ is scalar in $\\GL_2(q^2)$. So the  product $h_1$, say, of  two conjugates of $h$ by some element of $H$ is a matrix product of a matrix $t:=\\diag(\\mu \\cdot \\Id_2,\\mu^{-q} \\cdot \\Id_2)$ and  a unipotent matrix $u'$ of the form   $\\begin{pmatrix} \\Id_2&A\\\\ 0& \\Id_2\\end{pmatrix}$, where $A$ is a $(2\\times 2)$-matrix over  $\\mathbb{F}_{q^2}$. Moreover,\n$t\\in \\langle h_1\\rangle$ and hence $u':=t^{-1}h$ is unipotent and $u't=tu'$. Then either\n $u'=1$ or $t$ is scalar. In the latter case $e(g)\\leq 3$. As $\\diag(\\mu^{-q} \\cdot \\Id_2,\\mu \\cdot \\Id_2)$ is conjugate to $t$ by a matrix $\\begin{pmatrix}0&\\Id_2\\\\ \\Id_2&0 \\end{pmatrix}$, we have $e(g)\\leq 4$."
+    },
+    {
+      "id": "lemma-23-dc087bca",
+      "type": "lemma",
+      "content": "\\label{s33}\nLet $H=\\SL_2(q)$ with $q$ odd. If $u \\in H$ is a nontrivial unipotent element, there exist three conjugates of $u$ in $H$ whose product is $-1$.",
+      "content_preview": "Let H=_2(q) with q odd. If u H is a nontrivial unipotent element, there exist three conjugates of u in H whose product is -1.",
+      "display_name": "Lemma",
+      "label": "s33",
+      "position": {
+        "line_start": 931,
+        "line_end": 933
+      },
+      "references": [],
+      "proof": "Note that $H$ has two conjugacy classes of nontrivial unipotent elements which glue in $\\GL_2(q)$, so that a suitable element of $\\GL_2(q)$ swaps the two $H$-classes of unipotent elements (see \\cite[Lemma 5.2]{TZ04} for a more general fact). So it is enough to prove the result for one of the two classes. Consider the following elements of $H$. \n$$g_1=\\begin{pmatrix}0&1\\\\ -1&2\\end{pmatrix}, \\hspace{.1cm}\ng_2=\\begin{pmatrix}2&1\\\\ -1&0\\end{pmatrix}, \\hspace{.1cm}\ng_3=\\begin{pmatrix}1&0\\\\ -4&1\\end{pmatrix}, \\hspace{.1cm}\nh=\\begin{pmatrix} 0 & 1 \\\\ -1 & 0 \\end{pmatrix}, \\hspace{.1cm}\nk=\\begin{pmatrix} 2 & 1/2 \\\\ 0 & 1/2 \\end{pmatrix}.$$\nThe characteristic polynomial of $g_1,g_2,g_3$ is $(x-1)^2$, so they are unipotent and $g_1 g_2 g_3=-1$. Moreover $h^{-1}g_1h=g_2$ and $k^{-1}g_1k=g_3$."
+    },
+    {
+      "id": "lemma-24-cc2bc8d8",
+      "type": "lemma",
+      "content": "\\label{isomodules}\nLet $G = \\langle s \\rangle$ be a finite cyclic group and let $\\phi,\\tau$ be two finite dimensional irreducible representations of $G$ over a finite field $F$. If the matrices $\\phi(s)$, $\\tau(s)$ have an eigenvalue in common, then $\\phi$ and $\\tau$ are equivalent, i.e. the corresponding $F[G]$-modules are isomorphic.",
+      "content_preview": "Let G = s be a finite cyclic group and let , be two finite dimensional irreducible representations of G over a finite field F.",
+      "display_name": "Lemma",
+      "label": "isomodules",
+      "position": {
+        "line_start": 1016,
+        "line_end": 1018
+      },
+      "references": [],
+      "proof": "Let $F_1$ be the field $F(\\zeta)$ where $\\zeta$ is a primitive $|G|$-root of unity. Then, over $F_1$, $\\phi$ is a direct sum of absolutely irreducible constituents that are obtained from each other by Galois conjugations by elements of $\\mathcal{G}(F_1/F)$. We can say that they form a Galois group orbit. See \\cite[Theorem 19.4(ii)]{Feit}. The same is true for $\\tau$, so the orbits either coincide or are disjoint.\n\nNote that two absolutely irreducible representations $\\mu$, $\\nu$ of a cyclic group $\\langle s \\rangle$ are the same if and only if $\\mu(s)=\\nu(s)$. Since $\\phi(s)$, $\\tau(s)$ have an eigenvalue in common, and this eigenvalue belongs to $F_1$, they share a $1$-dimensional component, so the orbits are the same. It follows that $\\phi$ and $\\tau$ have the same irreducible constituents over $F_1$, so $\\phi(s)$, $\\tau(s)$ have the same list of eigenvalues up to ordering.\nSo $\\phi$ and $\\tau$ are equivalent over $F_1$. So $\\tau(s) = g \\phi(s) g^{-1}$ for some $g \\in \\GL_m(F_1)$, where $m = \\dim(W_1)$. In terms of matrix entries, the equation $g\\phi(s) = \\tau(s)g$ can be viewed as a homogeneous system of linear equations with indeterminates $g_{ij}$, $1 \\leq i,j \\leq m$ and coefficients in $F$. Then this system has a non-zero solution over $F$, so there is a matrix $h$ over $F$ such that $h\\phi(s) = \\tau(s)h$. Note that $\\det(h) \\neq 0$. Indeed, otherwise $hW_1=Y\\neq W_1$ and hence $\\tau(s)Y<\\tau(s) h W_1 = h\\phi(s)W_1 < hW_1=Y$, which is false as $\\tau$ is irreducible."
+    },
+    {
+      "id": "lemma-25-2923d7c1",
+      "type": "lemma",
+      "content": "\\label{au8} Let $u$ be a unipotent element in $H=O^\\pm _{2d}(q)=O(V)$ with $q$ even, $d$ odd. Then $C_H(u)$ is not a subgroup of $\\Omega^\\pm _{2d}(q)$.",
+      "content_preview": "Let u be a unipotent element in H=O^ _2d(q)=O(V) with q even, d odd. Then C_H(u) is not a subgroup of ^ _2d(q).",
+      "display_name": "Lemma",
+      "label": "au8",
+      "position": {
+        "line_start": 1028,
+        "line_end": 1029
+      },
+      "references": [],
+      "proof": "By \\cite[Lemma 4.9]{TZ04}, there exists an orthogonal decomposition $V=V_1 \\oplus \\ldots \\oplus V_f$, such that each $V_i$ is nondegenerate, $uV_i=V_i$ for all $i$ and the Jordan block sizes of $u$ on $V_i$ are the same and distinct on $V_i,V_j$ for $i\\neq j$, $i,j\\in \\{1,\\ldots,f\\}$. Let $u_i$ be the resriction of $u$ on $V_i$. It suffices to observe that $C_{O(V_i)}(u_i)$ is not contained in $\\Omega (V_i)$ for some $i$. As $q$ is even, $\\dim V_i$ is even for every $i$  by \\cite[Proposition 2.5.1]{KL}, so  $\\dim V_i\\equiv 2\\pmod 4$ for some $i  $. It suffices to show that $C_{O(V_i)}(u_i)$ is not contained in $\\Omega (V_i)$. To this end,   Let $a,m$ be such that   the Jordan blocks of $u_i$ consists of $a$ blocks of the same size $m$.\n \nIf $a$ is odd then then $u_i\\notin \\Omega (V_i)$ by  \\cite[p.182]{C}. Suppose that $a$ is even. Then $m$ is odd and $u_i\\in \\Omega (V_i)$.  \n\nWe use \\cite{LiS}. As  $m$ is odd, $u$ is of type $W(m)^{a/2}$ in the notation of \\cite[p.117, Theorem 7.3(iii)]{LiS}. In this case $\\Omega(V_i)\\cong \\Omega^+_{am}(q)$ and there is a single conjugacy class of elements of type $W(m)^{a/2}$ in  $\\Omega (V_i)$. Therefore, it suffices to observe the following. Let $M$ be a maximal totally singular\nsubspace of $V_i$; then $V_i = M \\oplus M'$, where $M'$  is a maximal totally singular\nsubspace of $V_i$ too. There is a basis $B$, say, of $V_i$ such that $B\\cap M$,\n$B\\cap M'$ are bases of $M,M'$, respectively, and the Gram matrix of $B$ is \n$\\begin{pmatrix}0&\\Id_k\\\\ \\Id_k&0\\end{pmatrix}$\nwith $k=\\dim M$. Let $u_i'=\\diag(A,{}^t A^{-1})$, where $A\\in \\GL(M)$ is such that the Jordan forms of $u_i,u_i'$ coincide. Then $u_i'\\in \\Omega(V_i)$ is of type  $W(m)^{a/2}$. As there is a single conjugacy class of elements of this type in $\\Omega(V_i)$, we can assume that $u_i=u'_i$. To show that \n$C_{O(V_i)}(u_i)$ contains an element  in $ O(V_i)\\setminus \\Omega(V_i)$, observe that \nif  $y=\\begin{pmatrix}0&\\Id_{k}\\\\ \\Id_{k}&0\\end{pmatrix}$\nthen $yu_iy^{-1}=\\diag({}^tA^{-1},A)$. As $A$ and ${}^tA^{-1}$ have the same Jordan form, we have $xAx^{-1}={}^tA^{-1}$ for some $x\\in \\GL_{ k}(q)$, and $zyu_iy^{-1}z^{-1}=u_i $ for $z=\\diag(x,{}^tx^{-1})\\in \\Omega(V_i)$. Note that $y$ is the product of $k$ reflections. As the spinor norm of a reflection is not equal to 1, so is the spinor norm of $y$ as $k$ is odd."
+    },
+    {
+      "id": "lemma-26-658d29c4",
+      "type": "lemma",
+      "content": "\\label{qe1} Let $F$ be an algebraically closed field and let  $A,B\\in \\GL_n(F)=\\GL(V)$ be diagonalizable elements with exactly two eigenvalues. Let $X=\\langle A,B\\rangle$. Then the composition factors of X on V are of dimension $1$ or $2$.",
+      "content_preview": "Let F be an algebraically closed field and let A,B _n(F)=(V) be diagonalizable elements with exactly two eigenvalues. Let X= A,B.",
+      "display_name": "Lemma",
+      "label": "qe1",
+      "position": {
+        "line_start": 1156,
+        "line_end": 1156
+      },
+      "references": [],
+      "proof": "Suppose the contrary, and let $W$ be a composition factor of dimension $d>2$. Since $A$ and $B$ are diagonalizable, they both have exactly two eigenvalues on $W$. So we can assume that $W=V$, so $X$ is irreducible.  \n\nLet $\\lambda_1,\\lambda_2$,  $\\mu_1,\\mu_2$ be the eigenvalues   of $A,B$, respectively, and we can assume  (by reordering them)  that \nthe multiplicity of $\\lambda_1$  and of $\\mu_1$ is at least $n/2$.    Let $V_1,V_2$ be \n$\\lambda_1,\\mu_1$-eigenspaces of $A,B$, respectively. As $X$ is irreducible, we have $V_1\\cap V_2=0$, and hence $\\dim V_1=\\dim V_2=n/2$ and $V_1+V_2=V$. Choose a basis $K$\nof $V$ such that $K_i:=K\\cap V_i$ is a basis of $V_i$, $i=1,2$, ordered so that the elements of $K_1$ are prior to those of $K_2$. Under such a basis the matrices of $A,B$ are of the form\n$$\\begin{pmatrix}\\lambda_1 \\cdot \\Id&C\\\\ 0&\\lambda_2 \\cdot \\Id\\end{pmatrix}, \\hspace{1cm}\n\\begin{pmatrix}\\mu_2 \\cdot \\Id&0\\\\ D&\\mu_1 \\cdot \\Id\\end{pmatrix}$$ \nwhere $C,D$ are square matrices of size $n/2$, and $D\\neq 0$ as $X$ is irreducible.\nLet $\\eta:V_1\\rightarrow  V_2$ be the mapping defined by $\\eta(v) := (B-\\mu_2\\Id)v\\,$ \nfor $v\\in V_1$.\nSince ${\\rm ker}\\, \\eta$ is $X$-stable, $D$ is nonsingular, so $\\eta(B_1)$ is a basis of $V_2$, hence we can choose $K_2=\\eta(K_1)$ so that $D$ is replaced by the identity matrix.  \nNow we can take $C$ to the upper triangular form  by\nconjugating both $A,B$ by a suitable matrix $N=\\diag(M,M)$ with $M\\in \\GL_{n/2}(F)$. Note that $NBN^{-1}=B$. Then the vectors $v_1=(1,0,\\ldots, 0)$, $v_2=(0,\\ldots, 0,1,0,\\ldots ,0)\\in F^{2n}$ span a 2-dimensional $X$-stable subspace of $V$ (here $1$ is located at the $(n+1)$-th position)."
+    },
+    {
+      "id": "lemma-27-98f0637a",
+      "type": "lemma",
+      "content": "\\label{dd2} Let V be an orthogonal space over ${\\mathbb F}_q$ of dimension $2n$. \n\n$(1)$ If $V$ is of type $+$ then $V$ is an orthogonal sum of $n$ dimension $2$ non-degenerate subspaces of type $+$, and if n is even then $V$ also is an orthogonal sum of $n$ dimension $2$ non-degenerate subspaces of type $-$. \n\n$(2)$ If $V$ is of type $-$ and $n$ is odd then $V$ is an orthogonal sum of $n$ dimension $2$ non-degenerate subspaces of type $-$.\n\n$(3)$ Suppose that n,q are odd. Then $Z(\\Omega(V))\\neq 1$ \nif and only if $V$ is of type $+$ and   $4|(q-1)$ \nor $V$ is of type $-$ and $4|(q+1)$.",
+      "content_preview": "Let V be an orthogonal space over F_q of dimension 2n. (1) If V is of type + then V is an orthogonal sum of n dimension 2 non-degenerate subspaces of...",
+      "display_name": "Lemma",
+      "label": "dd2",
+      "position": {
+        "line_start": 1231,
+        "line_end": 1240
+      },
+      "references": [],
+      "proof": "This follows from \\cite[Propositions 2.5.11(ii) and 2.5.13]{KL}."
+    },
+    {
+      "id": "lemma-28-162641fe",
+      "type": "lemma",
+      "content": "\\label{lemmaPSL}\nLet $n \\geq 2$ be an integer, $F$ a field, $H=\\SL_n(F)$, $G=\\PSL_n(F)$. Let $\\mu \\in F^{\\times}$ and let $g=\\diag(\\mu^{1-n},\\mu,\\ldots,\\mu) \\in H$. Let $l \\in \\{1,\\ldots,n-1\\}$ be such that $g^{x_1} \\ldots g^{x_l} = \\lambda \\cdot I \\in H$ for some $x_1,\\ldots,x_l \\in \\GL_n(F)$, $\\lambda \\in F$. Then $\\mu^{ln}=1$. In particular, if $F$ is finite of size $q$ and $d=(n,q-1)$, if $e(G) < n$ then $e(G) \\geq (q-1)/d$.",
+      "content_preview": "Let n 2 be an integer, F a field, H=_n(F), G=_n(F). Let F^ and let g=(^1-n,,,) H. Let l 1,,n-1 be such that g^x_1 g^x_l = I H for some x_1,,x_l...",
+      "display_name": "Lemma",
+      "label": "lemmaPSL",
+      "position": {
+        "line_start": 1278,
+        "line_end": 1280
+      },
+      "references": [],
+      "proof": "The last claim follows by choosing $\\mu$ of multiplicative order $q-1$, since then $\\mu^{ln}=1$ implies that $q-1$ divides $ln$, so $(q-1)/d$ divides $l$. Now we prove the first claim, i.e. that $\\mu^{ln}=1$. If $\\mu^n=1$ the claim is trivial. Now assume that $\\mu^n \\neq 1$. Then $\\mu^{1-n} \\neq \\mu$ so the matrix $g$ is not scalar. In particular, the $g$-eigenspace of $\\mu$ has dimension $n-1$. Assume $g^{x_1} \\ldots g^{x_l} = \\lambda \\cdot \\Id \\in H$ where each $x_i \\in H$. Let $W_i=\\{v \\in V\\ |\\ g^{x_i}(v)=\\mu v\\}$ be the $g^{x_i}$-eigenspace of $\\mu$ and let $U$ be the $g$-eigenspace of $\\mu$, then we have an isomorphism $U \\to W_i$ defined by $u \\mapsto x_i^{-1}(u)$. Therefore $\\dim(W_i)=n-1$ for all $i=1,\\ldots,l$. Set $W:=\\bigcap_{i=1}^l W_i$. Then $\\dim(W) \\geq n-l > 0$. Moreover $g^{x_1} \\ldots g^{x_l}$ acts as the multiplication by $\\mu^l$ on $W$, so $\\mu^l=\\lambda$ and hence $\\mu^{ln} = \\lambda^n=\\det(\\lambda\\cdot \\Id)=1$."
+    },
+    {
+      "id": "lemma-29-5f19f6e8",
+      "type": "lemma",
+      "content": "\\label{s25} $e(\\GL_n(2))=3$ for $n=3,4,5$.",
+      "content_preview": "e(_n(2))=3 for n=3,4,5.",
+      "display_name": "Lemma",
+      "label": "s25",
+      "position": {
+        "line_start": 1308,
+        "line_end": 1309
+      },
+      "references": [
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "(u)=2$. Suppose that $s\\neq 1 $. In view of Lemma \\ref{Gow} we can assume that $s$ is not regular. Then $s$ i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Observe that $e(\\GL_n(2))=3$ for $n=3,4$ as $\\GL_3(2)\\cong \\PSL_2(7)$ and $\\GL_4(2)=A_8$. Let $n=5$.\n\nLet $g\\in G$ and let $g=su$, where $s\\in \\langle g\\rangle$  is of odd order, $u$ is a 2-power.   If \n$s=1$ then $e(u)=2$. Suppose that $s\\neq 1 $. In view of Lemma \\ref{Gow} we can assume that $s$ is not regular. Then $s$ is reducible by Schur's lemma. Let $V_1,\\ldots,V_k$ be the homogeneous components of $s$ on $V$, and we can assume that $\\dim V_1\\geq \\dim V_2\\geq \\ldots \\geq \\dim V_k$. If $\\dim V_k=1$ then $g\\in \\diag(\\GL_4(2),1)$ and the result follows since we know that $e(\\GL_4(2))=3$. So we  assume that $\\dim V_k\\geq 2$, and hence $k=2$, $\\dim V_1=3$, $\\dim V_2=2 $. Note that the homogeneous components of $s$ are $g$-stable. So $gV_i=V_i$ for $i=1,2$. \nThen $g\\in  X_1,X_2$, $X_1\\cong  \\GL_3(2)$, $X_2\\cong \\GL_2(2)$. We can write  $g=\\diag(g_1,g_2)$, and let $g_i=s_iu_i$ for $i=1,2$. Then $s_i$ is either irreducible on $V_i$ or $s_i=\\Id$. If both $s_1,s_2$ are irreducible then $s$ is regular by \\cite{at}.\nSo $s\\neq 1,u\\neq 1$, and either $g_1=s_1$, $g_2=u_2$ or  $g_1=u_1$, $g_2=s_2$.\nIn the latter case each $u_1$, $s_2$ is real, so $g$ is real. In the former case $|s_1|=7$, $|u_2|=2$, so $|g|=14$.\n\nFor this $g$ we can use the character table \\cite[Page 70]{at}. Note that the 4 characters \nof degrees 496 take value $b_7,\\overline{b_7},-b_7,-\\overline{b_7}$ so their cubes sum to 0.  We have\n$$\\sum_{\\chi\\in{\\rm Irr}(G)}\\frac{\\chi(g)^3}{\\chi(1)}=1+\\frac{-1}{155}+ \\frac{1}{930}+\\frac{1}{960} + \\frac{-1}{1240}>0.$$\nThis proves the claim."
+    },
+    {
+      "id": "lemma-30-8d50ae1d",
+      "type": "lemma",
+      "content": "\\label{id4}\nIf  $g \\in \\GL_n(3)$ is indecomposable, then there exist $x,y \\in \\SL_n(3)$ such that $g \\cdot g^x \\cdot g^y$ is scalar.",
+      "content_preview": "If g _n(3) is indecomposable, then there exist x,y _n(3) such that g g^x g^y is scalar.",
+      "display_name": "Lemma",
+      "label": "id4",
+      "position": {
+        "line_start": 1332,
+        "line_end": 1334
+      },
+      "references": [
+        {
+          "target_id": "in3",
+          "reference_type": "internal",
+          "context": "imple and $u$ unipotent. In the notation of Lemma \\ref{in3}, $s\\in M_1$, $u\\in M_2$, and $s$ is irreducible i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "GuT",
+          "reference_type": "external",
+          "context": "\\rangle$ is either $M_1$ or $M_3$. \nBy Corollary \\ref{GuT}, a product of $3$ conjugates of $s$ in $\\langle s",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "u26",
+          "reference_type": "internal",
+          "context": "of 3 conjugates of $u$ in $M_2$ equals 1 by Lemma \\ref{u26}. If $u$ is real \nthen  $u$ is rational in $M_4$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $g=su$ with $s$ semisimple and $u$ unipotent. In the notation of Lemma \\ref{in3}, $s\\in M_1$, $u\\in M_2$, and $s$ is irreducible in $M_1\\cong \\GL_k(3)$.  Let $M_3\\subset M_1$, $M_4\\subset M_2$ be subgroups isomorphic to $\\SL_k(3), \\SL_l(3)$, respectively. Since the ground field has $3$ elements, $ \\langle s,M_3 \\rangle$ is either $M_1$ or $M_3$. \nBy Corollary \\ref{GuT}, a product of $3$ conjugates of $s$ in $\\langle s,M_3\\rangle$ is scalar and the conjugation elements can be chosen in $M_3$. In addition, if $u$ is not real then a product of 3 conjugates of $u$ in $M_2$ equals 1 by Lemma \\ref{u26}. If $u$ is real \nthen  $u$ is rational in $M_4$  by \\cite[Lemma 2.2(ii)]{TZ05}. \n Then $u$ is conjugate to $u^{-2}$,  so some product of $3$ conjugates of $u$ in $M_2$ equals 1. It follows that a product of $3$ conjugates of $g$ is scalar and the conjugation elements can be taken in $\\SL_n(3)$."
+    },
+    {
+      "id": "lemma-31-87616398",
+      "type": "lemma",
+      "content": "\\label{33s}\n$e(\\SL_n(3)) \\leq 6$.",
+      "content_preview": "e(_n(3)) 6.",
+      "display_name": "Lemma",
+      "label": "33s",
+      "position": {
+        "line_start": 1342,
+        "line_end": 1344
+      },
+      "references": [
+        {
+          "target_id": "id4",
+          "reference_type": "internal",
+          "context": "ection of $h$ in $\\GL(V_i)$ for all $i$. By Lemma \\ref{id4}, the product of some three $\\SL(V_i)$-conjugates",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $h\\in H=\\SL_n(3)=\\SL(V)$, and $V=\\bigoplus_{i=1}^t V_i$, where $V_i$ are indecomposable ${\\mathbb F}_3\\langle h\\rangle$-modules, and let $h_i$ be the projection of $h$ in $\\GL(V_i)$ for all $i$. By Lemma \\ref{id4}, the product of some three $\\SL(V_i)$-conjugates of $h_i$ is of order $\\leq 2$ in $\\SL(V_i)$ for $i=1,\\ldots,k$;  hence a product of $3$ conjugates of $h$ in $H$ is of order 2. Then $e(h)\\leq 6$."
+    },
+    {
+      "id": "lemma-32-a81e7adf",
+      "type": "lemma",
+      "content": "\\label{44s} Let $G=\\SL_n(4)$. Then $e(G)\\leq 18$. If $h\\in G$\nis semisimple then $e(h)\\leq 9$.",
+      "content_preview": "Let G=_n(4). Then e(G) 18. If h G is semisimple then e(h) 9.",
+      "display_name": "Lemma",
+      "label": "44s",
+      "position": {
+        "line_start": 1350,
+        "line_end": 1352
+      },
+      "references": [
+        {
+          "target_id": "GuT",
+          "reference_type": "external",
+          "context": "\\SL(V_i) Z(\\GL(V_i))| \\in\\{1,3\\}$. By Corollary  \\ref{GuT},\nthere are $x_i,y_i\\in \\SL(V_i)$ such that $h_ix_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose that $h \\in G$ is semisimple. Let $V=\\bigoplus_{i=1}^k V_i$ be a decomposition of $V$ as a direct sum of minimal $\\langle h \\rangle$-stable subspaces of $V$. Let $h_i$ be the projection of $h$ on $V_i$ for $i=1,\\ldots ,k$.  Then $h_i$ is irreducible on $V_i$. Note that $|\\GL(V_i) : \\SL(V_i) Z(\\GL(V_i))| \\in\\{1,3\\}$. By Corollary  \\ref{GuT},\nthere are $x_i,y_i\\in \\SL(V_i)$ such that $h_ix_ih_ix_i^{-1}y_ih_iy_i^{-1}\\in Z(\\GL(V_i))$.\nThis is also true for  $i$ with $\\dim V_i= 1$.\nIt follows that the product of some 3 conjugates of $h$ in $H$ acts scalarly on each $V_i$. \nSince $q=4$, we have  $e(h)\\leq 9$.\n\nIn general, let $h=su$, where $1\\neq s\\in H$ is semisimple, $1\\neq u\\in H$ is unipotent and $us=su$. Then $e_{C_G(s)}(u)\\leq 2$. Indeed, $C_{\\GL(V)}(s)$ is a direct product of groups isomorphic to $\\GL_{m}(q^k)$ for various $m,k$, see \\cite[Lemma 3.2]{TZ04}. Therefore, $u$ is contained in a subgroup of $C_{\\GL(V)}(s)\\cap H$ isomorphic to a direct product of groups $\\SL_{m}(q^k)$, since $|u|$ is a $p$-element for $p|q$ and $|GL_{m}(q^k)/\\SL_{m}(q^k)|$ is a $p'$-group. By \\cite[Theorem 1.7]{TZ04}, $u$ is real in $C_G(s)$. Therefore, $s^2$ is a product of 2 conjugates of $h$; as $e(s^2)\\leq 9$, we have $e(h)\\leq 18$."
+    },
+    {
+      "id": "lemma-33-4404b6b0",
+      "type": "lemma",
+      "content": "\\label{s53} Let $G=\\PSL_5(3)$. Then $e(G)\\leq 5$. In addition, $e(\\PSL_3(3))=e(\\PSL_4(3))=3$.",
+      "content_preview": "Let G=_5(3). Then e(G) 5. In addition, e(_3(3))=e(_4(3))=3.",
+      "display_name": "Lemma",
+      "label": "s53",
+      "position": {
+        "line_start": 1364,
+        "line_end": 1364
+      },
+      "references": [
+        {
+          "target_id": "un2",
+          "reference_type": "internal",
+          "context": ". If $g$ is semisimple then $e(g)\\leq 5$\nby Lemma \\ref{un2}. If $g$ is unipotent then $e(g)\\leq 2$ by \\cite[T",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "centsem",
+          "reference_type": "external",
+          "context": "block for every eigenvalue.\n\nWe   use Observation \\ref{centsem} and the notation therein in the following discuss",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "s of $s_2$ in $\\SL_3(3)$ equals $ \\Id_3$ by Lemma \\ref{Gow}, as $\\det (-\\Id_3)=-1$. If $\\mu=-1$ then, by Lemm",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "s33",
+          "reference_type": "internal",
+          "context": "as $\\det (-\\Id_3)=-1$. If $\\mu=-1$ then, by Lemma \\ref{s33}, the product of 3 conjugates of $J_2$ in $\\SL_2(3",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The second claim follows from \\cite{gap}, so we will now prove that $e(G) \\leq 5$. Let $g=su \\in G$, where $s$ is semisimple, $u$ is unipotent and $su=us$. If $g$ is semisimple then $e(g)\\leq 5$\nby Lemma \\ref{un2}. If $g$ is unipotent then $e(g)\\leq 2$ by \\cite[Theorem 1.8(ii)]{TZ04}. \n\nSuppose that  $g$ is neither semisimple nor unipotent.   Let $h\\in H=\\SL_5(3)$ be such that $g=hZ(H)$, and $h=su$, where $s,u\\in  \\langle h\\rangle$, $s$ is is semisimple, $u$ is unipotent. Then $s$ is not scalar. Recall that an $(n \\times n)$-matrix $A$ over a field $F$ is called cyclic if there exists $x \\in F^n$ such that $\\{x,Ax,\\ldots,A^{n-1}x\\}$ is a basis of $F^n$. The matrix $A$ is cyclic if and only if its Jordan canonical form contains only one Jordan block for every eigenvalue.\n\nWe   use Observation \\ref{centsem} and the notation therein in the following discussion, in which we list the possibilities for $u$ (up to conjugation). In particular, $n_1,\\ldots ,n_k$ are the dimensions of the homogeneous components of $s$.\n\nWe denote by $J_m$ the canonical Jordan block of size $m$. If $x$ is a $p$-element in $\\GL_n(q)$, where $p$ is the prime dividing $q$, then $(x-1)^n=0$, therefore if $\\GL_n(q)$ contains a unipotent element whose Jordan form is $J_m$, then $n \\geq m$. Since $s$ is not scalar, $k \\geq 2$.\n \n(a) $u=\\diag(J_4,1)$. The fact that $u \\in C_G(s)$ implies that $k=2$ and $n_1/m_1 \\geq 4$, so $m_1=m_2=1$, $n_1=4$, $n_2=1$. Therefore $h$ is a cyclic matrix whose all eigenvalues are in $\\mathbb{F}_3$. By \\cite[Theorem 3]{Lev94}, $g^{-1}$ is the product of two conjugates of $h$, whence $e(g)\\leq 3$.\n\n(b) $u=\\diag(J_3,J_2)$. In this case $n_1=3$, $m_1=1$, $n_2=2$, $m_2=1$, $s=\\diag(s_1,s_2)$,   $s_i=\\mu_i \\cdot \\Id$ for $i=1,2$, $\\mu_i\\in \\mathbb{F}_3$ and $\\mu_1^3\\mu_2^2=1$. As $s_1\\neq s_2$, $h$ is a cyclic matrix. So again $e(g)\\leq 3$ by \\cite[Theorem 3]{Lev94}.\n \n\n(c) $u=\\diag(J_3,1,1)$. In this case $k \\in \\{2,3\\}$, $n_1=3$, $m_1=1$, $s=\\diag(\\pm  \\Id_3,s_2)$, $s_2\\in \\GL_2(3)$. \nThen $J_3$ is real in $\\SL_3(3)$ and $s_2$ is real in $\\PGL_2(3)$. Using $-\\Id_3$, if necessary, to adjust the determinant, we deduce that the product of some two conjugates of $g$ in $G$ is $\\diag( \\Id_3,\\nu \\cdot \\Id_2)$, where  $\\nu=\\pm 1$. Then  $e(g)\\leq 4$.\n\n(d) $u=\\diag(J_2,1,1,1)$. In this case $k \\in \\{2,3,4\\}$, $n_1=2$, $m_1=1$, $s=\\diag(\\mu \\cdot \\Id_2,s_2)$, $\\mu=\\pm 1$, $s_2\\in \\SL_3(3)$.\n If $s_2$ is regular, then the product of  3 conjugates of $s_2$ in $\\SL_3(3)$ equals $ \\Id_3$ by Lemma \\ref{Gow}, as $\\det (-\\Id_3)=-1$. If $\\mu=-1$ then, by Lemma \\ref{s33}, the product of 3 conjugates of $J_2$ in $\\SL_2(3)$ equals $-\\Id$, so the product of some $3$ conjugates of $-J_2$ in  $\\SL_2(3)$ equals 1. Then  $e(g)\\leq 3$.  If $\\mu=1$ then, since\n$J_2^3=1$, again $e(g)\\leq 3$. If $s_2$ is not regular in $\\SL_3(3)$ then $s_2$ centralizes some unipotent element in $\\SL_3(3)$, and hence it is diagonalizable with at least two equal eigenvalues which belong to $\\mathbb{F}_3$. So we can assume that $s_2=\\diag(1,\\pm \\Id_2)$. Then $g = \\diag(\\mu.J_1,1,\\pm \\Id_2)$ is contained in the group $X= \\left\\{ \\diag(A,\\det A^{-1},\\pm\\Id_2)\\ |\\ A \\in \\GL_2(3) \\right\\}$. It follows that $g$ is real in $X$, so $e(g)=2$.\n \n(e) $u=\\diag(J_2,J_2,1)$. Then $n_1/m_1 \\geq 2$. If $m_1 \\geq 2$, then $m_1=2$ and $n_1=4$, while if $m_1=1$ then $n_1 \\geq 2$. This implies that \nthere are two isomorphic irreducible components, and their dimension is $1$ or $2$.\nSuppose first that these are of dimension $2$. Then, replacing $g$ by some conjugate, we can assume that $s=\\diag(s_1,s_1,t)$, where $s_1\\in \\GL_2(3)$ is irreducible, $t\\in \\mathbb{F}_3$. \nThen $t=1$ as $ \\det s_1^2=1$. So $s=\\diag(s_1,s_1,1)$. We deduce that $h=\\diag(A,1)$, where $A=s_2\\otimes J_2 \\in \\GL_2(3)\\otimes \\GL_2(3)$. Note that $\\GL_2(3)\\otimes \\GL_2(3)\\subset \\SL_4(3)$.  \nSince $J_2$ is real in $\\GL_2(3)$, and semisimple elements are real in  $\\GL_2(3)$ too, the result follows. Suppose now that $s$ has at least $2$ isomorphic components of dimension $1$. Then some eigenvalue $\\mu$ of $h$ is of multiplicity at least 2. Let $W$ be the $\\mu$-eigenspace of $h$. If $\\dim W=2$ or $3$ then $h=\\diag(-J_2,J_2,1)$ \nand  $e(h)=2$ as $J_2$ is real in $\\GL_2(3)$. If $\\dim W=4 $ then  $h=\\diag(-J_2,-J_2,1)$, and again  $e(h)=2$."
+    },
+    {
+      "id": "lemma-34-7725bd24",
+      "type": "lemma",
+      "content": "\\label{pu3} Let $H=\\SU_n(2)$, $n>1$ and let $s\\in H$ be a semisimple element.   Then  $e(s)\\leq 9$ and $e(H)\\leq 18 $.",
+      "content_preview": "Let H=_n(2), n>1 and let s H be a semisimple element. Then e(s) 9 and e(H) 18 .",
+      "display_name": "Lemma",
+      "label": "pu3",
+      "position": {
+        "line_start": 1447,
+        "line_end": 1447
+      },
+      "references": [
+        {
+          "target_id": "GuT",
+          "reference_type": "external",
+          "context": "_i)/Z(\\U(V_i)) \\SU(V_i)|\\in\\{1,3\\}$, by Corollary \\ref{GuT} there are $x_i,y_i\\in \\SU(V_i)$ such that $s_i x_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $V$ be the underlying space for $H$. By \\cite[Satz 2]{Huppert}, $V=\\bigoplus_i V_i$, where $V_i$'s are minimal $\\langle s \\rangle$-stable non-degenerate subspaces of $V$. Let $s_i$ be the restriction of $s$ to $V_i$. Then either $s_i$ is irreducible, or $V_i=W_i \\oplus W_i'$,\nwhere $W_i,W_i'$ are totally isotropic minimal $\\langle s_i \\rangle$-stable subspaces. In addition, there exists a basis of $V_i$ such that if $M_i$ is the matrix of $s_i$ on $W_i$ then \nthe matrix $M_i'$ of $s_i$ on $W_i'$ is ${}^t\\gamma(M_i)^{-1}$, where $\\gamma$ is a non-trivial Galois automorphism of ${\\mathbb F}_4$ (\\cite[Satz 2]{Huppert}). \nAs $W_i$ is irreducible, $s_i$ is a regular element of $\\GL(W_i)$. Moreover, by Schur's lemma $s_i$ is regular in $\\GL(V_i)$ unless $W_i,W_i'$ are isomorphic $\\mathbb{F}_{q^2}\\langle s_i\\rangle $-modules, equivalently, $M_i$ and $M'_i$ are similar as matrices of $\\GL_d(q^2)$, $d=\\dim W_i$. Then $M_i$ is contained in a subgroup $X_i$ of  $\\GL_d(q^2)$ isomorphic to $\\U_d(q)$. It follows that $V_i$ is a direct sum of  two $\\langle s_i \\rangle$-stable non-degenerate subspaces. Therefore, if we choose the decomposition $V=\\bigoplus_i V_i$ with maximal number of non-degenerate terms $V_i$ then $s_i$ is a regular element in $\\GL(V_i)$ and $\\U(V_i)$.\n\nSince $|\\U(V_i)/Z(\\U(V_i)) \\SU(V_i)|\\in\\{1,3\\}$, by Corollary \\ref{GuT} there are $x_i,y_i\\in \\SU(V_i)$ such that $s_i x_i s_i x_i^{-1} y_i s_i y_i^{-1} \\in Z(\\U(V_i))$. Therefore, the product of some 3 conjugates of $s$ is of order 3 or 1.  This implies $e(s)\\leq 9$. \n\nLet $h\\in H$ and \n$h=su$, $s,u\\in \\langle h\\rangle$ with $s$ semisimple, $u$ unipotent. \nNote that $C_{\\U(V)}(s)$ is a direct product of groups\nisomorphic to $\\GL_{m}(q^{2k})$ and $\\U_m(q^k)$ for various $m,k$, see \\cite[Lemma 3.3]{TZ04}. Therefore, $u$ is contained in a subgroup of $C_{\\GL(V)}(s)\\cap H$ isomorphic to a direct product of groups  $\\SL_{m}(q^k)$ and  $\\SU_m(q^k)$. By \\cite[Theorem 1.7(ii)]{TZ04}, applied to every multiple, $u$ is real in $C_G(s)$. Therefore, $s^2$ is a product of 2 conjugates of $h$; as $e(s^2)\\leq 9$, we have $e(h)\\leq 18$."
+    },
+    {
+      "id": "lemma-35-4b751e6d",
+      "type": "lemma",
+      "content": "\\label{pu2} Let $G=\\PSU_n(q),n>1$, q odd.  \nThen $e(G)\\leq 3n+3$. If $(n,q)=1$ then $e(G)\\leq 3n$.",
+      "content_preview": "Let G=_n(q),n>1, q odd. Then e(G) 3n+3. If (n,q)=1 then e(G) 3n.",
+      "display_name": "Lemma",
+      "label": "pu2",
+      "position": {
+        "line_start": 1463,
+        "line_end": 1464
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-36-86336bcb",
+      "type": "lemma",
+      "content": "\\label{g24}\nLet $G=G_2(q)$, q even.  Then $e(G)\\leq 4$.",
+      "content_preview": "Let G=G_2(q), q even. Then e(G) 4.",
+      "display_name": "Lemma",
+      "label": "g24",
+      "position": {
+        "line_start": 1494,
+        "line_end": 1496
+      },
+      "references": [],
+      "proof": "The character table of $G$ is available in \\cite{EY}. By inspection of this  one observes that the irreducible character values are not real only at two conjugacy classes, denoted by  $B_2(1)$ and $ B_2(2)$. So $e(g)=2$ unless \n$g\\in B_2(1)\\cup B_2(2)$.  \n\nRepresentatives of  $B_i(1)$, $i=1,2,\n$ are written in \\cite[Table IV-1]{EY} and in \\cite{Enomoto} as\n$h(\\omega,\\omega,\\omega)y_i$, where $y_i$ are unipotent,   $h:=h(\\omega,\\omega,\\omega)^3=1$ and $hy_i=y_ih$, see \\cite[p.327]{EY}.  So $|g|$ is even and hence $g,g^2$ are not conjugate. Therefore, $g^2$ is real, and hence $e(g)\\leq 4$."
+    },
+    {
+      "id": "lemma-37-2567ae80",
+      "type": "lemma",
+      "content": "\\label{e62}\nLet $G\\in \\{E_6(q), {^2}E_6(q)\\}$ be a simple group, and $p|q$ a prime. Then $e(G)\\leq d$, where $d=p$ for $p>11$, and $16,27,25,49,121$ for  $p=2,3,5,7,11$, respectively.",
+      "content_preview": "Let G E_6(q), ^2E_6(q) be a simple group, and p|q a prime. Then e(G) d, where d=p for p>11, and 16,27,25,49,121 for p=2,3,5,7,11, respectively.",
+      "display_name": "Lemma",
+      "label": "e62",
+      "position": {
+        "line_start": 1524,
+        "line_end": 1526
+      },
+      "references": [
+        {
+          "target_id": "5eg",
+          "reference_type": "internal",
+          "context": ",3$  \\cite{Lw}. So the result follows from  Lemma \\ref{5eg}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Note that the exponent of a Sylow $p$-subgroup of $G$ equals $p$\nfor $p>11$, $p^2$ for $3<p\\leq 11$, and $16,27$ for $p=2,3$  \\cite{Lw}. So the result follows from  Lemma \\ref{5eg}."
+    },
+    {
+      "id": "lemma-38-640789fa",
+      "type": "lemma",
+      "content": "\\label{613} \nLet $G \\in \\{E_6(q), {^2}E_6(q)\\}$. Then $G$ contains a regular semisimple element of order $13$; if $(q,6)=1$ then G contains a regular semisimple element of order $12$.",
+      "content_preview": "Let G E_6(q), ^2E_6(q). Then G contains a regular semisimple element of order 13; if (q,6)=1 then G contains a regular semisimple element of order 12.",
+      "display_name": "Lemma",
+      "label": "613",
+      "position": {
+        "line_start": 1536,
+        "line_end": 1538
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-39-5346150e",
+      "type": "lemma",
+      "content": "\\label{e88}  Let $\\mathbf{G}$ be the simple algebraic group of type $ E_8$ in characteristic $p>0$ and let $1\\neq s\\in  \\mathbf{G}$  be a semisimple element. \n \\smallskip\n\n\n$(1)$ The group $\\mathbf{C}:=C_{\\mathbf{G}}(s)$ is connected reductive, $\\mathbf{C}=Z(\\mathbf{C})\\cdot \\mathbf{G}_1\\cdots \\mathbf{G}_m$ for some simple algebraic groups\n$\\mathbf{G}_1\\,\\ldots ,\\mathbf{G}_m;$\n\n\\smallskip\n$(2)$ the groups $\\mathbf{G}_i$, $1\\leq i\\leq m$, are either of exceptional type distinct from $E_8$, or of classical groups of rank at most $8$.",
+      "content_preview": "Let be the simple algebraic group of type E_8 in characteristic p>0 and let 1 s be a semisimple element. (1) The group :=C_(s) is connected...",
+      "display_name": "Lemma",
+      "label": "e88",
+      "position": {
+        "line_start": 1550,
+        "line_end": 1560
+      },
+      "references": [],
+      "proof": "(1) $\\mathbf{C}$ is reductive (that is, it contains no non-trivial unipotent normal subgroups), see \\cite[3.9 on p. 197]{Sbo}, and connected  by \\cite[Theorem 14.16(i) or 14.20]{MTe}, since the simple algebraic group of type $ E_8$ is simply connected. So the claim is a well known fact of general theory of algebraic groups, see for instance \\cite[\\S 1.8, pp.16-17]{C}.\n \n(2) A maximal torus of $\\mathbf{C}$ is the product of some maximal tori of the multiples $Z(\\mathbf{C})$, $\\mathbf{G}_1$, $\\ldots$, $\\mathbf{G}_m$, and the center of a simple algebraic group is a finite group. Therefore, the rank of $\\mathbf{C}$ equals the sum of the ranks\nof the multiples, and hence the rank of every group $\\mathbf{G}_i$ is at most $8$. \nThis implies the claim for classical groups. If some $\\mathbf{G}_i$ is of type $E_8$\nthen $m=1$ and the rank of \n$ Z(\\mathbf{C})$ equals $0$; therefore, this group is finite. As $\\mathbf{G}$ is connected,  $ Z(\\mathbf{C})$ is contained in \n$\\mathbf{G}_1$, so $\\mathbf{C}$ is a simple algebraic group of type $E_8$. \nIt is well known that in this case $Z(\\mathbf{C})=1$, hence $s=1$, a contradiction."
+    },
+    {
+      "id": "lemma-40-09326b91",
+      "type": "lemma",
+      "content": "\\label{6u6} Let $ G=\\PSU_6(q)$, $p|q$ a prime. Let $s\\in G$ be a semisimple element. If $p>3$ then $e(s)\\leq 6$ and $e(G)\\leq 18$. If $p=2,3$\nthen $e(s)\\leq 8,9$ and $e(G)\\leq 16,27$, respectively.",
+      "content_preview": "Let G=_6(q), p|q a prime. Let s G be a semisimple element. If p>3 then e(s) 6 and e(G) 18. If p=2,3 then e(s) 8,9 and e(G) 16,27, respectively.",
+      "display_name": "Lemma",
+      "label": "6u6",
+      "position": {
+        "line_start": 1872,
+        "line_end": 1873
+      },
+      "references": [
+        {
+          "target_id": "un2",
+          "reference_type": "internal",
+          "context": "e a prime. If $p>3$ then $e(s)\\leq 6$ \n\n\nby Lemma \\ref{un2}. \nIt follows that $e(G)\\leq 18$ by \\cite[Theorem",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gr1",
+          "reference_type": "internal",
+          "context": "(G)\\leq 18$ by \\cite[Theorem 1.5]{TZ04} and Lemma \\ref{gr1}. \n\nFor $p=2,3$ the exponent of a Sylow $p$-subgro",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "5eg",
+          "reference_type": "internal",
+          "context": "9, respectively. So the result follows from Lemma \\ref{5eg}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $p|q$ be a prime. If $p>3$ then $e(s)\\leq 6$ \n\n\nby Lemma \\ref{un2}. \nIt follows that $e(G)\\leq 18$ by \\cite[Theorem 1.5]{TZ04} and Lemma \\ref{gr1}. \n\nFor $p=2,3$ the exponent of a Sylow $p$-subgroup of $G$ is 8,9, respectively. So the result follows from Lemma \\ref{5eg}."
+    },
+    {
+      "id": "lemma-41-4c55612f",
+      "type": "lemma",
+      "content": "\\label{gf3} Let $\\mathbf{G}$ be a connected reductive algebraic group in prime characteristic,\n$\\si$ a  Frobenius endomorphism of $\\mathbf{G}$, and $G=\\mathbf{G}^\\si$.\nSuppose that $\\mathbf{G}'$ is simply connected.???? Then $|G:Z(G)G_u|= |Z(G_u)|$, where $G_u$ is the subgroup of G generated by the unipotent elements.  \n\nIf $Z(G_u)$ is cyclic of order $k$ then $g^k\\in Z(G)G_u$ for every $g\\in G$.",
+      "content_preview": "Let be a connected reductive algebraic group in prime characteristic, a Frobenius endomorphism of , and G=^. Suppose that ' is simply connected.????",
+      "display_name": "Lemma",
+      "label": "gf3",
+      "position": {
+        "line_start": 1883,
+        "line_end": 1889
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-42-642f9831",
+      "type": "lemma",
+      "content": "\\label{66b}  Let $G=E_6(q)$ or ${}^2E_6(q)$,  $q$ odd.  Let $p|q$ be a prime.\nLet C be a non-central conjugacy class of  semisimple elements. Then $C^k$ contains a semisimple element of   every Borel subgroup $ B$ of $G$, where $k=100$, respectively, $36$. (Equivalently, $C^k$ meets every split maximal torus of $G$.)",
+      "content_preview": "Let G=E_6(q) or ^2E_6(q), q odd. Let p|q be a prime. Let C be a non-central conjugacy class of semisimple elements.",
+      "display_name": "Lemma",
+      "label": "66b",
+      "position": {
+        "line_start": 1909,
+        "line_end": 1911
+      },
+      "references": [
+        {
+          "target_id": "e62",
+          "reference_type": "internal",
+          "context": "$p=2,3,5,7 $ then $e(G)\\leq 16,27,25,47$ by Lemma \\ref{e62}. Let $p>2$.\n\n  If $g\\in C$ is regular semisimple",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "If $g\\in C$ is regular semisimple then, by Lemma \\ref{Gow}, $C^2$\ncontains  every semisimple element $x\\neq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gf3",
+          "reference_type": "internal",
+          "context": "L_u)|$. It is well known that $(m,q)=1$. By Lemma \\ref{gf3}, $x^m\\in L_u.Z(L)$  for every $x\\in L$. In partic",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Gow",
+          "reference_type": "internal",
+          "context": "regular element of $X_i$ then $e(g')=3$ by Lemma \\ref{Gow}. \nSuppose that some $x_1,x_2$ are regular. Then $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sn2",
+          "reference_type": "internal",
+          "context": ", resp. Indeed, the claim follows from  by Lemmas \\ref{sn2},  \\ref{6u6} for the first two groups. For the las",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "6u6",
+          "reference_type": "internal",
+          "context": "ed, the claim follows from  by Lemmas \\ref{sn2},  \\ref{6u6} for the first two groups. For the last two groups",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $p=2,3,5,7 $ then $e(G)\\leq 16,27,25,47$ by Lemma \\ref{e62}. Let $p>2$.\n\n  If $g\\in C$ is regular semisimple then, by Lemma \\ref{Gow}, $C^2$\ncontains  every semisimple element $x\\neq 1$ of $G$ (when $G$ is simple.)\nAs  $B$ contains a non-trivial semisimple element for $q>2$,  the result follows in this case.\n \nSuppose that $g=s$ is not regular semisimple.   Then $s\\in K$, where $K$ is a cyclic group\nwith $O_p(K)\\neq 1$. By a Borel-Tits theorem  \\cite[Theorem 13.1]{GL},  $K$ is contained in a proper parabolic subgroup $P$ of $G$, and $O_p(K)\\subseteq O_p(P)$. In addition, $s\\in L\\cong P/O_p(P)$, where $L$ is a Levi subgroup of $P$.   Recall that  $P=LO_p(P)$, with   $ L\\cap O_p(P)=1$.\n\nWe can assume that $G$ is of universal type, that is, $G=\\mathbf{G}^\\si$,\nwhere $\\mathbf{G} $ is a simply connected simple group of type $E_6$, and $\\si$ is a suitable Frobenius endomorphism of $\\mathbf{G} $.  \nThen   there exists a reductive connected subgroup $\\mathbf{L}$ of $\\mathbf{G} $ such that  $L=\\mathbf{L}^\\si$ \\cite[Proposition 26.1]{MTe}. \n By \\cite[Proposition 13.14]{MTe}, $\\mathbf{L}'$ is simply connected. Let $m=|Z(L_u)|$. It is well known that $(m,q)=1$. By Lemma \\ref{gf3}, $x^m\\in L_u.Z(L)$  for every $x\\in L$. In particular, $(g')^m\\in Z(L)L_u$  is semisimple. \n Therefore, $(g')^{md}\\in Z(L)$, where $d=\\max e(y)$ for $y\\in L_u/Z(L_u)$ semisimple. \n\nNote that $Z(L)$ normalizes every Sylow $p$-subgroup of $L$ and $O_p(P)$, hence every Sylow $p$-subgroup of $P$ and  some   Sylow $p$-subgroup of $G$. As   a Borel subgroup of $G$   is the normalizer of a Sylow $p$-subgroup of $G$,\nwe conclude that $Z(L)\\subset B$. So we have to obtain an upper bound for $md$.\n\nThe structure of subgroups $L_u$ can be easily read off from \\cite[Tables 9,10]{C23}.   (In those tables  the group under consideration is $G/Z(G)$, but this does not affect the structure of $L_u/Z(L_u)$.)  Note that $E_6(q)$ has 6  maximal parabolic subgroups, ${}^2E_6(q)$ has 4 maximal parabolic subgroups; these are easily detected in the tables by the property $O_p(P)\\neq 1$. \n\nBy \\cite[Table 9]{C23}, if $G=E_6(q)$ then $L_u/Z(L_u)\\in\\{ P\\Omega_{10}^+(q),\\PSL_6(q), \\PSL_5(q)\\times \\PSL_2(q),\n P\\Omega_8^+(q)$, $\\PSL_3(q)\\circ \\PSL_3(q)\\times \\PSL_2(q),\\PSL_2(q)\\times \\PSL_2(q)\\times \\PSL_3(q)\\}$. As $\\mathbf{L}'$ is simply connected, we have $m=|Z(L_u)|$ divides $ 4,6,10,4,18,12$, respectively. (This is well known; to be precise $m$ is the $p'$-part of the above number.)  In FACT, $4,6,10,4,6,6$, respectively, TO BE PROVEN) As $(g')^m$ is semisimple,  \n$d\\leq 4,6,10$ for the first 3 groups. We observe that $d=3$ for two last groups.\n \nConsider the case where  $L_u/Z(L_u)\\cong X_1\\times X_2\\times X_3$, with all multiples non-trivial. Suppose first that $X_1\\cong X_2 \\cong \\PSL_3(q)$, $X_3\\cong \\PSL_2(q)$. \nWe can write $g'=x_1x_2x_3$, where $x_i\\in X_i$, $i=1,2,3$ are semisimple elements. \nIf each $x_i$ is a regular element of $X_i$ then $e(g')=3$ by Lemma \\ref{Gow}. \nSuppose that some $x_1,x_2$ are regular. Then $x_3=1$, and $e(g')=3$ as above.\nSuppose that $x_i$ is not regular for $i\\in\\{1,2\\}$. Let $y_i$ be an element in the pullback of \n$x_i$ in $\\SL_3(q)$. Then $y_i$ is not regular, and then $y_i$ is diagonalizable in   $\\SL_3(q)$. \nThen the product of 3 conjugates of $y_i$ in $\\SL_3(q)$ equals $\\Id$, and then a product of 3 conjugates of $x$ in $L_u$ equals 1. \n\nThe case with $X_1\\cong \\PSL_3(q)$, $X_2\\cong X_3 \\cong \\PSL_2(q)$ is similar.\n\nWe conclude that $md$ divides $16,36,100,54,36$, respectively. \n \n\nLet $G=2E_6(q)$. \nBy \\cite[Table 10]{C23},  $L_u/Z(L_u)\\in\\{ P\\Omega_{8}^-(q),\\PSU_6(q), \\PSL_3(q^2)\\times \\PSL_2(q),  \\PSL_3(q) \\times \\PSL_2(q^2)\\}$. \nThen $d=e_{L_u/Z(L_u)}(g')$ divides $2,6,6,6$, resp. Indeed, the claim follows from  by Lemmas \\ref{sn2},  \\ref{6u6} for the first two groups. For the last two groups  this follows as above. In addition, $m=|Z(L_u)|=4,6,6,6$, resp. We conclude that $m$ divides $8,36,36,36$, respectively."
+    },
+    {
+      "id": "lemma-43-fc0e4eba",
+      "type": "lemma",
+      "content": "\\label{u66} Let $G=E _6(q)$ or ${}^2E_6(q)$,  \n$q$ odd, be a simple group. Let C be a non-central conjugacy class. Then  $1\\in C^m$,   \nwhere $m\\leq 3600$, resp., $2592$.",
+      "content_preview": "Let G=E _6(q) or ^2E_6(q), q odd, be a simple group. Let C be a non-central conjugacy class. Then 1 C^m, where m 3600, resp., 2592.",
+      "display_name": "Lemma",
+      "label": "u66",
+      "position": {
+        "line_start": 1956,
+        "line_end": 1958
+      },
+      "references": [
+        {
+          "target_id": "66b",
+          "reference_type": "internal",
+          "context": "t $C_1$ be the conjugacy class of $s^t$. By Lemma \\ref{66b},  $C^{tk}$ meets a split maximal torus $T$ of $G$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\mathbf{H}$ be\nthe simply connected simple algebraic group  of type $E_6$ such that $H=\\mathbf{H}^\\si$ for some Frobenius endomorphism $\\si$ of $\\mathbf{H}$ and $G=H/Z(H)$. Note that $|Z(H)|=(3,q-1)$, resp., $(3,q+1)$ if $G=E _6(q)$, resp.,  ${}^2E_6(q)$.\n\nLet $p|q$ be a prime. Recall that a split maximal torus $T$ of $G$ is a complement of a Sylow $p$-subgroup of $G$ in its normalizer (called a Borel subgroup of $G$), see \\cite[Cor 24.11]{MTe}.  It is well known that $|T|=(q-1)^6 $\nif $H=E_6(q)$ and $|T|=(q^2-1)^2(q-1)^2=(q-1)^4(q+1^2) $ if $H=2E_6(q)$. \n \nObserve that $G$  contains a (maximal) subgroup   of $G$ described in \n\\cite[Tables 9,10]{C23} as   $2.(\\PSL_2(q)\\times \\PSL_6(q)).2 $, resp., $2.(\\PSL_2(q)\\times \\PSU_6(q)).2 $; as $q$ is odd, the term $(2,q-1)=2$ in \\cite[Tables 9,10]{C23}. \nWe denote by $X$ the preimage of this group in $H$.\n\nIt follows from the comment of the first paragraph in Section 7 of \\cite{C23},\n$X=\\mathbf{X}^\\si$ for some maximal positive-dimensional algebraic subgroup  of $\\mathbf{H}$. Clearly, the connected component $\\mathbf{X}^\\circ$ of $\\mathbf{X}$ is of type $A_1\\times A_5$. In fact,    $\\mathbf{X}^\\circ=\\mathbf{X}$, see \\cite[Table A, p.302]{LSS}. By dimension reason, the maximal tori of $\\mathbf{X}$ are maximal tori of   $\\mathbf{H}$, and hence ${\\mathbf T}_1^\\si$ is a maximal torus of $H$ for every $\\si$-stable maximal torus   $\\mathbf{T}_1$ of $\\mathbf{X}$. \nOne observes that $X$ contains a subgroup $T_1$ of order $|T|$. \n\nWe claim that $T_1$\nis a split maximal torus of $H$. Indeed, the orders of maximal tori of $H=E_6(q)$  \n  are listed in \\cite[Table II, p.897]{DF}, and there is a unique maximal torus (up to conjugation in $H$) of order $(q-1)^6$, whence the claim in this case.  As stated at the \nend of \\cite[p. 903]{DF}, the orders of maximal tori of $2E_6(q)$ are obtained from the orders of those of $E_6(q)$ by replacing $q$ by $-q$ in the \nformulas of the orders   (and taking the absolute value if the result is a negative number). So maximal tori  of order $(q^2-1)^2(q-1)^2$ correspond to those   of order $(q^2-1)^2(q+1)^2$ in $E_6(q)$ (this is denoted by $T_8$ in \\cite[Table II, p.897]{DF}). By inspection, one concludes that there is a single maximal torus of this order in $E_6(q)$ and hence a single maximal torus of  order $(q^2-1)^2(q+1)^2$ in ${}^2E_6(q)$.\nIt follows that $T_1$ and $T$ are conjugate, and hence $T_1$ is  split.\n\n \n\nLet $x\\in T$ and let $D$ be a conjugacy class of $x$. We show that $e(x)\\leq 12$, resp., 24. \nWe can assume that $x\\in T_1\\subset H$. Let $Y$ be the subgroup of $H$ generated by unipotent elements. Then $x^2\\in Y$ and $Y/Z(Y)= \\PSL_2(q)\\times  \\PSL_6(q)$, resp.,  $\\PSL_2(q)\\times  \\PSU_6(q)$. Set $Y_1= \\SL_2(q)\\times  \\SL_6(q)$, resp.,  $\\SL_2(q)\\times  \\SU_6(q)$, and let $y_1\\in Y_1$ be an element in the preimage of $x^2$ in $Y_1$.\nThen $y_1=ab$, where $a\\in \\SL_2(q), $ $b\\in \\SL_6(q)$, resp.,  $b\\in  \\SU_6(q)$.\n\nIf $G=E_6(q)$ then  the product of some 6 conjugates of $b$ in $\\SL_6(q)$ equals 1, and hence the product of some 6 conjugates of $y_1$ in $Y_1$ equals 1 (as the semisimple elements of $\\SL_2(q)$ are real). As $Y=Y_1/Z(H)$, we conclude that $e(x)\\leq 12$.\n\nLet  $G={}^2E_6(q)$. Then $b$ is contained in a split maximal torus of $\\SU_6(q)=\\SL(V)$ as well as of $U_6(q)$. This can be describes as follows. Choose a basis of $V$\nwhose Gram matrix is $\\begin{pmatrix}0&\\Id_3\\\\ \\Id_3&0\\end{pmatrix}$.\nThen matrices $\\diag(\\mu_1,\\mu_2,\\mu_3,\\mu^{-q}_1,\\mu^{-q}_2,\\mu^{-q}_3)\\in U_6(q)$ for $\\mu_1,\\mu_2,\\mu_3\\in \\mathbb{F}_{q^2}$ form a split maximal  torus of $U_6(q)$, and those of determinant 1 forms a split   split torus of $\\SU_6(q)$. Then the product of 3 conjugates of \n$b$ yields a matrix $\\diag(\\mu.\\Id_3,\\mu^{-q}.\\Id_3)$ for $\\mu=\\mu_1\\mu_2\\mu_3$.\nThen this matrix is conjugate to $\\diag(\\mu^{-q}.\\Id_3,\\mu.\\Id_3)$, and the product of these two matrices is scalar $\\mu\\mu^{-q}.\\Id_6$. Therefore, the product of some 6 conjugates of $y_1$ lies in $Z(Y_1)$. Then  the product of some 6 conjugates of\n$x^2$ lies in $Z(Y)$, which is of order 2. Therefore, $e(x)\\leq 24$.  \n  \nLet $g\\in C$, and  $g=su$, where $s$ is semisimple, $u$ is unipotent elements of $\\langle g\\rangle$.   By \\cite[Theorem 1.5]{TZ04}, the generators of $\\langle u \\rangle$ lie in at most two conjugacy classes of $C_G(s)$; so $s^t\\in C^t$ for $t\\leq 3$ and $s^t$ is semisimple. Let $C_1$ be the conjugacy class of $s^t$. By Lemma \\ref{66b},  $C^{tk}$ meets a split maximal torus $T$ of $G$, where $k=100,36$\nfor  $G=E_6(q)$, ${}^2E_6(q)$, resp. It follows that $e(g)\\leq 300.12=3600, 108.24=2592 $, resp."
+    },
+    {
+      "id": "external_cor881",
+      "type": "unknown",
+      "content": "External reference to 'cor881'",
+      "content_preview": "External reference to 'cor881'",
+      "display_name": "Unknown",
+      "label": "cor881",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_centsem",
+      "type": "unknown",
+      "content": "External reference to 'centsem'",
+      "content_preview": "External reference to 'centsem'",
+      "display_name": "Unknown",
+      "label": "centsem",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_GuT",
+      "type": "unknown",
+      "content": "External reference to 'GuT'",
+      "content_preview": "External reference to 'GuT'",
+      "display_name": "Unknown",
+      "label": "GuT",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-10-a1dd3abb",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-10-a1dd3abb",
+      "target": "lemma-1-0467c682",
+      "type": null
+    },
+    {
+      "source": "lemma-11-309b0b44",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-11-309b0b44",
+      "target": "lemma-1-0467c682",
+      "type": null
+    },
+    {
+      "source": "lemma-14-bd04f71b",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-17-14adc6bc",
+      "target": "lemma-12-d23e5142",
+      "type": null
+    },
+    {
+      "source": "lemma-17-14adc6bc",
+      "target": "lemma-6-b6e5d60f",
+      "type": null
+    },
+    {
+      "source": "lemma-17-14adc6bc",
+      "target": "external_cor881",
+      "type": null
+    },
+    {
+      "source": "lemma-17-14adc6bc",
+      "target": "lemma-2-80987398",
+      "type": null
+    },
+    {
+      "source": "lemma-19-cacaa399",
+      "target": "lemma-6-b6e5d60f",
+      "type": null
+    },
+    {
+      "source": "lemma-19-cacaa399",
+      "target": "external_cor881",
+      "type": null
+    },
+    {
+      "source": "lemma-20-7de35150",
+      "target": "lemma-3-c58882ab",
+      "type": null
+    },
+    {
+      "source": "lemma-22-901e2669",
+      "target": "lemma-10-a1dd3abb",
+      "type": null
+    },
+    {
+      "source": "lemma-22-901e2669",
+      "target": "lemma-19-cacaa399",
+      "type": null
+    },
+    {
+      "source": "lemma-22-901e2669",
+      "target": "external_centsem",
+      "type": null
+    },
+    {
+      "source": "lemma-22-901e2669",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-22-901e2669",
+      "target": "lemma-21-3ee64fe2",
+      "type": null
+    },
+    {
+      "source": "lemma-29-5f19f6e8",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-30-8d50ae1d",
+      "target": "lemma-15-2cbe4b50",
+      "type": null
+    },
+    {
+      "source": "lemma-30-8d50ae1d",
+      "target": "external_GuT",
+      "type": null
+    },
+    {
+      "source": "lemma-30-8d50ae1d",
+      "target": "lemma-19-cacaa399",
+      "type": null
+    },
+    {
+      "source": "lemma-31-87616398",
+      "target": "lemma-30-8d50ae1d",
+      "type": null
+    },
+    {
+      "source": "lemma-32-a81e7adf",
+      "target": "external_GuT",
+      "type": null
+    },
+    {
+      "source": "lemma-33-4404b6b0",
+      "target": "lemma-10-a1dd3abb",
+      "type": null
+    },
+    {
+      "source": "lemma-33-4404b6b0",
+      "target": "external_centsem",
+      "type": null
+    },
+    {
+      "source": "lemma-33-4404b6b0",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-33-4404b6b0",
+      "target": "lemma-23-dc087bca",
+      "type": null
+    },
+    {
+      "source": "lemma-34-7725bd24",
+      "target": "external_GuT",
+      "type": null
+    },
+    {
+      "source": "lemma-37-2567ae80",
+      "target": "lemma-9-05a10a40",
+      "type": null
+    },
+    {
+      "source": "lemma-40-09326b91",
+      "target": "lemma-10-a1dd3abb",
+      "type": null
+    },
+    {
+      "source": "lemma-40-09326b91",
+      "target": "lemma-1-0467c682",
+      "type": null
+    },
+    {
+      "source": "lemma-40-09326b91",
+      "target": "lemma-9-05a10a40",
+      "type": null
+    },
+    {
+      "source": "lemma-42-642f9831",
+      "target": "lemma-37-2567ae80",
+      "type": null
+    },
+    {
+      "source": "lemma-42-642f9831",
+      "target": "lemma-7-05bf1bbf",
+      "type": null
+    },
+    {
+      "source": "lemma-42-642f9831",
+      "target": "lemma-41-4c55612f",
+      "type": null
+    },
+    {
+      "source": "lemma-42-642f9831",
+      "target": "lemma-12-d23e5142",
+      "type": null
+    },
+    {
+      "source": "lemma-42-642f9831",
+      "target": "lemma-40-09326b91",
+      "type": null
+    },
+    {
+      "source": "lemma-43-fc0e4eba",
+      "target": "lemma-42-642f9831",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 46,
+    "edge_count": 38,
+    "extractor_used": "regex-only"
+  }
+}

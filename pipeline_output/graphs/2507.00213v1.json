@@ -1,0 +1,294 @@
+{
+  "arxiv_id": "2507.00213v1",
+  "nodes": [
+    {
+      "id": "definition-1-1bac0f12",
+      "type": "definition",
+      "content": "\\label{D - enveloping surface}\nWe call \\emph{enveloping surface} in a 2-complex $X$ a (connected) surface without boundaries which visits every edge precisely once.",
+      "content_preview": "We call in a 2-complex X a (connected) surface without boundaries which visits every edge precisely once.",
+      "display_name": "Definition",
+      "label": "D - enveloping surface",
+      "position": {
+        "line_start": 258,
+        "line_end": 260
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-2-426b9d8f",
+      "type": "definition",
+      "content": "We call \\emph{Hamiltonian surface} in a 2-complex $X$ an enveloping surface which has no multiple vertex.",
+      "content_preview": "We call in a 2-complex X an enveloping surface which has no multiple vertex.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 270,
+        "line_end": 272
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-97bba1f5",
+      "type": "theorem",
+      "content": "\\label{T - main theorem}\nThe Brady complex $X$ contains precisely two Hamiltonian surfaces.",
+      "content_preview": "The Brady complex X contains precisely two Hamiltonian surfaces.",
+      "display_name": "Theorem",
+      "label": "T - main theorem",
+      "position": {
+        "line_start": 280,
+        "line_end": 282
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-4216a3dc",
+      "type": "theorem",
+      "content": "\\label{T - isomorphic}\nLet $\\Sigma_1$ and $\\Sigma_2$ denote the two Hamiltonian surfaces of $X$. Then there exists finite index subgroups $G_1$ and $G_2$ in $\\Aut(F_2)$ respectively stabilizing the surfaces $\\Sigma_1$ and $\\Sigma_2$, a group isomorphism $\\p\\colon G_1\\to G_2$ between  these groups, and an isometric isomorphism $\\psi\\colon \\Sigma_1\\to \\Sigma_2$ between the Hamiltonian surfaces, such that $\\psi(g_1x_1)=\\p(g_1)\\psi(x_1)$ for every $x_1\\in \\Sigma_1$ and every $g_1\\in G_1$.",
+      "content_preview": "Let _1 and _2 denote the two Hamiltonian surfaces of X. Then there exists finite index subgroups G_1 and G_2 in (F_2) respectively stabilizing the...",
+      "display_name": "Theorem",
+      "label": "T - isomorphic",
+      "position": {
+        "line_start": 289,
+        "line_end": 291
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-a3225e5d",
+      "type": "lemma",
+      "content": "Every Hamiltonian surface $\\Sigma$ in $X$ is connected; for every $x\\in X$, the intersection of  the link  $L_x$ of $x$ in $X$ with $\\Sigma$ is a Hamiltonian cycle in $L_x$.",
+      "content_preview": "Every Hamiltonian surface in X is connected; for every x X, the intersection of the link L_x of x in X with is a Hamiltonian cycle in L_x.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 305,
+        "line_end": 307
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-ba31cbfe",
+      "type": "lemma",
+      "content": "\\label{L- Hamiltonian cycles} \nThe Moebius ladder $L$ contains precisely five Hamiltonian graphs:\n\\begin{enumerate}\n\\item A unique cycle without rungs\n\\item Four cycles having a pair of missing consecutive rungs\n\\end{enumerate}\nBy consecutive rung, we mean rungs connected by two horizontal edges. Furthemore, the rungs in a Hamiltonian cycle in case 2 are at distance 3 (i.e., separated by a pair of paths consisting of three horizontal edges).",
+      "content_preview": "The Moebius ladder L contains precisely five Hamiltonian graphs: A unique cycle without rungs Four cycles having a pair of missing consecutive rungs...",
+      "display_name": "Lemma",
+      "label": "L- Hamiltonian cycles",
+      "position": {
+        "line_start": 375,
+        "line_end": 382
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "claim-7-022161e5",
+      "type": "claim",
+      "content": "If a Hamiltonian cycle misses a rung, then it must contain the four adjacent horizontal edges.",
+      "content_preview": "If a Hamiltonian cycle misses a rung, then it must contain the four adjacent horizontal edges.",
+      "display_name": "Claim",
+      "label": null,
+      "position": {
+        "line_start": 405,
+        "line_end": 406
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-8-f0a6ca53",
+      "type": "remark",
+      "content": "(a) There exist \\emph{hyperbolic} CAT(0) simplicial 2-complexes of order 2 without Hamiltonian surfaces. This is the case, for instance, of any simply connected simplicial complex with links isomorphic to  Coxeter's famous `my graph' \\cite{Cox}, which is a vertex transitive  cubic non Hamiltonian graph of girth 7.   In fact, this appears to be the only known example of such a graph. (The graph is shown in Fig.\\ 4.6 of \\cite{God}.) It is in fact a 3-arc regular graph on 28 vertices having an automorphism group of order $336=2^4\\cdot3\\cdot7$ isomorphic to $\\mathrm{PGL}_2(7)$. It would be interesting to study these hyperbolic complexes.\n\n(b) It would also be interseting to study the ``locally minimally'' Hamiltonian complexes of order 2, by which we mean that every link is isomorphic to a Hamiltonian graph that contains the minimal number of, i.e., precisely three, distinct Hamiltonian cycles.",
+      "content_preview": "(a) There exist CAT(0) simplicial 2-complexes of order 2 without Hamiltonian surfaces. This is the case, for instance, of any simply connected...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 625,
+        "line_end": 628
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-bf58ef91",
+      "type": "lemma",
+      "content": "Every link of $\\Sigma$ contains precisely two rungs.",
+      "content_preview": "Every link of contains precisely two rungs.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 637,
+        "line_end": 639
+      },
+      "references": [
+        {
+          "target_id": "L- Hamiltonian cycles",
+          "reference_type": "internal",
+          "context": "here is no such Hamiltonian cycle in $L$ by Lemma \\ref{L- Hamiltonian cycles}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $x\\in X$ be a vertex. If the link of $\\Sigma$ at $x$ contains no rung, i.e., it is of type 1, then $\\Sigma$ is locally isometric to a disk alternating in its center four triangles and four lozenges.  Here $x$ is adjacent to small lozenge angles the surface $\\Sigma$. We let $e$ be an edge  not containing $x$ in any of the four triangles at $x$. Since the surface $\\Sigma$ contains a lozenge incident to $e$, one vertex $y$ of the edge $e$ incident to the large angle in this lozenge. We have shown that the link of $\\Sigma$ at $y$  two adjacent rungs, together an horizontal triangle edge between them (i.e., a subword of the form $\\mathcal{L}-t-\\mathcal{L}$ in the labeled ladder $L$).  There is no such Hamiltonian cycle in $L$ by Lemma \\ref{L- Hamiltonian cycles}."
+    },
+    {
+      "id": "lemma-10-31965f79",
+      "type": "lemma",
+      "content": "Every link of $\\Sigma$ is of type 3.",
+      "content_preview": "Every link of is of type 3.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 648,
+        "line_end": 650
+      },
+      "references": [
+        {
+          "target_id": "L- Hamiltonian cycles",
+          "reference_type": "internal",
+          "context": "here is no such Hamiltonian cycle in $L$ by Lemma \\ref{L- Hamiltonian cycles}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We repeat the proof for the sake of completeness. \nLet $x\\in X$ be a vertex. Suppose the link of $\\Sigma$ at $x$ is of type 2, and let $D_x$ be the disk in $\\Sigma$ corresponding to union of all closed faces (namely, two triangles and four lozenges) attached to $x$.  We let $e$ be an edge  not containing $x$ in one of the two triangles at $x$. Since the surface $\\Sigma$ contains a lozenge incident to $e$, one vertex $y$ of the edge $e$ incident to the large angle in this lozenge. We have shown that the link of $\\Sigma$ at $y$  two adjacent rungs, together an horizontal triangle edge between them (i.e., a subword of the form $\\mathcal{L}-t-\\mathcal{L}$ in the labeled ladder $L$).  There is no such Hamiltonian cycle in $L$ by Lemma \\ref{L- Hamiltonian cycles}."
+    },
+    {
+      "id": "theorem-11-c3b16774",
+      "type": "theorem",
+      "content": "At most two of the five Hamiltonian cycles in $L$ are associated with links in a Hamiltonian surface of $X$.",
+      "content_preview": "At most two of the five Hamiltonian cycles in L are associated with links in a Hamiltonian surface of X.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 662,
+        "line_end": 664
+      },
+      "references": [],
+      "proof": "The intersection $\\Sigma\\cap L_x$ of a Hamiltonian surface with $L_x$ is a labeled cycle of type 3, and there are only two links of type 3 in the Moebius ladder $L$."
+    },
+    {
+      "id": "theorem-12-e77f3f02",
+      "type": "theorem",
+      "content": "Every Hamiltonian surface in $X$ contains every triangle of $X$.",
+      "content_preview": "Every Hamiltonian surface in X contains every triangle of X.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 673,
+        "line_end": 675
+      },
+      "references": [],
+      "proof": "Suppose $\\Sigma$ is a Hamiltonian surface in $X$. For every vertex $x\\in \\Sigma$, the link $L_x$ is of type 3, and therefore contains the four triangles adjacent to $x$. Since $\\Sigma$ visits every vertex, it contains every triangle in $X$."
+    },
+    {
+      "id": "theorem-13-6697f0d9",
+      "type": "theorem",
+      "content": "\\label{T - unique surface lozenge}\nEvery lozenge in $X$ is contained in a unique Hamiltonian surface.",
+      "content_preview": "Every lozenge in X is contained in a unique Hamiltonian surface.",
+      "display_name": "Theorem",
+      "label": "T - unique surface lozenge",
+      "position": {
+        "line_start": 691,
+        "line_end": 693
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-eb939740",
+      "type": "lemma",
+      "content": "\\label{L - shuriken}\nLet $t$ be a triangle and $\\Sigma$ be a Hamiltonian surface in $X$. The union of $t$ and all lozenges in $\\Sigma$ adjacent to $t$ forms a ``shuriken'', by which we mean the following configuration of a triangle and lozenges:\n\n\n\\begin{figure}[H]\n\n\\begin{tikzpicture}[line join=bevel,z=-5.5]\n\\tikzstyle{every node}=[font=\\tiny]\n\n\\coordinate (t_0_0) at (0,0);\n\\coordinate (t_0_1) at (0.5,0.866);\n\\coordinate (t_0_2) at (1,1.732);\n\\coordinate (t_0_3) at (1.5,2.598);\n\\coordinate (t_0_4) at (2,3.464);\n\\coordinate (t_0_5) at (2.5,4.33);\n\\coordinate (t_1_0) at (1,0);\n\\coordinate (t_1_1) at (1.5,0.866);\n\\coordinate (t_1_2) at (2,1.732);\n\\coordinate (t_1_3) at (2.5,2.598);\n\\coordinate (t_1_4) at (3,3.464);\n\\coordinate (t_1_5) at (3.5,4.33);\n\\coordinate (t_2_0) at (2,0);\n\\coordinate (t_2_1) at (2.5,0.866);\n\\coordinate (t_2_2) at (3,1.732);\n\\coordinate (t_2_3) at (3.5,2.598);\n\\coordinate (t_2_4) at (4,3.464);\n\\coordinate (t_2_5) at (4.5,4.33);\n\\coordinate (t_3_0) at (3,0);\n\\coordinate (t_3_1) at (3.5,0.866);\n\\coordinate (t_3_2) at (4,1.732);\n\\coordinate (t_3_3) at (4.5,2.598);\n\\coordinate (t_3_4) at (5,3.464);\n\\coordinate (t_3_5) at (5.5,4.33);\n\\coordinate (t_4_0) at (4,0);\n\\coordinate (t_4_1) at (4.5,0.866);\n\\coordinate (t_4_2) at (5,1.732);\n\\coordinate (t_4_3) at (5.5,2.598);\n\\coordinate (t_4_4) at (6,3.464);\n\\coordinate (t_4_5) at (6.5,4.33);\n\\coordinate (t_5_0) at (5,0);\n\\coordinate (t_5_1) at (5.5,0.866);\n\\coordinate (t_5_2) at (6,1.732);\n\\coordinate (t_5_3) at (6.5,2.598);\n\\coordinate (t_5_4) at (7,3.464);\n\\coordinate (t_5_5) at (7.5,4.33);\n\\coordinate (t_5_5) at (7.5,4.33);\n\n\\draw[solid,line width=0.1mm,color=black,-] (t_1_1) -- (t_2_1) -- (t_1_2) -- cycle;\n\\fill [fill=black, fill opacity =0.05] (t_1_1) -- (t_2_1) -- (t_1_2) -- cycle;\n\n\\draw[solid,line width=0.1mm,color=black,-] (t_2_1) -- (t_2_0) -- (t_1_0)-- (t_1_1);\n\\draw[solid,line width=0.1mm,color=black,-] (t_1_1) -- (t_0_2) -- (t_0_3)-- (t_1_2);\n\\draw[solid,line width=0.1mm,color=black,-] (t_1_2) -- (t_2_2) -- (t_3_1)-- (t_2_1);\n\n\n\n\\end{tikzpicture}\n\\caption{}\n\\end{figure}\n\n\\noindent Furthermore, if this configuration holds locally at two vertices of the triangle, it must hold at the third vertex.",
+      "content_preview": "Let t be a triangle and be a Hamiltonian surface in X. The union of t and all lozenges in adjacent to t forms a ``shuriken'', by which we mean the...",
+      "display_name": "Lemma",
+      "label": "L - shuriken",
+      "position": {
+        "line_start": 697,
+        "line_end": 758
+      },
+      "references": [],
+      "proof": "It follows by Lemma that if $\\ell-t$ is a subword in the labelled link of a vertex in $\\Sigma$, then $\\ell-t$ extends uniquely into $\\ell-t-\\mathcal{L}$. This observation, applied at every vertex of the given triangle, proves the lemma. The last assertion is clear."
+    },
+    {
+      "id": "theorem-15-f5736210",
+      "type": "theorem",
+      "content": "The universal cover $\\widetilde V$ is the Brady complex $X$.",
+      "content_preview": "The universal cover V is the Brady complex X.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 1219,
+        "line_end": 1221
+      },
+      "references": [],
+      "proof": "This follows directly by \\cite[Theorem 4.3]{torus}."
+    },
+    {
+      "id": "remark-16-bb44fb96",
+      "type": "remark",
+      "content": "Although not required to prove the theorems stated in the introduction, it is interesting in view of \\cite{torus} to compute in the space $V$ what the quotients of the $\\diamond$-flats are in $X$. In fact, $V$ can be viewed as a space built from these quotients, using four triangles, and three flat surfaces, each of which is a union of two lozenges. The computation of these flat surfaces is straightforward. Namely, it is obvious that the union of $x$ and $x'$ is a flat 2-torus, as is the union of $y$ and $y'$. The union of $z$ and $z'$, on the other hand, is  a Klein bottle and thus is non-orientable. This gives an example of a (non-orientable) torsion-free subgroup $\\pi_1(V)$ of finite index in $\\Aut(F_2)$ constructed from $t=2$ tori and $b=1$ Klein Bottle (compare \\cite[Remark 5.3]{torus}).",
+      "content_preview": "Although not required to prove the theorems stated in the introduction, it is interesting in view of to compute in the space V what the quotients of...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1229,
+        "line_end": 1231
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-17-20ae4951",
+      "type": "lemma",
+      "content": "There exits an involutive automorphism of $V$ taking $S$ to $S'$.",
+      "content_preview": "There exits an involutive automorphism of V taking S to S'.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 1570,
+        "line_end": 1572
+      },
+      "references": [],
+      "proof": "$\\theta_2$ is such an automorphism."
+    },
+    {
+      "id": "theorem-18-d1212890",
+      "type": "theorem",
+      "content": "$\\Aut(B)=\\ZI/2\\ZI^3$.",
+      "content_preview": "(B)=/2^3.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 1589,
+        "line_end": 1591
+      },
+      "references": [],
+      "proof": "A map $\\theta\\in \\Aut(B)$ induces an automorphism of the Klein bottle $K:=\\ip{z,z'}$. Furthermore, after composing with $\\theta_2$, we may assume that $\\theta$ stabilizes $z$. Consider the following map which we call $\\theta_3$:\n\n\\begin{align*}\nx_a&\\lra x_b\\\\\nx_c&\\lra x_d\\\\\ny_a&\\lra y_b\\\\\ny_c&\\lra y_d\\\\\nz_a&\\lra z_b\\\\\nz_c&\\lra z_d\\\\\n\\end{align*}\n\nThis map is an automorphism of $V$ which rotates every lozenge. After composing with $\\theta_1$ and $\\theta_2$, we may assume that $\\theta$ acts trivially on $z$ and therefore is trivial. Thus, $\\Aut(B)$ is a group isomorphic to $\\ZI/2\\ZI^3$ generated by three involutive automorphisms $\\theta_1$, $\\theta_2$ and $\\theta_3$."
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-9-bf58ef91",
+      "target": "lemma-6-ba31cbfe",
+      "type": null
+    },
+    {
+      "source": "lemma-10-31965f79",
+      "target": "lemma-6-ba31cbfe",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 18,
+    "edge_count": 2,
+    "extractor_used": "regex-only"
+  }
+}

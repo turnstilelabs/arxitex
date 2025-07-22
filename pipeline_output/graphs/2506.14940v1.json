@@ -1,0 +1,53 @@
+{
+  "arxiv_id": "2506.14940v1",
+  "nodes": [
+    {
+      "id": "lemma-1-d73d3222",
+      "type": "lemma",
+      "content": "\\label}\n\\newcommand{\\el}{",
+      "content_preview": "",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 299,
+        "line_end": 300
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-d39cc435",
+      "type": "lemma",
+      "content": "\\label{sh1}  \\rm {\\cite{E}, \\cite[Theorem 1.3]{BZ}}   \nLet  $\\om =\\sum_{i=1}^r a_i\\om_i$ and $\\mu=\\sum b_i\\om_i$ \n  be  dominant weights such that $\\mu\\prec\\om$.     Suppose that $a_i\\geq b_i$. Let $\\nu\\prec\\mu$. Then $m_\\om(\\nu)\\geq m_\\mu(\\nu)$.",
+      "content_preview": ", Let =_i=1^r a_i_i and = b_i_i be dominant weights such that . Suppose that a_i b_i. Let . Then m_() m_().",
+      "display_name": "Lemma",
+      "label": "sh1",
+      "position": {
+        "line_start": 470,
+        "line_end": 472
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-3-7820d514",
+      "type": "lemma",
+      "content": "\\label{44}  Let  $X$ be a subsystem subgroup of $G$ normalized by \n$T$.  Let $\\om\\in \\Omega_k(G)$. Let $V_X(\\mu)$ be an $FX$-composition factor of $V_\\om$, for some dominant weight $\\mu$ in the character group of $X\\cap T$. Then $\\mu\\in\\Omega_k(X)$.",
+      "content_preview": "Let X be a subsystem subgroup of G normalized by T. Let _k(G). Let V_X() be an FX-composition factor of V_, for some dominant weight in the character...",
+      "display_name": "Lemma",
+      "label": "44",
+      "position": {
+        "line_start": 477,
+        "line_end": 478
+      },
+      "references": [],
+      "proof": "Suppose the contrary. \nWrite $TX=XZ$, where  $Z=C_T(X)^\\circ$. Let $0\\subset M_1\\subset\\cdots\\subset M_t=V_\\om$ be an \n$F(XT)$-composition series of $V_\\om$. Then there exists $i$ such that $V_X(\\mu) \\cong M_i/M_{i-1}$.\nNow $M_i = M_{i-1}\\oplus M'$ as $FT$-modules, $Z$ acts by scalars on $M'$ and\nthe set of $(T\\cap X)$-weights in $M'$ (and their multiplicities) are precisely the same as in \n$V_X(\\mu)$. \n\nLet $\\nu$ be a  weight of $V_X(\\mu)$.   \nThen $\\nu$ corresponds to a   $T$-weight $\\nu'$ of $M'$. \nTherefore if $\\nu$ is a $(T\\cap X)$-weight occurring in $V_X(\\mu)$ with\nmultiplicity greater than $k$,  then the \\mult of weight $\\nu'$ in $M'$ is greater than $k$. \n\nThen the \\mult of some  dominant weight $\\nu_1$ of $G $ in $M$ is greater than $ k$. This is a contradiction.  The result follows."
+    }
+  ],
+  "edges": [],
+  "stats": {
+    "node_count": 3,
+    "edge_count": 0,
+    "extractor_used": "regex-only"
+  }
+}

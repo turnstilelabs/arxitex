@@ -1,0 +1,338 @@
+{
+  "arxiv_id": "2507.03907v1",
+  "nodes": [
+    {
+      "id": "theorem-1-3b039800",
+      "type": "theorem",
+      "content": "\\label{main theorem}\nThe isomorphism relation of countable universal, omnigenous locally finite groups is Borel complete.",
+      "content_preview": "The isomorphism relation of countable universal, omnigenous locally finite groups is Borel complete.",
+      "display_name": "Theorem",
+      "label": "main theorem",
+      "position": {
+        "line_start": 122,
+        "line_end": 124
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-f0c2eaed",
+      "type": "lemma",
+      "content": "\\label{lem:wo} Let $F, G$ be finite groups and let $\\psi\\colon F\\to G$ be a homomorphism from $F$ into $G$. Then there exist a finite group $H$, an embedding $i\\colon F\\to H$, and a surjective homomorphism $\\Psi\\colon H\\to G$ such that $\\psi=\\Psi\\circ i$.",
+      "content_preview": "Let F, G be finite groups and let F G be a homomorphism from F into G. Then there exist a finite group H, an embedding i F H, and a surjective...",
+      "display_name": "Lemma",
+      "label": "lem:wo",
+      "position": {
+        "line_start": 267,
+        "line_end": 268
+      },
+      "references": [],
+      "proof": "Let $g_1, \\dots, g_n\\in G\\setminus \\psi(F)$ be such that $G=\\langle \\psi(F), g_1, \\dots, g_n\\rangle$. Consider the free group $F_n=\\langle x_1, \\dots, x_n\\rangle$. Define $\\phi: F*F_n\\to G$ by $\\phi(f)=\\psi(f)$ for $f\\in F$ and $\\phi(x_i)=g_i$ for $1\\leq i\\leq n$. Then $\\phi$ can be extended to a surjective group homomorphism from $F*F_n$ to $G$. Note that $\\ker \\phi$ is of finite index in $F*F_n$, since $G$ is finite.\n\nBy a classical theorem of Gruenberg (see \\cite[Theorem 4.1]{Gruenberg} or \\cite{Berlai}), the free product of residually finite groups is residually finite. Thus $\\Gamma=F*F_n$ is residually finite. This implies that in $F*F_n$ there is a normal subgroup $N$ of finite index such that $N\\cap F=\\{e_{\\Gamma}\\}$ and $N\\leq \\ker\\phi$. Let $H=(F*F_n)/N$. Define $i: F\\to H$ by $i(f)=fN$. Then $i$ is a homomorphism. To see that $i$ is an embedding, suppose $fN=f'N$ with $f, f'\\in F$. Then $f^{-1}f'\\in N\\cap F=\\{e_\\Gamma\\}$, so $f=f'$.\n\nDefine $\\Psi\\colon H\\to G$ by $\\Psi(hN)=\\phi(h)$. We note that $\\Psi$ is well-defined. For this, suppose $hN=h'N$. Then $h^{-1}h\\in N\\leq \\ker\\phi$. Thus $\\phi(h^{-1}h')=e_G$, and $\\phi(h)=\\phi(h')$. It is obvious that $\\Psi$ is a surjective homomorphism.\n\nFinally, we verify that $\\psi=\\Psi\\circ i$. For this, let $f\\in F$, and note $\\Psi\\circ i(f)=\\Psi(fN)=\\phi(f)=\\psi(f)$."
+    },
+    {
+      "id": "proposition-3-b47f52b8",
+      "type": "proposition",
+      "content": "Let $\\Gamma$ be a locally finite group. Then $\\Gamma$ is omnigenous iff for any finite subgroup $F\\leq \\Gamma$, finite group $G$, and embedding $\\psi\\colon  F\\to G$, assuming that there is $g\\in G$ such that $G=\\langle \\psi(F), g\\rangle$, then there is a finite $H\\leq \\Gamma$ with $F\\leq H$ and a surjective homomorphism $\\Psi\\colon H\\to G$ such that $\\Psi\\upharpoonright F=\\psi$.",
+      "content_preview": "Let be a locally finite group. Then is omnigenous iff for any finite subgroup F , finite group G, and embedding F G, assuming that there is g G such...",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 280,
+        "line_end": 281
+      },
+      "references": [
+        {
+          "target_id": "lem:wo",
+          "reference_type": "internal",
+          "context": "le$ with $\\Psi_0\\upharpoonright F=\\psi$. By Lemma~\\ref{lem:wo}, there exist a finite group $K$, an embedding $i\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The stated property is obviously necessary for omnigenousness. To show its sufficiency, let $\\Gamma$ have the property. \n\nSuppose $F\\leq \\Gamma$ is finite, $G$ is a finite group, and $\\psi\\colon F\\to G$ is an embedding. Suppose $n\\geq 1$ is the smallest number such that there are $g_1, \\dots, g_n\\in G$ such that\n$G=\\langle \\psi(F), g_1, \\dots, g_n\\rangle$. We prove by induction on $n$ that there exist a finite $H\\leq \\Gamma$ with $F\\leq H$ and a surjective homomorphism $\\Psi\\colon H\\to G$ with $\\Psi\\upharpoonright F=\\psi$. If $n=1$ this is given by the assumption on $\\Gamma$. \n\nAs the inductive hypothesis, suppose there exist a finite $H_0\\leq \\Gamma$ with $F\\leq H_0$ and a surjective homomorphism $\\Psi_0\\colon H_0\\to \\langle \\psi(F), g_1, \\dots, g_{n-1}\\rangle$ with $\\Psi_0\\upharpoonright F=\\psi$. By Lemma~\\ref{lem:wo}, there exist a finite group $K$, an embedding $i\\colon H_0\\to K$, and a surjective homomorphism $\\kappa\\colon K \\to G$ such that $\\Psi_0=\\kappa\\circ i$. Note that, without loss of generality, we may assume $K=\\langle i(H_0), k\\rangle$ for any $k$ with $\\kappa(k)=g_n$. By the assumption on $\\Gamma$ again, there exist $H\\leq \\Gamma$ with $H_0\\leq H$ and a surjective homomorphism $\\Phi\\colon H\\to K$ such that $\\Phi\\upharpoonright H_0=i$. Letting $\\Psi=\\kappa\\circ \\Phi$. Then $\\Psi\\colon H\\to G$ is surjective, and $\\Psi\\upharpoonright F=\\Psi_0\\upharpoonright F=\\psi$."
+    },
+    {
+      "id": "lemma-4-566b1bf0",
+      "type": "lemma",
+      "content": "\\label{special subgroup}\n    $S(A,f)$ is a simple normal subgroup of $D(A,f)$. Every nontrivial normal subgroup of $D(A,f)$ contains $S(A,f)$ as a normal subgroup. Thus $S(A,f)$ is the only nontrivial simple normal subgroup of $D(A,f)$.",
+      "content_preview": "S(A,f) is a simple normal subgroup of D(A,f). Every nontrivial normal subgroup of D(A,f) contains S(A,f) as a normal subgroup.",
+      "display_name": "Lemma",
+      "label": "special subgroup",
+      "position": {
+        "line_start": 315,
+        "line_end": 317
+      },
+      "references": [],
+      "proof": "It is easy to see that $S(A,f)$ is a normal subgroup. To see that it is simple, it suffices to show that the normal subgroup generated by any nontrivial element of $S(A,f)$ must be the whole group. For this, fix a nontrivial $t \\in H_i$. Let $N_t$ be the normal subgroup generated by $t$ in $S(A,f)$. Then $N_t \\cap H_j \\ni t$ is a nontrivial normal subgroup of $H_j$ for all $j\\geq i$. Since we have assumed that $H_j=H$ is simple, $N_t \\cap H_j =H_j$ and thus $N_t = S(A,f)$. This shows that $S(A,f)$ is simple. \n\n    Now assume $G$ is a nontrivial normal subgroup of $D(A,f)$. Let $(e_A,e_H)\\neq (s,t)\\in G\\cap G_i$. We may assume that $t\\neq e_H$ since otherwise we can do the same argument to $\\varphi_i(s,t)=(s,f(s,t)) \\in G\\cap G_{i+1}$. The group $H$ has trivial center. Thus we can choose $t'\\in H_i$ such that $t$ and $t'$ do not commute. Then $(s,t)\\neq (s,t't{t'}^{-1})=(e_A,t')(s,t)(e_A,t'^{-1})\\in G\\cap G_i$. Let $a=t'tt'^{-1}t^{-1}$. Then $a\\in H_i$ is nontrivial and $(e_A,a)\\in G\\cap H_i$ (identify $H_i$ with $\\{e_A\\}\\times H_i$). What we have shown so far is that if $G\\cap G_i$ is nontrivial, then for all $j>i$, $G\\cap H_j$ is nontrivial. Now by the argument in the preceding paragraph, the normal subgroup of $D(A, f)$ generated by any nontrivial element of $H_j$ is $S(A, f)$. Since $G$ is normal, it follows that $G$ contains $S(A, f)$.\n\n\n\n    The last assertion  follows immediately."
+    },
+    {
+      "id": "lemma-5-57ef6b4c",
+      "type": "lemma",
+      "content": "\\label{back to A} For any group $A$ we have $A \\cong D(A,f)/S(A, f)$. Consequently, if $D(A,f)\\cong D(B,g)$ (it is not necessary that the group $H$ used in their constructions are the same), then $A\\cong B$.",
+      "content_preview": "For any group A we have A D(A,f)/S(A, f). Consequently, if D(A,f) D(B,g) (it is not necessary that the group H used in their constructions are the...",
+      "display_name": "Lemma",
+      "label": "back to A",
+      "position": {
+        "line_start": 331,
+        "line_end": 332
+      },
+      "references": [],
+      "proof": "For any $g=(s,t)\\in G_i=A\\oplus H$, define $\\pi(g)=s$. Then $\\pi$ is well defined since $\\varphi_i$ does not change the first coordinate. $\\pi$ is obviously a homomorphism from $D(A,f)$ onto $A$. \n    Note that $\\pi(g)=e_A$ iff $ g=(e_A,t)\\in G_i=A\\oplus H$ for some $i\\in\\omega$ and $t\\in H$ iff $g\\in S(A,f)$. Thus the kernel of $\\pi$ is $S(A,f)$. By the isomorphism theorem, $A\\cong D(A,f)/S(A,f)$."
+    },
+    {
+      "id": "proposition-6-77dd41d6",
+      "type": "proposition",
+      "content": "\\label{omnigeneity}\n    Let $A$ be a locally finite group, let $H=\\mathbb{H}$, and let $f\\colon A\\oplus \\mathbb{H}\\to \\mathbb{H}$ be an embedding. Then $D(A,f)=D(A, H, f)$ is omnigenous.",
+      "content_preview": "Let A be a locally finite group, let H=, and let f A be an embedding. Then D(A,f)=D(A, H, f) is omnigenous.",
+      "display_name": "Proposition",
+      "label": "omnigeneity",
+      "position": {
+        "line_start": 409,
+        "line_end": 411
+      },
+      "references": [],
+      "proof": "Let $\\Gamma_1\\leq \\Gamma_2$ be finite groups and $g:\\Gamma_1\\to D(A,f)$ be a group embedding. Since $\\Gamma_1$ is finite, there is $i\\in\\omega$ such that $g(\\Gamma_1)\\subseteq G_i= A\\oplus \\mathbb{H}$. We should emphasize here that in $D(A,f)$, $g\\in G_i$ is identified with $\\varphi_i(g) \\in G_{i+1}$. Then $f\\circ g$ is an embedding from $\\Gamma_1$ to $\\mathbb{H}$. \n    By the weak homogeneity of $\\mathbb{H}$, there exist a finite subgroup $K$ of $\\mathbb{H}$ and a group isomorphism $h\\colon K \\to \\Gamma_2$ so that $(f\\circ g)(\\Gamma_1)\\leq K\\leq \\mathbb{H}$ and for all $\\gamma\\in \\Gamma_1$, $(h\\circ f\\circ g)(\\gamma)=\\gamma$. Let $K'$ be the subgroup of $G_{i+1}$ generated by $(\\varphi_i\\circ g)(\\Gamma_1)\\cup (\\{e_A\\}\\times K)$. Then since in $D(A,f)$, $g(\\Gamma_1)$ is identified with $(\\varphi_i\\circ g)(\\Gamma_1)$, $g(\\Gamma_1)$ is a subgroup of $K'$. Since $A$ is locally finite and $K'$ is finitely generated, $K'$ is finite. \n    Let $\\Phi$ canonically map $(s,t)\\in G_{i+1}$ to $t\\in \\mathbb{H}$. Then it is easy to verify that $\\Phi(K')=K$ and thus $h\\circ \\Phi$ is a homomorphism from $K'$ onto $\\Gamma_2$. Now for any $\\gamma\\in \\Gamma_1$, we have\n    $$(h\\circ \\Phi\\circ g)(\\gamma)=(h\\circ \\Phi\\circ \\varphi_i\\circ g)(\\gamma)=(h\\circ f\\circ g)(\\gamma)=\\gamma.$$ Thus $D(A,f)$ is omnigenous."
+    },
+    {
+      "id": "proposition-7-436605a4",
+      "type": "proposition",
+      "content": "[Paolini--Shelah \\cite{PS}]\\label{PSlemma}\n     For every countable locally finite group $G$ there exists $G \\cong G' \\leq \\mathbb{H}$ such that every $\\phi \\in \\aut(G')$ extends to a $\\hat{\\phi} \\in \\aut(\\mathbb{H})$ in such a way that $\\phi \\mapsto \\hat{\\phi}$ embeds $\\aut(G')$ into $\\aut(\\mathbb{H})$.",
+      "content_preview": "[Paolini--Shelah ] For every countable locally finite group G there exists G G' such that every (G') extends to a () in such a way that embeds (G')...",
+      "display_name": "Proposition",
+      "label": "PSlemma",
+      "position": {
+        "line_start": 422,
+        "line_end": 424
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-ad2741ce",
+      "type": "lemma",
+      "content": "\\label{automorphism}\n    Let $G,f$ be as above. Let $A,B\\leq G$. Suppose there is an automorphism of $G$ mapping $A$ onto $B$. Then there is an automorphism of $D(G,f)$ mapping $D(A,f)$ onto $D(B,f)$.",
+      "content_preview": "Let G,f be as above. Let A,B G. Suppose there is an automorphism of G mapping A onto B. Then there is an automorphism of D(G,f) mapping D(A,f) onto...",
+      "display_name": "Lemma",
+      "label": "automorphism",
+      "position": {
+        "line_start": 442,
+        "line_end": 444
+      },
+      "references": [],
+      "proof": "Let $\\pi$ be an automorphism of $G$ mapping $A$ onto $B$.\n    First of all, $\\pi$ canonically extends to an automorphism of $G\\oplus \\mathbb{H}$ which we still denote by $\\pi$, that is, $\\pi(s,t)=(\\pi(s),t)$. By the choice of $f$ which uses Proposition~\\ref*{PSlemma}, there is an automorphism $\\pi'$ of $\\mathbb{H}$ such that for all $(s,t)\\in G\\oplus \\mathbb{H}$, $(\\pi'\\circ f)(s,t)=(f\\circ \\pi)(s,t)$. Using this, we now define a sequence of automorphisms $h_i$ of $\\mathbb{H}$ by induction on $i\\in\\omega$. \n\n    Let $h_0=\\id$. Suppose $h_i$ has been defined. Then $\\pi'\\circ f\\circ(\\id,h_i)\\circ f^{-1}$ is an automorphism of $f(G\\oplus \\mathbb{H})$ and thus extends to an automorphism $h_{i+1}$ of $\\mathbb{H}$. This finishes the definition of $h_i$, $i\\in\\omega$. \n    \nWe now define an automorphism $\\hat{\\pi}$ of $D(G,f)$ mapping $D(A,f)$ onto $D(B,f)$. For $x\\in D(G,f)$, if $x\\in G_i=G\\oplus\\mathbb{H}$ is of the form $(s,t)$, we let $\\hat{\\pi}(x)=(\\pi(s),h_i(t))\\in G_i$. \n    We first check that $\\hat{\\pi}$ is well defined. For this, suppose $(s,t)\\in G_i$ and $(s',t')\\in G_{i+1}$ represent the same element of $D(G,f)$. Then $s'=s$ and $t'=f(s,t)$. Then \n    \\begin{align*}\n        h_{i+1}(t')&=(h_{i+1}\\circ f)(s,t)=(\\pi'\\circ f)(s,h_i(t))\\\\& =(f\\circ\\pi)(s,h_i(t))=f(\\pi(s),h_i(t)).\n    \\end{align*}\n    Thus $(\\pi(s),h_i(t))$ and $(\\pi(s'),h_{i+1}(t'))$ represent the same element. \n\n   \n   \n      \n    \n   \n   It is easy to check that $\\hat{\\pi}$ is an automorphism of $D(G, f)$. Finally, note that \n    \\begin{align*}\n        x\\in D(A,f) &\\iff \\exists i\\in\\omega\\  \\big(\\, x=(s,t)\\in G_i \\mbox{ and } s \\in A\\,\\big) \\\\& \\iff \\exists i\\in\\omega \\ \\big(\\,\\hat{\\pi}(x)=(\\pi(s),h_i(t))\\in G_i \\mbox{ and } \\pi(s)\\in B\\,\\big)\\\\& \\iff \\hat{\\pi}(x)\\in D(B,f).  \n    \\end{align*}\n    Thus $\\hat{\\pi}(D(A, f))=D(B, f)$ as promised."
+    },
+    {
+      "id": "definition-9-84a20fec",
+      "type": "definition",
+      "content": "A graph is called \\textit{nice} if it does not contain a triangle or a square, and for any distinct vertices $x,y$, there is a vertex $z$ adjacent to $x$ but not to $y$.",
+      "content_preview": "A graph is called if it does not contain a triangle or a square, and for any distinct vertices x,y, there is a vertex z adjacent to x but not to y.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 590,
+        "line_end": 592
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-10-b7d9d36f",
+      "type": "theorem",
+      "content": "[Mekler \\cite{Me}]\\label{me}{\\ }\n\\begin{enumerate}\n\\item[\\rm (1)] The class of all countable nice graphs is Borel complete.\n\\item[\\rm (2)] If $G$, $H$ are nice graphs, then $G\\cong H$ iff $\\Gamma(G)\\cong \\Gamma(H)$. \n\\end{enumerate}",
+      "content_preview": "[Mekler ] The class of all countable nice graphs is Borel complete. If G, H are nice graphs, then G H iff (G) (H).",
+      "display_name": "Theorem",
+      "label": "me",
+      "position": {
+        "line_start": 596,
+        "line_end": 601
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-11-31e490e9",
+      "type": "definition",
+      "content": "\\label{def:rg} The {\\em random graph} $\\mathcal{R}$ is the unique countable graph  with the following property: \n\\begin{quote}\n   for any disjoint finite subsets $A,B$ of $\\mathcal{R}$, there is a vertex $x$ in $\\mathcal{R}$ which is adjacent to every vertex in $A$ but not to any in $B$. \n\\end{quote}",
+      "content_preview": "The random graph is the unique countable graph with the following property: for any disjoint finite subsets A,B of , there is a vertex x in which is...",
+      "display_name": "Definition",
+      "label": "def:rg",
+      "position": {
+        "line_start": 608,
+        "line_end": 612
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-db54f34c",
+      "type": "lemma",
+      "content": "For any countable graph $G$, we have $\\mathcal{R}(G)\\cong \\mathcal{R}$. Moreover, if $H$ is also a countable graph and $f\\colon G\\to H$ is a graph isomorphism, then $f$ extends to an isomorphism of $\\mathcal{R}(G)$ to $\\mathcal{R}(H)$.",
+      "content_preview": "For any countable graph G, we have (G) . Moreover, if H is also a countable graph and f G H is a graph isomorphism, then f extends to an isomorphism...",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 617,
+        "line_end": 619
+      },
+      "references": [
+        {
+          "target_id": "def:rg",
+          "reference_type": "internal",
+          "context": "thcal{R}(G)$ satisfies the property in Definition~\\ref{def:rg}. For this, let $A, B$ be disjoint finite subsets",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "For the first part, we only need to check that $\\mathcal{R}(G)$ satisfies the property in Definition~\\ref{def:rg}. For this, let $A, B$ be disjoint finite subsets of $\\mathcal{R}(G)$. Then there is $n\\in\\omega$ such that $A,B\\subseteq G_n$ and thus $A\\in F^{G_n}\\subseteq G_{n+1}$. As a vertex in $\\mathcal{R}(G)$, $A$ is adjacent to each element of $A$ but not to any of $B$. This shows that $\\mathcal{R}(G)\\cong \\mathcal{R}$.\n\nFor the second part, note that if we can construct graph isomorphisms $f_n\\colon G_n\\to H_n$ such that for all $n\\in\\omega$, $f_{n+1}$ extends $f_n$, then $\\bigcup_n f_n$ is an isomorphism of $\\mathcal{R}(G)$ to $\\mathcal{R}(H)$. \n    So it suffices to show that any isomorphism $f:G\\to H$ can be extended to an isomorphism from $G'$ to $H'$. For this, define $F\\colon G'=G\\sqcup F^G\\to H'=H\\sqcup F^H$ by\n$$ F(x)=\\left\\{\\begin{array}{ll}\nf(x), & \\mbox{if $x\\in G$,} \\\\\n\\{f(y)\\colon y\\in x\\}, & \\mbox{if $x\\in F^G$.}\n\\end{array}\\right.\n$$\nIt is easy to verify that $F$ is an isomorphism extending $f$."
+    },
+    {
+      "id": "theorem-13-82343886",
+      "type": "theorem",
+      "content": "\\label{graph extension}\n    There is a Borel map $S$ from $\\mathcal{P}$ to $\\mbox{\\rm SG}(\\mathcal{R})$ such that for every graph $G\\in\\mathcal{P}$, $S(G)\\cong G$, and for any $G, H\\in\\mathcal{P}$ and any isomorphism $f\\colon S(G)\\to S(H)$, there is an automorphism of $\\mathcal{R}$ extending $f$.",
+      "content_preview": "There is a Borel map S from to () such that for every graph G, S(G) G, and for any G, H and any isomorphism f S(G) S(H), there is an automorphism of...",
+      "display_name": "Theorem",
+      "label": "graph extension",
+      "position": {
+        "line_start": 636,
+        "line_end": 638
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-c4823815",
+      "type": "lemma",
+      "content": "\\label{graph to group}\n    For each countable graph, $\\Gamma(G)$ is isomorphic to $\\Gamma'(G)$. Moreover, for countable nice grahps $G$ and $H$, $G\\cong H$ iff there is an automorphism of $\\Gamma(\\mathcal{R})$ sending $\\Gamma'(G)$ onto $\\Gamma'(H)$.",
+      "content_preview": "For each countable graph, (G) is isomorphic to '(G). Moreover, for countable nice grahps G and H, G H iff there is an automorphism of () sending '(G)...",
+      "display_name": "Lemma",
+      "label": "graph to group",
+      "position": {
+        "line_start": 642,
+        "line_end": 644
+      },
+      "references": [
+        {
+          "target_id": "graph extension",
+          "reference_type": "internal",
+          "context": "the moreover part, if $G\\cong H$, then by Theorem \\ref{graph extension}, there is an automorphism of $\\mathcal{R}$ sendin",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "me",
+          "reference_type": "internal",
+          "context": "\\cong \\Gamma'(H)\\cong \\Gamma(H)$. Thus by Theorem \\ref{me} (2), $G\\cong H$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Recall that $\\Gamma(G)$ is generated by $G$. Without loss of generality we can assume $G=S(G)\\subseteq \\mathcal{R}$. We prove that the embedding of generators of $\\Gamma(G)$ to generators of $\\Gamma(\\mathcal{R})$ induces an embedding from $\\Gamma(G)$ onto $\\Gamma'(G)$. First note that since $\\mathbf{2}_{x\\in \\mathcal{R}}C_p$ and $\\mathbf{2}_{x\\in G} C_p$ are both free among groups of nilpotnent class 2 and exponent $p$, the embedding of generators naturally induces an embedding from the latter into the former. Thus we may assume that the latter is contained in the former. \n    Now let $N_G=\\langle[x,y]\\colon x,y\\in G, xGy \\rangle$ and $N_{\\mathcal{R}}=\\langle[x,y]\\colon x,y\\in \\mathcal{R}, x\\mathcal{R}y \\rangle$. We define $f:\\Gamma(G) \\to \\Gamma'(G)$ as follows. For $g\\in \\mathbf{2}_{x\\in G}C_p$, we set $f(gN_G)=gN_\\mathcal{R}$. Then it suffices to show that $f$ is a well-defined group embedding. \n\n    For the well-definedness, let $g,h\\in \\mathbf{2}_{x\\in G}C_p$ and suppose that $h^{-1}g\\in N_G$. Then since $G$ is a subgraph of $\\mathcal{R}$, $h^{-1}g\\in N_\\mathcal{R}$. Thus $f$ is well-defined. Obviously, $f$ is a homomorphism. Thus we only need to show that $f$ is injective. For this let $g\\in \\mathbf{2}_{x\\in G}C_p$ and suppose that $f(gN_G)=gN_\\mathcal{R}=N_\\mathcal{R}$, i.e., $g\\in N_\\mathcal{R}$. We need to show that $g\\in N_G$. Here we need a property of the free nilpontent-class-2, exponent-$p$ group. As remarked in \\cite{Me}, the center of $\\mathbf{2}_{x\\in G}C_p$ is a free abelian $p$-group generated by $\\{[x,y]\\colon x\\neq y \\in G\\}$. Similarly for $\\mathbf{2}_{x\\in \\mathcal{R}}C_p$. \n    Thus if $g\\in N_\\mathcal{R}$, then $g$ is in the center of $\\mathbf{2}_{x\\in \\mathcal{R}}C_p$. Thus it is also in the center of $\\mathbf{2}_{x\\in G}C_p$ which means that there are $x_i,y_i\\in G$ and $0<k_i<p$ such that $g=[x_0,y_0]^{k_0}\\dots[x_n,y_n]^{k_n}$. Also since $g\\in N_\\mathcal{R}$, there are $x_i',y_i'\\in\\mathcal{R}$ such that $x_i'\\mathcal{R}y_i'$ and $0<k_i'<p$ such that $g=[x_0',y_0']^{k_i'}\\dots[x_m',y_m']^{k_i'}$. But then these two representations must be the same due to the freeness. Thus $x_iGy_i$ for all $i$ and $g\\in N_G$. \n\n    For the moreover part, if $G\\cong H$, then by Theorem \\ref{graph extension}, there is an automorphism of $\\mathcal{R}$ sending $S(G)$ onto $S(H)$. Then this automorphism induces an automorphism of $\\Gamma(\\mathcal{R})$ sending $\\Gamma'(G)$ onto $\\Gamma'(H)$. Conversely, if there is such an automorphism, then $\\Gamma(G)\\cong \\Gamma'(G)\\cong \\Gamma'(H)\\cong \\Gamma(H)$. Thus by Theorem \\ref{me} (2), $G\\cong H$."
+    },
+    {
+      "id": "theorem-15-c2ecce3f",
+      "type": "theorem",
+      "content": "If $G$, $H$ are nice graphs, then the following are equivalent: \n    \\begin{enumerate}\n        \\item[\\rm (1)] $G\\cong H$;  \n        \\item[\\rm (2)] There is an automorphism of $L(\\mathcal{R})$ mapping $L(G)$ onto $L(H)$; \n        \\item[\\rm (3)] $L(G)\\cong L(H)$. \n    \\end{enumerate}",
+      "content_preview": "If G, H are nice graphs, then the following are equivalent: G H; There is an automorphism of L() mapping L(G) onto L(H); L(G) L(H).",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 657,
+        "line_end": 664
+      },
+      "references": [
+        {
+          "target_id": "graph to group",
+          "reference_type": "internal",
+          "context": "enumerate}(1)$\\Rightarrow$(2) follows from Lemmas \\ref{graph to group} and \\ref{automorphism}. (2)$\\Rightarrow$(3) is ob",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "automorphism",
+          "reference_type": "internal",
+          "context": "$(2) follows from Lemmas \\ref{graph to group} and \\ref{automorphism}. (2)$\\Rightarrow$(3) is obvious. (3)$\\Rightarrow$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "back to A",
+          "reference_type": "internal",
+          "context": "s obvious. (3)$\\Rightarrow$(1) follows from Lemma \\ref{back to A} and Theorem~\\ref{me}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "me",
+          "reference_type": "internal",
+          "context": "1) follows from Lemma \\ref{back to A} and Theorem~\\ref{me}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "(1)$\\Rightarrow$(2) follows from Lemmas \\ref{graph to group} and \\ref{automorphism}. (2)$\\Rightarrow$(3) is obvious. (3)$\\Rightarrow$(1) follows from Lemma \\ref{back to A} and Theorem~\\ref{me}."
+    }
+  ],
+  "edges": [
+    {
+      "source": "proposition-3-b47f52b8",
+      "target": "lemma-2-f0c2eaed",
+      "type": null
+    },
+    {
+      "source": "lemma-12-db54f34c",
+      "target": "definition-11-31e490e9",
+      "type": null
+    },
+    {
+      "source": "lemma-14-c4823815",
+      "target": "theorem-13-82343886",
+      "type": null
+    },
+    {
+      "source": "lemma-14-c4823815",
+      "target": "theorem-10-b7d9d36f",
+      "type": null
+    },
+    {
+      "source": "theorem-15-c2ecce3f",
+      "target": "lemma-14-c4823815",
+      "type": null
+    },
+    {
+      "source": "theorem-15-c2ecce3f",
+      "target": "lemma-8-ad2741ce",
+      "type": null
+    },
+    {
+      "source": "theorem-15-c2ecce3f",
+      "target": "lemma-5-57ef6b4c",
+      "type": null
+    },
+    {
+      "source": "theorem-15-c2ecce3f",
+      "target": "theorem-10-b7d9d36f",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 15,
+    "edge_count": 8,
+    "extractor_used": "regex-only"
+  }
+}

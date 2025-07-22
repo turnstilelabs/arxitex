@@ -1,0 +1,487 @@
+{
+  "arxiv_id": "2507.00211v1",
+  "nodes": [
+    {
+      "id": "definition-1-f32b27bb",
+      "type": "definition",
+      "content": "Let $\\Gamma$ be a Fuchsian group of finite covolume. We say that $\\Gamma$ is \\emph{semi-arithmetic} if $K$ is a totally real number field and the traces of elements of $\\Gamma$ are algebraic integers.",
+      "content_preview": "Let be a Fuchsian group of finite covolume. We say that is if K is a totally real number field and the traces of elements of are algebraic integers.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 2552,
+        "line_end": 2554
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-2-1abf73f1",
+      "type": "definition",
+      "content": "[cf. {\\cite{SW00}}]\\label{arithactingonH2}\n    A subgroup $\\Delta$ of $\\PSL(2,\\R)^r$ will be called an \\emph{arithmetic group acting on} $\\bH^r$ if it is commensurable to some $\\rP\\rho_1(\\cO^1)$ as above. If $\\Delta$ is a finite index subgroup of $\\rP\\rho_1(\\cO^1)$, we say it is \\emph{derived from a quaternion algebra}.",
+      "content_preview": "[cf. ] A subgroup of (2,)^r will be called an ^r if it is commensurable to some _1(^1) as above. If is a finite index subgroup of _1(^1), we say it...",
+      "display_name": "Definition",
+      "label": "arithactingonH2",
+      "position": {
+        "line_start": 2584,
+        "line_end": 2586
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-3-4942ad00",
+      "type": "proposition",
+      "content": "[{\\cite[Proposition 1]{SW00}}]\n    A Fuchsian group $\\Gamma$ of finite covolume is semi-arithmetic of arithmetic dimension $r$ if and only if it is commensurable to a subgroup of an arithmetic group $\\Delta$ acting on $\\bH^r$.",
+      "content_preview": "[] A Fuchsian group of finite covolume is semi-arithmetic of arithmetic dimension r if and only if it is commensurable to a subgroup of an arithmetic...",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 2592,
+        "line_end": 2594
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-4-f271b52c",
+      "type": "definition",
+      "content": "Let $\\Gamma$ be a semi-arithmetic Fuchsian group, with arithmetic dimension 2. The group $\\Gamma^{(2)}$ is derived from a quaternion algebra and has a family of embeddings $f: \\Gamma^{(2)} \\to \\SL(2,\\R)^2$ given by restriction of  $\\rho\\circ\\rho_1^{-1}$  for each choice of $\\rho = (\\rho_1, \\rho_2)$ as above.\n    We say that $\\Gamma$ \\emph{admits a modular embedding} \n    if $f$ can be chosen so that there exists an $f$-equivariant holomorphic (or anti-holomorphic) function $\\tilde{F}: \\bH \\to \\pm\\bH\\times \\pm\\bH$, that is, a function $\\tilde{F} = (\\tilde{F}_1, \\tilde{F}_2)$ satisfying\n    \\begin{align*}\n        \\tilde{F}(\\gamma \\cdot z) = f(\\gamma)\\cdot \\tilde{F}(z)\n        = (\\gamma\\cdot\\tilde{F}_1(z) \\, , \\, \\rho_2\\circ\\rho_1^{-1}(\\gamma)\\cdot\\tilde{F}_2(z)),\n    \\end{align*}\n    for all $z\\in \\bH$ and all $\\gamma \\in \\Gamma^{(2)}$, with each $\\tilde{F}_i$ holomorphic or anti-holomorphic.",
+      "content_preview": "Let be a semi-arithmetic Fuchsian group, with arithmetic dimension 2. The group ^(2) is derived from a quaternion algebra and has a family of...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 2600,
+        "line_end": 2609
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-8f647fcf",
+      "type": "lemma",
+      "content": "\\label{norm bound}\nLet \\(\\Gamma\\) be a cocompact semi-arithmetic Fuchsian group of arithmetic dimension \\(2\\) which admits a modular embedding.\n Let \\(\\sigma: K \\to \\R\\) be the unique non-trivial Galois embedding with \\(\\sigma(\\tr(\\Gamma^{(2)})) \\not\\subset [-2,2] \\). Then there exists \\(0 < \\delta=\\delta(\\Gamma) < 1\\)  such that\n\\begin{equation}\\label{strict bound}\n|\\sigma(\\tr(\\gamma))| < 2|\\tr(\\gamma)|^{1-\\delta}\n\\end{equation}\n  for  all  hyperbolic elements \\(\\gamma \\in \\Gamma^{(2)}\\) (or all hyperbolic $\\gamma \\in \\Gamma$ in case the group $\\Gamma$ is derived from a quaternion algebra). In particular,\n\\begin{equation}\\label{eq norm bound} \n|\\mathrm{N}_{K \\mid \\Q}(\\tr(\\gamma))| < 2^{d-1}|\\tr(\\gamma)|^{2-\\delta}\n\\end{equation}\nfor all  such elements \\(\\gamma\\).",
+      "content_preview": "Let () be a cocompact semi-arithmetic Fuchsian group of arithmetic dimension (2) which admits a modular embedding.",
+      "display_name": "Lemma",
+      "label": "norm bound",
+      "position": {
+        "line_start": 2639,
+        "line_end": 2650
+      },
+      "references": [
+        {
+          "target_id": "equivariance",
+          "reference_type": "external",
+          "context": "verline{\\Omega}} |DF_z|=1-\\delta.\\]\n    Hence, by \\eqref{equivariance} we have \\(\\sup_{z \\in \\Hyp} |DF_z|=1-\\delta\\). No",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "strict bound",
+          "reference_type": "external",
+          "context": "psilon}\\]\nfor all \\(0<\\epsilon<1\\). \n\nThis proves \\eqref{strict bound} and implies \\eqref{eq norm bound}:\n\\[\n|\\mathrm{N}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq norm bound",
+          "reference_type": "external",
+          "context": "). \n\nThis proves \\eqref{strict bound} and implies \\eqref{eq norm bound}:\n\\[\n|\\mathrm{N}_{K \\mid \\Q}(\\tr(\\gamma))| = |\\tr(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We can assume that $\\Gamma$ is derived from a quaternion algebra. \n    Let \\(\\Omega\\) be a fundamental domain  for \\(\\Gamma\\) contained in a compact set. Since the map \\(F\\) defined above is holomorphic (or anti-holomorphic), by the Schwarz--Pick lemma, there exists \\(0<\\delta<1\\) such that \\[\\sup_{z \\in \\overline{\\Omega}} |DF_z|=1-\\delta.\\]\n    Hence, by \\eqref{equivariance} we have \\(\\sup_{z \\in \\Hyp} |DF_z|=1-\\delta\\). Notice that cocompactness of $\\Gamma$ is essential for this argument because in the presence of cusps we may have $\\sup_{z \\in \\overline{\\Omega}} |DF_z|=1$.  \n    \n    Let \\(\\gamma \\in \\Gamma\\) be a hyperbolic element with displacement \n    \\[\\ell=d(z,\\gamma z)=2\\arcosh\\left(\\frac{|\\tr(\\gamma)|}{2}\\right),\\] \n    where $z \\in \\Hyp$ is a point on the axis of $\\gamma$.\n\n    If \\(\\gamma^\\sigma\\) is hyperbolic with displacement \\(\\ell'\\), we have\n    \\begin{align*}\n    2\\arcosh\\left(\\frac{|\\sigma(\\tr( \\gamma))|}{2}\\right) =\\ell' \\leq ~  & d(F(z),\\gamma^\\sigma  F(z)) \\\\\n                                                   =  ~ & d(F(z),F(\\gamma z)) \\\\\n                                                  \\leq ~ &  (1-\\delta) \\ell \\\\\n                                                   =  ~  & (1-\\delta)2\\arcosh\\left(\\frac{|\\tr(\\gamma)|}{2}\\right).\n    \\end{align*}\n    Therefore, we obtain\n    \\begin{equation}\n        |\\sigma(\\tr(\\gamma ))|  \\leq 2\\cosh\\left((1-\\delta)\\arcosh\\left(\\frac{|\\tr(\\gamma)|}{2}\\right)\\right). \n    \\end{equation}\n\nSince \\(\\arcosh(x)=\\log(x+\\sqrt{x^2-1})\\) for all real \\(x \\ge 1,\\) we obtain that for all \\(x \\ge 2\\) we have \\(\\arcosh(x/2) \\leq \\log(x).\\) \n\nHence, \n\\begin{align*}\n\\cosh((1-\\delta)\\arcosh(\\nicefrac{|\\tr(\\gamma)|}{2})) &\\leq \\cosh((1-\\delta)\\log(|\\tr(\\gamma)|))<|\\tr(\\gamma)|^{1-\\delta};\\\\\n |\\sigma(\\tr(\\gamma ))| &< 2|\\tr(\\gamma)|^{1-\\delta}.\n\\end{align*}\n\nIf \\(\\gamma^\\sigma\\) is elliptic, we have a stronger inequality \\[|\\sigma(\\tr(\\gamma))|<2<2|\\tr(\\gamma)|^{1-\\epsilon}\\]\nfor all \\(0<\\epsilon<1\\). \n\nThis proves \\eqref{strict bound} and implies \\eqref{eq norm bound}:\n\\[\n|\\mathrm{N}_{K \\mid \\Q}(\\tr(\\gamma))| = |\\tr(\\gamma) \\cdot \\sigma(\\tr(\\gamma)) \\cdot \\prod_{j=3}^d \\sigma_j(\\tr(\\gamma))| < 2^{d-1}|\\tr(\\gamma)|^{2-\\delta}.\n\\]"
+    },
+    {
+      "id": "lemma-6-2725683d",
+      "type": "lemma",
+      "content": "\\label{lem B-C}\nLet $\\Gamma$ be a cocompact semi-arithmetic group satisfying assumptions of Lemma~\\ref{norm bound}. Then there exist \\(0<\\delta<1\\) and $C>0$ depending on \\(\\Gamma\\) such that for any $N > 2$ we have\n\\begin{align*}\n    \\#(\\cL(\\Gamma)\\cap[N-1, N]) \\leq CN^{1-\\delta}.\n\\end{align*}\nMoreover, if $\\Gamma$ is derived from a quaternion algebra, then any two different traces in $\\cL'(T)$ are $cT^{\\delta-1}$ separated for a constant $c>0$ depending only on the degree of $K$.",
+      "content_preview": "Let be a cocompact semi-arithmetic group satisfying assumptions of Lemma~. Then there exist (0<<1) and C>0 depending on () such that for any N > 2 we...",
+      "display_name": "Lemma",
+      "label": "lem B-C",
+      "position": {
+        "line_start": 2696,
+        "line_end": 2702
+      },
+      "references": [
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "-arithmetic group satisfying assumptions of Lemma~\\ref{norm bound}. Then there exist \\(0<\\delta<1\\) and $C>0$ depend",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "strict bound",
+          "reference_type": "external",
+          "context": "2)}\\) and for all \\(j=3,\\ldots,d\\). By inequality \\eqref{strict bound} from Lemma~\\ref{norm bound}, if \\(t, s \\in (2,T]\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "\\). By inequality \\eqref{strict bound} from Lemma~\\ref{norm bound}, if \\(t, s \\in (2,T]\\) are different traces of el",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "s)| \\leq 4N^{1-\\delta}$, $k< i \\leq 2k$, by Lemma~\\ref{norm bound}, and $|\\tau_i(t-s)| \\leq 4$ for $i > 2k$ (we assu",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First assume that $\\Gamma$ is derived from a quaternion algebra.\nConsider the set \\(\\{\\mathrm{id},\\sigma,\\sigma_3,\\ldots,\\sigma_d\\}\\) of the Galois embeddings of \\(K\\). We recall that \\(|\\sigma_j(\\tr(\\gamma))|<2\\) for any hyperbolic element \\(\\gamma \\in \\Gamma^{(2)}\\) and for all \\(j=3,\\ldots,d\\). By inequality \\eqref{strict bound} from Lemma~\\ref{norm bound}, if \\(t, s \\in (2,T]\\) are different traces of elements of $\\Gamma$, then \n\\[1 \\leq |\\mathrm{N}_{K \\mid \\Q}(t-s)| \\leq |t-s|(|\\sigma(t)|+|\\sigma(s)|)4^{d-2} <C_1|t-s|T^{1-\\delta}\\]\nfor some constant \\(C_1>0\\) which depends only on the degree of \\(K\\). This inequality shows that \\(t\\) and \\(s\\) are \\(cT^{\\delta-1}\\) separated with \\(c=\\frac{1}{C_1}>0.\\)\n\nIn general, similar to \\cite[Lemma~2.1]{LuoSarnak94}, we consider all the embeddings of the field $L = \\Q(\\cL(\\Gamma))$ into $\\mathbb{C}$ which we denote by $\\tau_1 = \\id, \\tau_2, \\ldots, \\tau_n$, $n = [L:\\Q]$. We order them so that the first $k$ embeddings extend the embedding $\\sigma_1 = \\id$ of the subfield $K$ of $L$, and the next $k$ embeddings extend $\\sigma_2 = \\sigma$. Since $\\tr(\\gamma)^2 = \\tr(\\gamma^2) + 2$ we have \\(x^2-2 \\in \\cL(\\Gamma^{(2)})\\) for any \\(x \\in \\cL(\\Gamma)\\), in particular, \\(x^2 \\in K\\). Suppose there are more than $2^{2k-1}(M+1)$ points of $\\cL(\\Gamma)$ in the interval $[N-1, N]$, with $M$ a positive integer. Then by the pigeonhole principle there are at least two different elements $t,s\\in \\cL(\\Gamma)$ and some $\\epsilon_i \\in \\{-1,1\\}$,  $i = 2,\\ldots,2k$, such that $0 < |t - s| \\leq \\frac1M$, $\\tau_i(t) = \\epsilon_i t$, $\\tau_i(s) = \\epsilon_i s$ for $2\\le i \\le k,$ and $\\tau_i(t) = \\epsilon_i \\sqrt{\\sigma_2(t^2)}$, $\\tau_i(s) = \\epsilon_i \\sqrt{\\sigma_2(s^2)}$ for \\(k<i\\le 2k\\). Thus $0\\neq t-s \\in \\cO_L$, $|\\tau_i(t-s)| \\leq \\frac1M$, $1\\leq i \\leq k$, by the assumption, $|\\tau_i(t-s)| \\leq 4N^{1-\\delta}$, $k< i \\leq 2k$, by Lemma~\\ref{norm bound}, and $|\\tau_i(t-s)| \\leq 4$ for $i > 2k$ (we assume that $\\tau_i(\\cL(\\Gamma)) \\subset [-2,2]$ for $i > 2k$, which follows from $\\tr(\\gamma)^2 = \\tr(\\gamma^2) + 2$ and $\\sigma_j(\\cL(\\Gamma^{(2)})) \\subset [-2,2]$, for $j >2$). Hence we have \n$$1 \\leq |\\mathrm{N}_{L \\mid \\Q}(t-s)| \\leq C_2\\frac1{M^k} (4N)^{(1-\\delta)k}4^{n-2k},$$\nwhich implies $M \\leq C N^{1-\\delta}$ with $C = C(\\Gamma) >0$."
+    },
+    {
+      "id": "corollary-7-c7a9acdd",
+      "type": "corollary",
+      "content": "\\label{cor lem B-C}\nThere exist \\(0<\\delta<1\\) and \\(C>0\\) depending on \\(\\Gamma\\) such that for $T>2$,     \n    \n    \n    \n     \\begin{equation*}\n        \\cL'(T) \\leq C T^{2-\\delta}.\n    \\end{equation*}",
+      "content_preview": "There exist (0<<1) and (C>0) depending on () such that for T>2, '(T) C T^2-.",
+      "display_name": "Corollary",
+      "label": "cor lem B-C",
+      "position": {
+        "line_start": 2727,
+        "line_end": 2735
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-8-d393bc54",
+      "type": "theorem",
+      "content": "\\label{thm1}\n All cocompact semi-arithmetic Fuchsian groups which admit a modular embedding and have arithmetic dimension at most \\(2\\) have exponential growth of the mean multiplicity in the length spectrum.",
+      "content_preview": "All cocompact semi-arithmetic Fuchsian groups which admit a modular embedding and have arithmetic dimension at most (2) have exponential growth of...",
+      "display_name": "Theorem",
+      "label": "thm1",
+      "position": {
+        "line_start": 2740,
+        "line_end": 2742
+      },
+      "references": [
+        {
+          "target_id": "cor lem B-C",
+          "reference_type": "internal",
+          "context": "right)\\right).\n\\end{equation}\n\nThus, by Corollary~\\ref{cor lem B-C} and the well known inequality \\(\\cosh(\\frac{\\ell}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "c{\\ell}{2}}\\), already used in the proof of Lemma~\\ref{norm bound}, we obtain\n\n\n\n\\begin{equation}\n     \\mathcal{N}'(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The result if already known for arithmetic groups by \\cite{LuoSarnak94}, so we \ncan assume that \\(\\Gamma\\) is a non-arithmetic group as above. \n\n\nLet \\(\\mathcal{N}'(\\ell)\\) be the number of distinct lengths bounded by \\(\\ell\\) of closed geodesics in the orbifold \\(\\Gamma \\backslash \\Hyp.\\)  Each length produces a unique positive trace of a hyperbolic element of \\(\\Gamma\\) bounded by \\(2\\arcosh({\\ell}/{2})\\), i.e. with the notation of the previous lemma, we have \n\\begin{equation}\n    \\mathcal{N}'(\\ell) \\leq \\mathcal{L}'\\left(2\\cosh\\left(\\frac{\\ell}{2}\\right)\\right).\n\\end{equation}\n\nThus, by Corollary~\\ref{cor lem B-C} and the well known inequality \\(\\cosh(\\frac{\\ell}{2})\\leq e^{\\frac{\\ell}{2}}\\), already used in the proof of Lemma~\\ref{norm bound}, we obtain\n\n\n\n\\begin{equation}\n     \\mathcal{N}'(\\ell) \\leq C'e^{(1-\\delta')\\ell}\n\\end{equation}\nfor some constants \\(C'>0\\) and \\(0<\\delta'<\\frac{1}{2}.\\)\nBy the prime geodesic theorem, the number \\(\\mathcal{N}(\\ell)\\) of closed geodesics of \\(\\Gamma \\backslash \\Hyp\\) counted with multiplicity is given by\n\\begin{align*} \n\\mathcal{N}(\\ell) \\sim \\dfrac{e^\\ell}{\\ell} & \\text{ when } \\ell \\to \\infty. \\end{align*}\nThus the mean multiplicity \\(\\langle g(\\ell) \\rangle\\) of closed geodesics of length at most \\(\\ell\\) grows at least as\n\n\n\n\\begin{align*}\n    \\langle g(\\ell) \\rangle = \\dfrac{\\mathcal{N}(\\ell)}{\\mathcal{N}'(\\ell)}\\gtrsim c \\dfrac{e^{\\delta' \\ell}}{\\ell}, \n\\end{align*}\nwhere \\(c>0\\) and \\(0<\\delta'<\\frac{1}{2}\\) depend on  \\(\\Gamma\\) and its arithmetic invariants."
+    },
+    {
+      "id": "lemma-9-1d1784c1",
+      "type": "lemma",
+      "content": "\\label{lemma: extension map}\n    Let \\(S\\) be a complete non-compact hyperbolic surface with finite area and compact core \\(\\Omega\\), and let \\(X\\) be a metric space of curvature \\(\\leq \\kappa\\) (in the sense of Alexandrov) for some \\(\\kappa\\leq 0\\). For any Lipschitz map \\(f:S \\to X\\), there exists a Lipschitz map \\(g: S \\to X\\) such that \\(g|_\\Omega  = f |_\\Omega\\) and the Lipschitz constant of \\(g\\) is equal to the Lipschitz constant of \\(f |_\\Omega\\). In particular, \\(g_*=f_*:\\pi_1(S) \\to \\pi_1(X).\\)",
+      "content_preview": "Let (S) be a complete non-compact hyperbolic surface with finite area and compact core (), and let (X) be a metric space of curvature ( ) (in the...",
+      "display_name": "Lemma",
+      "label": "lemma: extension map",
+      "position": {
+        "line_start": 2803,
+        "line_end": 2805
+      },
+      "references": [],
+      "proof": "Since \\(X\\) has curvature \\(\\leq \\kappa\\) for some \\(\\kappa \\leq 0\\) and \\(S\\) has curvature \\(\\leq -1\\) in the sense of Alexandrov, we can apply the generalized Kirszbraun theorem \\cite[Theorem~A]{LangSchr97} in order to obtain an extension \\(g\\) of \\(f \\mid \\Omega\\) with the same Lipschitz constant."
+    },
+    {
+      "id": "lemma-10-27becb07",
+      "type": "lemma",
+      "content": "\\label{lem norm bound 2}\nLet \\(\\Gamma\\) be a non-cocompcat semi-arithmetic Fuchsian group of arithmetic dimension \\(2\\) which admits a modular embedding. Then there exist constants \\(0<\\delta<1\\) and \\(C>0\\) depending on $\\Gamma$ such that \n\\[|\\sigma(\\tr(\\gamma))| \\leq C|\\tr(\\gamma)|^{1-\\delta}\\]\nfor any hyperbolic element \\(\\gamma \\in \\Gamma^{(2)}.\\)",
+      "content_preview": "Let () be a non-cocompcat semi-arithmetic Fuchsian group of arithmetic dimension (2) which admits a modular embedding.",
+      "display_name": "Lemma",
+      "label": "lem norm bound 2",
+      "position": {
+        "line_start": 2835,
+        "line_end": 2839
+      },
+      "references": [
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "o the Schwarz--Pick lemma (cf. the proof of Lemma~\\ref{norm bound}). \n\nNow we can apply Lemma~\\ref{lemma: extension",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma: extension map",
+          "reference_type": "internal",
+          "context": "Lemma~\\ref{norm bound}). \n\nNow we can apply Lemma~\\ref{lemma: extension map} to find a \\(\\sqrt{1+(1-\\delta)^2}\\)-Lipschitz map",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "tant as \\(G_1\\).\n\nRepeating the argument of Lemma~\\ref{norm bound}, we consider \\(\\tilde{\\Omega}\\), a connected lift",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq: comparison between discplacements",
+          "reference_type": "external",
+          "context": "eft(\\frac{|\\sigma(\\tr(\\gamma))|}{2}\\right)\\).  By \\eqref{eq: comparison between discplacements}, we obtain\n  \\begin{align*}\n 2\\arcosh\\left(\\frac{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "norm bound",
+          "reference_type": "internal",
+          "context": "\\end{align*}\nand the proof finishes as in Lemma \\ref{norm bound}.\n\nIt remains to consider the case when the group",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:trace",
+          "reference_type": "external",
+          "context": "q$,\nderived from a quaternion algebra. By formula \\eqref{eq:trace}, the inequality extends to $\\Gamma$ with the new",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let us first assume that the group $\\Gamma$ is torsion-free and derived from a quaternion algebra.\nConsider the hyperbolic surface \\(S=\\Gamma \\backslash \\Hyp\\) and a lattice \\(\\tilde{\\Gamma} < \\SL(2,\\R)\\times\\SL(2,\\R)\\) with \\(\\rho(\\gamma):=(\\gamma,\\gamma^{\\sigma}) \\in \\tilde{\\Gamma}\\) for all \\(\\gamma \\in \\Gamma.\\) \n\n\nLet \\(\\Omega \\subset S\\) be a compact core of \\(S\\). If $F:\\Hyp \\to \\pm \\Hyp$ is a holomorphic or anti-holomorphic map such that \\(F(\\gamma \\cdot z)=\\gamma^\\sigma \\cdot F(z)\\), for any \\(z \\in \\Hyp\\) and \\(~\\gamma \\in \\Gamma\\), provided by the modular embedding of $\\Gamma$. Consider the metric space \\(X=\\tilde{\\Gamma} \\backslash(\\pm\\Hyp\\times\\pm\\Hyp)\\), which is locally isometric to \\(\\Hyp\\times\\Hyp\\) equipped with the product metric. We have an embedding \\(G:S \\to X,\\)  given by \n$$G(\\Gamma z)=\\tilde{\\Gamma}(z,F(z)).$$  \nWhen  restricted to \\(\\Omega\\), the map \\(G\\) is \\(\\sqrt{1+(1-\\delta)^2}\\)-Lipschitz for some \\(0<\\delta<1\\) according to the Schwarz--Pick lemma (cf. the proof of Lemma~\\ref{norm bound}). \n\nNow we can apply Lemma~\\ref{lemma: extension map} to find a \\(\\sqrt{1+(1-\\delta)^2}\\)-Lipschitz map \\(G_1:S \\to X\\). Its equivariant lift \\(\\tilde{G}:\\Hyp \\to \\tilde{X} \\subset \\pm \\Hyp \\times \\pm \\Hyp\\) is also Lipschitz with the same Lipschitz constant as \\(G_1\\).\n\nRepeating the argument of Lemma~\\ref{norm bound}, we consider \\(\\tilde{\\Omega}\\), a connected lift of \\(\\Omega\\) to \\(\\Hyp\\), and for any hyperbolic element \\(\\gamma \\in \\Gamma,\\) up to conjugation, we can assume that the displacement \\(\\ell\\) of \\(\\gamma\\) is realized by a point \\(z \\in \\tilde{\\Omega},\\) which means that \\(\\ell=d(z,\\gamma z).\\) We know that \\(\\rho(\\gamma)\\) is a hyperbolic element of \\(\\tilde{\\Gamma}\\), with displacement \\(\\sqrt{\\ell^2+\\ell_{\\sigma}^2},\\) where \\(\\ell_\\sigma\\) is the displacement of \\(\\gamma^{\\sigma}.\\) By the choice of \\(z\\) and the fact that \\(\\tilde{G}(w)=(w,F(w))\\) for all \\(w \\in \\tilde{\\Omega}\\), we obtain\n \n\\begin{equation*}\\label{eq:displacement of rho gamma} \n\\ell^2+\\ell_{\\sigma}^2  \\leq    d\\Big((z,F(z)),\\rho(\\gamma)(z,F(z))\\Big)^2 = d(z,\\gamma z)^2 + d(F(z),\\gamma^\\sigma  F(z))^2.\n\\end{equation*}\nMoreover,\n  \\begin{equation*}\\label{eq: lipschitz constant}\n  d\\Big((z,F(z)),\\rho(\\gamma)(z,F(z))\\Big)^2 = d( \\tilde{G}(z),\\tilde{G}(\\gamma z))^2  \\leq \\big(1+(1-\\delta)^2\\big)d(z,\\gamma z)^2,\n  \\end{equation*}\nwhich implies, using the equality \\(\\ell=d(z,\\gamma z)\\), that \n  \\begin{equation}\\label{eq: comparison between discplacements} \\ell_{\\sigma} \\leq d(F(z),\\gamma^\\sigma  F(z))  \\leq (1-\\delta)\\ell.\\end{equation}\n  There are two possibilities, the first one occurs when  \\(\\ell_\\sigma =0\\), i.e. \\(\\gamma^\\sigma\\) is elliptic, in which case the lemma follows immediately.  \n  If \\(\\gamma^\\sigma\\) is hyperbolic, then we have \\(\\ell_\\sigma=2\\arcosh\\left(\\frac{|\\sigma(\\tr(\\gamma))|}{2}\\right)\\).  By \\eqref{eq: comparison between discplacements}, we obtain\n  \\begin{align*}\n 2\\arcosh\\left(\\frac{|\\sigma(\\tr(\\gamma))|}{2}\\right)   \\leq  2(1-\\delta)\\arcosh\\left(\\frac{|\\tr(\\gamma)|}{2}\\right), \\\\\n  \\end{align*}\nand the proof finishes as in Lemma \\ref{norm bound}.\n\nIt remains to consider the case when the group $\\Gamma$ has torsion. Then we first prove the inequality for its finite index torsion-free subgroup $\\Gamma_1$, $[\\Gamma:\\Gamma_1] = q$,\nderived from a quaternion algebra. By formula \\eqref{eq:trace}, the inequality extends to $\\Gamma$ with the new multiplicative constant $C_1 = C_1(\\Gamma_1,q) > 0$."
+    },
+    {
+      "id": "theorem-11-48b49aa3",
+      "type": "theorem",
+      "content": "\\label{thm2}\n All non-cocompact semi-arithmetic Fuchsian groups which admit a modular embedding and have arithmetic dimension at most \\(2\\) have exponential growth of the mean multiplicity in the length spectrum.",
+      "content_preview": "All non-cocompact semi-arithmetic Fuchsian groups which admit a modular embedding and have arithmetic dimension at most (2) have exponential growth...",
+      "display_name": "Theorem",
+      "label": "thm2",
+      "position": {
+        "line_start": 2874,
+        "line_end": 2876
+      },
+      "references": [
+        {
+          "target_id": "lem norm bound 2",
+          "reference_type": "internal",
+          "context": "chsian group satisfying the assumptions. By Lemma~\\ref{lem norm bound 2}, the group $\\Gamma$ satisfies the same weak bound",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem B-C",
+          "reference_type": "internal",
+          "context": "he same weak bounded clustering property of Lemma~\\ref{lem B-C}. The rest of the argument follows the line of the",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm1",
+          "reference_type": "internal",
+          "context": "argument follows the line of the proof of Theorem~\\ref{thm1}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\Gamma$ be a non-cocompact Fuchsian group satisfying the assumptions. By Lemma~\\ref{lem norm bound 2}, the group $\\Gamma$ satisfies the same weak bounded clustering property of Lemma~\\ref{lem B-C}. The rest of the argument follows the line of the proof of Theorem~\\ref{thm1}."
+    },
+    {
+      "id": "definition-12-55e7914d",
+      "type": "definition",
+      "content": "When $\\PSL(X,q)$ is a lattice in $\\PSL(2,\\R)$, we call it the \\emph{Veech group} of $(X,q)$.",
+      "content_preview": "When (X,q) is a lattice in (2,), we call it the of (X,q).",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 2920,
+        "line_end": 2922
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_equivariance",
+      "type": "unknown",
+      "content": "External reference to 'equivariance'",
+      "content_preview": "External reference to 'equivariance'",
+      "display_name": "Unknown",
+      "label": "equivariance",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_strict bound",
+      "type": "unknown",
+      "content": "External reference to 'strict bound'",
+      "content_preview": "External reference to 'strict bound'",
+      "display_name": "Unknown",
+      "label": "strict bound",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq norm bound",
+      "type": "unknown",
+      "content": "External reference to 'eq norm bound'",
+      "content_preview": "External reference to 'eq norm bound'",
+      "display_name": "Unknown",
+      "label": "eq norm bound",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq: comparison between discplacements",
+      "type": "unknown",
+      "content": "External reference to 'eq: comparison between discplacements'",
+      "content_preview": "External reference to 'eq: comparison between discplacements'",
+      "display_name": "Unknown",
+      "label": "eq: comparison between discplacements",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:trace",
+      "type": "unknown",
+      "content": "External reference to 'eq:trace'",
+      "content_preview": "External reference to 'eq:trace'",
+      "display_name": "Unknown",
+      "label": "eq:trace",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-5-8f647fcf",
+      "target": "external_equivariance",
+      "type": null
+    },
+    {
+      "source": "lemma-5-8f647fcf",
+      "target": "external_strict bound",
+      "type": null
+    },
+    {
+      "source": "lemma-5-8f647fcf",
+      "target": "external_eq norm bound",
+      "type": null
+    },
+    {
+      "source": "lemma-6-2725683d",
+      "target": "lemma-5-8f647fcf",
+      "type": null
+    },
+    {
+      "source": "lemma-6-2725683d",
+      "target": "external_strict bound",
+      "type": null
+    },
+    {
+      "source": "theorem-8-d393bc54",
+      "target": "corollary-7-c7a9acdd",
+      "type": null
+    },
+    {
+      "source": "theorem-8-d393bc54",
+      "target": "lemma-5-8f647fcf",
+      "type": null
+    },
+    {
+      "source": "lemma-10-27becb07",
+      "target": "lemma-5-8f647fcf",
+      "type": null
+    },
+    {
+      "source": "lemma-10-27becb07",
+      "target": "lemma-9-1d1784c1",
+      "type": null
+    },
+    {
+      "source": "lemma-10-27becb07",
+      "target": "external_eq: comparison between discplacements",
+      "type": null
+    },
+    {
+      "source": "lemma-10-27becb07",
+      "target": "external_eq:trace",
+      "type": null
+    },
+    {
+      "source": "theorem-11-48b49aa3",
+      "target": "lemma-10-27becb07",
+      "type": null
+    },
+    {
+      "source": "theorem-11-48b49aa3",
+      "target": "lemma-6-2725683d",
+      "type": null
+    },
+    {
+      "source": "theorem-11-48b49aa3",
+      "target": "theorem-8-d393bc54",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 17,
+    "edge_count": 14,
+    "extractor_used": "regex-only"
+  }
+}
