@@ -16,7 +16,7 @@ import sys
 import tempfile
 import webbrowser
 from pathlib import Path
-from typing import Dict
+from typing import Dict, Optional
 from loguru import logger
 
 from arxitex.downloaders.async_downloader import AsyncSourceDownloader
@@ -31,35 +31,42 @@ def get_examples_dir():
     examples_dir.mkdir(exist_ok=True)
     return examples_dir
 
-async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool) -> Dict:
+async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool, source_dir: Optional[Path] = None) -> Dict:
     """
-    Orchestrates the full pipeline to generate a dependency graph from an arXiv paper.
+    Orchestrates the full pipeline to generate a dependency graph from an arXiv paper
+    by downloading the source to a self-deleting temporary directory.
+    
     Args:
         arxiv_id: The arXiv identifier (e.g., '2103.14030').
         use_llm: Flag to determine whether to use the hybrid LLM-based extractor.
+        source_dir: The base directory where temporary processing folders will be created.
+        
     Returns:
         A dictionary containing the full graph data and statistics.
     """
     if use_llm and not os.getenv("OPENAI_API_KEY"):
         raise ArxivExtractorError("The --use-llm flag requires the OPENAI_API_KEY environment variable to be set.")
     
-    temp_dir_name = f"arxiv_{arxiv_id.replace('/', '_')}_"
-    with tempfile.TemporaryDirectory(prefix=temp_dir_name) as temp_dir:
+    log_location = source_dir if source_dir else "system's default temp directory"
+    logger.debug(f"[{arxiv_id}] Creating temporary directory inside: {log_location}")
+
+    with tempfile.TemporaryDirectory(prefix=f"{arxiv_id.replace('/', '_')}_", dir=source_dir) as temp_dir:
         temp_path = Path(temp_dir)
+        
         async with AsyncSourceDownloader(cache_dir=temp_path) as downloader:
             latex_content = await downloader.async_download_and_read_latex(arxiv_id)
         
+            if not latex_content:
+                raise ArxivExtractorError(f"Failed to retrieve LaTeX content for {arxiv_id}")
+
             if use_llm:
-                logger.info("Using Hybrid (Regex + LLM) graph builder.")
+                logger.info(f"[{arxiv_id}] Using Hybrid (Regex + LLM) graph builder.")
                 graph = await enhanced_extractor.build_graph_with_hybrid_model(latex_content)
             else:
-                logger.info("Using Regex-only graph builder.")
+                logger.info(f"[{arxiv_id}] Using Regex-only graph builder.")
                 graph = base_extractor.build_graph_from_latex(latex_content)
             
-            # Convert DocumentGraph to dictionary format for output
-            nodes = []
-            for _, node in enumerate(graph.nodes, 1):
-                nodes.append(node.to_dict())
+            nodes = [node.to_dict() for _, node in enumerate(graph.nodes, 1)]
             
             edges = []
             for edge in graph.edges:
@@ -72,9 +79,9 @@ async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool) -> Dict:
                     edge_dict["dependency"] = edge.dependency
                 edges.append(edge_dict)
             
-            logger.info("Finalizing graph statistics...")
+            logger.info(f"[{arxiv_id}] Finalizing graph statistics...")
             stats = graph.get_statistics()
-            logger.info(f"Graph statistics: {stats}")
+            logger.info(f"[{arxiv_id}] Graph statistics: {stats}")
             
             return {
                 "arxiv_id": arxiv_id,
