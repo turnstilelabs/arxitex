@@ -1,0 +1,937 @@
+{
+  "arxiv_id": "2507.00283v1",
+  "nodes": [
+    {
+      "id": "example-1-a993aa20",
+      "type": "example",
+      "content": "[Boolean lattice]\n  The \\emph{Boolean lattice} $\\bool(n)$ consists of all subsets for\n  the $n$-element set $\\{1,\\ldots,n\\}$, partially ordered under\n  inclusion, and it is indeed a lattice: given $A,B\\in \\bool(n)$, the\n  unique meet is $A\\cap B$ and the unique join is $A\\cup B$. This\n  poset is also graded, with rank function $\\rank\\colon\\bool(n) \\to\n  \\mathbb{N}$ given by $\\rank(A) = |A|$ for each $A\\subseteq\n  \\{1,\\ldots,n\\}$. Fixing an element $A\\in \\bool(n)$ with rank $k$,\n  the lower set $\\low(A)$ is isomorphic to the smaller Boolean lattice\n  $\\bool(k)$, whereas the upper set $\\upper(A)$ is isomorphic to\n  $\\bool(n-k)$. Finally, we write $\\bool^*(n)$ to mean the subposet of\n  nonempty elements in $\\bool(n)$ and refer to this as the\n  \\emph{truncated Boolean poset}.",
+      "content_preview": "[Boolean lattice] The (n) consists of all subsets for the n-element set 1,,n, partially ordered under inclusion, and it is indeed a lattice: given...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 816,
+        "line_end": 829
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-2-b94842e7",
+      "type": "example",
+      "content": "Let $G = \\Z$ with generating set $X = \\{1\\}$. For each positive\n  integer $n$, $\\ell(n) = n$, and the induced partial order is the\n  usual one for $\\Z$.  The interval from $0$ to $n$ in this poset\n  consists of a single chain with $n+1$ elements.",
+      "content_preview": "Let G = with generating set X = 1. For each positive integer n, (n) = n, and the induced partial order is the usual one for .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 970,
+        "line_end": 975
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-3-cf6b329f",
+      "type": "example",
+      "content": "\\label{ex:absolute-order-interval}\n  Let $G$ be the symmetric group $\\sym_d$ and let $X = T$ be the set\n  of all transpositions.  Then for all $g\\in \\sym_d$, the length\n  $\\ell(g)$ is called the \\emph{absolute reflection length} and the\n  induced partial order is the \\emph{absolute order} on the symmetric\n  group. If we define $\\delta$ to be the $d$-cycle $(1\\ 2\\ \\cdots\\ d)\n  \\in \\sym_d$, then the interval $[1,\\delta]$ is the \\emph{lattice of\n  noncrossing permutations} \\cite{mccammond06},\n  \\cite[Section~4]{gcp2}. For example, if $\\delta = (1\\ 2\\ 3) \\in\n  \\sym_3$ and $T = \\{a,b,c\\}$ where $a = (1\\ 2)$, $b = (2\\ 3)$ and $c\n  = (1\\ 3)$, then the interval $[1,\\delta]$ consists of five elements\n  (see Figure~\\ref{fig:absolute-order-interval}). This structure\n  produces the \\emph{dual presentation} for $\\braid_3$, defined by\n  $\\langle a,b,c,\\delta \\mid ab = bc = ca = \\delta\\rangle$. More\n  generally, the dual presentation for the $d$-strand braid group\n  $\\braid_d$ has as its generating set the nontrivial elements of\n  $[1,\\delta]$, with relations consisting of all words which arise\n  from closed loops in $[1,\\delta]$ which are based at the identity\n  \\cite{brady01,bessis-03}. See also \\cite{McCammond-dual-euc-art,\n    McCammondSulway-euc-art}.",
+      "content_preview": "Let G be the symmetric group _d and let X = T be the set of all transpositions. Then for all g _d, the length (g) is called the and the induced...",
+      "display_name": "Example",
+      "label": "ex:absolute-order-interval",
+      "position": {
+        "line_start": 977,
+        "line_end": 997
+      },
+      "references": [
+        {
+          "target_id": "fig:absolute-order-interval",
+          "reference_type": "external",
+          "context": ",\\delta]$ consists of five elements\n  (see Figure~\\ref{fig:absolute-order-interval}). This structure\n  produces the \\emph{dual presen",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-4-e10880eb",
+      "type": "example",
+      "content": "[$\\fact(\\sym_3,\\delta,\\Ib)$]\\label{ex:weak-fact-2}\n  If $G = \\sym_3$ and $X = \\{a,b,c\\}$ as in\n  Example~\\ref{ex:absolute-order-interval}, then\n  $\\fact(\\sym_3,\\delta,\\Ib)$ contains the $15$ elements shown in\n  Figure~\\ref{fig:weak-fact-2}.  There are $3$ in rank~$2$, $7$ in\n  rank~$1$, and $5$ in rank~$0$.",
+      "content_preview": "[(_3,,)] If G = _3 and X = a,b,c as in Example~, then (_3,,) contains the 15 elements shown in Figure~. There are 3 in rank~2, 7 in rank~1, and 5 in...",
+      "display_name": "Example",
+      "label": "ex:weak-fact-2",
+      "position": {
+        "line_start": 1162,
+        "line_end": 1168
+      },
+      "references": [
+        {
+          "target_id": "ex:absolute-order-interval",
+          "reference_type": "internal",
+          "context": "$G = \\sym_3$ and $X = \\{a,b,c\\}$ as in\n  Example~\\ref{ex:absolute-order-interval}, then\n  $\\fact(\\sym_3,\\delta,\\Ib)$ contains the $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weak-fact-2",
+          "reference_type": "external",
+          "context": "Ib)$ contains the $15$ elements shown in\n  Figure~\\ref{fig:weak-fact-2}.  There are $3$ in rank~$2$, $7$ in\n  rank~$1$, a",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-5-ea0dcad5",
+      "type": "example",
+      "content": "[$\\comp(\\Z,n,\\Ib)$]\n  In the special case $G = \\Z$ and $X = \\{1\\}$ we switch to additive\n  notation and refer to the linear factorizations of $n \\in \\Z$ as\n  \\emph{linear compositions}. The set of all linear compositions is\n  denoted $\\comp(\\Z,n,\\Ib)$.  The reason for this switch to additive\n  notation is to make the map $L$ from factorizations to compositions\n  easier to define.  See Definition~\\ref{def:fact-to-comp}.  Unlike\n  the more general case, $\\comp(\\Z,n,\\Ib)$ has a unique maximum\n  element given by the row vector $[0\\ 1\\ \\cdots\\ 1\\ 0]$ of length\n  $n+2$. See Figure~\\ref{fig:weak-comp-2} for an example when $n = 2$.",
+      "content_preview": "[(,n,)] In the special case G = and X = 1 we switch to additive notation and refer to the linear factorizations of n as .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 1224,
+        "line_end": 1234
+      },
+      "references": [
+        {
+          "target_id": "def:fact-to-comp",
+          "reference_type": "external",
+          "context": "compositions\n  easier to define.  See Definition~\\ref{def:fact-to-comp}.  Unlike\n  the more general case, $\\comp(\\Z,n,\\Ib",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weak-comp-2",
+          "reference_type": "external",
+          "context": "\\ 1\\ \\cdots\\ 1\\ 0]$ of length\n  $n+2$. See Figure~\\ref{fig:weak-comp-2} for an example when $n = 2$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-6-afee93be",
+      "type": "example",
+      "content": "[$\\fact(\\sym_3,\\delta,\\Sb)$]\\label{ex:circ-fact-2}\n  When $G = \\sym_3$, $X = T = \\{a,b,c\\}$, and $\\delta = (1\\ 2\\ 3)$ as\n  in Example~\\ref{ex:absolute-order-interval}, the poset\n  $\\fact(\\sym_3,\\delta,\\Sb)$ has $8$ elements. See\n  Figure~\\ref{fig:circ-fact-2}.",
+      "content_preview": "[(_3,,)] When G = _3, X = T = a,b,c, and = (1 2 3) as in Example~, the poset (_3,,) has 8 elements. See Figure~.",
+      "display_name": "Example",
+      "label": "ex:circ-fact-2",
+      "position": {
+        "line_start": 1310,
+        "line_end": 1315
+      },
+      "references": [
+        {
+          "target_id": "ex:absolute-order-interval",
+          "reference_type": "internal",
+          "context": ",b,c\\}$, and $\\delta = (1\\ 2\\ 3)$ as\n  in Example~\\ref{ex:absolute-order-interval}, the poset\n  $\\fact(\\sym_3,\\delta,\\Sb)$ has $8$ e",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:circ-fact-2",
+          "reference_type": "external",
+          "context": "sym_3,\\delta,\\Sb)$ has $8$ elements. See\n  Figure~\\ref{fig:circ-fact-2}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-7-9b034474",
+      "type": "example",
+      "content": "[$\\comp(\\Z,n,\\Sb)$]\\label{ex:circ-comp-2}\n  When $G = \\Z$ and $X = \\{1\\}$, we denote the set $\\fact(\\Z,g,\\Sb)$\n  by $\\comp(\\Z,n,\\Sb)$ and refer to its elements as \\emph{circular\n  compositions of $n$}. When $n = 2$, for example, the poset\n  $\\comp(\\Z,2,\\Sb)$ of circular compositions of $2$ has four elements\n  and is isomorphic to $\\bool(2)$ --- see\n  Figure~\\ref{fig:circ-comp-2}. More generally, it is important to\n  note that while there is a rank-preserving bijection between\n  $\\comp(\\Z,n,\\Sb)$ and $\\bool(n)$, the two are not isomorphic when $n\n  > 2$ since there are relations in the former which do not appear in\n  the latter. For example, each rank-one element of $\\bool(3)$ lies\n  beneath exactly two rank-two elements, but the circular composition\n  $[1\\ |\\ 2\\ |\\ 0]$ lies beneath $[1\\ |\\ 1\\ 1\\ |\\ 0]$,\n  $[0\\ |\\ 1\\ 2\\ |\\ 0]$ and $[0\\ |\\ 2\\ 1\\ |\\ 0]$ in $\\comp(\\Z,3,\\Sb)$.",
+      "content_preview": "[(,n,)] When G = and X = 1, we denote the set (,g,) by (,n,) and refer to its elements as . When n = 2, for example, the poset (,2,) of circular...",
+      "display_name": "Example",
+      "label": "ex:circ-comp-2",
+      "position": {
+        "line_start": 1354,
+        "line_end": 1368
+      },
+      "references": [
+        {
+          "target_id": "fig:circ-comp-2",
+          "reference_type": "external",
+          "context": "and is isomorphic to $\\bool(2)$ --- see\n  Figure~\\ref{fig:circ-comp-2}. More generally, it is important to\n  note that w",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-8-e254b14b",
+      "type": "example",
+      "content": "[$\\wfact(\\sym_3,\\delta,\\Ib)$]\\label{ex:wfact-g-interval}\n  If $G = \\sym_3$, $T = \\{a,b,c\\}$ and $\\delta = (1\\ 2\\ 3)$ as in\n  Example~\\ref{ex:absolute-order-interval}, then\n  $\\wfact(\\sym_3,\\delta,\\Ib)$ is a $2$-dimensional simplicial complex\n  which consists of three triangles, all sharing a common edge.  The\n  $3$ triangles, $7$ edges, and $5$ vertices of $O_\\delta =\n  \\wfact(\\sym_3,\\delta,\\Ib)$ shown in\n  Figure~\\ref{fig:weighted-fact-2-interval} are labeled by the $15$\n  elements of $\\fact(\\sym_3,\\delta,\\Ib)$ shown in\n  Figure~\\ref{fig:weak-fact-2}.",
+      "content_preview": "[(_3,,)] If G = _3, T = a,b,c and = (1 2 3) as in Example~, then (_3,,) is a 2-dimensional simplicial complex which consists of three triangles, all...",
+      "display_name": "Example",
+      "label": "ex:wfact-g-interval",
+      "position": {
+        "line_start": 1551,
+        "line_end": 1561
+      },
+      "references": [
+        {
+          "target_id": "ex:absolute-order-interval",
+          "reference_type": "internal",
+          "context": "a,b,c\\}$ and $\\delta = (1\\ 2\\ 3)$ as in\n  Example~\\ref{ex:absolute-order-interval}, then\n  $\\wfact(\\sym_3,\\delta,\\Ib)$ is a $2$-dime",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weighted-fact-2-interval",
+          "reference_type": "external",
+          "context": "=\n  \\wfact(\\sym_3,\\delta,\\Ib)$ shown in\n  Figure~\\ref{fig:weighted-fact-2-interval} are labeled by the $15$\n  elements of $\\fact(\\sym",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weak-fact-2",
+          "reference_type": "external",
+          "context": "s of $\\fact(\\sym_3,\\delta,\\Ib)$ shown in\n  Figure~\\ref{fig:weak-fact-2}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-9-168b8607",
+      "type": "example",
+      "content": "[$\\wcomp(\\Z,n,\\Ib)$]\\label{ex:wcomp-n-interval}\n  When $G = \\Z$ and $X = \\{1\\}$, we denote the set $\\wfact(\\Z,n,\\Ib)$\n  by $\\wcomp(\\Z,n,\\Ib)$ and refer to its elements as \\emph{weighted\n  linear compositions of $n$}. If we consider the action of $\\sym_n$\n  on the $n$-cube $\\Ib^n$ by permuting coordinates, then each element\n  $\\bs = 0^{a_L}s_1^{a_1}\\cdots s_k^{a_k} 1^{a_R}$ in\n  $\\wcomp(\\Z,n,\\Ib)$ can be viewed as a point on the quotient space\n  $\\Ib^n/\\sym_n$, which is isometric to a standard $n$-dimensional\n  orthoscheme. For each $\\ba \\in \\comp(\\Z,n,\\Ib)$, the set of weighted\n  linear compositions $\\bs$ of $n$ with $P(\\bs) = \\ba$ forms an open\n  face of the standard orthoscheme which we refer to as a\n  (non-standard) \\emph{orthoscheme of shape $\\ba$}.  This recovers\n  what we found in Corollary~\\ref{cor:comp-bool}: $\\comp(\\Z,n,\\Ib)$ is\n  the face poset for the standard $n$-dimensional orthoscheme.\n  Moreover, Remark~\\ref{rem:orthoscheme-faces} tells us that elements\n  $\\ba = [a_L\\ a_1\\ \\cdots\\ a_k\\ a_R]$ and $\\bb =\n  [b_L\\ b_1\\ \\cdots\\ b_k\\ b_R]$ in $\\comp(\\Z,n,\\Ib)$ label isometric\n  faces of $\\wcomp(\\Z,n,\\Ib)$ if $a_i = b_i$ for all $i \\in\n  \\{1,\\ldots,k\\}$; see Figure~\\ref{fig:mult-3}.",
+      "content_preview": "[(,n,)] When G = and X = 1, we denote the set (,n,) by (,n,) and refer to its elements as . If we consider the action of _n on the n-cube ^n by...",
+      "display_name": "Example",
+      "label": "ex:wcomp-n-interval",
+      "position": {
+        "line_start": 1563,
+        "line_end": 1582
+      },
+      "references": [
+        {
+          "target_id": "cor:comp-bool",
+          "reference_type": "external",
+          "context": "ba$}.  This recovers\n  what we found in Corollary~\\ref{cor:comp-bool}: $\\comp(\\Z,n,\\Ib)$ is\n  the face poset for the st",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "rem:orthoscheme-faces",
+          "reference_type": "external",
+          "context": "d $n$-dimensional orthoscheme.\n  Moreover, Remark~\\ref{rem:orthoscheme-faces} tells us that elements\n  $\\ba = [a_L\\ a_1\\ \\cdots",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:mult-3",
+          "reference_type": "external",
+          "context": "b_i$ for all $i \\in\n  \\{1,\\ldots,k\\}$; see Figure~\\ref{fig:mult-3}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-10-c9d7cee3",
+      "type": "example",
+      "content": "[$\\wfact(\\sym_3,\\delta,\\Sb)$]\\label{ex:wfact-g-circle}\n  If $G = \\sym_3$, $T = \\{a,b,c\\}$ and $\\delta = (1\\ 2\\ 3)$ as in\n  Example~\\ref{ex:wfact-g-interval}, then $\\wfact(\\sym_3,\\delta,\\Sb)$\n  is obtained from $\\wfact(\\sym_3,\\delta,\\Ib)$ by identifying edges.\n  The quotient $K_g = \\wfact(\\sym_3,\\delta,\\Sb)$ has $3$ triangles,\n  $4$ edges, and $1$ vertex, and these cells are labeled by the $8$\n  elements of $\\fact(\\sym_3,\\delta,\\Sb)$ shown in\n  Figure~\\ref{fig:circ-fact-2}. \n  For a depiction of the pointwise labels in $K_g$, see \n  Figure~\\ref{fig:weighted-fact-2-circle}.",
+      "content_preview": "[(_3,,)] If G = _3, T = a,b,c and = (1 2 3) as in Example~, then (_3,,) is obtained from (_3,,) by identifying edges.",
+      "display_name": "Example",
+      "label": "ex:wfact-g-circle",
+      "position": {
+        "line_start": 1668,
+        "line_end": 1678
+      },
+      "references": [
+        {
+          "target_id": "ex:wfact-g-interval",
+          "reference_type": "internal",
+          "context": "a,b,c\\}$ and $\\delta = (1\\ 2\\ 3)$ as in\n  Example~\\ref{ex:wfact-g-interval}, then $\\wfact(\\sym_3,\\delta,\\Sb)$\n  is obtained f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:circ-fact-2",
+          "reference_type": "external",
+          "context": "s of $\\fact(\\sym_3,\\delta,\\Sb)$ shown in\n  Figure~\\ref{fig:circ-fact-2}. \n  For a depiction of the pointwise labels in $K",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weighted-fact-2-circle",
+          "reference_type": "external",
+          "context": "n of the pointwise labels in $K_g$, see \n  Figure~\\ref{fig:weighted-fact-2-circle}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-11-37abd789",
+      "type": "example",
+      "content": "[$\\wcomp(\\Z,n,\\Sb)$]\n    \\label{ex:weighted-comp-circle}\n    When $G = \\Z$ and $X = \\{1\\}$, we denote the set\n    $\\wfact(\\Z,n,\\Sb)$ by $\\wcomp(\\Z,n,\\Sb)$ and refer to its elements\n    as \\emph{weighted circular compositions of $n$}.  As discussed in\n    Example~\\ref{ex:wcomp-n-interval}, $\\wcomp(\\Z,n,\\Ib)$ is isometric\n    to a standard $n$-dimensional orthoscheme, so $\\wcomp(\\Z,n,\\Sb)$\n    is obtained by identifying faces of an orthoscheme according to\n    the map $q \\colon \\comp(\\Z,n,\\Ib) \\to \\comp(\\Z,n,\\Sb)$ given in\n    Definition~\\ref{def:circular-factorization}. To give another way\n    of viewing this identification, the inequalities $x_1 \\leq x_2\n    \\leq \\cdots \\leq x_n \\leq x_1 + 1$ define a topological subspace\n    of $\\mathbb{R}^n$ called a \\emph{column} which is isometric to the\n    product of $\\mathbb{R}$ and an $(n-1)$-simplex (more specifically,\n    a Coxeter simplex of type $\\widetilde{A}_{n-1}$. See\n    \\cite[Section~8]{BrMc-10} and \\cite[Section~8]{dmw20}).  The\n    infinite cyclic group generated by the isometry $T:\\mathbb{R}^n\n    \\to \\mathbb{R}^n$ given by $T(x_1,x_2,\\ldots,x_n) =\n    (x_2,\\ldots,x_n,x_1+1)$ acts freely on the column and a\n    fundamental domain for the action is a standard $n$-dimensional\n    orthoscheme. The quotient by this free $\\Z$-action is\n    $\\wcomp(\\Z,n,\\Sb)$.",
+      "content_preview": "[(,n,)] When G = and X = 1, we denote the set (,n,) by (,n,) and refer to its elements as . As discussed in Example~, (,n,) is isometric to a...",
+      "display_name": "Example",
+      "label": "ex:weighted-comp-circle",
+      "position": {
+        "line_start": 1680,
+        "line_end": 1702
+      },
+      "references": [
+        {
+          "target_id": "ex:wcomp-n-interval",
+          "reference_type": "internal",
+          "context": "ompositions of $n$}.  As discussed in\n    Example~\\ref{ex:wcomp-n-interval}, $\\wcomp(\\Z,n,\\Ib)$ is isometric\n    to a standar",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "def:circular-factorization",
+          "reference_type": "external",
+          "context": "\\Ib) \\to \\comp(\\Z,n,\\Sb)$ given in\n    Definition~\\ref{def:circular-factorization}. To give another way\n    of viewing this identifi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-12-cd56e484",
+      "type": "example",
+      "content": "\\label{ex:subcompositions}\n  When $G = \\Z$ and $X = \\{1\\}$ we denote $\\Fc(\\Z,n,\\Ib)$ by\n  $\\Cc(\\Z,n,\\Ib)$ and refer to subfactorizations as\n  \\emph{subcompositions}. The elements of rank $k$ in $\\Cc(\\Z,n,\\Ib)$\n  are precisely those in $\\wcomp(\\Z,k,\\Ib)$ by definition. Each point\n  is labeled by an element of $\\wcomp(\\Z,k,\\Ib)$, i.e. a $k$-element\n  multiset in the interval, and each cell is labeled by an element of\n  $\\comp(\\Z,k,\\Ib)$, the list of multiplicities in their natural linear\n  order.  In particular, the elements in each rank form a standard\n  metric orthoscheme.  See Figure~\\ref{fig:top-graded-poset} for an\n  illustration when $n = 3$.  Note that there is a stark asymmetry in\n  this ordering.  For any element of rank $k$ with $0 < k < n$, there\n  is only a finite number of elements below it in rank $k-1$\n  (obtained by removing one of the elements of this $k$-element\n  multiset), and there is a continuum of elements above it in rank\n  $k+1$ (obtained by adding a random real number in $\\Ib$ to the\n  multiset).",
+      "content_preview": "When G = and X = 1 we denote (,n,) by (,n,) and refer to subfactorizations as . The elements of rank k in (,n,) are precisely those in (,k,) by...",
+      "display_name": "Example",
+      "label": "ex:subcompositions",
+      "position": {
+        "line_start": 1793,
+        "line_end": 1810
+      },
+      "references": [
+        {
+          "target_id": "fig:top-graded-poset",
+          "reference_type": "external",
+          "context": "form a standard\n  metric orthoscheme.  See Figure~\\ref{fig:top-graded-poset} for an\n  illustration when $n = 3$.  Note that th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-13-17b5f6e8",
+      "type": "example",
+      "content": "If $\\bs = 0^{a_L}s_1^{a_1}\\cdots s_k^{a_k}1^{a_R}$ is a multiset in\n  $\\Cc(\\Z,n,\\Ib)$, then its lower set $\\low(\\bs)$ is isomorphic to the\n  product of chain posets with lengths $a_L, a_1,\\ldots,a_k,a_R$.  See\n  Figure~\\ref{fig:lower-poset} for an illustration for the $5$ element\n  multiset $\\bs = 0^0 s^2 t^3 1^0$ with $0 < s < t < 1$. Note that\n  when $\\bs = 0^1s_1^1\\cdots s_k^11^1$, this means that the lower set\n  $\\low(\\bs)$ is isomorphic to the Boolean lattice $\\bool(k+2)$.",
+      "content_preview": "If = 0^a_Ls_1^a_1 s_k^a_k1^a_R is a multiset in (,n,), then its lower set () is isomorphic to the product of chain posets with lengths a_L,...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 1830,
+        "line_end": 1838
+      },
+      "references": [
+        {
+          "target_id": "fig:lower-poset",
+          "reference_type": "external",
+          "context": "lengths $a_L, a_1,\\ldots,a_k,a_R$.  See\n  Figure~\\ref{fig:lower-poset} for an illustration for the $5$ element\n  multise",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-14-f4aec28f",
+      "type": "example",
+      "content": "Let $\\bs = [0^0 s^1 1^0]$ be a multiset of size $1$ in the unit\n  interval and an element of $\\Cc(\\Z,3,\\Ib)$.  The upper set\n  $\\upper(\\bs)$ is the collection of multisets of size at most $3$ in\n  $\\Ib$ which contains $s$ as one of its elements.  By\n  Theorem~\\ref{thm:interval-lower-upper}, this is a subposet\n  isomorphic (as a topological poset) to $\\Cc(\\Z,2,\\Ib)$.  This is\n  illustrated in Figure~\\ref{fig:top-graded-upset}.  The bending of\n  the image under the embedding is caused by the inequalities between\n  the one or two new multiset elements and the original multiset\n  element $s$.",
+      "content_preview": "Let = [0^0 s^1 1^0] be a multiset of size 1 in the unit interval and an element of (,3,). The upper set () is the collection of multisets of size at...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 1979,
+        "line_end": 1990
+      },
+      "references": [
+        {
+          "target_id": "thm:interval-lower-upper",
+          "reference_type": "external",
+          "context": "ontains $s$ as one of its elements.  By\n  Theorem~\\ref{thm:interval-lower-upper}, this is a subposet\n  isomorphic (as a topologica",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:top-graded-upset",
+          "reference_type": "external",
+          "context": "$\\Cc(\\Z,2,\\Ib)$.  This is\n  illustrated in Figure~\\ref{fig:top-graded-upset}.  The bending of\n  the image under the embedding",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-15-e7c0c299",
+      "type": "example",
+      "content": "\\label{ex:subfact-delta}\n  Let $G = \\sym_3$, $\\delta = (1\\ 2\\ 3)$ with $\\delta = ab = bc = ca$\n  as in Example~\\ref{ex:absolute-order-interval}. The maximal elements\n  (of rank~$2$) in the linear topological poset\n  $\\Fc(\\sym_3,\\delta,\\Ib)$ form a subspace homeomorphic to $O_\\delta$,\n  the three isosceles right triangles with a common hypotenuse shown\n  in Figure~\\ref{fig:weighted-fact-2-interval}.  The rank~$1$ elements\n  are three disjoint unit intervals, $O_a = \\wfact(\\sym_3,a,\\Ib)$,\n  $O_b = \\wfact(\\sym_3,b,\\Ib)$ and $O_c = \\wfact(\\sym_3,c,\\Ib)$, and\n  the unique rank $0$ element is the complex $O_1 =\n  \\wfact(\\sym_3,1,\\Ib)$.  Under the quotient identification defined\n  above, the rank~$2$ elements $\\Fc(\\sym_3,\\delta,\\Sb)$ form the $1$\n  vertex interval complex $K_\\delta$ schematically shown in\n  Figure~\\ref{fig:weighted-fact-2-circle}.  But the three unit\n  intervals in rank~$1$ are identified end-to-end to form a single\n  circle of length~$3$, rather than three disjoint circles $K_a \\sqcup\n  K_b \\sqcup K_c$ each of length~$1$.  This is because conjugating by\n  $\\delta$ sends $a$ to $b$, $b$ to $c$ and $c$ to $a$.",
+      "content_preview": "Let G = _3, = (1 2 3) with = ab = bc = ca as in Example~. The maximal elements (of rank~2) in the linear topological poset (_3,,) form a subspace...",
+      "display_name": "Example",
+      "label": "ex:subfact-delta",
+      "position": {
+        "line_start": 2044,
+        "line_end": 2062
+      },
+      "references": [
+        {
+          "target_id": "ex:absolute-order-interval",
+          "reference_type": "internal",
+          "context": "3)$ with $\\delta = ab = bc = ca$\n  as in Example~\\ref{ex:absolute-order-interval}. The maximal elements\n  (of rank~$2$) in the line",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weighted-fact-2-interval",
+          "reference_type": "external",
+          "context": "angles with a common hypotenuse shown\n  in Figure~\\ref{fig:weighted-fact-2-interval}.  The rank~$1$ elements\n  are three disjoint unit",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:weighted-fact-2-circle",
+          "reference_type": "external",
+          "context": "omplex $K_\\delta$ schematically shown in\n  Figure~\\ref{fig:weighted-fact-2-circle}.  But the three unit\n  intervals in rank~$1$ are",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-16-24cab5bb",
+      "type": "example",
+      "content": "Let $\\delta$ be the $d$-cycle $(1\\ \\cdots\\ d) \\in \\sym_d$ and let\n  $[\\bu]$ be an equivalence class of a weighted linear factorization\n  of $\\gamma \\in P_\\delta = [1,\\delta]$. \n  Then the upper set\n  $\\upper([\\bu])$ in $\\Fc(\\sym_d,\\delta,\\Sb)$ is isomorphic to\n  $\\Fc(\\sym_d,\\gamma^{-1}\\delta,\\Sb)$. Moreover, the maximal elements\n  of $\\upper([\\bu])$ form a subspace of the dual braid complex which\n  is isometric to a product of dual braid complexes with smaller\n  dimension.",
+      "content_preview": "Let be the d-cycle (1 d) _d and let [] be an equivalence class of a weighted linear factorization of P_ = [1,].",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 2133,
+        "line_end": 2143
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-17-7b7a2890",
+      "type": "example",
+      "content": "Let $\\bs \\in \\Cc(\\Z,n,\\Ib)$ with $\\rho(\\bs) = k$. Then $\\upper(\\bs)$\n  is isomorphic to $\\Cc(\\Z,n-k,\\Ib)$, and the maximal elements of\n  $\\upper(\\bs)$ form a subspace homeomorphic to an orthoscheme of\n  dimension $n-k$. Similarly, the upper set $\\upper([\\bs])$ in\n  $\\Cc(\\Z,n,\\Sb)$ is homeomorphic to $\\Cc(\\Z,n-k,\\Sb)$, and the\n  maximal elements of $\\upper([\\bs)$ form a subspace which is\n    isometric to the quotient of the standard orthoscheme of dimension\n    $n-k$ described in Example~\\ref{ex:weighted-comp-circle}.",
+      "content_preview": "Let (,n,) with () = k. Then () is isomorphic to (,n-k,), and the maximal elements of () form a subspace homeomorphic to an orthoscheme of dimension...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 2145,
+        "line_end": 2154
+      },
+      "references": [
+        {
+          "target_id": "ex:weighted-comp-circle",
+          "reference_type": "internal",
+          "context": "cheme of dimension\n    $n-k$ described in Example~\\ref{ex:weighted-comp-circle}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-18-3ad4135f",
+      "type": "example",
+      "content": "\\label{ex:ncs-k-shuffle}\n  The degree-$12$ noncrossing partition in\n  Figure~\\ref{fig:ncs-example} can be described by the shorthand $\\pi\n  = 0^{\\pi_L} 0.1^{\\pi_1} 0.4^{\\pi_2} 0.5^{\\pi_3} 0.9^{\\pi_4}$, where\n  \\begin{align*}\n    \\pi_L &= \\{\\{1\\},\\{2\\},\\{3\\},\\{4\\},\\{5\\},\\{6\\},\\{7\\},\\{8\\},\\{9\\},\\{10\\},\\{11\\},\\{12\\}\\}; \\\\\n    \\pi_1 &= \\{\\{1\\},\\{2\\},\\{3\\},\\{4,5\\},\\{6\\},\\{7\\},\\{8\\},\\{9\\},\\{10\\},\\{11\\},\\{12\\}\\}; \\\\\n    \\pi_2 &= \\{\\{1,2,3,11\\},\\{4\\},\\{5\\},\\{6\\},\\{7\\},\\{8\\},\\{9\\},\\{10\\},\\{12\\}\\}; \\\\\n    \\pi_3 &= \\{\\{1\\},\\{2\\},\\{3,6,8\\},\\{4\\},\\{5\\},\\{7\\},\\{9\\},\\{10\\},\\{11,12\\}\\}; \\\\\n    \\pi_4 &= \\{\\{1\\},\\{2\\},\\{3\\},\\{4\\},\\{5\\},\\{6\\},\\{7\\},\\{8,9,10\\},\\{11\\},\\{12\\}\\}.\n  \\end{align*}\n  See Figure~\\ref{fig:ncs-k-shuffle} for an illustration (omitting the discrete partition $\\pi_L$).\n  Note that when superimposed in the proper order, these partitions form a \n  noncrossing hypertree on the vertex set $\\{1,\\ldots,12\\}$ as described in \\cite{Mc-ncht}.",
+      "content_preview": "The degree-12 noncrossing partition in Figure~ can be described by the shorthand = 0^_L 0.1^_1 0.4^_2 0.5^_3 0.",
+      "display_name": "Example",
+      "label": "ex:ncs-k-shuffle",
+      "position": {
+        "line_start": 2249,
+        "line_end": 2263
+      },
+      "references": [
+        {
+          "target_id": "fig:ncs-example",
+          "reference_type": "external",
+          "context": "The degree-$12$ noncrossing partition in\n  Figure~\\ref{fig:ncs-example} can be described by the shorthand $\\pi\n  = 0^{\\pi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "fig:ncs-k-shuffle",
+          "reference_type": "external",
+          "context": "10\\},\\{11\\},\\{12\\}\\}.\n  \\end{align*}\n  See Figure~\\ref{fig:ncs-k-shuffle} for an illustration (omitting the discrete partit",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "external_fig:absolute-order-interval",
+      "type": "unknown",
+      "content": "External reference to 'fig:absolute-order-interval'",
+      "content_preview": "External reference to 'fig:absolute-order-interval'",
+      "display_name": "Unknown",
+      "label": "fig:absolute-order-interval",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:weak-fact-2",
+      "type": "unknown",
+      "content": "External reference to 'fig:weak-fact-2'",
+      "content_preview": "External reference to 'fig:weak-fact-2'",
+      "display_name": "Unknown",
+      "label": "fig:weak-fact-2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_def:fact-to-comp",
+      "type": "unknown",
+      "content": "External reference to 'def:fact-to-comp'",
+      "content_preview": "External reference to 'def:fact-to-comp'",
+      "display_name": "Unknown",
+      "label": "def:fact-to-comp",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:weak-comp-2",
+      "type": "unknown",
+      "content": "External reference to 'fig:weak-comp-2'",
+      "content_preview": "External reference to 'fig:weak-comp-2'",
+      "display_name": "Unknown",
+      "label": "fig:weak-comp-2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:circ-fact-2",
+      "type": "unknown",
+      "content": "External reference to 'fig:circ-fact-2'",
+      "content_preview": "External reference to 'fig:circ-fact-2'",
+      "display_name": "Unknown",
+      "label": "fig:circ-fact-2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:circ-comp-2",
+      "type": "unknown",
+      "content": "External reference to 'fig:circ-comp-2'",
+      "content_preview": "External reference to 'fig:circ-comp-2'",
+      "display_name": "Unknown",
+      "label": "fig:circ-comp-2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:weighted-fact-2-interval",
+      "type": "unknown",
+      "content": "External reference to 'fig:weighted-fact-2-interval'",
+      "content_preview": "External reference to 'fig:weighted-fact-2-interval'",
+      "display_name": "Unknown",
+      "label": "fig:weighted-fact-2-interval",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_cor:comp-bool",
+      "type": "unknown",
+      "content": "External reference to 'cor:comp-bool'",
+      "content_preview": "External reference to 'cor:comp-bool'",
+      "display_name": "Unknown",
+      "label": "cor:comp-bool",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_rem:orthoscheme-faces",
+      "type": "unknown",
+      "content": "External reference to 'rem:orthoscheme-faces'",
+      "content_preview": "External reference to 'rem:orthoscheme-faces'",
+      "display_name": "Unknown",
+      "label": "rem:orthoscheme-faces",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:mult-3",
+      "type": "unknown",
+      "content": "External reference to 'fig:mult-3'",
+      "content_preview": "External reference to 'fig:mult-3'",
+      "display_name": "Unknown",
+      "label": "fig:mult-3",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:weighted-fact-2-circle",
+      "type": "unknown",
+      "content": "External reference to 'fig:weighted-fact-2-circle'",
+      "content_preview": "External reference to 'fig:weighted-fact-2-circle'",
+      "display_name": "Unknown",
+      "label": "fig:weighted-fact-2-circle",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_def:circular-factorization",
+      "type": "unknown",
+      "content": "External reference to 'def:circular-factorization'",
+      "content_preview": "External reference to 'def:circular-factorization'",
+      "display_name": "Unknown",
+      "label": "def:circular-factorization",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:top-graded-poset",
+      "type": "unknown",
+      "content": "External reference to 'fig:top-graded-poset'",
+      "content_preview": "External reference to 'fig:top-graded-poset'",
+      "display_name": "Unknown",
+      "label": "fig:top-graded-poset",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:lower-poset",
+      "type": "unknown",
+      "content": "External reference to 'fig:lower-poset'",
+      "content_preview": "External reference to 'fig:lower-poset'",
+      "display_name": "Unknown",
+      "label": "fig:lower-poset",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_thm:interval-lower-upper",
+      "type": "unknown",
+      "content": "External reference to 'thm:interval-lower-upper'",
+      "content_preview": "External reference to 'thm:interval-lower-upper'",
+      "display_name": "Unknown",
+      "label": "thm:interval-lower-upper",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:top-graded-upset",
+      "type": "unknown",
+      "content": "External reference to 'fig:top-graded-upset'",
+      "content_preview": "External reference to 'fig:top-graded-upset'",
+      "display_name": "Unknown",
+      "label": "fig:top-graded-upset",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:ncs-example",
+      "type": "unknown",
+      "content": "External reference to 'fig:ncs-example'",
+      "content_preview": "External reference to 'fig:ncs-example'",
+      "display_name": "Unknown",
+      "label": "fig:ncs-example",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_fig:ncs-k-shuffle",
+      "type": "unknown",
+      "content": "External reference to 'fig:ncs-k-shuffle'",
+      "content_preview": "External reference to 'fig:ncs-k-shuffle'",
+      "display_name": "Unknown",
+      "label": "fig:ncs-k-shuffle",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "example-3-cf6b329f",
+      "target": "external_fig:absolute-order-interval",
+      "type": null
+    },
+    {
+      "source": "example-4-e10880eb",
+      "target": "example-3-cf6b329f",
+      "type": null
+    },
+    {
+      "source": "example-4-e10880eb",
+      "target": "external_fig:weak-fact-2",
+      "type": null
+    },
+    {
+      "source": "example-5-ea0dcad5",
+      "target": "external_def:fact-to-comp",
+      "type": null
+    },
+    {
+      "source": "example-5-ea0dcad5",
+      "target": "external_fig:weak-comp-2",
+      "type": null
+    },
+    {
+      "source": "example-6-afee93be",
+      "target": "example-3-cf6b329f",
+      "type": null
+    },
+    {
+      "source": "example-6-afee93be",
+      "target": "external_fig:circ-fact-2",
+      "type": null
+    },
+    {
+      "source": "example-7-9b034474",
+      "target": "external_fig:circ-comp-2",
+      "type": null
+    },
+    {
+      "source": "example-8-e254b14b",
+      "target": "example-3-cf6b329f",
+      "type": null
+    },
+    {
+      "source": "example-8-e254b14b",
+      "target": "external_fig:weighted-fact-2-interval",
+      "type": null
+    },
+    {
+      "source": "example-8-e254b14b",
+      "target": "external_fig:weak-fact-2",
+      "type": null
+    },
+    {
+      "source": "example-9-168b8607",
+      "target": "external_cor:comp-bool",
+      "type": null
+    },
+    {
+      "source": "example-9-168b8607",
+      "target": "external_rem:orthoscheme-faces",
+      "type": null
+    },
+    {
+      "source": "example-9-168b8607",
+      "target": "external_fig:mult-3",
+      "type": null
+    },
+    {
+      "source": "example-10-c9d7cee3",
+      "target": "example-8-e254b14b",
+      "type": null
+    },
+    {
+      "source": "example-10-c9d7cee3",
+      "target": "external_fig:circ-fact-2",
+      "type": null
+    },
+    {
+      "source": "example-10-c9d7cee3",
+      "target": "external_fig:weighted-fact-2-circle",
+      "type": null
+    },
+    {
+      "source": "example-11-37abd789",
+      "target": "example-9-168b8607",
+      "type": null
+    },
+    {
+      "source": "example-11-37abd789",
+      "target": "external_def:circular-factorization",
+      "type": null
+    },
+    {
+      "source": "example-12-cd56e484",
+      "target": "external_fig:top-graded-poset",
+      "type": null
+    },
+    {
+      "source": "example-13-17b5f6e8",
+      "target": "external_fig:lower-poset",
+      "type": null
+    },
+    {
+      "source": "example-14-f4aec28f",
+      "target": "external_thm:interval-lower-upper",
+      "type": null
+    },
+    {
+      "source": "example-14-f4aec28f",
+      "target": "external_fig:top-graded-upset",
+      "type": null
+    },
+    {
+      "source": "example-15-e7c0c299",
+      "target": "example-3-cf6b329f",
+      "type": null
+    },
+    {
+      "source": "example-15-e7c0c299",
+      "target": "external_fig:weighted-fact-2-interval",
+      "type": null
+    },
+    {
+      "source": "example-15-e7c0c299",
+      "target": "external_fig:weighted-fact-2-circle",
+      "type": null
+    },
+    {
+      "source": "example-17-7b7a2890",
+      "target": "example-11-37abd789",
+      "type": null
+    },
+    {
+      "source": "example-18-3ad4135f",
+      "target": "external_fig:ncs-example",
+      "type": null
+    },
+    {
+      "source": "example-18-3ad4135f",
+      "target": "external_fig:ncs-k-shuffle",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 36,
+    "edge_count": 29,
+    "extractor_used": "regex-only"
+  }
+}

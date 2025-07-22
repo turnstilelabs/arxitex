@@ -1,0 +1,1214 @@
+{
+  "arxiv_id": "2506.22528v1",
+  "nodes": [
+    {
+      "id": "proposition-1-30b170c1",
+      "type": "proposition",
+      "content": "(\\cite{mordeson_comm}, Theorem 1.1.14)\n\t\\label{hom}\n\tLet $f : X \\rightarrow Y$ be a mapping.\n\t\\begin{enumerate}\n\t\t\\item[({i})] Let $\\{ \\mu_i \\}_{i \\in I}$ be a family of $L$-subsets of $X$. Then, $f(\\mathop{\\cup}\\limits_{i \\in I} \\mu_i) = \\mathop{\\cup}\\limits_{i \\in I} f(\\mu_i)$ and $f(\\mathop{\\cap}\\limits_{i \\in I} \\mu_i) \\subseteq \\mathop{\\cap}\\limits_{i \\in I}f(\\mu_i)$.\n\t\t\\item[({ii})] Let $\\mu \\in L^X$. Then, $f^{-1}(f(\\mu)) \\supseteq \\mu$. The equality holds if $f$ is injective.\n\t\t\\item[{(iii)}] Let  $\\nu \\in L^Y$. Then, $f(f^{-1}(\\nu)) \\subseteq \\nu$. The equality holds if $f$ is surjective.\n\t\t\\item[{(iv)}] Let $\\mu \\in L^X$ and $\\nu \\in L^Y$. Then, $f(\\mu) \\subseteq \\nu$ if and only if $\\mu \\subseteq f^{-1}(\\nu)$. Moreover, if $f$ is injective, then $f^{-1}(\\nu) \\subseteq \\mu$ if and only if $\\nu \\subseteq f(\\mu)$.\n\t\\end{enumerate}",
+      "content_preview": "(, Theorem 1.1.14) Let f : X Y be a mapping. Let _i _i I be a family of L-subsets of X. Then, f(_i I _i) = _i I f(_i) and f(_i I _i) _i If(_i).",
+      "display_name": "Proposition",
+      "label": "hom",
+      "position": {
+        "line_start": 148,
+        "line_end": 157
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-2-9f0cf621",
+      "type": "definition",
+      "content": "Let $\\mu \\in L ^G $. Then, $\\mu $ is called an $L$-subgroup of $G$ if for each $x, y\\in G$,\n\t\\begin{enumerate}\n\t\t\\item[({i})] $\\mu (xy)\\ge \\mu (x)\\wedge \\mu (y)$,\n\t\t\\item[({ii})] $\\mu (x^{-1} )=\\mu (x)$.\n\t\\end{enumerate}\n\tThe set of $L$-subgroups of $G$ is denoted by $L(G)$. Clearly, the tip of an $L$-subgroup is attained at the identity element of $G$, that is, $\\text{tip}(\\mu) = \\mu(e)$.",
+      "content_preview": "Let L ^G . Then, is called an L-subgroup of G if for each x, y G, (xy) (x) (y), (x^-1 )= (x). The set of L-subgroups of G is denoted by L(G).",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 163,
+        "line_end": 170
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-2170fa01",
+      "type": "theorem",
+      "content": "(\\cite{mordeson_comm}, Lemma 1.2.5)\n\t\\label{lev_gp}\n\tLet $\\mu \\in L ^G $. Then, $\\mu $ is an $L$-subgroup of $G$ if and only if each non-empty level subset $\\mu_{a} $ is a subgroup of $G$.",
+      "content_preview": "(, Lemma 1.2.5) Let L ^G . Then, is an L-subgroup of G if and only if each non-empty level subset _a is a subgroup of G.",
+      "display_name": "Theorem",
+      "label": "lev_gp",
+      "position": {
+        "line_start": 172,
+        "line_end": 175
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-f70cccd8",
+      "type": "theorem",
+      "content": "(\\cite{mordeson_comm}, Theorems 1.2.10, 1.2.11)\n\t\\label{hom_gp}\n\tLet $f : G \\rightarrow H$ be a group homomorphism. Let $\\mu \\in L(G)$ and $\\nu \\in L(H)$. Then, $f(\\mu) \\in L(H)$ and $f^{-1}(\\nu) \\in L(G)$.",
+      "content_preview": "(, Theorems 1.2.10, 1.2.11) Let f : G H be a group homomorphism. Let L(G) and L(H). Then, f() L(H) and f^-1() L(G).",
+      "display_name": "Theorem",
+      "label": "hom_gp",
+      "position": {
+        "line_start": 177,
+        "line_end": 180
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-5-af6dc7b7",
+      "type": "definition",
+      "content": "(\\cite{ajmal_sol}) \n\tLet $\\eta\\in L(\\mu)$ such that $\\eta$ is non-constant and $\\eta\\ne\\mu$. Then, $\\eta$ is said to be a proper $L$-subgroup of $\\mu$.",
+      "content_preview": "() Let L() such that is non-constant and . Then, is said to be a proper L-subgroup of .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 187,
+        "line_end": 189
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-6-563c5c50",
+      "type": "definition",
+      "content": "(\\cite{ajmal_nil})\n\tLet $\\eta \\in L(\\mu)$. Let $a_0$ and $t_0$ denote the tip and tail of $\\eta$, respectively. We define the trivial $L$-subgroup of $\\eta$ as follows:\n\t\\[ \\eta_{t_0}^{a_0}(x) = \\begin{cases}\n\t\ta_0 & \\text{if } x=e,\\\\\n\t\tt_0 & \\text{if } x \\neq e.\n\t\\end{cases} \\]",
+      "content_preview": "() Let L(). Let a_0 and t_0 denote the tip and tail of , respectively. We define the trivial L-subgroup of as follows: [ _t_0^a_0(x) = a_0 & x=e, t_0...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 193,
+        "line_end": 199
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-7-e3ce7d45",
+      "type": "theorem",
+      "content": "(\\cite{ajmal_nil}, Theorem 2.1)\n\t\\label{lev_sgp}\n\tLet $\\eta \\in L^\\mu$. Then, $\\eta\\in L(\\mu)$ if and only if each non-empty level subset $\\eta_a$  is a subgroup of $\\mu_a$.",
+      "content_preview": "(, Theorem 2.1) Let L^. Then, L() if and only if each non-empty level subset _a is a subgroup of _a.",
+      "display_name": "Theorem",
+      "label": "lev_sgp",
+      "position": {
+        "line_start": 201,
+        "line_end": 204
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-8-999d8342",
+      "type": "definition",
+      "content": "(\\cite{mordeson_comm})\n\tLet $\\eta \\in L^\\mu $. Then, the $L$-subgroup of $\\mu$ generated by $\\eta$ is defined as the smallest $L$-subgroup of $\\mu$ which contains $\\eta $. It is denoted by $\\langle \\eta \\rangle $, that is,\n\t\\[ \\langle \\eta \\rangle = \\cap\\{ \\theta \\in L(\\mu) \\mid \\eta \\subseteq \\theta \\}. \\]",
+      "content_preview": "() Let L^ . Then, the L-subgroup of generated by is defined as the smallest L-subgroup of which contains . It is denoted by , that is, [ = L() . ]",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 208,
+        "line_end": 211
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-9-7080589b",
+      "type": "definition",
+      "content": "(\\cite{wu_normal})\n\tLet $\\eta \\in L(\\mu)$. Then, we say that  $\\eta$  is a normal $L$-subgroup of $\\mu$   if  \n\t\\begin{center}\n\t\t$\\eta(yxy^{-1}) \\geq \\eta(x)\\wedge \\mu(y)$ for  all  $x,y \\in G.$\n\t\\end{center}",
+      "content_preview": "() Let L(). Then, we say that is a normal L-subgroup of if (yxy^-1) (x) (y) for all x,y G.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 215,
+        "line_end": 220
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-10-540972d8",
+      "type": "theorem",
+      "content": "(\\cite{mordeson_comm}, Theorem 1.4.3)\n\t\\label{lev_norsgp}\n\tLet $\\eta \\in L(\\mu)$. Then, $\\eta\\in NL(\\mu)$ if and only if each non-empty level subset $\\eta_a$  is a normal subgroup of $\\mu_a$.",
+      "content_preview": "(, Theorem 1.4.3) Let L(). Then, NL() if and only if each non-empty level subset _a is a normal subgroup of _a.",
+      "display_name": "Theorem",
+      "label": "lev_norsgp",
+      "position": {
+        "line_start": 226,
+        "line_end": 229
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-11-dab2af40",
+      "type": "definition",
+      "content": "(\\cite{mordeson_comm})\n\tLet $\\mu \\in L^X$. Then, $\\mu$ is said to possess sup-propery if for each $A \\subseteq X$, there exists $a_0 \\in A$ such that $ \\mathop \\vee \\limits_{a \\in A}  {\\mu(a) } = \\mu(a_0)$.",
+      "content_preview": "() Let L^X. Then, is said to possess sup-propery if for each A X, there exists a_0 A such that _a A (a) = (a_0).",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 231,
+        "line_end": 233
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-12-f9e5bc2a",
+      "type": "theorem",
+      "content": "(\\cite{ajmal_gen}, Theorem 3.1)\n\t\\label{gen}\n\tLet $\\eta\\in L^{^{\\mu}}.$ Let $a_{0}=\\mathop {\\vee}\\limits_{x\\in G}{\\left\\{\\eta\\left(x\\right)\\right\\}}$ and define an $L$-subset $\\hat{\\eta}$ of $G$ by\n\t\\begin{center}\n\t\t$\\hat{\\eta}\\left(x\\right)=\\mathop{\\vee}\\limits_{a \\leq a_{0}}{\\left\\{a \\mid x\\in\\left\\langle \\eta_{a}\\right\\rangle\\right\\}}$.\n\t\\end{center}\n\t\n\t\\noindent Then, $\\hat{\\eta}\\in L(\\mu)$ and  $\\hat{\\eta} =\\left\\langle \\eta \\right\\rangle$.",
+      "content_preview": "(, Theorem 3.1) Let L^^. Let a_0= _x G(x) and define an L-subset of G by (x)=_a a_0a x _a. Then, L() and = .",
+      "display_name": "Theorem",
+      "label": "gen",
+      "position": {
+        "line_start": 237,
+        "line_end": 245
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-13-69d5ad58",
+      "type": "theorem",
+      "content": "(\\cite{ajmal_gen}, Theorem 3.7)\n\t\\label{gen_sup}\n\tLet $\\eta \\in L^{\\mu}$ and $a_0 = \\mathop{\\vee}\\limits_{x \\in G}\\{\\eta(x)\\}$, then for all $b \\leq a_0$, $\\langle \\eta_b \\rangle \\subseteq \\langle \\eta \\rangle_b$. Moreover, if $\\eta$ possesses the sup-property, then $\\langle \\eta_b \\rangle = \\langle \\eta \\rangle_b$.",
+      "content_preview": "(, Theorem 3.7) Let L^ and a_0 = _x G(x), then for all b a_0, _b _b. Moreover, if possesses the sup-property, then _b = _b.",
+      "display_name": "Theorem",
+      "label": "gen_sup",
+      "position": {
+        "line_start": 247,
+        "line_end": 250
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-14-8dc3a172",
+      "type": "theorem",
+      "content": "(\\cite{ajmal_sol}, Lemma 3.27)\n\t\\label{gen_hom}\n\tLet $f : G \\rightarrow H$ be a group homomorphism, let $\\mu \\in L(G)$ and $\\nu \\in L(H)$. Then, for all $\\eta \\in L^{\\mu}$, $\\langle f(\\eta) \\rangle = f(\\langle \\eta \\rangle)$ and for all $\\theta \\in L^{\\nu}$, $\\langle f^{-1}(\\theta) \\rangle = f^{-1}(\\langle \\theta \\rangle).$",
+      "content_preview": "(, Lemma 3.27) Let f : G H be a group homomorphism, let L(G) and L(H). Then, for all L^, f() = f( ) and for all L^, f^-1() = f^-1( ).",
+      "display_name": "Theorem",
+      "label": "gen_hom",
+      "position": {
+        "line_start": 252,
+        "line_end": 255
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-15-c061b120",
+      "type": "definition",
+      "content": "\\label{dfncon}(\\cite{jahan_conj})\n\t Let $\\eta$ be an $L$-subgroup of $\\mu$ and $a_z \\in \\mu$. The conjugate of $\\eta$ by $a_z$ is defined to be the $L$-subset $\\eta^{a_z}$ given by\n\t\\[ \\eta^{a_z}(x) = a \\wedge \\eta(zxz^{-1}) \\quad \\text{ for all } x \\in G. \\]",
+      "content_preview": "() Let be an L-subgroup of and a_z . The conjugate of by a_z is defined to be the L-subset ^a_z given by [ ^a_z(x) = a (zxz^-1) x G. ]",
+      "display_name": "Definition",
+      "label": "dfncon",
+      "position": {
+        "line_start": 261,
+        "line_end": 264
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-16-2202d040",
+      "type": "remark",
+      "content": "\\label{conj_tip}\n\tFor any $L$-subgroup $\\eta$ of $\\mu$ and $L$-point $a_z\\in \\mu$, $\\eta^{a_z}$ is an $L$-subgroup of $\\mu$. Moreover, $\\text{tip}(\\eta^{a_z}$) = $a \\wedge \\text{tip}(\\eta)$, since\n\t\\[ \\eta^{a_z}(e) = a \\wedge \\eta(zez^{-1}) = a \\wedge \\eta(e). \\]",
+      "content_preview": "For any L-subgroup of and L-point a_z , ^a_z is an L-subgroup of . Moreover, (^a_z) = a (), since [ ^a_z(e) = a (zez^-1) = a (e). ]",
+      "display_name": "Remark",
+      "label": "conj_tip",
+      "position": {
+        "line_start": 266,
+        "line_end": 269
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-17-d49122a9",
+      "type": "theorem",
+      "content": "(\\cite{jahan_conj})\\label{lvl_conj}\n\tLet $\\eta, \\nu \\in L(\\mu)$ and $a \\in L$ such that $\\text{tip}(\\nu) = a \\wedge \\text{tip}(\\eta)$. Then, $\\nu=\\eta^{a_z}$ for $a_z \\in \\mu$ if and only if $\\nu_t = {\\eta_t}^{z^{-1}}$ for all $t \\leq \\text{tip}(\\nu)$.",
+      "content_preview": "() Let , L() and a L such that () = a (). Then, =^a_z for a_z if and only if _t = _t^z^-1 for all t ().",
+      "display_name": "Theorem",
+      "label": "lvl_conj",
+      "position": {
+        "line_start": 273,
+        "line_end": 275
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-18-139b732a",
+      "type": "definition",
+      "content": "Let $\\eta$ be an $L$-subgroup of an $L$-group $\\mu$. Then, $\\eta$ is said to be an abnormal $L$-subgroup of $\\mu$ if for every $L$-point $a_x \\in \\mu$, $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$.",
+      "content_preview": "Let be an L-subgroup of an L-group . Then, is said to be an abnormal L-subgroup of if for every L-point a_x , a_x , ^a_x .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 279,
+        "line_end": 281
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-19-d2aead7a",
+      "type": "theorem",
+      "content": "\\label{levsub1}\n\tLet $\\eta$ be an $L$-subgroup of $\\mu$ such that $\\text{tip}(\\eta) = \\text{tip}(\\mu)$. If $\\eta_t$ is an abnormal subgroup of $\\mu_t$ for all $t \\leq \\text{tip}(\\eta)$, then $\\eta$ is an abnormal $L$-subgroup of $\\mu$. Conversely, let $L$ be an upper well ordered lattice and $\\mu \\in L(G)$. If $\\eta$ is an abnormal $L$-subgroup of $\\mu$, then $\\eta_t$ is an abnormal subgroup of $\\mu_t$ for all $t \\leq \\text{tip}(\\eta)$.",
+      "content_preview": "Let be an L-subgroup of such that () = (). If _t is an abnormal subgroup of _t for all t (), then is an abnormal L-subgroup of .",
+      "display_name": "Theorem",
+      "label": "levsub1",
+      "position": {
+        "line_start": 285,
+        "line_end": 288
+      },
+      "references": [
+        {
+          "target_id": "gen",
+          "reference_type": "internal",
+          "context": "eta \\cup \\eta^{a_x})_a \\rangle$.\tHence by Theorem \\ref{gen}, \n\t\\[ \\langle \\eta, \\eta^{a_x} \\rangle (x^{-1}) =",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gen",
+          "reference_type": "internal",
+          "context": "{t_{x^{-1}}} \\rangle (x^{-1}) \\geq t.$ By Theorem \\ref{gen},\n\t\\begin{center} \n\t\t$\\langle \\eta, \\eta^{t_{x^{-1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "$(\\Rightarrow)$ Suppose that $\\text{tip}(\\eta) = \\text{tip}(\\mu)$ and $\\eta_t$ is an abnormal subgroup of $\\mu_t$ for all $t \\leq \\text{tip}(\\eta)$. To show that $\\eta$ is an abnormal $L$-subgroup of $\\mu$, let $a_x \\in \\mu$. Then, \n\t\\[ a \\leq \\mu(x) \\leq \\text{tip}(\\mu) = \\text{tip}(\\eta). \\]\n\tBy hypothesis, $\\eta_a$ is an abnormal $L$-subgroup of $\\mu_a$. Moreover, $x^{-1} \\in \\mu_a$. Thus $x^{-1} \\in \\langle \\eta_a, {\\eta_a}^{x^{-1}} \\rangle$, that is,\n\t\\[ x^{-1} = x_1 x_2 \\ldots x_k, \\text{ where } x_i \\text{ or } {x_i}^{-1} \\in \\eta_a \\cup {\\eta_a}^{x^{-1}}. \\]\n\tNow, if $x_i \\in \\eta_a$, then $\\eta(x_i) \\geq a$. On the other hand, if $x_i \\in {\\eta_a}^{x^{-1}}$, then $xx_ix^{-1} \\in \\eta_a$, that is, $\\eta(xx_ix^{-1}) \\geq a$. Thus $\\eta^{a_x}(x_i) \\geq a$. Hence\n\t\\[ x^{-1} = x_1 x_2 \\ldots x_k, \\text{ where } (\\eta \\cup \\eta^{a_x})(x_i) \\geq a, \\] that is,\n\t\\[ x^{-1} = x_1 x_2 \\ldots x_k, \\text{ where } x_i \\text{ or } {x_i}^{-1} \\in (\\eta \\cup \\eta^{a_x})_a. \\]\n\tThis implies $x^{-1} \\in \\langle (\\eta \\cup \\eta^{a_x})_a \\rangle$.\tHence by Theorem \\ref{gen}, \n\t\\[ \\langle \\eta, \\eta^{a_x} \\rangle (x^{-1}) = \\mathop{\\vee}\\limits_{c \\leq \\eta(e)} {\\left\\{c \\mid x^{-1} \\in \\langle (\\eta \\cup \\eta^{a_x} )_c \\rangle \\right\\}} \\geq a. \\]\n\tSince $\\langle \\eta, \\eta^{a_x} \\rangle$ is an $L$-subgroup of $\\mu$, $\\langle\\eta, \\eta^{a_x} \\rangle (x) \\geq a$. Thus $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$. We conclude that $\\eta$ is an abnormal $L$-subgroup of $\\mu$.  \n\t\n\t$(\\Leftarrow)$ Conversely, let $L$ be an upper well ordered lattice and let $\\mu \\in L(G)$. Let $\\eta$ be an abnormal $L$-subgroup of $\\mu$ and let $t \\leq \\text{tip}(\\eta)$. To show that $\\eta_t$ is an abnormal subgroup of $\\mu_t$, let $x \\in \\mu_t$. Then, $t_{x^{-1}} \\in \\mu$. By abnormality of $\\eta$ in $\\mu$, $t_{x^{-1}} \\in \\langle \\eta, \\eta^{t_{x^{-1}}} \\rangle$, that is, $\\langle \\eta, \\eta^{t_{x^{-1}}} \\rangle (x^{-1}) \\geq t.$ By Theorem \\ref{gen},\n\t\\begin{center} \n\t\t$\\langle \\eta, \\eta^{t_{x^{-1}}} \\rangle(x^{-1}) = \\mathop{\\vee}\\limits_{c \\leq \\eta(e)}{\\left\\{c \\mid x^{-1} \\in \\left\\langle (\\eta \\cup \\eta^{t_{x^{-1}}})_c \\right\\rangle \\right\\}}.$ \n\t\\end{center}\n\tLet $A = \\{ c \\leq \\eta(e) \\mid x^{-1} \\in\\left\\langle (\\eta \\cup \\eta^{t_{x^{-1}}})_c \\right\\rangle \\}$. Then, $A$ is a non-empty subset of $L$ since $0 \\in L$. Moreover, since $L$ is upper well ordered, $A$ contains its supremum, say $c_0$. Thus $x^{-1} \\in \\langle (\\eta \\cup \\eta^{t_{x^{-1}}})_{c_0} \\rangle$ and $c_0 \\geq t$. This implies $(\\eta \\cup \\eta^{t_{x^{-1}}})_{c_0} \\subseteq (\\eta \\cup \\eta^{t_{x^{-1}}})_t$ and hence $x^{-1} \\in \\langle (\\eta \\cup \\eta^{t_{x^{-1}}})_t \\rangle$. Thus\n\t\\[ x^{-1} = x_1 x_2 \\ldots x_k, \\text{ where } {x_i} \\text{ or } {x_i}^{-1} \\in (\\eta \\cup \\eta^{t_{x^{-1}}})_t, \\]\n\tthat is, $(\\eta \\cup \\eta^{t_{x^{-1}}})(x_i) \\geq t$. This implies \n\t\\[ \\eta(x_i) \\vee \\eta^{t_{x^{-1}}}(x_i) \\geq t. \\]\n\tAgain, since $L$ is upper well ordered, $\\eta(x_i) \\geq t$ or $\\eta^{t_{x^{-1}}}(x_i) \\geq t$. If $\\eta(x_i) \\geq t$, then $x_i \\in \\eta_t$. On the other hand, if $\\eta^{t_{x^{-1}}}(x_i) \\geq t$, then \n\t\\[ \\eta(x^{-1} x_i x) \\geq t \\wedge \\eta(x^{-1} x_i x) \\geq t, \\]\n\tthat is, $x_i \\in {\\eta_t}^x$. Thus $x_i \\in \\eta_t \\cup {\\eta_t}^x$. Therefore\n\t\\[ x^{-1} = x_1 x_2 \\ldots x_k, \\text{ where } x_i \\text{ or } {x_i}^{-1} \\in \\eta_t \\cup {\\eta_t}^x. \\]\n\tThis implies $x^{-1} \\in \\langle \\eta_t, {\\eta_t}^x \\rangle$. Since $\\langle \\eta_t, {\\eta_t}^x \\rangle$ is a subgroup of $G$, we conclude that $x \\in \\langle \\eta_t, {\\eta_t}^x \\rangle$."
+    },
+    {
+      "id": "lemma-20-5a014bbb",
+      "type": "lemma",
+      "content": "\\label{hom_conj} (\\cite{jahan_conj})\n\tLet $f : G \\rightarrow H$ be a group homomorphism and $\\mu \\in L(G)$. Then, for $\\eta \\in L(\\mu)$ and $a_z \\in \\mu$, the $L$-subgroup $f(\\eta^{a_z})$ is a conjugate $L$-subgroup of $f(\\eta)$ in $f(\\mu)$. In fact, \n\t\\[ f(\\eta^{a_z}) = f(\\eta)^{a_{f(z)}}. \\]",
+      "content_preview": "() Let f : G H be a group homomorphism and L(G). Then, for L() and a_z , the L-subgroup f(^a_z) is a conjugate L-subgroup of f() in f().",
+      "display_name": "Lemma",
+      "label": "hom_conj",
+      "position": {
+        "line_start": 318,
+        "line_end": 321
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-21-7a9b27c2",
+      "type": "lemma",
+      "content": "\\label{hom_lev}\n\tLet $f:G \\rightarrow H$ be a group homomorphism and $\\mu \\in L(G)$. Then, for $\\eta \\in L(\\mu)$, \n\t\\[ f(\\eta_t) \\subseteq f(\\eta)_t \\]\n\tfor all $t \\leq \\text{tip}(\\eta)$.",
+      "content_preview": "Let f:G H be a group homomorphism and L(G). Then, for L(), [ f(_t) f()_t ] for all t ().",
+      "display_name": "Lemma",
+      "label": "hom_lev",
+      "position": {
+        "line_start": 323,
+        "line_end": 327
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-22-57591604",
+      "type": "theorem",
+      "content": "\\label{hom_abn}\n\tLet $f : G \\rightarrow H$ be a surjective group homomorphism. Let $\\mu \\in L(G)$ such that $\\mu$ possesses sup-property. If $\\eta$ is an abnormal $L$-subgroup of $\\mu$, then $f(\\eta)$ is an abnormal $L$-subgroup of f($\\mu$).",
+      "content_preview": "Let f : G H be a surjective group homomorphism. Let L(G) such that possesses sup-property. If is an abnormal L-subgroup of , then f() is an abnormal...",
+      "display_name": "Theorem",
+      "label": "hom_abn",
+      "position": {
+        "line_start": 329,
+        "line_end": 331
+      },
+      "references": [
+        {
+          "target_id": "gen",
+          "reference_type": "internal",
+          "context": "e \\eta, \\eta^{a_s} \\rangle(s) \\geq a$. By Theorem \\ref{gen},\n\t\\[  \\langle \\eta, \\eta^{a_s} \\rangle(s) = \\math",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hom_lev",
+          "reference_type": "internal",
+          "context": "{-1} \\in f((\\eta \\cup \\eta^{a_s})_c).\\]\n\tBy Lemma \\ref{hom_lev}, $f((\\eta \\cup \\eta^{a_s})_c) \\subseteq (f(\\eta \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "hom_conj",
+          "reference_type": "internal",
+          "context": "(f(\\eta) \\cup f(\\eta^{a_s}))_c$. Also, by Theorem \\ref{hom_conj}, $(f(\\eta^{a_s})) = f(\\eta)^{a_{f(s)}} = f(\\eta)^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $a_x \\in f(\\mu)$. We have to show that $a_x \\in \\langle f(\\eta), f(\\eta)^{a_x} \\rangle$. Since $a_x \\in f(\\mu)$, $f(\\mu)(x) \\geq a$. By definition,\n\t\\[ f(\\mu)(x) = \\vee \\{ \\mu(g) \\mid g \\in f^{-1}(x) \\}. \\]\n\tLet $A = \\{ g \\in G \\mid g \\in f^{-1}(x) \\}$. Since $f$ is a surjection, $A$ is a non-empty subset of $G$. Since $\\mu$ possesses the sup-property, there exists $s \\in A$ such that \n\t\\[ a \\leq f(\\mu)(x) = \\vee \\{ \\mu(g) \\mid g \\in A \\} = \\mu(s). \\] \n\tHence $f(s) = x$ and $a_s \\in \\mu$. Now, since $\\eta$ is an abnormal $L$-subgroup of $\\mu$, $a_s \\in \\langle \\eta, \\eta^{a_s} \\rangle$, that is, $\\langle \\eta, \\eta^{a_s} \\rangle(s) \\geq a$. By Theorem \\ref{gen},\n\t\\[  \\langle \\eta, \\eta^{a_s} \\rangle(s) = \\mathop{\\vee}\\limits_{c \\leq \\eta(e)}\\left\\{c \\mid s \\in \\langle(\\eta \\cup \\eta^{a_s})_c \\rangle \\right\\} \\]\n\tLet $c \\leq \\eta(e)$ such that $s \\in \\langle (\\eta \\cup \\eta^{a_s})_c \\rangle$. Then,\n\t\\[ s = s_1 s_2 \\ldots s_n, \\text{ where } s_i \\text{ or } {s_i}^{-1} \\in (\\eta \\cup \\eta^{a_s})_c. \\]\n\tThis implies\n\t\\[ x = f(s) = f(s_1)f(s_2)\\ldots f(s_n), \\text{ where } f(s_i) \\text{ or } f(s_i)^{-1} \\in f((\\eta \\cup \\eta^{a_s})_c).\\]\n\tBy Lemma \\ref{hom_lev}, $f((\\eta \\cup \\eta^{a_s})_c) \\subseteq (f(\\eta \\cup \\eta^{a_s}))_c = (f(\\eta) \\cup f(\\eta^{a_s}))_c$. Also, by Theorem \\ref{hom_conj}, $(f(\\eta^{a_s})) = f(\\eta)^{a_{f(s)}} = f(\\eta)^{a_x}$. Hence\n\t\\[ x = f(s_1)f(s_2)\\ldots f(s_n), \\text{ where } f(s_i) \\text{ or } f(s_i)^{-1} \\in (f(\\eta) \\cup f(\\eta)^{a_x})_c, \\]\n\tthat is, $x \\in \\langle f(\\eta) \\cup f(\\eta^{a_x}))_c \\rangle$. Thus\n\t\\begin{equation*}\n\t\t\\begin{split}\n\t\t\t\\langle f(\\eta), f(\\eta)^{a_x} \\rangle (x) &= \\mathop{\\vee}\\limits_{c \\leq f(\\eta)(e)}\\left\\{c \\mid x \\in \\langle(f(\\eta) \\cup f(\\eta)^{a_x})_c \\rangle \\right\\}\\\\\n\t\t\t&\\geq \\mathop{\\vee}\\limits_{c \\leq \\eta(e)}\\left\\{c \\mid s \\in \\langle(\\eta \\cup \\eta^{a_s})_c \\rangle \\right\\}\\\\\n\t\t\t&= \\langle \\eta, \\eta^{a_s} \\rangle (s)\\\\\n\t\t\t&\\geq a.  \n\t\t\\end{split}\n\t\\end{equation*}\n\tHence $a_x \\in \\langle f(\\eta), f(\\eta)^{a_x} \\rangle$. We conclude that $f(\\eta)$ is an abnormal $L$-subgroup of $f(\\mu)$."
+    },
+    {
+      "id": "proposition-23-9735c3f9",
+      "type": "proposition",
+      "content": "Let $H$ and $K$ be subgroups of $G$ such that $H \\subseteq K$. Then, $H$ is an abnormal subgroup of $K$ if and only if $1_H$ is an abnormal $L$-subgroup of $1_K$.",
+      "content_preview": "Let H and K be subgroups of G such that H K. Then, H is an abnormal subgroup of K if and only if 1_H is an abnormal L-subgroup of 1_K.",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 359,
+        "line_end": 361
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-24-1040e3a6",
+      "type": "example",
+      "content": "Let $G = S_4$ and $L$ be lattice given by Figure 1. \n\t\\begin{center}\n\t\t\\includegraphics[scale=0.5]{lattice1.png}\\\\\n\t\t\\centering \\text{Figure 1}\t\t\n\t\\end{center}\n\tLet \n\t\\[H_1 = \\{ \\epsilon, (12), (13), (23), (123), (132) \\}, H_2 = \\{ \\epsilon, (12), (14), (24), (124), (142) \\}, \\]\n\t\\[ H_3 = \\{ \\epsilon, (14), (13), (14), (134), (143) \\} \\text{ and } H_4 = \\{ \\epsilon, (23), (24), (34), (234), (243) \\} \\]\n\tbe the four copies of $S_3$ in $S_4$, where $\\epsilon$ denotes the identity permutation.\n\tDefine an $L$-subgroup $\\mu$ of $S_4$ as follows:\n\t\\[ \\mu(x) = \\begin{cases}\n\t\tu &\\text{if } x \\in \\langle (12) \\rangle; \\\\\n\t\td &\\text{otherwise}. \n\t\\end{cases} \\]\n\tSince $\\mu_t$ is a subgroup of $G$ for all $t \\leq \\mu(e)$, it follows from Theorem \\ref{lev_gp} that $\\mu \\in L(G)$. Now, define an $L$-subset $\\eta$ of $\\mu$ by\n\t\\[ \\eta(x) = \\begin{cases}\n\t\tu &\\text{if } x \\in \\langle (12) \\rangle; \\\\\n\t\ta &\\text{if } x \\in H_1 \\setminus \\langle (12) \\rangle; \\\\\n\t\tb &\\text{if } x \\in H_2 \\setminus \\langle (12) \\rangle; \\\\\n\t\tl &\\text{otherwise}.\n\t\\end{cases} \\]\n\tAgain, since each $\\eta_t$ is a subgroup of $\\mu_t$, by Theorem \\ref{lev_sgp}, $\\eta \\in L(\\mu)$. We show that $\\eta$ is an abnormal $L$-subgroup of $\\mu$. \n\t\n\tFirstly, consider the $L$-point $d_{(34)} \\in \\mu$. The conjugate $L$-subgroup $\\eta^{d_{(34)}}$ is given by\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta^{d_{(34)}} (x) &= d \\wedge \\eta((34)x(34)) \\\\\n\t\t&= \\begin{cases}\n\t\t\td &\\text{if } x \\in \\langle (12) \\rangle; \\\\\n\t\t\ta &\\text{if } x \\in H_2 \\setminus \\langle (12) \\rangle; \\\\\n\t\t\tb &\\text{if } x \\in H_1 \\setminus \\langle (12) \\rangle; \\\\\n\t\t\tl &\\text{otherwise.}\n\t\t\\end{cases}\n\t\\end{split}\n\t\\end{equation*}\n\tNow, by Theorem \\ref{gen},\n\t\\[ \\langle \\eta, \\eta^{d_{(34)}} \\rangle = \\mathop{\\vee}\\limits_{t \\leq u} \\{ t \\mid x \\in \\langle (\\eta \\cup \\eta^{d_{(34)}})_t \\rangle  \\}. \\]\n\tNote that $\\eta_a = H_1, \\eta_b = H_2, (\\eta^{d_{(34)}})_a = H_2$ and $(\\eta^{d_{(34)}})_b = H_1$. Moreover,\n\t\\[ (34) = (24)(132)(124) \\in \\langle H_1, H_2 \\rangle. \\]\n\tHence\n\t\\[ \\langle \\eta, \\eta^{d_{(34)}} \\rangle (34) = a \\vee b = d. \\]\n\tThus $d_{(34)} \\in \\langle \\eta, \\eta^{d_{(34)}} \\rangle$.  \n\tSimilarly, it can be easily verified that $c_x \\in \\langle \\eta, \\eta^{c_x} \\rangle$ for all $c_x \\in \\mu$. Hence $\\eta$ is an abnormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let G = S_4 and L be lattice given by Figure 1. Let [H_1 = , (12), (13), (23), (123), (132) , H_2 = , (12), (14), (24), (124), (142) , ] [ H_3 = ,...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 365,
+        "line_end": 409
+      },
+      "references": [
+        {
+          "target_id": "lev_gp",
+          "reference_type": "internal",
+          "context": "for all $t \\leq \\mu(e)$, it follows from Theorem \\ref{lev_gp} that $\\mu \\in L(G)$. Now, define an $L$-subset $\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lev_sgp",
+          "reference_type": "internal",
+          "context": "ach $\\eta_t$ is a subgroup of $\\mu_t$, by Theorem \\ref{lev_sgp}, $\\eta \\in L(\\mu)$. We show that $\\eta$ is an abn",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gen",
+          "reference_type": "internal",
+          "context": "s}\n\t\\end{split}\n\t\\end{equation*}\n\tNow, by Theorem \\ref{gen},\n\t\\[ \\langle \\eta, \\eta^{d_{(34)}} \\rangle = \\mat",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-25-ac00ab09",
+      "type": "lemma",
+      "content": "(\\cite{jahan_conj})\n\t\\label{nor_conj}\n\tLet $\\eta \\in L(\\mu)$. Then, $\\eta$ is a normal $L$-subgroup of $\\mu$ if and only if  $\\eta^{a_z} \\subseteq \\eta$ for every $L$-point $a_z \\in \\mu$. Moreover, if $\\eta \\in NL(\\mu)$ and $\\text{tip}(\\eta^{a_z}) = \\text{tip}(\\eta)$, then $\\eta^{a_z} = \\eta$.",
+      "content_preview": "() Let L(). Then, is a normal L-subgroup of if and only if ^a_z for every L-point a_z . Moreover, if NL() and (^a_z) = (), then ^a_z = .",
+      "display_name": "Lemma",
+      "label": "nor_conj",
+      "position": {
+        "line_start": 413,
+        "line_end": 416
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-26-6a48f735",
+      "type": "theorem",
+      "content": "\\label{abn_nor}\n\tLet $\\mu \\in L(G)$. Then, the only $L$-subgroup of $\\mu$ that is both normal and abnormal in $\\mu$ is $\\mu$ itself.",
+      "content_preview": "Let L(G). Then, the only L-subgroup of that is both normal and abnormal in is itself.",
+      "display_name": "Theorem",
+      "label": "abn_nor",
+      "position": {
+        "line_start": 418,
+        "line_end": 421
+      },
+      "references": [
+        {
+          "target_id": "nor_conj",
+          "reference_type": "internal",
+          "context": "rmal $L$-subgroup of $\\mu$, it follows from Lemma \\ref{nor_conj} that $\\eta^{a_x} \\subseteq \\eta$. Thus\n\t\\[ a_x \\i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\eta \\in L(\\mu)$ such that $\\eta$ is both a normal as well as an abnormal $L$-subgroup of $\\mu$. Let $x \\in G$ and $a=\\mu(x)$. Then, $a_x \\in \\mu$. By the abnormality of $\\eta$, $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$. Now, since $\\eta$ is a normal $L$-subgroup of $\\mu$, it follows from Lemma \\ref{nor_conj} that $\\eta^{a_x} \\subseteq \\eta$. Thus\n\t\\[ a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle = \\eta. \\]\n\tTherefore $\\mu(x) = a \\leq \\eta(x)$, that is, $\\eta(x) = \\mu(x)$. We conclude that $\\eta = \\mu$."
+    },
+    {
+      "id": "proposition-27-6db4559b",
+      "type": "proposition",
+      "content": "\\label{inc_lvl}\n\tLet $\\eta, \\nu \\in L(\\mu)$. Then, $\\eta \\subseteq \\nu$ if and only if $\\eta_t \\subseteq \\nu_t$ for all $t \\leq \\text{tip}(\\eta)$.",
+      "content_preview": "Let , L(). Then, if and only if _t _t for all t ().",
+      "display_name": "Proposition",
+      "label": "inc_lvl",
+      "position": {
+        "line_start": 428,
+        "line_end": 430
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-28-e5adf71c",
+      "type": "proposition",
+      "content": "(\\cite{jahan_conj})\\label{conj_inv}\n\tLet $\\eta \\in L(\\mu)$ and $a_x$ be an $L$-point of $\\mu$. Then, $\\eta^{a_x} \\subseteq \\eta$ if and only if $\\eta^{a_{x^{-1}}} \\subseteq \\eta$.",
+      "content_preview": "() Let L() and a_x be an L-point of . Then, ^a_x if and only if ^a_x^-1 .",
+      "display_name": "Proposition",
+      "label": "conj_inv",
+      "position": {
+        "line_start": 432,
+        "line_end": 434
+      },
+      "references": [
+        {
+          "target_id": "lvl_conj",
+          "reference_type": "internal",
+          "context": "tip }(\\eta^{a_z}) = a \\wedge \\eta(e)$. By Theorem \\ref{lvl_conj}, $(\\eta^{a_z})_t = {\\eta_t}^{z^{-1}}$ for all $t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lvl_conj",
+          "reference_type": "internal",
+          "context": "} t \\leq a \\wedge \\eta(e). \\]\n\tAgain, by Theorem \\ref{lvl_conj}, $(\\eta^{a_{z^{-1}}})_t = {\\eta_t}^z$ for all $t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "inc_lvl",
+          "reference_type": "internal",
+          "context": ")= \\text{tip }(\\eta^{a_z})$. Hence by Proposition \\ref{inc_lvl}, $\\eta^{a_{z^{-1}}} \\subseteq \\eta$.\n\t\n\t\\noindent",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose that $\\eta^{a_z} \\subseteq \\eta$. Then, $(\\eta^{a_z})_t \\subseteq \\eta_t$ for all $t \\leq \\text{tip }(\\eta^{a_z}) = a \\wedge \\eta(e)$. By Theorem \\ref{lvl_conj}, $(\\eta^{a_z})_t = {\\eta_t}^{z^{-1}}$ for all $t \\leq a \\wedge \\eta(e)$. Thus\n\t\\[ {\\eta_t}^{z^{-1}} \\subseteq \\eta_t \\text{ for all } t \\leq a \\wedge \\eta(e). \\]\n\tThis implies $z^{-1} \\in N(\\eta_t)$ for all $t \\leq a \\wedge \\eta(e)$. Since the normalizer of $\\eta_t$ is a subgroup of $G$, $z \\in N(\\eta_t)$ for all $t \\leq a \\wedge \\eta(e)$. Thus\n\t\\[ {\\eta_t}^z \\subseteq \\eta_t \\text{ for all } t \\leq a \\wedge \\eta(e). \\]\n\tAgain, by Theorem \\ref{lvl_conj}, $(\\eta^{a_{z^{-1}}})_t = {\\eta_t}^z$ for all $t \\leq a \\wedge \\eta(e) $. Thus $(\\eta^{a_{z^{-1}}})_t \\subseteq \\eta_t$ for all $t \\leq a \\wedge \\eta(e)= \\text{tip }(\\eta^{a_z})$. Hence by Proposition \\ref{inc_lvl}, $\\eta^{a_{z^{-1}}} \\subseteq \\eta$.\n\t\n\t\\noindent  The converse part can be obtained by replacing $z$ by $z^{-1}$ in the above exposition."
+    },
+    {
+      "id": "theorem-29-529fcfcd",
+      "type": "theorem",
+      "content": "\\label{def_norm}\n\tLet $\\eta \\in L(\\mu)$ and let $\\lambda$ be the $L$-subset of $G$ defined as follows:\n\t\\[ \\lambda = \\bigcup \\left\\{ a_z \\in \\mu \\mid \\eta^{a_z} \\subseteq \\eta \\right\\}. \\]\n\tThen, $\\lambda$ is the largest $L$-subgroup of $\\mu$ such that $\\eta$ is a normal $L$-subgroup of $\\lambda$. Hence $\\lambda$ is the normalizer of $\\eta$ in $\\mu$.",
+      "content_preview": "Let L() and let be the L-subset of G defined as follows: [ = a_z ^a_z . ] Then, is the largest L-subgroup of such that is a normal L-subgroup of .",
+      "display_name": "Theorem",
+      "label": "def_norm",
+      "position": {
+        "line_start": 447,
+        "line_end": 451
+      },
+      "references": [
+        {
+          "target_id": "conj_inv",
+          "reference_type": "internal",
+          "context": "tice. Moreover, it follows readily by Proposition \\ref{conj_inv} that $\\lambda(x^{-1}) = \\lambda(x)$. Thus $\\lambd",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "conj_inv",
+          "reference_type": "internal",
+          "context": "Then, $\\eta^{a_y} \\subseteq \\eta$. By Proposition \\ref{conj_inv}, $\\eta^{a_{y^{-1}}} \\subseteq \\eta$. Thus \n\t\\begi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Firstly, note that for all $x \\in G$, \n\t\\[ \\lambda(x) = \\bigcup \\left\\{ a_z \\in \\mu \\mid \\eta^{a_z} \\subseteq \\eta \\right\\}(x) = \\bigvee_{\\substack{a_x \\in \\mu \\\\ \\eta^{a_x} \\subseteq \\eta}} \\left\\{ a \\right\\}. \\]\n\tFor $x \\in G$, define the subset $L_{\\eta}(x)$ of $L$ as follows:\n\t\\[ L_{\\eta}(x) = \\{ a \\in L \\mid a_x \\in \\mu \\text{ and } \\eta^{a_x} \\subseteq \\eta \\}. \\]\n\tThen, $\\lambda(x) = \\vee \\{ a \\mid a \\in L_{\\eta}(x) \\}$.\n\tNow, we show that $\\lambda$ is an $L$-subgroup of $\\mu$. Clearly, $\\lambda \\subseteq \\mu$, since for all $x \\in G$, \n\t\\[ \\lambda(x) = \\vee \\{ a \\mid a_x \\in \\mu \\text{ and } \\eta^{a_x} \\subseteq \\eta \\} \\leq \\vee \\{ a \\mid a_x \\in \\mu\\} = \\mu(x). \\]  \n\tLet $x , y \\in G$. We claim that if $a \\in L_{\\eta}(x)$ and $b \\in L_{\\eta}(y)$, then $a \\wedge b \\in L_{\\eta}(xy)$. So, let $a \\in L_{\\eta}(x)$ and $b \\in L_{\\eta}(y)$. Then, $a_x, b_y \\in \\mu$ and $\\eta^{a_x}, \\eta^{b_y} \\subseteq \\eta$. Then, $(a \\wedge b)_{xy} \\in \\mu$, since\n\t\\[ \\mu(xy) \\geq \\mu(x) \\wedge \\mu(y) \\geq a \\wedge b. \\]\n\tMoreover, for all $g \\in G$,\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta^{(a \\wedge b)_{xy}}(g) &= (a \\wedge b) \\wedge \\eta((xy)g(xy)^{-1}) \\\\\n\t\t&= b \\wedge (a \\wedge \\eta(x(ygy^{-1})x^{-1})) \\\\\n\t\t&= b \\wedge \\eta^{a_x}(ygy^{-1}) \\\\\n\t\t&\\leq b \\wedge \\eta(ygy^{-1}) \\qquad\\qquad\\qquad\\qquad\\qquad (\\text{since $\\eta^{a_x} \\subseteq \\eta$}) \\\\\n\t\t&= \\eta^{b_y}(g) \\\\\n\t\t&\\leq \\eta(g). ~\\qquad\\qquad\\quad\\qquad\\qquad\\qquad\\qquad (\\text{since $\\eta^{b_y} \\subseteq \\eta$})\n\t\\end{split}\n\t\\end{equation*} \n\tHence $\\eta^{(a \\wedge b)_{xy}} \\subseteq \\eta$. Therefore $a \\wedge b \\in L_{\\eta}(xy)$. Thus we have\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\lambda(xy) &= \\vee \\{ c \\mid c \\in L_{\\eta}(xy) \\} \\\\\n\t\t&\\geq \\{ a \\wedge b \\mid a \\in L_{\\eta}(x) \\text{ and } b \\in L_{\\eta}(y) \\} \\\\\n\t\t&= (\\vee \\{a \\mid a \\in L_{\\eta}\\}) \\wedge (\\{ b \\mid b \\in L_{\\eta}(y)\\}) \\\\\n\t\t&= \\lambda(x) \\wedge \\lambda(y),\n\t\\end{split}\n\t\\end{equation*}\n\tsince $L$ is a completely distributive lattice. Moreover, it follows readily by Proposition \\ref{conj_inv} that $\\lambda(x^{-1}) = \\lambda(x)$. Thus $\\lambda$ is an $L$-subgroup of $\\mu$.\n\t\n\t\\noindent Next, to show that $\\eta$ is a $L$-subgroup of $\\lambda$, let $x \\in G$. Then, $(\\eta(x))_x \\in \\mu$ and for all $g \\in G$,\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta(g) &= \\eta(x^{-1}(xgx^{-1})x) \\\\\n\t\t&\\geq \\eta(x^{-1}) \\wedge \\eta(xgx^{-1}) \\\\\n\t\t&= \\eta(x) \\wedge \\eta(xgx^{-1}) \\\\\n\t\t&= \\eta^{(\\eta(x))_x}(g). \n\t\\end{split}\n\t\\end{equation*}\n\tThus $\\eta^{(\\eta(x))_x} \\subseteq \\eta$. Hence $\\eta(x) \\in L_{\\eta}(x)$. Therefore\n\t\\[ \\eta(x) \\leq \\vee \\{ a \\mid a \\in L_{\\eta}(x) \\} = \\lambda(x). \\] \n\tNow, to show that $\\eta$ is a normal $L$-subgroup of $\\lambda$, let $x, y \\in G$ and let $a \\in L_{\\eta}(y)$. Then, $\\eta^{a_y} \\subseteq \\eta$. By Proposition \\ref{conj_inv}, $\\eta^{a_{y^{-1}}} \\subseteq \\eta$. Thus \n\t\\begin{equation*}\n\t\\begin{split}\n\t\ta \\wedge \\eta(x) &= a \\wedge \\eta(y^{-1}(yxy^{-1})y) \\\\\n\t\t&= \\eta^{a_{y^{-1}}}(yxy^{-1}) \\\\\n\t\t&\\leq \\eta(yxy^{-1}).\n\t\\end{split}\n\t\\end{equation*}\n\tTherefore\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta(yxy^{-1}) &\\geq \\vee \\{ \\eta(x) \\wedge a \\mid L_{\\eta}(y) \\} \\\\\n\t\t&= \\eta(x) \\wedge \\{ \\vee \\{ a \\mid a \\in L_{\\eta}(y) \\}\\} \\\\ \n\t\t&= \\eta(x) \\wedge \\lambda(y).\n\t\\end{split}\n\t\\end{equation*}\n\tThus $\\eta$ is a normal $L$-subgroup of $\\mu$.\n\t\\noindent Finally, we show that $\\lambda$ is the largest $L$-subgroup of $\\mu$ such that $\\eta$ is normal in $\\lambda$. To this end, let $\\theta$ be an $L$-subgroup of $\\mu$ containing $\\eta$ such that $\\eta$ is a normal $L$-subgroup of $\\theta$. Let $x \\in G$. Then, $(\\theta(x))_x \\in \\mu$ and for all $g \\in G$,\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta^{(\\theta(x))_x}(g) &= \\theta(x) \\wedge \\eta(xgx^{-1}) \\\\\n\t\t&= \\theta(x^{-1}) \\wedge \\eta(xgx^{-1}) ~~~\\qquad\\qquad\\qquad (\\text{since $\\theta \\in L(\\mu)$} )\\\\\n\t\t&\\leq \\eta(x^{-1}(xgx^{-1})x) \\qquad\\qquad\\qquad\\qquad (\\text{since $\\eta \\in NL(\\theta)$})\\\\\n\t\t&= \\eta(g).\n\t\\end{split}\n\t\\end{equation*}   \n\tHence $(\\theta(x))_x \\in L_{\\eta}(x)$. Therefore\n\t\\[ \\theta(x) \\leq \\vee \\{ a \\mid a \\in L_{\\eta}(x) \\} = \\lambda(x). \\]\n\tWe conclude that $\\theta \\subseteq \\lambda$."
+    },
+    {
+      "id": "theorem-30-33bca09e",
+      "type": "theorem",
+      "content": "\\label{norm_abn}\n\tLet $\\eta$ be an abnormal $L$-subgroup of $\\mu$. Then, $\\eta$ is a self-normalizing subgroup of $\\mu$, that is, $N(\\eta) = \\eta$.",
+      "content_preview": "Let be an abnormal L-subgroup of . Then, is a self-normalizing subgroup of , that is, N() = .",
+      "display_name": "Theorem",
+      "label": "norm_abn",
+      "position": {
+        "line_start": 528,
+        "line_end": 531
+      },
+      "references": [
+        {
+          "target_id": "def_norm",
+          "reference_type": "internal",
+          "context": "{a_z} \\rangle = \\eta. \\]\n\tIt follows from Theorem \\ref{def_norm} that\n\t\\[ N(\\eta) = \\bigcup \\left\\{ a_z \\in \\mu \\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\eta$ be an abnormal $L$-subgroup of $\\mu$. To show that $N(\\eta) \\subseteq \\eta$, let $a_z \\in \\mu$ such that $\\eta^{a_z} \\subseteq \\eta$. Then, \n\t\\[ a_z \\in \\langle \\eta, \\eta^{a_z} \\rangle = \\eta. \\]\n\tIt follows from Theorem \\ref{def_norm} that\n\t\\[ N(\\eta) = \\bigcup \\left\\{ a_z \\in \\mu \\mid \\eta^{a_z} \\subseteq \\eta \\right\\} \\subseteq \\eta. \\]\n\tHence $N(\\eta) = \\eta$."
+    },
+    {
+      "id": "remark-31-4e28f1bf",
+      "type": "remark",
+      "content": "In \\cite{jahan_nil}, the authors have proved that nilpotent $L$-subgroups of an $L$-group satisfy the normalizer condition, that is, if $\\eta$ is a nilpotent $L$-subgroup of an $L$-group $\\mu$, then $\\eta$ is a proper $L$-subgroup of its normalizer $N(\\eta)$. Hence nilpotent $L$-subgroups cannot be self-normalizing subgroups. It follows from the above theorem that a nilpotent $L$-subgroup cannot be an abnormal $L$-subgroup. Hence the class of nilpotent $L$-subgroups is disjoint from the class of abnormal $L$-subgroups.",
+      "content_preview": "In , the authors have proved that nilpotent L-subgroups of an L-group satisfy the normalizer condition, that is, if is a nilpotent L-subgroup of an...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 540,
+        "line_end": 542
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-32-78f54e93",
+      "type": "example",
+      "content": "Consider the $L$-subgroup $\\eta$ of the $L$-group $\\mu$ discussed in Example 1. We determine the normalizer $N(\\eta)$ of $\\eta$. By Theorem \\ref{def_norm}, \n\t\\[ N(\\eta) = \\bigcup \\left\\{ c_z \\in \\mu \\mid \\eta^{c_z} \\subseteq \\eta \\right\\}, \\]\n\tthat is, for $x \\in G$,\n\t\\[ N(\\eta)(x) = \\bigvee_{\\substack{c_x \\in \\mu \\\\ \\eta^{c_x} \\subseteq \\eta}} \\left\\{ c \\right\\}. \\]\n\tUsing the above expression, we evaluate $N(\\eta)$ for some particular elements. Firstly, consider $(23) \\in G$. Let $c_{(23)} \\in \\mu$. Then, \n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta^{c_{(23)}} (x) &= c \\wedge \\eta((23)x(23)) \\\\ \n\t\t&= \\begin{cases}\n\t\t\tc \\wedge u &\\text{if } x \\in \\langle (13) \\rangle; \\\\\n\t\t\tc \\wedge a &\\text{if } x \\in H_1 \\setminus \\langle (13) \\rangle; \\\\\n\t\t\tc \\wedge b &\\text{if } x \\in H_3 \\setminus \\langle (13) \\rangle;\\\\\n\t\t\tc \\wedge l &\\text{otherwise}\n\t\t\\end{cases}\n\t\\end{split}\n\t\\end{equation*}\n\tThus $\\eta^{c_{(23)}} \\subseteq \\eta$ only if $c = a$ or $c = l$. Therefore $N(\\eta)(23) = a = \\eta(a)$. Similarly, it can be easily seen that $N(\\eta)(x) = \\eta(x)$ for all $x \\in G$. Hence $N(\\eta) = \\eta$.",
+      "content_preview": "Consider the L-subgroup of the L-group discussed in Example 1. We determine the normalizer N() of . By Theorem , [ N() = c_z ^c_z , ] that is, for x...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 546,
+        "line_end": 564
+      },
+      "references": [
+        {
+          "target_id": "def_norm",
+          "reference_type": "internal",
+          "context": "ne the normalizer $N(\\eta)$ of $\\eta$. By Theorem \\ref{def_norm}, \n\t\\[ N(\\eta) = \\bigcup \\left\\{ c_z \\in \\mu \\mid",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-33-e6bac896",
+      "type": "definition",
+      "content": "(\\cite{jahan_max})\n\tLet $\\mu \\in L(G)$. A proper $L$-subgroup $\\eta$ of $\\mu$ is said to be a maximal $L$-subgroup of $\\mu$ if, whenever $\\eta \\subseteq \\theta \\subseteq \\mu$ for some $\\theta \\in L(\\mu)$, then either $\\theta = \\eta$ or $\\theta = \\mu$.",
+      "content_preview": "() Let L(G). A proper L-subgroup of is said to be a maximal L-subgroup of if, whenever for some L(), then either = or = .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 570,
+        "line_end": 572
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-34-7917cd10",
+      "type": "definition",
+      "content": "A non-empty subset $X$ of a lattice $L$ is said to be supstar if every non-empty subset $A$ of $X$ contains its supremum, that is, $\\mathop{\\vee}\\limits_{a \\in A} \\{a\\} \\in A$.",
+      "content_preview": "A non-empty subset X of a lattice L is said to be supstar if every non-empty subset A of X contains its supremum, that is, _a A a A.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 576,
+        "line_end": 578
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-35-fd28a1ee",
+      "type": "proposition",
+      "content": "Let $\\eta\\in L^{\\mu}$. Then, $\\eta$ possesses sup-property if and only if $\\text{Im}(\\eta)$ is a supstar subset of $L$.",
+      "content_preview": "Let L^. Then, possesses sup-property if and only if () is a supstar subset of L.",
+      "display_name": "Proposition",
+      "label": null,
+      "position": {
+        "line_start": 582,
+        "line_end": 584
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-36-6b3125bf",
+      "type": "definition",
+      "content": "Let $\\{\\eta_i:i\\in I\\}\\subseteq L^{\\mu}$ be an arbitrary family. Then, $\\{\\eta_i:i\\in I\\}$ is said to be a supstar family if $\\mathop{\\bigcup}\\limits_{i\\in I}\\text{Im} (\\eta_i)$ is a supstar subset of $L$. In particular, two $L$-subsetes $\\eta, \\theta \\in L^{\\mu}$ are said to be jointly supstar if $\\text{Im}(\\eta) \\cup \\text{Im}(\\theta)$ is a supstar subset of $L$.",
+      "content_preview": "Let _i:i I L^ be an arbitrary family. Then, _i:i I is said to be a supstar family if _i I (_i) is a supstar subset of L.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 586,
+        "line_end": 588
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-37-0a57348d",
+      "type": "lemma",
+      "content": "\\label{conj_sup}\n\tLet $\\eta \\in L(\\mu)$ such that $\\eta$ and $\\mu$ are jointly supstar. Let $a_x \\in \\mu$, where $a \\in \\text{Im}(\\mu)$. Then, \n\t\\[ \\text{Im}(\\eta^{a_x}) \\subseteq \\text{Im}(\\eta)\\cup\\text{Im}(\\mu). \\]\n\tMoreover, $\\eta \\cup \\eta^{a_x}$ possesses sup-property.",
+      "content_preview": "Let L() such that and are jointly supstar. Let a_x , where a (). Then, [ (^a_x) ()(). ] Moreover, ^a_x possesses sup-property.",
+      "display_name": "Lemma",
+      "label": "conj_sup",
+      "position": {
+        "line_start": 590,
+        "line_end": 595
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-38-8282f524",
+      "type": "theorem",
+      "content": "Let $\\eta \\in L(\\mu)$ such that $\\eta$ and $\\mu$ are jointly supstar. Let $\\eta$ be a maximal $L$-subgroup of $\\mu$. Then, $\\eta$ is either a normal or an abnormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let L() such that and are jointly supstar. Let be a maximal L-subgroup of . Then, is either a normal or an abnormal L-subgroup of .",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 597,
+        "line_end": 599
+      },
+      "references": [
+        {
+          "target_id": "abn_nor",
+          "reference_type": "internal",
+          "context": "a proper $L$-subgroup of $\\mu$. Hence by Theorem \\ref{abn_nor}, $\\eta$ cannot be both a normal and an abnormal $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nor_conj",
+          "reference_type": "internal",
+          "context": "an abnormal $L$-subgroup of $\\mu$. Then, by Lemma \\ref{nor_conj}, there exists an $L$-point $a_x \\in \\mu$ such tha",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "conj_sup",
+          "reference_type": "internal",
+          "context": "ntly supstar and $c \\in \\text{Im}(\\mu)$, by Lemma \\ref{conj_sup}, $\\eta \\cup \\eta^{c_y}$ possesses the sup-propert",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gen_sup",
+          "reference_type": "internal",
+          "context": "y}$ possesses the sup-property. Hence by Theorems \\ref{gen_sup} and \\ref{lvl_conj}, \n\t\t\\[ \\langle \\eta, \\eta^{c_y",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lvl_conj",
+          "reference_type": "internal",
+          "context": "sup-property. Hence by Theorems \\ref{gen_sup} and \\ref{lvl_conj}, \n\t\t\\[ \\langle \\eta, \\eta^{c_y} \\rangle_c = \\lang",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "conj_sup",
+          "reference_type": "internal",
+          "context": "ntly supstar and $c \\in \\text{Im}(\\mu)$, by Lemma \\ref{conj_sup}, $\\eta \\cup \\eta^{c_y}$ possesses the sup-propert",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gen_sup",
+          "reference_type": "internal",
+          "context": "y}$ possesses the sup-property. Hence by Theorems \\ref{gen_sup} and \\ref{lvl_conj}, \n\t\t\\[ \\langle \\eta, \\eta^{c_y",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lvl_conj",
+          "reference_type": "internal",
+          "context": "sup-property. Hence by Theorems \\ref{gen_sup} and \\ref{lvl_conj}, \n\t\t\\[ \\langle \\eta, \\eta^{c_y} \\rangle_c = \\lang",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "def_norm",
+          "reference_type": "internal",
+          "context": "er, since $\\eta^{c_y} \\subseteq \\eta$, by Theorem \\ref{def_norm}, $c_y \\in N(\\eta)$. Hence $\\eta \\subsetneq N(\\eta",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Firstly, since $\\eta$ is a maximal $L$-subgroup of $\\mu$, it is a proper $L$-subgroup of $\\mu$. Hence by Theorem \\ref{abn_nor}, $\\eta$ cannot be both a normal and an abnormal $L$-subgroup of $\\mu$. Now, suppose on the contrary, that $\\eta$ is neither a normal nor an abnormal $L$-subgroup of $\\mu$. Then, by Lemma \\ref{nor_conj}, there exists an $L$-point $a_x \\in \\mu$ such that $\\eta^{a_x} \\nsubseteq \\eta$. Also, it follows from the definition of abnormality that there exists an $L$-point $b_y \\in \\mu$ such that $b_y \\notin \\langle \\eta, \\eta^{b_y} \\rangle$. Here, we note that $a_x \\notin \\eta$, for if $\\eta(x) \\geq a$, then for all $g \\in G$,\n\t\\begin{equation*}\n\t\t\\begin{split}\n\t\t\t\\eta(g) &= \\eta(x^{-1}(xgx^{-1})x) \\\\\n\t\t\t&\\geq\\eta(x) \\wedge \\eta(xgx^{-1}) \\qquad\\qquad\\qquad~~ (\\text{since } \\eta \\in L(\\mu))  \\\\\n\t\t\t&\\geq a \\wedge \\eta(xgx^{-1}) \\qquad\\qquad\\qquad\\qquad (\\text{since } \\eta(x) \\geq a) \\\\\n\t\t\t&= \\eta^{a_x}(g),\n\t\t\\end{split}\n\t\\end{equation*}\n\twhich contradicts our assumption that $\\eta^{a_x} \\nsubseteq \\eta$. Also, it is clear that $b_y \\notin \\eta$. Let $c = \\mu(x)$ and $d = \\mu(y)$. Then, since $a_x \\notin \\eta$, $c_x \\notin \\eta$. Similarly, $d_y \\notin \\eta$. Moreover, since $\\{ c, d \\} \\subseteq \\text{Im}(\\mu)$,\n\t\\[ c \\vee d = c \\text{ or } d. \\]\n\tThus we have the following cases:\n\t\\begin{description}\n\t\t\\item[Case 1: $\\mathbf{c<d}$.]\tDefine an $L$-subset $\\theta$ of $G$ as follows:\n\t\t\\[ \\theta(g) = \\{ \\eta(g) \\vee c \\} \\wedge \\mu(g) \\qquad\\qquad \\text{for all } g \\in G. \\]\n\t\tNote that for all $g \\in G$, $\\theta(g) \\leq \\mu(g)$. Hence $\\theta \\in L^{\\mu}$. Now, we show that $\\theta \\in L(\\mu)$. To this end, let $g_1, g_2 \\in G$. Then,\n\t\t\\begin{equation*}\n\t\t\t\\begin{split}\n\t\t\t\t\\theta(g_1g_2) &= \\{ \\eta(g_1g_2) \\vee c \\} \\wedge \\mu(g_1g_2) \\\\\n\t\t\t\t&\\geq \\{ \\{ \\eta(g_1) \\wedge \\eta(g_2) \\} \\vee c \\} \\wedge \\{ \\mu(g_1) \\wedge \\mu(g_2) \\} \\\\\n\t\t\t\t&= \\{\\{\\eta(g_1) \\vee c\\} \\wedge \\{\\eta(g_2) \\vee c\\}\\} \\wedge \\{\\mu(g_1) \\wedge \\mu(g_2)\\} \\\\\n\t\t\t\t&= \\{\\{ \\eta(g_1) \\vee c \\} \\wedge \\mu(g_1)\\} \\wedge \\{{\\eta(g_2) \\vee c } \\wedge \\mu(g_2) \\} \\\\\n\t\t\t\t&=  \\theta(g_1) \\wedge \\theta(g_2).\n\t\t\t\\end{split}\n\t\t\\end{equation*}\n\t\tAlso, for all $g \\in G$,\n\t\t\\begin{equation*}\n\t\t\t\\begin{split}\n\t\t\t\t\\theta(g^{-1}) &= \\{ \\eta(g^{-1}) \\vee c \\} \\wedge \\mu(g^{-1}) \\\\\n\t\t\t\t&= \\{ \\eta(g) \\vee c \\} \\wedge \\mu(g) \\qquad\\qquad\\qquad (\\text{since } \\eta, \\mu \\in L(G)) \\\\\n\t\t\t\t&= \\theta(g).\n\t\t\t\\end{split}\n\t\t\\end{equation*}\n\t\tHence $\\theta \\in L(\\mu)$. Moreover, note that \n\t\t\\[ \\eta(g) \\leq \\eta(g) \\vee c \\qquad \\text{and} \\qquad \\eta(g) \\leq \\mu(g) \\]\n\t\tfor all $g \\in G$. Hence\n\t\t\\[ \\eta(g) \\leq \\{ \\eta(g) \\vee c \\} \\wedge \\mu(g) = \\theta(g) \\leq \\mu(g) \\]\n\t\tfor all $g \\in G$. Hence $\\eta \\subseteq \\theta \\subseteq \\mu$. Now, since $\\eta$  and $\\mu$ are jointly supstar and $\\{ \\eta(x), c \\} \\subseteq \\text{Im}(\\mu) \\cup \\text{Im}(\\eta)$, $\\eta(x) \\vee c = \\eta(x) \\text{ or } c$. Moreover, $c_x \\notin \\eta$ implies $\\eta(x) < c$. Thus $\\eta(x) \\vee c = c$. This implies\n\t\t\\[ \\eta(x) < c = \\{ \\eta(x) \\vee c \\} \\wedge \\mu(x) = \\theta(x). \\]\n\t\tHence $\\eta \\subsetneq \\theta$. Next, since $\\eta$  and $\\mu$ are jointly supstar and $\\{ \\eta(y), d \\} \\subseteq \\text{Im}(\\mu) \\cup \\text{Im}(\\eta)$, $\\eta(y) \\vee d = \\eta(y) \\text{ or } d$. Moreover, $d_y \\notin \\eta$ implies $\\eta(y) < d$. Also, by assuption, $c < d$. Thus $\\eta(y) \\vee c < d$. This implies\n\t\t\\[ \\theta(y) = \\{ \\eta(y) \\vee c \\} \\wedge \\mu(y) < d = \\mu(y). \\]\n\t\tThus $\\theta \\subsetneq \\mu$. Hence we have found an $L$-subgroup $\\theta$ of $\\mu$ such that $\\eta \\subsetneq \\theta \\subsetneq \\mu$, which contradicts the maximality of $\\eta$ in $\\mu$. \n\t\t\n\t\t\\item[Case 2: $\\mathbf{d < c}$.] Define an $L$-subset $\\theta$ of $G$ as follows:\n\t\t\\[ \\theta(g) = \\{ \\eta(g) \\vee d \\} \\wedge \\mu(g) \\qquad\\qquad \\text{for all } g \\in G. \\]\n\t\tThen, it can be proven similar to case 1 that $\\theta \\in L(\\mu)$ and $\\eta \\subseteq \\theta \\subseteq \\mu$.\n\t\tNow, since $\\eta$  and $\\mu$ are jointly supstar and $\\{ \\eta(y), d \\} \\subseteq \\text{Im}(\\mu) \\cup \\text{Im}(\\eta)$, $\\eta(y) \\vee d = \\eta(y) \\text{ or } d$. Moreover, $d_y \\notin \\eta$ implies $\\eta(y) < d$. Thus $\\eta(y) \\vee d = d$. This implies\n\t\t\\[ \\eta(y) < d = \\{ \\eta(y) \\vee d \\} \\wedge \\mu(y) = \\theta(y). \\]\n\t\tHence $\\eta \\subsetneq \\theta$. Next, since $\\eta$  and $\\mu$ are jointly supstar and $\\{ \\eta(x), c \\} \\subseteq \\text{Im}(\\mu) \\cup \\text{Im}(\\eta)$, $\\eta(x) \\vee c = \\eta(x) \\text{ or } c$. Moreover, $c_x \\notin \\eta$ implies $\\eta(x) < c$. Also, by assuption, $d < c$. Thus $\\eta(x) \\vee d < c$. This implies\n\t\t\\[ \\theta(x) = \\{ \\eta(x) \\vee d \\} \\wedge \\mu(x) < c = \\mu(x). \\]\n\t\tThus $\\theta \\subsetneq \\mu$. Hence we have found an $L$-subgroup $\\theta$ of $\\mu$ such that $\\eta \\subsetneq \\theta \\subsetneq \\mu$, which contradicts the maximality of $\\eta$ in $\\mu$. \n\t\t\n\t\t\\item[Case 3: $\\mathbf{c=d}$ and $\\mathbf{x \\in \\langle \\eta_c, {\\eta_c}^{y^{-1}} \\rangle}$.] Consider the $L$-subgroup $\\langle \\eta, \\eta^{c_y} \\rangle$ of $\\mu$. Note that \n\t\t\\[ \\eta \\subseteq \\langle \\eta, \\eta^{c_y} \\rangle \\subseteq \\mu. \\]\n\t\tMoreover, since $\\eta$ and $\\mu$ are jointly supstar and $c \\in \\text{Im}(\\mu)$, by Lemma \\ref{conj_sup}, $\\eta \\cup \\eta^{c_y}$ possesses the sup-property. Hence by Theorems \\ref{gen_sup} and \\ref{lvl_conj}, \n\t\t\\[ \\langle \\eta, \\eta^{c_y} \\rangle_c = \\langle (\\eta \\cup \\eta^{c_y} )_c \\rangle = \\langle \\eta_c, {\\eta_c}^{y^{-1}} \\rangle. \\]\n\t\tHence $x \\in  \\langle \\eta, \\eta^{c_y} \\rangle_c$, that is $c_x \\in  \\langle \\eta, \\eta^{c_y} \\rangle$. Since $c_x \\notin \\eta$,\n\t\t\\[ \\eta \\subsetneq \\langle \\eta, \\eta^{c_y} \\rangle \\subseteq \\mu. \\]\n\t\tTherefore by maximality of $\\eta$ in $\\mu$, $\\langle \\eta, \\eta^{c_y} \\rangle = \\mu$. Thus $c_y \\in \\langle \\eta, \\eta^{c_y} \\rangle$. This implies \n\t\t\\[ y \\in  \\langle \\eta, \\eta^{c_y} \\rangle_c = \\langle \\eta_c, {\\eta_c}^{y^{-1}} \\rangle. \\]\n\t\tNow, $b \\leq c$ implies $\\eta_c \\subseteq \\eta_b$ and ${\\eta_c}^{y^{-1}} \\subseteq {\\eta_b}^{y^{-1}}$. Thus\n\t\t\\[  y \\in \\langle \\eta, \\eta^{c_y} \\rangle_c = \\langle (\\eta \\cup \\eta^{c_y} )_c \\rangle = \\langle \\eta_c, {\\eta_c}^{y^{-1}} \\rangle \\subseteq \\langle \\eta_b, {\\eta_b}^{y^{-1}} \\rangle \\subseteq \\langle (\\eta \\cup \\eta^{b_y})_b \\rangle \\subseteq \\langle \\eta, \\eta^{b_y} \\rangle_b, \\]\n\t\twhich contradicts the assumption that $b_y \\notin \\langle \\eta, \\eta^{b_y} \\rangle$.\n\t\t\n\t\t\\item[Case 4: $\\mathbf{c=d}$ and $\\mathbf{x \\notin \\langle \\eta_c, {\\eta_c}^{y^{-1}} \\rangle}$.] Consider the $L$-subgroup $\\langle \\eta, \\eta^{c_y} \\rangle$ of $\\mu$. Again, since $\\eta$ and $\\mu$ are jointly supstar and $c \\in \\text{Im}(\\mu)$, by Lemma \\ref{conj_sup}, $\\eta \\cup \\eta^{c_y}$ possesses the sup-property. Hence by Theorems \\ref{gen_sup} and \\ref{lvl_conj}, \n\t\t\\[ \\langle \\eta, \\eta^{c_y} \\rangle_c = \\langle (\\eta \\cup \\eta^{c_y} )_c \\rangle = \\langle \\eta_c, {\\eta_c}^{y^{-1}} \\rangle. \\]\n\t\tHence $x \\notin  \\langle \\eta, \\eta^{c_y} \\rangle_c$, that is $c_x \\notin  \\langle \\eta, \\eta^{c_y} \\rangle$. Hence\n\t\t\\[ \\eta \\subseteq \\langle \\eta, \\eta^{c_y} \\rangle \\subsetneq \\mu. \\]\n\t\tBy maximality of $\\eta$ in $\\mu$, we must have $\\eta = \\langle \\eta, \\eta^{c_y} \\rangle$. Thus $\\eta^{c_y} \\subseteq \\eta$. Now, let $N(\\eta)$ be the normalizer of $\\eta$ in $\\mu$. Then, $\\eta \\subseteq N(\\eta) \\subseteq \\mu$. Moreover, since $\\eta^{c_y} \\subseteq \\eta$, by Theorem \\ref{def_norm}, $c_y \\in N(\\eta)$. Hence $\\eta \\subsetneq N(\\eta)$. Moreover, $\\eta^{a_x} \\subsetneq \\eta$ implies $a_x \\notin N(\\eta)$. Hence $N(\\eta) \\subsetneq \\mu$. Thus\n\t\t\\[ \\eta \\subsetneq N(\\eta) \\subsetneq \\mu, \\]\n\t\twhich contradicts the maximality of $\\eta$ in $\\mu$.  \n\t\\end{description}\n\tThus we arrive at a contradiction in all of these exhaustive cases. Therefore we conclude that $\\eta$ is either a normal or an abnormal $L$-subgroup of $\\mu$."
+    },
+    {
+      "id": "theorem-39-4c7aae04",
+      "type": "theorem",
+      "content": "Let $\\eta$ be a maximal $L$-subgroup of $\\mu$. Then, $\\eta$ is either a normal or an abnormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let be a maximal L-subgroup of . Then, is either a normal or an abnormal L-subgroup of .",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 676,
+        "line_end": 678
+      },
+      "references": [
+        {
+          "target_id": "def_norm",
+          "reference_type": "internal",
+          "context": "bf{\\eta^{a_x} \\subseteq \\eta}$.] Then, by Theorem \\ref{def_norm}, $a_x \\in N(\\eta)$. Since $N(\\eta) = \\eta$, $a_x",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\eta$ be a maximal $L$-subgroup of $\\mu$ and let $N(\\eta)$ denote the normalizer of $\\eta$ in $\\mu$. Then,\n\t\\[ \\eta \\subseteq N(\\eta) \\subseteq \\mu. \\]\n\tBy maximality of $\\eta$, either $N(\\eta) = \\mu$ or $N(\\eta) = \\eta$. If $N(\\eta) = \\mu$, then $\\eta$ is a normal $L$-subgroup of $\\mu$. On the other hand, suppose that $N(\\eta) = \\eta$. We claim that $\\eta$ is an abnormal $L$-subgroup of $\\mu$. To this end, let $a_x \\in \\mu$. Then, we have the following cases:\n\t\\begin{description}\n\t\t\\item[Case 1: $\\mathbf{\\eta^{a_x} \\nsubseteq \\eta.}$]\tThen, $\\eta \\subsetneq \\langle \\eta, \\eta^{a_x} \\rangle \\subseteq \\mu$. By maximality of $\\eta$, $\\langle \\eta, \\eta^{a_x} \\rangle = \\mu$. Thus $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$.\n\t\t\\item[Case 2: $\\mathbf{\\eta^{a_x} \\subseteq \\eta}$.] Then, by Theorem \\ref{def_norm}, $a_x \\in N(\\eta)$. Since $N(\\eta) = \\eta$, $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$.\n\t\\end{description}\n\t\\noindent Hence in both the cases, $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$. Thus $\\eta$ is an abnormal $L$-subgroup of $\\mu$."
+    },
+    {
+      "id": "example-40-0cce94f2",
+      "type": "example",
+      "content": "Let $M=\\{ l,f,a,b,c,d,u \\}$ be the lattice given by figure 1. Let $\\mathbf{2}$ be the chain $0<1$. Then, \n\t\\begin{align*}\n\t\tM \\times \\mathbf{2} = &\\{ (l,0), (f,0), (a,0), (b,0), (c,0), (d,0), (u,0),\\\\\n\t\t&~ (l,1), (f,1), (a,1), (b,1), (c,1), (d,1), (u,1) \\}. \n\t\\end{align*} \n\t\\noindent Let $G=S_4$, the group of all permutations of the set $\\{1,2,3,4\\}$ with identity element $\\epsilon$. Let\n\t\\[ D_4^1 = \\langle (24), (1234) \\rangle, D_4^2 = \\langle (12), (1324) \\rangle, D_4^3 = \\langle (23), (1342) \\rangle \\]\n\tdenote the dihedral subgroups of $G$ and $V_4 = \\{\\epsilon, (12)(34), (13)(24), (14)(23)\\}$ denote the Klein-4 subgroup of $G$. \n\t\\begin{center}\n\t\t\\includegraphics[scale=1.0]{lattice3.png}\\\\\n\t\t\\centering \\text{Figure 1}\t\t\n\t\\end{center}\n\tDefine the $L$-subset $\\mu$ of $G$ as follows:\n\t\\[ \\mu(x) = \\begin{cases}\n\t\t(u,1) &\\text{if } x = e,\\\\\n\t\t(d,1) &\\text{if } x \\in V_4 \\setminus \\{e\\}, \\\\\n\t\t(d,0) &\\text{if } x \\in S_4 \\setminus V_4.\n\t\\end{cases} \\]\n\tSince each non-empty level subset $\\mu_t$ is a subgroup of $G$, by Theorem \\ref{lev_gp}, $\\mu$ is an $L$-subgroup of $G$.\n\t\n\t\\noindent Now, define $\\eta \\in L^{\\mu}$ as follows:\n\t\\[ \\eta(x) = \\begin{cases}\n\t\t(u,1) &\\text{if } x=e,\\\\\n\t\t(d,1) &\\text{if } x \\in V_4 \\setminus \\{e\\},\\\\\n\t\t(a,0) &\\text{if } x \\in D_4^1 \\setminus V_4,\\\\\n\t\t(b,0) &\\text{if } x \\in D_4^2 \\setminus V_4,\\\\\n\t\t(c,0) &\\text{if } x \\in D_4^3 \\setminus V_4,\\\\\n\t\t(f,0) &\\text{if } x \\in S_4 \\setminus \\mathop{\\cup}\\limits_{i=1}^3 D_4^i.\n\t\\end{cases} \\]\n\tSince every non-empty level subset $\\eta_t$ is a subgroup of $\\mu_t$, by Theorem \\ref{lev_sgp}, $\\eta \\in L(\\mu)$. Moreover, it can be verified that $\\eta$ is a maximal $L$-subgroup of $\\mu$. To this end, suppose that there exists an $L$-subgroup $\\theta \\in L(\\mu)$ such that $\\eta \\subsetneq \\theta \\subseteq \\mu$. Then, there exists $x \\in G$ such that $\\eta(x) < \\theta(x) \\leq \\mu(x)$. Since \n\t\\[ \\eta_{(u,1)} = \\mu_{(u,1)} \\qquad \\text{and} \\qquad \\eta_{(d,1)} = \\mu_{(d,1)}, \\]\n\twe must have $x \\in S_4 \\setminus V_4$. Now, suppose that $x \\in D_4^1 \\setminus V_4$. Then, \n\t$\\eta(x) < \\theta(x) \\leq \\mu(x)$ implies $\\theta(x) = (d,0)$. But then, $D_4^1, D_4^2 \\subseteq \\theta_{(b,0)}$ implies $\\theta_{(b,0)} = S_4$. Similarly, $\\theta_{(c,0)} = S_4$. Thus $\\theta_{(d,0)} = S_4$, which implies $\\theta = \\mu$. Moreover, it can be verified in a similar manner for all other $x$ that $\\theta = \\mu$. Hence $\\eta$ is a maximal $L$-subgroup of $\\mu$.\n\t\n\t\\noindent Next, note that the pairs $(\\eta_t, \\mu_t)$ for $t = (a,1), (b,1) \\text{ and } (c,1)$ are \n\t\\[ (\\eta_{(a,1)}, \\mu_{(a,1)}) = (D_4^1, S_4), (\\eta_{(b,1)}, \\mu_{(b,1)}) = (D_4^2, S_4), (\\eta_{(c,1)}, \\mu_{(c,1)}) = (D_4^3, S_4) \\]\n\tSince none of the $D_4^i$ is a normal subgroup of $S_4$, by Theorem \\ref{lev_norsgp}, $\\eta$ is not a normal $L$-subgroup of $\\mu$.  \n\t\t\n\t\\noindent Finally, it can be shown easily that $\\eta$ is an abnormal $L$-subgroup of $\\mu$. For instance, consider the $L$-point ${(d,0)}_{(123)} \\in \\mu$. Then, by definition, \n\t\\[ \\eta^{{(d,0)}_{(123)}}(x) = (d,0) \\wedge \\eta((123)x(132)) \\]\n\tfor all $x \\in S_4$. Hence\n\t\\[\t\\eta^{{(d,0)}_{(123)}}(x) = \\begin{cases}\n\t\t(d,0) \\wedge (u,1) &\\text{if } x=e,\\\\\n\t\t(d,0) \\wedge (d,1) &\\text{if } x \\in V_4 \\setminus \\{e\\},\\\\\n\t\t(d,0) \\wedge (b,0) &\\text{if } x \\in D_4^1 \\setminus V_4,\\\\\n\t\t(d,0) \\wedge (c,0) &\\text{if } x \\in D_4^2 \\setminus V_4,\\\\\n\t\t(d,0) \\wedge (a,0) &\\text{if } x \\in D_4^3 \\setminus V_4,\\\\\n\t\t(d,0) \\wedge (f,0) &\\text{if } x \\in S_4 \\setminus \\mathop{\\cup}\\limits_{i=1}^3 D_4^i.\n\t\\end{cases} \\]\n\tThus\n\t\\[\\eta^{{(d,0)}_{(123)}}(x) = \\begin{cases}\n\t\t(d,0) &\\text{if } x \\in V_4,\\\\\n\t\t(b,0) &\\text{if } x \\in D_4^1 \\setminus V_4,\\\\\n\t\t(c,0) &\\text{if } x \\in D_4^2 \\setminus V_4,\\\\\n\t\t(a,0) &\\text{if } x \\in D_4^3 \\setminus V_4,\\\\\n\t\t(f,0) &\\text{if } x \\in S_4 \\setminus \\mathop{\\cup}\\limits_{i=1}^3 D_4^i.\n\t\\end{cases} \\] \n\tHence it is clear that ${(d,0)}_{(123)} \\in \\langle \\eta, \\eta^{{(d,0)}_{(123)}} \\rangle$.",
+      "content_preview": "Let M= l,f,a,b,c,d,u be the lattice given by figure 1. Let be the chain 0<1. Then, M = & (l,0), (f,0), (a,0), (b,0), (c,0), (d,0), (u,0), &~ (l,1),...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 692,
+        "line_end": 751
+      },
+      "references": [
+        {
+          "target_id": "lev_gp",
+          "reference_type": "internal",
+          "context": "l subset $\\mu_t$ is a subgroup of $G$, by Theorem \\ref{lev_gp}, $\\mu$ is an $L$-subgroup of $G$.\n\t\n\t\\noindent No",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lev_sgp",
+          "reference_type": "internal",
+          "context": "set $\\eta_t$ is a subgroup of $\\mu_t$, by Theorem \\ref{lev_sgp}, $\\eta \\in L(\\mu)$. Moreover, it can be verified",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lev_norsgp",
+          "reference_type": "internal",
+          "context": "$D_4^i$ is a normal subgroup of $S_4$, by Theorem \\ref{lev_norsgp}, $\\eta$ is not a normal $L$-subgroup of $\\mu$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-41-40a8970b",
+      "type": "definition",
+      "content": "Let $\\eta$ be an $L$-subgroup of $\\mu$. Then, $\\eta$ is said to be a contranormal $L$-subgroup of $\\mu$ if there does not exist any proper $L$-subgroup of $\\mu$ containing every conjugate $\\eta^{a_z}$ of $\\eta$ in $\\mu$.",
+      "content_preview": "Let be an L-subgroup of . Then, is said to be a contranormal L-subgroup of if there does not exist any proper L-subgroup of containing every...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 759,
+        "line_end": 761
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-42-b688282f",
+      "type": "definition",
+      "content": "(\\cite{ajmal_nc})\n\tLet $\\eta \\in L(\\mu)$. The $L$-subset $\\mu\\eta\\mu^{-1}$ of $\\mu$ defined by \n\t\\[ \\mu\\eta\\mu^{-1}(x) = \\bigvee_{x=zyz^{-1}} \\left\\{ \\eta(y) \\wedge \\mu(z) \\right\\} \\qquad \\text{ for each } x \\in G \\]\n\tis called the conjugate of $\\eta$ in $\\mu$.\tThe normal closure of $\\eta$ in $\\mu$, denoted by $\\eta^\\mu$, is defined to be the $L$-subgroup of $\\mu$ generated by the conjugate $\\mu\\eta\\mu^{-1}$, that is,\n\t\\[ \\eta^\\mu = \\langle \\mu\\eta\\mu^{-1} \\rangle. \\]\n\tMoreover, $\\eta^\\mu$ is the smallest normal $L$-subgroup of $\\mu$ containing $\\eta$.",
+      "content_preview": "() Let L(). The L-subset ^-1 of defined by [ ^-1(x) = _x=zyz^-1 (y) (z) x G ] is called the conjugate of in .",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 767,
+        "line_end": 773
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-43-475bd734",
+      "type": "remark",
+      "content": "The tip of the normal closure $\\eta^\\mu$ of $\\eta$ is same as $\\text{tip}(\\eta)$, that is, $\\eta^\\mu (e) = \\eta(e)$.",
+      "content_preview": "The tip of the normal closure ^ of is same as (), that is, ^ (e) = (e).",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 775,
+        "line_end": 777
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-44-245a0b64",
+      "type": "definition",
+      "content": "(\\cite{ajmal_nc})\n\tLet $\\eta \\in L(\\mu)$. Define a descending series of $L$-subgroups of $\\mu$ inductively as follows:\n\t\\[ \\eta_0 = \\mu \\qquad \\text{ and } \\qquad \\eta_i = \\eta^{\\eta_{i-1}} \\qquad \\text{ for all } i \\geq 1. \\]\n\tThen, $\\eta_i$ is the smallest normal $L$-subgroup of $\\eta_{i-1}$ containing $\\eta$, called the $i^{th}$ normal closure of $\\eta$ in $\\mu$. The series of $L$-subgroups\n\t\\[ \\mu = \\eta_0 \\supseteq \\eta_1 \\supseteq \\ldots \\supseteq \\eta_{i-1} \\supseteq \\eta_i \\supseteq \\ldots \\]\n\tis called the normal closure series of $\\eta$ in $\\mu$. Moreover, if there exists a non-negative integer $m$ such that \n\t\\[ \\eta = \\eta_m \\vartriangleleft \\eta_{m-1} \\vartriangleleft \\ldots \\vartriangleleft \\eta_0 = \\mu, \\]\n\tthen $\\eta$ is said to be a subnormal $L$-subgroup of $\\mu$ with defect $m$. \n\t\n\t\\noindent Clearly, $m=0$ if $\\eta = \\mu$ and $m=1$ if $\\eta \\in NL(\\mu)$ and $\\eta \\neq \\mu$.",
+      "content_preview": "() Let L(). Define a descending series of L-subgroups of inductively as follows: [ _0 = _i = ^_i-1 i 1. ] Then, _i is the smallest normal L-subgroup...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 779,
+        "line_end": 789
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-45-c52576b5",
+      "type": "theorem",
+      "content": "\\label{con_sub}\n\tLet $\\eta$ be a contranormal $L$-subgroup of $\\mu$. Then, $\\eta$ is a normal $L$-subgroup of $\\mu$ if and only if $\\eta = \\mu$. Moreover, if $\\eta$ is a proper $L$-subgroup of $\\mu$, then $\\eta$ is not a subnormal $L$-subgroup of $\\mu$. Hence $\\eta$ is either a subnormal $L$-subgroup of $\\mu$ with defect $0$ or $\\eta$ is not a subnormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let be a contranormal L-subgroup of . Then, is a normal L-subgroup of if and only if = . Moreover, if is a proper L-subgroup of , then is not a...",
+      "display_name": "Theorem",
+      "label": "con_sub",
+      "position": {
+        "line_start": 791,
+        "line_end": 794
+      },
+      "references": [
+        {
+          "target_id": "nor_conj",
+          "reference_type": "internal",
+          "context": ". Then, since $\\eta$ is normal in $\\mu$, by Lemma \\ref{nor_conj}, $\\eta^{a_z} \\subseteq \\eta$ for all $a_z \\in \\mu",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Firstly,  suppose that $\\eta$ is a normal $L$-subgroup of $\\mu$. Then, since $\\eta$ is normal in $\\mu$, by Lemma \\ref{nor_conj}, $\\eta^{a_z} \\subseteq \\eta$ for all $a_z \\in \\mu$. However, since $\\eta$ is a contranormal $L$-subgroup of $\\mu$, there does not exist any proper $L$-subgroup of $\\mu$ containing every conjugate of $\\eta$. It follows that $\\eta = \\mu$. \n\t\n\tNext, suppose that $\\eta$ is a proper $L$-subgroup of $\\mu$. We claim that $\\eta$ is a contranormal $L$-subgroup of $\\mu$ if and only if $\\eta^{\\mu} = \\mu$. For this, we show that if for $\\theta \\in L(\\mu)$, $\\eta^{a_z} \\subseteq \\theta$ for all $a_z \\in \\mu$ if and only if $\\eta^\\mu \\subseteq \\theta$.\n \t\n \tSuppose that  $\\eta^{a_z} \\subseteq \\theta$ for all $a_z \\in \\mu$. Let $x \\in G$. Then,\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\mu\\eta\\mu^{-1} (x) &= \\bigvee_{\\substack{x=zyz^{-1} \\\\ y,z \\in G}} \\left\\{ \\eta(y) \\wedge \\mu(z) \\right\\} \\\\\n\t\t&= \\bigvee_{z \\in G} \\left\\{ \\eta(z^{-1}xz) \\wedge \\mu(z) \\right\\} \\\\\n\t\t&= \\bigvee_{\\substack{a \\leq \\mu(z) \\\\ z \\in G}} \\left\\{ \\eta(z^{-1}xz) \\wedge a \\right\\} \\\\\n\t\t&= \\left\\{ \\bigcup_{a_z \\in \\mu} \\eta^{a_z} \\right\\} (x).\n\t\\end{split}\n\t\\end{equation*}\n\tBy assumption, $\\eta^{a_z} \\subseteq \\theta$ fo all $a_z \\in \\mu$. Hence $\\mathop{\\bigcup}\\limits_{a_z \\in \\mu} \\eta^{a_z} \\subseteq \\theta$. Hence $\\eta^\\mu = \\langle \\mu \\eta \\mu^{-1} \\rangle \\subseteq \\theta$. \n\t\n\t\\noindent Conversely, suppose that $\\eta^\\mu \\subseteq \\eta$. Let $a_z \\in \\mu$. Then, $\\mu(z^{-1}) \\geq a$. Therefore for all $x \\in G$,\n\t\\begin{equation*}\n\t\\begin{split}\n\t\t\\eta^{a_z}(x) &= a \\wedge \\eta(zxz^{-1}) \\\\\n\t\t&\\leq \\mu(z^{-1}) \\wedge \\eta(zxz^{-1}) \\\\\n\t\t&\\leq \\bigvee_{\\substack{x = gyg^{-1} \\\\ g,y \\in G}} \\left\\{ \\eta(y) \\wedge \\mu(g) \\right\\} \\\\\n\t\t&= \\mu\\eta\\mu^{-1}(x).\n\t\\end{split}\n\t\\end{equation*}\n\tSince $\\eta^\\mu \\subseteq \\theta$, $\\mu\\eta\\mu^{-1} \\subseteq \\theta$. This implies $\\eta^{a_z} \\subseteq \\theta$ for all $a_z \\in \\mu$.\n\t\n\tFrom the above claim, it follows that $\\eta$ is a contranormal $L$-subgroup of $\\mu$ if and only if $\\eta^\\mu = \\mu$. Now, let $\\eta_i$ denote the $i^{th}$ normal closure of $\\eta$ in $\\mu$, where\n\t\\[ \\eta_0 = \\mu \\qquad \\text{ and } \\qquad \\eta_i = \\eta^{\\eta_{i-1}} \\qquad \\text{ for all } i \\geq 1. \\]\n\tIt follows that \n\t\\[ \\eta_0 = \\mu, \\eta_1 = \\eta^{\\eta_0} = \\eta^\\mu, \\eta_2 = \\eta^{\\eta_1} = \\eta^{\\mu} = \\mu, \\ldots, \\eta_i = \\eta^{\\eta_{i-1}} = \\eta^{\\mu} = \\mu, \\ldots \\]\n\tHence $\\eta_m \\neq \\eta$ for any $m \\geq 0$. It follows that $\\eta$ is not a subnormal $L$-subgroup of $\\mu$."
+    },
+    {
+      "id": "definition-46-0fe1e07e",
+      "type": "definition",
+      "content": "\\label{def_contra}\n\tLet $\\eta \\in L(\\mu)$. Then, $\\eta$ is said to be a contranormal $L$-subgroup of $\\mu$ if the normal closure $\\eta^\\mu$ of $\\eta$ in $\\mu$ is the whole $L$-group $\\mu$.",
+      "content_preview": "Let L(). Then, is said to be a contranormal L-subgroup of if the normal closure ^ of in is the whole L-group .",
+      "display_name": "Definition",
+      "label": "def_contra",
+      "position": {
+        "line_start": 832,
+        "line_end": 835
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-47-febb40bc",
+      "type": "lemma",
+      "content": "\\label{nc_sup}\n\tLet $\\eta \\in L(\\mu)$ such that $\\eta$ and $\\mu$ are jointly supstar. Then, \n\t\\[ \\text{Im}(\\mu\\eta\\mu^{-1}) \\subseteq \\text{Im}(\\eta)\\cup\\text{Im}(\\mu). \\]\n\tMoreover, if $L$ is a chain, then $\\mu\\eta\\mu^{-1}$ possesses sup-property.",
+      "content_preview": "Let L() such that and are jointly supstar. Then, [ (^-1) ()(). ] Moreover, if L is a chain, then ^-1 possesses sup-property.",
+      "display_name": "Lemma",
+      "label": "nc_sup",
+      "position": {
+        "line_start": 839,
+        "line_end": 844
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-48-119572ba",
+      "type": "theorem",
+      "content": "\\label{lev_contra}\n\tLet $L$ be a chain and $\\mu \\in L(G)$. Let $\\eta \\in L(\\mu)$ such that $\\eta$ and $\\mu$ are jointly supstar. If $\\eta$ is a contranormal $L$-subgroup of $\\mu$, then $\\eta_t$ is a contranormal subgroup of $\\mu_t$ for all $t \\leq \\text{tip}(\\eta)$. Conversely, let $\\mu \\in L(G)$ and $\\eta \\in L(\\mu)$ such that $\\text{tip}(\\eta) = \\text{tip}(\\mu)$. If $\\eta_t$ is a contranormal $L$-subgroup of $\\mu_t$ for all $t \\leq \\text{tip}(\\eta)$, then $\\eta$ is a contranormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let L be a chain and L(G). Let L() such that and are jointly supstar. If is a contranormal L-subgroup of , then _t is a contranormal subgroup of _t...",
+      "display_name": "Theorem",
+      "label": "lev_contra",
+      "position": {
+        "line_start": 846,
+        "line_end": 849
+      },
+      "references": [
+        {
+          "target_id": "lev_norsgp",
+          "reference_type": "internal",
+          "context": "roup of $\\mu$ containing $\\eta$. Hence by Theorem \\ref{lev_norsgp}, $\\{\\eta^\\mu\\}_t$ is a normal subgroup of $\\mu_t$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "nc_sup",
+          "reference_type": "internal",
+          "context": "angle \\subseteq {\\eta_t}^{\\mu_t} $. Now, by Lemma \\ref{nc_sup}, $\\mu\\eta\\mu^{-1}$ possesses sup-property. Hence",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "gen_sup",
+          "reference_type": "internal",
+          "context": "mu^{-1}$ possesses sup-property. Hence by Theorem \\ref{gen_sup}, \n\t\\[ \\{\\eta^\\mu\\}_t = \\langle \\mu\\eta\\mu^{-1} \\r",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lvl_conj",
+          "reference_type": "internal",
+          "context": "a^{t_{x^{-1}}})_t \\subseteq \\theta_t$. By Theorem \\ref{lvl_conj}, \n\t\\[ (\\eta^{t_{x^{-1}}})_t = {\\eta_t}^x. \\]\n\tThe",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "($\\Rightarrow$) Let $t \\leq \\text{tip}(\\eta)$. To show that $\\eta_t$ is a contranormal subgroup of $\\mu_t$, we claim that $\\{\\eta^\\mu\\}_t = {\\eta_t}^{\\mu_t}$, where ${\\eta_t}^{\\mu_t}$ denotes the normal closure of $\\eta_t$ in $\\mu_t$.\n\t\n\tFirstly, note that $\\eta^\\mu$ is a normal $L$-subgroup of $\\mu$ containing $\\eta$. Hence by Theorem \\ref{lev_norsgp}, $\\{\\eta^\\mu\\}_t$ is a normal subgroup of $\\mu_t$ containing $\\eta_t$. By the definition of normal closure, ${\\eta_t}^{\\mu_t}$ is the smallest normal subgroup of $\\mu_t$ containing $\\eta_t$. Hence ${\\eta_t}^{\\mu_t} \\subseteq \\{ \\eta^\\mu \\}_t$. For the reverse inclusion, let $x \\in \\{ \\mu\\eta\\mu^{-1} \\}_t$. Then, $\\mu\\eta\\mu^{-1}(x) \\geq t$, that is,\n\t\\[ \\bigvee_{\\substack{x = gyg^{-1} \\\\ g,y \\in G}} \\left\\{ \\eta(y) \\wedge \\mu(g) \\right\\} \\geq t. \\]\n\tLet $A = \\{ \\eta(y) \\wedge \\mu(g) \\mid y,g \\in G \\text{ and } gyg^{-1} = x \\}.$ Then, $A$ is a non-empty subset of $\\text{Im}(\\mu)\\cup\\text{Im}(\\eta)$. Since $\\eta$ and $\\mu$ are jointly supstar, $A$ contains its supremum, that is, there exist $y_1, g_1 \\in G$ such that\n\t\\[ \\bigvee_{\\substack{x = gyg^{-1} \\\\ g,y \\in G}} \\left\\{ \\eta(y) \\wedge \\mu(g) \\right\\} = \\eta(y_1) \\wedge \\mu(g_1). \\]\n\tMoreover, $\\eta(y_1) \\wedge \\mu(g_1) \\geq t$, that is, $y_1 \\in \\eta_t$ and $g_1 \\in \\mu_t$. Thus \n\t\\[ x = g_1y_1{g_1}^{-1} \\in {\\eta_t}^{\\mu_t}. \\]\n\tHence $\\{\\mu\\eta\\mu^{-1}\\}_t \\subseteq {\\eta_t}^{\\mu_t}$. This implies $\\langle \\{\\mu\\eta\\mu^{-1}\\}_t \\rangle \\subseteq {\\eta_t}^{\\mu_t} $. Now, by Lemma \\ref{nc_sup}, $\\mu\\eta\\mu^{-1}$ possesses sup-property. Hence by Theorem \\ref{gen_sup}, \n\t\\[ \\{\\eta^\\mu\\}_t = \\langle \\mu\\eta\\mu^{-1} \\rangle_t = \\langle \\{ \\mu\\eta\\mu^{-1}\\}_t \\rangle \\subseteq {\\eta_t}^{\\mu_t}. \\]\n\tThus $\\{\\eta^\\mu\\}_t = {\\eta_t}^{\\mu_t}$. This proves the claim.\n\t\n\tNow, since $\\eta$ is a contranormal $L$-subgroup of $\\mu$, $\\eta^\\mu = \\mu$. Hence $\\{\\eta^\\mu\\}_t = \\mu_t$. It follows from the above claim that ${\\eta_t}^{\\mu_t} = \\mu_t$. Thus $\\eta_t$ is a contranormal subgroup of $\\mu_t$.\n\t\n\t($\\Leftarrow$) To show that $\\eta$ is a contranormal $L$-subgroup of $\\mu$, suppose that there exists an $L$-subgroup $\\theta$ of $\\mu$ such that $\\eta^{a_z} \\subseteq \\theta$ for all $a_z \\in \\mu$. Note that $\\text{tip}(\\eta) = \\text{tip}(\\theta) = \\text{tip}(\\mu)$. We show that $\\theta_t = \\mu_t$ for all $t \\leq \\theta(e)$.\n\t\n\t\\noindent Let $t \\leq \\theta(e)$. Since $\\theta \\subseteq \\mu$, $\\theta_t \\subseteq \\mu_t$. For the reverse inclusion, we claim that every conjugate of $\\eta_t$ in $\\mu_t$ is contained in $\\theta_t$. To this end, let $x \\in \\mu_t$. Then, $t_{x^{-1}} \\in \\mu$. By assumption, $\\eta^{t_{x^{-1}}} \\subseteq \\theta$. Thus $(\\eta^{t_{x^{-1}}})_t \\subseteq \\theta_t$. By Theorem \\ref{lvl_conj}, \n\t\\[ (\\eta^{t_{x^{-1}}})_t = {\\eta_t}^x. \\]\n\tTherefore ${\\eta_t}^x \\subseteq \\theta_t$, which proves the claim. Since $\\eta_t$ is a contranormal subgroup of $\\mu_t$, we must have $\\theta_t = \\mu_t$. Thus $\\theta = \\mu$."
+    },
+    {
+      "id": "theorem-49-ee2b40d1",
+      "type": "theorem",
+      "content": "Let $H$ and $K$ be subgroups of $G$. Then, $H$ is a contranormal subgroup of $K$ if and only if $1_H$ is contranormal $L$-subgroup of $1_K$.",
+      "content_preview": "Let H and K be subgroups of G. Then, H is a contranormal subgroup of K if and only if 1_H is contranormal L-subgroup of 1_K.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 874,
+        "line_end": 876
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-50-ca8ec847",
+      "type": "theorem",
+      "content": "Let $\\eta$ be a maximal $L$-subgroup of $\\mu$. Then, $\\eta$ is either a normal or a contranormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let be a maximal L-subgroup of . Then, is either a normal or a contranormal L-subgroup of .",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 878,
+        "line_end": 880
+      },
+      "references": [
+        {
+          "target_id": "def_contra",
+          "reference_type": "internal",
+          "context": "her hand, if $\\eta^\\mu = \\mu$, then by Definition \\ref{def_contra}, $\\eta$ is a contranormal $L$-subgroup of $\\mu$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\eta$ be a maximal $L$-subgroup of $\\mu$ and let $\\eta^\\mu$ be the normal closure of $\\eta$ in $\\mu$. Then,\n\t\\[ \\eta \\subseteq \\eta^\\mu \\subseteq \\mu. \\]\n\tBy maximality of $\\eta$, either $\\eta^\\mu = \\mu$ or $\\eta^\\mu = \\eta$. If $\\eta^\\mu = \\eta$, then $\\eta$ is a normal $L$-subgroup of $\\mu$. On the other hand, if $\\eta^\\mu = \\mu$, then by Definition \\ref{def_contra}, $\\eta$ is a contranormal $L$-subgroup of $\\mu$. Hence the result."
+    },
+    {
+      "id": "theorem-51-ad17cbb4",
+      "type": "theorem",
+      "content": "Let $\\eta$ be an abnormal $L$-subgroup of $\\mu$. Then, $\\eta$ is a contranormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Let be an abnormal L-subgroup of . Then, is a contranormal L-subgroup of .",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 889,
+        "line_end": 891
+      },
+      "references": [],
+      "proof": "Let $\\eta$ be an abnormal $L$-subgroup of $\\mu$. Then, for all $a_z \\in \\mu$, $a_z \\in \\langle \\eta, \\eta^{a_z} \\rangle$. To show that $\\eta$ is a contranormal $L$-subgroup of $\\mu$, let $\\theta \\in L(\\mu)$ such that $\\eta^{a_z} \\subseteq \\theta$ for all $a_z \\in \\mu$. We show that $\\theta = \\mu$.\n\t\n\t\\noindent Firstly, note that $\\eta \\subseteq \\theta$, since $\\eta = \\eta^{{a_0}_e} \\subseteq \\theta$, where $a_0 = \\text{tip}(\\mu)$. Now, let $x \\in G$ and $a = \\mu(x)$. Then, $a_x \\in \\mu$. By abnormality of $\\eta$ in $\\mu$, $a_x \\in \\langle \\eta, \\eta^{a_x} \\rangle$. By assumption, $\\eta^{a_x} \\subseteq \\theta$. Moreover, $\\eta \\subseteq \\theta$. Hence $\\langle \\eta, \\eta^{a_x} \\rangle \\subseteq \\theta$. This implies $a_x \\in \\theta$, that is, $\\theta(x) \\geq a =\\mu(x)$. Thus $\\theta(x) = \\mu(x)$ and we conclude that $\\theta = \\mu$."
+    },
+    {
+      "id": "example-52-57089654",
+      "type": "example",
+      "content": "Consider the $L$-subgroup $\\eta$ of the $L$-group $\\mu$ discussed in Example 1. We show that $\\eta$ is a contranormal $L$-subgroup of $\\mu$. Suppose that there exists an $L$-subgroup $\\theta$ of $\\mu$ such that $\\eta^{a_x} \\subseteq \\theta$ for all $a_x \\in \\mu$. We show that $\\theta = \\mu$. For instance, consider $(123) \\in S_4$. By assumption, \n\t\\[ a = u \\wedge a = u \\wedge \\eta((123)) = \\eta^{u_\\epsilon}((123)) \\leq \\theta((123)). \\]\n\tAlso, \n\t\\[ b = d \\wedge b = d \\wedge \\eta((124)) = \\eta^{d_{(34)}}((123)) \\leq \\theta((123)). \\] \n\tThus $\\theta((123)) \\geq d = a \\vee b$. Since $\\theta \\in L(\\mu)$, it follows that $\\theta((123)) = \\mu((123)) = d$. Similarly, it can be verified that for all $x \\in G$, $\\theta(x) = \\mu(x)$, that is, $\\theta = \\mu$. It follows that $\\eta$ is a contranormal $L$-subgroup of $\\mu$.",
+      "content_preview": "Consider the L-subgroup of the L-group discussed in Example 1. We show that is a contranormal L-subgroup of .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 898,
+        "line_end": 905
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-19-d2aead7a",
+      "target": "theorem-12-f9e5bc2a",
+      "type": null
+    },
+    {
+      "source": "theorem-22-57591604",
+      "target": "theorem-12-f9e5bc2a",
+      "type": null
+    },
+    {
+      "source": "theorem-22-57591604",
+      "target": "lemma-21-7a9b27c2",
+      "type": null
+    },
+    {
+      "source": "theorem-22-57591604",
+      "target": "lemma-20-5a014bbb",
+      "type": null
+    },
+    {
+      "source": "example-24-1040e3a6",
+      "target": "theorem-3-2170fa01",
+      "type": null
+    },
+    {
+      "source": "example-24-1040e3a6",
+      "target": "theorem-7-e3ce7d45",
+      "type": null
+    },
+    {
+      "source": "example-24-1040e3a6",
+      "target": "theorem-12-f9e5bc2a",
+      "type": null
+    },
+    {
+      "source": "theorem-26-6a48f735",
+      "target": "lemma-25-ac00ab09",
+      "type": null
+    },
+    {
+      "source": "proposition-28-e5adf71c",
+      "target": "theorem-17-d49122a9",
+      "type": null
+    },
+    {
+      "source": "proposition-28-e5adf71c",
+      "target": "proposition-27-6db4559b",
+      "type": null
+    },
+    {
+      "source": "theorem-29-529fcfcd",
+      "target": "proposition-28-e5adf71c",
+      "type": null
+    },
+    {
+      "source": "theorem-30-33bca09e",
+      "target": "theorem-29-529fcfcd",
+      "type": null
+    },
+    {
+      "source": "example-32-78f54e93",
+      "target": "theorem-29-529fcfcd",
+      "type": null
+    },
+    {
+      "source": "theorem-38-8282f524",
+      "target": "theorem-26-6a48f735",
+      "type": null
+    },
+    {
+      "source": "theorem-38-8282f524",
+      "target": "lemma-25-ac00ab09",
+      "type": null
+    },
+    {
+      "source": "theorem-38-8282f524",
+      "target": "lemma-37-0a57348d",
+      "type": null
+    },
+    {
+      "source": "theorem-38-8282f524",
+      "target": "theorem-13-69d5ad58",
+      "type": null
+    },
+    {
+      "source": "theorem-38-8282f524",
+      "target": "theorem-17-d49122a9",
+      "type": null
+    },
+    {
+      "source": "theorem-38-8282f524",
+      "target": "theorem-29-529fcfcd",
+      "type": null
+    },
+    {
+      "source": "theorem-39-4c7aae04",
+      "target": "theorem-29-529fcfcd",
+      "type": null
+    },
+    {
+      "source": "example-40-0cce94f2",
+      "target": "theorem-3-2170fa01",
+      "type": null
+    },
+    {
+      "source": "example-40-0cce94f2",
+      "target": "theorem-7-e3ce7d45",
+      "type": null
+    },
+    {
+      "source": "example-40-0cce94f2",
+      "target": "theorem-10-540972d8",
+      "type": null
+    },
+    {
+      "source": "theorem-45-c52576b5",
+      "target": "lemma-25-ac00ab09",
+      "type": null
+    },
+    {
+      "source": "theorem-48-119572ba",
+      "target": "theorem-10-540972d8",
+      "type": null
+    },
+    {
+      "source": "theorem-48-119572ba",
+      "target": "lemma-47-febb40bc",
+      "type": null
+    },
+    {
+      "source": "theorem-48-119572ba",
+      "target": "theorem-13-69d5ad58",
+      "type": null
+    },
+    {
+      "source": "theorem-48-119572ba",
+      "target": "theorem-17-d49122a9",
+      "type": null
+    },
+    {
+      "source": "theorem-50-ca8ec847",
+      "target": "definition-46-0fe1e07e",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 52,
+    "edge_count": 29,
+    "extractor_used": "regex-only"
+  }
+}

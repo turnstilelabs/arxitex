@@ -1,0 +1,503 @@
+{
+  "workflow_name": "DiscoveryWorkflow",
+  "run_timestamp_utc": "2025-07-22T17:17:28.820119+00:00",
+  "papers_attempted_in_this_run": 100,
+  "successful_in_this_run": [
+    {
+      "status": "success",
+      "arxiv_id": "2506.07640v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.08050v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.07143v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.06860v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.06538v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.05956v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.05272v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04955v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04928v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04882v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04856v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04773v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04437v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.04007v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.03848v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.03633v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.03604v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.03446v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.03377v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.02885v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.02732v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.02728v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.02446v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.02340v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.02319v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01690v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01638v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01577v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01528v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01501v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01248v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01239v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.01235v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.00952v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.00948v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.00940v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.00729v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2506.00590v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.24662v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.24430v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23609v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23572v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23507v3",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23364v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23318v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23293v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23269v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.23142v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.22755v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.22565v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.22485v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.22403v3",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.22064v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21803v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21789v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21763v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21718v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21484v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21365v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21299v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21267v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21222v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21134v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21090v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.21029v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.20999v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.20960v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.20462v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.20238v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.20224v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.20057v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.19649v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.19393v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.18826v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.18804v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.18569v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.18054v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.17865v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.17559v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.17547v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16617v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16589v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16556v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16417v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16375v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16323v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16295v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16285v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.16009v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.15761v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.15871v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.15359v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.15150v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.14602v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.14247v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.13849v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.13639v1",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.13347v2",
+      "action": "added_to_queue"
+    },
+    {
+      "status": "success",
+      "arxiv_id": "2505.13288v3",
+      "action": "added_to_queue"
+    }
+  ],
+  "failed_in_this_run": []
+}

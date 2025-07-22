@@ -1,0 +1,1365 @@
+{
+  "arxiv_id": "2507.03309v1",
+  "nodes": [
+    {
+      "id": "theorem-1-d279d3f2",
+      "type": "theorem",
+      "content": "\\label{ThmZal}\nThe assignments\n$I\\mapsto \\Phi(I)$ and $\\Phi\\mapsto I(\\Phi)$ are (mutually inverse) inclusion reversing bijections between the set of semiprimitive ideals in $\\bk S_\\infty$ and the set of inductive systems.\n\nIn both cases the bijection restricts to a bijection between the set of indecomposable inductive systems and $\\Spec \\bk S_\\infty$.",
+      "content_preview": "The assignments I (I) and I() are (mutually inverse) inclusion reversing bijections between the set of semiprimitive ideals in S_ and the set of...",
+      "display_name": "Theorem",
+      "label": "ThmZal",
+      "position": {
+        "line_start": 229,
+        "line_end": 234
+      },
+      "references": [],
+      "proof": "For fields of characteristic zero, this is \\cite[Propositions~3.3 and~3.11]{Za}. For positive characteristic, in \\cite[Theorem~1.25]{Za} it is proved that $I\\mapsto \\Phi(I)$ is bijections between the set of semiprimitive ideals in $\\bk S_\\infty$ and the set of inductive systems. The inverse $\\Phi\\mapsto I(\\Phi)$ as provided {\\it loc. cit.} is defined as the maximal ideal $J<\\bk S_\\infty$ under the restriction $\\Phi(J)=\\Phi$. That this is actually the same as the maximal ideal $J<\\bk S_\\infty$ under the restriction $\\Phi(J)\\supset\\Phi$ follows from \\cite[Proposition~2.6(i)]{BK}.\n\n\nFinally, \\cite[Proposition~8.5]{Za} states that $I(\\Phi)$ is prime if and only if $\\Phi$ is indecomposable. The last conclusion thus follows from the observation that a prime ideal $P$ in $\\bk S_\\infty$ must be semiprimitive, for instance by observing via the discussion before the theorem that the Jacobson radical of $\\bk S_\\infty/P$ is locally nilpotent and hence zero."
+    },
+    {
+      "id": "remark-2-9424765e",
+      "type": "remark",
+      "content": "Every prime ideal in $\\bk S_\\infty$ is primitive. Indeed, a prime ideal $I(\\Phi)$ is an intersection of primitive ideals $I(\\Phi_\\alpha)$, but this implies $\\Phi=\\cup_\\alpha\\Phi_\\alpha$, so by indecomposability of $\\Phi$, we find $\\Phi=\\Phi_\\alpha$ for some~$\\alpha$.",
+      "content_preview": "Every prime ideal in S_ is primitive. Indeed, a prime ideal I() is an intersection of primitive ideals I(_), but this implies =__, so by...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 243,
+        "line_end": 245
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-3-757a54e9",
+      "type": "lemma",
+      "content": "\\label{lem:totprim}\nThe only totally prime ideals in $\\bk S_\\infty$ are $J_+$ and $J_-$.",
+      "content_preview": "The only totally prime ideals in S_ are J_+ and J_-.",
+      "display_name": "Lemma",
+      "label": "lem:totprim",
+      "position": {
+        "line_start": 305,
+        "line_end": 307
+      },
+      "references": [],
+      "proof": "A totally prime in a ring restricts to a totally prime ideal in any subring. In $\\bk S_n$, the only prime ideals are primitive and their quotients are $\\End_{\\bk}(V)$ for the corresponding simple $V$. Hence, the only totally prime ideals in $\\bk S_n$ are the ideals of the one-dimensional representations, the trivial and the sign representation."
+    },
+    {
+      "id": "definition-4-8f6000e5",
+      "type": "definition",
+      "content": "\\label{DefT}\nAn ideal $I<\\bk S_\\infty$ is  {\\bf T-prime} if for all $m,n\\in \\mZ_{>0}$, $f\\in\\bk S_m$ and $g\\in \\bk S_n$ with\n$f\\bullet g\\in I_{m+n}$,\nwe have $f\\in I$ or $g\\in I$.",
+      "content_preview": "An ideal I< S_ is T-prime if for all m,n _>0, f S_m and g S_n with f g I_m+n, we have f I or g I.",
+      "display_name": "Definition",
+      "label": "DefT",
+      "position": {
+        "line_start": 314,
+        "line_end": 318
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-5-2b290719",
+      "type": "definition",
+      "content": "For ideals $I,J$ in $\\bk S_\\infty$, the ideal $I\\Join J$ is defined as the preimage of $$I\\otimes \\bk S_\\infty \\;+\\; \\bk S_\\infty\\otimes J$$\nunder the comultiplication algebra morphism\n$\\Delta:\\bk S_\\infty\\to\\bk S_\\infty \\otimes \\bk S_\\infty$.",
+      "content_preview": "For ideals I,J in S_, the ideal I J is defined as the preimage of I S_ ;+; S_ J under the comultiplication algebra morphism : S_ S_ S_.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 400,
+        "line_end": 404
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-6-7b24ef6d",
+      "type": "example",
+      "content": "\\label{ExPlus}\n\\begin{enumerate}\n\\item The augmentation ideal $J_+$ is the identity element for the operation $\\Join$, meaning that for every ideal $I$ in $\\bk S_\\infty$,\n$$I\\Join J_+\\;=\\; I\\;=\\; J_+\\Join I.$$\n\\item The identity ideal is the zero element for the operation $\\Join$, meaning \n$$I\\Join \\bk S_\\infty\\;=\\; \\bk S_\\infty\\;=\\; \\bk S_\\infty\\Join I.$$\n\\item For two $\\bk S_\\infty$-modules, we have\n$$\\Ann (M\\otimes N)\\;=\\; \\Ann(M)\\Join \\Ann(N),$$\nfor example $J_-\\Join J_-=J_+$.\n\\end{enumerate}",
+      "content_preview": "The augmentation ideal J_+ is the identity element for the operation , meaning that for every ideal I in S_, I J_+;=; I;=; J_+ I.",
+      "display_name": "Example",
+      "label": "ExPlus",
+      "position": {
+        "line_start": 411,
+        "line_end": 421
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-7-99ddb62d",
+      "type": "definition",
+      "content": "For ideals $I,J$ in $\\bk S_\\infty$, the ideal $I\\dagger J$ is such that\n\\begin{eqnarray*}\n(I\\dagger J)_n&=& \\bigcap_{i=0}^n \\Ann_{\\bk S_n} (\\bk S_{n}/\\bk S_n(I_i\\otimes \\bk S_{n-i}\\,+\\, \\bk S_i\\otimes J_{n-i}))\\\\\n&=& \\bigcap_{i=0}^n \\Ann_{\\bk S_n} \\Ind^{S_n}_{S_i\\times S_{n-i}}(\\bk S_i/I_i\\boxtimes \\bk S_{n-i}/J_{n-i})\\\\\n&=& \\bigcap_{i=0}^n \\Ann_{\\bk S_n} \\Ind^{S_n}_{S_i\\times S_{n-i}}(V_i\\boxtimes W_{n-i}),\n\\end{eqnarray*}\nfor any $\\bk S_i$-module $V_i$ with annihilator $I_i$ and any $\\bk S_{n-i}$-module $W_{n-i}$ with annihilator $J_{n-i}$.",
+      "content_preview": "For ideals I,J in S_, the ideal I J is such that (I J)_n&=& _i=0^n _ S_n ( S_n/ S_n(I_i S_n-i,+, S_i J_n-i)) &=& _i=0^n _ S_n ^S_n_S_i S_n-i( S_i/I_i...",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 430,
+        "line_end": 438
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-8-64f63f5f",
+      "type": "example",
+      "content": "\\label{ExDagger}\n\\begin{enumerate}\n\\item The identity ideal $\\bk S_\\infty$ is the identity element for the operation  $\\dagger$, meaning\n$$I\\dagger \\bk S_\\infty\\;=\\; I\\;=\\; \\bk S_\\infty \\dagger I.$$\n\\item For $m,n\\in\\mN$, we define the ideal \n$$\\mP_{m,n}\\,:= \\,J_+^{\\dagger m}\\dagger J_-^{\\dagger n},$$\nso $\\mP_{0,0}=\\bk S_\\infty$ by convention. Then $(\\mP_{m,n})_i$ is the kernel of the permutation action\n$$\\bk S_i\\;\\to\\; \\End(V^{\\otimes i}),$$\nfor $V$ a supervector space of dimension $m|n$. This follows directly, or from Example~\\ref{ExsVec} below. We take the convention that for $\\mathrm{char}(\\bk)=2$, we have $\\mP_{m,n}=J^{\\dagger (m+n)}_+$.\n\\end{enumerate}",
+      "content_preview": "The identity ideal S_ is the identity element for the operation , meaning I S_;=; I;=; S_ I. For m,n, we define the ideal _m,n,:= ,J_+^ m J_-^ n, so...",
+      "display_name": "Example",
+      "label": "ExDagger",
+      "position": {
+        "line_start": 442,
+        "line_end": 453
+      },
+      "references": [
+        {
+          "target_id": "ExsVec",
+          "reference_type": "internal",
+          "context": "ion $m|n$. This follows directly, or from Example~\\ref{ExsVec} below. We take the convention that for $\\mathrm{c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-3cb8db67",
+      "type": "lemma",
+      "content": "For all ideals $I,J<\\bk S_\\infty$ and $P\\in \\TSpec \\bk S_\\infty$, we have\n$$(I\\dagger J)\\Join P\\;=\\; (I\\Join P)\\dagger (J\\Join P).$$",
+      "content_preview": "For all ideals I,J< S_ and P S_, we have (I J) P;=; (I P) (J P).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 455,
+        "line_end": 458
+      },
+      "references": [
+        {
+          "target_id": "LemDefT",
+          "reference_type": "external",
+          "context": "on thus follows from condition (5) in Proposition~\\ref{LemDefT}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We can rewrite $((I\\dagger J)\\Join P)_n$ as\n$$\\bigcap_{i=0}^n\\Ann\\left(\\Ind^{S_n}_{S_i\\times S_{n-i}}\\left((\\bk S_{i}/I_i\\boxtimes S_{n-i}/I_{n-i}) \\otimes \\Res^{S_n}_{S_i\\times S_{n-i}}\\bk S_n/P_n\\right)\\right),$$\nwhereas $((I\\Join P)\\dagger (J\\Join P))_n$ becomes\n$$\\bigcap_{i=0}^n\\Ann\\left(\\Ind^{S_n}_{S_i\\times S_{n-i}}\\left((\\bk S_i/I_i\\otimes \\bk S_i/P_i)\\boxtimes (\\bk S_{n-i}/J_{n-i}\\otimes \\bk S_{n-i}/P_{n-i})\\right)\\right).$$\nThe conclusion thus follows from condition (5) in Proposition~\\ref{LemDefT}."
+    },
+    {
+      "id": "theorem-10-dacba761",
+      "type": "theorem",
+      "content": "The set $\\TSpec \\bk S_\\infty$ equipped with addition $\\dagger$ and multiplication $\\Join$ is a commutative semiring.",
+      "content_preview": "The set S_ equipped with addition and multiplication is a commutative semiring.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 469,
+        "line_end": 471
+      },
+      "references": [
+        {
+          "target_id": "LemDefT",
+          "reference_type": "external",
+          "context": "in$ preserves T-prime ideals can, via Proposition~\\ref{LemDefT}, be reduced to the observation that the annihilat",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The only things that remains to be proved is that $\\dagger$ and $\\Join$ restrict to operations\n$$\\TSpec\\bk S_\\infty\\;\\times\\;\\TSpec \\bk S_\\infty\\;\\to\\; \\TSpec \\bk S_\\infty.$$\n\nThe fact that $\\Join$ preserves T-prime ideals can, via Proposition~\\ref{LemDefT}, be reduced to the observation that the annihilator ideal in $\\bk S_m\\otimes \\bk S_n$ of\n$$\\bk S_{m+n}/I_{m+n}\\;\\otimes\\; \\bk S_{m+n}/J_{m+n}$$\ncoincides with that of\n$$ (\\bk S_{m}/I_{m}\\;\\otimes\\; \\bk S_{m}/J_{m})\\;\\boxtimes\\; (\\bk S_{n}/I_{n}\\;\\otimes\\; \\bk S_{n}/J_{n}),$$\nassuming that $I,J$ are T-prime.\n\nThe case $\\dagger$ follows similarly, by also applying Mackey's formula."
+    },
+    {
+      "id": "remark-11-125e8ad4",
+      "type": "remark",
+      "content": "Already for $\\mathrm{char}(\\bk)=0$, the semiring $\\TSpec \\bk S_\\infty$ is not topological for the Jacobson topology, as follows from the explicit description in the Section~\\ref{Sec0}.",
+      "content_preview": "Already for ()=0, the semiring S_ is not topological for the Jacobson topology, as follows from the explicit description in the Section~.",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 485,
+        "line_end": 487
+      },
+      "references": [
+        {
+          "target_id": "Sec0",
+          "reference_type": "external",
+          "context": "lows from the explicit description in the Section~\\ref{Sec0}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-29fff216",
+      "type": "lemma",
+      "content": "\\label{LemdAdd}\nFor non-zero ideals $I,J$ in $\\bk S_\\infty$, we have\n$$\\ddd(I\\dagger J)\\;\\ge\\; \\ddd(I)+\\ddd(J).$$",
+      "content_preview": "For non-zero ideals I,J in S_, we have (I J);; (I)+(J).",
+      "display_name": "Lemma",
+      "label": "LemdAdd",
+      "position": {
+        "line_start": 495,
+        "line_end": 498
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-13-23bf2aba",
+      "type": "corollary",
+      "content": "For a non-zero proper ideal $I<\\bk S_\\infty$ and $m,n\\in \\mN$, we have $I^{\\dagger m}=I^{\\dagger n}$ if and only if $m=n$.",
+      "content_preview": "For a non-zero proper ideal I< S_ and m,n , we have I^ m=I^ n if and only if m=n.",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 501,
+        "line_end": 503
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-2fd72638",
+      "type": "lemma",
+      "content": "\\label{Lemgdagger}\nFor $I,J\\in \\TSpec\\bk S_\\infty$, we have\n\\begin{enumerate}\n\\item $\\max\\{\\gggr(I),\\gggr(J)\\}\\;\\le\\; \\gggr(I\\dagger J)\\;\\le\\; \\gggr(I)+\\gggr(J)$;\n\\item $\\gggr(I\\Join J)\\;\\le\\; \\gggr(I)\\gggr(J)$.\n\\end{enumerate}",
+      "content_preview": "For I,J S_, we have (I),(J);; (I J);; (I)+(J); (I J);; (I)(J).",
+      "display_name": "Lemma",
+      "label": "Lemgdagger",
+      "position": {
+        "line_start": 515,
+        "line_end": 521
+      },
+      "references": [],
+      "proof": "The first inequality in (1) follows since $I\\dagger J\\subset I$. For the second inequality, by definition, we have an exact sequence\n$$0\\to (I\\dagger J)_{n}\\to \\bk S_n\\to \\bigoplus_{i=0}^n \\End_{\\bk}\\left(\\Ind^{S_n}_{S_i\\times S_{n-i}} (\\bk S_i/I_i\\boxtimes \\bk S_{n-i}/J_{n-i})\\right),$$\nwhere the right arrow represents the action of $\\bk S_n$. This action commutes with the obvious right $\\bk S_i\\otimes \\bk S_{n-i}$-action on the induced module, so that the exact sequence can be adjusted to get the estimate\n$$g_n(I\\dagger J)\\;\\le\\;\\sum_{i=0}^n\\binom{n}{i}^2 g_i(I)g_{n-i}(J)$$\nand hence\n$$\\sqrt{g_n(I\\dagger J)}\\;\\le\\;\\sum_{i=0}^n\\binom{n}{i} \\sqrt{g_i(I)}\\sqrt{g_{n-i}(J)}.$$\nThe result then follows from a standard argument, see for instance the proof of \\cite[Lemma~4.9(2)]{CEO}.\n\nPart (2) follows more directly from the exact sequence\n$$0\\to (I\\Join J)_n\\to \\bk S_n\\to \\bk S_n/I_n\\otimes \\bk S_n/J_n$$\nwhere the right arrow is comultiplication followed by quotient map."
+    },
+    {
+      "id": "lemma-15-3930c03b",
+      "type": "lemma",
+      "content": "\\label{Lemmag}\n\\begin{enumerate}\n\\item We have $\\gggr(\\mP_{m,0})=\\gggr(J_+^{m\\dagger})=m$.\n\\item If $\\mathrm{char}(\\bk)=0$, then $\\gggr(\\mP_{m,n})=m+n$.\n\\end{enumerate}",
+      "content_preview": "We have (_m,0)=(J_+^m)=m. If ()=0, then (_m,n)=m+n.",
+      "display_name": "Lemma",
+      "label": "Lemmag",
+      "position": {
+        "line_start": 539,
+        "line_end": 544
+      },
+      "references": [
+        {
+          "target_id": "ExDagger",
+          "reference_type": "internal",
+          "context": "lity, see for instance \\cite{Berele}, and Example~\\ref{ExDagger}(2), we have\n$$\\gggr(\\mP_{m,n})\\;=\\;\\lim_{i\\to\\inf",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Lemgdagger",
+          "reference_type": "internal",
+          "context": "mP_{m,n}),$$\nso the conclusion follows from Lemma~\\ref{Lemgdagger}(1).\n\nPart (1) follows from part (2), Schur-Weyl d",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We start with part (2). By Schur-Weyl duality, see for instance \\cite{Berele}, and Example~\\ref{ExDagger}(2), we have\n$$\\gggr(\\mP_{m,n})\\;=\\;\\lim_{i\\to\\infty}\\sqrt[2i]{\\dim_{\\bk}\\End_{GL(V)}(V^{\\otimes i})},$$\nfor $V$ a supervector space of dimension $m|n$.\nNow by \\cite{Berele}, the $GL(V)$-representation $V^{\\otimes i}$ is semisimple and the number of isomorphism classes of simple modules that can appear as direct summand in $V^{\\otimes i}$ grows only polynomially in $i$, as it is bounded by $(i)^{m+n}$. On the other hand, with $d_i$ the length of $V^{\\otimes i}$, we have \n$$\\lim_{i\\to\\infty}\\sqrt[i]{d_i}\\;=\\; m+n,$$\nsee for instance \\cite[Proposition~3.1]{COT}. There must be a simple module that occurs at least $d_i/i^{m+n}$ times as direct summand in $V^{\\otimes i}$, giving a lower bound for the dimension of $\\End_{GL(V)}(V^{\\otimes i})$. Combining all the above observations, we find that\n$$m+n\\;=\\;\\lim_{i\\to\\infty}\\sqrt[2i]{(d_i/i^{m+n})^2}\\;\\le\\;\\gggr(\\mP_{m,n}),$$\nso the conclusion follows from Lemma~\\ref{Lemgdagger}(1).\n\nPart (1) follows from part (2), Schur-Weyl duality in positive characteristic and independence of $\\dim_{\\bk}\\End_{GL(V)}(V^{\\otimes i})$ on the characteristic (a well-known consequence of the fact that $V^{\\otimes i}$ is a tilting module in a highest weight category with standard modules that have the same character in every characteristic)."
+    },
+    {
+      "id": "remark-16-8a9a4f6c",
+      "type": "remark",
+      "content": "As observed in \\cite{CEKO}, for $I=\\mP_{m,n}$, the dimension of $\\bk S_i/I_i$ s lower in positive characteristic than in characteristic zero, so a priori the inequality $\\gggr(\\mP_{m,n})\\le m+n$ from Lemma~\\ref{Lemgdagger} might be strict. Note however that $\\gggr(\\mP_{1,1})=2$ by \\cite[Theorem~3.3.1]{CEKO}.",
+      "content_preview": "As observed in , for I=_m,n, the dimension of S_i/I_i s lower in positive characteristic than in characteristic zero, so a priori the inequality...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 558,
+        "line_end": 560
+      },
+      "references": [
+        {
+          "target_id": "Lemgdagger",
+          "reference_type": "internal",
+          "context": "e inequality $\\gggr(\\mP_{m,n})\\le m+n$ from Lemma~\\ref{Lemgdagger} might be strict. Note however that $\\gggr(\\mP_{1,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-17-632da3de",
+      "type": "example",
+      "content": "\\label{ExsVec}\nIf $\\cC=\\sVec$ and $V\\in\\cC$ a supervector space of dimension $m|n$, then $\\TAnn(V)=\\mP_{m,n}$, as now follows from the definition in Example~\\ref{ExDagger}(2).",
+      "content_preview": "If = and V a supervector space of dimension m|n, then (V)=_m,n, as now follows from the definition in Example~(2).",
+      "display_name": "Example",
+      "label": "ExsVec",
+      "position": {
+        "line_start": 596,
+        "line_end": 598
+      },
+      "references": [
+        {
+          "target_id": "ExDagger",
+          "reference_type": "internal",
+          "context": "}$, as now follows from the definition in Example~\\ref{ExDagger}(2).",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "remark-18-6ca23d07",
+      "type": "remark",
+      "content": "\\label{ggd}\nWe have\n$$g_n(\\Ann(X))\\;\\le\\; \\dim_{\\bk}\\End(X^{\\otimes n})\\;\\le\\; \\ell(X^{\\otimes n})^2$$\nand therefore\n$$\\gggr(\\Ann(X))\\;\\le\\; \\mathtt{gd}(X).$$",
+      "content_preview": "We have g_n((X));; _(X^ n);; (X^ n)^2 and therefore ((X));; (X).",
+      "display_name": "Remark",
+      "label": "ggd",
+      "position": {
+        "line_start": 608,
+        "line_end": 614
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-19-71ca09bf",
+      "type": "theorem",
+      "content": "\\label{Prop:0}\n\\begin{enumerate}\n\\item There is an inclusion order reversing bijection from $\\bP_\\infty$ to $\\Spec \\bk S_\\infty$, given by $\\lambda\\mapsto I_\\lambda$, where for all $n\\in\\mZ_{>0}$\n$$I_\\lambda\\cap \\bk S_n\\;=\\; \\bigcap_{\\mu\\vdash n\\mid \\mu\\subset \\lambda}\\Ann(D^\\mu).$$\n\\item Every ideal in $\\bk S_\\infty$ is a finite intersections of prime ideals.\n \\end{enumerate}",
+      "content_preview": "There is an inclusion order reversing bijection from _ to S_, given by I_, where for all n_>0 I_ S_n;=; _ n (D^).",
+      "display_name": "Theorem",
+      "label": "Prop:0",
+      "position": {
+        "line_start": 650,
+        "line_end": 656
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-20-c19a1425",
+      "type": "lemma",
+      "content": "\\label{Lem:Incomp}\nEvery set of incomparable partitions (for the inclusion order) is finite.",
+      "content_preview": "Every set of incomparable partitions (for the inclusion order) is finite.",
+      "display_name": "Lemma",
+      "label": "Lem:Incomp",
+      "position": {
+        "line_start": 660,
+        "line_end": 662
+      },
+      "references": [],
+      "proof": "To find a contradiction, let $S$ be an infinite set of incomparable partitions.\nWe distinguish into two cases. \n\nCase (I): There is no bound on the number of labels that can be $\\infty$ for elements of $S$. In that case we can replace $S$ with a subset that contains, for each $i\\in\\mN$ at most one element of the form $(\\infty^i,a_{i+1},\\cdots)$ with $a_{i+1}\\in\\mN$. Purely for notational simplicity we assume that there is {\\it precisely} one, for each $i\\in\\mN$.\nThen\n$$S\\;=\\;\\{(\\infty^i, a_{i,i+1},a_{i,i+2},\\cdots),\\; i\\in\\mN\\}.$$\nBy incomparability, we need, for each $i<j$, to have $r_{i,j}>j$ with \n$$a_{i, r_{i,j}}> a_{j,r_{i,j}}.$$\nBut now, this implies\n$$a_{0,r_{0,1}}> a_{1,r_{0,1}}\\ge a_{1, r_{1,j}}>a_{2,r_{1,j}}$$\nwhere we can take any $j\\ge r_{0,1}$. Continuing like this, we create an infinite strictly decreasing chain (if we only consider the odd or only the even positions) of natural numbers, a contradiction.\n\nCase (II): There is a bound on the number of labels that can be $\\infty$ in every element of $S$. In that case, we can replace $S$ with an infinite subset such that every element has the same number, say $t\\in\\mN$, of labels equal to $\\infty$. By definition of the inclusion order, we can actually remove the infinite part (the first $t$ labels of each element), and replace $S$ with an infinite set of incomparable partitions without $\\infty$ labels. We can then replace all partitions by their transpose. Since Case (I) leads to a contradiciton, we are again in Case (II). Applying the same procedure we just outlined again then produces an infinite set of incomparable {\\em finite} partitions. That this is impossible is classical, see for instance the remark in \\cite[\\S3]{FL}."
+    },
+    {
+      "id": "corollary-21-9d677e82",
+      "type": "corollary",
+      "content": "\\label{Cor:Lem}\nFor $\\lambda\\in\\bP_\\infty$, let $\\Phi_\\lambda$ be the inductive system corresponding to all $D^\\mu$ with $\\mu\\subset\\lambda$. Every union\n$\\cup_{\\lambda\\in S}\\Phi_\\lambda$ is equal to $\\cup_{\\lambda\\in S_0}\\Phi_\\lambda$ for a finite subset $S_0\\subset S$.",
+      "content_preview": "For _, let _ be the inductive system corresponding to all D^ with . Every union _ S_ is equal to _ S_0_ for a finite subset S_0 S.",
+      "display_name": "Corollary",
+      "label": "Cor:Lem",
+      "position": {
+        "line_start": 679,
+        "line_end": 682
+      },
+      "references": [
+        {
+          "target_id": "Prop:0",
+          "reference_type": "internal",
+          "context": "a finite subset $S_0\\subset S$.[Proof of Theorem~\\ref{Prop:0}]Most results follow from Theorem~\\ref{ThmZal}, wh",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmZal",
+          "reference_type": "internal",
+          "context": "rem~\\ref{Prop:0}]Most results follow from Theorem~\\ref{ThmZal}, which we use freely.\n\n\nBy replacing $D^\\lambda$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Cor:Lem",
+          "reference_type": "internal",
+          "context": "hi_\\lambda$ were not indecomposable, by Corollary~\\ref{Cor:Lem} we could write it as a \\textit{finite} union of (",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Cor:Lem",
+          "reference_type": "internal",
+          "context": "sprove.\n\nPart (2) now also follows from Corollary~\\ref{Cor:Lem}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "[Proof of Theorem~\\ref{Prop:0}]Most results follow from Theorem~\\ref{ThmZal}, which we use freely.\n\n\nBy replacing $D^\\lambda$ by $\\lambda$, we obtain a bijection between inductive systems and `saturated' ideals in the poset $\\bY\\subset\\bP$. Here saturated means that removing any element produces a subset that is no longer an ideal.\n\n\nFor a non-empty inductive system $\\Phi$, we can consider a path $\\p$ in $\\bY$ that is contained in $\\Phi$ and set $\\lambda:=\\p(\\infty)$. Then $\\Phi_\\lambda\\subset\\Phi$, so $\\Phi$ is a union of such systems. For part (1) it suffices to show that the systems $\\Phi_\\lambda$ are indecomposable.\n\nIf a system $\\Phi_\\lambda$ were not indecomposable, by Corollary~\\ref{Cor:Lem} we could write it as a \\textit{finite} union of (smaller) systems $\\Phi_\\mu$, which one can easily disprove.\n\nPart (2) now also follows from Corollary~\\ref{Cor:Lem}."
+    },
+    {
+      "id": "example-22-2380e79a",
+      "type": "example",
+      "content": "We have\n$$I_{(\\infty^\\infty)}\\;=\\; 0,\\quad I_{(\\infty,0^\\infty)}=J_+,\\quad\\mbox{and}\\quad I_{(1^\\infty)}=J_-$$\nand more generally\n$$I_{\\infty^m,n^\\infty}\\;=\\;\\mP_{m,n}=(J_+)^{\\dagger m}\\dagger (J_-)^{\\dagger n},$$\nas follows from follows from Example~\\ref{ExDagger}(2) and \\cite[Theorem~3.20]{Berele}.",
+      "content_preview": "We have I_(^);=; 0, I_(,0^)=J_+, I_(1^)=J_- and more generally I_^m,n^;=;_m,n=(J_+)^ m (J_-)^ n, as follows from follows from Example~(2) and .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 706,
+        "line_end": 712
+      },
+      "references": [
+        {
+          "target_id": "ExDagger",
+          "reference_type": "internal",
+          "context": "dagger n},$$\nas follows from follows from Example~\\ref{ExDagger}(2) and \\cite[Theorem~3.20]{Berele}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-23-3532df23",
+      "type": "theorem",
+      "content": "\\label{ThmClassT}\nThe following conditions are equivalent on a prime ideal $I<\\bk S_\\infty$.\n\\begin{enumerate}\n\\item $I$ is T-prime;\n\\item $I$ does not have a cover in the inclusion order on $\\Spec \\bk S_\\infty$;\n\\item $I$ is zero or $I=\\mP_{m,n}$ for $(m,n)\\in \\mN\\times\\mN$;\n\\item $I$ is not the sum of two other ideals;\n\\item $I=\\TAnn(X)$ for some object $X$ in a tensor category $\\cC$ over $\\bk$.\n\\end{enumerate}",
+      "content_preview": "The following conditions are equivalent on a prime ideal I< S_. I is T-prime; I does not have a cover in the inclusion order on S_; I is zero or...",
+      "display_name": "Theorem",
+      "label": "ThmClassT",
+      "position": {
+        "line_start": 730,
+        "line_end": 739
+      },
+      "references": [
+        {
+          "target_id": "Prop:MIndec",
+          "reference_type": "external",
+          "context": "ble, so $I_\\lambda$ is not T-prime by Proposition~\\ref{Prop:MIndec}.\n\nThat (3) implies (5) follows from Example~\\ref{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ExsVec",
+          "reference_type": "internal",
+          "context": "ndec}.\n\nThat (3) implies (5) follows from Example~\\ref{ExsVec}.\n\nThat (5) implies (1) is in Proposition~\\ref{Lem",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Lem:Tens",
+          "reference_type": "external",
+          "context": "{ExsVec}.\n\nThat (5) implies (1) is in Proposition~\\ref{Lem:Tens}.\n\n\n\nEquivalence between (2) and (3) follows from",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Prop:0",
+          "reference_type": "internal",
+          "context": "ivalence between (2) and (3) follows from Theorem~\\ref{Prop:0}(1). Indeed, the partitions $\\lambda\\in\\bP_\\infty$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmZal",
+          "reference_type": "internal",
+          "context": "prove equivalence between (3) and (4). By Theorem~\\ref{ThmZal}, it suffices to prove that $\\Phi_\\lambda$ for an",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First we prove that (1) implies (3). \nTake an $\\infty$-partition $\\lambda$ not of the form $\\lambda=(\\infty^m, n^\\infty)$ or $(\\infty^\\infty)$. We need to show that $I_\\lambda$ is not T-prime. There are (unique) $m,n\\in\\mN$ (not both zero), so that\n$$\\lambda=(\\infty^m,n+a_1,n+a_2,\\ldots, n+a_r, n^\\infty),$$\nfor a non-empty (finite) partition $(a_1,\\ldots, a_r)$. We set\n$$\\mu:=((n+a_1)^{m+1},n+a_2,\\ldots, n+a_r)\\;\\subset\\;\\lambda.$$\nIt follows from the Littlewood-Richardson rule that\n$$\\left[\\Res^{S_{2d}}_{S_d\\times S_d} D^\\kappa \\,:\\, D^\\mu\\boxtimes D^\\mu\\right]\\;=0,$$\nwhenever $\\lambda\\supset\\kappa\\vdash 2d$, with $d=|\\mu|$. Indeed, in order to form the required LR tableau, the Yamanouchi word condition implies that we need to place $n+a_1$ labels `$m+1$' in the part of the skew tableau $\\kappa\\backslash \\mu$ that can only be $n$ wide. This forces $a_1=0$, a contradiction.  Hence $\\Phi^\\lambda$ is not T-indecomposable, so $I_\\lambda$ is not T-prime by Proposition~\\ref{Prop:MIndec}.\n\nThat (3) implies (5) follows from Example~\\ref{ExsVec}.\n\nThat (5) implies (1) is in Proposition~\\ref{Lem:Tens}.\n\n\n\nEquivalence between (2) and (3) follows from Theorem~\\ref{Prop:0}(1). Indeed, the partitions $\\lambda\\in\\bP_\\infty$ that do not have $\\lambda'\\in \\bP_\\infty$ with the property that $\\lambda'\\subset\\mu\\subset\\lambda$ implies either $\\mu=\\lambda$ or $\\mu=\\lambda'$ are precisely the partitions that do not have `removable boxes', and these are $(\\infty^m, n^\\infty)$ and $(\\infty^\\infty)$.\n\n\n\n\nFinally, we prove equivalence between (3) and (4). By Theorem~\\ref{ThmZal}, it suffices to prove that $\\Phi_\\lambda$ for an $\\infty$-partition $\\lambda$ can be written as an intersection of two inductive systems if and only if $\\lambda$ is not of the form $(\\infty^m,n^\\infty)$. If $\\lambda=(\\infty^m,n^\\infty)$, then every inductive system that strictly contains $\\Phi_\\lambda$ contains $((m+1)^{n+1})$. Conversely, if $\\lambda$ is not of the form $(\\infty^m,n^\\infty)$, then it has $l>1$ addable boxes and we can write $\\Phi_\\lambda=\\cap_\\mu\\Phi_\\mu$ for $\\mu$ ranging of the $l$ partitions obtained by adding one of those boxes."
+    },
+    {
+      "id": "theorem-24-d6fd9315",
+      "type": "theorem",
+      "content": "\\label{ThmsVec} Let $\\cC$ be a tensor category of moderate growth and consider\n$$\\TAnn_{\\cC}:\\;M^{\\oplus}(\\cC)\\to \\TSpec\\bk S_\\infty.$$\n\\begin{enumerate}\n\\item $\\TAnn_{\\cC}$ factors via the Grothendieck semiring $M(\\cC)$.\n\\item For $\\cC=\\sVec$ and $(m,n)\\in\\mN\\times\\mN$, we have\n$$\\TAnn([\\bk^{m|n}])\\;=\\; \\mP_{m,n}.$$\n\\item $\\TAnn_{\\cC}$ is injective if and only if $\\cC=\\Vecc$ or $\\cC=\\sVec$.\n\\item $\\TAnn_{\\cC}$ is an isomorphism of semirings if and only $\\cC=\\sVec$.\n\\end{enumerate}",
+      "content_preview": "Let be a tensor category of moderate growth and consider _:;M^() S_. _ factors via the Grothendieck semiring M().",
+      "display_name": "Theorem",
+      "label": "ThmsVec",
+      "position": {
+        "line_start": 783,
+        "line_end": 792
+      },
+      "references": [
+        {
+          "target_id": "ExsVec",
+          "reference_type": "internal",
+          "context": "unctor to $\\sVec$.\n\nPart (2) follows from Example~\\ref{ExsVec}. Hence $\\TAnn_{\\sVec}$ is an isomorphism by \nTheo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmClassT",
+          "reference_type": "internal",
+          "context": "nce $\\TAnn_{\\sVec}$ is an isomorphism by \nTheorem~\\ref{ThmClassT} and consequently $\\TAnn_{\\Vecc}$ is injective. It",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Part (1) can easily be seen direclty, but also follows from the fact that $\\TAnn_{\\cC}$ factors via the forgetful functor to $\\sVec$.\n\nPart (2) follows from Example~\\ref{ExsVec}. Hence $\\TAnn_{\\sVec}$ is an isomorphism by \nTheorem~\\ref{ThmClassT} and consequently $\\TAnn_{\\Vecc}$ is injective. It now also follows that (4) holds if we prove (3).\n\n\nThe remaining direction of part (3) is trivial for the case where $\\cC$ is the representation category of an affine group scheme, since then any representation and a trivial representation of the same dimension are sent to the same T-prime ideal. The general case follows with minor additional work. Indeed, one can quickly observe that for $\\TAnn_{\\cC}$ to be injective, $\\cC$ can only have one non-trivial simple object. The conclusion then follows via \\cite[Corollaire~0.8]{Del02} and the observation that the only finite group with precisely two conjugacy classes of elements is $C_2$."
+    },
+    {
+      "id": "corollary-25-615b62ba",
+      "type": "corollary",
+      "content": "\\label{Cor0}\nThe semiring $\\TSpec \\bk S_\\infty$ is isomorphic to $\\mN[x]/(x^2-1)$, which is isomorphic to the semiring with underlying additive semigroup $\\mN\\times\\mN$ with product\n$$(m,n)(m',n')\\;=\\; (mm'+nn',mn'+nm').$$\nThe map $\\gggr:\\TSpec \\bk S_\\infty\\to\\mN$, is the semiring homomorphism $(m,n)\\mapsto m+n$.",
+      "content_preview": "The semiring S_ is isomorphic to /(x^2-1), which is isomorphic to the semiring with underlying additive semigroup with product (m,n)(m',n');=;...",
+      "display_name": "Corollary",
+      "label": "Cor0",
+      "position": {
+        "line_start": 803,
+        "line_end": 807
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-26-0649a647",
+      "type": "theorem",
+      "content": "\\label{ThmSph}\nConsider $\\omega=(\\alpha,\\beta)\\in \\Omega$. If either $\\gamma(\\alpha,\\beta)<1$ or $\\alpha_i>0$ for all $i$ or $\\beta_j>0$ for all $j$, then\n$$\\LAnn T^\\omega\\;=\\;\\RAnn T^\\omega\\;=\\; 0.$$\nIn the remaining cases, set\n$$m:=\\max\\{i\\in\\mN\\mid \\alpha_i\\not=0\\}\\quad\\mbox{and}\\quad n:=\\max\\{i\\in\\mN\\mid\\beta_i\\not=0\\}.$$\nThen we have\n$$\\LAnn T^\\omega\\;=\\;\\RAnn T^\\omega\\;=\\; \\mathfrak{P}_{m,n}.$$",
+      "content_preview": "Consider =(,) . If either (,)<1 or _i>0 for all i or _j>0 for all j, then T^;=; T^;=; 0. In the remaining cases, set m:=i _i=0 n:=i_i=0.",
+      "display_name": "Theorem",
+      "label": "ThmSph",
+      "position": {
+        "line_start": 851,
+        "line_end": 858
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-27-7c2c7506",
+      "type": "remark",
+      "content": "Theorem~\\ref{ThmSph} gives a negative answer to Zalesskii's question in \\cite[Problem~5.12]{Za}, for the alternating group $A_\\infty$. In fact, `$J_\\chi=0$' (as defined in the proof of \\ref{ThmSph} or \\cite[Definition~5.8]{Za}) will be the case for `most' choices of extremal characters $\\chi:A_\\infty\\to\\mC$.",
+      "content_preview": "Theorem~ gives a negative answer to Zalesskii's question in , for the alternating group A_. In fact, `J_=0' (as defined in the proof of or ) will be...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 860,
+        "line_end": 862
+      },
+      "references": [
+        {
+          "target_id": "ThmSph",
+          "reference_type": "internal",
+          "context": "Theorem~\\ref{ThmSph} gives a negative answer to Zalesskii's question i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmSph",
+          "reference_type": "internal",
+          "context": "In fact, `$J_\\chi=0$' (as defined in the proof of \\ref{ThmSph} or \\cite[Definition~5.8]{Za}) will be the case fo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-28-234dbf4e",
+      "type": "lemma",
+      "content": "\\label{Lem0}\nGiven $\\omega\\in \\Omega$, there exists a path $\\p$ in $\\bY$ which is entirely contained in $\\supp(\\omega)$, so that $\\omega$ is the limit obtained from $\\p(n)$ as in \\eqref{eqab}.",
+      "content_preview": "Given , there exists a path in which is entirely contained in (), so that is the limit obtained from (n) as in .",
+      "display_name": "Lemma",
+      "label": "Lem0",
+      "position": {
+        "line_start": 893,
+        "line_end": 895
+      },
+      "references": [
+        {
+          "target_id": "eqab",
+          "reference_type": "external",
+          "context": "$\\omega$ is the limit obtained from $\\p(n)$ as in \\eqref{eqab}.Following for instance \\cite{VK}, the set $\\cT(\\b",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqab",
+          "reference_type": "external",
+          "context": "u^\\omega$-almost every path $\\p$ admits the limit \\eqref{eqab}, producing $\\omega$.\n\nNow assume that the stateme",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Following for instance \\cite{VK}, the set $\\cT(\\bY)$ of paths on $\\bY$ is a topological space by its inverse limit interpretation. Concretely, the open subsets are given by (finite) unions of cylinder subsets. A cyclinder subset of level $n$ is a subset comprising all paths that share a common initial segment of length~$n$.\n\nThen there is a bijection between the set of coherent systems of distributions on $\\bY$ and the set of Gibbs measures (called central Borel measures in \\cite{VK}) on $\\cT(\\bY)$, see \\cite[Proposition~7.11]{BO}. We describe one direction of the bijection. We start from a coherent system $\\{P^{(n)}\\}$, where $P^{(n)}$ is thus a probability measure on the finite set $\\bY_n$. By definition of Borel measures, it is sufficient to determine the value of a Borel measure on the cylindrical sets. The Gibbs measure of the set corresponding to an initial segment\n$$(\\nu,\\kappa,\\ldots, \\lambda\\vdash n)$$ is given by $P^{(n)}(\\lambda)$. \n\nNow, fix $\\omega\\in \\Omega$, with corresponding $\\chi^\\omega$, coherent system $\\{P^{(n)}\\}$ and Gibbs measure $\\mu^\\omega$. By construction of $P^{(n)}$, we have $P^{(n)}(\\lambda)\\not=0$ if and only if $\\lambda$ is in $\\supp\\omega$. It follows from the Vershik\u2013Kerov ergodic theorem from \\cite{VK}, see \\cite[Corollary~7.19]{BO}, that $\\mu^\\omega$-almost every path $\\p$ admits the limit \\eqref{eqab}, producing $\\omega$.\n\nNow assume that the statement in the lemma is false. Then the set of paths with limit $\\omega$ is contained in the union of cylinders corresponding to initial segments that end outside the support. By the above, this union has measure zero, contradicting the previous paragraph."
+    },
+    {
+      "id": "remark-29-abcc9180",
+      "type": "remark",
+      "content": "The condition on $\\p$ in Lemma~\\ref{Lem0} is not automatic. For example $\\p(n)=(n-1,1)$ is a path leading to the trivial character $\\chi(\\sigma)=1$ for all $\\sigma\\in S_\\infty$. The lemma thus predicts that this $\\chi$ can also be obtained as a limit from another path, and we can indeed take the path $\\q(n)=(n)$.",
+      "content_preview": "The condition on in Lemma~ is not automatic. For example (n)=(n-1,1) is a path leading to the trivial character ()=1 for all S_.",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 907,
+        "line_end": 909
+      },
+      "references": [
+        {
+          "target_id": "Lem0",
+          "reference_type": "internal",
+          "context": "The condition on $\\p$ in Lemma~\\ref{Lem0} is not automatic. For example $\\p(n)=(n-1,1)$ is",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "corollary-30-bb857bf9",
+      "type": "corollary",
+      "content": "\\label{CorSupp}\nConsider $\\omega=(\\alpha,\\beta)\\in \\Omega$. If either $\\gamma(\\alpha,\\beta)<1$ or $\\alpha_i>0$ for all $i$ or $\\beta_j>0$ for all $j$, then\n$\\supp(\\omega)=\\bY$.\nIn the remaining cases, \n$$\\supp(\\omega)\\;=\\; \\Phi^{(\\infty^m,n^\\infty)}$$\nwith $m,n$ as in Theorem~\\ref{ThmSph}.",
+      "content_preview": "Consider =(,) . If either (,)<1 or _i>0 for all i or _j>0 for all j, then ()=. In the remaining cases, ();=; ^(^m,n^) with m,n as in Theorem~.",
+      "display_name": "Corollary",
+      "label": "CorSupp",
+      "position": {
+        "line_start": 911,
+        "line_end": 917
+      },
+      "references": [
+        {
+          "target_id": "ThmSph",
+          "reference_type": "internal",
+          "context": "^{(\\infty^m,n^\\infty)}$$\nwith $m,n$ as in Theorem~\\ref{ThmSph}.Assume first that the support of $\\omega$ is not",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Lem0",
+          "reference_type": "internal",
+          "context": "\\supp(\\omega)$. Let $\\p$ be any path as in Lemma~\\ref{Lem0}. It follows that\n$$\\sum_{i=1}^s\\alpha_i+\\sum_{j=1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqab",
+          "reference_type": "external",
+          "context": "rements for a path to lead to limit~ $\\omega$ via~\\eqref{eqab}, we can use Lemma~\\ref{Lem0} to show that\n$$\\Phi^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "Lem0",
+          "reference_type": "internal",
+          "context": "imit~ $\\omega$ via~\\eqref{eqab}, we can use Lemma~\\ref{Lem0} to show that\n$$\\Phi^{(\\infty^m,n^\\infty)}\\;\\subse",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eqab",
+          "reference_type": "external",
+          "context": "p(r)\\vdash r$.\nThis path has limit $\\omega$ under \\eqref{eqab}, whence\n$$\\supp(\\omega)\\;\\subset\\; \\Phi^{\\p(\\inft",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Assume first that the support of $\\omega$ is not all of $\\bY$. There there are $s,t\\in\\mN$ so that $\\mu_{s+1}\\le t$ for all $\\mu\\in \\supp(\\omega)$. Let $\\p$ be any path as in Lemma~\\ref{Lem0}. It follows that\n$$\\sum_{i=1}^s\\alpha_i+\\sum_{j=1}^t\\beta_j\\;=\\;\\lim_{n\\to\\infty} \\frac{\\sum_{i=1}^s \\p(n)_i+\\sum_{j=1}^t (\\p(n)^t)_j}{n}\\;=\\;1,$$\nwhich proves the first claim. \n\nNow assume that $\\gamma(\\alpha,\\beta)=1$ and $\\alpha_i=0$ iff $i>m$ and $\\beta_j=0$ iff $j>n$. By considering the obvious requirements for a path to lead to limit~ $\\omega$ via~\\eqref{eqab}, we can use Lemma~\\ref{Lem0} to show that\n$$\\Phi^{(\\infty^m,n^\\infty)}\\;\\subset\\; \\supp(\\omega).$$\nTo show equality, we can consider a path which, for $r\\gg$\nis given by\n$$\\p(r)\\;=\\;(f(r),\\lfloor r\\alpha_2\\rfloor,\\ldots, \\lfloor r\\alpha_m\\rfloor,\\q(r)^t)$$\nwith\n$$\\q(r)\\;=\\;(\\lfloor r\\beta_1\\rfloor-m,\\ldots, \\lfloor r\\beta_n\\rfloor -m),$$\nand $f(r)\\in\\mN$ such that $\\p(r)\\vdash r$.\nThis path has limit $\\omega$ under \\eqref{eqab}, whence\n$$\\supp(\\omega)\\;\\subset\\; \\Phi^{\\p(\\infty)}\\;=\\;\\Phi^{(\\infty^m,n^\\infty)}.$$\nThis concludes the proof."
+    },
+    {
+      "id": "theorem-31-96b73cad",
+      "type": "theorem",
+      "content": "\\label{ThmAdm} Consider an irreducible admissible representation $V(\\omega,\\Lambda,M)$ with $\\omega=(\\alpha,\\beta)$.\nIf either $\\gamma(\\alpha,\\beta)<1$ or $\\alpha_i>0$ for all $i$ or $\\beta_i>0$ for all $i$, then\n$$\\LAnn_{\\bk S_\\infty}V(\\omega,\\Lambda,M)\\;=\\;0\\;=\\;\\RAnn_{\\bk S_\\infty}V(\\omega,\\Lambda,M).$$\nIn the remaining cases, set\n$$m:=\\max\\{i\\in\\mN\\mid \\alpha_i\\not=0\\},\\qquad n:=\\max\\{i\\in\\mN\\mid\\beta_i\\not=0\\},$$\n$\\lambda=\\Lambda(0)$ and $\\mu=M(0)$. Then\n$$\\LAnn_{\\bk S_\\infty} V(\\omega,\\Lambda,M)\\;=\\; I_{(\\infty^m,n+\\lambda_1,n+\\lambda_2,\\ldots)}\\quad\\mbox{and}$$\n$$\\RAnn_{\\bk S_\\infty} V(\\omega,\\Lambda,M)\\;=\\; I_{(\\infty^m,n+\\mu_1,n+\\mu_2,\\ldots)}.$$",
+      "content_preview": "Consider an irreducible admissible representation V(,,M) with =(,). If either (,)<1 or _i>0 for all i or _i>0 for all i, then _ S_V(,,M);=;0;=;_...",
+      "display_name": "Theorem",
+      "label": "ThmAdm",
+      "position": {
+        "line_start": 975,
+        "line_end": 983
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-32-db4e03e8",
+      "type": "remark",
+      "content": "Since there is no restriction on $\\Lambda(0)$, Theorem~\\ref{ThmAdm} implies that, contrary to spherical representations, the (left) annihilator ideals of admissible representations range over all prime ideals.",
+      "content_preview": "Since there is no restriction on (0), Theorem~ implies that, contrary to spherical representations, the (left) annihilator ideals of admissible...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 986,
+        "line_end": 988
+      },
+      "references": [
+        {
+          "target_id": "ThmAdm",
+          "reference_type": "internal",
+          "context": "there is no restriction on $\\Lambda(0)$, Theorem~\\ref{ThmAdm} implies that, contrary to spherical representatio",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-33-4ed51aea",
+      "type": "lemma",
+      "content": "\\label{Lem:LR}\nFor a partition $\\nu\\vdash j$ satisfying $\\nu_{s+1}\\le t$, for some $s,t\\in\\mN$, and partitions $\\lambda\\vdash r$ and $\\kappa\\vdash r+j$, the condition\n$$[\\Ind^{S_{r+j}}_{S_r\\times S_j} D^\\lambda\\boxtimes D^\\nu: D^\\kappa]\\;\\not=\\;0$$\nimplies that $\\kappa_{s+i}\\le t+\\lambda_i $ for all $i>0$.",
+      "content_preview": "For a partition j satisfying _s+1 t, for some s,t, and partitions r and r+j, the condition [^S_r+j_S_r S_j D^ D^: D^];=;0 implies that _s+i t+_i for...",
+      "display_name": "Lemma",
+      "label": "Lem:LR",
+      "position": {
+        "line_start": 993,
+        "line_end": 997
+      },
+      "references": [],
+      "proof": "Immediate from the Littlewood-Richardson rule."
+    },
+    {
+      "id": "lemma-34-eb1504da",
+      "type": "lemma",
+      "content": "\\label{LemSub}\nWe have \n$$\\LAnn V(\\omega,\\Lambda,M)\\;\\subset\\;\\LAnn T^\\omega\\;\\supset\\; \\RAnn V(\\omega,\\Lambda,M).$$",
+      "content_preview": "We have V(,,M);; T^;; V(,,M).",
+      "display_name": "Lemma",
+      "label": "LemSub",
+      "position": {
+        "line_start": 1003,
+        "line_end": 1006
+      },
+      "references": [],
+      "proof": "By construction of  $V(\\omega,\\Lambda,M)$, see for instance \\cite[\\S 1.2]{Ok}, its restriction to $S_\\infty[d]\\times S_\\infty[d]$ has a direct summand isomorphic to $T^\\omega$ (using the canonical identification $S_\\infty[d]\\simeq S_\\infty$). Hence\n$$\\LAnn V(\\omega,\\Lambda,M)\\cap \\bk S_\\infty[d]\\;\\subset\\; I,$$\nwith $I$ the ideal $\\LAnn T^\\omega$ interpreted in $\\bk S_\\infty[d]$. The claim then follows by conjugation."
+    },
+    {
+      "id": "conjecture-35-e97b1159",
+      "type": "conjecture",
+      "content": "\\label{ConjVer}\nThe annihilator map\n$$\\TAnn_{\\cC}:\\;M^{\\oplus}(\\cC)\\to\\TSpec\\bk S_\\infty$$\nis injective if and only if $\\cC$ is incompressible, and a semiring isomorphism if and only if $\\cC=\\Ver_{p^\\infty}$.",
+      "content_preview": "The annihilator map _:;M^() S_ is injective if and only if is incompressible, and a semiring isomorphism if and only if =_p^.",
+      "display_name": "Conjecture",
+      "label": "ConjVer",
+      "position": {
+        "line_start": 1067,
+        "line_end": 1071
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "remark-36-7b274917",
+      "type": "remark",
+      "content": "\\begin{enumerate}\n\\item A consequence of the conjecture would be that classifying (T-)prime ideals in $\\bk S_\\infty$ is a wild problem.\n\\item Conjecture~\\ref{ConjVer} is a stronger version of \\cite[Conjecture~1.4]{BEO}. Indeed, assume that Conjecture~\\ref{ConjVer} is true and let $\\cC$ be an arbitrary incompressible tensor category. By \\cite[Corollary~5.2.8]{Incomp}, there exists an incompressible tensor category $\\cD$ containing both $\\Ver_{p^\\infty}$ and $\\cC$ as tensor subcategories. Then $\\TAnn_{\\Ver_{p^\\infty}}$ factors via $\\TAnn_{\\cD}$. However, under Conjecture~\\ref{ConjVer}, the former is an isomorphism, while the latter is injective, implying that $M^{\\oplus}(\\Ver_{p^\\infty})\\hookrightarrow M^{\\oplus}(\\cD)$ is an isomorphism, forcing $\\cD=\\Ver_{p^\\infty}$ and hence $\\cC\\subset \\Ver_{p^\\infty}$. The conclusion follows from \\cite[Theorem~A]{Incomp}.\n\\end{enumerate}",
+      "content_preview": "A consequence of the conjecture would be that classifying (T-)prime ideals in S_ is a wild problem. Conjecture~ is a stronger version of .",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1073,
+        "line_end": 1078
+      },
+      "references": [
+        {
+          "target_id": "ConjVer",
+          "reference_type": "internal",
+          "context": "\\bk S_\\infty$ is a wild problem.\n\\item Conjecture~\\ref{ConjVer} is a stronger version of \\cite[Conjecture~1.4]{BE",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ConjVer",
+          "reference_type": "internal",
+          "context": "jecture~1.4]{BEO}. Indeed, assume that Conjecture~\\ref{ConjVer} is true and let $\\cC$ be an arbitrary incompressi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ConjVer",
+          "reference_type": "internal",
+          "context": "tors via $\\TAnn_{\\cD}$. However, under Conjecture~\\ref{ConjVer}, the former is an isomorphism, while the latter i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "conjecture-37-a05fdfbb",
+      "type": "conjecture",
+      "content": "\\label{ConjVer}\nLet $\\cC$ be Frobenius exact.\nIf the annihilator map\n$$\\TAnn_{\\cC}:\\;M^{\\oplus}(\\cC)\\to\\TSpec\\bk S_\\infty$$\nis injective, then $\\cC$ is a tensor subcategory of $\\Ver_p$ (and thus incompressible).",
+      "content_preview": "Let be Frobenius exact. If the annihilator map _:;M^() S_ is injective, then is a tensor subcategory of _p (and thus incompressible).",
+      "display_name": "Conjecture",
+      "label": "ConjVer",
+      "position": {
+        "line_start": 1082,
+        "line_end": 1087
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-38-558aeb20",
+      "type": "example",
+      "content": "For the augmentation ideal $J_+$ we have\n$$\\aaa(J_+)=1\\quad\\mbox{and}\\quad\\sss(J_+)=p-1.$$",
+      "content_preview": "For the augmentation ideal J_+ we have (J_+)=1(J_+)=p-1.",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 1100,
+        "line_end": 1103
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-39-c120f87f",
+      "type": "lemma",
+      "content": "For non-zero ideals $I,J$ in $\\bk S_\\infty$, we have\n$$\\sss(I\\dagger J)\\;=\\; \\sss(I)+\\sss(J)\\quad\\mbox{and}\\quad \\aaa(I\\dagger J)\\;=\\;\\aaa(I)+\\aaa(J).$$",
+      "content_preview": "For non-zero ideals I,J in S_, we have (I J);=; (I)+(J) (I J);=;(I)+(J).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 1107,
+        "line_end": 1110
+      },
+      "references": [],
+      "proof": "We write the proof for symmetrisers. We can observe that, for $r,t\\in\\mZ_{>0}$, we have $s_{r+t}=s'(s_r\\bullet s_t)$, for $s'$ a sum of shortest coset representatives of $S_{r+t}/(S_r\\times S_t)$. Hence, if $s_m\\not\\in I$ and $s_n\\not\\in J$, it follows that $s_{m+n}$ does not act trivially on the generator $1\\otimes 1\\otimes 1$ of $\\Ind^{S_{m+n}}_{S_m\\times S_n}(\\bk S_m/I_m\\boxtimes \\bk S_n/J_n)$. Hence we find\n$$\\sss(I\\dagger J)\\;\\ge\\; \\sss(I)+\\sss(J).$$\nTo get the inequality in the other direction, we can use additionally that the symmetriser is in the centre of the group algebra. We can observe that $s_{m+1}\\in I$ and $s_{n+1}\\in J$ imply that $s_{m+n+1}$ acts trivially on \n$$\\Ind^{S_{m+n+1}}_{S_i\\times S_j}(\\bk S_i/I_i\\boxtimes \\bk S_j/J_j)$$ for $i+j=m+n+1$, since either $i\\ge m+1$ or $j\\ge n+1$."
+    },
+    {
+      "id": "lemma-40-eb903cb6",
+      "type": "lemma",
+      "content": "\\label{lemfin}\nFor any $I\\in \\TSpec\\bk S_\\infty$, we have $\\gggr(I)\\in\\mR_{\\ge 0}$.",
+      "content_preview": "For any I S_, we have (I)_ 0.",
+      "display_name": "Lemma",
+      "label": "lemfin",
+      "position": {
+        "line_start": 1119,
+        "line_end": 1121
+      },
+      "references": [
+        {
+          "target_id": "Lemmag",
+          "reference_type": "internal",
+          "context": "ggr(I)\\;\\le\\; \\gggr(\\TAnn(V))\\;=\\, n,$$\nsee Lemma~\\ref{Lemmag}(1).",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "As recalled above, we have $s_n\\in I$, for some $n$. Hence $ \\TAnn(V)\\subset I$, for a vector space $V$ of dimension $n$, by classical invariant theory. Thus\n$$\\gggr(I)\\;\\le\\; \\gggr(\\TAnn(V))\\;=\\, n,$$\nsee Lemma~\\ref{Lemmag}(1)."
+    },
+    {
+      "id": "theorem-41-16d3ceff",
+      "type": "theorem",
+      "content": "\\label{ThmVer}\n\\begin{enumerate}\n\\item The annihilator map $\\TAnn_{\\Ver_4}$\nis injective.\n\\item For every prime $p$, the annihilator map\n$\\TAnn_{\\Ver_p}$\nis injective.\n\\end{enumerate}",
+      "content_preview": "The annihilator map __4 is injective. For every prime p, the annihilator map __p is injective.",
+      "display_name": "Theorem",
+      "label": "ThmVer",
+      "position": {
+        "line_start": 1130,
+        "line_end": 1138
+      },
+      "references": [],
+      "proof": "First we prove part (1). There are three indecomposable objects in $\\Ver_4$, see \\cite{BE}, the unit $\\unit$, a simple projective $V$ and the projective cover $P$ of $\\unit$. We will use\n$$V^{\\otimes 2}\\simeq P\\quad\\mbox{and}\\quad V\\otimes P\\simeq V^2.$$ We associate three invariants to the annihilator of an object $X$ in $\\Ver_4$. With $K:=\\TAnn(V)$, set $x_1(X):=\\sss(\\TAnn(X))$ and\n$$x_2(X):=\\sss(K\\Join\\TAnn(X))\\quad\\mbox{and}\\quad x_3(X):=\\sss(K\\Join K\\Join \\TAnn(X)).$$ \nIn practice, we can use $K\\Join\\TAnn(X)=\\TAnn(V\\otimes X)$.\n\nIf\n$X$ is $\\unit^l\\oplus V^m\\oplus P^n,$\nthen by \\cite[Example~4.6]{CEO} and the above tensor products\n$$x_1(X)= l+2m+4n,\\quad x_2(X)=2l+4m+4n,\\quad x_3(X)=4l+4m+8n.$$\nIt now follows from the observation\n$$\\det\\left(\\begin{array}{ccc}\n1&2&4\\\\\n2&4&4\\\\\n4&4&8\n\\end{array}\\right)\\;=\\;-16\\;\\not=\\; 0$$\nthat $\\TAnn_{\\Ver_4}$ is injective.\n\nFor part (2), we consider $\\Ver_p$ as the semisimplification of $\\mathrm{Rep} C_p$, so that the simple $L_i\\in \\Ver_p$, for $0<i<p$, is the image of the indecomposable $C_p$-representation of dimension $i$, see \\cite{Os}. As in part (1), for $X\\in\\Ver_p$ we define $x_i(X):=\\aaa(\\TAnn(L_2^{\\otimes i-1}\\otimes X))$, for $i\\in\\mZ_{>0}$, which only depend on $\\TAnn(X)$. For $W\\in\\mathrm{Rep} C_p$, with image $\\overline{W}\\in\\Ver_p$, the value $\\aaa(\\TAnn(\\overline{W}))$ is the (vector space) dimension of $W$ minus the dimension of the maximal projective summand.\nFor $i+j\\le p$, we thus have\n$x_i(L_j)=2^{i-1}j$ and for $i+j=p+1$, we have\n$x_i(L_j)=2^{i-1}j-p$. Again it suffices to show that the determinant of the $(p-1)\\times(p-1)$-matrix $(x_i(L_j))_{1\\le i,j\\le p-1}$ is non-zero. After subtracting the first row $2^{i-1}$ times from the $i$-th row, we obtain a matrix $A$ with \n$A_{ij}=0$ if $i+j<p$ and $i>1$, and $A_{ij}=-p$ if $i+j=p+1$, hence\n$$\\det((x_i(L_j))_{ij})\\;=\\; \\det(A)\\;=\\; (-1)^{\\frac{(p+1)(p-2)}{2}}p^{p-2}\\;\\not=\\; 0,$$\nas desired."
+    },
+    {
+      "id": "remark-42-637133fc",
+      "type": "remark",
+      "content": "The method in the proof of Theorem~\\ref{ThmVer} would extend to the essential image of the defining monoidal functor\n$$F:\\mathrm{Tilt} SL_2\\to\\Ver_{p^n},$$\nsee \\cite{BEO, AbEnv}, if it remains true that \n$$\\aaa(\\TAnn_{\\Ver_{p^n}}(FT_i))=\\dim_{\\bk}T_i,\\quad\\mbox{ for }\\quad0\\le i\\le p^n-2,$$ where $T_i$ is the $SL_2$-tilting module of highest weight $i$. The cases dealt with in Theorem~\\ref{ThmVer} are precisely those for which $F$ is essentially surjective.",
+      "content_preview": "The method in the proof of Theorem~ would extend to the essential image of the defining monoidal functor F: SL_2_p^n, see , if it remains true that...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 1167,
+        "line_end": 1172
+      },
+      "references": [
+        {
+          "target_id": "ThmVer",
+          "reference_type": "internal",
+          "context": "The method in the proof of Theorem~\\ref{ThmVer} would extend to the essential image of the defini",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmVer",
+          "reference_type": "internal",
+          "context": "ghest weight $i$. The cases dealt with in Theorem~\\ref{ThmVer} are precisely those for which $F$ is essentially",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-43-ad1ff6de",
+      "type": "definition",
+      "content": "A proper non-zero ideal $I<\\bk S_\\infty$ {\\bf admits dimension $\\delta\\in \\bk$} if $R_\\delta(I_{n+1})\\subset I_n$ for all $n>0$.",
+      "content_preview": "A proper non-zero ideal I< S_ admits dimension if R_(I_n+1) I_n for all n>0.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 1257,
+        "line_end": 1258
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-44-845969be",
+      "type": "lemma",
+      "content": "\\label{LemDim}\nIf a proper non-zero ideal $I<\\bk S_\\infty$ admits dimension $\\delta\\in \\bk$, then $\\delta$ is unique and is in the image of the ring homomorphism $\\mZ\\to\\bk$.",
+      "content_preview": "If a proper non-zero ideal I< S_ admits dimension , then is unique and is in the image of the ring homomorphism .",
+      "display_name": "Lemma",
+      "label": "LemDim",
+      "position": {
+        "line_start": 1262,
+        "line_end": 1264
+      },
+      "references": [
+        {
+          "target_id": "as",
+          "reference_type": "external",
+          "context": ".Assume $\\mathrm{char}(\\bk)=p>0$. \nAs recalled in \\ref{as}, then $a_{n+1}\\in I$ while $a_{n}\\not \\in I$ for",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmFinal",
+          "reference_type": "internal",
+          "context": "The characteristic~0 case follows from Theorem~\\ref{ThmFinal}(3) below.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Assume $\\mathrm{char}(\\bk)=p>0$. \nAs recalled in \\ref{as}, then $a_{n+1}\\in I$ while $a_{n}\\not \\in I$ for some $n\\in\\mZ_{>0}$. It follows quickly that\n$$I_n\\,\\ni \\,R_\\sigma(a_{n+1})\\;=\\; (\\delta-n)\\,a_n$$\nand hence $\\delta$ is the image of $n$ under $\\mZ\\to\\bk$. \n\nThe characteristic~0 case follows from Theorem~\\ref{ThmFinal}(3) below."
+    },
+    {
+      "id": "theorem-45-e1660a99",
+      "type": "theorem",
+      "content": "\\label{ThmFinal}\n\\begin{enumerate}\n\\item A non-zero proper ideal $I<\\bk S_\\infty$ admits a dimension if and only if it is of the form $\\TAnn_{\\cA}(X)$ for an object $X$ in a RSM category $\\cA$. The dimension of $I$ then equals the categorical dimension of $X$.\n\\item For every $\\delta\\in\\bk$, there is a bijection between the non-zero proper tensor ideals in $\\OB(\\delta)$ and the proper non-zero ideals in $\\bk S_\\infty$ admitting dimension $\\delta$, given by $\\cI\\mapsto \\TAnn_{\\OB(\\delta)/\\cI}(V_\\delta)$.\n\\item If $\\mathrm{char}(\\bk)=0$, then a non-zero proper ideal $I<\\bk S_\\infty$ admits a dimension if and only if it is T-prime. Moreover, the dimension of $\\mP_{m,n}$ is $m-n$.\n\\item If $\\mathrm{char}(\\bk)>3$, there are ideals in $\\bk S_\\infty$ that admit a dimension, but are not T-prime.\n\\end{enumerate}",
+      "content_preview": "A non-zero proper ideal I< S_ admits a dimension if and only if it is of the form _(X) for an object X in a RSM category .",
+      "display_name": "Theorem",
+      "label": "ThmFinal",
+      "position": {
+        "line_start": 1285,
+        "line_end": 1292
+      },
+      "references": [
+        {
+          "target_id": "defR",
+          "reference_type": "external",
+          "context": "ne direction is immediate, since the operation in \\eqref{defR} can be interpreted inside $\\OB(\\delta)$ as tensor",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmsVec",
+          "reference_type": "internal",
+          "context": "}$ for all $m-n=\\delta$. Now compare with Theorem~\\ref{ThmsVec}(2).\n\nFinally, for part (4) it suffices to observe",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We start by proving (2). By adjunction, all information of a tensor ideal $\\cI$ in $\\OB(\\delta)$ is contained in $I:=\\TAnn_{\\OB(\\delta)/\\cI}(V_\\delta)$, where in particular $I_n=\\cI(V_\\delta^{\\otimes n},V_\\delta^{\\otimes n})$. It thus only remains to prove that an ideal $I<\\bk S_\\infty$ can be realised inside $\\OB(\\delta)$ if and only if it admits dimension $\\delta$. One direction is immediate, since the operation in \\eqref{defR} can be interpreted inside $\\OB(\\delta)$ as tensoring with $V_\\delta^\\ast$ followed by pre- and post-composing with morphism. Hence an ideal must admit dimension $\\delta$ in order to correspond to a tensor ideal in $\\OB(\\delta)$. The other direction follows a slightly expanded diagrammatic interpretation.\n\nPart (1) then follows from part (2) and the universality of $\\OB(\\delta)$.\n\n\nFor part (3) we use parts (1) and (2). Then we can invoke the classification of tensor ideals in $\\OB(\\delta)$ from \\cite{Selecta}, stating that they are given by (for $\\delta\\in\\mZ$, and there are no proper non-zero tensor ideals if $\\delta\\not\\in\\mZ$) the kernels of the symmetric monoidal functors $\\OB(\\delta)\\to\\sVec$ sending $V_\\delta$ to $\\bk^{m|n}$ for all $m-n=\\delta$. Now compare with Theorem~\\ref{ThmsVec}(2).\n\nFinally, for part (4) it suffices to observe that, as proved in \\cite{CEOq}, there exists a tensor ideal $\\cI$ in $\\OB(3)$ with the property that there are morphisms $f,g$ in $\\OB(3)$ not in $\\cI$ but for which $f\\otimes g\\in \\cC$. Indeed, by adjunction we can assume that $f $ and $g$ are endomorphisms of tensor powers of $V_\\delta$, so that the conclusion follows from part (2)."
+    },
+    {
+      "id": "corollary-46-6f0ddae1",
+      "type": "corollary",
+      "content": "\\label{CorFin}\n\\begin{enumerate}\n\\item If a skew symmetriser vanishes on an object in a RSM category, then its categorical dimension corresponds to the last one that does not vanish.\n\\item If $\\mathrm{char}(\\bk)=p>0$, then $\\OB(\\delta)$ only has non-zero proper tensor ideals if $\\delta\\in \\mF_p$.\n\\end{enumerate}",
+      "content_preview": "If a skew symmetriser vanishes on an object in a RSM category, then its categorical dimension corresponds to the last one that does not vanish.",
+      "display_name": "Corollary",
+      "label": "CorFin",
+      "position": {
+        "line_start": 1306,
+        "line_end": 1311
+      },
+      "references": [
+        {
+          "target_id": "LemDim",
+          "reference_type": "internal",
+          "context": "umerate}Part (1), follows from the proof of Lemma~\\ref{LemDim} and Theorem~\\ref{ThmFinal}(1). Part (2) follows f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmFinal",
+          "reference_type": "internal",
+          "context": "from the proof of Lemma~\\ref{LemDim} and Theorem~\\ref{ThmFinal}(1). Part (2) follows from Theorem~\\ref{ThmFinal}(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ThmFinal",
+          "reference_type": "internal",
+          "context": "~\\ref{ThmFinal}(1). Part (2) follows from Theorem~\\ref{ThmFinal}(2) and Lemma~\\ref{LemDim}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "LemDim",
+          "reference_type": "internal",
+          "context": "follows from Theorem~\\ref{ThmFinal}(2) and Lemma~\\ref{LemDim}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Part (1), follows from the proof of Lemma~\\ref{LemDim} and Theorem~\\ref{ThmFinal}(1). Part (2) follows from Theorem~\\ref{ThmFinal}(2) and Lemma~\\ref{LemDim}."
+    },
+    {
+      "id": "conjecture-47-69806ca8",
+      "type": "conjecture",
+      "content": "Every T-prime ideal admits a dimension.",
+      "content_preview": "Every T-prime ideal admits a dimension.",
+      "display_name": "Conjecture",
+      "label": null,
+      "position": {
+        "line_start": 1324,
+        "line_end": 1324
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_LemDefT",
+      "type": "unknown",
+      "content": "External reference to 'LemDefT'",
+      "content_preview": "External reference to 'LemDefT'",
+      "display_name": "Unknown",
+      "label": "LemDefT",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_Sec0",
+      "type": "unknown",
+      "content": "External reference to 'Sec0'",
+      "content_preview": "External reference to 'Sec0'",
+      "display_name": "Unknown",
+      "label": "Sec0",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_Prop:MIndec",
+      "type": "unknown",
+      "content": "External reference to 'Prop:MIndec'",
+      "content_preview": "External reference to 'Prop:MIndec'",
+      "display_name": "Unknown",
+      "label": "Prop:MIndec",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_Lem:Tens",
+      "type": "unknown",
+      "content": "External reference to 'Lem:Tens'",
+      "content_preview": "External reference to 'Lem:Tens'",
+      "display_name": "Unknown",
+      "label": "Lem:Tens",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eqab",
+      "type": "unknown",
+      "content": "External reference to 'eqab'",
+      "content_preview": "External reference to 'eqab'",
+      "display_name": "Unknown",
+      "label": "eqab",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_as",
+      "type": "unknown",
+      "content": "External reference to 'as'",
+      "content_preview": "External reference to 'as'",
+      "display_name": "Unknown",
+      "label": "as",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_defR",
+      "type": "unknown",
+      "content": "External reference to 'defR'",
+      "content_preview": "External reference to 'defR'",
+      "display_name": "Unknown",
+      "label": "defR",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "example-8-64f63f5f",
+      "target": "example-17-632da3de",
+      "type": null
+    },
+    {
+      "source": "lemma-9-3cb8db67",
+      "target": "external_LemDefT",
+      "type": null
+    },
+    {
+      "source": "theorem-10-dacba761",
+      "target": "external_LemDefT",
+      "type": null
+    },
+    {
+      "source": "remark-11-125e8ad4",
+      "target": "external_Sec0",
+      "type": null
+    },
+    {
+      "source": "lemma-15-3930c03b",
+      "target": "example-8-64f63f5f",
+      "type": null
+    },
+    {
+      "source": "lemma-15-3930c03b",
+      "target": "lemma-14-2fd72638",
+      "type": null
+    },
+    {
+      "source": "remark-16-8a9a4f6c",
+      "target": "lemma-14-2fd72638",
+      "type": null
+    },
+    {
+      "source": "example-17-632da3de",
+      "target": "example-8-64f63f5f",
+      "type": null
+    },
+    {
+      "source": "corollary-21-9d677e82",
+      "target": "theorem-19-71ca09bf",
+      "type": null
+    },
+    {
+      "source": "corollary-21-9d677e82",
+      "target": "theorem-1-d279d3f2",
+      "type": null
+    },
+    {
+      "source": "example-22-2380e79a",
+      "target": "example-8-64f63f5f",
+      "type": null
+    },
+    {
+      "source": "theorem-23-3532df23",
+      "target": "external_Prop:MIndec",
+      "type": null
+    },
+    {
+      "source": "theorem-23-3532df23",
+      "target": "example-17-632da3de",
+      "type": null
+    },
+    {
+      "source": "theorem-23-3532df23",
+      "target": "external_Lem:Tens",
+      "type": null
+    },
+    {
+      "source": "theorem-23-3532df23",
+      "target": "theorem-19-71ca09bf",
+      "type": null
+    },
+    {
+      "source": "theorem-23-3532df23",
+      "target": "theorem-1-d279d3f2",
+      "type": null
+    },
+    {
+      "source": "theorem-24-d6fd9315",
+      "target": "example-17-632da3de",
+      "type": null
+    },
+    {
+      "source": "theorem-24-d6fd9315",
+      "target": "theorem-23-3532df23",
+      "type": null
+    },
+    {
+      "source": "remark-27-7c2c7506",
+      "target": "theorem-26-0649a647",
+      "type": null
+    },
+    {
+      "source": "lemma-28-234dbf4e",
+      "target": "external_eqab",
+      "type": null
+    },
+    {
+      "source": "remark-29-abcc9180",
+      "target": "lemma-28-234dbf4e",
+      "type": null
+    },
+    {
+      "source": "corollary-30-bb857bf9",
+      "target": "theorem-26-0649a647",
+      "type": null
+    },
+    {
+      "source": "corollary-30-bb857bf9",
+      "target": "lemma-28-234dbf4e",
+      "type": null
+    },
+    {
+      "source": "corollary-30-bb857bf9",
+      "target": "external_eqab",
+      "type": null
+    },
+    {
+      "source": "remark-32-db4e03e8",
+      "target": "theorem-31-96b73cad",
+      "type": null
+    },
+    {
+      "source": "remark-36-7b274917",
+      "target": "conjecture-37-a05fdfbb",
+      "type": null
+    },
+    {
+      "source": "lemma-40-eb903cb6",
+      "target": "lemma-15-3930c03b",
+      "type": null
+    },
+    {
+      "source": "remark-42-637133fc",
+      "target": "theorem-41-16d3ceff",
+      "type": null
+    },
+    {
+      "source": "lemma-44-845969be",
+      "target": "external_as",
+      "type": null
+    },
+    {
+      "source": "lemma-44-845969be",
+      "target": "theorem-45-e1660a99",
+      "type": null
+    },
+    {
+      "source": "theorem-45-e1660a99",
+      "target": "external_defR",
+      "type": null
+    },
+    {
+      "source": "theorem-45-e1660a99",
+      "target": "theorem-24-d6fd9315",
+      "type": null
+    },
+    {
+      "source": "corollary-46-6f0ddae1",
+      "target": "lemma-44-845969be",
+      "type": null
+    },
+    {
+      "source": "corollary-46-6f0ddae1",
+      "target": "theorem-45-e1660a99",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 54,
+    "edge_count": 34,
+    "extractor_used": "regex-only"
+  }
+}

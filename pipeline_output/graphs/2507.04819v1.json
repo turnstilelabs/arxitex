@@ -1,0 +1,874 @@
+{
+  "arxiv_id": "2507.04819v1",
+  "nodes": [
+    {
+      "id": "lemma-1-b7f4aff8",
+      "type": "lemma",
+      "content": "\\label{lem:unions:of:invertible:general}\nLet $T$ be a monoid and $r,s,t\\in T$ with $rs$ and $st$ invertible.  Then $s$ and $rst$ are invertible.",
+      "content_preview": "Let T be a monoid and r,s,t T with rs and st invertible. Then s and rst are invertible.",
+      "display_name": "Lemma",
+      "label": "lem:unions:of:invertible:general",
+      "position": {
+        "line_start": 750,
+        "line_end": 752
+      },
+      "references": [],
+      "proof": "First note that $rst[(st)^{-1}s(rs)^{-1}] = 1$ and $[(st)^{-1}s(rs)^{-1}]rst = 1$, whence $rst$ is invertible.  Since $rs,st$ are invertible, $s$ is left and right invertible, hence invertible."
+    },
+    {
+      "id": "lemma-2-557b3bf9",
+      "type": "lemma",
+      "content": "\\cite[Lemma~3.4]{Zhang}\\label{lem:Zhang:Irred}\nAn irreducible word $u \\in A^*$ is invertible if and only if\n$u \\in \\Delta^*$.",
+      "content_preview": "An irreducible word u A^* is invertible if and only if u ^*.",
+      "display_name": "Lemma",
+      "label": "lem:Zhang:Irred",
+      "position": {
+        "line_start": 759,
+        "line_end": 762
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-3-df8e340d",
+      "type": "lemma",
+      "content": "\\cite[Theorem 5.2]{otto1991decision}\\label{lem:OttoZhang}\nLet $M = \\lb A \\mid w_1=1, \\ldots, w_k=1 \\rb$.  Then every word $u \\in A^*$ can be uniquely factorised as $u\\equiv u_0a_1u_1 \\ldots a_m u_m$ where, for $0 \\leq i \\leq m$, we have $a_i \\in A$ and $u_i$ is a maximal invertible subword of $u$.  We call this the Otto-Zhang normal form of $u$.  Moreover, if $v \\in A^*$ with $u=v$ in $M$, then the Otto-Zhang normal form of $v$ is $v \\equiv v_0a_1v_1 \\ldots a_m v_m$ where\n $u_i = v_i$ in $M$ for $i=0,\\ldots, m$.",
+      "content_preview": "Let M = A w_1=1, , w_k=1 . Then every word u A^* can be uniquely factorised as u u_0a_1u_1 a_m u_m where, for 0 i m, we have a_i A and u_i is a...",
+      "display_name": "Lemma",
+      "label": "lem:OttoZhang",
+      "position": {
+        "line_start": 770,
+        "line_end": 773
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-b0c6b8c7",
+      "type": "lemma",
+      "content": "\\label{lemma:OZ} Let $M = \\lb A \\mid w_1=1, \\ldots, w_k=1 \\rb$, let $u \\in A^*$ and let  \n  \\[u\\equiv u_0a_1u_1 \\ldots a_m u_m \\]\nbe the Otto-Zhang normal form of $u$. Then $\\ov u\\equiv \\ov{u_0}a_1\\ov{u_1}\\cdots a_m\\ov{u_m}$ and each $\\ov{u_i}\\in \\Delta^*$. Moreover, this is the Otto-Zhang normal form of $\\ov u$.",
+      "content_preview": "Let M = A w_1=1, , w_k=1 , let u A^* and let [u u_0a_1u_1 a_m u_m ] be the Otto-Zhang normal form of u. Then u a_1 a_m and each ^*.",
+      "display_name": "Lemma",
+      "label": "lemma:OZ",
+      "position": {
+        "line_start": 777,
+        "line_end": 780
+      },
+      "references": [
+        {
+          "target_id": "lem:unions:of:invertible:general",
+          "reference_type": "internal",
+          "context": "$\\ov {u_j}$ is invertible, it follows from Lemma~\\ref{lem:unions:of:invertible:general} that either $w\\equiv \\ov u_i$ for some $i$, or $w",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Zhang:Irred",
+          "reference_type": "internal",
+          "context": "e subword of \n$v$ is reduced. \nFinally,  by Lemma~\\ref{lem:Zhang:Irred}, each $\\ov{u_i}$ is a word in $\\Delta^*$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "To see this, it suffices to show that each $\\ov{u_i}$ is a maximal invertible subword of $v \\equiv \\ov{u_0}a_1\\ov{u_1}\\cdots a_m\\ov{u_m}$, and that $v$\nis reduced. Suppose that $w$ is a maximal invertible subword of $v$.\nSince each $\\ov {u_j}$ is invertible, it follows from Lemma~\\ref{lem:unions:of:invertible:general} that either $w\\equiv \\ov u_i$ for some $i$, or $w\\equiv \\ov {u_{i-1}}a_{i}\\cdots a_k\\ov{u_k}$ for some $1\\leq i\\leq k\\leq m$.  But in the latter case $u_{i-1}a_i\\cdots a_ku_k$ is an invertible word, a contradiction.  Thus each $\\ov {u_j}$ is a maximal invertible subword of $v$. \nIt now follows that \n$v$\nis reduced since the left-hand side of each rewrite rule is nonempty and invertible, and each maximal invertible subword of \n$v$ is reduced. \nFinally,  by Lemma~\\ref{lem:Zhang:Irred}, each $\\ov{u_i}$ is a word in $\\Delta^*$."
+    },
+    {
+      "id": "definition-5-23eaa1b6",
+      "type": "definition",
+      "content": "\\label{def:height}\nGiven any pair $(\\mu,\\gamma)\\in A^+\\times A^+$ such that some invertible word cuts across $(\\mu,\\gamma)$, we define the height of $(\\mu,\\gamma)$ to be the height of the lattice of invertible words cutting across $(\\mu,\\gamma)$, i.e., the length of the longest chain of invertible words cutting across $(\\mu,\\gamma)$.",
+      "content_preview": "Given any pair (,) A^+ A^+ such that some invertible word cuts across (,), we define the height of (,) to be the height of the lattice of invertible...",
+      "display_name": "Definition",
+      "label": "def:height",
+      "position": {
+        "line_start": 854,
+        "line_end": 856
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-4487cb3b",
+      "type": "lemma",
+      "content": "\\label{lem:ht.zero}\nLet $\\mu,\\gamma\\in A^*$ be reduced  with $\\mu\\gamma$ invertible but $\\mu$ noninvertible (or, equivalently, $\\gamma$ noninvertible).  If $(\\mu,\\gamma)$ has height $0$, then $\\mu$ has no nonempty left invertible prefix and $\\gamma$ has no nonempty right invertible suffix.",
+      "content_preview": "Let , A^* be reduced with invertible but noninvertible (or, equivalently, noninvertible). If (,) has height 0, then has no nonempty left invertible...",
+      "display_name": "Lemma",
+      "label": "lem:ht.zero",
+      "position": {
+        "line_start": 862,
+        "line_end": 864
+      },
+      "references": [
+        {
+          "target_id": "p:lattice.vers1",
+          "reference_type": "external",
+          "context": "o nonempty right invertible suffix by Proposition~\\ref{p:lattice.vers1}.  Since $\\mu$ and $\\gamma$ are also not invertibl",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Write $\\mu\\equiv \\mu'a$ and $\\gamma\\equiv b\\gamma'$ with $a,b\\in A$.   Note that $\\mu'$ is right invertible and $\\gamma'$ is left invertible, and so  $\\mu'$ has no nonempty left invertible prefix and $\\gamma'$ has no nonempty right invertible suffix by Proposition~\\ref{p:lattice.vers1}.  Since $\\mu$ and $\\gamma$ are also not invertible, but are right and left invertible, respectively, the lemma follows."
+    },
+    {
+      "id": "lemma-7-1f188c5c",
+      "type": "lemma",
+      "content": "\\label{lem_NGenAdvanced_newExtra}\nThe monoid $N$ is finitely generated by the set\n$X \\cup Y$ where\n\\[Y=\\{(\\delta,\\delta^{-1}): \\delta\\in \\Delta\\}\\] and\n$X$ consists of all pairs $(\\delta_1,\\delta_2\\delta\\inv)$ such that:\n\\begin{enumerate}\n\\item  $\\delta_1,\\delta_2\\in A^+$ are reduced;\n\\item  $\\delta\\equiv \\delta_1\\delta_2$ is invertible;\n\\item $(\\delta_1,\\delta_2)$ has height $0$;\n\\item  $\\delta_1$ has no invertible suffix.\n\\end{enumerate}\nFurthermore these four conditions imply that $\\delta \\equiv \\delta_1 \\delta_2 \\in \\Delta$, and hence the set $X$ is finite.",
+      "content_preview": "The monoid N is finitely generated by the set X Y where [Y=(,^-1): ] and X consists of all pairs (_1,_2) such that: _1,_2 A^+ are reduced; _1_2 is...",
+      "display_name": "Lemma",
+      "label": "lem_NGenAdvanced_newExtra",
+      "position": {
+        "line_start": 874,
+        "line_end": 887
+      },
+      "references": [
+        {
+          "target_id": "p:lattice.cuts",
+          "reference_type": "external",
+          "context": "utting across $(u,v)$; this exists by Proposition~\\ref{p:lattice.cuts}.  Write $u\\equiv u'\\delta_1$ and $v\\equiv \\delta_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Zhang:Irred",
+          "reference_type": "internal",
+          "context": "elta_1$ is reduced, $\\gamma\\in \\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred}.  Therefore, $(\\gamma,\\gamma\\inv)\\in \\langle Y\\ra",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Zhang:Irred",
+          "reference_type": "internal",
+          "context": "t is invertible it belongs to $\\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred}.  Since $\\delta_1\\notin \\Delta^*$ (being noninver",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $u,v\\in A^*$ be reduced with $uv=1$ in $M$.  We prove by induction on $|u|$ that $(u,v)\\in \\langle X\\cup Y\\rangle$. If $u=1$, then since $uv=1$ in $M$ and $v$ is reduced, we must have $v=1$. Proceeding by induction, if $|u|>0$,  then $uv$ is not reduced (being $1$ in $M$), and so we can apply a rewrite rule to it.  Since $u,v$ are reduced, the left-hand side of any applicable rewrite rule cuts across $(u,v)$.  But the left-hand side of any rewrite rule is invertible and nonempty.  Hence there is an invertible word cutting across $(u,v)$.  Let  $\\delta$ be the minimal invertible word cutting across $(u,v)$; this exists by Proposition~\\ref{p:lattice.cuts}.  Write $u\\equiv u'\\delta_1$ and $v\\equiv \\delta_2v'$ with $\\delta\\equiv \\delta_1\\delta_2$. Suppose first that $\\delta_1$ has no invertible suffix.  We compute $(u,v)=(u',\\delta v')(\\delta_1,\\delta_2\\delta\\inv)$.  Note that $|u'|<|u|$ and $u'\\delta v'\\equiv uv$, and hence is $1$ in $M$.  So $(u',\\delta v')\\in \\langle X\\cup Y\\rangle$ by induction, noting that $u'$ is a reduced word, whereas $(\\delta_1,\\delta_2\\delta\\inv)\\in X$ by minimality of $\\delta$ which implies $(\\delta_1, \\delta_2)$ has height zero.  Otherwise, $\\delta_1\\equiv \\delta_1'\\gamma$ where $\\gamma$ is a nonempty invertible suffix.  Since $\\delta_1$ is reduced, $\\gamma\\in \\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred}.  Therefore, $(\\gamma,\\gamma\\inv)\\in \\langle Y\\rangle$.  But then $(u,v) = (u'\\delta_1'\\gamma,v) = (u'\\delta_1',\\ov{\\gamma v})(\\gamma,\\gamma\\inv)$, where $u' \\delta_1'$ is a reduced word since it is a subword of the reduced word $u$. Since $u'\\delta_1'\\ov{\\gamma v}=uv=1$ in $M$, and $|u'\\delta_1'|<|u|$, we deduce that  $(u'\\delta_1'\\gamma,v)\\in \\langle X\\cup Y\\rangle$ by induction, and hence $(u,v)\\in \\langle X\\cup Y\\rangle$.\n\nFinally, we show that conditions (1)--(4) together imply that $\\delta\\equiv\\delta_1\\delta_2 \\in \\Delta$ and hence the set $X$ is finite. There are two cases to consider. \n\nFirst suppose that $\\delta\\equiv\\delta_1\\delta_2$ is not reduced. Since $\\delta_1$ and $\\delta_2$ are both reduced by (1) it follows that the left hand side $\\mu \\in \\Delta^+$ of some rewrite rule cuts across $(\\delta_1, \\delta_2)$.          \nWrite $\\delta_1\\delta_2 \\equiv \\delta_1' \\mu_1 \\mu_2 \\delta_2'$ where $\\delta_1 \\equiv \\delta_1' \\mu_1$, $\\delta_2 \\equiv \\mu_2 \\delta_2'$ and $\\mu_1\\mu_2 \\in \\Delta^+$ with $\\mu_1$ and $\\mu_2$ both non-empty words. Since by (4) the word $\\delta_1$ has no invertible suffix, it follows that $\\mu_1 \\not\\in \\Delta^+$ hence there is a word $\\gamma \\in \\Delta$ such that $\\gamma$ cuts across $(\\delta_1,\\delta_2)$. Since by (3) we have that $(\\delta_1,\\delta_2)$ has height zero this is only possible if $\\delta \\equiv \\delta_1 \\delta_2 \\equiv \\gamma \\in \\Delta$. This completes the proof that in this case $\\delta \\equiv \\delta_1\\delta_2 \\in \\Delta$. \n\nNext we consider the case that $\\delta\\equiv\\delta_1\\delta_2$ is reduced. Since $\\delta_1\\delta_2$ is reduced, then as it is invertible it belongs to $\\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred}.  Since $\\delta_1\\notin \\Delta^*$ (being noninvertible), the expression of $\\delta_1\\delta_2$ as a product of words from $\\Delta$ must involve an element $\\delta'\\in\\Delta$ cutting across $(\\delta_1,\\delta_2)$.  Since any element of $\\Delta$ is invertible, we deduce that $\\delta_1\\delta_2\\equiv \\delta' \\in \\Delta$ by definition of height $0$. This completes the proof that in this case $\\delta \\equiv \\delta_1\\delta_2 \\in \\Delta$. \n\nWe have shown that the conditions (1)--(4) together imply that $\\delta\\equiv\\delta_1\\delta_2 \\in \\Delta$ and hence, since $\\Delta$ is finite, the set $X$ is also finite."
+    },
+    {
+      "id": "lemma-8-0f3ee09e",
+      "type": "lemma",
+      "content": "[Ping Pong Lemma]\\label{l:ping.pong}\nLet $N$ be a cancellative monoid, $G$ a subgroup of the group of units of $N$ and $X\\subseteq N$.  Suppose that $N=\\langle G\\cup X\\rangle$ and there is a right $N$-set $A$  such that $A=A_0\\sqcup \\bigsqcup_{x\\in X}Ax$ with $Axg\\subseteq A_0$ whenever $x\\in X$ and $1\\neq g\\in G$, and $Ax\\subsetneq A$. Then $\\langle X\\rangle$ is a free monoid with basis $X$ and $N\\cong G\\ast X^*$.",
+      "content_preview": "[Ping Pong Lemma] Let N be a cancellative monoid, G a subgroup of the group of units of N and X N. Suppose that N= G X and there is a right N-set A...",
+      "display_name": "Lemma",
+      "label": "l:ping.pong",
+      "position": {
+        "line_start": 923,
+        "line_end": 925
+      },
+      "references": [],
+      "proof": "First note that if $X=\\emptyset$, then $N=G$ and there is nothing to prove.  So we may assume that $X\\neq \\emptyset$.\nFor each $x \\in X$ if $x^i=x^j$ for some $i,j \\in \\mathbb{N}$ with $i > j$ then since $N$ is a cancellative monoid this would imply $x^{i-j}=1$ and thus $x$ is invertible. But if $x$ were invertible it would imply $Ax=A$ contradicting the hypotheses of the lemma. \nHence, \neach $x\\in X$ generates a free submonoid $x^*$. \nWe want to show that $N \\cong G\\ast \\Asterisk_{\\substack{x\\in X}}x^*$.  By assumption, the natural map from the free product to $N$ is surjective.  The action of $N$ on $A$ inflates to  $G\\ast \\Asterisk_{\\substack{x\\in X}}x^*$ via this natural map.   First note that if \nan element $\\alpha$ of the free product $G\\ast \\Asterisk_{\\substack{x\\in X}}x^*$\nis in normal form with last syllable of type $x^*$, then $A\\alpha\\subseteq Ax$. \nIf $\\alpha$ has last syllable of type $G$, there are two cases.  If $\\alpha\\in G\\setminus \\{1\\}$, then $A\\alpha=A$ and $Ax\\alpha\\subseteq A_0$ for all $x\\in X$; if $\\alpha=\\alpha'x^kg$ with $x\\in X$, $k>0$ and $g\\in G\\setminus \\{1\\}$, then $A\\alpha\\subseteq A_0$.  It follows that if $\\alpha$ is a nonempty normal form, then it acts nontrivially on $A$, and we can determine the type of its last syllable from its action on $A$.   \n\n Suppose that $\\alpha$ and $\\beta$ are normal forms for the free product.  We induct on the sum of their syllable lengths to show that if $\\alpha$ and $\\beta$ represent the same element of $N$, then they are equal in the free product. By the previous paragraph, we may assume that $\\alpha$ and $\\beta$ are nonempty and  their last syllables have the same type.\nSuppose first that  $\\alpha = \\alpha'x^k$ and $\\beta=\\beta'x^m$ with $x\\in X$ and $\\alpha',\\beta'$ of one shorter syllable length.  Without loss of generality assume that $k\\leq m$.  Then cancelling $x^k$ we get $\\alpha'$ and $\\beta'x^{m-k}$ represent the same element of $N$.  By induction, since $\\alpha'$ does not end in an $x^*$-syllable, we must have that $m=k$ and  $\\alpha'=\\beta'$ in the free product.   Next suppose that $\\alpha=\\alpha' g$ and $\\beta =\\beta'g'$ where $g,g'\\in G\\setminus \\{1\\}$ and $\\alpha',\\beta'$ have syllable length one shorter.  Then $\\alpha'=\\beta' g'g\\inv$ in $N$.  Since $\\alpha'$ does not end in a $G$-syllable, we deduce by induction that $g'g\\inv =1$ and $\\alpha'=\\beta'$ in the free product.  This completes the proof."
+    },
+    {
+      "id": "theorem-9-555356aa",
+      "type": "theorem",
+      "content": "\\label{thm:FreeProductStructure}\nThe monoid $N$ is isomorphic to a free product $G \\ast C^*$ where $G$ is the group of units of $M$ and $C$ is a finite set. More precisely,\nlet\n$X \\cup Y$ be the finite generating set for $N$ obtained in Lemma~\\ref{lem_NGenAdvanced_newExtra}. Then $X$ is a basis for a free submonoid of $N$ and $N\\cong G\\ast X^*$ where the copy of $G$ is identified with $\\langle Y\\rangle$.",
+      "content_preview": "The monoid N is isomorphic to a free product G C^* where G is the group of units of M and C is a finite set.",
+      "display_name": "Theorem",
+      "label": "thm:FreeProductStructure",
+      "position": {
+        "line_start": 942,
+        "line_end": 946
+      },
+      "references": [
+        {
+          "target_id": "lem_NGenAdvanced_newExtra",
+          "reference_type": "internal",
+          "context": "e finite generating set for $N$ obtained in Lemma~\\ref{lem_NGenAdvanced_newExtra}. Then $X$ is a basis for a free submonoid of $N$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem_NGenAdvanced_newExtra",
+          "reference_type": "internal",
+          "context": "know that $N$ is generated by $X\\cup Y$ by Lemma~\\ref{lem_NGenAdvanced_newExtra}.  We have already pointed out that $N$ is cancell",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "claim:1",
+          "reference_type": "external",
+          "context": "ced.  \n\\end{Claim}  \n\\begin{proof}[Proof of Claim~\\ref{claim:1}]\nBy assumption $\\pi_{\\ell}$, $\\pi_r$ and $\\delta$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem_NGenAdvanced_newExtra",
+          "reference_type": "internal",
+          "context": "ma$ are reduced by the definition of $X$ in Lemma~\\ref{lem_NGenAdvanced_newExtra}.  First we observe that $\\pi_{\\ell}\\mu$ is reduce",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:ht.zero",
+          "reference_type": "internal",
+          "context": "of $\\mu$, something we already observed in Lemma~\\ref{lem:ht.zero} it does not have.  Dually, $\\gamma\\ov{\\tau\\inv\\pi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:ht.zero",
+          "reference_type": "internal",
+          "context": "them) would contradict the fact (proved in Lemma~\\ref{lem:ht.zero}) that $\\gamma$ has no nonempty right invertible s",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "ertible subword of $\\pi_{\\ell}\\mu\\delta$ by Lemma~\\ref{lemma:OZ}.  By definition of the generating set $X$ the wor",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "claim:1",
+          "reference_type": "external",
+          "context": "the proof of the claim.\n  \\end{proof}\n\nFrom Claim~\\ref{claim:1} it follows that $\\pi_{\\ell}\\mu$ and $\\gamma\\ov{\\t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "p:lattice.cuts",
+          "reference_type": "external",
+          "context": "-empty words by definition of $X$.\nBy Proposition~\\ref{p:lattice.cuts} the set of invertible words cutting across this p",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "claim:1",
+          "reference_type": "external",
+          "context": "i_r)$ and $\\pi_\\ell\\mu\\delta$ is reduced by Claim~\\ref{claim:1}.  Now if $\\pi x(g,g\\inv)=\\pi'x'$ with $\\pi'=(\\pi_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "claim:1",
+          "reference_type": "external",
+          "context": "inv\\pi_r')$ with $\\pi_\\ell'\\mu'$ reduced by Claim~\\ref{claim:1}.  Thus $\\pi_\\ell'\\mu'\\equiv\\pi_\\ell\\mu\\delta$.  W",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Note that if $\\mu,\\gamma \\in A^*$ are reduced with $\\mu$ non-empty, \n and with $\\mu\\gamma$ invertible and with $\\mu$ having no invertible suffix, then $\\mu$ is right invertible, but not invertible.\n\nWe prove the free product decomposition using the Ping Pong Lemma applied to the right action of $N$ on itself.  We know that $N$ is generated by $X\\cup Y$ by Lemma~\\ref{lem_NGenAdvanced_newExtra}.  We have already pointed out that $N$ is cancellative. Note that if $x=(\\delta_1,\\delta_2\\delta\\inv)\\in X$ with $\\delta_1\\delta_2\\equiv \\delta\\in \\Delta$ and $\\delta_1$ having no invertible suffix, then $\\delta_1$ is right invertible (as $\\delta$ is invertible), and hence is not left invertible.  It follows that $x$ is not left invertible, and so  $Nx\\subsetneq N$ for all $x\\in X$.  We now prove that the collection $\\{Nx: x\\in X\\}$ is pairwise disjoint.  \n\n\nLet $\\pi\\in N$ with $\\pi=(\\pi_{\\ell},\\pi_r)$ with $\\pi_{\\ell},\\pi_r$ reduced words.  If $(\\mu,\\gamma\\tau\\inv)\\in X$ with $\\mu\\gamma\\equiv \\tau\\in \\Delta$, we shall show that we can uniquely recover $(\\mu,\\gamma\\tau\\inv)$ from $(\\pi_\\ell\\mu, \\gamma\\tau\\inv \\pi_r)=\\pi(\\mu,\\gamma\\tau\\inv)$.\nWe need a claim in order to do this.  We continue to write $\\ov{w}$ for the reduced form of $w$.\n\n\n\\begin{Claim}\\label{claim:1}\nLet $\\pi=(\\pi_\\ell,\\pi_r)\\in N$ with $\\pi_{\\ell},\\pi_r$ reduced, $(\\mu,\\gamma\\tau\\inv)\\in X$ with $\\tau\\equiv \\mu\\gamma$ and $\\delta\\in \\Delta^*$ reduced.  Then\n\\[\\pi(\\mu,\\gamma\\tau\\inv)(\\delta,\\delta\\inv) = (\\pi_{\\ell}\\mu\\delta,\\delta\\inv\\gamma\\ov{\\tau\\inv \\pi_r})\\] and $\\pi_{\\ell}\\mu\\delta$ and $\\gamma\\ov{\\tau\\inv \\pi_r}$ are both reduced.  \n\\end{Claim}  \n\\begin{proof}[Proof of Claim~\\ref{claim:1}]\nBy assumption $\\pi_{\\ell}$, $\\pi_r$ and $\\delta$ are reduced.  The words $\\mu,\\gamma$ are reduced by the definition of $X$ in Lemma~\\ref{lem_NGenAdvanced_newExtra}.  First we observe that $\\pi_{\\ell}\\mu$ is reduced.  This follows since $\\pi_{\\ell}$ and $\\mu$ are reduced, and no rewrite rule can be applied with the left-hand side of the rewrite rule including both letters in $\\pi_{\\ell}$ and in  $\\mu$ since the left-hand side of every rewrite rule belongs to $\\Delta^+$, and hence is invertible,  and that would then give a nonempty left invertible prefix of $\\mu$, something we already observed in Lemma~\\ref{lem:ht.zero} it does not have.  Dually, $\\gamma\\ov{\\tau\\inv\\pi_r}$ is reduced because no rewrite rule can be applied to $\\gamma$ or $\\overline{\\tau^{-1}\\pi_r}$ since they are reduced, and\nfurthermore, any rewrite rule applied across both of these words (i.e., involving letters from both of them) would contradict the fact (proved in Lemma~\\ref{lem:ht.zero}) that $\\gamma$ has no nonempty right invertible suffix, as the left-hand side of any rewrite rule is nonempty and invertible.  \n\nFinally we show that $\\pi_{\\ell}\\mu\\delta$ is reduced.  Since the left hand side of any rewrite rule is nonempty and invertible, and as $\\pi_{\\ell}\\mu$ and $\\delta$ are reduced, it is enough to show that $\\delta$ is a maximal invertible subword of $\\pi_{\\ell}\\mu\\delta$ by Lemma~\\ref{lemma:OZ}.  By definition of the generating set $X$ the word $\\mu$ does not have an invertible suffix.\nIt follows that there is no suffix $\\mu''$ of $\\mu$ such that $\\mu''\\delta$ is invertible.\nA word of the form $\\sigma \\mu\\delta$ cannot be invertible since if it were, then $\\sigma \\mu$ would be invertible, implying  $\\mu$ is left invertible which is a contradiction, since it is right invertible but not invertible.\nThis completes the proof of the claim.\n  \\end{proof}\n\nFrom Claim~\\ref{claim:1} it follows that $\\pi_{\\ell}\\mu$ and $\\gamma\\ov{\\tau\\inv\\pi_r}$ are reduced.\nWe now recover $(\\mu,\\gamma\\tau\\inv)$ uniquely from $(\\pi_\\ell\\mu,\\gamma\\ov{\\tau\\inv \\pi_r})$ in the following way.\nConsider all the invertible words cutting across this pair.\nThere is at least one such word since $\\mu\\gamma$ is invertible and $\\mu$ and $\\gamma$ are both non-empty words by definition of $X$.\nBy Proposition~\\ref{p:lattice.cuts} the set of invertible words cutting across this pair is a lattice\nunder inclusion. \nWe claim that the word\n$\\mu \\gamma$ is the unique minimal element of this lattice.  This word is minimal because, by definition of $X$, the pair $(\\mu, \\gamma)$ has height zero.  In a lattice minimal elements are unique.  It follows that we can recover $(\\mu, \\gamma\\tau\\inv)$ from $(\\pi_\\ell\\mu,\\gamma\\ov{\\tau\\inv \\pi_r})$, and hence the collection $\\{Nx: x\\in X\\}$ is pairwise disjoint.\n\n\n\nLet $N_0$ be the complement of $\\bigsqcup_{x\\in X}Nx$.  By the Ping Pong Lemma, it remains to show that $Nx(g,g\\inv)\\subseteq N_0$ for all $x\\in X$ and $g\\neq 1$ in $G$.  Indeed, let $x=(\\mu,\\gamma\\tau\\inv)\\in X$, and let $\\delta\\in \\Delta^*$ be reduced representing $g$, whence $\\delta$ is nonempty.  Let $\\pi=(\\pi_\\ell,\\pi_r)\\in N$ with $\\pi_\\ell,\\pi_r$ reduced.  Then \n$\\pi x(g,g\\inv) = (\\pi_\\ell\\mu\\delta,\\delta\\inv \\gamma\\tau\\inv \\pi_r)$ and $\\pi_\\ell\\mu\\delta$ is reduced by Claim~\\ref{claim:1}.  Now if $\\pi x(g,g\\inv)=\\pi'x'$ with $\\pi'=(\\pi_\\ell',\\pi_r')\\in N$, $x'=(\\mu',\\gamma'(\\tau')\\inv)\\in X$, $\\tau'\\equiv \\mu'\\gamma'\\in \\Delta$ and $\\pi_\\ell',\\pi_r'$ reduced, then we would have $\\pi'x'=(\\pi_\\ell'\\mu',\\gamma'(\\tau')\\inv\\pi_r')$ with $\\pi_\\ell'\\mu'$ reduced by Claim~\\ref{claim:1}.  Thus $\\pi_\\ell'\\mu'\\equiv\\pi_\\ell\\mu\\delta$.  We cannot have $\\delta$ as a suffix of $\\mu'$ since $\\mu'$ has no invertible suffix and $\\delta$ is nonempty.   If $\\mu'$ is a suffix of $\\delta$, then it is left invertible, but it is also right invertible since $\\mu'\\gamma'$ is invertible.  This contradicts that $\\mu'$ has no invertible suffix. Thus $\\pi x(g,g\\inv)\\in N_0$.  This completes the proof that $X$ freely generates $X^*$ and  $N\\cong G\\ast X^*$ by the Ping Pong Lemma."
+    },
+    {
+      "id": "theorem-10-48146f4b",
+      "type": "theorem",
+      "content": "\\label{thm:Free:N:Set2}\nThe set $M \\times M$ is a free right $N$-set under the action\n\\[\n(m_1,m_2) \\cdot (n_1,n_2) = (m_1 n_1, n_2 m_2),\n\\]\nwhere $(m_1,m_2) \\in M \\times M$ and $(n_1,n_2) \\in N$. In more detail, let\n\\begin{align*}\n& \\mathcal{B} = \\{\n(\\alpha_1, \\alpha_2): \\mbox{$\\alpha_1\\alpha_2 \\equiv \\alpha$ is a reduced word and $\\alpha$} \\\\\n& \\mbox{has Otto-Zhang normal form $\\alpha\\equiv w_0a_1w_1\\cdots a_mw_m$}  \\\\\n& \\mbox{with $\\alpha_1\\equiv w_0a_1\\cdots wa_{i-1}$  and $\\alpha_2\\equiv w_{i-1}a_i\\cdots a_mw_m$} \\\\\n& \\mbox{for some $1\\leq i\\leq m+1$} \\}.\n  \\end{align*}\nThen $M \\times M$ is a free right $N$-set with basis\n$\\mathcal{B}$.",
+      "content_preview": "The set M M is a free right N-set under the action [ (m_1,m_2) (n_1,n_2) = (m_1 n_1, n_2 m_2), ] where (m_1,m_2) M M and (n_1,n_2) N.",
+      "display_name": "Theorem",
+      "label": "thm:Free:N:Set2",
+      "position": {
+        "line_start": 1011,
+        "line_end": 1026
+      },
+      "references": [
+        {
+          "target_id": "lem:Zhang:Irred",
+          "reference_type": "internal",
+          "context": "reduced and hence belongs to $\\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred}.  Also, $\\ov{uv} = w_0a_1\\cdots a_{i-1}\\ov{w_{i-1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "ts a_{i-1}\\ov{w_{i-1}}a_i\\cdots a_m w_m$ by Lemma~\\ref{lemma:OZ}.   It follows that $(u',v')\\in \\mathcal B$ where",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "cdots a_mw_m$ in Otto-Zhang normal form. By Lemma~\\ref{lemma:OZ}, each $w_j$ is reduced and in $\\Delta^*$.   Then",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:unions:of:invertible:general",
+          "reference_type": "internal",
+          "context": "{i-2}a_{i-1}xyw_{i-1}a_i\\cdots a_mw_m$.  By Lemma~\\ref{lem:unions:of:invertible:general}, it follows that any maximal invertible subword o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "nu:=a_iw_i\\cdots a_mw_m$.  We conclude from Lemma~\\ref{lemma:OZ} that $\\ov{y\\alpha_2} \\equiv \\ov{yw_{i-1}}a_iw_i\\c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:unions:of:invertible:general",
+          "reference_type": "internal",
+          "context": "$x$ a suffix of $z$, it would follow \nfrom Lemma~\\ref{lem:unions:of:invertible:general} \nthat $zyw_{i-1}$ is an invertible word strictly",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $u,v\\in A^*$ be reduced words and let $uv\\equiv w_0a_1\\cdots a_mw_m$ in Otto-Zhang normal form.  Suppose, moreover, that $u\\equiv w_0a_0\\cdots w_{i-2}a_{i-1}w_{i-1}'$ and $v\\equiv w_{i-1}''a_i\\cdots a_mw_m$ where $w_{i-1}\\equiv w_{i-1}'w_{i-1}''$.   Note that for $j\\neq i-1$, we have that $w_j$ is reduced and hence belongs to $\\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred}.  Also, $\\ov{uv} = w_0a_1\\cdots a_{i-1}\\ov{w_{i-1}}a_i\\cdots a_m w_m$ by Lemma~\\ref{lemma:OZ}.   It follows that $(u',v')\\in \\mathcal B$ where $u'\\equiv w_0a_1\\cdots w_{i-2}a_{i-1}$ and $v'\\equiv \\ov{w_{i-1}}a_i\\cdots a_mw_m$.  We claim that $(u,v)\\in (u',v')N$.  Indeed, note that $(w_{i-1}',w_{i-1}''w_{i-1}\\inv)\\in N$ and\n\\[(u',v')(w_{i-1}',w_{i-1}''w_{i-1}\\inv) = (u'w_{i-1}', w_{i-1}''w_{i-1}\\inv w_{i-1}a_i\\cdots a_mw_m) = (u,v),\\]\nas required.  We conclude that $\\mathcal B$ is a generating set for $M\\times M$ as a right $N$-set.  It remains, to show each element of $M\\times M$ has only one expression in the form $(\\alpha_1,\\alpha_2)(n_1,n_2)$ with $(\\alpha_1,\\alpha_2)\\in \\mathcal B$ and $(n_1,n_2)\\in N$.\n\nSuppose that $(\\alpha_1,\\alpha_2)\\in \\mathcal B$ and let $x,y$ be reduced words with $xy=1$.  We show that $(\\alpha_1,\\alpha_2)$ can be recovered from the right-hand side of $(\\alpha_1,\\alpha_2)(x,y) = (\\alpha_1x,y\\alpha_2)$.  Note that by definition of $\\mathcal B$, $\\alpha_1$ has no invertible suffix.   First we claim that $\\alpha_1x$ is reduced.  Indeed, since $\\alpha_1$ and $x$ are reduced, any rewrite rule that is applicable must cut across $(\\alpha_1,x)$.  Since the left-hand side of a rewrite rule is nonempty and invertible, this means we can write $\\alpha_1\\equiv \\alpha\\beta$ and $x\\equiv \\gamma\\delta$ with $\\beta\\gamma$ invertible and $\\beta$, $\\gamma$ nonempty.  Since $x$ is right invertible, we deduce that $\\gamma$ is invertible and hence $\\beta$ is invertible, contradicting that $\\alpha_1$ has no invertible suffix.\nConsider $(\\alpha_1x,\\ov{y\\alpha_2})$. \nLet $\\mu$ be the longest invertible word that cuts across $(\\alpha_1x,\\ov{y\\alpha_2})$ if such a word exists, while if no such word exists then let $\\mu$ be the longest invertible suffix of $\\alpha_1 x$, which could possibly be empty. We claim that $\\alpha_1x\\ov{y\\alpha_2}\\equiv \\alpha_1\\mu\\nu$ with $\\ov{\\mu\\nu}=\\alpha_2$.  It will then follow that we can recover $(\\alpha_1,\\alpha_2)$ from $(\\alpha_1,\\alpha_2)(x,y)$.    \n\n\\begin{sloppypar}\nIndeed, to prove the claim let $\\alpha_1\\alpha_2\\equiv w_0a_0\\cdots a_mw_m$ in Otto-Zhang normal form. By Lemma~\\ref{lemma:OZ}, each $w_j$ is reduced and in $\\Delta^*$.   Then by definition of $\\mathcal B$, we have some $i$ with $\\alpha_1\\equiv w_0a_0\\cdots w_{i-2}a_{i-1}$ and $\\alpha_2\\equiv w_{i-1}a_i\\cdots a_mw_m$.   Then $\\alpha_1xy\\alpha_2\\equiv w_0a_0\\cdots w_{i-2}a_{i-1}xyw_{i-1}a_i\\cdots a_mw_m$.  By Lemma~\\ref{lem:unions:of:invertible:general}, it follows that any maximal invertible subword of $\\alpha_1xy\\alpha_2$ is either a maximal invertible subword of $\\alpha_1$, $\\alpha_2$ or contains $xy$.  But since $xy=1$ in $M$ and $w_{i-1}$ is maximal invertible in $\\alpha_1\\alpha_2$, it follows that $xyw_{i-1}$ is the maximal invertible subword of $\\alpha_1xy\\alpha_2\\equiv w_0a_0\\cdots w_{i-2}a_{i-1}xyw_{i-1}a_i\\cdots a_mw_m$ containing $xy$. Since every maximal invertible subword of $\\alpha_1xy\\alpha_2$ is either a maximal invertible subword of $\\alpha_1$, $\\alpha_2$ or contains $xy$, it follows that the Otto Zhang normal form of the word $\\alpha_1xy\\alpha_2$ is\n\\[\n\\alpha_1xy\\alpha_2\\equiv w_0a_0\\cdots w_{i-2}a_{i-1}(xyw_{i-1})a_i\\cdots a_mw_m\n\\]\nwhere the maximal invertible subwords in this normal form are the words\n\\[\nw_0, \\ldots, w_{i-2}, xyw_{i-1}, w_i, \\ldots, w_m. \n\\]\nSince $xyw_{i-1}$ is invertible it follows that $y w_{i-1}$ is left invertible. Since $a_i w_i \\cdots a_mw_m$ has no invertible prefix it follows that no invertible word cuts across the pair\n\\[\n(y w_{i-1}, a_i w_i \\cdots a_mw_m).\n\\]\nIndeed, if $\\sigma \\equiv \\sigma_1 \\sigma_2$ were an invertible word that cuts across this pair with $\\sigma_2$ a prefix of   \n$a_i w_i \\cdots a_mw_m$, then $\\sigma_1$ is left invertible since it is a suffix of the left invertible word $y w_{i-1}$, and $\\sigma_1$ is right invertible since it is a prefix of the invertible word $\\sigma$. Then $\\sigma_1$ and $\\sigma$ are invertible and thus $\\sigma_2$ is an invertible prefix of $a_i w_i \\cdots a_mw_m$ which is a contradiction. It follows that every invertible subword of the word       \n\\[\ny w_{i-1} a_i w_i \\cdots a_mw_m\n\\]\nis contained in either a subword of $y w_{i-1}$ or else is a subword of $a_i w_i \\cdots a_mw_m$.\nIt follows that the Otto-Zhang normal form of $y\\alpha_2$ is graphically equal to the product of the Otto-Zhang normal form of $yw_{i-1}$ and $\\nu:=a_iw_i\\cdots a_mw_m$.  We conclude from Lemma~\\ref{lemma:OZ} that $\\ov{y\\alpha_2} \\equiv \\ov{yw_{i-1}}a_iw_i\\cdots a_mw_m$.  Then\n\\[\\alpha_1 x \\ov{y\\alpha_2} \\equiv w_0a_0\\cdots w_{i-2}a_{i-1}x\\ov{yw_{i-1}}a_iw_i\\cdots a_mw_m.\\]\nNow there are two cases.\nIf there is an invertible word that cuts across $(\\alpha_1x,\\ov{y\\alpha_2})$ then it follows that $\\mu = x\\ov{yw_{i-1}}$ since $xy=1$, $x\\ov{yw_{i-1}}$ is invertible, and $w_{i-1}$ is a maximal invertible subword of $\\alpha_1\\alpha_2$.  Therefore, $\\alpha_1\\ov{y\\alpha_2}\\equiv \\alpha_1\\mu\\nu$ and $\\ov{\\mu\\nu}=\\alpha_2$.\nIn the other case there is no invertible word that cuts across $(\\alpha_1x,\\ov{y\\alpha_2})$.\nIn this case since $x \\ov{yw_{i-1}}$ is invertible, either $x$ is empty or $\\ov{yw_{i-1}}$ is empty. If $x$ is empty then $y$ is also empty since $xy=1$ and $x$ and $y$ are reduced. Therefore, $(\\alpha_1 x, \\ov{y \\alpha_2}) = (\\alpha_1, \\alpha_2)$, and by definition of $\\mathcal{B}$ the word $\\alpha_1$ has no non-trivial invertible suffix, so $\\mu$ is empty. So we recover $\\alpha_2 = \\nu = \\ov{\\mu \\nu}$.  \nOtherwise, $\\ov{yw_{i-1}}$ is the empty word so\n\\[\\alpha_1 x \\ov{y\\alpha_2} \\equiv w_0a_0\\cdots w_{i-2}a_{i-1}xa_iw_i\\cdots a_mw_m.\\] \nIn this case in $M$ we have $x = xy w_{i-1} = w_{i-1}$. In particular $x$ is invertible. Furthermore\n\\[\\alpha_1 x \\equiv w_0a_0\\cdots w_{i-2}a_{i-1}x \\]\nSuppose that $x$ is not the longest invertible suffix of the word $\\alpha_1 x$; say, e.g., $z$ is a longer such suffix.  Then since $xy w_{i-1}$ and $z$ are both invertible with $x$ a suffix of $z$, it would follow \nfrom Lemma~\\ref{lem:unions:of:invertible:general} \nthat $zyw_{i-1}$ is an invertible word strictly containing $xy w_{i-1}$ contradicting the fact proved above that $xyw_{i-1}$ is a maximal invertible subword of $\\alpha_1xy\\alpha_2$. Hence in this case $x$ is the longest invertible suffix of the word $\\alpha_1 x$. So by definition $\\mu \\equiv x$ and\n\\[\\alpha_1 x \\ov{y\\alpha_2} \\equiv \\alpha_1 xa_iw_i\\cdots a_mw_m \\equiv \\alpha_1 \\mu \\nu \\] \nand\n\\[ \\ov{\\mu \\nu} = \\ov{xa_iw_i\\cdots a_mw_m } = \\ov{w_{i-1}a_iw_i\\cdots a_mw_m } = \\alpha_2 \\]\nsince in this case, as we saw above, $x = w_{i-1}$ in $M$. This completes the proof that we can recover $(\\alpha_1, \\alpha_2)$ from $(\\alpha_1, \\alpha_2)(x,y)$.\n\\end{sloppypar}\n\nNext suppose that $(\\alpha_1,\\alpha_2)\\in \\mathcal B$ and $(\\alpha_1,\\alpha_2)(x,y)=(\\alpha_1,\\alpha_2)(x',y')$ with $(x,y)$ and $(x',y')\\in N$.  We show that $(x,y)=(x',y')$.  Indeed, by Corollary~\\cite[Corollary~3.8]{GraySteinbergDocumenta}, $M$ is a free right $R_1$-set and a free left $L_1$-set. Note that $R_1,L_1$ are cancellative monoids. Hence the equations $\\alpha_1x=\\alpha_1x'$ and $y\\alpha_2=y'\\alpha_2$ imply that $x=x'$ and $y=y'$, as required."
+    },
+    {
+      "id": "remark-11-666df1d5",
+      "type": "remark",
+      "content": "\\label{remark:useful.basis}\nLet $u,v \\in A^*$ be reduced. Write\n\\begin{eqnarray*}\nuv &\\equiv& w_0a_1w_1 \\ldots a_m w_m\n  \\end{eqnarray*}\nas in the statement of Lemma~\\ref{lem:OttoZhang}, where for $0 \\leq i \\leq m$ we have $a_i \\in A$ and $w_i$ is a maximal invertible subword of $w$ (where some of the $w_i$ could be the empty word).  Suppose that\n\\begin{align*}\nu & \\equiv  w_0a_1\\cdots w_{i-2}a_{i-1}w_{i-1}' \\\\ v & \\equiv  w_{i-1}''a_iw_i\\cdots a_mw_m\n\\end{align*}\nwith $w_{i-1}\\equiv w_{i-1}'w_{i-1}''$.  The proof of Theorem~\\ref{thm:Free:N:Set2} shows that $(u,v)$ is in the weak $N$-orbit of the basis element $(w_0a_1\\cdots w_{i-2}a_{i-1},\\ov{w_{i-1}}a_i\\cdots a_mw_m)$. \n\nSince the set $M \\times M$ is a free right $N$-set Theorem~\\ref{thm:Free:N:Set2}, the observation in the previous paragraph provides a characterisation of exactly when two pairs $(u_1,v_1)$ and $(u_2,v_2)$ belong to the same weak $N$-orbit of the free right $N$-set $M \\times M$. Indeed, $(u_1,v_1)$ and $(u_2,v_2)$ belong to the same weak $N$-orbit if and only if the basis elements from $\\mathcal{B}$ obtained from $(u_1,v_1)$ and from $(u_2,v_2)$ via the process described in the previous paragraph are the same. This description of the weak $N$-orbits of $M \\times M$ will be used in several arguments below.",
+      "content_preview": "Let u,v A^* be reduced. Write uv && w_0a_1w_1 a_m w_m as in the statement of Lemma~, where for 0 i m we have a_i A and w_i is a maximal invertible...",
+      "display_name": "Remark",
+      "label": "remark:useful.basis",
+      "position": {
+        "line_start": 1077,
+        "line_end": 1089
+      },
+      "references": [
+        {
+          "target_id": "lem:OttoZhang",
+          "reference_type": "internal",
+          "context": "_m\n  \\end{eqnarray*}\nas in the statement of Lemma~\\ref{lem:OttoZhang}, where for $0 \\leq i \\leq m$ we have $a_i \\in A$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:Free:N:Set2",
+          "reference_type": "internal",
+          "context": "}\\equiv w_{i-1}'w_{i-1}''$.  The proof of Theorem~\\ref{thm:Free:N:Set2} shows that $(u,v)$ is in the weak $N$-orbit of th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:Free:N:Set2",
+          "reference_type": "internal",
+          "context": "set $M \\times M$ is a free right $N$-set Theorem~\\ref{thm:Free:N:Set2}, the observation in the previous paragraph provid",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-4d005048",
+      "type": "lemma",
+      "content": "\\label{lem:forst:quotient2}\nThe quotient $\\overleftrightarrow{\\Gamma} /N$ of the two-sided Cayley graph $\\overleftrightarrow{\\Gamma}$ of $M$ by $N$ is a forest.",
+      "content_preview": "The quotient /N of the two-sided Cayley graph of M by N is a forest.",
+      "display_name": "Lemma",
+      "label": "lem:forst:quotient2",
+      "position": {
+        "line_start": 1104,
+        "line_end": 1106
+      },
+      "references": [
+        {
+          "target_id": "lem:OttoZhang",
+          "reference_type": "internal",
+          "context": "and all $a_i \\in A$, as in the statement of Lemma~\\ref{lem:OttoZhang}.  Let $w'\\equiv a_1 a_2 \\ldots a_m$.   We claim t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:OttoZhang",
+          "reference_type": "internal",
+          "context": "m$ with $\\ov{w_{i-1}'w_{i-1}''}=w_{i-1}$ by Lemma~\\ref{lem:OttoZhang} and Lemma~\\ref{lemma:OZ}.  Both $w_{i-1}'$ and $w",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "}=w_{i-1}$ by Lemma~\\ref{lem:OttoZhang} and Lemma~\\ref{lemma:OZ}.  Both $w_{i-1}'$ and $w_{i-1}''$ can be empty.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "remark:useful.basis",
+          "reference_type": "internal",
+          "context": "so this map is surjective on vertices.  By Remark~\\ref{remark:useful.basis}, this map factors through $(M\\times M)/N$, and th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:OttoZhang",
+          "reference_type": "internal",
+          "context": "reduced, $a\\in A$ and $\\mu a\\gamma=m$.  By Lemma~\\ref{lem:OttoZhang} and Lemma~\\ref{lemma:OZ}, we have two cases.  The",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "gamma=m$.  By Lemma~\\ref{lem:OttoZhang} and Lemma~\\ref{lemma:OZ}, we have two cases.  The first is that $\\mu\\equiv",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "remark:useful.basis",
+          "reference_type": "internal",
+          "context": "1}'aw_{i-1}''}=w_{i-1}$.  In this case, by Remark~\\ref{remark:useful.basis}, this edge is between two vertices in the same we",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $m \\in M$ and consider the component corresponding to $m$ in $\\overleftrightarrow{\\Gamma}/N$. Let $w$ be the reduced word that equals $m$. Write\n\\[\nw \\equiv w_0 a_1 w_1 \\ldots a_m w_m\n\\]\nin Otto-Zhang normal form where the $w_i$ are maximal invertible subwords (possibly empty, and all in $\\Delta^*$) and all $a_i \\in A$, as in the statement of Lemma~\\ref{lem:OttoZhang}.  Let $w'\\equiv a_1 a_2 \\ldots a_m$.   We claim that the $m$-component of $\\overleftrightarrow{\\Gamma}/N$ is isomorphic as a labelled graph to the linear automaton $\\mathcal A(w')$ for $w'$ with vertex set $0,\\ldots, m$ and an edge labelled by $a_i$ from $i-1$ to $i$ for $1\\leq i\\leq m$.  It will then follow that  $\\overleftrightarrow{\\Gamma}/N$ is a forest.\n\nDefine a cellular map from the $m$-component of $\\overleftrightarrow{\\Gamma}$ to $A(w')$ as follows.  If $\\alpha_1,\\alpha_2\\in A^*$ are reduced with $\\alpha_1\\alpha_2=m$, then $\\alpha_1\\equiv w_0a_1\\cdots w_{i-2}a_{i-1}w_{i-1}'$ and $\\alpha_2\\equiv w_{i-1}''a_iw_i\\cdots a_mw_m$ with $\\ov{w_{i-1}'w_{i-1}''}=w_{i-1}$ by Lemma~\\ref{lem:OttoZhang} and Lemma~\\ref{lemma:OZ}.  Both $w_{i-1}'$ and $w_{i-1}''$ can be empty.  Send $(\\alpha_1,\\alpha_2)$ to $i-1$.  Notice in particular that the basis element $(w_0a_1\\cdots w_{i-2}a_{i-1}, w_{i-1}a_iw_i\\cdots a_mw_m)$ is sent to $i-1$, and so this map is surjective on vertices.  By Remark~\\ref{remark:useful.basis}, this map factors through $(M\\times M)/N$, and the induced map is injective on vertices.    An edge in the $m$-component of  $\\overleftrightarrow{\\Gamma}$ has the form $(\\mu,a,\\gamma)$ where $\\mu,\\gamma\\in A^*$ are reduced, $a\\in A$ and $\\mu a\\gamma=m$.  By Lemma~\\ref{lem:OttoZhang} and Lemma~\\ref{lemma:OZ}, we have two cases.  The first is that $\\mu\\equiv w_0a_0\\cdots w_{i-2}a_{i-1}w_{i-1}'$, $\\gamma\\equiv w_{i-1}''a_i\\cdots a_mw_m$ where $\\ov{w_{i-1}'aw_{i-1}''}=w_{i-1}$.  In this case, by Remark~\\ref{remark:useful.basis}, this edge is between two vertices in the same weak $N$-orbit, namely that of the basis element $(w_0a_0\\cdots w_{i-2}a_{i-1},w_{i-1}a_i\\cdots a_mw_m)$.  The second case is that $\\mu\\equiv w_0a_0\\cdots w_{i-1}$, $\\gamma\\equiv w_i\\cdots a_mw_0$ and $a=a_i$.  In this case, initial vertex is in the weak $N$-orbit of the basis element $(w_0a_0\\cdots a_{i-1}, w_{i-1}a_i\\cdots a_mw_m)$, whereas the terminal vertex is in the weak $N$-orbit of the basis element $(w_0\\cdots w_{i-1}a_i, w_i\\cdots a_mw_m)$.  We map the corresponding edge of $\\overleftrightarrow{\\Gamma}/N$ to the edge labeled $a_i$ from $i-1$ to $i$.  This completes the proof of the isomorphism."
+    },
+    {
+      "id": "theorem-13-73997c90",
+      "type": "theorem",
+      "content": "\\label{thm:E:Gen:Set2}\nLet $E$ be the set of edges of the two-sided Cayley graph $\\overleftrightarrow{\\Gamma}$ between vertices in the \\emph{same} weak $N$-orbit.  Then $E$ is a finitely generated free left $M \\times M^{\\mathrm{op}}$-set under the action\n\\[\n(m_1, m_2) \\cdot (u,a,v) = (m_1 u, a, v m_2)\n\\]\nfor $(m_1, m_2) \\in M \\times M^{\\mathrm{op}}$ and $(u,a,v) \\in E$, with finite basis\n\\begin{align*}\n& \\mathcal{C} = \\{\n(\\delta_1, a, \\delta_2): \\delta_1 a \\delta_2\\ \\text{is invertible},\\ a \\in A,\\ \\delta_1,\\ \\delta_2 \\in A^*\\ \\text{are reduced}, \\\\\n& \\mbox{and no proper invertible subword of $\\delta_1a\\delta_2$ contains this $a$} \\}.\n  \\end{align*}\nFurthermore, if $(\\delta_1, a, \\delta_2) \\in \\mathcal{C}$ then $\\delta_1 a \\delta_2 \\in \\Delta$.",
+      "content_preview": "Let E be the set of edges of the two-sided Cayley graph between vertices in the weak N-orbit. Then E is a finitely generated free left M M^-set under...",
+      "display_name": "Theorem",
+      "label": "thm:E:Gen:Set2",
+      "position": {
+        "line_start": 1155,
+        "line_end": 1167
+      },
+      "references": [
+        {
+          "target_id": "lemma:OZ",
+          "reference_type": "internal",
+          "context": "$a$ for some $i$, then $uav$ is reduced by Lemma~\\ref{lemma:OZ} (since $u,v$ are reduced, and hence their subword",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "remark:useful.basis",
+          "reference_type": "internal",
+          "context": "lign*}\nare in different weak $N$-orbits by Remark~\\ref{remark:useful.basis}, as $(u a,v)$ is a basis element and \\[(w_0a_1\\cd",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "remark:useful.basis",
+          "reference_type": "internal",
+          "context": "h $w_i\\equiv w_i'aw_i''$.  It follows from Remark~\\ref{remark:useful.basis} that $(ua,v)$ and $(u,av)$ both belong to the wea",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "p:lattice.vers1",
+          "reference_type": "external",
+          "context": "ta_1a\\delta_2$ containing this $a$ by Proposition~\\ref{p:lattice.vers1}.  Write $u\\equiv u'\\delta_1$ and $v\\equiv \\delta_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "p:lattice.vers1",
+          "reference_type": "external",
+          "context": "delta_1'$ has no invertible prefix by Proposition~\\ref{p:lattice.vers1}.  Thus $\\alpha\\delta_1'\\equiv u'\\delta_1$ and, du",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "p:lattice.vers1",
+          "reference_type": "external",
+          "context": "rd containing $a$, which follows from Proposition~\\ref{p:lattice.vers1}, we conclude that $\\delta_1'a\\delta_2'\\equiv \\del",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:Zhang:Irred",
+          "reference_type": "internal",
+          "context": "s reduced, then it belongs to $\\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred} since it is invertible.  Otherwise, we can apply",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(u,a,v)$ be an edge with $u,v\\in A^*$ reduced, and  let \\[uav\\equiv w_0a_1\\cdots a_mw_m\\] in Otto-Zhang normal form.  First of all we claim that $(u,a,v)\\in E$ if and only if the distinguished occurrence of $a$ is not any of the $a_i$.\n Suppose first that $a_i$ is the distinguished occurrence of $a$ for some $i$, then $uav$ is reduced by Lemma~\\ref{lemma:OZ} (since $u,v$ are reduced, and hence their subwords $w_j$ are reduced) and\n\\begin{align*}\n(u,av) & = (w_0a_1\\cdots a_{i-1}w_{i-1},a_i\\cdots a_mw_m) &  \\text{and}\\\\\n(ua,v) &= (w_0\\cdots w_{i-1}a_i, w_ia_{i+1}\\cdots a_mw_m)\n\\end{align*}\nare in different weak $N$-orbits by Remark~\\ref{remark:useful.basis}, as $(u a,v)$ is a basis element and \\[(w_0a_1\\cdots a_{i-1},w_{i-1}a_i\\cdots a_mw_m)\\] is the basis element in the weak orbit of $(u,av)$.\n\nOn the other hand, suppose that $a$ is a letter of some $w_i$.  Then $u\\equiv w_0a_1\\cdots a_iw_i'$ and $v\\equiv w_i''a_{i+1}\\cdots a_mw_m$ with $w_i\\equiv w_i'aw_i''$.  It follows from Remark~\\ref{remark:useful.basis} that $(ua,v)$ and $(u,av)$ both belong to the weak $N$-orbit of the basis element $(w_0a_1\\cdots a_i,\\ov{w_i}a_{i+1}\\cdots a_mw_m)$.  In particular, each element of $\\mathcal C$ belongs to $E$.\n\nWe must now show that if $(u,a,v)\\in E$, then $(u,a,v) = (m_1,m_2)(\\delta_1,a,\\delta_2)$ for a unique $(m_1,m_2)\\in M\\times M^{op}$ and $(\\delta_1,a,\\delta_2)\\in \\mathcal C$.  As before let $uav\\equiv w_0a_1\\cdots a_mw_m$ in Otto-Zhang normal form.  Then, by the above, there is a unique $i$ such that the distinguished $a$ occurs in $w_i$.  Since $w_i$ is invertible, there is a unique minimal invertible subword $\\delta_1a\\delta_2$ containing this $a$ by Proposition~\\ref{p:lattice.vers1}.  Write $u\\equiv u'\\delta_1$ and $v\\equiv \\delta_2v'$.  Then $(\\delta_1,a,\\delta_2)\\in \\mathcal C$ and $(u,a,v) = (u',v')(\\delta_1,a,\\delta_2)$.  We claim that these choices are unique.\n\nClearly the letter $a$ is uniquely determined by $(u,a,v)$.  Suppose that $\\alpha,\\beta,\\delta_1',\\delta_2'$ are reduced with $(\\alpha,\\beta)(\\delta_1',a,\\delta_2')=(u,a,v)$ and $(\\delta_1',a,\\delta_2')\\in \\mathcal C$.  Then $(u,a,v)=(\\alpha\\delta_1',a,\\delta_2'\\beta)$.  We claim that $\\alpha\\delta_1'$ and $\\delta_2'\\beta$ are reduced.  We handle just the first case as the second is dual.   Since $\\alpha,\\delta_1'$ are reduced and each left-hand side of a rewrite rule is nonempty and invertible, it follows that the only way we can apply a  rewrite rule is if it overlaps $\\alpha$ and $\\delta_1'$.   This would imply that $\\delta_1'$ has a left invertible prefix.   Now any prefix of $\\delta_1'$ is right invertible since $\\delta_1'a\\delta_2'$ is invertible.   But then we obtain a contradiction to the fact that $\\delta_1'$ has no invertible prefix by Proposition~\\ref{p:lattice.vers1}.  Thus $\\alpha\\delta_1'\\equiv u'\\delta_1$ and, dually, $\\delta_2'\\beta\\equiv \\delta_2v'$.  Then $\\delta_1'a\\delta_2'$ and $\\delta_1a\\delta_2$ are both minimal invertible subwords of $uav\\equiv \\alpha\\delta_1'a\\delta_2'\\beta$ containing the distinguished $a$.  By uniqueness of the  minimal invertible subword containing $a$, which follows from Proposition~\\ref{p:lattice.vers1}, we conclude that $\\delta_1'a\\delta_2'\\equiv \\delta_1a\\delta_2$, with the distinguished occurrences of $a$ the same.  Thus $\\delta_1\\equiv \\delta_1'$, $\\delta_2\\equiv \\delta_2'$, $u'\\equiv \\alpha$ and $v'\\equiv \\beta$. This establishes the uniqueness, and so $\\mathcal C$ is a basis.\n\nTo prove that $\\mathcal C$ is finite we show that if $(\\delta_1,a,\\delta_2)\\in \\mathcal C$, then $\\delta_1a\\delta_2\\in \\Delta$.  We begin by showing that $\\delta_1a\\delta_2\\in \\Delta^*$.  If $\\delta_1a\\delta_2$ is reduced, then it belongs to $\\Delta^*$ by Lemma~\\ref{lem:Zhang:Irred} since it is invertible.  Otherwise, we can apply a rewrite rule to $\\delta_1a\\delta_2$.  Since $\\delta_1,\\delta_2$ are reduced, the left-hand side of the rewrite rule must contain $a$.  Since each left-hand side of a rewrite rule is in $\\Delta^+$, hence invertible, and $\\delta_1a\\delta_2$ has no proper invertible subword containing the distinguished $a$, we must have that $\\delta_1a\\delta_2$ is the left-hand side of a rewrite rule, and hence in $\\Delta^*$.  It follows now that there is a subword of $\\delta_1a\\delta_2$ containing $a$ that belongs to $\\Delta$. But then since elements of $\\Delta$ are invertible, we deduce by minimality that $\\delta_1a\\delta_2\\in \\Delta$.  We conclude that $\\mathcal C$ is finite as $\\Delta$ is finite."
+    },
+    {
+      "id": "theorem-14-05a627b5",
+      "type": "theorem",
+      "content": "[Theorem~A]\\label{thm:main:special:monoids2}\nLet $M$ be a finitely presented monoid of the form \n\\[M = \\lb A \\mid w_1=1, \\ldots, w_k=1 \\rb\\]\nand let $G$ be the group of units of $M$.\n\\begin{enumerate}\n\\item[(i)]\nIf $G$ is of type $\\FPn$ (for $1 \\leq n \\leq \\infty$) then $M$ is of type bi-$\n\\FPn$.\n\\item[(ii)]\nFurthermore, the Hochschild cohomological dimension of $M$ is bounded below by\n$\\mathrm{cd}(G)$\nand bounded above by\n$\\mathrm{max}\\{ 2, \\mathrm{cd}(G) \\}$.\n  \\end{enumerate}",
+      "content_preview": "[Theorem~A] Let M be a finitely presented monoid of the form [M = A w_1=1, , w_k=1 ] and let G be the group of units of M.",
+      "display_name": "Theorem",
+      "label": "thm:main:special:monoids2",
+      "position": {
+        "line_start": 1190,
+        "line_end": 1204
+      },
+      "references": [
+        {
+          "target_id": "lem:forst:quotient2",
+          "reference_type": "internal",
+          "context": "rightarrow{\\Gamma} /N$ which is a forest by Lemma~\\ref{lem:forst:quotient2}.\nNotice that the multiplication map $M \\times M \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:E:Gen:Set2",
+          "reference_type": "internal",
+          "context": "generated free $M\\times M^{op}$-set from Theorem~\\ref{thm:E:Gen:Set2}.  Thus we have a free resolution\n \\[0\\longrightar",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:FreeProductStructure",
+          "reference_type": "internal",
+          "context": "\\cong \\Z[M \\times M]\\otimes_{\\ZN} \\Z$.\nIn Theorem~\\ref{thm:FreeProductStructure} we proved that $N$ is a free product of the group",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "t:bieri",
+          "reference_type": "external",
+          "context": "and $C_1(F)$ is $\\FPinfty$ it follows from Lemma~\\ref{t:bieri}\nthat the $\\ZM$ is $\\FPn$ as a $\\mathbb Z[M\\times",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "c:fp.resolved",
+          "reference_type": "external",
+          "context": "ost $\\mathrm{max}\\{2, \\mathrm{cd}(G)\\}$, by Lemma~\\ref{c:fp.resolved}.  \n\n\nThe fact that the Hochschild cohomological d",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\overleftrightarrow{\\Gamma}$ be the two-sided Cayley graph of $M$ and let $F$ be  $\\overleftrightarrow{\\Gamma} /N$ which is a forest by Lemma~\\ref{lem:forst:quotient2}.\nNotice that the multiplication map $M \\times M \\rightarrow M$ factors through $(M \\times M)/N$ and hence the connected components of $F$ are still isomorphic to $M$ as an $M$-biset.  The augmented cellular chain complex\n\\[\n0 \\rightarrow C_1(F) \\rightarrow C_0(F) \\rightarrow H_0(F)\\cong \\ZM \\rightarrow 0\n\\]\nis a bimodule resolution of $\\ZM$ with exactness following from $F$ being a forest.\n\nNow $C_1(F)$ is the quotient of a free bimodule on $A$, namely $\\mathbb Z[M\\times A\\times M]$, by $\\mathbb ZE$ where $E$ is the finitely generated free $M\\times M^{op}$-set from Theorem~\\ref{thm:E:Gen:Set2}.  Thus we have a free resolution\n \\[0\\longrightarrow \\mathbb ZE\\longrightarrow \\mathbb Z[M\\times A\\times M]\\to  C_1(F)\\to 0\\] by finitely generated free bimodules, and so $C_1(F)$ is $\\FPinfty$ and has\nprojective dimension at most 1.\n\nWe have $C_0(F)\\cong \\Z[(M\\times M)/N]\\cong \\Z[M \\times M]\\otimes_{\\ZN} \\Z$.\nIn Theorem~\\ref{thm:FreeProductStructure} we proved that $N$ is a free product of the group of units $G$ and\na finitely generated free monoid.\nTogether with~\\cite[Corollary 4.13]{GraySteinbergDocumenta} this then implies that\n$N$ is of type left-$\\FPn$, and hence $\\Z$ is a left $\\ZN$-module of type $\\FPn$. Let $F_\\bullet\\to \\Z\\to 0$ be a free resolution of $\\Z$ by $\\ZN$-modules with $F_i$ finitely generated for $0\\leq i\\leq n$.  Then since $M\\times M^{op}$ is a free right $N$-set, it follows that $\\Z[M \\times M^{op}]$ is free as a right $\\ZN$-module and hence flat.  Thus $\\mathbb Z[M\\times M^{op}]\\otimes_{\\ZN} F_\\bullet \\to  \\mathbb Z[M\\times M^{op}]\\otimes_{\\ZN} \\Z\\to 0$ is a free resolution with $\\mathbb Z[M\\times M^{op}]\\otimes_{\\ZN} F_i$ finitely generated for $0\\leq i\\leq n$.  Therefore, $C_0(F)\\cong \\Z[M \\times M^{op}]\\otimes_{\\ZN} \\Z$ is a $\\mathbb Z[M\\times M^{op}]$-module of type $\\FPn$.\nNow since $C_0(F)$ is $\\FPn$ and $C_1(F)$ is $\\FPinfty$ it follows from Lemma~\\ref{t:bieri}\nthat the $\\ZM$ is $\\FPn$ as a $\\mathbb Z[M\\times M^{op}]$-module, and hence the monoid $M$ is of type bi-$\\FPn$.\n\nBy~\\cite[Corollary 4.15]{GraySteinbergDocumenta}, since $N$ is a free product of $G$ and a free monoid\nwe can choose a free resolution of $\\Z$ over $\\ZN$ to have length at most\n$\\mathrm{max}\\{1, \\mathrm{cd}(G) \\}$,\nand so we can deduce from the above argument that $C_0(F)$ has projective dimension at most $\\max\\{1,\\mathrm{cd}(G)\\}$.   Since $C_1(F)$ has projective dimension at most $1$, we deduce that $\\ZM$ has projective dimension at most\n$\\mathrm{max}\\{2, \\mathrm{cd}(G) \\}$,\nand thus $M$ has Hochschild dimension at most $\\mathrm{max}\\{2, \\mathrm{cd}(G)\\}$, by Lemma~\\ref{c:fp.resolved}.  \n\n\nThe fact that the Hochschild cohomological dimension of $M$ is bounded below by that of $G$ follows from~\\cite[Theorem 3.16(2)]{GraySteinbergDocumenta} together with the fact that the Hochschild cohomological dimension bounds both the left and right cohomological dimension of a monoid; see~\\cite[Section~7]{GraySteinbergAGT}."
+    },
+    {
+      "id": "theorem-15-946c9485",
+      "type": "theorem",
+      "content": "[Theorem~B]\\label{thm:main:one:relator}\nEvery one-relator monoid of the form $\\langle A \\mid r=1 \\rangle$ is of type bi-$\\FP_\\infty$. Moreover, if $r$ is not a proper power then the one-relator monoid has Hochschild cohomological dimension at most $2$, while if $r$ is a proper power then the monoid has infinite Hochschild cohomological dimension.",
+      "content_preview": "[Theorem~B] Every one-relator monoid of the form A r=1 is of type bi-_. Moreover, if r is not a proper power then the one-relator monoid has...",
+      "display_name": "Theorem",
+      "label": "thm:main:one:relator",
+      "position": {
+        "line_start": 1244,
+        "line_end": 1246
+      },
+      "references": [
+        {
+          "target_id": "thm:main:special:monoids2",
+          "reference_type": "internal",
+          "context": "y Theorem~\\cite{Lyndon1950}. Now applying Theorem~\\ref{thm:main:special:monoids2}(i) we deduce that $M$ is of type bi-$\\FP_\\infty$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:main:special:monoids2",
+          "reference_type": "internal",
+          "context": "child cohomological dimension   of $M$ by Theorem~\\ref{thm:main:special:monoids2}(ii).\n\nIf $r$ is a proper power then $G$ has torsi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:main:special:monoids2",
+          "reference_type": "internal",
+          "context": "Hochschild cohomological dimension   by Theorem~\\ref{thm:main:special:monoids2}(ii).",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $M= \\langle A \\mid r=1 \\rangle$. The group of units $G$ of $M$ is a one-relator group by Adjan's theorem~\\cite[Lemma 96]{Adjan1966} and hence the group $G$ is of type $\\FP_\\infty$ by Lyndon's Identity Theorem~\\cite{Lyndon1950}. Now applying Theorem~\\ref{thm:main:special:monoids2}(i) we deduce that $M$ is of type bi-$\\FP_\\infty$.\n\nFor the second statement, if $r$ is not a proper power then the group of units $G$ will be (see e.g.~\\cite[Lemma~3.18]{GraySteinbergDocumenta}) a torsion-free one-relator group. Then Lyndon's results~\\cite{Lyndon1950} imply that $G$ has cohomological dimension at most 2, which implies the same for the Hochschild cohomological dimension   of $M$ by Theorem~\\ref{thm:main:special:monoids2}(ii).\n\nIf $r$ is a proper power then $G$ has torsion and hence infinite cohomological dimension.  Therefore $M$ has infinite  Hochschild cohomological dimension   by Theorem~\\ref{thm:main:special:monoids2}(ii)."
+    },
+    {
+      "id": "external_p:lattice.vers1",
+      "type": "unknown",
+      "content": "External reference to 'p:lattice.vers1'",
+      "content_preview": "External reference to 'p:lattice.vers1'",
+      "display_name": "Unknown",
+      "label": "p:lattice.vers1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_p:lattice.cuts",
+      "type": "unknown",
+      "content": "External reference to 'p:lattice.cuts'",
+      "content_preview": "External reference to 'p:lattice.cuts'",
+      "display_name": "Unknown",
+      "label": "p:lattice.cuts",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_claim:1",
+      "type": "unknown",
+      "content": "External reference to 'claim:1'",
+      "content_preview": "External reference to 'claim:1'",
+      "display_name": "Unknown",
+      "label": "claim:1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_t:bieri",
+      "type": "unknown",
+      "content": "External reference to 't:bieri'",
+      "content_preview": "External reference to 't:bieri'",
+      "display_name": "Unknown",
+      "label": "t:bieri",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_c:fp.resolved",
+      "type": "unknown",
+      "content": "External reference to 'c:fp.resolved'",
+      "content_preview": "External reference to 'c:fp.resolved'",
+      "display_name": "Unknown",
+      "label": "c:fp.resolved",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-4-b0c6b8c7",
+      "target": "lemma-1-b7f4aff8",
+      "type": null
+    },
+    {
+      "source": "lemma-4-b0c6b8c7",
+      "target": "lemma-2-557b3bf9",
+      "type": null
+    },
+    {
+      "source": "lemma-6-4487cb3b",
+      "target": "external_p:lattice.vers1",
+      "type": null
+    },
+    {
+      "source": "lemma-7-1f188c5c",
+      "target": "external_p:lattice.cuts",
+      "type": null
+    },
+    {
+      "source": "lemma-7-1f188c5c",
+      "target": "lemma-2-557b3bf9",
+      "type": null
+    },
+    {
+      "source": "theorem-9-555356aa",
+      "target": "lemma-7-1f188c5c",
+      "type": null
+    },
+    {
+      "source": "theorem-9-555356aa",
+      "target": "external_claim:1",
+      "type": null
+    },
+    {
+      "source": "theorem-9-555356aa",
+      "target": "lemma-6-4487cb3b",
+      "type": null
+    },
+    {
+      "source": "theorem-9-555356aa",
+      "target": "lemma-4-b0c6b8c7",
+      "type": null
+    },
+    {
+      "source": "theorem-9-555356aa",
+      "target": "external_p:lattice.cuts",
+      "type": null
+    },
+    {
+      "source": "theorem-10-48146f4b",
+      "target": "lemma-2-557b3bf9",
+      "type": null
+    },
+    {
+      "source": "theorem-10-48146f4b",
+      "target": "lemma-4-b0c6b8c7",
+      "type": null
+    },
+    {
+      "source": "theorem-10-48146f4b",
+      "target": "lemma-1-b7f4aff8",
+      "type": null
+    },
+    {
+      "source": "remark-11-666df1d5",
+      "target": "lemma-3-df8e340d",
+      "type": null
+    },
+    {
+      "source": "remark-11-666df1d5",
+      "target": "theorem-10-48146f4b",
+      "type": null
+    },
+    {
+      "source": "lemma-12-4d005048",
+      "target": "lemma-3-df8e340d",
+      "type": null
+    },
+    {
+      "source": "lemma-12-4d005048",
+      "target": "lemma-4-b0c6b8c7",
+      "type": null
+    },
+    {
+      "source": "lemma-12-4d005048",
+      "target": "remark-11-666df1d5",
+      "type": null
+    },
+    {
+      "source": "theorem-13-73997c90",
+      "target": "lemma-4-b0c6b8c7",
+      "type": null
+    },
+    {
+      "source": "theorem-13-73997c90",
+      "target": "remark-11-666df1d5",
+      "type": null
+    },
+    {
+      "source": "theorem-13-73997c90",
+      "target": "external_p:lattice.vers1",
+      "type": null
+    },
+    {
+      "source": "theorem-13-73997c90",
+      "target": "lemma-2-557b3bf9",
+      "type": null
+    },
+    {
+      "source": "theorem-14-05a627b5",
+      "target": "lemma-12-4d005048",
+      "type": null
+    },
+    {
+      "source": "theorem-14-05a627b5",
+      "target": "theorem-13-73997c90",
+      "type": null
+    },
+    {
+      "source": "theorem-14-05a627b5",
+      "target": "theorem-9-555356aa",
+      "type": null
+    },
+    {
+      "source": "theorem-14-05a627b5",
+      "target": "external_t:bieri",
+      "type": null
+    },
+    {
+      "source": "theorem-14-05a627b5",
+      "target": "external_c:fp.resolved",
+      "type": null
+    },
+    {
+      "source": "theorem-15-946c9485",
+      "target": "theorem-14-05a627b5",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 20,
+    "edge_count": 28,
+    "extractor_used": "regex-only"
+  }
+}

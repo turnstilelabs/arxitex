@@ -1,0 +1,137 @@
+{
+  "arxiv_id": "2507.03100v2",
+  "nodes": [
+    {
+      "id": "remark-1-de6735a9",
+      "type": "remark",
+      "content": "Note that $\\Alt_5,\\Sym_5,\\Alt_6,\\Sym_6,M_{10},\\PGL_2(9)$ are all covered by the last case, being almost simple groups corresponding (sometimes by exceptional isomorphism) to one of the simple groups $\\PSL_2(5)$ and $\\PSL_2(9).$",
+      "content_preview": "Note that _5,_5,_6,_6,M_10,_2(9) are all covered by the last case, being almost simple groups corresponding (sometimes by exceptional isomorphism) to...",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 218,
+        "line_end": 220
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-8e51f9f9",
+      "type": "lemma",
+      "content": "[\\cite{Liang}, Lemma 2.1]\n    \\label{codegree-divides}\n    Let $G$ be a finite group and let $\\chi\\in\\Irr(G).$\n    \\begin{enumerate}\n        \\item If $N$ be a $G$-invariant subgroup of $\\ker\\chi$. Then $\\chi$ may be viewed as an irreducible character of $G/N$, and the codegrees of $\\chi$ in $G$ and in $G/N$ are the same.\n        \\item If $M$ is a subnormal subgroup of G and $\\psi$ is an irreducible constituent of $\\chi_M$, then $\\psi^c(1)\\mid \\chi^c(1).$\n    \\end{enumerate}",
+      "content_preview": "[, Lemma 2.1] Let G be a finite group and let (G). If N be a G-invariant subgroup of . Then may be viewed as an irreducible character of G/N, and the...",
+      "display_name": "Lemma",
+      "label": "codegree-divides",
+      "position": {
+        "line_start": 224,
+        "line_end": 231
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-bcc5b03d",
+      "type": "theorem",
+      "content": "[Clifford's Theorem]\n    \\label{clifford}\n    Let $\\pi: G\\to GL(n,K)$ be an irreducible representation over a field $K$. If $N\\lhd G$, then $\\pi|_N=\\bigoplus_{i=1}^t\\rho_i$, where each $\\rho_i$ is an irreducible representation of $N$ of the same dimension. This, of course, implies the existence of some irreducible representation $\\rho$ of dimension $\\frac{n}{t}$.\\\\\n    In terms of characters, if $\\mu$ is a complex character of $N$, then for a fixed $g\\in G$, $\\mu^{(g)}$ is irreducible if and only if $\\mu$ is irreducible. If $\\chi\\in\\Irr(G)$ and $\\mu\\in\\Irr(N)$, then when $\\langle\\chi|_N,\\mu\\rangle\\neq 0$, $\\chi_N=e\\sum_{i=1}^t\\mu^{(g_i)}$ for some $e,t\\in\\mathbb{Z}^+$ with $g_i\\in G$.",
+      "content_preview": "[Clifford's Theorem] Let : G GL(n,K) be an irreducible representation over a field K. If N G, then |_N=_i=1^t_i, where each _i is an irreducible...",
+      "display_name": "Theorem",
+      "label": "clifford",
+      "position": {
+        "line_start": 233,
+        "line_end": 237
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-4-6ad86648",
+      "type": "corollary",
+      "content": "Let $N\\unlhd G,$ and let $\\psi$ be an irreducible character of $N$; then there exists an irreducible character $\\chi$ of $G$ such that $\\psi(1)\\mid \\chi(1),$ $\\psi^c(1)\\mid \\chi^c(1),$ and $\\psi$ is an irreducible component of $\\chi_N.$",
+      "content_preview": "Let N G, and let be an irreducible character of N; then there exists an irreducible character of G such that (1) (1), ^c(1) ^c(1), and is an...",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 239,
+        "line_end": 241
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-5-908ca096",
+      "type": "theorem",
+      "content": "[Mattarei's Lemma] Let $G$ be a finite group containing no nontrivial solvable normal subgroups. Then there are nonabelian simple groups $T_1,\\ldots,T_r$ and $n_1,\\ldots,n_r\\geq 1$ such that $G$ contains an isomorphic copy of $T_1^{n_1}\\times\\cdots\\times T_r^{n_r}$ and is isomorphic to a subgroup of $\\Aut(T_1^{n_1}\\times\\cdots\\times T_r^{n_r})$.",
+      "content_preview": "[Mattarei's Lemma] Let G be a finite group containing no nontrivial solvable normal subgroups. Then there are nonabelian simple groups T_1,,T_r and...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 243,
+        "line_end": 244
+      },
+      "references": [],
+      "proof": "Let $N_1,\\ldots,N_r$ be the minimal normal subgroups of $G$, and let $N=N_1\\cdots N_r$. We may write $N_i\\cong T_i^{n_i}$ for some simple group $T_i$, and note that $T_i$ must be nonabelian since $N_i$ is not solvable. In particular, $Z(N_i)=1$. Now, for $i\\neq j$, $N_i\\cap N_j=1$, and so elements of $N_i$ and $N_j$ commute, meaning that elements of $N_i$ and $\\prod_{j\\neq i}N_j$ commute. Thus, $N_i\\cap\\prod_{j\\neq i}N_j\\leq Z(N_i)=1$, so that $N$ is the internal direct product of the $N_i$: $N\\cong N_1\\times\\cdots\\times N_r$.\n\nNow, $N\\unlhd G$, and so we have a homomorphism $G\\to\\Aut(N)$ with kernel $Z_G(N)$, where $g$ maps to $\\varphi_g:n\\mapsto gng^{-1}$. Since elements of $Z_G(N)$ commute with elements of $N$,\n$$Z_G(N)\\cap N=Z(N)\\cong Z(N_1)\\times\\cdots\\times Z(N_r)=1.$$\nNote that $Z_G(N)$ is normal in $G$, as it is a kernel of a homomorphism. Thus, if $Z_G(N)\\neq 1$, then it would contain a minimal normal subgroup, and so we would have $Z_G(N)\\cap N\\neq 1$, an impossibility. This means, $Z_G(N)=1$, and so we can embed $G$ into $\\Aut(N)$.\n\nFinally, since each $N_i$ is normal in $G$, it is fixed by the action of $G$, so that the image of $G$ lies in\n$$\\Aut(N_1)\\times\\cdots\\times\\Aut(N_r)\\leq\\Aut(T_1^{n_1}\\times\\cdots\\times T_r^{n_r}),$$\nas desired."
+    },
+    {
+      "id": "theorem-6-40c34785",
+      "type": "theorem",
+      "content": "[\\cite{FRT}, Theorem 1]\n    If $\\lambda=(\\lambda_1,...,\\lambda_k)$ is a finite sequence of positive integers s.t. $\\lambda_1\\geq\\lambda_2\\geq...\\geq\\lambda_k$, then for $n=\\lambda_1+...+\\lambda_k$, there exists an irreducible character $\\chi_\\lambda$ of $S_n$ with degree $\\frac{n!}{H(\\lambda)}$. Furthermore, if $\\lambda\\neq\\overline{\\lambda}$, then $\\chi_\\lambda$ restricted to $A_n$ is again irreducible and of the same degree. Here $H(\\lambda)$ denotes the hook-length product and $\\overline{\\lambda}$ denotes the conjugate partition of $\\lambda$.",
+      "content_preview": "[, Theorem 1] If =(_1,...,_k) is a finite sequence of positive integers s.t. _1_2..._k, then for n=_1+...+_k, there exists an irreducible character _...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 255,
+        "line_end": 257
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-a2c32fa6",
+      "type": "lemma",
+      "content": "\\label{An-Chars}\n    If $n\\geq 8$, then $\\rm{Irr}(\\Alt_n)$ contains characters of degree\n    $$\\frac{n(n-2)(n-4)}{3},\\qquad \\frac{(n-1)(n-2)(n-3)}{6},\\qquad \\frac{n(n-3)}{2}$$ that extend to $\\Sym_n$.",
+      "content_preview": "If n 8, then (_n) contains characters of degree , , that extend to _n.",
+      "display_name": "Lemma",
+      "label": "An-Chars",
+      "position": {
+        "line_start": 258,
+        "line_end": 261
+      },
+      "references": [],
+      "proof": "Let $n\\geq 8$ be arbitrary. If $\\lambda=(n-3,2,1)$, notice how $\\lambda$ is not self-conjugate. By Theorem 3.1, we find that $\\chi_\\lambda(1)=\\frac{n(n-2)(n-4)}{3}$. If we alternatively let $\\lambda=(n-3,1,1,1)$, then we similarly get a character corresponding to $\\lambda$ with $\\chi_\\lambda(1)=\\frac{(n-1)(n-2)(n-3)}{6}$. Lastly, let $\\lambda=(n-2,2)$. It follows that $\\chi_\\lambda(1)=\\frac{n(n-3)}{2}.$"
+    },
+    {
+      "id": "theorem-8-58d5c5b0",
+      "type": "theorem",
+      "content": "[\\cite{White}, Theorem A]\n    Let $S = \\PSL_2(q)$, where $q=p^f>3$ for a prime $p$, $A = \\Aut(S),$ and let $S\\le H\\le A.$ $A$ is generated by $S,$ a diagonal automorphism $\\delta$ of order $2$ if $p$ is odd and $1$ otherwise, and a field automorphism $\\varphi$ of order $f.$\n    Set $G=\\PGL_2(q)$ if $\\delta\\in H$ and $G = S$ if $\\delta\\not\\in H$, and let $|H:G|=d=2^a m$, $m$ odd. If $m$ is odd, let $\\varepsilon=(-1)^{(q-1)/2}$. The set of irreducible character degrees of $H$ is\n    \\[\\operatorname{cd}(H)=\\{1,q,(q+\\varepsilon)/2\\}\\cup\\{(q-1)2^a\\ell:\\ell\\mid m\\}\\cup\\{(q+1)j:j\\mid d\\},\\]\n    with the exceptions:\n    \\begin{enumerate}\n        \\item $(q+\\varepsilon)/2$ is not a degree if $p=2$ or if $p$ is odd with $H\\not\\le S\\langle\\varphi\\rangle.$\n        \\item $\\ell\\neq 1$ if $p=3,$ $f$ is odd, and $H=S\\langle\\varphi\\rangle.$\n        \\item $j\\neq 1$ if $p=3,$ $f$ is odd, and $H=A.$\n        \\item $j\\neq 1$ if $p=2,3,$ or $5,$ $f$ is odd, and $H=S\\langle\\varphi\\rangle.$\n        \\item $j\\neq 2$ if $p=2$ or $3,$ $f$ is 2 mod 4, and $H=S\\langle\\varphi\\rangle$ or $H=S\\langle\\delta\\varphi\\rangle.$\n    \\end{enumerate}",
+      "content_preview": "[, Theorem A] Let S = _2(q), where q=p^f>3 for a prime p, A = (S), and let S H A. A is generated by S, a diagonal automorphism of order 2 if p is odd...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 266,
+        "line_end": 278
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-7b9ce240",
+      "type": "lemma",
+      "content": "\\label{PSL-exceptions}\n    With all groups and variables as above, a subgroup $S\\le H\\le \\Aut(S)$ has the property that $\\gcd(\\chi(1),\\chi^c(1))$ is square-free for all $\\chi\\in\\Irr(G)$ as long as all of the following conditions hold:\n    \\begin{enumerate}\n        \\item If $p\\neq 2,$ then $p^2\\nmid d$;\n        \\item For any odd prime $r\\neq p,$ either $r^2\\nmid d$ or $r^4\\nmid d(q^2-1)$;\n        \\item $4\\nmid d$ in all cases, and in particular $2\\nmid d$ whenever $q\\equiv 1 (\\operatorname{mod}\\ 8),$ $q\\equiv 7 (\\operatorname{mod}\\ 8),$ or $q$ is odd and $\\delta\\in H$.\n    \\end{enumerate}\n    These conditions are also necessary except in the two groups $\\PSL_2(9)\\le M_{10},S_6\\le\\Aut(\\PSL_2(9)).$",
+      "content_preview": "With all groups and variables as above, a subgroup S H (S) has the property that ((1),^c(1)) is square-free for all (G) as long as all of the...",
+      "display_name": "Lemma",
+      "label": "PSL-exceptions",
+      "position": {
+        "line_start": 280,
+        "line_end": 289
+      },
+      "references": [],
+      "proof": "The value $\\gcd(\\chi(1),\\chi^c(1))$ is square-free if and only if for every prime $p,$ $p^2$ does not divide both $\\chi(1)$ and $\\chi^c(1).$ Note also that since $\\Out(\\PSL_2(q))$ is abelian and $S$ is the unique minimal normal subgroup of $H,$ any representation is either linear or satisfies $\\chi^c(1)=|G|/\\chi(1).$ From here we proceed by casework.\n\n    For an odd prime power $q=p^f,$ the character degree $q$ and its corresponding codegree have $\\gcd$ a multiple of $p^2$ only when $\\frac{|G|}{q},$ equal to $(q^2-1)d$ up to powers of 2, is a multiple of $p^2.$ $q,q-1,q+1$ have no pairwise common factors except for possibly 2, and in particular this condition requires $p^2\\mid d.$ All other characters similarly have $p^2$ never dividing the $\\gcd$ or dividing it only when $p^2\\mid d.$ Conversely, the degree $q$ always works when $p^2\\mid d$; for $\\PSL_2(q)$ only has an extension of index $p^2$ when $q$ has more than one factor of $p,$ implying $p^2\\mid\\gcd(q,|G|/q).$\n\n    For an odd prime $r\\neq p,$ $r^2$ dividing the degree and codegree implies that $r^4\\mid |G|,$ or (since $q$ and any factors of $2$ are relatively prime to $r^4$) that $r^4\\mid (q^2-1)d.$ Furthermore, if $r^2\\nmid d,$ then the remaining of $r$ must lie in $q-1$ and $q+1.$ Since these two cannot share a factor of $r,$ all but at most one factor of $r$ lies in either the degree or the codegree: for in every possible case, the character degree has all the factors of $r$ in $q-1$ but none in $q+1,$ all the factors in $q+1$ but none in $q-1,$ or neither. In all these cases, the degree or codegree without the factors of $r$ associated to $q^2-1$ will have at most one factor of $r$ in it, so that $r^2$ does not divide one of the two sides.\n\n    Conversely, when $r^2\\mid d$ and $r^4\\mid (q^2-1)d,$ consider the character degrees $(q-1)2^ar^2$ and $(q+1)r^2$; these are valid since $\\ell,j=1,j=2$ cannot equal $q^2.$ Since $q-1$ and $q+1$ share no factors of $r,$ one of $q-1$ and $q+1$ is not a multiple of $r.$ It follows that $r^2$ exactly divides one of the given degrees, and so the corresponding codegree is also a multiple of $r^4/r^2=r^2$. Thus their $\\gcd$ is a multiple of $r^2.$\n\n    For $q$ a power of 2, the trivial $\\delta$ is in $H$ in all cases, and a degree of $q$ yields codegree $(q^2-1)d$; similarly to above, the gcd here can only be even when $4\\mid d,$ as with all other degrees, and since $q>3,$ $\\gcd(q,|G|/q)$ is a multiple of $4.$\n\n    For $q$ an odd prime power, significant casework is required covering the value of $p$ mod $8$ and whether $\\delta\\in H.$ When $\\delta\\in H,$ $|G|=q(q^2-1)d,$ while when $\\delta\\not\\in H, |G|=q(q^2-1)d/2.$ The degrees of $1,q,(q+\\varepsilon)/2$ are always odd and therefore irrelevant. A case-by-case study of the possibilities for 2 gives the $2\\nmid d$ and $4\\nmid d$ restrictions listed above. Most of the exceptions have no effect on our square-free case, generally coinciding with already-disallowed values for $d$. Only the last one has an effect: when $p=3,f=2,j=2,d=2,$ the groups $H=S\\langle\\varphi\\rangle$ and $H=S\\langle\\delta\\varphi\\rangle$ have no $j=2$ character, corresponding to the extensions $M_{10}$ and $S_6$ of $\\PSL_2(9).$\n    \\begin{enumerate}\n        \\item When $q \\equiv 1\\,(\\textrm{mod}\\ 8)$, the codegrees corresponding to $(q-1)2^a\\ell,$ namely $q(q+1)\\cdot m/\\ell$ or $q(q+1)/2\\cdot m/\\ell,$ cannot be multiples of 4. $(q+1)j$ is a multiple of $4$ if and only if $j$ is even, and the corresponding codegrees $q(q-1)\\cdot d/j$ and $q(q-1)/2\\cdot d/j$ are multiples of 4. Thus we have a $\\gcd$ which is a multiple of 4 iff there exists an even choice for $j$. For $j$ to be even requires that $d$ be even. Conversely, if $d$ is even, we may attempt to choose $j=d$; this is only disallowed when $d=2,$ $p=2$ or $3,$ and $f$ is $2$ mod 4. For an odd prime power, this can only be $S=\\PSL_2(3^{4n+2}).$ $H=S\\langle\\varphi\\rangle$ and $H=S\\langle\\delta\\varphi\\rangle$ do not contain $\\delta,$ and so the index of $S$ within them is precisely $d=4n+2.$ That is, we have exceptions to $\\PSL_2(9)$ with the extensions of order $2$ not containing $\\delta$; these are $M_{10}$ and $S_6$, which indeed satisfy our square-free condition.\n        \\item When $q \\equiv 3\\,(\\textrm{mod}\\ 8)$, $(q-1)2^a\\ell$ is a multiple of 4 iff $d$ is even; when $\\delta\\in H,$ the codegree $q(q+1)\\cdot m/\\ell$ is a multiple of 4, while for $\\delta\\not\\in H,$ $q(q+1)/2\\cdot m/\\ell$ is not a multiple of 4. $(q+1)j$ is always a multiple of 4 while $q(q-1)\\cdot d/j$ can be a multiple of $4$ iff $d$ is even and $q(q-1)/2\\cdot d/j$ can be a multiple of $4$ iff $d$ is a multiple of $4.$ Not counting exceptions, then, we have the condition $2\\nmid d$ for $\\delta\\in H$ and $4\\nmid d$ for $\\delta\\not\\in H.$ Exceptions 2 through 4 above must be considered; since $\\delta\\not\\in S\\langle\\varphi\\rangle,$ we need only consider exception 3 for $\\delta\\in H,$ which has no effect on the $(q-1)2^a\\ell$ degree that matters for $\\delta\\in H.$ For $\\delta\\not\\in H,$ $\\ell=1$ and $j=1$ are disallowed; we only care about $(q+1)j$ here, and when $4\\mid d,$ $f$ must be even. Thus no exceptions apply here.\n        \\item When $q \\equiv 5\\,(\\textrm{mod}\\ 8)$, the codegrees corresponding to $(q-1)2^a\\ell,$ namely $q(q+1)\\cdot m/\\ell$ or $q(q+1)/2\\cdot m/\\ell,$ cannot be multiples of 4. $(q+1)j$ is a multiple of 4 iff $j$ is even; when $\\delta\\in H,$ the codegree $q(q-1)\\cdot d/j$ is always a multiple of 4, while for $\\delta\\not\\in H,$ the codegree $q(q-1)/2\\cdot d/j$ is a multiple of 4 iff $d/j$ is even. These correspond to the conditions $2\\nmid d$ for $\\delta\\in H$ and $4=(2\\cdot2)\\nmid (j\\cdot d/j)=d.$ The only exception that could apply here is exception 4, in which $p=5$ and $f$ is odd; since we care only about $j$ even, the $j\\neq 1$ restriction does not matter, so no restrictions apply.\n        \\item When $q \\equiv 7\\,(\\textrm{mod}\\ 8)$, $(q-1)2^a\\ell$ is a multiple of 4 iff $d$ is even, while the possible codegrees $q(q+1)\\cdot m/\\ell$ and $q(q+1)/2\\cdot m/\\ell$ are always multiples of 4. $(q+1)j$ is always a multiple of 4 while $q(q-1)\\cdot d/j$ can be a multiple of $4$ iff $d$ is even and $q(q-1)/2\\cdot d/j$ can be a multiple of $4$ iff $d$ is a multiple of $4.$ The former conditions are stronger, so the condition we want here is $2\\nmid d.$\n    \\end{enumerate}\n    These are all the necessary conditions for our $\\gcd$ to be square-free."
+    }
+  ],
+  "edges": [],
+  "stats": {
+    "node_count": 9,
+    "edge_count": 0,
+    "extractor_used": "regex-only"
+  }
+}

@@ -1,0 +1,545 @@
+{
+  "arxiv_id": "2507.04065v1",
+  "nodes": [
+    {
+      "id": "example-1-562f25e3",
+      "type": "example",
+      "content": "\\label{ex:semidir.dns}\n  Consider the 3-dimensional solvable Lie group $\\bG:=\\bR^2\\rtimes \\bS^1$, with the circle acting on the plane via its usual identification $\\bS^1\\cong \\mathrm{SO}(2)$ as the rotation group. Or: $\\bS^1\\subset \\bC$ acts on $\\bC\\cong \\bR^2$ by multiplication. Let $\\Gamma\\le \\bG$ be the 2-generated group\n  \\begin{equation}\\label{eq:ex:semidir.dns:gammas}\n    \\Gamma:=\\Braket{v,z}\n    ,\\quad\n    0\\ne v\\in \\bC\\le \\bC\\rtimes \\bS^1\n    ,\\quad\n    z=\\exp(2\\pi i \\theta)\\in \\bS^1\\subset \\bC\n  \\end{equation}\n  for $\\theta\\in \\bR$. The derived subgroup $\\Gamma^{((1))}$ is precisely the $\\bZ$-span of all $z^n v-v$, $n\\in \\bZ$. We have\n  \\begin{align*}\n    \\Gamma\n    &=\n      \\left(\\sum_{n\\in \\bZ}\\bZ z^n v\\right)\\rtimes \\left\\{z^m\\ :\\ m\\in \\bZ\\right\\}\n      \\le \\bC\\rtimes \\bS^1\\\\\n    \\Gamma^{(1)}\n    &=\n      \\sum_{n\\in \\bZ} \\bZ\\left(v-z^n v\\right),\\numberthis\\label{eq:ex:semidir.dns:g1}\n  \\end{align*}\n  and hence:\n  \\begin{itemize}[wide]\n  \\item $\\Gamma$ is dense in $\\bG$ precisely when $\\theta$ is irrational (so that $z$ is not a root of unity);\n    \n  \\item while $\\Gamma^{(1)}$ fails to be finitely-generated precisely \\cite[\\S 6.4, Proposition 14]{serre_rep_1977} when $z$ is not an \\emph{algebraic integer}: a (strictly \\cite[Remark post Lemma 1.6]{wash_cycltm_2e_1997}) stronger condition than not being a root of unity, but still a ``generic'' (i.e. residual) one.\n  \\end{itemize}",
+      "content_preview": "Consider the 3-dimensional solvable Lie group :=^2 ^1, with the circle acting on the plane via its usual identification ^1 (2) as the rotation group.",
+      "display_name": "Example",
+      "label": "ex:semidir.dns",
+      "position": {
+        "line_start": 695,
+        "line_end": 720
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "example-2-81ab0e0b",
+      "type": "example",
+      "content": "\\label{ex:alg.not.int}\n  In \\Cref{ex:semidir.dns}, take for $z$ any complex number of the form\n  \\begin{equation*}\n    z:=\\frac ac+\\frac bc i\n    ,\\quad\n    (a,b,c)\\in \\bZ^3_{>0}\n    \\text{ a \\emph{Pythagorean triple}},\n  \\end{equation*}\n  the latter phrase meaning (as it usually does \\cite[\\S 2.6]{lng_nt}) that $a^2+b^2=c^2$. A specific example would be $(a,b,c)=(3,4,5)$, mentioned also in \\cite[Remark following Lemma 1.6]{wash_cycltm_2e_1997}.\n\n  For non-zero $v\\in \\bC\\cong \\bR^2$ the elements\n  \\begin{equation*}\n    \\left\\{z^n v\\ :\\ n\\in F\\right\\}\n    ,\\quad\n    \\text{finite }F\\subseteq\\bZ\n  \\end{equation*}\n  $\\bZ$-span a discrete subgroup of $\\bC$ (a lattice if $F$ is sufficiently large), so no f.g. subgroup of \\Cref{eq:ex:semidir.dns:g1} will be dense in $\\bG^{((1))}$.",
+      "content_preview": "In , take for z any complex number of the form z:= ac+ bc i , (a,b,c) ^3_>0 , the latter phrase meaning (as it usually does ) that a^2+b^2=c^2.",
+      "display_name": "Example",
+      "label": "ex:alg.not.int",
+      "position": {
+        "line_start": 748,
+        "line_end": 765
+      },
+      "references": [
+        {
+          "target_id": "ex:semidir.dns",
+          "reference_type": "internal",
+          "context": "\\label{ex:alg.not.int}\n  In \\Cref{ex:semidir.dns}, take for $z$ any complex number of the form\n  \\b",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:ex:semidir.dns:g1",
+          "reference_type": "external",
+          "context": "F$ is sufficiently large), so no f.g. subgroup of \\Cref{eq:ex:semidir.dns:g1} will be dense in $\\bG^{((1))}$.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "remark-3-36631f4d",
+      "type": "remark",
+      "content": "\\label{re:fg.nec}\n  There are qualitatively different examples showing that a dense $\\Gamma\\le \\bG$ (for connected metabelian $\\bG$) certainly need not contain f.g. subgroups $\\Lambda\\le \\Gamma^{(1)}$ dense in $\\bG^{((1))}$ if $\\Gamma$ was not dense to begin with.\n  \n  The \\emph{Heisenberg group} \\cite[\\S 10.1]{de}\n  \\begin{equation*}\n    \\bH(\\bR)\n    :=\n    \\left\\{\n      \\begin{pmatrix}\n        1&a&b\\\\\n        0&1&c\\\\\n        0&0&1\n      \\end{pmatrix}\n      \\ :\\\n      a,b,c\\in \\bR\n    \\right\\}\n    \\le\n    \\mathrm{GL}_3(\\bR)\n  \\end{equation*}\n  has the analogously-defined $\\bH(\\bQ)$ as a dense subgroup, with no finitely-generated subgroup of $\\bH(\\bQ)^{(1)}\\cong \\bQ$ dense in $\\bH(\\bR)^{((1))}=\\bH(\\bR)^{(1)}\\cong \\bR$.",
+      "content_preview": "There are qualitatively different examples showing that a dense (for connected metabelian ) certainly need not contain f.g.",
+      "display_name": "Remark",
+      "label": "re:fg.nec",
+      "position": {
+        "line_start": 767,
+        "line_end": 787
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-a0bc6c9f",
+      "type": "lemma",
+      "content": "\\label{le:splice}\n  A finite-dimensional Lie algebra $\\fg$ over an arbitrary field is nilpotent if and only if it has nilpotent ideals $\\fk\\le \\fj^{(1)}\\le \\fj$ with nilpotent quotient $\\fg/\\fk$.",
+      "content_preview": "A finite-dimensional Lie algebra over an arbitrary field is nilpotent if and only if it has nilpotent ideals ^(1) with nilpotent quotient /.",
+      "display_name": "Lemma",
+      "label": "le:splice",
+      "position": {
+        "line_start": 848,
+        "line_end": 850
+      },
+      "references": [],
+      "proof": "Only the backward implication is of any substance. The assumed nilpotence of $\\fj$ means that the lower central series $(\\fj^{[n]})_n$ eventually terminates at $\\{0\\}$; it thus suffices \\cite[\\S 3.3, Theorem]{hmph_1980} to prove the adjoint action nilpotent on each $\\fj^{[n]}/\\fj^{[n+1]}$, the assumption being that it is so for $n=0$:\n  \\begin{equation*}\n    \\fj/\\fk\n    \\xrightarrowdbl[\\quad\\text{$\\fg/\\fk$ nilpotent}\\quad]{\\quad\\text{$\\fg$-module surjection}\\quad}\n    \\fj/\\fj^{(1)}\n    =\n    \\fj/\\fj^{[1]}.\n  \\end{equation*}\n  The conclusion follows inductively, given the $\\fg$-module morphisms\n  \\begin{equation*}\n    \\left(\\fj/\\fk\\right)\\otimes \\left(\\fj^{[n]}/\\fj^{[n+1]}\\right)\n    \\xrightarrowdbl[\\quad]{\\quad[-,-]\\quad}\n    \\fj^{[n+1]}\n    /\n    \\left(\n      \\left[\\fk,\\fj^{[n]}\\right]\n      +\n      \\fj^{[n+2]}\n    \\right)\n    =\n    \\fj^{[n+1]}\n    /    \n    \\fj^{[n+2]}:\n  \\end{equation*}\n  every $x\\in \\fg$ is \\emph{primitive} \\cite[Definition 1.3.4]{mont} in the enveloping Hopf algebra $U\\fg$, and a primitive element acting nilpotently in $V$ and $W$ is easily seen to do so in $V\\otimes W$."
+    },
+    {
+      "id": "example-5-dd3ca355",
+      "type": "example",
+      "content": "\\label{ex:semidir.z2}\n  Take for $\\bG$ the two-component group $V\\rtimes \\left(\\bS^1\\rtimes \\bZ/2\\right)$, where\n  \\begin{itemize}[wide]\n  \\item $V\\cong \\bC^2$ is the 2-dimensional representation $\\chi_1\\oplus \\chi_{-1}$ of the circle factor $\\bS^1$, with\n    \\begin{equation*}\n      \\chi_n\n      :=\n      \\left(\\bS^1\\ni z\\xmapsto{\\quad}z^n\\in \\bS^1\\right)\n      \\in\n      \\widehat{\\bS^1}\\cong \\bZ\n    \\end{equation*}\n    denoting the circle's characters;\n\n  \\item and $\\bZ/2=\\Braket{\\sigma}$ operating on $\\bS^1$ by inversion and on $V$ by interchanging two fixed basis elements $v_{\\pm}\\in V_{\\pm}$, the latter being the summands of $V$ respectively carrying the characters $\\chi_{\\pm}$. \n  \\end{itemize}\n  The maximal compact subgroups of $\\bG$ are \\cite[\\S VII.3.2, Proposition 3]{bourb_int_7-9_en} the conjugates\n  \\begin{equation}\\label{eq:wtw}\n    \\left\\{\\left(w-tw,t\\right)\\in V\\rtimes \\left(\\bS^1\\rtimes \\bZ/2\\right)\\ :\\ t\\in \\bS^1\\rtimes \\bZ/2\\right\\}\n    \\quad\\text{for varying}\\quad\n    w\\in V,\n  \\end{equation}\n  so the closure of the set of elliptic elements consists of $(v,t)$ with $v\\in \\im (1-t)$. As all $t$ in the non-identity component $\\bS^1 \\sigma$ of $\\bS^1\\rtimes \\bZ/2$ are mutually-conjugate involutions with (complex-)1-dimensional eigenspaces, no\n  \\begin{equation*}\n    (v,t)\\in V\\times \\bS^1\\sigma\n    ,\\quad\n    tv=v\\ne 0\n  \\end{equation*}\n  is arbitrarily approachable by elements of the form \\Cref{eq:wtw}.",
+      "content_preview": "Take for the two-component group V (^1 /2), where [wide] V ^2 is the 2-dimensional representation _1 _-1 of the circle factor ^1, with _n := (^1 zz^n...",
+      "display_name": "Example",
+      "label": "ex:semidir.z2",
+      "position": {
+        "line_start": 1041,
+        "line_end": 1069
+      },
+      "references": [
+        {
+          "target_id": "eq:wtw",
+          "reference_type": "external",
+          "context": "arbitrarily approachable by elements of the form \\Cref{eq:wtw}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "remark-6-b3da8102",
+      "type": "remark",
+      "content": "\\label{re:wu.ident.err}\n  It will be helpful, in addition to providing \\Cref{ex:semidir.z2} above, to also identify the apparent flaw in the proof of \\cite[Theorem 2.10]{MR1044968}. One problem that invalidates the argument as presented occurs in the second paragraph of the proof.\n\n  That discussion starts with a compact Lie group $\\bK$ and a finite cyclic $\\bD=\\Braket{d}$ normalizing it (much like the $\\bK:=\\bS^1$ and $\\bD:=\\bZ/2$ of \\Cref{ex:semidir.z2}). Representing $\\bK\\cdot \\bD$ on a vector space $V$ (again, as in \\Cref{ex:semidir.z2}), the claim is that for generic $t$ in a maximal torus of $\\bK$ the operator $d^{-1}-t$ on $V$ is invertible (equivalently: $1-dt$ is invertible). The example already shows that this need not be so, as $1-dt$, there, are all scalar multiples of (complex) rank-1 idempotents.\n  \n  The issue with the proof is the claim that as soon as $d^{-1}$ and $t$ agree on some $v$, all of their respective powers $(d^{-1})^{\\ell}$ and $t^{\\ell}$ do as well, for $\\ell\\in \\bZ_{>0}$. There is no reason why this would be so (unless $d$ and $t$ in fact \\emph{commute}, which is not the standing assumption):\n  \\begin{equation*}\n    \\begin{pmatrix}\n      0&1\\\\\n      1&0\n    \\end{pmatrix}\n    \\quad\\text{and}\\quad\n    \\begin{pmatrix}\n      z&0\\\\\n      0&z^{-1}\n    \\end{pmatrix}\n    ,\\quad\n    z\\in \\bS^1\n  \\end{equation*}\n  agree on $\n  \\begin{pmatrix}\n    x\\\\zx\n  \\end{pmatrix}\n  $ for every $x\\in \\bC^{\\times}$, while their squares do not unless $z=\\pm 1$.",
+      "content_preview": "It will be helpful, in addition to providing above, to also identify the apparent flaw in the proof of . One problem that invalidates the argument as...",
+      "display_name": "Remark",
+      "label": "re:wu.ident.err",
+      "position": {
+        "line_start": 1071,
+        "line_end": 1095
+      },
+      "references": [
+        {
+          "target_id": "ex:semidir.z2",
+          "reference_type": "internal",
+          "context": "r}\n  It will be helpful, in addition to providing \\Cref{ex:semidir.z2} above, to also identify the apparent flaw in the",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ex:semidir.z2",
+          "reference_type": "internal",
+          "context": "t (much like the $\\bK:=\\bS^1$ and $\\bD:=\\bZ/2$ of \\Cref{ex:semidir.z2}). Representing $\\bK\\cdot \\bD$ on a vector space $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "ex:semidir.z2",
+          "reference_type": "internal",
+          "context": "\\bK\\cdot \\bD$ on a vector space $V$ (again, as in \\Cref{ex:semidir.z2}), the claim is that for generic $t$ in a maximal",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "corollary-7-a412e3a1",
+      "type": "corollary",
+      "content": "\\label{cor:mnth.sbgp}\n  Let $\\bG$ be an almost-connected locally compact group. The set of elliptic elements is dense in $\\bG$ if and only if this is so for every closed subgroup of the form $\\bG_0\\cdot\\Braket{d}$ for arbitrary $d\\in \\bG$.",
+      "content_preview": "Let be an almost-connected locally compact group. The set of elliptic elements is dense in if and only if this is so for every closed subgroup of the...",
+      "display_name": "Corollary",
+      "label": "cor:mnth.sbgp",
+      "position": {
+        "line_start": 1209,
+        "line_end": 1211
+      },
+      "references": [
+        {
+          "target_id": "thn:k.by.l",
+          "reference_type": "external",
+          "context": "lem reduces to the semidirect products covered by \\Cref{thn:k.by.l} (indeed, to \\emph{Lie} semidirect products of tha",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thn:k.by.l",
+          "reference_type": "external",
+          "context": ". Note also that we do not need the full force of \\Cref{thn:k.by.l}: the equivalence \\Cref{item:thn:k.by.l:k.act} $\\L",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:thn:k.by.l:k.act",
+          "reference_type": "external",
+          "context": "full force of \\Cref{thn:k.by.l}: the equivalence \\Cref{item:thn:k.by.l:k.act} $\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} s",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:thn:k.by.l:k0.act",
+          "reference_type": "external",
+          "context": "ce \\Cref{item:thn:k.by.l:k.act} $\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} suffices.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The discussion on \\cite[p.869]{MR1044968} explains how the problem reduces to the semidirect products covered by \\Cref{thn:k.by.l} (indeed, to \\emph{Lie} semidirect products of that form), and in the latter's context the claim is plain. Note also that we do not need the full force of \\Cref{thn:k.by.l}: the equivalence \\Cref{item:thn:k.by.l:k.act} $\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} suffices."
+    },
+    {
+      "id": "lemma-8-3e681c96",
+      "type": "lemma",
+      "content": "\\label{le:s.cent}\n  For a finite-dimensional representation $\\bK\\xrightarrow{\\rho}\\mathrm{GL}(V)$ of the compact group $\\bK$ we have \n  \\begin{equation*}\n    \\overline{\\left\\{s\\in \\bK\\ :\\ V^s=\\{0\\}\\right\\}}\n    =\n    \\bK\n    \\xRightarrow{\\quad}\n    \\forall\\left(\\sigma\\in \\bK\\right)\n    \\left(\n      \\overline{\\left\\{s\\in \\left(\\bK_0^{\\sigma}\\right)_0\\ :\\ V^{s\\sigma}=\\{0\\}\\right\\}}\n      =\n      \\left(\\bK_0^{\\sigma}\\right)_0\n    \\right).\n  \\end{equation*}",
+      "content_preview": "For a finite-dimensional representation (V) of the compact group we have = ( ) ( )_0 : V^s=0 = (_0^)_0 ).",
+      "display_name": "Lemma",
+      "label": "le:s.cent",
+      "position": {
+        "line_start": 1220,
+        "line_end": 1234
+      },
+      "references": [
+        {
+          "target_id": "item:thn:k.by.l:k.act",
+          "reference_type": "external",
+          "context": "assuming all groups in sight Lie. The equivalence \\Cref{item:thn:k.by.l:k.act} $\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:thn:k.by.l:k0.act",
+          "reference_type": "external",
+          "context": "ce \\Cref{item:thn:k.by.l:k.act} $\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} of \\Cref{thn:k.by.l} will also be taken for grant",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thn:k.by.l",
+          "reference_type": "external",
+          "context": "\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} of \\Cref{thn:k.by.l} will also be taken for granted, so that the hypot",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:tw.ad",
+          "reference_type": "external",
+          "context": "ows \\cite[Theorem 4.26]{lee2013introduction} that \\Cref{eq:tw.ad} splits locally around $1\\in \\bK_0$ via some smoot",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "there is no harm in assuming all groups in sight Lie. The equivalence \\Cref{item:thn:k.by.l:k.act} $\\Leftrightarrow$ \\Cref{item:thn:k.by.l:k0.act} of \\Cref{thn:k.by.l} will also be taken for granted, so that the hypothesis can be phrased as either one of these conditions, as convenient.\n\n  We are assuming $\\sigma\\in \\bK$ arbitrarily approximable by elements $s \\sigma\\in \\bK$ with no 1-eigenvectors in $V$ and $s\\in \\bK_0$. The claim is that the $s$ can in fact be chosen in the smaller subgroup $\\left(\\bK_0^{\\sigma}\\right)_0$ instead. To see this, observe that because\n  \\begin{equation*}\n    \\ker\\left(1-\\Ad_{\\sigma}\\right)\n    =\n    \\fk^{\\sigma}\n    =\n    Lie\\left(\\bK_0^{\\sigma}\\right)_0\n  \\end{equation*}\n  we have \n  \\begin{equation*}\n    \\fk:=Lie(\\bK)\n    =\n    \\fk^{\\sigma}\\oplus \\im\\left(1-\\Ad_{\\sigma}\\right). \n  \\end{equation*}\n  It follows that the map\n  \\begin{equation}\\label{eq:tw.ad}\n    \\bK_0\\times \\bK_0^{\\sigma}\n    \\ni\n    (t,u)\n    \\xmapsto{\\quad}\n    t^{-1} \\cdot u\\cdot \\Ad_{\\sigma}(t)\n    \\in \\bK_0\n  \\end{equation}\n  is a \\emph{submersion} \\cite[p.78]{lee2013introduction} at $(1,1)$. it follows \\cite[Theorem 4.26]{lee2013introduction} that \\Cref{eq:tw.ad} splits locally around $1\\in \\bK_0$ via some smooth map $(t_{\\bullet},u_{\\bullet})$:\n  \\begin{equation*}\n    \\forall\\left(1\\sim s\\in \\bK_0\\right)\n    \\quad:\\quad\n    t_s^{-1} \\cdot u_s\\cdot \\Ad_{\\sigma}(t_s)=s, \n  \\end{equation*}\n  with `$\\sim$' meaning ``close to''. We can now conclude: $s\\sigma$ with $1\\sim s$ is $t_s$-conjugate to $u_s \\sigma$ with $1\\sim u_s\\in\\left(\\bK^{\\sigma}_0\\right)_0$."
+    },
+    {
+      "id": "lemma-9-e80866b9",
+      "type": "lemma",
+      "content": "\\label{le:s.cent.tor}\n  Let $\\bK\\xrightarrow{\\rho}\\mathrm{GL}(V)$ be a finite-dimensional representation of the compact group $\\bK$. If\n  \\begin{equation*}\n    \\overline{\\left\\{s\\in \\bK\\ :\\ V^s=\\{0\\}\\right\\}}\n    =\n    \\bK\n  \\end{equation*}\n  then for every $s\\in \\bK$ and $s$-invariant maximal pro-torus $\\bT\\le \\bK_0$ the set \\Cref{eq:etor} with $V$ in place of $\\fl$ is dense in $(\\bT^s)_0$.",
+      "content_preview": "Let (V) be a finite-dimensional representation of the compact group . If = then for every s and s-invariant maximal pro-torus _0 the set with V in...",
+      "display_name": "Lemma",
+      "label": "le:s.cent.tor",
+      "position": {
+        "line_start": 1270,
+        "line_end": 1278
+      },
+      "references": [
+        {
+          "target_id": "eq:etor",
+          "reference_type": "external",
+          "context": "nvariant maximal pro-torus $\\bT\\le \\bK_0$ the set \\Cref{eq:etor} with $V$ in place of $\\fl$ is dense in $(\\bT^s)_0",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "$\\bK$ will again be Lie. If $\\sigma\\in \\bK$ leaves $\\bT$ invariant it also permutes the summands of the corresponding \\emph{root-space decomposition} \\cite[post Proposition 6.44]{hm5} of $\\fk$. It follows that $\\bT$ normalizes $\\left(\\bK_0^{\\sigma}\\right)_0$, so centralizes (and hence contains) a maximal torus therein.\n\n  There is thus no loss of generality in substituting $\\left(\\bK_0^{\\sigma}\\right)_0\\cdot \\overline{\\Braket{\\sigma}}$ for $\\bK$ and hence assuming $\\sigma$ central in $\\bK$. Now, though, there is little left to prove: the elements $s\\sigma$, $s\\in \\bK_0$ with no 1-eigenvectors and approximating $\\sigma$ arbitrarily are (by the centrality of $\\sigma$) $\\bK_0$-conjugate to analogous products with $s\\in \\bT$ instead simply because the conjugates of $\\bT$ cover $\\bK_0$ \\cite[Theorem 9.32]{hm5}."
+    },
+    {
+      "id": "theorem-10-9c3df0f1",
+      "type": "theorem",
+      "content": "\\label{th:all.autos.fix.pro-tori}\n  An automorphism of a compact group $\\bK$ leaves invariant some maximal pro-torus $\\bT\\le \\bK_0$.",
+      "content_preview": "An automorphism of a compact group leaves invariant some maximal pro-torus _0.",
+      "display_name": "Theorem",
+      "label": "th:all.autos.fix.pro-tori",
+      "position": {
+        "line_start": 1363,
+        "line_end": 1365
+      },
+      "references": [
+        {
+          "target_id": "res:inv.pro.tor",
+          "reference_type": "external",
+          "context": "his has no effect on the argument, as observed in \\Cref{res:inv.pro.tor}\\Cref{item:res:inv.pro.tor:lie}. An automorphism o",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:res:inv.pro.tor:lie",
+          "reference_type": "external",
+          "context": "he argument, as observed in \\Cref{res:inv.pro.tor}\\Cref{item:res:inv.pro.tor:lie}. An automorphism of $\\bK$ will induce one on its",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "res:inv.pro.tor",
+          "reference_type": "external",
+          "context": "pro-lie-struct} so the preceding discussion (e.g. \\Cref{res:inv.pro.tor}\\Cref{item:res:inv.pro.tor:fp}) applies.\n\n  \\item",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item:res:inv.pro.tor:fp",
+          "reference_type": "external",
+          "context": "preceding discussion (e.g. \\Cref{res:inv.pro.tor}\\Cref{item:res:inv.pro.tor:fp}) applies.\n\n  \\item On the other hand, $\\bK_{\\inft",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We will harmlessly assume $\\bK$ connected throughout, as well as \\emph{semisimple} (in the sense of \\cite[Definition 9.5]{hm5}): this has no effect on the argument, as observed in \\Cref{res:inv.pro.tor}\\Cref{item:res:inv.pro.tor:lie}. An automorphism of $\\bK$ will induce one on its \\emph{pro-Lie algebra} \n  \\begin{equation*}\n    \\fk:=Lie(\\bK)\n    \\overset{\\text{\\cite[\\S 2]{hm_pro-lie-struct}}}{\\cong}\n    \\prod_{j\\in J}\\fs_j\n    ,\\quad\n    \\text{simple compact Lie algebras }\\fs_j\n  \\end{equation*}\n  and hence on the product $\\widetilde{\\bK}\\cong \\prod_j \\bS_j$ of compact, simple, simply-connected Lie groups $\\bS_j$ equipped with a profinite-kernel surjection\n  \\begin{equation*}\n    \\widetilde{\\bK}\n    \\xrightarrowdbl{\\quad}\n    \\bK\n    \\quad\n    \\left(\\text{\\cite[Corollary 9.25]{hm5}, where $\\widetilde{\\bK}$ would be $\\bK^*$}\\right).\n  \\end{equation*}\n  Because images of maximal pro-tori through surjections are again such \\cite[Lemma 9.31]{hm5}, it is enough to assume $\\bK$ of the form $\\prod_j \\bS_j$. \n\n  An automorphism $\\alpha\\in \\Aut(\\bK)$ will then permute the factors $\\bS_j$ \\cite[Proposition 3.1 and Theorem 2.10]{hm_pro-lie-struct}, hence an induced permutation $\\alpha\\circlearrowright J$ (denoted abusively by the same symbol as the original automorphism) and an $\\alpha$-invariant decomposition\n  \\begin{equation*}\n    \\bK=\\bK_{\\infty} \\times \\bK_{<\\infty}\n    \\quad\\text{where}\\quad\n    \\begin{aligned}\n      \\bK_{\\infty}\n      &:=\n        \\prod_{|\\alpha j|=\\aleph_0}\\prod_{j'\\in \\alpha_j}\\bS_{j'}\\\\\n      \\bK_{<\\infty}\n      &:=\n        \\prod_{|\\alpha j|<\\infty}\\prod_{j'\\in \\alpha_j}\\bS_{j'}.\n    \\end{aligned}\n  \\end{equation*}\n  The two factors can be handled separately, and the conclusion follows.\n  \\begin{itemize}[wide]\n  \\item On $\\bK_{<\\infty}$ the automorphism $\\alpha$ is elliptic \\cite[Lemma 2.6(ii)]{hm_pro-lie-struct} so the preceding discussion (e.g. \\Cref{res:inv.pro.tor}\\Cref{item:res:inv.pro.tor:fp}) applies.\n\n  \\item On the other hand, $\\bK_{\\infty}$ plainly has an $\\alpha$-invariant maximal pro-torus: $\\prod_j \\bT_j$, where $\\bT_j\\le \\bS_j$ is a fixed maximal pro-torus selected arbitrarily for $j$ ranging over a system of representatives for the infinite orbits of $\\alpha$ and $\\bT_{\\alpha j}:=\\alpha \\bT_j$ for all infinite-orbit $j$. \n  \\end{itemize}"
+    },
+    {
+      "id": "external_eq:ex:semidir.dns:g1",
+      "type": "unknown",
+      "content": "External reference to 'eq:ex:semidir.dns:g1'",
+      "content_preview": "External reference to 'eq:ex:semidir.dns:g1'",
+      "display_name": "Unknown",
+      "label": "eq:ex:semidir.dns:g1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:wtw",
+      "type": "unknown",
+      "content": "External reference to 'eq:wtw'",
+      "content_preview": "External reference to 'eq:wtw'",
+      "display_name": "Unknown",
+      "label": "eq:wtw",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_thn:k.by.l",
+      "type": "unknown",
+      "content": "External reference to 'thn:k.by.l'",
+      "content_preview": "External reference to 'thn:k.by.l'",
+      "display_name": "Unknown",
+      "label": "thn:k.by.l",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:thn:k.by.l:k.act",
+      "type": "unknown",
+      "content": "External reference to 'item:thn:k.by.l:k.act'",
+      "content_preview": "External reference to 'item:thn:k.by.l:k.act'",
+      "display_name": "Unknown",
+      "label": "item:thn:k.by.l:k.act",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:thn:k.by.l:k0.act",
+      "type": "unknown",
+      "content": "External reference to 'item:thn:k.by.l:k0.act'",
+      "content_preview": "External reference to 'item:thn:k.by.l:k0.act'",
+      "display_name": "Unknown",
+      "label": "item:thn:k.by.l:k0.act",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:tw.ad",
+      "type": "unknown",
+      "content": "External reference to 'eq:tw.ad'",
+      "content_preview": "External reference to 'eq:tw.ad'",
+      "display_name": "Unknown",
+      "label": "eq:tw.ad",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:etor",
+      "type": "unknown",
+      "content": "External reference to 'eq:etor'",
+      "content_preview": "External reference to 'eq:etor'",
+      "display_name": "Unknown",
+      "label": "eq:etor",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_res:inv.pro.tor",
+      "type": "unknown",
+      "content": "External reference to 'res:inv.pro.tor'",
+      "content_preview": "External reference to 'res:inv.pro.tor'",
+      "display_name": "Unknown",
+      "label": "res:inv.pro.tor",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:res:inv.pro.tor:lie",
+      "type": "unknown",
+      "content": "External reference to 'item:res:inv.pro.tor:lie'",
+      "content_preview": "External reference to 'item:res:inv.pro.tor:lie'",
+      "display_name": "Unknown",
+      "label": "item:res:inv.pro.tor:lie",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item:res:inv.pro.tor:fp",
+      "type": "unknown",
+      "content": "External reference to 'item:res:inv.pro.tor:fp'",
+      "content_preview": "External reference to 'item:res:inv.pro.tor:fp'",
+      "display_name": "Unknown",
+      "label": "item:res:inv.pro.tor:fp",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "example-2-81ab0e0b",
+      "target": "example-1-562f25e3",
+      "type": null
+    },
+    {
+      "source": "example-2-81ab0e0b",
+      "target": "external_eq:ex:semidir.dns:g1",
+      "type": null
+    },
+    {
+      "source": "example-5-dd3ca355",
+      "target": "external_eq:wtw",
+      "type": null
+    },
+    {
+      "source": "remark-6-b3da8102",
+      "target": "example-5-dd3ca355",
+      "type": null
+    },
+    {
+      "source": "corollary-7-a412e3a1",
+      "target": "external_thn:k.by.l",
+      "type": null
+    },
+    {
+      "source": "corollary-7-a412e3a1",
+      "target": "external_item:thn:k.by.l:k.act",
+      "type": null
+    },
+    {
+      "source": "corollary-7-a412e3a1",
+      "target": "external_item:thn:k.by.l:k0.act",
+      "type": null
+    },
+    {
+      "source": "lemma-8-3e681c96",
+      "target": "external_item:thn:k.by.l:k.act",
+      "type": null
+    },
+    {
+      "source": "lemma-8-3e681c96",
+      "target": "external_item:thn:k.by.l:k0.act",
+      "type": null
+    },
+    {
+      "source": "lemma-8-3e681c96",
+      "target": "external_thn:k.by.l",
+      "type": null
+    },
+    {
+      "source": "lemma-8-3e681c96",
+      "target": "external_eq:tw.ad",
+      "type": null
+    },
+    {
+      "source": "lemma-9-e80866b9",
+      "target": "external_eq:etor",
+      "type": null
+    },
+    {
+      "source": "theorem-10-9c3df0f1",
+      "target": "external_res:inv.pro.tor",
+      "type": null
+    },
+    {
+      "source": "theorem-10-9c3df0f1",
+      "target": "external_item:res:inv.pro.tor:lie",
+      "type": null
+    },
+    {
+      "source": "theorem-10-9c3df0f1",
+      "target": "external_item:res:inv.pro.tor:fp",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 20,
+    "edge_count": 15,
+    "extractor_used": "regex-only"
+  }
+}

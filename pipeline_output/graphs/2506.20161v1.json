@@ -1,0 +1,823 @@
+{
+  "arxiv_id": "2506.20161v1",
+  "nodes": [
+    {
+      "id": "theorem-1-10014c68",
+      "type": "theorem",
+      "content": "\\textup{(\\cite[Theorem $6.7$]{kapovich-nonqc})}\nSuppose $G$ is a torsion free, nonelementary hyperbolic group. Then, in $G$ there is a malnormal\nquasiconvex subgroup $H$ which is a free group of rank at least $2$.",
+      "content_preview": ") Suppose G is a torsion free, nonelementary hyperbolic group. Then, in G there is a malnormal quasiconvex subgroup H which is a free group of rank...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 2863,
+        "line_end": 2866
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-924798ee",
+      "type": "lemma",
+      "content": "\\label{lem-properties of I(H)}\n\\begin{enumerate}\n\\item The sets $Comm_G(H) \\subset \\mathcal I_G(H)$ and $\\mathcal F_G(H)\\cap \\mathcal I_G(H)=\\emptyset$.\n\\item $H$ is weakly malnormal in $G$ if and only if $\\mathcal F_G(H)=G\\setminus H$, and in which\ncase $Comm_G(H)=H=\\mathcal I_G(H)$.\n\\item The natural action of $H$ by conjugation on $G$, keeps these sets stable.\n\\end{enumerate}",
+      "content_preview": "The sets Comm_G(H) I_G(H) and F_G(H) I_G(H)=. H is weakly malnormal in G if and only if F_G(H)=G H, and in which case Comm_G(H)=H= I_G(H).",
+      "display_name": "Lemma",
+      "label": "lem-properties of I(H)",
+      "position": {
+        "line_start": 2947,
+        "line_end": 2954
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-d87cee09",
+      "type": "theorem",
+      "content": "\\textup{(\\cite[Theorem $6.7$]{kapovich-nonqc})}\\label{malnormal in free}\nSuppose $H<G$ are nonelementary, finitely generated free groups. Then there is a nonelementary,\nfinitely generated (free) subgroup $K<H$ such that $K$ is malnormal in $G$.",
+      "content_preview": ") Suppose H<G are nonelementary, finitely generated free groups. Then there is a nonelementary, finitely generated (free) subgroup K<H such that K is...",
+      "display_name": "Theorem",
+      "label": "malnormal in free",
+      "position": {
+        "line_start": 2967,
+        "line_end": 2970
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-5f337b0d",
+      "type": "lemma",
+      "content": "[Reduction Lemma]\\label{reduction lemma}\nSuppose $H<G$ are infinite groups. Let\n$$\\mathcal E_G(H)=\\{E<H: E=H\\cap H^g \\, \\mbox{for some}\\, g\\in \\mathcal I_G(H)\\setminus Comm_G(H)\\}.$$\nLet $G_1=Comm_G(H)$.\nSuppose $K<H$ is such that $K\\cap E$ is finite for all $E\\in \\mathcal E_G(H)$.\nThen (1) $Comm_G(K)=Comm_{G_1}(K)$.\n\n\\RED{Replace with a correct statement:}\n(2) $G\\setminus G_1\\subset \\mathcal F_G(K)$; equivalently,\n$\\mathcal I_G(K)\\subset G_1$. Also $Comm_G(K)=Comm_{G_1}(K)$.\n\n(2) If $K$ has finite index in $Comm_{G_1}(K)$ then $Comm_{G_1}(K)$ is weakly malnormal in $G$\niff it is weakly malnormal in $G_1$.",
+      "content_preview": "[Reduction Lemma] Suppose H<G are infinite groups. Let E_G(H)=E<H: E=H H^g , , g I_G(H) Comm_G(H). Let G_1=Comm_G(H).",
+      "display_name": "Lemma",
+      "label": "reduction lemma",
+      "position": {
+        "line_start": 2982,
+        "line_end": 2995
+      },
+      "references": [],
+      "proof": "(1)\n\n\n{\\tiny Let $g\\in G\\setminus G_1$. If $K\\cap K^g$ is infinite then so is $H\\cap H^g$.\nBut then $H\\cap H^g\\in \\mathcal E_G(H)$ and $K\\cap (H\\cap H^g)$ is infinite\nwhich is a contradiction. Hence, $G\\setminus G_1\\subset \\mathcal F_G(K)$.\nThis proves (2). (3) is immediate from (2).}"
+    },
+    {
+      "id": "lemma-5-c5c42572",
+      "type": "lemma",
+      "content": "\\label{malnormal transitive}\nSuppose we have three groups $K<H<G$. If $H$ is (weakly) malnormal in $G$ and $K$ is\n(weakly) malnormal in $H$ then $K$ is (weakly) malnormal in $G$.",
+      "content_preview": "Suppose we have three groups K<H<G. If H is (weakly) malnormal in G and K is (weakly) malnormal in H then K is (weakly) malnormal in G.",
+      "display_name": "Lemma",
+      "label": "malnormal transitive",
+      "position": {
+        "line_start": 3015,
+        "line_end": 3018
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-65ac4a10",
+      "type": "lemma",
+      "content": "\\label{lemma: commensurator}\nSuppose $G$ is any group and $H,K$ any two subgroups such that the index of $H\\cap K$\nis finite in both $H$ and $K$. Then $Comm_G(H)=Comm_G(K)$.",
+      "content_preview": "Suppose G is any group and H,K any two subgroups such that the index of H K is finite in both H and K. Then Comm_G(H)=Comm_G(K).",
+      "display_name": "Lemma",
+      "label": "lemma: commensurator",
+      "position": {
+        "line_start": 3020,
+        "line_end": 3023
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-7-390c171b",
+      "type": "theorem",
+      "content": "\\textup{(\\cite[Proposition 1]{BT})}\\label{finite gp inj}\n\tSuppose $K$ is a finite subgroup of $Aut(\\mathbb F_n)$ where $n\\ge2$. Then the restriction of the natural map $Aut(\\mathbb F_n)\\map GL_n(\\Z)$ to $K$ is injective.",
+      "content_preview": ") Suppose K is a finite subgroup of Aut( F_n) where n2. Then the restriction of the natural map Aut( F_n) GL_n() to K is injective.",
+      "display_name": "Theorem",
+      "label": "finite gp inj",
+      "position": {
+        "line_start": 3028,
+        "line_end": 3030
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-ce179daa",
+      "type": "lemma",
+      "content": "Suppose we have an isometry $f:X\\map X$ of hyperbolic metric space $X$. Then $f$ extends to a\nhomeomorphism $\\bar{f}: \\bar{ X}\\map \\bar{X}$.\n\nThis defines an action of $Isom(X)$ $-$ the group of isometries of $X$, on $\\bar{X}$.",
+      "content_preview": "Suppose we have an isometry f:X X of hyperbolic metric space X. Then f extends to a homeomorphism : . This defines an action of Isom(X) - the group...",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 3109,
+        "line_end": 3114
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-b925b585",
+      "type": "lemma",
+      "content": "{\\em (Characteristics of loxodromic isometries)}\\label{char loxo isom}\n(a) Suppose $f$ is a loxodromic isometry of a hyperbolic metric space $X$. Let $x\\in X$.\nThen the following hold.\n\n(1) $f$ has exactly two  fixed points in $\\pa X$, namely the limits $\\lim_{n\\map \\infty} f^{\\pm n}(x)$\n{\\em (which we denote by $f^{\\pm \\infty}$ respectively)}.\n\n(2) Given $\\xi \\in \\pa X$, if $\\xi\\neq f^{-\\infty}$ then $\\lim_{n\\map \\infty} f^n.\\xi= f^{\\infty}$.\n\n\\smallskip\n(b) Suppose $f$ is a nonelliptic isometry of a hyperbolic metric space $X$ such that $f$ has precisely\ntwo fixed points in $\\pa X$. Then $f$ is a loxodromic isometry.",
+      "content_preview": "(Characteristics of loxodromic isometries) (a) Suppose f is a loxodromic isometry of a hyperbolic metric space X. Let x X. Then the following hold.",
+      "display_name": "Lemma",
+      "label": "char loxo isom",
+      "position": {
+        "line_start": 3136,
+        "line_end": 3148
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-10-8e17d926",
+      "type": "lemma",
+      "content": "\\label{lem-finding free qc}\nSuppose $X$ is a hyperbolic metric space which may not be proper, and suppose $f,g$ are two independent loxodromic isometries\non $X$. Then there is $m\\in\\N$ such that the group $H=\\lgl f^m,g^m\\rgl \\simeq \\mathbb F_2$. Moreover, any orbit map\n$H \\map X$ is quasiisometric embedding.",
+      "content_preview": "Suppose X is a hyperbolic metric space which may not be proper, and suppose f,g are two independent loxodromic isometries on X.",
+      "display_name": "Lemma",
+      "label": "lem-finding free qc",
+      "position": {
+        "line_start": 3155,
+        "line_end": 3159
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-11-0e80d1e2",
+      "type": "lemma",
+      "content": "\\textup{(\\cite[Lemma $3.10$]{bridson-haefliger}, \\cite[Corollary $8.2.G$]{gromov-hypgps})}\\label{lem-infinite ele loxo}\nIn a hyperbolic group $G$, any infinite order element $g$ acts on a Cayley graph of $G$ as a loxodromic isometry.\n\nIn a nonelementary hyperbolic group there are infinite order elements (which we call independent infinite order elements)\nthat induce two independent loxodromic isometries on a Cayley graph of $G$.",
+      "content_preview": ", ) In a hyperbolic group G, any infinite order element g acts on a Cayley graph of G as a loxodromic isometry.",
+      "display_name": "Lemma",
+      "label": "lem-infinite ele loxo",
+      "position": {
+        "line_start": 3162,
+        "line_end": 3167
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-f285eb8f",
+      "type": "lemma",
+      "content": "\\label{lemma lox}\nSuppose $f$ is an isometry of a hyperbolic metric space $X$ such that $f$ is not an elliptic\nisometry and $f$ has at least two fixed points in $\\partial X$. Then $f$ is loxodromic.",
+      "content_preview": "Suppose f is an isometry of a hyperbolic metric space X such that f is not an elliptic isometry and f has at least two fixed points in X.",
+      "display_name": "Lemma",
+      "label": "lemma lox",
+      "position": {
+        "line_start": 3172,
+        "line_end": 3175
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-13-a5c26b2f",
+      "type": "lemma",
+      "content": "\\label{limit set basic}\n(1) If $X$ is a proper hyperbolic metric space then for any set $A\\subset X$,\n$\\Lambda_X(A)\\neq \\emptyset$ if and only if $A$ has infinite diameter.\n\nIn particular, for a hyperbolic group $G$, and a subset $A\\subset G$,\n$\\Lambda_G(A)\\neq \\emptyset $ if and only if $A$ is infinite.\n\n(2) Suppose $X$ is any hyperbolic metric space and $A,B$ are two subsets of $X$.\nIf $Hd(A,B)<\\infty$ then $\\Lambda_X(A)=\\Lambda_X(B)$.\n\n(3) Suppose $G$ is a hyperbolic group. Then the following hold:\n\n(i) If $K<H$ are some subgroups of $G$ then $[H:K]<\\infty$ implies\n$\\Lambda(K)=\\Lambda(H)$.\n\n(ii) For any $H<G$ and $x\\in G$, $x\\Lambda(H)=\\Lambda(xH)=\\Lambda(H^x)$ where $H^x$ denotes the conjugate of $H$ by $x$.",
+      "content_preview": "(1) If X is a proper hyperbolic metric space then for any set A X, _X(A) if and only if A has infinite diameter.",
+      "display_name": "Lemma",
+      "label": "limit set basic",
+      "position": {
+        "line_start": 3212,
+        "line_end": 3228
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-14-bc3ea398",
+      "type": "lemma",
+      "content": "\\textup{(\\cite[Theorem $5.1$]{coornaert-mea})}\\label{limit set minimal}\n(1) Suppose $X$ is a hyperbolic metric space, and $\\mathcal G$ is a group acting\nproperly discontinuously by isometries on $X$. Then $\\Lambda_X(\\mathcal G)$ is the\nminimal, closed, $\\mathcal G$-invariant subset of $\\pa X$.\n\n(2) Suppose $G$ is a hyperbolic group and $H$ is an infinite subgroup of $G$.\nThen $\\Lambda_G(H)$ is the minimal, closed, $H$-invariant subset of $\\pa G$.\n\nIn particular, any $G$-orbit on $\\pa G$ is dense in $\\pa G$.",
+      "content_preview": ") (1) Suppose X is a hyperbolic metric space, and G is a group acting properly discontinuously by isometries on X.",
+      "display_name": "Lemma",
+      "label": "limit set minimal",
+      "position": {
+        "line_start": 3231,
+        "line_end": 3240
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-15-fc20c773",
+      "type": "lemma",
+      "content": "\\label{cyclic lemma}\n\tSuppose $G$ is a hyperbolic group with a quasiconvex subgroup $H$ and $g\\in G$ is an\n\tinfinite order element such that $g^{\\infty}\\in \\Lambda(H)$. Then $g^n\\in H$\n\tfor some $n\\in \\N$.",
+      "content_preview": "Suppose G is a hyperbolic group with a quasiconvex subgroup H and g G is an infinite order element such that g^ (H). Then g^n H for some n .",
+      "display_name": "Lemma",
+      "label": "cyclic lemma",
+      "position": {
+        "line_start": 3303,
+        "line_end": 3307
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-16-ea65c40d",
+      "type": "lemma",
+      "content": "\\label{prop-finite-union-nowheredense}\nLet $G$ be a nonelementary hyperbolic group. Let $H$ be an infinite index, quasiconvex\nsubgroup of $G$. Then $\\Lambda_G(H)$ is nowhere dense in $\\pa G$.",
+      "content_preview": "Let G be a nonelementary hyperbolic group. Let H be an infinite index, quasiconvex subgroup of G. Then _G(H) is nowhere dense in G.",
+      "display_name": "Lemma",
+      "label": "prop-finite-union-nowheredense",
+      "position": {
+        "line_start": 3319,
+        "line_end": 3322
+      },
+      "references": [
+        {
+          "target_id": "limit set minimal",
+          "reference_type": "internal",
+          "context": "l, closed, $H$-invariant\nsubset of $\\pa G$ (Lemma \\ref{limit set minimal} $(2)$), and $U\\neq \\emptyset$ it follows\nthat $V=",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "{\\pm \\infty}$. Such a $\\xi$ exists by\nProposition \\ref{qc prop}(10) for otherwise $H$ will be of finite index in",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "char loxo isom",
+          "reference_type": "internal",
+          "context": "n.\\xi\\map h^{\\infty}$ as $n \\map \\infty$ by Lemma \\ref{char loxo isom} $(2)$.\nAs $V$ is an open neighbourhood of $h^{\\in",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "Hence, $H$ has finite index in $G$ by Proposition \\ref{qc prop}(10).",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Without loss of generality both $G$ and $H$ are infinite groups. We prove the contrapositive statement.\nSuppose $U\\subset \\Lambda_G(H)$ is a nonempty open subset of $\\pa G$. Then\nthe set $V=\\bigcup_{h\\in H}h.U$ is an open and $H$-invariant subset of $\\Lambda_G(H)$.\nAlso $V$ is an open subset of $\\pa G$. Thus $\\Lambda_G(H)\\setminus V$ is an $H$-invariant\nclosed subset of $\\Lambda_G(H)$. As $\\Lambda_G(H)$ is the minimal, closed, $H$-invariant\nsubset of $\\pa G$ (Lemma \\ref{limit set minimal} $(2)$), and $U\\neq \\emptyset$ it follows\nthat $V=\\Lambda_G(H)$ and it is an open subset of $\\pa G$.\n\nNow, as $H$ is an infinite hyperbolic group there is an infinite order element, say, $h\\in H$.\nLet $\\xi \\in \\pa G$ be any element other than $h^{\\pm \\infty}$. Such a $\\xi$ exists by\nProposition \\ref{qc prop}(10) for otherwise $H$ will be of finite index in $G$. Now,\n$h^n.\\xi\\map h^{\\infty}$ as $n \\map \\infty$ by Lemma \\ref{char loxo isom} $(2)$.\nAs $V$ is an open neighbourhood of $h^{\\infty}$ in $\\pa G$,\nfor all large $n$, we have $h^n.\\xi \\in V$. As $V$ is $H$-invariant it follows that $\\xi\\in V$.\nThus $V=\\pa G$. Hence, $H$ has finite index in $G$ by Proposition \\ref{qc prop}(10)."
+    },
+    {
+      "id": "lemma-17-c2efb9b7",
+      "type": "lemma",
+      "content": "\\label{egh finite}\nSuppose $G$ is a hyperbolic group and $H$ is a quasiconvex subgroup of $G$.\nThen the set $\\mathcal E_G(H)=\\{H\\cap H^g:g\\in\\mathcal I_G(H)\\}$ has finitely many subgroups of $H$ up to conjugation\nby elements of $H$.",
+      "content_preview": "Suppose G is a hyperbolic group and H is a quasiconvex subgroup of G. Then the set E_G(H)=H H^g:g I_G(H) has finitely many subgroups of H up to...",
+      "display_name": "Lemma",
+      "label": "egh finite",
+      "position": {
+        "line_start": 3353,
+        "line_end": 3357
+      },
+      "references": [
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "al I_G(H)$ and $E=H\\cap H^g$. Then by Proposition \\ref{qc prop}(8), $E$ is an\ninfinite quasiconvex subgroup of $G",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "$ has at least two\ndistinct points by Proposition \\ref{qc prop}(3).\nLet $\\xi_1\\neq \\xi_2$ be points of $\\Lambda_G",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "D=D(\\delta,k)$ where is $D$ is as in Proposition \\ref{qc prop}(9).\nHence, $d_G(1, h^{-1}\\gamma)\\leq D$. We note",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $\\Gamma_G$ be a Cayley graph of $G$ with respect to a finite generating set.\nSuppose $\\Gamma_G$ is $\\delta$-hyperbolic and $H$ is a $k$-quasiconvex in $\\Gamma_G$.\nLet $g\\in \\mathcal I_G(H)$ and $E=H\\cap H^g$. Then by Proposition \\ref{qc prop}(8), $E$ is an\ninfinite quasiconvex subgroup of $G$. Then the 1st part of the same proposition implies\nthat $E$ is an infinite hyperbolic group. It follows that $\\Lambda_G(E)$ has at least two\ndistinct points by Proposition \\ref{qc prop}(3).\nLet $\\xi_1\\neq \\xi_2$ be points of $\\Lambda_G(E)$ and let $\\gamma$ be a geodesic\nline in $\\Gamma_G$ joining them. Then there is a point $h\\in H$ such that\n$d_G(\\gamma, h)\\leq D=D(\\delta,k)$ where is $D$ is as in Proposition \\ref{qc prop}(9).\nHence, $d_G(1, h^{-1}\\gamma)\\leq D$. We note that (1)\n$h^{-1}\\xi_1,~h^{-1}\\xi_2\\in \\Lambda_G(h^{-1}E)=\\Lambda_G(h^{-1}Eh)$;\nand (2) also $h^{-1}\\xi_1,~h^{-1}\\xi_2\\in \\Lambda_G (h.gHg^{-1})=\\Lambda_G(h^{-1}gH)$.\nAs $h^{-1}gH$ is also a $k$-quasiconvex subset of $\\Gamma_G$, we have\n$d_G(1, h^{-1}gH)\\leq 2D$. Let $x=h^{-1}g$. We note that the number of such left cosets $xH$\nof $H$ such that $d_G(1, xH)\\leq 2D$ is finite. Hence, $h^{-1}Eh=H\\cap xHx^{-1}$ is\nalso finite. The Lemma follows."
+    },
+    {
+      "id": "lemma-18-9e567b31",
+      "type": "lemma",
+      "content": "\\label{qc conjugate}\n\tSuppose $G$ is a hyperbolic group and $H$ is a quasiconvex subgroup.\n\tLet $x,y\\in G$, and let $x$ be of infinite order. Then $x^n\\in yHy^{-1}$ for some $n\\in \\N$ if and only if $x^{\\infty}\\in \\Lambda_G(yH)$.",
+      "content_preview": "Suppose G is a hyperbolic group and H is a quasiconvex subgroup. Let x,y G, and let x be of infinite order.",
+      "display_name": "Lemma",
+      "label": "qc conjugate",
+      "position": {
+        "line_start": 3378,
+        "line_end": 3381
+      },
+      "references": [
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "subgroups of\n\thyperbolic groups, i.e. Proposition \\ref{qc prop}(8) and the fact that\n\t$\\Lambda_G(yHy^{-1})=\\Lambd",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "We note that $yHy^{-1}$ is a quasiconvex subgroup of $G$ and so is $\\lgl x\\rgl$. Now, the\n\tlemma follows from the limit set intersection property of quasiconvex subgroups of\n\thyperbolic groups, i.e. Proposition \\ref{qc prop}(8) and the fact that\n\t$\\Lambda_G(yHy^{-1})=\\Lambda_G(yH)$, as follows.\n\t\n\t\n\tIf $x^n\\in yHy^{-1}$ then clearly $x^{\\infty}\\in \\Lambda_G(yHy^{-1})=\\Lambda_G(yH)$.\n\tOn the other hand if, $x^{\\infty}\\in \\Lambda_G(yH)$, then we have\n\t$x^{\\infty}\\in \\Lambda_G(\\lgl x\\rgl)\\cap \\Lambda_G(yHy^{-1})=\\Lambda_G(\\lgl x\\rgl\\cap yHy^{-1})$.\n\tIt follows that $\\lgl x\\rgl\\cap yHy^{-1}=\\lgl x^n\\rgl$ for some $n\\in \\mathbb N$."
+    },
+    {
+      "id": "lemma-19-72d59e3c",
+      "type": "lemma",
+      "content": "\\label{commen lemma}\nSuppose $G$ is a hyperbolic group and $H$ is an infinite, quasiconvex subgroup of $G$.\nLet $g\\in  G\\setminus Comm_G(H)$. Then $H\\cap H^g$ has infinite index in $H$.",
+      "content_preview": "Suppose G is a hyperbolic group and H is an infinite, quasiconvex subgroup of G. Let g G Comm_G(H). Then H H^g has infinite index in H.",
+      "display_name": "Lemma",
+      "label": "commen lemma",
+      "position": {
+        "line_start": 3397,
+        "line_end": 3400
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-20-65a535fc",
+      "type": "lemma",
+      "content": "\\label{commens lemma 2}\nSuppose $G$ is a hyperbolic group and $H, K$ are two infinite quasiconvex subgroups of $G$.\nSuppose $K<H$ and $\\Lambda(K)=\\Lambda(H)$. Then $[H:K]<\\infty$.",
+      "content_preview": "Suppose G is a hyperbolic group and H, K are two infinite quasiconvex subgroups of G. Suppose K<H and (K)=(H). Then [H:K]<.",
+      "display_name": "Lemma",
+      "label": "commens lemma 2",
+      "position": {
+        "line_start": 3435,
+        "line_end": 3438
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-21-8dd54a40",
+      "type": "theorem",
+      "content": "\\textup{(\\cite[Theorem 3.2]{dow-tay-cosurface} (see also \\cite[Theorem $6.7$]{ab-mn-acy})}\n\\label{u-boundary}\n\nThe natural map $\\pa_u G\\map \\pa \\hat{G}$ given by Proposition \\ref{geod in coned space}(2)\nis a homeomorphism.",
+      "content_preview": "(see also ) The natural map _u G given by Proposition (2) is a homeomorphism.",
+      "display_name": "Theorem",
+      "label": "u-boundary",
+      "position": {
+        "line_start": 3501,
+        "line_end": 3506
+      },
+      "references": [
+        {
+          "target_id": "geod in coned space",
+          "reference_type": "external",
+          "context": "ap $\\pa_u G\\map \\pa \\hat{G}$ given by Proposition \\ref{geod in coned space}(2)\nis a homeomorphism.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-22-c9885db7",
+      "type": "lemma",
+      "content": "\\label{free lemma 1}\nLet $w\\in G$. Let $V_w\\subset \\pa G$ be the set of all $\\xi\\in \\pa G$ such that\nthere is a geodesic ray $\\alpha: [0,\\infty)\\map \\Gamma_G$ with $\\alpha(0)=1$,\n$\\alpha(\\infty)=\\xi$ and $[1,w]\\subset \\alpha$.\n\nThen $V_w$ is a closed subset of $\\pa G$ with nonempty interior.",
+      "content_preview": "Let w G. Let V_w G be the set of all G such that there is a geodesic ray : [0,) _G with (0)=1, ()= and [1,w] .",
+      "display_name": "Lemma",
+      "label": "free lemma 1",
+      "position": {
+        "line_start": 3614,
+        "line_end": 3620
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-23-861cc9ca",
+      "type": "lemma",
+      "content": "\\label{lem-var-free-grp}\nLet $w\\in G\\setminus [G,G]$.\nThen the closure of the set\n$$\\A=\\{(wg)^{\\infty}:g\\in [G,G], \\mbox{ and}\\,  wg \\,\n\\text{cyclically reduced and reduced} \\}$$ in $\\pa G$ has nonempty interior\nin $\\pa G$.",
+      "content_preview": "Let w G [G,G]. Then the closure of the set =(wg)^:g [G,G], , wg , in G has nonempty interior in G.",
+      "display_name": "Lemma",
+      "label": "lem-var-free-grp",
+      "position": {
+        "line_start": 3627,
+        "line_end": 3633
+      },
+      "references": [
+        {
+          "target_id": "free lemma 1",
+          "reference_type": "internal",
+          "context": "$\\A$ in $\\pa G$ is the set $V_w$ defined\nin Lemma \\ref{free lemma 1}. \nFor this we first make the following observatio",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem-var-free-grp",
+          "reference_type": "internal",
+          "context": "or the reader.\n\nThis completes the proof of Lemma \\ref{lem-var-free-grp}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "It is enough to show that the closure of $\\A$ in $\\pa G$ is the set $V_w$ defined\nin Lemma \\ref{free lemma 1}. \nFor this we first make the following observation.\n\nWe note that for any cyclically reduced element $g\\in G$ concatenation of the\ngeodesic segments $[g^n,g^{n+1}]$, $n\\geq 0$ gives a geodesic ray starting from\n$1$. Let $\\gamma_g$ denote this geodesic ray. If $\\xi\\in \\pa G$ and $\\alpha$\nis a geodesic ray in $\\Gamma_G$ joining $1$ to $\\xi$ and $\\{g_n\\}$\nis a sequence of cyclically reduced elements then $g_n\\map \\xi$ if and only if\n$g^{\\infty}_n=\\gamma_{g_n}(\\infty)\\map \\xi$ as $n\\map \\infty$.\n\n\nThus we have $\\A\\sse V_m$. Now, let $\\alpha$ be a geodesic ray starting from $1$ and\nending at a point of $V_w$. Suppose $\\alpha(n_0)=w$. Now, for any $n\\in \\N$ we define\nbelow a reduced element $g_n$ of $[G,G]$ such that $wg_n$ is reduced and cyclically reduced.\nLet $\\iota: G\\map G$ be the automorphism of $G$ given by $\\iota (x_i)=x^{-1}_i$ for all\n$1\\leq i\\leq m$. We note that for all $g\\in G$, $g.\\iota(g)\\in [G,G]$.\n\nThere two cases to consider to define $g_n$'s.\n\n\n\n{\\bf Case 1.} Suppose $w$ starts and ends with nonzero powers of\nthe same element of $S$. Without loss of generality suppose $w$ starts\nand ends with some nonzero powers of $x_1$. Now, depending on $t=w^{-1}\\alpha(n_0+1)$\nthere are two subcases to consider.\n\n{\\bf Subcase 1.1.} Suppose $t=x_1$ or $t=x^{-1}_1$.\nNow, for all $k\\in \\N$ we look at the word $w_k=w^{-1}\\alpha(n_0+k)$.\nWe note that $w_k=x^{r_1}_{p_1}x^{r_2}_{p_2}\\ldots x^{r_i}_{p_i}$\nwhere  $1\\leq p_j\\leq m$, $p_1=1$ and $r_1, r_2,\\cdots, r_i$ are all nonzero integers.\nSuppose there is subsequence of natural numbers $\\{k_n\\}$\nsuch that  for all $n\\in \\N$, $w_{k_n}$ ends with a power of $x_2$. Then we define\n$g_n$ as follows: If $w_{k_n}=x^{r_1}_{1}x^{r_2}_{p_2}\\ldots x^{r_i}_{2}$ then we let\n$g_n=w_{k_n}.\\iota(w_{k_n})$. Then clearly $wg_n$ is reduced and cyclically reduced and\n$[1,wg_n]\\cap \\alpha$ contains $[1,ww_{k_n}]$ as a subsegment, whence $(wg_n)^{\\infty}\\in\\A$ and $(wg_n)^{\\infty}\\map\\al(\\infty)$ as $n\\map\\infty$.\n\nOn the other hand if for all but finitely many $w_k$'s end with a nonzero power of\n$x_1$ then we define  $g'_n=w_n.x_2.\\iota(w_n.x_2)$ for all $n\\in \\N$.\nWe note that clearly $\\{g_n\\}$ can be taken to be a suitable subsequence\nof $\\{g'_n\\}$.\n\n{\\bf Subcase 1.2.} Suppose $t$ is either $x_2$ or $x^{-1}_2$.\nWe define $w_k$'s as in Subcase 1.1 and look for a sequence of natural numbers\n$\\{k_n\\}$ such that $w_{k_n}$ ends with a power of $x_1$. If such a sequence\nexists then we define $g_n =w_{k_n}.t^{-1}.\\iota(w_{k_n}t^{-1})$.\n\nOn the other hand, if all but finitely many $w_k$'s end with $x_2$\nthen for all large $n$ we define\n$g_n=w_n.x_1.t^{-1}.\\iota(w_n.x_1.t^{-1})$.\n\n\n{\\bf Case 2.} Suppose $w$ starts and ends with the power of two different symbols.\nIn this case also the choices of $g_n$'s can be made in a similar manner. However,\nwe skip the details to avoid repetition, and instead leave it as a simple\nexercise for the reader.\n\nThis completes the proof of Lemma \\ref{lem-var-free-grp}."
+    },
+    {
+      "id": "theorem-24-c167c436",
+      "type": "theorem",
+      "content": "\\label{main malnormal thm}\nLet $G$ be a nonelementary hyperbolic group. Let $H$ be a nonelementary, quasiconvex\nsubgroup of $G$. Then there is a free subgroup $H_1\\simeq \\mathbb F_2$ of $H$ such that\nthe following hold:\n\\begin{enumerate}\n\\item $Comm_G(H_1)$ is of the form $H_1\\times A$ for some finite subgroup $A$ of $G$. \n\n\\item $H_1A\\isom H_1\\times A$ is weakly malnormal (and quasiconvex) in $G$.\n\\end{enumerate}",
+      "content_preview": "Let G be a nonelementary hyperbolic group. Let H be a nonelementary, quasiconvex subgroup of G. Then there is a free subgroup H_1 F_2 of H such that...",
+      "display_name": "Theorem",
+      "label": "main malnormal thm",
+      "position": {
+        "line_start": 3845,
+        "line_end": 3854
+      },
+      "references": [
+        {
+          "target_id": "main prop",
+          "reference_type": "external",
+          "context": "tep 1.} First we prove an analogue of Proposition \\ref{main prop}\nto get hold of a free quasiconvex subgroup whose",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sec-gen on mal",
+          "reference_type": "external",
+          "context": "on $\\mathcal I_G(F_i)$ at each stage (see Section \\ref{sec-gen on mal} for the notation).\n\nAs $H$ is nonelementary, by P",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "tation).\n\nAs $H$ is nonelementary, by Proposition \\ref{qc prop}(6), we can find a free subgroup\n$F_1$ of $H$ isom",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "qc prop",
+          "reference_type": "external",
+          "context": "en $F_1$ has finite index in $G_1$ by Proposition \\ref{qc prop}(4). Hence, we can\nfind a finite index subgroup  $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma: commensurator",
+          "reference_type": "internal",
+          "context": "1$.\nWe note that $Comm_G(F_1)=Comm_G(F_2)$ (Lemma \\ref{lemma: commensurator}). Thus $F_2$ is a finitely generated free\nquasico",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "commen lemma",
+          "reference_type": "internal",
+          "context": "that $F_2$ is normal in $Comm_G(F_2)$.\n\nBy Lemma \\ref{commen lemma}, for all $g\\in G\\setminus Comm_G(F_2)$, $F_2\\cap",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem-properties of I(H)",
+          "reference_type": "internal",
+          "context": "_2)\\setminus Comm_G(F_2)\\}$\nby conjugation (Lemma \\ref{lem-properties of I(H)}), and by Lemma \\ref{egh finite}, there are finite",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "egh finite",
+          "reference_type": "internal",
+          "context": "Lemma \\ref{lem-properties of I(H)}), and by Lemma \\ref{egh finite}, there are finitely many $F_2$-orbits of subgroup",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "main prop",
+          "reference_type": "external",
+          "context": "F_2)=G_2$, say, is virtually free, by Proposition \\ref{main prop}, we may\nconstruct a subgroup $F_3<F_2$ with the f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "step 1 of thm",
+          "reference_type": "external",
+          "context": "use the notations and definition from Proposition \\ref{step 1 of thm} and\nits proof; e.g. let $F$ still denote the subg",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "step 1 of thm",
+          "reference_type": "external",
+          "context": "the subgroup of $G$ as constructed in Proposition\n\\ref{step 1 of thm}.  Next, we seek a subgroup of $F$ with the desire",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "step 1 of thm",
+          "reference_type": "external",
+          "context": "runs, once again, along the lines of Proposition \\ref{step 1 of thm}.\n\nLet $G_3=Comm_G(F)$.\nOnce again, let $\\{E_1, \\l",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "pingpong prop",
+          "reference_type": "external",
+          "context": "$g\\in G\\setminus Comm_G(F)$. Then by Proposition \\ref{pingpong prop}, there is a\nfree subgroup $F_4$, say, in $F$ of r",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "malnormal in free",
+          "reference_type": "internal",
+          "context": "may assume that $A< Z_G(F_4)$. Now, using Theorem \\ref{malnormal in free},\none can find a subgroup of $F_4$ which is isomor",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "main malnormal thm",
+          "reference_type": "internal",
+          "context": "ws that $H_1$ satisfies the properties of\nTheorem \\ref{main malnormal thm}.\n\nIndeed, $H_1A\\isom H_1\\times A$ is weakly malno",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "step 1 of thm",
+          "reference_type": "external",
+          "context": "ained in $(1)$ above (in the proof of Proposition \\ref{step 1 of thm}), that $Comm_G(H_1)=Comm_{G_3}(H_1)=Comm_{G_3}(H_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "{\\bf Step 1.} First we prove an analogue of Proposition \\ref{main prop}\nto get hold of a free quasiconvex subgroup whose commensurator in $G$\nhas a rather simple structure.\n\n\\begin{prop}\\label{step 1 of thm}\nIf $G$ is a nonelementary hyperbolic group and $H<G$ is a nonelementary quasiconvex\nsubgroup then there is subgroup $F$ of $H$ such that with the following properties.\n\\begin{enumerate}\n\\item $F\\isom \\mathbb F_n$ where $n\\geq 2$ and $F$ is quasiconvex in $G$.\n\\item $F$ is a (finite index) normal subgroup of $Comm_G(F)$.\n\\item $Comm_G(F)=\\mathbb F A \\isom \\mathbb F \\ltimes A$\nwhere $A$ is a finite normal subgroup of $Comm_G(F)$ and $\\mathbb F$\nis a free group containing $F$ as a finite index subgroup.\n\\end{enumerate}\n\\end{prop}\n\\begin{proof}\nThe proof idea is to construct a descending sequence of finitely generated\nfree groups $H\\supset F_1 \\supset F_2\\cdots $ such that we have better control\non $\\mathcal I_G(F_i)$ at each stage (see Section \\ref{sec-gen on mal} for the notation).\n\nAs $H$ is nonelementary, by Proposition \\ref{qc prop}(6), we can find a free subgroup\n$F_1$ of $H$ isomorphic to $\\mathbb F_2$ which is quasiconvex in $G$. Let $G_1= Comm_G(F_1)$.\nThen $F_1$ has finite index in $G_1$ by Proposition \\ref{qc prop}(4). Hence, we can\nfind a finite index subgroup  $F_2$ of $F_1$ which is normal in $G_1$.\nWe note that $Comm_G(F_1)=Comm_G(F_2)$ (Lemma \\ref{lemma: commensurator}). Thus $F_2$ is a finitely generated free\nquasiconvex of $G$ such that $F_2$ is normal in $Comm_G(F_2)$.\n\nBy Lemma \\ref{commen lemma}, for all $g\\in G\\setminus Comm_G(F_2)$, $F_2\\cap F^g_2$ has\ninfinite index in $F_2$. We recall that $F_2$ acts on the set\n$\\mathcal E'_G(F_2)=\\{E<F_2: E=F_2\\cap F^g_2,\\, g\\in \\mathcal I_G(F_2)\\setminus Comm_G(F_2)\\}$\nby conjugation (Lemma \\ref{lem-properties of I(H)}), and by Lemma \\ref{egh finite}, there are finitely many $F_2$-orbits of subgroups\nin $\\mathcal E'_G(F_2)$. Let $\\mathcal E\\subset \\mathcal E'_G(F_2)$ be a finite subset containing\nexactly one element from each of the $F_2$-orbits of infinite subgroups of the form $F_2\\cap F^g_2$, $g\\in G$.\nAs $Comm_G(F_2)=G_2$, say, is virtually free, by Proposition \\ref{main prop}, we may\nconstruct a subgroup $F_3<F_2$ with the following two properties:\\smallskip\n\n(1) $F_3\\cap E^h=\\{1\\}$ for all $E\\in \\mathcal E$ and for all $h\\in F_2$.\nWe note that this implies \n$Comm_G(F_3)=Comm_{G_2}(F_3)$. Indeed, let $x\\notin G_2$ such that $[F_3:F_3\\cap F^x_3]<\\infty$. In particular, $x\\in \\mathcal I_G(F_2)\\setminus Comm_{G}(F_2)$. Thus $F_3\\cap (F_2\\cap F^x_2)$ is infinite $-$ contradicting to the fact that $F_3\\cap E^h$ is trivial.\\smallskip\n\n(2) There is a free subgroup $\\mathbb F<Comm_G(F_3)$ and a finite normal\nsubgroup $A$ of $Comm_G(F_3)=\\mathbb F A\\isom \\mathbb F \\ltimes A$.\n\nFinally, we define $F=\\mathbb F\\cap F_3$. Clearly then $F$ satisfies the properties\nof the proposition.\n\\end{proof}\n\n{\\bf Step 2.} We continue to use the notations and definition from Proposition \\ref{step 1 of thm} and\nits proof; e.g. let $F$ still denote the subgroup of $G$ as constructed in Proposition\n\\ref{step 1 of thm}.  Next, we seek a subgroup of $F$ with the desired properties.\nThe proof runs, once again, along the lines of Proposition \\ref{step 1 of thm}.\n\nLet $G_3=Comm_G(F)$.\nOnce again, let $\\{E_1, \\ldots, E_l\\}$ be a finite set of representatives\nof infinite and infinite index subgroups of $F$ of the form $F\\cap F^g$ up to conjugation\nby elements of $F$, where\n$g\\in G\\setminus Comm_G(F)$. Then by Proposition \\ref{pingpong prop}, there is a\nfree subgroup $F_4$, say, in $F$ of rank two such that\n$F_4\\cap E^h_i$ is finite for all $h\\in F$ and $1\\leq i\\leq l$.\nWe note the inclusions $F_4<F<\\mathbb F<G_3$. If necessary, by passing to a further\nsubgroup we may assume that $A< Z_G(F_4)$. Now, using Theorem \\ref{malnormal in free},\none can find a subgroup of $F_4$ which is isomorphic to $\\mathbb F_2$ and which is\nmalnormal in $\\mathbb F$.\nLet $H_1$ be such a subgroup. Now it follows that $H_1$ satisfies the properties of\nTheorem \\ref{main malnormal thm}.\n\nIndeed, $H_1A\\isom H_1\\times A$ is weakly malnormal in $G_3$, and so $Comm_{G_3}(H_1)\\isom H_1\\times A$. It follows, as explained in $(1)$ above (in the proof of Proposition \\ref{step 1 of thm}), that $Comm_G(H_1)=Comm_{G_3}(H_1)=Comm_{G_3}(H_1A)\\isom H_1\\times A$. Finally, we have $(a)$ $H_1A\\cap E_i$ is finite for all $g\\in \\mathcal I_G(F)\\setminus G_3$, $(b)$ $H_1A$ has finite index in $Comm_{G_3}(H_1A)$, and $(c)$ $H_1A$ is weakly malnormal in $G_3$. It follows that $H_1A\\isom H_1\\times A$ is weakly malnormal in $G$."
+    },
+    {
+      "id": "remark-25-2dbc4520",
+      "type": "remark",
+      "content": "\\label{rmk-increasing rank}\n To increase the rank of $H_1$ in Theorem \\ref{main malnormal thm}, we can take a malnormal subgroup $H_2$\n of any finite rank in $H_1$. (See \\cite{wise-mal-1, wise-mal-2, das-mj-FS} for construction\n of malnormal subgroups of free groups.) Then $H_2\\times A$ will be weakly malnormal in $G$ by\n Lemma \\ref{malnormal transitive}.",
+      "content_preview": "To increase the rank of H_1 in Theorem , we can take a malnormal subgroup H_2 of any finite rank in H_1. (See for construction of malnormal subgroups...",
+      "display_name": "Remark",
+      "label": "rmk-increasing rank",
+      "position": {
+        "line_start": 3929,
+        "line_end": 3934
+      },
+      "references": [
+        {
+          "target_id": "main malnormal thm",
+          "reference_type": "internal",
+          "context": "g rank}\n To increase the rank of $H_1$ in Theorem \\ref{main malnormal thm}, we can take a malnormal subgroup $H_2$\n of any f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "malnormal transitive",
+          "reference_type": "internal",
+          "context": "imes A$ will be weakly malnormal in $G$ by\n Lemma \\ref{malnormal transitive}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-26-0f6a098f",
+      "type": "theorem",
+      "content": "\\label{main application}\nGiven any nonelementary hyperbolic group $G'$ there is another hyperbolic group\n$G$ and an injective homomorphism $\\phi:G'\\map G$ such that\n$\\phi(G')$ is nonquasiconvex in $G$.",
+      "content_preview": "Given any nonelementary hyperbolic group G' there is another hyperbolic group G and an injective homomorphism :G' G such that (G') is nonquasiconvex...",
+      "display_name": "Theorem",
+      "label": "main application",
+      "position": {
+        "line_start": 3939,
+        "line_end": 3943
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_qc prop",
+      "type": "unknown",
+      "content": "External reference to 'qc prop'",
+      "content_preview": "External reference to 'qc prop'",
+      "display_name": "Unknown",
+      "label": "qc prop",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_geod in coned space",
+      "type": "unknown",
+      "content": "External reference to 'geod in coned space'",
+      "content_preview": "External reference to 'geod in coned space'",
+      "display_name": "Unknown",
+      "label": "geod in coned space",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_main prop",
+      "type": "unknown",
+      "content": "External reference to 'main prop'",
+      "content_preview": "External reference to 'main prop'",
+      "display_name": "Unknown",
+      "label": "main prop",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_sec-gen on mal",
+      "type": "unknown",
+      "content": "External reference to 'sec-gen on mal'",
+      "content_preview": "External reference to 'sec-gen on mal'",
+      "display_name": "Unknown",
+      "label": "sec-gen on mal",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_step 1 of thm",
+      "type": "unknown",
+      "content": "External reference to 'step 1 of thm'",
+      "content_preview": "External reference to 'step 1 of thm'",
+      "display_name": "Unknown",
+      "label": "step 1 of thm",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_pingpong prop",
+      "type": "unknown",
+      "content": "External reference to 'pingpong prop'",
+      "content_preview": "External reference to 'pingpong prop'",
+      "display_name": "Unknown",
+      "label": "pingpong prop",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-16-ea65c40d",
+      "target": "lemma-14-bc3ea398",
+      "type": null
+    },
+    {
+      "source": "lemma-16-ea65c40d",
+      "target": "external_qc prop",
+      "type": null
+    },
+    {
+      "source": "lemma-16-ea65c40d",
+      "target": "lemma-9-b925b585",
+      "type": null
+    },
+    {
+      "source": "lemma-17-c2efb9b7",
+      "target": "external_qc prop",
+      "type": null
+    },
+    {
+      "source": "lemma-18-9e567b31",
+      "target": "external_qc prop",
+      "type": null
+    },
+    {
+      "source": "theorem-21-8dd54a40",
+      "target": "external_geod in coned space",
+      "type": null
+    },
+    {
+      "source": "lemma-23-861cc9ca",
+      "target": "lemma-22-c9885db7",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "external_main prop",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "external_sec-gen on mal",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "external_qc prop",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "lemma-6-65ac4a10",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "lemma-19-72d59e3c",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "lemma-2-924798ee",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "lemma-17-c2efb9b7",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "external_step 1 of thm",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "external_pingpong prop",
+      "type": null
+    },
+    {
+      "source": "theorem-24-c167c436",
+      "target": "theorem-3-d87cee09",
+      "type": null
+    },
+    {
+      "source": "remark-25-2dbc4520",
+      "target": "theorem-24-c167c436",
+      "type": null
+    },
+    {
+      "source": "remark-25-2dbc4520",
+      "target": "lemma-5-c5c42572",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 32,
+    "edge_count": 19,
+    "extractor_used": "regex-only"
+  }
+}

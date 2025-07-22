@@ -1,0 +1,538 @@
+{
+  "arxiv_id": "2507.05033v1",
+  "nodes": [
+    {
+      "id": "lemma-1-3811f13e",
+      "type": "lemma",
+      "content": "\\label{lem-same-closures}\n    The closures $\\overline{G}, \\overline{H}$ of two subgroups $G,H\\subset \\AT$ coincide if and only if $G_n=H_n$ for all $n\\geq 0$.",
+      "content_preview": "The closures , of two subgroups G,H coincide if and only if G_n=H_n for all n 0.",
+      "display_name": "Lemma",
+      "label": "lem-same-closures",
+      "position": {
+        "line_start": 395,
+        "line_end": 397
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-95588604",
+      "type": "lemma",
+      "content": "\\label{EXDOC: lem: G is self-similar}\nSuppose $\\sX=\\{1,\\dots, d\\}$, and consider the following system of $k\\geq 1$ equations: \n\\begin{align}\\label{eq: rec-syst}\n\\begin{aligned}\ng_1 &= \\left( h_{1,1} \\, ,\\,  \\dots \\, , \\, h_{1,d}\\right) \\sigma_1,\\\\\ng_2 &= \\left( h_{2,1} \\, ,\\,  \\dots \\, , \\, h_{2,d}\\right)  \\sigma_2,\\\\\n& \\vdots \\\\\ng_k &= \\left( h_{k,1} \\, ,\\,  \\dots \\, , \\, h_{k,d}\\right) \\sigma_k, \\\\\n\\end{aligned}\n\\end{align}\nwhere each $h_{i,j}$ is a (non-empty) finite word in $\\{g_1,\\, g_1^{-1},\\, \\dots,\\, g_k,\\, g_k^{-1}\\}\\sqcup \\AT$ and each $\\sigma_i$ is a permutation in $\\Sym_d$. Then the following statements are true:\n\\begin{enumerate}[label=(\\roman*),font=\\normalfont]\n    \\item\\label{item: rec-syst-i} There are unique elements $g_1,\\dots,g_k\\in \\AT$ that satisfy all the identities of \\eqref{eq: rec-syst}.\n    \\item\\label{item: rec-syst-ii} If each $h_{i,j}$ is a word in $\\{\\one, g_1,\\, g_1^{-1},\\, \\dots,\\, g_k,\\, g_k^{-1}\\}$, then the respective subgroups $G:=\\langle g_1,\\dots, g_k\\rangle$ and $\\overline{G}:=\\llangle g_1,\\dots,g_k\\rrangle$ of $\\AT$ are self-similar.\n\\end{enumerate}",
+      "content_preview": "Suppose =1,, d, and consider the following system of k 1 equations: g_1 &= ( h_1,1 , ,, , , , h_1,d) _1, g_2 &= ( h_2,1 , ,, , , , h_2,d) _2, & g_k...",
+      "display_name": "Lemma",
+      "label": "EXDOC: lem: G is self-similar",
+      "position": {
+        "line_start": 410,
+        "line_end": 425
+      },
+      "references": [
+        {
+          "target_id": "eq: rec-syst",
+          "reference_type": "external",
+          "context": "ts,g_k\\in \\AT$ that satisfy all the identities of \\eqref{eq: rec-syst}.\n    \\item\\label{item: rec-syst-ii} If each $h_{i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq: rec-syst",
+          "reference_type": "external",
+          "context": "$n$ of the tree $\\sT_\\sX$, we deduce that System~\\eqref{eq: rec-syst} defines uniquely the action of each $g_i$ on $\\sT",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item: rec-syst-i",
+          "reference_type": "external",
+          "context": "ely the action of each $g_i$ on $\\sT_n$, and thus \\ref{item: rec-syst-i} follows. When every $h_{i,j}$ is a word in $\\{\\on",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The proof is standard, and we leave some straightforward details to the reader. By induction on the level $n$ of the tree $\\sT_\\sX$, we deduce that System~\\eqref{eq: rec-syst} defines uniquely the action of each $g_i$ on $\\sT_n$, and thus \\ref{item: rec-syst-i} follows. When every $h_{i,j}$ is a word in $\\{\\one, g_1,\\, g_1^{-1},\\, \\dots,\\, g_k,\\, g_k^{-1}\\}$, we also immediately have that $g_i|_x\\in G$ for every generator $g_i$ and all $x\\in \\sX$. Finally,\n    fix $g \\in \\overline{G}$ and let $\\{h_m\\} \\subset G$ be a sequence converging to $g$, i.e., for every $n\\geq 1$ there is $M_n \\geq 1$ such that $h_m|_{\\sT_n}  = g|_{\\sT_n}$ for all $m \\geq M_n$. It then follows that for each $x\\in \\sX$ the sequence of sections $\\{h_m|_x\\}$ converges to the section $g|_x$. Note that each $h_m|_x\\in G$ due to the self-similarity of~$G$. Since $\\overline{G}$ is closed, we conclude that $g|_x\\in \\overline{G}$, and thus $\\overline{G}$ is self-similar as well."
+    },
+    {
+      "id": "lemma-3-14b6d10a",
+      "type": "lemma",
+      "content": "\\label{lem: conj-action}\n    Let $g=\\left(g_1\\,,\\, \\dots \\, , \\, g_d\\right) \\sigma_g$ and  $w=\\left(w_1\\,,\\, \\dots \\, , \\, w_d\\right) \\sigma_w$ be arbitrary elements in $\\AT$. Then for the conjugate $g' := wgw^{-1}=\\left(g'_1\\,,\\, \\dots \\, , \\, g'_d\\right) \\sigma_{g'}$ we have\n    \\[\\sigma_{g'}= \\sigma_w\\sigma_g \\sigma_w^{-1} \\quad \\text{and} \\quad g'_x=w_x\\,g_{x\\cdot \\sigma_w}\\,w^{-1}_{x\\cdot \\sigma_{g'}} \\quad \\text{for each $x\\in \\sX$.}\\]\n    Moreover, the analogous statement holds for all $n\\geq 1$ and $g,w\\in \\AT_n$.",
+      "content_preview": "Let g=(g_1,,, , , , g_d) _g and w=(w_1,,, , , , w_d) _w be arbitrary elements in . Then for the conjugate g' := wgw^-1=(g'_1,,, , , , g'_d) _g' we...",
+      "display_name": "Lemma",
+      "label": "lem: conj-action",
+      "position": {
+        "line_start": 463,
+        "line_end": 467
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-11d75de1",
+      "type": "lemma",
+      "content": "\\label{lem: conjugacy-representative}\n    Let $g=\\left(g_1\\,,\\, \\dots \\, , \\, g_d\\right) \\sigma_g$ be an arbitrary element in $\\AT$, and suppose $\\sigma_g=\\tau_1\\cdots \\tau_s$ is a disjoint cycle decomposition of $\\sigma_g$. For each cycle $\\tau_j$, choose a letter $x_j\\in \\supp(\\tau_j)$. \n\n    Consider the element $h\\in \\AT$ defined by the wreath recursion $h=\\left(h_1\\,,\\, \\dots \\, , \\, h_d\\right) \\sigma_h$, where \n    \\[\\text{$\\sigma_h= \\sigma_g$ \\quad and \\quad  \n    $h_x= \\begin{cases} g_{\\tau_j}, \\quad &\\text{if $x=x_j$ for some cycle $\\tau_j$}\\\\ \\one, \\quad &\\text{otherwise}.\\end{cases}$}\\]\n    Then the elements $g$ and $h$ are conjugate in $\\AT$.",
+      "content_preview": "Let g=(g_1,,, , , , g_d) _g be an arbitrary element in , and suppose _g=_1 _s is a disjoint cycle decomposition of _g.",
+      "display_name": "Lemma",
+      "label": "lem: conjugacy-representative",
+      "position": {
+        "line_start": 478,
+        "line_end": 485
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-281681b5",
+      "type": "lemma",
+      "content": "\\label{lem: conjugacy-works-levelwise}\n    Let $g,g'\\in \\AT$. Then $g\\sim_\\AT g'$ if and only if $g|_{\\sT_n}\\sim_{\\AT_n} g'|_{\\sT_n}$ for each $n\\geq 0$.",
+      "content_preview": "Let g,g' . Then g_ g' if and only if g|__n__n g'|__n for each n 0.",
+      "display_name": "Lemma",
+      "label": "lem: conjugacy-works-levelwise",
+      "position": {
+        "line_start": 507,
+        "line_end": 509
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-670de71d",
+      "type": "lemma",
+      "content": "\\label{lemma-model-groups}\n    Let $G=\\llangle a, b, c_1,\\dots, c_r\\rrangle \\subset \\AT$ be a {\\normalfont \\ref{main-assumption}}-restricted model group as in Definition~\\ref{defn-group}, and let $\\Gamma := \\langle a,b, c_1,\\ldots,c_r\\rangle$ be the corresponding countable dense subgroup. Then the following is true:\n    \\begin{enumerate}[label=(\\roman*),font=\\normalfont]\n    \\item\\label{item: model-i} $\\Gamma$ and $G$ are self-similar subgroups of $\\AT$.\n    \\item\\label{item: model-ii} $\\Gamma$ and $G$ contain an odometer. In fact, the product of all their (topological) generators $a,b, c_1,\\ldots,c_r$ in any order is an odometer. \n    \\item\\label{item: model-iii}\n    We have $[a,b]=a^{-1}b^{-1}ab=(\\one, \\, \\one, \\one) (1\\,2\\, 3) \\in \\Gamma\\subset G$.\n    \\end{enumerate}",
+      "content_preview": "Let G= a, b, c_1,, c_r be a -restricted model group as in Definition~, and let := a,b, c_1,,c_r be the corresponding countable dense subgroup.",
+      "display_name": "Lemma",
+      "label": "lemma-model-groups",
+      "position": {
+        "line_start": 946,
+        "line_end": 954
+      },
+      "references": [
+        {
+          "target_id": "main-assumption",
+          "reference_type": "external",
+          "context": "\\dots, c_r\\rrangle \\subset \\AT$ be a {\\normalfont \\ref{main-assumption}}-restricted model group as in Definition~\\ref{def",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "defn-group",
+          "reference_type": "external",
+          "context": "umption}}-restricted model group as in Definition~\\ref{defn-group}, and let $\\Gamma := \\langle a,b, c_1,\\ldots,c_r\\r",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item: model-i",
+          "reference_type": "external",
+          "context": "3) \\in \\Gamma\\subset G$.\n    \\end{enumerate}Part~\\ref{item: model-i} is an immediate consequence of Lemma~\\ref{EXDOC:",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "EXDOC: lem: G is self-similar",
+          "reference_type": "internal",
+          "context": "em: model-i} is an immediate consequence of Lemma~\\ref{EXDOC: lem: G is self-similar}. Part~\\ref{item: model-ii} follows from the fact",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item: model-ii",
+          "reference_type": "external",
+          "context": "f Lemma~\\ref{EXDOC: lem: G is self-similar}. Part~\\ref{item: model-ii} follows from the fact that the model generators $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item: model-iii",
+          "reference_type": "external",
+          "context": "cite[Cor.~6.7.7]{Nekrashevych2005}. Finally, Part~\\ref{item: model-iii} follows by a direct computation.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Part~\\ref{item: model-i} is an immediate consequence of Lemma~\\ref{EXDOC: lem: G is self-similar}. Part~\\ref{item: model-ii} follows from the fact that the model generators $a,b,c_1,\\dots,c_r$ specify a \\emph{kneading automaton} (see \\cite[Def.~6.7.4]{Nekrashevych2005} for the definition), and thus their product in any order is an odometer by \\cite[Cor.~6.7.7]{Nekrashevych2005}. Finally, Part~\\ref{item: model-iii} follows by a direct computation."
+    },
+    {
+      "id": "lemma-7-f95c3721",
+      "type": "lemma",
+      "content": "\\label{EXDOC: Le: forms of elements of G}\n    Let $H\\subseteq G$ be arbitrary subgroups of $\\AT$ such that $H_1= \\Sym_3$ and $G$ is self-similar. If for all $g\\in G$ there exists some $h\\in H$ of the form $h=(g,*,\\one)$, then for all $g\\in G$ the group $H$ also contains elements of the form $$(g,\\one,*),\\, (*,\\one,g),\\, (*,g,\\one),\\, (\\one,*,g), \\, \\textrm{and} \\;\\; (\\one,g,*),$$\n    where each $*$ represents some (possibly different) element of $G$.\n    \n    Moreover, the analogous claim still holds if we replace $g\\in G$ and $h \\in H$ with $g\\in G_{n-1}$ and $h \\in H_n$, respectively, for any $n \\geq 1$.",
+      "content_preview": "Let H G be arbitrary subgroups of such that H_1= _3 and G is self-similar. If for all g G there exists some h H of the form h=(g,*,), then for all g...",
+      "display_name": "Lemma",
+      "label": "EXDOC: Le: forms of elements of G",
+      "position": {
+        "line_start": 963,
+        "line_end": 968
+      },
+      "references": [
+        {
+          "target_id": "lem: conj-action",
+          "reference_type": "internal",
+          "context": "at $(h_3gh_3^{-1},\\kappa,\\one)\\in H$. Using Lemma~\\ref{lem: conj-action}, we then have $$h(h_3^{-1}gh_3,\\kappa,\\one)h^{-1}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The proof is straightforward, and we outline it only for the first claim. Suppose that for all $g\\in G$ we have some element of the form $(g,*,\\one)$ inside $H$. Let us fix an arbitrary $g\\in G$. As $H_1=\\Sym_3$ and the group $G\\supseteq H$ is self-similar, we can find some $h=(h_1,h_2,h_3)(13)\\in H$ with each section $h_i\\in G$. Then $h_3^{-1}gh_3\\in G$ and, by our assumption, there exists some $\\kappa\\in G$ such that $(h_3gh_3^{-1},\\kappa,\\one)\\in H$. Using Lemma~\\ref{lem: conj-action}, we then have $$h(h_3^{-1}gh_3,\\kappa,\\one)h^{-1}=(\\one,h_2\\kappa h_2^{-1},g) \\in H.$$ \n    So, we have shown that for all $g\\in G$ the group $H$ contains an element of the form $(\\one,*,g)$. The proofs for $(*,\\one,g)$, $(*,g,\\one)$, $(g,\\one,*)$, and $(\\one,g,*)$ follow in a similar manner."
+    },
+    {
+      "id": "lemma-8-c779160e",
+      "type": "lemma",
+      "content": "\\label{lem: model-self-replicativity}\n     Let $G=\\llangle a,b,c_1,\\dots,c_r\\rrangle$ be a {\\normalfont \\ref{main-assumption}}-restricted model group as in Definition~\\ref{defn-group}. Then\n     for all $g\\in G$ the group $G$ contains elements of the form \n     $$(g,*,\\one),\\, (g,\\one,*),\\, (*,\\one,g),\\, (*,g,\\one),\\, (\\one,*,g), \\, \\textrm{and} \\;\\; (\\one,g,*),$$\n    where each $*$ represents some (possibly different) element of $G$. In particular, the group $G$ is self-replicating. \n    \n    Furthermore, the analogous statements hold for the corresponding countable dense subgroup $\\Gamma:=\\langle a,b,c_1,\\dots,c_r\\rangle$.",
+      "content_preview": "Let G= a,b,c_1,,c_r be a -restricted model group as in Definition~. Then for all g G the group G contains elements of the form (g,*,),, (g,,*),,...",
+      "display_name": "Lemma",
+      "label": "lem: model-self-replicativity",
+      "position": {
+        "line_start": 981,
+        "line_end": 988
+      },
+      "references": [
+        {
+          "target_id": "main-assumption",
+          "reference_type": "external",
+          "context": "ngle a,b,c_1,\\dots,c_r\\rrangle$ be a {\\normalfont \\ref{main-assumption}}-restricted model group as in Definition~\\ref{def",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "defn-group",
+          "reference_type": "external",
+          "context": "umption}}-restricted model group as in Definition~\\ref{defn-group}. Then\n     for all $g\\in G$ the group $G$ contain",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cond:Y2",
+          "reference_type": "external",
+          "context": "the form $(\\ell, *, \\one)$. Indeed, by Condition~\\ref{cond:Y2}, we know that $\\ell$ appears within the set $\\{x,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item: model-iii",
+          "reference_type": "external",
+          "context": "1} = (y, y, 1)$, since $(1\\, 2\\, 3)\\in G$ by Part~\\ref{item: model-iii} of Lemma~\\ref{lemma-model-groups}. \n        \\item",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma-model-groups",
+          "reference_type": "internal",
+          "context": ", 3)\\in G$ by Part~\\ref{item: model-iii} of Lemma~\\ref{lemma-model-groups}. \n        \\item If $\\ell=c_{i,j}$, then, by Condi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "cond:Y3",
+          "reference_type": "external",
+          "context": "\\item If $\\ell=c_{i,j}$, then, by Condition~\\ref{cond:Y3}, the generator $c_i$ itself or its conjugate by $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "defn-self-similar-replicating",
+          "reference_type": "external",
+          "context": "lar, $\\Gamma$ is self-replicating (see Definition~\\ref{defn-self-similar-replicating}). The analogous statement for the closure $G=\\ove",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "item: model-i",
+          "reference_type": "external",
+          "context": "\\kappa, \\one)$. Since $G$ is self-similar by Part~\\ref{item: model-i} of Lemma~\\ref{lemma-model-groups}, we have $\\kapp",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lemma-model-groups",
+          "reference_type": "internal",
+          "context": "self-similar by Part~\\ref{item: model-i} of Lemma~\\ref{lemma-model-groups}, we have $\\kappa\\in G$, which completes the argum",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "EXDOC: Le: forms of elements of G",
+          "reference_type": "internal",
+          "context": "r $\\Gamma$ and $G$ follows immediately from Lemma~\\ref{EXDOC: Le: forms of elements of G}, with $H=\\Gamma$ and $H=G$, respectively.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "First, we claim that, for each model generator $\\ell\\in \\{a,b,c_1,\\dots, c_r\\}$, the group $\\Gamma\\subset G$ contains some element of the form $(\\ell, *, \\one)$. Indeed, by Condition~\\ref{cond:Y2}, we know that $\\ell$ appears within the set $\\{x,y\\} \\cup \\{ c_{i,j}: \\,i=1,\\dots, r,\\, j=1,2,3\\}$ of sections of the generators. Our claim then follows by considering different cases:\n    \\begin{itemize}\n        \\item If $\\ell=x$, we consider the element $a^2=(x,x,\\one)$. \n        \\item If $\\ell=y$, we may consider  the conjugate $(1\\, 2\\, 3) \\, b^2\\,  (1\\, 2\\, 3)^{-1} = (y, y, 1)$, since $(1\\, 2\\, 3)\\in G$ by Part~\\ref{item: model-iii} of Lemma~\\ref{lemma-model-groups}. \n        \\item If $\\ell=c_{i,j}$, then, by Condition~\\ref{cond:Y3}, the generator $c_i$ itself or its conjugate by $(1\\, 2\\, 3)^{\\pm1}$ must be of the form $(\\ell, *, \\one)$ or $(\\ell, \\one , *)$. In the latter case, we may conjugate one more time by $b$ to get an element of the desired form $(\\ell, *, \\one)$, and the claim follows. \n    \\end{itemize}\n        \n\n    \n\n    \n    \n\n   \n\n    We conclude that for all $g\\in \\Gamma$, the countable group $\\Gamma$ contains an element of the form $(g, *, \\one)$; in particular, $\\Gamma$ is self-replicating (see Definition~\\ref{defn-self-similar-replicating}). The analogous statement for the closure $G=\\overline{\\Gamma}$ now follows by a compactness argument. Namely, given an arbitrary $g\\in G$, let us consider a sequence $\\{g_m\\} \\subset \\Gamma$ converging to $g$. We know that for each $g_m$ there exists an element $(g_m,\\kappa_m, \\one) \\in \\Gamma\\subset G$ for some $\\kappa_m\\in \\Gamma$. Since $G$ is compact, the sequence $\\{(g_m,\\kappa_m, \\one)\\}$ has an accumulation point in $G$, which then must be of the form  $(g,\\kappa, \\one)$. Since $G$ is self-similar by Part~\\ref{item: model-i} of Lemma~\\ref{lemma-model-groups}, we have $\\kappa\\in G$, which completes the argument. \n\n    Finally, since $\\Gamma_1=G_1=\\Sym_3$, the existence of elements of the other desired forms for $\\Gamma$ and $G$ follows immediately from Lemma~\\ref{EXDOC: Le: forms of elements of G}, with $H=\\Gamma$ and $H=G$, respectively."
+    },
+    {
+      "id": "external_eq: rec-syst",
+      "type": "unknown",
+      "content": "External reference to 'eq: rec-syst'",
+      "content_preview": "External reference to 'eq: rec-syst'",
+      "display_name": "Unknown",
+      "label": "eq: rec-syst",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item: rec-syst-i",
+      "type": "unknown",
+      "content": "External reference to 'item: rec-syst-i'",
+      "content_preview": "External reference to 'item: rec-syst-i'",
+      "display_name": "Unknown",
+      "label": "item: rec-syst-i",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_main-assumption",
+      "type": "unknown",
+      "content": "External reference to 'main-assumption'",
+      "content_preview": "External reference to 'main-assumption'",
+      "display_name": "Unknown",
+      "label": "main-assumption",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_defn-group",
+      "type": "unknown",
+      "content": "External reference to 'defn-group'",
+      "content_preview": "External reference to 'defn-group'",
+      "display_name": "Unknown",
+      "label": "defn-group",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item: model-i",
+      "type": "unknown",
+      "content": "External reference to 'item: model-i'",
+      "content_preview": "External reference to 'item: model-i'",
+      "display_name": "Unknown",
+      "label": "item: model-i",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item: model-ii",
+      "type": "unknown",
+      "content": "External reference to 'item: model-ii'",
+      "content_preview": "External reference to 'item: model-ii'",
+      "display_name": "Unknown",
+      "label": "item: model-ii",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_item: model-iii",
+      "type": "unknown",
+      "content": "External reference to 'item: model-iii'",
+      "content_preview": "External reference to 'item: model-iii'",
+      "display_name": "Unknown",
+      "label": "item: model-iii",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_cond:Y2",
+      "type": "unknown",
+      "content": "External reference to 'cond:Y2'",
+      "content_preview": "External reference to 'cond:Y2'",
+      "display_name": "Unknown",
+      "label": "cond:Y2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_cond:Y3",
+      "type": "unknown",
+      "content": "External reference to 'cond:Y3'",
+      "content_preview": "External reference to 'cond:Y3'",
+      "display_name": "Unknown",
+      "label": "cond:Y3",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_defn-self-similar-replicating",
+      "type": "unknown",
+      "content": "External reference to 'defn-self-similar-replicating'",
+      "content_preview": "External reference to 'defn-self-similar-replicating'",
+      "display_name": "Unknown",
+      "label": "defn-self-similar-replicating",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-2-95588604",
+      "target": "external_eq: rec-syst",
+      "type": null
+    },
+    {
+      "source": "lemma-2-95588604",
+      "target": "external_item: rec-syst-i",
+      "type": null
+    },
+    {
+      "source": "lemma-6-670de71d",
+      "target": "external_main-assumption",
+      "type": null
+    },
+    {
+      "source": "lemma-6-670de71d",
+      "target": "external_defn-group",
+      "type": null
+    },
+    {
+      "source": "lemma-6-670de71d",
+      "target": "external_item: model-i",
+      "type": null
+    },
+    {
+      "source": "lemma-6-670de71d",
+      "target": "lemma-2-95588604",
+      "type": null
+    },
+    {
+      "source": "lemma-6-670de71d",
+      "target": "external_item: model-ii",
+      "type": null
+    },
+    {
+      "source": "lemma-6-670de71d",
+      "target": "external_item: model-iii",
+      "type": null
+    },
+    {
+      "source": "lemma-7-f95c3721",
+      "target": "lemma-3-14b6d10a",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_main-assumption",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_defn-group",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_cond:Y2",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_item: model-iii",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "lemma-6-670de71d",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_cond:Y3",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_defn-self-similar-replicating",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "external_item: model-i",
+      "type": null
+    },
+    {
+      "source": "lemma-8-c779160e",
+      "target": "lemma-7-f95c3721",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 18,
+    "edge_count": 18,
+    "extractor_used": "regex-only"
+  }
+}

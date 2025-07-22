@@ -1,0 +1,178 @@
+{
+  "arxiv_id": "2507.05087v1",
+  "nodes": [
+    {
+      "id": "lemma-1-182e1b5b",
+      "type": "lemma",
+      "content": "[Bounded Noise Lemma]\\label{l:BNL}\nIf ${\\rm{Area}}(w) = M$, then there is a product of the form (\\ref{w:equ})\nwith area $M$ and noise at most $ML + |w|$, where $L$ is the length of the longest relator in $R$.",
+      "content_preview": "[Bounded Noise Lemma] If (w) = M, then there is a product of the form () with area M and noise at most ML + |w|, where L is the length of the longest...",
+      "display_name": "Lemma",
+      "label": "l:BNL",
+      "position": {
+        "line_start": 3910,
+        "line_end": 3913
+      },
+      "references": [
+        {
+          "target_id": "w:equ",
+          "reference_type": "external",
+          "context": "a}}(w) = M$, then there is a product of the form (\\ref{w:equ})\nwith area $M$ and noise at most $ML + |w|$, wher",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "remark-2-152c8bf5",
+      "type": "remark",
+      "content": "\\label{r:solve}\nWith the Bounded Noise Lemma in hand, it is clear that the word problem is solvable in $Q$ if and only\nif $\\delta_Q(n)$ is a recursive function: on the one hand,  knowing which $w=1$ in $Q$, one can naively\nsearch for equalities of the form (\\ref{w:equ}) until one is found,  giving a bound on \n${\\rm{Area}}(w)$ that can be sharpened to an exact value by checking the finitely many products with\nfewer factors that satisfy the Bounded Noise Lemma -- thus $\\delta_Q(n)$ can be computed; conversely, \ngiven a word of $w$ length $n$,  if $\\delta_Q(|n|)$ can be computed, then one can determine whether $w=1$ in $Q$\nby testing the validity of  (\\ref{w:equ}) for each product with $M\\le {\\rm{Area}}(w)$ that satisfies the Bounded Noise Lemma, and there are only finitely many such equalities that need to be tested.\n\nWe shall employ a similar argument to see that the recursiveness of the following function is equivalent to the\nsolvability of the power problem in $Q$.",
+      "content_preview": "With the Bounded Noise Lemma in hand, it is clear that the word problem is solvable in Q if and only if _Q(n) is a recursive function: on the one...",
+      "display_name": "Remark",
+      "label": "r:solve",
+      "position": {
+        "line_start": 3915,
+        "line_end": 3926
+      },
+      "references": [
+        {
+          "target_id": "w:equ",
+          "reference_type": "external",
+          "context": "ne can naively\nsearch for equalities of the form (\\ref{w:equ}) until one is found,  giving a bound on \n${\\rm{Ar",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "w:equ",
+          "reference_type": "external",
+          "context": "whether $w=1$ in $Q$\nby testing the validity of  (\\ref{w:equ}) for each product with $M\\le {\\rm{Area}}(w)$ that",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "definition-3-a390e95a",
+      "type": "definition",
+      "content": "\\label{d:d^c}\nThe {\\em rel-cyclics} Dehn function of a finitely presented group $\\G=\\<X\\mid R\\>$ is \n$$ \n\\d^{c}(n) : = \\max_{w,u} \\{ {\\rm{Area}}(w\\,u^p) +|pn| \\colon |w|+|u|\\le n,\\ w=_\\G u^{-p},\\\n|p|\\le  o(u)/2\\},\n$$\nwhere $o(u)\\in\\N\\cup\\{\\infty\\}$ is the order of $u$ in $\\G$.",
+      "content_preview": "The rel-cyclics Dehn function of a finitely presented group =<X R> is ^c(n) : = _w,u (w,u^p) +|pn| |w|+|u| n, w=_ u^-p, |p| o(u)/2, where o(u) is the...",
+      "display_name": "Definition",
+      "label": "d:d^c",
+      "position": {
+        "line_start": 3928,
+        "line_end": 3935
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-414cfc90",
+      "type": "lemma",
+      "content": "\\label{l:constants}\nFor any $\\delta$-hyperbolic group $G$ with finite generating set $X$,  and for all $\\l\\ge 1,\\, \\e\\ge 0$,\nthere are positive constants $E, C$ and $\\mu$ such that  the following statements hold.\n\\begin{enumerate}\n\\item  The Hausdorff distance between  any $(\\l,\\e)$-quasigeodesic in $\\cay(G,X)$\nand any geodesic with the same endpoints is at most $E$.\n\\item Every  quadrilateral in $\\cay(G,X)$ with $(\\l,\\e)$-quasigeodesic sides is $C$-slim, \nmeaning that each side is contained in the $C$-neighbourhood of the union of the other 3 sides.\n\\item For every $g\\in G$ of infinite order,  $d(1,g^i) \\le \\mu d(1,g^p)$ for all integers $0<i<p$.\n\\end{enumerate}",
+      "content_preview": "For any -hyperbolic group G with finite generating set X, and for all 1,, 0, there are positive constants E, C and such that the following statements...",
+      "display_name": "Lemma",
+      "label": "l:constants",
+      "position": {
+        "line_start": 3960,
+        "line_end": 3970
+      },
+      "references": [],
+      "proof": "(1) is the standard Morse Lemma for hyperbolic spaces,  \\cite{BH}, p.~401. Item  (2) follows easily\nfrom (1) and the slimness of triangles (after introducing a diagonal).  \nAssertion (3)  is  proved in \\cite[Proposition 4.7]{mb:CLfib}."
+    },
+    {
+      "id": "lemma-5-6b253262",
+      "type": "lemma",
+      "content": "\\label{l:local-geod}\nFor any $\\delta$-hyperbolic group $G$ with finite generating set $X$,  \nthere exist positive constants $\\e_0$ and $\\l_0\\ge 1$ such that  the following statements hold.\n\\begin{enumerate}\n\\item  For each  conjugacy class of  infinite-order elements in $G$,   if $w\\in F(X)$ is a word of minimal length \namong all representatives of this class,  then the lines in $\\cay(G,X)$ labelled $w^*$ are \n$(\\l_0, \\e_0)$-quasigeodesics. \n\n\n\n\\item Moreover,  if $|w| > 8\\delta$ then $d(1, w^p) \\ge  \\frac{p}{2}|w| -2\\delta$. \n\\end{enumerate}",
+      "content_preview": "For any -hyperbolic group G with finite generating set X, there exist positive constants _0 and _0 1 such that the following statements hold.",
+      "display_name": "Lemma",
+      "label": "l:local-geod",
+      "position": {
+        "line_start": 3977,
+        "line_end": 3989
+      },
+      "references": [],
+      "proof": "If  $|w|>8\\delta$, then according to Theorem III.H.1.13 of \\cite{BH},  \nthe lines labelled $w^*$ are $(\\l_0,\\e_0)$-quasigeodesics where the\nconstants $\\l_0, \\e_0$ depend only on $\\delta$.\nThere are only finitely many $w$ to consider with $|w| \\le 8\\d$,  so increasing the constants $\\l_0, \\e_0$ \nif necessary,  we may assume that these are also $(\\l_0,\\e_0)$-quasigeodesics.  \n\n Item (3)  is a special case of   \\cite[Theorem III.H.1.13(3)]{BH}."
+    },
+    {
+      "id": "lemma-6-065cf12f",
+      "type": "lemma",
+      "content": "\\label{l:find-root}\nIf $G$ is torsion-free and hyperbolic, then there is an algorithm that, given a word $w$ in the generators, will decide if \n$w$ is non-trivial in $G$ and, if it is,  will produce a word $w_0$ such that $C_G(w) = \\<w_0\\>$.",
+      "content_preview": "If G is torsion-free and hyperbolic, then there is an algorithm that, given a word w in the generators, will decide if w is non-trivial in G and, if...",
+      "display_name": "Lemma",
+      "label": "l:find-root",
+      "position": {
+        "line_start": 4001,
+        "line_end": 4004
+      },
+      "references": [
+        {
+          "target_id": "l:constants",
+          "reference_type": "internal",
+          "context": "$. If $w\\neq 1$, then  $C_G(w)$\nis cyclic.  Lemma \\ref{l:constants}(3) tells us that $C_G(w)$ is generated by $g\\in G",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "The word problem in $G$ is solvable, so we can determine whether $w\\neq 1$. If $w\\neq 1$, then  $C_G(w)$\nis cyclic.  Lemma \\ref{l:constants}(3) tells us that $C_G(w)$ is generated by $g\\in G$ with $d(1,g)\\le \\mu |w|$.\nFor each word $v$ of length at most $\\mu |w|$, we use the solution to the word problem to decide if $[v,w]=1$\nin $G$. If $[v,w]=1$ and $v\\neq 1$ in $G$,  then, searching in parallel,  we use the solution to the word problem to either\nfind coprime integers $q\\ge 1$ and $q'\\ge 2$ such that $v^q=w^{\\pm q'}$, in which case we discard $v$,  or else \nfind an integer $p\\ge 1$ such that $w= v^{\\pm p}$.   The largest $p$ that is found identifies $v$ as  $w_0$."
+    },
+    {
+      "id": "lemma-7-86a9a031",
+      "type": "lemma",
+      "content": "\\label{l:slim}\nA  group $G$ with finite generating set $X$ is hyperbolic if and only if there is constant $\\eta>0$ such that\nall triangles in the Cayley graph $\\cay(G,X)$ are $\\eta$-thin.",
+      "content_preview": "A group G with finite generating set X is hyperbolic if and only if there is constant >0 such that all triangles in the Cayley graph (G,X) are -thin.",
+      "display_name": "Lemma",
+      "label": "l:slim",
+      "position": {
+        "line_start": 4049,
+        "line_end": 4052
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_w:equ",
+      "type": "unknown",
+      "content": "External reference to 'w:equ'",
+      "content_preview": "External reference to 'w:equ'",
+      "display_name": "Unknown",
+      "label": "w:equ",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-1-182e1b5b",
+      "target": "external_w:equ",
+      "type": null
+    },
+    {
+      "source": "remark-2-152c8bf5",
+      "target": "external_w:equ",
+      "type": null
+    },
+    {
+      "source": "lemma-6-065cf12f",
+      "target": "lemma-4-414cfc90",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 8,
+    "edge_count": 3,
+    "extractor_used": "regex-only"
+  }
+}

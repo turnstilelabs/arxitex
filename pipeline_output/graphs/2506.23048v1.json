@@ -1,0 +1,2541 @@
+{
+  "arxiv_id": "2506.23048v1",
+  "nodes": [
+    {
+      "id": "theorem-1-b43553c5",
+      "type": "theorem",
+      "content": "\\label{th:psl}\nSuppose that $G_0= \\mathrm{PSL}_n(q)$. If $H$ is large in $G$, then one of the following holds:\n\\begin{enumerate} [\\rm (a)]\n\\item  $H_0 \\in\\mathcal{C}_1 \\cup \\mathcal{C}_8$.\n\\item  $H_0 \\in\\mathcal{C}_2$ and is of type $\\mathrm{GL}_{n/t}(q)\\wr \\mathrm{S}_t$, where   $t=2$, or $t=3$ and \n\\[\nq\\in \\{3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 32, 49, 64, 81, 128\\}.\n\\]  \n\\item  $H_0 \\in\\mathcal{C}_3$ and is of type $\\mathrm{GL}_{n/t}(q^r)$, where $r=2$, or $r=3$ with $q \\in \\{2,3,4,5,7, 8, 9, 11, 16, 27, 32\\}$, or $r=5$ and $(n,q)=(5,2)$. \n\\item  $H_0\\in \\mathcal{C}_5$ and is of type $\\mathrm{GL}_n(q^{1/r})$, where $r=2$ or $3$. \n\\item  $H_0\\in \\mathcal{C}_6$ and  $(G_0,H_0)$ is one of the following:\n\\[\n\\begin{split}\n& (\\mathrm{PSL}_{4}(5),2^{4}.\\mathrm{A}_{6} ), \n(\\mathrm{PSL}_{2}(23),\\mathrm{S}_{4}), (\\mathrm{PSL}_{2}(19),\\mathrm{A}_{4}),(\\mathrm{PSL}_{2}(17),\\mathrm{S}_{4}),\\\\\n&(\\mathrm{PSL}_{2}(13),\\mathrm{A}_{4}), (\\mathrm{PSL}_{2}(11), \\mathrm{A}_{4}), (\\mathrm{PSL}_{2}(7),\\mathrm{S}_{4}), (\\mathrm{PSL}_{2}(5),\\mathrm{A}_{4}).\n\\end{split}\n\\]\n\\item $H_0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, except for the case where $H_0\\in \\mathcal{C}_5$ of type $\\mathrm{GL}_n(q^{1/3})$, there always exists such a large maximal subgroup $H$.",
+      "content_preview": "Suppose that G_0= _n(q). If H is large in G, then one of the following holds: [ (a)] H_0 _1 _8. H_0 _2 and is of type _n/t(q) _t, where t=2, or t=3...",
+      "display_name": "Theorem",
+      "label": "th:psl",
+      "position": {
+        "line_start": 145,
+        "line_end": 166
+      },
+      "references": [
+        {
+          "target_id": "tab:A",
+          "reference_type": "external",
+          "context": "0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, exce",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "tab:B",
+          "reference_type": "external",
+          "context": "$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, except for the case",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-fe5d5c0c",
+      "type": "theorem",
+      "content": "\\label{th:psu}\nSuppose that $G_0=\\mathrm{PSU}_n(q)$, where $n\\geq 3$. If $H$ is large in $G$, then one of the following holds:\n\\begin{enumerate} [\\rm (a)]\n\\item  $H_0 \\in\\mathcal{C}_1$.\n\\item  $H_0 \\in\\mathcal{C}_2$  is of type $\\mathrm{GL}_{n/2}(q^2).2$, or of type  $\\mathrm{GU}_{n/t}(q)\\wr \\mathrm{S}_t$, and one of the following holds: \n\\begin{enumerate}[\\rm (b.1)]\n\\item $t=2$;\n\\item $t=3$ and $q \\in \\{2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 29, 32, 49, 64, 81, 128\\}$;\n\\item $4\\leq t\\leq 12$, and $(q,m,t)$ is as follows:\n\\[\n \\begin{split}\n&   ( 2, 1, 4 ),\n  ( 2, 1, 5 ),\n  ( 2, 1, 6 ),\n  ( 2, 1, 7 ),\n  ( 2, 1, 8 ),\n  ( 2, 1, 9 ),\n  ( 2, 1, 10 ),\n  ( 2, 1, 11 ), \\\\&\n  ( 3, 1, 4 ), \n  ( 3, 1, 5 ),\n  ( 3, 1, 6 ),\n  ( 4, 1, 4 ),\n  ( 4, 1, 5 ),\n  ( 5, 1, 4 ),\n  ( 7, 1, 4 ),\n  ( 8, 1, 4 ),\n  ( 9, 1, 4 ).\n\\end{split}\n\\]\n\\end{enumerate}\n\n\\item  $H_0 \\in\\mathcal{C}_3$ and is of type $\\mathrm{GU}_{n/r}(q^r)$ with $r=3$ and $q \\in \\{2, 3, 4, 5, 7, 8, 9, 16, 27, 32\\}$. \n\n\\item  $H_0\\in \\mathcal{C}_5$ and $H_0$ is of type $\\mathrm{Sp}_n(q)$ or $\\mathrm{GO}_{n}^{\\epsilon}(q)$, or $\\mathrm{GU}_n(q^{1/r})$, where $r=2$ or $3$.   \n\\item  $H_0\\in \\mathcal{C}_6$ and  $(G_0,H_0)$ is one of the following:\n\\[\n (\\mathrm{PSU}_{3}(5),3^{2}.\\mathrm{Q}_{8} ),  \n (\\mathrm{PSU}_{4}(3),2^{4}.\\mathrm{A}_{6} ),   (\\mathrm{PSU}_{4}(7),2^{4}.\\mathrm{S}_{6} ). \n\\] \n\\item $H_0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, except for the case where $H_0\\in \\mathcal{C}_5$ of type $\\mathrm{GU}_n(q^{1/3})$, there always exists such a large maximal subgroup $H$.",
+      "content_preview": "Suppose that G_0=_n(q), where n 3. If H is large in G, then one of the following holds: [ (a)] H_0 _1. H_0 _2 is of type _n/2(q^2).",
+      "display_name": "Theorem",
+      "label": "th:psu",
+      "position": {
+        "line_start": 168,
+        "line_end": 211
+      },
+      "references": [
+        {
+          "target_id": "tab:A",
+          "reference_type": "external",
+          "context": "0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, exce",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "tab:B",
+          "reference_type": "external",
+          "context": "$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, except for the case",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-e937e360",
+      "type": "theorem",
+      "content": "\\label{th:psp}\nSuppose that $G_0=\\mathrm{PSp}_n(q)$, where $n\\geq 4$ and $(n,q)\\neq (4,2)$. If $H$ is large in $G$, then one of the following holds:\n\\begin{enumerate} [\\rm (a)]\n\\item  $H_0 \\in \\mathcal{C}_1 \\cup \\mathcal{C}_8$, or $G_0=\\mathrm{PSp}_4(2^e)$ and $H_0=[q^4]:(q-1)^2$.\n\n\\item  $H_0 \\in\\mathcal{C}_2$ and  is of type $\\mathrm{GL}_{n/2}(q)$ or of type $\\mathrm{Sp}_{n/t}(q)\\wr \\mathrm{S}_t$, where  $t\\in \\{2,3\\}$, or $(n,t)=(8,4)$, or $(q,n,t)= (3,10,5)$ or $(4,10,5)$ \n  \\item  $H_0 \\in\\mathcal{C}_3$ and is of type  is of type $\\mathrm{GU}_{n/2}(q)$, $\\mathrm{Sp}_{n/2}(q^2)$ or $\\mathrm{Sp}_{n/3}(q^3)$. \n  \\item  $H_0\\in \\mathcal{C}_5$ and is of type $\\mathrm{Sp}_n(q^{1/r})$, where $r=2$ or $3$.\n  \\item  $H_0\\in \\mathcal{C}_6$ and  $(G_0,H_0)$ is one of the following\n\\[\n (\\mathrm{PSp}_{4}(3),2^{4}:\\mathrm{\\Omega}^{-}_{4}(2) ),  \n (\\mathrm{PSp}_{4}(5),2^{4}.\\mathrm{\\Omega}^{-}_{4}(2) ),   (\\mathrm{PSU}_{4}(7),2^{4}.\\mathrm{SO}^{-}_{4}(2)),    (\\mathrm{PSp}_{8}(3),2^{6}.\\mathrm{\\Omega}^{-}_{6}(2)). \n\\] \n  \\item $H_0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n  \\end{enumerate}\n  Conversely, for each case above, there always exists such a large maximal subgroup $H$.",
+      "content_preview": "Suppose that G_0=_n(q), where n 4 and (n,q) (4,2). If H is large in G, then one of the following holds: [ (a)] H_0 _1 _8, or G_0=_4(2^e) and...",
+      "display_name": "Theorem",
+      "label": "th:psp",
+      "position": {
+        "line_start": 214,
+        "line_end": 230
+      },
+      "references": [
+        {
+          "target_id": "tab:A",
+          "reference_type": "external",
+          "context": "0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n  \\end{enumerate}\n  Conversely,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "tab:B",
+          "reference_type": "external",
+          "context": "$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n  \\end{enumerate}\n  Conversely, for each case ab",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-eb6887f1",
+      "type": "theorem",
+      "content": "\\label{th:pso}\nSuppose that $G_0=\\mathrm{P\\Omega}^{\\epsilon}_n(q)$, where $n\\geq 7$ and $\\epsilon \\in \\{\\circ,+,-\\}$. If $H$ is large in $G$, then one of the following holds:\n\\begin{enumerate} [\\rm (a)]\n\\item  $H_0 \\in \\mathcal{C}_1$.\n\\item  $H_0 \\in\\mathcal{C}_2$ and one of the following holds:\n\\begin{enumerate}[\\rm (b.1)]\n\t\\item $H_0$ is of type  $\\mathrm{GL}_{n / 2}(q). 2$ or $\\mathrm{GO}_{n / 2}^{\\circ}(q)^{2}$; \n\t\\item $H_0$ is of type $\\mathrm{GO}_{n/2}^{\\epsilon_{1}}(q) \\wr \\mathrm{S}_{t}$ with $t=2$; \n\t\\item $(G_0,H_0)=(\\mathrm{P\\Omega}_7(5),2^5.\\mathrm{S}_5)$, $(\\mathrm{P\\Omega}_n^{\\epsilon}(3), 2^{n-(2,n)-1}.\\mathrm{A}_n)$, where $7\\leq n\\leq 13$, $ (\\mathrm{P\\Omega}_8^{+}(5),2^6.\\mathrm{A}_8)$, $(\\mathrm{P\\Omega}_{14}^{-}(3),2^{12}.\\mathrm{A}_{14})$, $(\\mathrm{P\\Omega}_8^{+}(2),3^4.2^3.\\mathrm{S}_4)$, $(\\mathrm{P\\Omega}_8^{+}(3),[2^9].\\mathrm{S}_4)$, $(\\mathrm{P\\Omega}_{10}^{-}(2),3^5.2^4.\\mathrm{S}_5)$,  or $(\\mathrm{P\\Omega}_{12}^{-}(2), \\mathrm{A}_5^3.2^2.\\mathrm{S}_3)$. \n\\end{enumerate} \n\\item  $H_0 \\in\\mathcal{C}_3$ and is of type $\\mathrm{GO}_{n/2}^{\\varepsilon}(q^{2})$, $\\mathrm{GO}_{n/2}^{\\circ}(q^{2})$ or $\\mathrm{GU}_{n/2}(q)$. \n\\item $H_0 \\in\\mathcal{C}_4$ and is of type $\\mathrm{Sp}_{2}(q) \\otimes \\mathrm{Sp}_{n/2}(q)$ and $(n,\\epsilon)=(8,+)$ or $(12,+)$.\n\\item  $H_0\\in \\mathcal{C}_5$ and is of type $\\mathrm{GO}_{n}^{\\epsilon'}(q^{1/2})$  or $\\mathrm{GO}_{n}^{\\epsilon}(q^{1/3})$.  \n\\item  $H_0\\in \\mathcal{C}_6$ and $(G_0,H_0)=(\\mathrm{P\\Omega}_8^{+}(3),2^6.\\Omega_{6}^+(2))$.  \n\\item $H_0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, for each case above, there always exists such a large maximal subgroup $H$.",
+      "content_preview": "Suppose that G_0=^_n(q), where n 7 and ,+,-. If H is large in G, then one of the following holds: [ (a)] H_0 _1.",
+      "display_name": "Theorem",
+      "label": "th:pso",
+      "position": {
+        "line_start": 233,
+        "line_end": 250
+      },
+      "references": [
+        {
+          "target_id": "tab:A",
+          "reference_type": "external",
+          "context": "0\\in \\mathcal{S}$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, for",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "tab:B",
+          "reference_type": "external",
+          "context": "$, and $(G_0,H_0)$ lies in Tables~\\ref{tab:A} and~\\ref{tab:B}.\n\\end{enumerate}\nConversely, for each case above,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "proposition-5-1413d511",
+      "type": "proposition",
+      "content": "\\label{prop:orders}\nLet $d$ be as in Table~\\ref{tb:orderofsimplegroups}.\n\\begin{enumerate} [\\rm (a)]\n  \\item $|\\mathrm{SL}_n(q)|=|\\mathrm{PGL}_n(q)|=d|\\mathrm{PSL}_n(q)|$, and $|\\mathrm{GL}_n(q)|=(q-1) |\\mathrm{SL}_n(q)| $.\n  \\item $|\\mathrm{SU}_n(q)|=|\\mathrm{PGU}_n(q)|=d|\\mathrm{PSU}_n(q)|$, and $|\\mathrm{GU}_n(q)|=(q-1) |\\mathrm{SU}_n(q)| $.\n  \\item $|\\mathrm{Sp}_{2m}(q)|  =d|\\mathrm{PSp}_{2m}(q)|$.\n  \\item If $q$ is odd, then $|\\mathrm{\\Omega}_{2m+1}(q)|=|\\mathrm{P\\Omega}_{2m+1}(q)|$, and $|\\mathrm{SO}_{2m+1}(q)|=2|\\mathrm{\\Omega}_{2m+1}(q)|$, and $|\\mathrm{GO}_{2m+1}(q)|=2|\\mathrm{SO}_{2m+1}(q)|$.\n  \\item  $|\\mathrm{\\Omega}_{2m}^{\\epsilon}(q)|=\\frac{1}{(2,q-1)}|\\mathrm{P\\Omega}_{2m}^{\\epsilon}(q)|$, and $|\\mathrm{SO}_{2m}^{\\epsilon}(q)|=2|\\mathrm{\\Omega}_{2m}^{\\epsilon}(q)|$, and $|\\mathrm{GO}_{2m}^{\\epsilon}(q)|=(2,q-1)|\\mathrm{SO}_{2m}^{\\epsilon}(q)|$, and if $m\\geq 2$, then \n$|\\mathrm{\\Omega}_{2m}^{\\epsilon}(q)|=\\frac{1}{(2,q-1)}q^{m(m - 1)}(q^{m}+1)\\prod_{i = 1}^{m - 1}(q^{2i}-1)$.\n\\end{enumerate}",
+      "content_preview": "Let d be as in Table~. [ (a)] |_n(q)|=|_n(q)|=d|_n(q)|, and |_n(q)|=(q-1) |_n(q)| . |_n(q)|=|_n(q)|=d|_n(q)|, and |_n(q)|=(q-1) |_n(q)| .",
+      "display_name": "Proposition",
+      "label": "prop:orders",
+      "position": {
+        "line_start": 309,
+        "line_end": 319
+      },
+      "references": [
+        {
+          "target_id": "tb:orderofsimplegroups",
+          "reference_type": "external",
+          "context": "\\label{prop:orders}\nLet $d$ be as in Table~\\ref{tb:orderofsimplegroups}.\n\\begin{enumerate} [\\rm (a)]\n  \\item $|\\mathrm{SL",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "proposition-6-769aa910",
+      "type": "proposition",
+      "content": "\\label{prop:iso}\n\\begin{enumerate}[\\rm (a)]\n  \\item $\\mathrm{PSL}_2(q)\\cong \\mathrm{PSU}_2(q) \\cong \\mathrm{PSp}_2(q) \\cong \\mathrm{P\\Omega}_3(q) $.\n  \\item $\\mathrm{\\Omega}^{+}_2(q)\\cong \\mathrm{C}_{ {q-1}/{(2,q-1)}}$,  $\\mathrm{\\Omega}^{-}_2(q)\\cong \\mathrm{C}_{ {q+1}/{(2,q-1)}}$,  $\\mathrm{P\\Omega}^{+}_4(q)\\cong \\mathrm{PSL}_{2}(q)^2$,  $\\mathrm{P\\Omega}^{-}_4(q)\\cong \\mathrm{PSL}_{2}(q^2)$, $\\mathrm{P\\Omega}_5(q)\\cong \\mathrm{PSp}_4(q)$, $\\mathrm{P\\Omega}^{+}_6(q)\\cong \\mathrm{PSL}_{4}(q) $,  $\\mathrm{P\\Omega}^{-}_6(q)\\cong \\mathrm{PSU}_{4}(q)$, and  $\\mathrm{P\\Omega}_{2m+1}(q)\\cong \\mathrm{PSp}_{2m}(q)$ for even $q$. \n\\end{enumerate}",
+      "content_preview": "[ (a)] _2(q) _2(q) _2(q) _3(q) . ^+_2(q) _ q-1/(2,q-1), ^-_2(q) _ q+1/(2,q-1), ^+_4(q) _2(q)^2, ^-_4(q) _2(q^2), _5(q) _4(q), ^+_6(q) _4(q) , ^-_6(q)...",
+      "display_name": "Proposition",
+      "label": "prop:iso",
+      "position": {
+        "line_start": 321,
+        "line_end": 326
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-d8a0116e",
+      "type": "lemma",
+      "content": "[{\\cite[Lemma~4.2]{AB2015}}] \\label{lm:LUSO}\nLet $q$ be a prime power.\n\\begin{enumerate}[\\rm (i)]\n\\item If $n,q\\geq 2$ then \n\\begin{align*}\n &(1-q^{-1}-q^{-2} )q^{n^{2}} <|\\mathrm{GL}_{n}(q) |\\leq (1-q^{-1} ) (1-q^{-2} )q^{n^{2}}\\\\ \n &(1+q^{-1} ) (1-q^{-2} )q^{n^{2}} <|\\mathrm{GU}_{n}(q) |\\leq (1+q^{-1} ) (1-q^{-2} ) (1+q^{-3} )q^{n^{2}} \n\\end{align*}\n\n\\item  If $n\\geq4$ and $q\\geq2$ then \n\\[(1-q^{-2}-q^{-4})q^{\\frac{1}{2}n(n+1)}<|\\mathrm{Sp}_{n}(q)|\\leq (1-q^{-2})( 1-q^{-4}) q^{\\frac{1}{2}n(n+1)}\\]\n\n\\item  If $n\\geq 5$ and $q\\geq2$ then \n\\begin{align*}\n&(1-q^{-2}-q^{-4})q^{\\frac{1}{2}n(n-1)} <|\\mathrm{SO}_n^\\circ(q)| <(1-q^{-2})(1-q^{-4})q^{\\frac{1}{2}n(n-1)}\\\\ \n&(1-q^{-2}-q^{-4})(1-q^{-\\frac{n}{2}})q^{\\frac{1}{2}n(n-1)} <\\frac{|\\mathrm{SO}_n^+(q)|}{(2,q)} <(1-q^{-2})(1-q^{-4})q^{\\frac{1}{2}n(n-1)}\\\\  \n&(1-q^{-2}-q^{-4})q^{\\frac{1}{2}n(n-1)} <\\frac{|\\mathrm{SO}_n^-(q)|}{(2,q)} <(1-q^{-2})(1-q^{-4})(1+q^{-\\frac{n}{2}})q^{\\frac{1}{2}n(n-1)}\\\\  \n\\end{align*} \n\\end{enumerate}",
+      "content_preview": "[] Let q be a prime power. [ (i)] If n,q 2 then &(1-q^-1-q^-2 )q^n^2 <|_n(q) | (1-q^-1 ) (1-q^-2 )q^n^2 &(1+q^-1 ) (1-q^-2 )q^n^2 <|_n(q) | (1+q^-1 )...",
+      "display_name": "Lemma",
+      "label": "lm:LUSO",
+      "position": {
+        "line_start": 330,
+        "line_end": 349
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-e637ef6f",
+      "type": "lemma",
+      "content": "[{\\cite[Corollary~4.3]{AB2015}}] \\label{lm:LUSO1} \n\\begin{enumerate}[\\rm (i)]\n\\item If $n\\geqslant2$ then\n\\[ \nq^{n^2-2}<| \\mathrm{PSL}_n(q)|\\leq (1-q^{-2})q^{n^2-1}.\n\\]\n\n\\item If $n\\geq 3$ then\n\\[\n(1-q^{-1})q^{n^2-2}<| \\mathrm{PSU}_n(q)|\\leq (1-q^{-2})(1+q^{-3})q^{n^2-1}<q^{n^2-1}.\n\\]\n\n\\item If $n\\geq 4$ then\n\\[\n\\frac{1}{2(2,q-1)}q^{\\frac{1}{2}n(n+1)}< |\\mathrm{PSp}_{n}(q) |<q^{\\frac{1}{2}n(n+1)}.\n\\]  \n\n\\item If $n\\geq 7$ then\n\\[\n\\frac{1}{4(2,n)}q^{\\frac{1}{2}n(n-1)}< |\\mathrm{P}\\Omega_{n}^{\\epsilon}(q) |<q^{\\frac{1}{2}n(n-1)}.\n\\]   \nIn particular, $|G|>\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}$ for every finite simple classical group $G$ of dimension $n$ over $\\mathbb{F}_{q}$.\n \\end{enumerate}",
+      "content_preview": "[] [ (i)] If n2 then [ q^n^2-2<| _n(q)| (1-q^-2)q^n^2-1. ] If n 3 then [ (1-q^-1)q^n^2-2<| _n(q)| (1-q^-2)(1+q^-3)q^n^2-1<q^n^2-1.",
+      "display_name": "Lemma",
+      "label": "lm:LUSO1",
+      "position": {
+        "line_start": 353,
+        "line_end": 376
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-57d353a4",
+      "type": "lemma",
+      "content": "\\label{lm:Omega}\nLet $\\epsilon\\in \\{+,-,\\circ \\}$ and $n\\geq 2$. Then $|\\Omega_n^\\epsilon(q)|<q^{\\frac{n(n-1)}{2}}/(2,q-1) $, except when $n=2$ and $\\epsilon=-$.\n  Moreover, $|\\Omega_2^-(q)|= (q+1)/{(2,q-1)}$.",
+      "content_preview": "Let +,-, and n 2. Then |_n^(q)|<q^/(2,q-1) , except when n=2 and =-. Moreover, |_2^-(q)|= (q+1)/(2,q-1).",
+      "display_name": "Lemma",
+      "label": "lm:Omega",
+      "position": {
+        "line_start": 379,
+        "line_end": 382
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-10-a16f15b1",
+      "type": "lemma",
+      "content": "\\label{lm:n!}\n  Let \\( t\\geq 2 \\) be a positive integer. Then \\( t!<(\\frac{t+1}{2})^t=2^{t\\log_2(\\frac{t+1}{2})} \\).",
+      "content_preview": "Let ( t 2 ) be a positive integer. Then ( t!<()^t=2^t_2() ).",
+      "display_name": "Lemma",
+      "label": "lm:n!",
+      "position": {
+        "line_start": 385,
+        "line_end": 387
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-11-e763be81",
+      "type": "lemma",
+      "content": "\\label{lm:q2f}\nLet \\( p \\) be a prime and let \\( q=p^e \\), where \\( e \\) is a positive integer. \nThen \\( e^2=\\log_p(q)^2 \\leq q \\), except when \\( q=8 \\).\nIn particular, \\( \\log_p(q)^2 \\leq 9q/8\\) for any \\( q \\).",
+      "content_preview": "Let ( p ) be a prime and let ( q=p^e ), where ( e ) is a positive integer. Then ( e^2=_p(q)^2 q ), except when ( q=8 ).",
+      "display_name": "Lemma",
+      "label": "lm:q2f",
+      "position": {
+        "line_start": 391,
+        "line_end": 395
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-00f9ef9f",
+      "type": "lemma",
+      "content": "\\label{lm:GG0} \nThe group $H$ is large in $G$ if and only if \n\\begin{equation}\\label{eq:H}\n |G_0|\\leq \\vert H_0\\vert^3  \\vert \\mathcal{O}  \\vert^2   .\n\\end{equation}",
+      "content_preview": "The group H is large in G if and only if |G_0| H_0^3 ^2 .",
+      "display_name": "Lemma",
+      "label": "lm:GG0",
+      "position": {
+        "line_start": 441,
+        "line_end": 446
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-13-1a398f40",
+      "type": "lemma",
+      "content": "\\label{lm:H1G1}\nThe group $H_1$ is maximal in $G_1$.",
+      "content_preview": "The group H_1 is maximal in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:H1G1",
+      "position": {
+        "line_start": 465,
+        "line_end": 467
+      },
+      "references": [],
+      "proof": "Suppose for a contradiction that $H_1$ is not maximal in $G_1$. Then there exists a subgroup $M$ of $G_1$ such that $H_1 < M < G_1$. Since $H$ is maximal in $G$, and $H \\leq H_1 < M$, it follows that $M \\cap G = H$. Consequently, $M \\cap G_0 = H \\cap G_0 = H_0$. \nNow, because $G_0$ is normal in $G_1$, we have $M \\cap G_0 = H_0$ is normal in $M$. This implies $M \\leq N_{G_1}(H_0) = H_1$. However, this contradicts the assumption $H_1 < M$.  \nTherefore, $H_1$ must be maximal in $G_1$."
+    },
+    {
+      "id": "lemma-14-d8f0b28c",
+      "type": "lemma",
+      "content": "Suppose $H_0\\in\\mathcal{A}$.\nThen $H_1$ is large in $G_1$ if and only if $H_0$ is large in $G_0$ and $(G_0,H_0)$ satisfies Table~\\ref{tab:A} (same as~\\cite[Table~9]{AB2015}).",
+      "content_preview": "Suppose H_0. Then H_1 is large in G_1 if and only if H_0 is large in G_0 and (G_0,H_0) satisfies Table~ (same as~).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 576,
+        "line_end": 579
+      },
+      "references": [
+        {
+          "target_id": "tab:A",
+          "reference_type": "external",
+          "context": "is large in $G_0$ and $(G_0,H_0)$ satisfies Table~\\ref{tab:A} (same as~\\cite[Table~9]{AB2015}).",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-15-9f17b71e",
+      "type": "lemma",
+      "content": "Suppose $H_0\\in\\mathcal{S}\\setminus \\mathcal{A}$.\nThen $H_1$ is large  if and only if  $(G_0,H_0)$ satisfies Table~\\ref{tab:B}. In particular, either $H_0$ is large and maximal in $G_0$, or  $(G_0,H_0)=(\\mathrm{PSU}_9(2) ,\\mathrm{J}_3 )$, $(\\mathrm{P\\Omega}_{8}^{+}(q), {}^3\\mathrm{D}_4 (q_0))$ with $q=q_0^3$ even, or $(\\mathrm{PSU}_3(5) ,\\mathrm{PSL}_2(7))$.",
+      "content_preview": "Suppose H_0 . Then H_1 is large if and only if (G_0,H_0) satisfies Table~. In particular, either H_0 is large and maximal in G_0, or (G_0,H_0)=(_9(2)...",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 631,
+        "line_end": 634
+      },
+      "references": [
+        {
+          "target_id": "tab:B",
+          "reference_type": "external",
+          "context": "arge  if and only if  $(G_0,H_0)$ satisfies Table~\\ref{tab:B}. In particular, either $H_0$ is large and maximal",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-16-57071945",
+      "type": "lemma",
+      "content": "[{\\cite[Theorem~7 and Proposition 4.7]{AB2015}}]\\label{lm:pslc1c8}\nSuppose $G_0=\\mathrm{PSL}_n(q)$ and $H_0 \\in\\mathcal{C}_1 \\cup \\mathcal{C}_8$. \nThen $H_0$ is large in $G_0$.",
+      "content_preview": "[] Suppose G_0=_n(q) and H_0 _1 _8. Then H_0 is large in G_0.",
+      "display_name": "Lemma",
+      "label": "lm:pslc1c8",
+      "position": {
+        "line_start": 726,
+        "line_end": 729
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-17-43d72dc6",
+      "type": "lemma",
+      "content": "\\label{lm:pslc2}\nSuppose $G_0=\\mathrm{PSL}_n(q)$ and $H_0 \\in\\mathcal{C}_2$.\nThen  $H_1$ is large in $G_1$ if and only if $H_0$ is of type $\\mathrm{GL}_{n/t}(q)\\wr \\mathrm{S}_t$, and  either $t=2$, or $t=3$ and \n\\[\nq\\in \\{3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 32, 49, 64, 81, 128\\}.\n\\]",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _2. Then H_1 is large in G_1 if and only if H_0 is of type _n/t(q) _t, and either t=2, or t=3 and [ q 3, 4, 5, 7, 8, 9, 11,...",
+      "display_name": "Lemma",
+      "label": "lm:pslc2",
+      "position": {
+        "line_start": 732,
+        "line_end": 738
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "m(q)<(1-q^{-1})q^{m^2}=(q-1)q^{m^2-1}$ (see Lemma~\\ref{lm:LUSO}(i)), we have $|\\mathrm{SL}_m(q)|<q^{m^2-1}$. Then",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO1",
+          "reference_type": "internal",
+          "context": "t!.\\]\n\n\n\n\nSince $ q^{n^2-2}\\leq |G_0|$ (see Lemma~\\ref{lm:LUSO1}) and $\\vert \\mathcal{O}_{1} \\vert^2<5d^2q$ (see E",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslout",
+          "reference_type": "external",
+          "context": "nd $\\vert \\mathcal{O}_{1} \\vert^2<5d^2q$ (see Eq.~\\eqref{eq:pslout}), we conclude from Eq.~\\eqref{eq:H1}   that \n\\[\nq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "(see Eq.~\\eqref{eq:pslout}), we conclude from Eq.~\\eqref{eq:H1}   that \n\\[\nq^{m^2t^2-2}<|G_0|\\leq |H_0|^3 \\vert \\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:n!",
+          "reference_type": "internal",
+          "context": "e that $t!<2^{t\\log_2(\\frac{t+1}{2})}$ (see Lemma~\\ref{lm:n!}) and  $q^{m^2}\\geq 5 =2^{\\log_2(5)}$ (see Eq.~\\eq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc2-qm",
+          "reference_type": "external",
+          "context": "n!}) and  $q^{m^2}\\geq 5 =2^{\\log_2(5)}$ (see Eq.~\\eqref{eq:pslc2-qm}).  \nThen we  have\n\\[\n2^{\\log_2(5)t(t-3)}\\leq q^{m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc2qt2",
+          "reference_type": "external",
+          "context": "irect verification shows that this inequality Eq.~\\eqref{eq:pslc2qt2} for integer $t\\geq 2$ holds if and only if $t\\in",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc2qt1",
+          "reference_type": "external",
+          "context": "2015}.\n\nSuppose $t=5$. Since $q^{m^2}\\geq 5$, Eq.~\\eqref{eq:pslc2qt1} implies $5^{10}<5\\cdot (5!)^3$.\nHowever, $5^{10}=",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc2qt1",
+          "reference_type": "external",
+          "context": ")^3$, a contradiction. \n\n\nSuppose $t=4$. Then Eq.~\\eqref{eq:pslc2qt1} holds if and only if $q^{m^2}=5$. Now $m=1$, $n=4",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "|\\mathcal{O}_1|=3623878656$, we conclude from Eq.~\\eqref{eq:H1} that $H_1$ is not large in $G_1$.\n \n\n\n\n\nThe case",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sec:techniques",
+          "reference_type": "external",
+          "context": "has been  dealt with as the exmaple in Subsection~\\ref{sec:techniques}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 3.5.A]{K-Lie}, $H_0$ has only one type $\\mathrm{GL}_{m}(q)\\wr \\mathrm{S}_t$ with $n=mt$ and $t\\geq 2$, and $ \\mathcal{O}_{1} =\\mathrm{Out}(G_0)$ (since $c=1$ and $|\\mathcal{O}_{1}|=|\\mathrm{Out}(G_0)|/c$) and \n\\begin{equation}\\label{eq:pslc2-qm}\n  \\text{$q\\geq 5$ if $m =1$, and $q \\geq 3$ if $m =2$. }\n\\end{equation} \nBy~\\cite[Proposition~4.2.9]{K-Lie}, $|H_0|=d^{-1}|\\mathrm{SL}_m(q)^{t}.(q-1)^{t-1}.\\mathrm{S}_t|$.  \nSince $ |\\mathrm{GL}_m(q)<(1-q^{-1})q^{m^2}=(q-1)q^{m^2-1}$ (see Lemma~\\ref{lm:LUSO}(i)), we have $|\\mathrm{SL}_m(q)|<q^{m^2-1}$. Then\n \\[|H_0|<d^{-1} q^{m^2t-1}t!.\\]\n\n\n\n\nSince $ q^{n^2-2}\\leq |G_0|$ (see Lemma~\\ref{lm:LUSO1}) and $\\vert \\mathcal{O}_{1} \\vert^2<5d^2q$ (see Eq.~\\eqref{eq:pslout}), we conclude from Eq.~\\eqref{eq:H1}   that \n\\[\nq^{m^2t^2-2}<|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2< (d^{-3}q^{3m^2t-3} (t!)^3 ) (5d^{2}q)<5(t!)^3q^{3m^2t-2}  .  \n\\]\nIt follows that \n\\begin{equation}\\label{eq:pslc2qt1}\nq^{m^2t(t-3)}< 5(t!)^3.\n\\end{equation} \n\nNotice that $t!<2^{t\\log_2(\\frac{t+1}{2})}$ (see Lemma~\\ref{lm:n!}) and  $q^{m^2}\\geq 5 =2^{\\log_2(5)}$ (see Eq.~\\eqref{eq:pslc2-qm}).  \nThen we  have\n\\[\n2^{\\log_2(5)t(t-3)}\\leq q^{m^2t(t-3)}<4(t!)^3<2^{3t\\log_2(\\frac{t+1}{2})+2 },\n\\]\nwhich implies\n\\begin{equation}\\label{eq:pslc2qt2}\n \\log_2(5)t(t-3)<3t\\log_2(\\frac{t+1}{2})+\\log_2(5).\n\\end{equation} \nA direct verification shows that this inequality Eq.~\\eqref{eq:pslc2qt2} for integer $t\\geq 2$ holds if and only if $t\\in \\{2,3,4,5\\}$. \nIf $t=2$, then $ H_0  $ is large in $G_0$ by~\\cite[Proposition 4.7]{AB2015}.\n\nSuppose $t=5$. Since $q^{m^2}\\geq 5$, Eq.~\\eqref{eq:pslc2qt1} implies $5^{10}<5\\cdot (5!)^3$.\nHowever, $5^{10}=9765625>8640000=5\\cdot (5!)^3$, a contradiction. \n\n\nSuppose $t=4$. Then Eq.~\\eqref{eq:pslc2qt1} holds if and only if $q^{m^2}=5$. Now $m=1$, $n=4$ and $q=5$. Then $|H_0|=4^2\\cdot 4!=384$, $|\\mathcal{O}_1|=8$ and $|G_0|=7254000000$.\nSince $|H_0|^3\\cdot |\\mathcal{O}_1|=3623878656$, we conclude from Eq.~\\eqref{eq:H1} that $H_1$ is not large in $G_1$.\n \n\n\n\n\nThe case $t=3$ has been  dealt with as the exmaple in Subsection~\\ref{sec:techniques}."
+    },
+    {
+      "id": "lemma-18-5c963de8",
+      "type": "lemma",
+      "content": "\\label{lm:pslc3}\nSuppose $G _0=\\mathrm{PSL}_n(q)$ and $H_0 \\in\\mathcal{C}_3$.  \n Then $H_1$ is large in $G_1$ if and only if  $H_0$ is of type $\\mathrm{GL}_{n/r}(q^r)$, where  $r=2$, or $r=3$ with $q \\in \\{2,3,4,5,7, 8, 9, 11, 16, 27, 32\\}$, or $(G_1,H_1)=(\\mathrm{PSL}_5(2).2, 31:10)$.",
+      "content_preview": "Suppose G _0=_n(q) and H_0 _3. Then H_1 is large in G_1 if and only if H_0 is of type _n/r(q^r), where r=2, or r=3 with q 2,3,4,5,7, 8, 9, 11, 16,...",
+      "display_name": "Lemma",
+      "label": "lm:pslc3",
+      "position": {
+        "line_start": 791,
+        "line_end": 794
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "cal{O}_{1}\\vert^2 <9d^2q/2$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\nq^{m^2r^2-2}<|G_0|\\leq  |H_0|^3 \\vert\\ma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "$\\mathrm{PSL}_5(2).2$). \n\nAssume  $r=3$.\nNow Eq.~\\eqref{eq:H1} holds if and only if\n\\[\n \\frac{|\\mathrm{GL}_m(q^3",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "q-1)^2}{3^3\\cdot 4\\log_p(q)^2}:=h(q)\n\\] \nBy Lemma~\\ref{lm:LUSO},\n\\[\nf(q):=\\frac{(1-q^{-3}-q^{-6})^3}{(1-q^{-1}-q^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 3.5.A]{K-Lie}, $H_0$ is of type $\\mathrm{GL}_m(q^r)$ with $r$ prime and $n=mr$, and $ \\mathcal{O}_{1} =\\mathrm{Out}(G_0)$. By~\\cite[Proposition 4.3.6]{K-Lie},  $|H_0|=d^{-1}(q-1)^{-1}|\\mathrm{GL}_m(q^r)|r$.\nSince $q-1\\geq q/2$ and $|\\mathrm{GL}_m(q^r)<q^{m^2r}$, we have $|H_0|\\leq  d^{-1}(2rq^{m^2r-1}) $.\n\n\n\nSince $ q^{n^2-2}\\leq |G|$ and $\\vert \\mathcal{O}_{1}\\vert^2 <9d^2q/2$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\nq^{m^2r^2-2}<|G_0|\\leq  |H_0|^3 \\vert\\mathcal{O}_{1}\\vert^2< (d^{-3} (2r)^3q^{3m^2r-3} ) (9d^2q/2)<36r^3q^{3m^2r-2}  .  \n\\] \nIt follows that\n\\begin{equation}\\label{eq:pslc3qm2s}\nr(r-3)<\\log_{q^{m^2}}(36r^3).\n\\end{equation} \nThis inequality holds if and only if $r\\in \\{2,3\\}$, or $(q^{m^2},r)=(2, 5) $ (notice that $r$ is a prime).\n\n\n\n\nIf $r=2$, then $ H_0  $ is large in $G_0$ by~\\cite[Proposition 4.7]{AB2015}. For the case $(q^{m^2},r)=(2, 5) $, we have $(G_1,H_1)=(\\mathrm{PSL}_5(2).2, 31:10)$ (computation shows that $31:10$ is indeed large in $\\mathrm{PSL}_5(2).2$). \n\nAssume  $r=3$.\nNow Eq.~\\eqref{eq:H1} holds if and only if\n\\[\n \\frac{|\\mathrm{GL}_m(q^3)|^3 }{|\\mathrm{GL}_{3m}(q)|}>\\frac{(q-1)^2}{3^3\\cdot 4\\log_p(q)^2}:=h(q)\n\\] \nBy Lemma~\\ref{lm:LUSO},\n\\[\nf(q):=\\frac{(1-q^{-3}-q^{-6})^3}{(1-q^{-1}-q^{-2})}< \\frac{|\\mathrm{GL}_m(q^3)|^3 }{|\\mathrm{GL}_{3m}(q)|} < \\frac{(1-q^{-3})^3(1-q^{-6})^3}{ 1-q^{-1}-q^{-2} }:=g(q).\n\\]\nBy~\\cite[p.202]{AB2015},  $g(q) < 4/3 $ when $q\\geq 7$.\nComputation shows that  the inequality $h(q)<4/3$ for $q\\geq 7$ holds precisely when $q\\in \\{ 7, 8, 9, 11, 16, 27, 32, 64\\}$.\nFurther computation shows that $h(q)<f(q)$ for each $q\\in \\{2,3,4,5,7, 8, 9, 11, 16, 27, 32\\}:=Q$, and $h(64)>g(64)$.\nTherefore, $H_1$ is large in $G_1$ if and only if $q\\in Q$."
+    },
+    {
+      "id": "lemma-19-4d50b61b",
+      "type": "lemma",
+      "content": "\\label{lm:pslc4}\nSuppose $G_0=\\mathrm{PSL}_n(q)$ and $H_0\\in  \\mathcal{C}_4$.\nThen $H_1$ is non-large in $G_1$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _4. Then H_1 is non-large in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:pslc4",
+      "position": {
+        "line_start": 835,
+        "line_end": 838
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "n_2}(q)|^3}{|\\mathrm{SL}_{n}(q)|}.  \n\n\\]\nBy Lemma~\\ref{lm:LUSO}, we have \n\\[\n\\frac{1}{2}q^{q^{n^2-1}}\\leq (1-\\fra",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "_n(q)|<(1-q^{-2})q^{n^2-1}<q^{n^2-1}.\n\\]\nFrom Eq.~\\eqref{eq:H1} we conclude \n\\[\nq^{n^2-1}\\leq 4\\log_p(q)^2c(2^{-6",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 3.5.A]{K-Lie}, $H_0$ is of type $\\mathrm{GL}_{n_1}(q)\\otimes \\mathrm{GL}_{n_2}(q) $ with $2\\leq  n_1<\\sqrt{n} $ and $n=n_1n_2$.\nBy~\\cite[Proposition 4.3.6]{K-Lie},  $|H_0|=d^{-1}|\\mathrm{SL}_{n_1}(q)|\\cdot |\\mathrm{SL}_{n_2}(q)|.c$, where $c=(q-1,n_1,n_2)$. \nIt follows that\n\n\\[\n\\frac{|H_0|^3|\\mathcal{O}_1|^2}{|G_0|}=\\frac{|\\mathrm{SL}_{n_1}(q)|^3\\cdot |\\mathrm{SL}_{n_2}(q)|^3d^{-3}c^3\\cdot (2d\\log_p(q)/c)^2 }{d^{-1}|\\mathrm{SL}_{n}(q)|}=4\\log_p(q)^2c \\cdot \\frac{|\\mathrm{SL}_{n_1}(q)|^3\\cdot |\\mathrm{SL}_{n_2}(q)|^3}{|\\mathrm{SL}_{n}(q)|}.  \n\n\\]\nBy Lemma~\\ref{lm:LUSO}, we have \n\\[\n\\frac{1}{2}q^{q^{n^2-1}}\\leq (1-\\frac{q^{-2}}{1-q^{-1}} ) q^{n^2-1}< |\\mathrm{SL}_n(q)|<(1-q^{-2})q^{n^2-1}<q^{n^2-1}.\n\\]\nFrom Eq.~\\eqref{eq:H1} we conclude \n\\[\nq^{n^2-1}\\leq 4\\log_p(q)^2c(2^{-6}q^{n_1^2+n_2^2-2})< q^{n_1^2+n_2^2} .\n\\] \n(Note that $\\log_p(q)^2\\leq \\frac{9}{8}q$ and $c<q$.)\nTherefore,\n\\[\n2>n_1^2n_2^2-n_1^2-n_2^2+1=(n_1^2-1)(n_2^2-1),\n\\] \nwhich is impossible as $ n_1\\geq 2$."
+    },
+    {
+      "id": "lemma-20-4a6699bc",
+      "type": "lemma",
+      "content": "\\label{lm:pslc5}\nSuppose $G_0=\\mathrm{PSL}_n(q)$ and $H_0 \\in\\mathcal{C}_5$. \nIf  $H_1$ is large in $G_1$, then $H_0$ is of type $\\mathrm{GL}_n(q^{1/r})$, where $r=2$ or $3$.\nIn particular, if $r=2$, then $H_0$ is large in $G_0$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _5. If H_1 is large in G_1, then H_0 is of type _n(q^1/r), where r=2 or 3. In particular, if r=2, then H_0 is large in G_0.",
+      "display_name": "Lemma",
+      "label": "lm:pslc5",
+      "position": {
+        "line_start": 895,
+        "line_end": 899
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "q_0-1,\\frac{q-1}{(q-1,n)}]^{-1}(q-1) $.\n\nBy Lemma~\\ref{lm:LUSO}, we have $|\\mathrm{PGL}_n(q)|<(1-q^{-2})q^{n^2-1}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "n^2-2}$ and  $|\\mathcal{O}_1|^2 < 5q^3$.  \nBy Eq.~\\eqref{eq:H1} we have \n\\[\nq_0^{r(n^2-2)}= q^{n^2-2}<|G_0|\\leq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc5",
+          "reference_type": "external",
+          "context": "}(5)\\leq \\log_2(5)<3$, a contradiction.\nThus, Eq.~\\eqref{eq:pslc5} holds if and only if $r\\in \\{2,3\\}$. \nWe note tha",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 3.5.A]{K-Lie}, $H_0$ is of type $\\mathrm{GL}_n(q_0)$, where $q=q_0^r$ for a prime $r$. \nBy~\\cite[Proposition 4.5.3]{K-Lie}, $H_0=c(q-1)^{-1} |\\mathrm{PGL}_n(q_0)|$, where $c= [q_0-1,\\frac{q-1}{(q-1,n)}]^{-1}(q-1) $.\n\nBy Lemma~\\ref{lm:LUSO}, we have $|\\mathrm{PGL}_n(q)|<(1-q^{-2})q^{n^2-1}$.\n\n\n\nTherefore, $|H_0|\\leq q_0^{n^2-1}$.\nNotice that  $|G_0|\\geq q^{n^2-2}$ and  $|\\mathcal{O}_1|^2 < 5q^3$.  \nBy Eq.~\\eqref{eq:H1} we have \n\\[\nq_0^{r(n^2-2)}= q^{n^2-2}<|G_0|\\leq  |H_0|^3 |\\mathcal{O}_1|^2< q_0^{3(n^2-1)}(4d^2\\log_p(q)^2)<5 q_0^{3n^2 }  .  \n\\]  \nIt follows that\n\\begin{equation}\\label{eq:pslc5}\nn^2(r-3)-2r <\\log_{q_0}(5).\n\\end{equation} \nNotice that  $r$ is a prime and $r\\mid n$.\nIt is clear that $n^2(r-3)-2r $ is increasing on $r$.\nIf $r\\geq 5$, then $n^2(r-3)-2r-3>5^2\\cdot 2-10-3=37$, while $\\log_{q_0}(5)\\leq \\log_2(5)<3$, a contradiction.\nThus, Eq.~\\eqref{eq:pslc5} holds if and only if $r\\in \\{2,3\\}$. \nWe note that if $r=2$, then $H_0$ is large in $G_0$ by~\\cite[Proposition~4.7]{AB2015}."
+    },
+    {
+      "id": "remark-21-8b2b6529",
+      "type": "remark",
+      "content": "In Lemma~\\ref{lm:pslc5}, we did not provide a sufficient condition for \\( H_1 \\) to be large in \\( G_1 \\) in the case where \\( r = 3 \\). In fact, when \\( r = 3 \\), we have the following exact expression\n\\begin{align*}\n  \\frac{|H_0|^3|\\mathcal{O}_1|^2}{|G_0|}&=\\frac{\\frac{c^3|\\mathrm{PGL}_n(q_0)|^3}{(q -1)^3}\\cdot  \\frac{4\\log_p(q)^2(n,q-1)^2}{c^2}}{\\frac{1}{(n,q-1)}|\\mathrm{PGL}_n(q_0^3)|}=\\frac{4\\log_p(q)^2c(n,q-1)^3}{(q -1)^3} \\cdot \\frac{|\\mathrm{PGL}_n(q_0)|^3}{ |\\mathrm{PGL}_n(q)|}\\\\\n& =\\frac{4\\log_p(q)^2 (n,q-1)^3}{(q -1)^2[q_0-1,\\frac{q-1}{(n,q -1)}]} \\cdot \\frac{q-1}{(q_0-1)^3}\\cdot \\frac{|\\mathrm{GL}_n(q_0)|^3}{ |\\mathrm{GL}_n(q)|}\\\\\n&=\\frac{4\\log_p(q)^2 (n,q-1)^3}{(q -1)(q_0-1)^3 [q_0-1,\\frac{q-1}{(n,q -1)}]}  \\frac{|\\mathrm{GL}_n(q_0)|^3}{ |\\mathrm{GL}_n(q)|}\\\\\n&=\\frac{36\\log_p(q_0)^2 (n,q_0^3-1)^3}{(q_0^3 -1)(q_0-1)^3 [q_0-1,\\frac{q_0^3-1}{(n,q_0^3-1)}]}  \\frac{|\\mathrm{GL}_n(q_0)|^3}{ |\\mathrm{GL}_n(q_0^3)|}\n\\end{align*} \nBy Lemma~\\ref{lm:LUSO} and the technique in subsection~\\ref{sec:techniques},   \n\\[ \n \\frac{(1-q_0^{-1}-q_0^{-2})^3}{(1-q_0^{-3})(1-q_0^{-6})}<\\frac{|\\mathrm{GL}_n(q_0)|^3}{ |\\mathrm{GL}_n(q_0^3)|}<\\frac{(1-q_0^{-1})^3(1-q_0^{-2})^3}{ 1-q_0^{-3}-q_0^{-3} } .\n\\]\nThese expressions allow us to  verify whether $H_1$ is large in $G_1$ for specific pairs  $(n,q_0)$.\nHowever, deriving a simple condition appears intractable, and we therefore conclude our analysis at this stage.",
+      "content_preview": "In Lemma~, we did not provide a sufficient condition for ( H_1 ) to be large in ( G_1 ) in the case where ( r = 3 ).",
+      "display_name": "Remark",
+      "label": null,
+      "position": {
+        "line_start": 934,
+        "line_end": 948
+      },
+      "references": [
+        {
+          "target_id": "lm:pslc5",
+          "reference_type": "internal",
+          "context": "In Lemma~\\ref{lm:pslc5}, we did not provide a sufficient condition for \\(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "}{ |\\mathrm{GL}_n(q_0^3)|}\n\\end{align*} \nBy Lemma~\\ref{lm:LUSO} and the technique in subsection~\\ref{sec:techniqu",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "sec:techniques",
+          "reference_type": "external",
+          "context": "mma~\\ref{lm:LUSO} and the technique in subsection~\\ref{sec:techniques},   \n\\[ \n \\frac{(1-q_0^{-1}-q_0^{-2})^3}{(1-q_0^{-",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-22-67ad58ce",
+      "type": "lemma",
+      "content": "\\label{lm:pslc6}\nSuppose $G_0=\\mathrm{PSL}_n(q)$ and $H_0 \\in\\mathcal{C}_6$.\nThen $H_1$ is large in $G_1$ if and only if  $(G_0,H_0)$ is one of the following\n\\[\n\\begin{split}\n& (\\mathrm{PSL}_{4}(5),2^{4}.\\mathrm{A}_{6} ), \n (\\mathrm{PSL}_{2}(23),\\mathrm{S}_{4}), (\\mathrm{PSL}_{2}(19),\\mathrm{A}_{4}),(\\mathrm{PSL}_{2}(17),\\mathrm{S}_{4}),\\\\\n &(\\mathrm{PSL}_{2}(13),\\mathrm{A}_{4}), (\\mathrm{PSL}_{2}(11), \\mathrm{A}_{4}), (\\mathrm{PSL}_{2}(7),\\mathrm{S}_{4}), (\\mathrm{PSL}_{2}(5),\\mathrm{A}_{4}).\n \\end{split}\n\\]",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _6. Then H_1 is large in G_1 if and only if (G_0,H_0) is one of the following [ & (_4(5),2^4.",
+      "display_name": "Lemma",
+      "label": "lm:pslc6",
+      "position": {
+        "line_start": 951,
+        "line_end": 961
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "ce $|\\mathrm{Sp}_{2m}(r)|<r^{m(2m-1)}$, see Lemma~\\ref{lm:LUSO}, we derive $|H_0|\\leq  r^{2m+m(2m+1)}=r^{m(2m+3)}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "$|H_0|\\leq  r^{2m+m(2m+1)}=r^{m(2m+3)} $. \nBy Eq.~\\eqref{eq:H1} we have \n\\[\n  q^{n^2-2}<|G_0|\\leq  |H_0|^3 \\vert",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc62",
+          "reference_type": "external",
+          "context": "a contradiction.\nTherefore, $m=1$.\nNow, from Eq.~\\eqref{eq:pslc62} we have $r^2-22<0$, forcing $r=3$. \nBy~\\cite[Tabl",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "e can verify that there is no $q $ satisfying Eq.~\\eqref{eq:H1}. \n \nAssume that $H_0$ is of type   $ (4\\circ 2^{1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pslc61",
+          "reference_type": "external",
+          "context": "$|H_0|\\leq 2^{2m}|\\mathrm{Sp}_{2m}(2)|$.\nThen Eq~\\eqref{eq:pslc61} also holds here.\nNow $q\\geq 3$ and $m\\geq 2$.\nThu",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "\\end{itemize}\nDirect verification shows that  Eq.~\\eqref{eq:H1} holds if and only if $q=5$, giving $(G_0,H_0)=(\\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "c=d=(8,q-1)$. Direct verification shows that  Eq.~\\eqref{eq:H1} does not hold.\n\nAssume that $H_0$ is of type  $2_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 4.6.B]{K-Lie},  $H_0$ has three types \n\\begin{enumerate}[\\rm (i)]\n  \\item $r^{1+2m}.\\mathrm{Sp}_{2m}(r)$, where $n=r^{m},m\\geq 1$, and $r$ is an odd prime divisor of $q-1$, and $er$ is odd ($e=\\log_q(p)$ is the smallest integer such that $r\\mid (q^e-1)$);\n  \\item $(4\\circ 2^{1+2m}).\\mathrm{Sp}_{2m}(2)$, where $n=2^{m}\\geq 4$, $q=p$ is odd;\n  \\item $2_{-}^{1+2}.\\mathrm{GO}^{-}_{2}(2)$, where $ n=2$ and $q=p$ is odd.\n\\end{enumerate}\n\n \nAssume that $H_0$ is of type  $r^{1+2m}.\\mathrm{Sp}_{2m}(r)$.\nBy~\\cite[Proposition 4.6.5]{K-Lie}, $|H_0|\\leq r^{2m}|\\mathrm{Sp}_{2m}(r)|$.\nSince $|\\mathrm{Sp}_{2m}(r)|<r^{m(2m-1)}$, see Lemma~\\ref{lm:LUSO}, we derive $|H_0|\\leq  r^{2m+m(2m+1)}=r^{m(2m+3)} $. \nBy Eq.~\\eqref{eq:H1} we have \n\\[\n  q^{n^2-2}<|G_0|\\leq  |H_0|^3 \\vert \\mathcal{O}_1\\vert^2< r^{3m(2m+3)}(5q^3) .  \n\\] \nIt follows that\n\\begin{equation}\\label{eq:pslc61}\nr^{2m}-5=n^2-5 <3m(2m+3)\\log_q(r)+\\log_{q}(5).\n\\end{equation} \nSince $r\\geq 3$ and $r \\mid q-1$, we have $q\\geq 4$ and $\\log_q(r)<1$.\nHence, \n\\begin{equation}\\label{eq:pslc62}\n r^{2m}-3m(2m+3)-7<0.\n\\end{equation} \nIf $m\\geq 2$, then by the binomial expansion, we have\n\\begin{align*}\n  r^{2m}=(r-2+2)^{2m}&>2^{2m}+2m\\cdot 2^{2m-1}(r-1)+ m(2m-1)\\cdot 2^{2m-2}(r-2)^2\\\\\n  &> 16+16m+4m(2m-1)> 7+3m(2m+3),  \n\\end{align*}\nwhich is a contradiction.\nTherefore, $m=1$.\nNow, from Eq.~\\eqref{eq:pslc62} we have $r^2-22<0$, forcing $r=3$. \nBy~\\cite[Table~2.9]{BHRD2013}, $H_0=3^{2}:\\mathrm{Q}_8$, $|\\mathcal{O}_1|=2d$ and $q=p \\equiv 1\\pmod{3}$. \nOne can verify that there is no $q $ satisfying Eq.~\\eqref{eq:H1}. \n \nAssume that $H_0$ is of type   $ (4\\circ 2^{1+2m}).\\mathrm{Sp}_{2m}(2) $.\nBy~\\cite[Proposition 4.6.6]{K-Lie}, $|H_0|\\leq 2^{2m}|\\mathrm{Sp}_{2m}(2)|$.\nThen Eq~\\eqref{eq:pslc61} also holds here.\nNow $q\\geq 3$ and $m\\geq 2$.\nThus\n\\[\n2^{2m}-5<m(6m+9)+\\log_3(5).\n\\]\nIt holds if and only if $m\\in \\{2,3\\}$.\n\nLet $m=2$. Then $n=4$. By~\\cite[Table~8.8]{BHRD2013}, either  \n\\begin{itemize}\n  \\item $|H_0|=2^4\\cdot |\\mathrm{S}_6|$, $q=p=1\\pmod{8}$ and $c=4$; or\n  \\item $|H_0|=2^4\\cdot |\\mathrm{A}_6|$, $q=p=5\\pmod{8}$ and $c=2$.\n\\end{itemize}\nDirect verification shows that  Eq.~\\eqref{eq:H1} holds if and only if $q=5$, giving $(G_0,H_0)=(\\mathrm{PSL}_4(5),2^4.\\mathrm{A}_6)$.\n\nLet $m=3$. Then $n=8$, $H_0=2^6.\\mathrm{Sp}_6(2)$ and $q=p=1\\pmod{4}$, and $c=d=(8,q-1)$. Direct verification shows that  Eq.~\\eqref{eq:H1} does not hold.\n\nAssume that $H_0$ is of type  $2_{-}^{1+2}.\\mathrm{GO}^{-}_{2}(2)$. Now $n=2$.\nBy~\\cite[Table~8.1]{BHRD2013}, either\n\\begin{itemize}\n  \\item $|H_0|= |\\mathrm{S}_4|$, $q=p=\\pm 1\\pmod{8}$ and $c=2$; or\n  \\item $|H_0|= |\\mathrm{A}_4|$, $q=p=\\pm 3,5,\\pm 13\\pmod{40}$ and $c=1$.\n\\end{itemize}\nBy direct verification, we obtain the remaining pairs $(G_0,H_0)$ in the lemma. \nWe note that,  if $q=11$ or $19$, then $\\mathrm{A}_4$ is not maximal in $G_0$, while its normalizer $\\mathrm{S}_4$ is maximal and large in $\\mathrm{PGL}_2(q)$."
+    },
+    {
+      "id": "lemma-23-81ebb8ed",
+      "type": "lemma",
+      "content": "Suppose $G_0=\\mathrm{PSL}_n(q)$ and $H_0 \\in \\mathcal{C}_7 $.\nThen $H_1$ is non-large in $G_1$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _7 . Then H_1 is non-large in G_1.",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 1031,
+        "line_end": 1034
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "2^{t\\log_2(\\frac{t+1}{2})}$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\nq^{m^{2t}-2}<|G_0|\\leq  |H_0|^3 \\vert \\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose for a contradiction that $H_1$ is large in $G_1$. \nBy~\\cite[Table 3.5.A and Proposition 4.7.3]{K-Lie}, $H_0$ is of type $\\mathrm{GL}_{m}(q) \\wr \\mathrm{S}_t$, where $n=m^t$ with $m\\geq 3$ and $t \\geq 2$, and $|H_0|<|\\mathrm{SL}_{m}(q)|^{t}t!$.\nSince $|\\mathrm{SL}_{m}(q)|<q^{m^2-1}$, $|G_0|\\geq q^{n^2-2}$, $\\vert \\mathcal{O}_1 \\vert^2<5q^3$ and $t!<2^{t\\log_2(\\frac{t+1}{2})}$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\nq^{m^{2t}-2}<|G_0|\\leq  |H_0|^3 \\vert \\mathcal{O}_1 \\vert^2< (q^{t(m^2-1)}t!)^3\\cdot (5q^3)<5q^{3t(m^2-1)+3}\\cdot 2^{3t\\log_2(\\frac{t+1}{2})} .  \n\\] \nIt follows that \n\\[\n m^{2t}-3t(m^2-1)-5<\\log_2(5) +3t\\log_2(\\frac{t+1}{2}).\n\\]\nIt is clear that $ m^{2t}-3t(m^2-1) $ is increasing in $m$. Since $m\\geq 3$, we have\n\\[\n 3^{2t}-24t-5 <\\log_2(5) +3t\\log_2(\\frac{t+1}{2}). \n\\]\nHowever, there is no $t\\geq 2$ satisfying the above inequality. \nThis contradiction proves the lemma."
+    },
+    {
+      "id": "lemma-24-6eeeb3df",
+      "type": "lemma",
+      "content": "[{\\cite[Proposition 4.17]{AB2015}}]\\label{lm:psuc1}\nSuppose $G_0=\\mathrm{PSU}_n(q)$ and $H_0 \\in\\mathcal{C}_1 $. \nThen $H_0$ is large in $G_0$.",
+      "content_preview": "[] Suppose G_0=_n(q) and H_0 _1 . Then H_0 is large in G_0.",
+      "display_name": "Lemma",
+      "label": "lm:psuc1",
+      "position": {
+        "line_start": 1073,
+        "line_end": 1076
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-25-6c8a2ebd",
+      "type": "lemma",
+      "content": "\\label{lm:psuc2}\nSuppose $G_0=\\mathrm{PSU}_n(q)$ and $H_0 \\in\\mathcal{C}_2$. \nThen $H_1$ is large in $G_1$ if and only if one of the following holds:\n\\begin{enumerate}[\\rm (a)]\n  \\item $H_0$ is of type $\\mathrm{GL}_{n/2}(q^2).2$\n   \\item  $H_0$ is of type $\\mathrm{GU}_{n/t}(q)\\wr \\mathrm{S}_t$, and  one of the following holds:\n  \\begin{enumerate}[\\rm (b.1)]  \n  \\item $t=2$;\n  \\item $t=3$ and $q \\in \\{2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 29, 32, 49, 64, 81, 128\\}$;\n  \\item $4\\leq t\\leq 12$, and $(q,m,t)$ is as follows:\n  \\[\n   \\begin{split}\n  &   ( 2, 1, 4 ),\n      ( 2, 1, 5 ),\n      ( 2, 1, 6 ),\n      ( 2, 1, 7 ),\n      ( 2, 1, 8 ),\n      ( 2, 1, 9 ),\n      ( 2, 1, 10 ),\n      ( 2, 1, 11 ), \\\\&\n      ( 3, 1, 4 ), \n      ( 3, 1, 5 ),\n      ( 3, 1, 6 ),\n      ( 4, 1, 4 ),\n      ( 4, 1, 5 ),\n      ( 5, 1, 4 ),\n      ( 7, 1, 4 ),\n      ( 8, 1, 4 ),\n      ( 9, 1, 4 ).\n  \\end{split}\n  \\]\n\\end{enumerate}  \n\\end{enumerate}",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _2. Then H_1 is large in G_1 if and only if one of the following holds: [ (a)] H_0 is of type _n/2(q^2).",
+      "display_name": "Lemma",
+      "label": "lm:psuc2",
+      "position": {
+        "line_start": 1079,
+        "line_end": 1112
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO1",
+          "reference_type": "internal",
+          "context": "_0|>  (1-q^{-1})q^{n^2-2}>q^{n^2-2}/2$ (see Lemma~\\ref{lm:LUSO1}) and $\\vert \\mathcal{O}_{1} \\vert^2\\leq 9d^2q/2 $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psuout",
+          "reference_type": "external",
+          "context": "rt \\mathcal{O}_{1} \\vert^2\\leq 9d^2q/2 $ (see Eq.~\\eqref{eq:psuout}). \nBy Lemma~\\ref{lm:LUSO}(i),\n\\[\n|\\mathrm{GU}_m(q",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "9d^2q/2 $ (see Eq.~\\eqref{eq:psuout}). \nBy Lemma~\\ref{lm:LUSO}(i),\n\\[\n|\\mathrm{GU}_m(q)|\\leq (1+q^{-1} ) (1-q^{-",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "1} (1+q^{-1})^{t-1}q^{m^2t-1}t!.\\] \nThen from Eq.~\\eqref{eq:H1} we have  that \n\\[\n\\begin{split}\n \\frac{1}{2}q^{m^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "_{ m}(q)|^9}{|\\mathrm{GU}_{3m}(q)|}.\n\\]\nThen  Eq.~\\eqref{eq:H1} equals to \n\\[ \\frac{|\\mathrm{GU}_{ m}(q)|^9}{|\\ma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "frac{(q+1)^2}{864\\log_p(q)^2}:=h(q).\n\\] \nBy Lemma~\\ref{lm:LUSO}, $(1+q^{-1} ) (1-q^{-2} )q^{a^{2}} <|\\mathrm{GU}_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "hile $g(q)<4\\cdot (1+200^{-1})^8<5$, implying Eq.~\\eqref{eq:H1} can not happen. \nTherefore, $q<200$. Computation",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psuc2-1",
+          "reference_type": "external",
+          "context": "m^2}}(1+q^{-1})-3\\log_{q^{m^2}}(t!).\n\\] \nThen Eq.~\\eqref{eq:psuc2-1} equals to $f(q,m,t)<0$.\nIt is clear that $f(q,m,t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "ples $(q,m,t)$, direct computation shows that Eq.~\\eqref{eq:H1} holds if and only if $(q,m,t)$ is as follows:\n\\[",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "According to~\\cite[Table 3.5.B]{K-Lie}, $H_0$ has two types, $\\mathrm{GL}_{n/2}(q^2).2$ and $\\mathrm{GU}_m(q)\\wr \\mathrm{S}_t$.  \nIf $H_0$ is of type $\\mathrm{GL}_{n/2}(q^2).2$, then $H_0$ is large in $G_0$, see~\\cite[Proposition 4.17]{AB2015}. \n\nAssume that  $H_0$ is of type $\\mathrm{GU}_m(q)\\wr \\mathrm{S}_t$, where $n=mt$ and $t\\geq 2$. \n\nBy~\\cite[Proposition 4.3.6]{K-Lie},  $ \\mathcal{O}_{1} =\\mathrm{Out}(G_0)$, $|H_0|=d^{-1}(q+1)^{-1}|\\mathrm{GU}_m(q)|^t t!$.   \nNotice that $  |G_0|>  (1-q^{-1})q^{n^2-2}>q^{n^2-2}/2$ (see Lemma~\\ref{lm:LUSO1}) and $\\vert \\mathcal{O}_{1} \\vert^2\\leq 9d^2q/2 $ (see Eq.~\\eqref{eq:psuout}). \nBy Lemma~\\ref{lm:LUSO}(i),\n\\[\n|\\mathrm{GU}_m(q)|\\leq (1+q^{-1} ) (1-q^{-2} ) (1+q^{-3} )q^{m^{2}}\\leq (1+q^{-1} ) q^{m^2}.\n\\]\n Since $(1+q^{-1})=q^{-1}(q+q^{-1})$, we have \n \\[|H_0|<d^{-1} (1+q^{-1})^{t-1}q^{m^2t-1}t!.\\] \nThen from Eq.~\\eqref{eq:H1} we have  that \n\\[\n\\begin{split}\n \\frac{1}{2}q^{m^2t^2-2}  <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 &< (d^{-3}(1+q^{-1})^{3(t-1)} q^{3m^2t-3} (t!)^3 ) (\\frac{9}{2}d^{2}q)\\\\\n&<9(t!)^3(1+q^{-1})^{3(t-1)}q^{3m^2t-2} .\n\\end{split}  \n\\]\nIt follows that \n\\begin{equation}\\label{eq:psuc2-1}\n  q^{m^2t(t-3)}< 9(1+q^{-1})^{3(t-1)}(t!)^3.\n\\end{equation} \nClearly, the above inequality holds when $t\\in \\{2,3\\}$.   \nIf $t=2$, then $ H_0  $ is large in $G_0$ by~\\cite[Proposition 4.17]{AB2015}. \n\n\nAssume $t=3$. Notice that  $|G_0|=d^{-1}(q+1)^{-1}|\\mathrm{GU}_{3m}(q)|$. \nHence\n\\[\n\\frac{|H_0|^3|\\mathcal{O}_{1}|^2}{|G_0|}=\\frac{(3!)^3\\cdot (4d^2\\log_p(q)^2)}{d^2(q+1)^2} \\cdot \\frac{|\\mathrm{GU}_{ m}(q)|^9}{|\\mathrm{GU}_{3m}(q)|}=\\frac{864\\log_p(q)^2}{(q+1)^2} \\cdot \\frac{|\\mathrm{GU}_{ m}(q)|^9}{|\\mathrm{GU}_{3m}(q)|}.\n\\]\nThen  Eq.~\\eqref{eq:H1} equals to \n\\[ \\frac{|\\mathrm{GU}_{ m}(q)|^9}{|\\mathrm{GU}_{3m}(q)|}\\geq \\frac{(q+1)^2}{864\\log_p(q)^2}:=h(q).\n\\] \nBy Lemma~\\ref{lm:LUSO}, $(1+q^{-1} ) (1-q^{-2} )q^{a^{2}} <|\\mathrm{GU}_{a}(q) |<(1+q^{-1} )  q^{a^{2}}$, hence \n\\[\nf(q):=\\frac{(1+q^{-1})^9(1-q^{-2})^9}{ 1+q^{-1}  }<\\frac{|\\mathrm{GU}_{ m}(q)|^9}{|\\mathrm{GU}_{3m}(q)|}<\\frac{( 1+q^{-1} )^9 }{(1+q^{-1}) (1-q^{-2})}=:g(q).\n\\] \nIf $q\\geq 200$, then $h(q)>(q+1)^2/864>46$, while $g(q)<4\\cdot (1+200^{-1})^8<5$, implying Eq.~\\eqref{eq:H1} can not happen. \nTherefore, $q<200$. Computation shows that  $h(q)<g(q)$ holds if and only if \n\\[\nq \\in \\{2, 3, 4, 5, 7, 8, 9, 11, 13, 16, 17, 19, 23, 25, 27, 29, 32, 49, 64, 81, 128\\}.\n\\]\nMoreover, for those $q$ above, $h(q)<f(q)$ also holds.  This proves part (b.2).\n\nAssume $t\\geq 4$. \nSet \n\\[\nf(q,m,t):=t(t-3)-\\log_{q^{m^2}}(9)-3(t-1)\\log_{q^{m^2}}(1+q^{-1})-3\\log_{q^{m^2}}(t!).\n\\] \nThen Eq.~\\eqref{eq:psuc2-1} equals to $f(q,m,t)<0$.\nIt is clear that $f(q,m,t)$ is increasing in both $q$ and $m$.\nTherefore,  \n\\[\n  f(2,1,t)\\leq f(2,m,t)\\leq f(q,m,t)<0.\n\\]\nNote that \\( f(2,1,t) \\) is a univariate function:  \n\\[\nf(2,1,t) = t(t-3) - \\log_{2}(9) - 3(t-1)\\log_{2}\\left(1+2^{-1}\\right) - 3\\log_{2}(t!).\n\\]  \nSince $2\\log_{2}\\left(1+2^{-1}\\right) < 1.8$ and  $t! < 2^{t\\log_2\\left(\\frac{t+1}{2}\\right)}$,\nwe observe that if \\( f(2,1,t) < 0 \\), then \\( g(t) < 0 \\) must necessarily hold, where  \n\\[\ng(t) := t(t-3) - 1.8(t-1) - 3t\\log_2\\left(\\frac{t+1}{2}\\right) - \\log_{2}(9).\n\\]  \nIt is straightforward to verify that, for sufficiently large \\( t \\) (e.g., \\( t > 100 \\)), $\\frac{(t+1) }{2} \\geq 3 \\log_2\\left(\\frac{t+1}{2}\\right)$, and  further $\\frac{t(t-7)}{2} > 1.8(t-1) + \\log_{2}(9)$.  \nConsequently, the solution set for \\( g(t) < 0 \\) is confined to \\( 4 \\leq t \\leq 100 \\).\nDirect verification shows that  \\( f(2,1,t) < 0 \\) with $4 \\leq t \\leq 100$ holds  if and only if  $4\\leq t\\leq 12$. Then for each $4\\leq t\\leq 12$, we compute the values for  $m$ such that $f(2,m,t)<0$.\nIt shows that  either $(m,t)=(2,4)$, or $m=1$ and $4\\leq t\\leq 12$. \nThen for each pair $(m,t)$, we compute those $q$ such that $f(q,m,t)<0$. \nComputation shows that $(q,m,t)$ is one of the following:  $( 2 ,  2 ,  4 )$, $(2,1,i)$ with $4\\leq i\\leq 12$, $(j,1,4)$ with $3\\leq j \\leq 19$, $(k,1,5)$ with $3\\leq k \\leq 5$, $( 3 ,  1 ,  6)$, $( 3 ,  1 ,  7)$, $( 4 ,  1 ,  6)$.\nFor those triples $(q,m,t)$, direct computation shows that Eq.~\\eqref{eq:H1} holds if and only if $(q,m,t)$ is as follows:\n\\[\n \\begin{split}\n&   ( 2, 1, 4 ),\n    ( 2, 1, 5 ),\n    ( 2, 1, 6 ),\n    ( 2, 1, 7 ),\n    ( 2, 1, 8 ),\n    ( 2, 1, 9 ),\n    ( 2, 1, 10 ),\n    ( 2, 1, 11 ), \\\\&\n    ( 3, 1, 4 ),\n    ( 3, 1, 5 ),\n    ( 3, 1, 6 ),\n    ( 4, 1, 4 ),\n    ( 4, 1, 5 ),\n    ( 5, 1, 4 ),\n    ( 7, 1, 4 ),\n    ( 8, 1, 4 ),\n    ( 9, 1, 4 ).\n\\end{split}\n\\]\nThis proves part (b.3)."
+    },
+    {
+      "id": "lemma-26-9135e732",
+      "type": "lemma",
+      "content": "\\label{lm:psuc3}\nSuppose $G _0=\\mathrm{PSU}_n(q)$ and $H_0 \\in\\mathcal{C}_3$.\nThen $H_1$ is large in $G_1$ if and only if $H_0$ is of type $\\mathrm{GU}_{n/r}(q^r)$ with $r=3$ and $q \\in \\{2, 3, 4, 5, 7, 8, 9, 16, 27, 32\\}$.",
+      "content_preview": "Suppose G _0=_n(q) and H_0 _3. Then H_1 is large in G_1 if and only if H_0 is of type _n/r(q^r) with r=3 and q 2, 3, 4, 5, 7, 8, 9, 16, 27, 32.",
+      "display_name": "Lemma",
+      "label": "lm:psuc3",
+      "position": {
+        "line_start": 1213,
+        "line_end": 1216
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "cal{O}_{1}\\vert^2 <9d^2q/2$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\frac{1}{2}q^{m^2r^2-2} <|G_0|\\leq |H_0|",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "3 =166375$ and $|\\mathcal{O}_1|=2$, for which Eq.~\\eqref{eq:H1} does not hold. \n  \nAssume  $r=3$.\nNow Eq.~\\eqref{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "{eq:H1} does not hold. \n  \nAssume  $r=3$.\nNow Eq.~\\eqref{eq:H1} holds if and only if\n\\[\n \\frac{|\\mathrm{GU}_m(q^3",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "q-1)^2}{3^3\\cdot 4\\log_p(q)^2}:=h(q)\n\\] \nBy Lemma~\\ref{lm:LUSO}, $(1+q^{-1} ) (1-q^{-2} )q^{a^{2}} <|\\mathrm{GU}_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "hile $g(q)<4\\cdot (1+200^{-3})^3<5$, implying Eq.~\\eqref{eq:H1} can not happen. \nTherefore, $q<200$. Computation",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 3.5.B]{K-Lie}, $H_0$ has only one type $\\mathrm{GU}_{m}(q^r)$, where  $r$ is an odd prime and $n=mr$, and $ \\mathcal{O}_{1} =\\mathrm{Out}(G_0)$. By~\\cite[Proposition 4.3.6]{K-Lie},  $|H_0|=d^{-1}(q+1)^{-1}|\\mathrm{GL}_m(q^t)|t $.\nSince $|\\mathrm{GU}_m(q^r)<(1+q^{-1})q^{m^2r}$, we have $|H_0|\\leq  d^{-1}r q^{m^2r-1}  $. \nSince $  |G_0| > (1-q^{-1})q^{n^2-2}\\geq q^{n^2-2}/2$ and $\\vert \\mathcal{O}_{1}\\vert^2 <9d^2q/2$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\frac{1}{2}q^{m^2r^2-2} <|G_0|\\leq |H_0|^3 \\vert\\mathcal{O}_{1}\\vert^2< (d^{-3} r^3q^{3m^2r-3} ) (\\frac{9}{2}d^2q )<\\frac{9}{2}t^3q^{3m^2r-2} .  \n\\] \nIt follows that\n\\begin{equation} \\label{eq:psuc3qm2s}\nr(r-3)<\\log_{q^{m^2}}(9r^3).\n\\end{equation} \nThis inequality holds if and only if $r=3$, or $(q^{m^2},r)=(2, 5) $ (notice that $r$ is an odd prime).\n\n\n\n\n For the case $(q^{m^2},r)=(2, 5) $, we have $|G_0|=|\\mathrm{PSU}_5(2)|=13685760$ and $|H_0|^3=(|11:5|)^3 =166375$ and $|\\mathcal{O}_1|=2$, for which Eq.~\\eqref{eq:H1} does not hold. \n  \nAssume  $r=3$.\nNow Eq.~\\eqref{eq:H1} holds if and only if\n\\[\n \\frac{|\\mathrm{GU}_m(q^3)|^3 }{|\\mathrm{GU}_{3m}(q)|}>\\frac{(q-1)^2}{3^3\\cdot 4\\log_p(q)^2}:=h(q)\n\\] \nBy Lemma~\\ref{lm:LUSO}, $(1+q^{-1} ) (1-q^{-2} )q^{a^{2}} <|\\mathrm{GU}_{a}(q) |<(1+q^{-1} )  q^{a^{2}}$, hence  \n\\[\nf(q):=\\frac{(1+q^{-3})^3(1-q^{-6})^3}{ 1+q^{-1}  }<\\frac{|\\mathrm{GU}_{ m}(q^3)|^3}{|\\mathrm{GU}_{3m}(q)|}<\\frac{( 1+q^{-3} )^3 }{(1+q^{-1}) (1-q^{-2})}=:g(q).\n\\] \nIf $q\\geq 200$, then $h(q)>(q+1)^2/108>374$, while $g(q)<4\\cdot (1+200^{-3})^3<5$, implying Eq.~\\eqref{eq:H1} can not happen. \nTherefore, $q<200$. Computation shows that  $h(q)<g(q)$ holds if and only if \n\\[\nq \\in \\{2, 3, 4, 5, 7, 8, 9, 16, 27, 32\\}.\n\\]\nMoreover, for those $q$ above, $h(q)<f(q)$ also holds.  \nThen the lemma follows."
+    },
+    {
+      "id": "lemma-27-01b0fc41",
+      "type": "lemma",
+      "content": "\\label{lm:psuc4}\nSuppose $G_0=\\mathrm{PSU}_n(q)$ and $H_0\\in  \\mathcal{C}_4$.\nThen $H_1$ is non-large in $G_1$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _4. Then H_1 is non-large in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:psuc4",
+      "position": {
+        "line_start": 1256,
+        "line_end": 1259
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": ").c|$, where $c=[(q+1,{n_1},{n_2})^2]$. \nBy Lemma~\\ref{lm:LUSO}, we can conclude  $|\\mathrm{SU}_a(q)|\\leq (1-q^{-",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "\\mathrm{SU}_{n_2}(q)|\\leq d^{-1}q^{11}$.\nFrom Eq.~\\eqref{eq:H1} we have\n\\[\n\\frac{1}{2}q^{34} <|G_0|\\leq  |H_0|^3",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "1, 128, 256, 512\\}.\n\\]\nComputation shows that Eq.~\\eqref{eq:H1} does not hold for any $q$ above.\nTherefore, the c",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "(G_0) \\vert^2 \\leq 9d^2q/2$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n  \\frac{1}{2} q^{{n_1}^2{n_2}^2-2} <|G_0",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psuc4",
+          "reference_type": "external",
+          "context": "}^2+{n_2}^2)  =13{n_1}^2-48$.\nIt implies that Eq.~\\eqref{eq:psuc4} holds only for $({n_1},{n_2},q)=(2,4,2)$. \nHoweve",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose for a contradiction that $H_1$ is large in $G_1$.\nBy~\\cite[Table 3.5.B and Proposition 4.4.10]{K-Lie}, $H_0$ is of type $\\mathrm{GU}_{n_1}(q)\\otimes \\mathrm{GU}_{n_2}(q) $ with $1< {n_1}<\\sqrt{n} $ and $n={n_1}{n_2}$, and  furthermore, $|H_0|=d^{-1}|\\mathrm{SU}_{n_1}(q) \\circ \\mathrm{SU}_{n_2}(q).c|$, where $c=[(q+1,{n_1},{n_2})^2]$. \nBy Lemma~\\ref{lm:LUSO}, we can conclude  $|\\mathrm{SU}_a(q)|\\leq (1-q^{-2})(1+q^{-3})q^{a^2-1}< q^{a^2-1}$.\nNotice that $|G_0|> q^{n^2-2}/2$ and $\\vert \\mathcal{O}_{1}\\vert^2\\leq   4d^2\\log_p(q)^2$.\nSince $1<n_1<\\sqrt{n}$, we have $n\\geq 6$ and $n_2\\geq 3$.\n\nAssume $(n_1,n_2)=(2,3)$. Then $|H_0|=d^{-1}|\\mathrm{SU}_{n_1}(q)|\\cdot |\\mathrm{SU}_{n_2}(q)|\\leq d^{-1}q^{11}$.\nFrom Eq.~\\eqref{eq:H1} we have\n\\[\n\\frac{1}{2}q^{34} <|G_0|\\leq  |H_0|^3 \\vert \\mathcal{O}_{1}  \\vert^2< (d^{-3}  q^{33} ) (4d^2\\log_p(q)^2) < 4 \\log_p(q)^2 q^{33 }  .\n\\]  \nIt follows $q<8\\log_p(q)^2$, which holds only for \n\\[\nq\\in \\{ 2, 3, 4, 5, 7, 8, 9, 16, 25, 27, 32, 64, 81, 128, 256, 512\\}.\n\\]\nComputation shows that Eq.~\\eqref{eq:H1} does not hold for any $q$ above.\nTherefore, the case  $(n_1,n_2)=(2,3)$ can not happen.\n\nAssume that $(n_1,n_2)\\neq (2,3)$. \nNow\n\\[\n| H_0| \\leq \\frac{|\\mathrm{SU}_{n_1}(q)||\\mathrm{SU}_{n_2}(q)| (q+1) }{d }\\leq \\frac{q^{{n_1}^2+{n_2}^2-2}}{ d} \\cdot \\frac{3q}{2}=\\frac{3q^{{n_1}^2+{n_2}^2-1}}{2d}.\n\\] \nSince  $\\vert \\mathcal{O}_{1}\\vert^2\\leq \\vert \\mathrm{Out} (G_0) \\vert^2 \\leq 9d^2q/2$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n  \\frac{1}{2} q^{{n_1}^2{n_2}^2-2} <|G_0|\\leq  |H_0|^3 \\vert \\mathcal{O}_{1}  \\vert^2< ( (\\frac{3}{2d})^3 q^{3({n_1}^2+{n_2}^2-1)} ) (\\frac{9}{2}d^2q ) < \\frac{243 }{16}q^{3({n_1}m^2+{n_2}^2-2) }  . \n\\] \nIt follows that \n\\begin{equation}\\label{eq:psuc4}\n  {n_1}^2{n_2}^2-3({n_1}^2+{n_2}^2) < \\log_q( \\frac{243}{8})<\\log_q( 31).\n\\end{equation} \nSince $({n_1},{n_2})\\neq (2,3)$ and $1<{n_1}<\\sqrt{{n_1}{n_2}}$, we have ${n_2}\\geq 4$.\nIf ${n_2}\\geq 5$, then \n\\[ {n_1}^2{n_2}^2-3({n_1}^2+{n_2}^2)=({n_1}^2-3){n_2}^2-3{n_1}^2\\geq 22{n_1}^2-75\\geq 22\\cdot 4-75=13>\\log_2(31)\\geq \\log_q(31),\\] a contradiction.\nTherefore, ${n_2}=4$. Now ${n_1}^2{n_2}^2-3({n_1}^2+{n_2}^2)  =13{n_1}^2-48$.\nIt implies that Eq.~\\eqref{eq:psuc4} holds only for $({n_1},{n_2},q)=(2,4,2)$. \nHowever, by~\\cite[Tables~8.46]{BHRD2013}, when $q=2$, such maximal subgroup $H_1$ of type  $\\mathrm{GU}_2(q)\\otimes \\mathrm{GU}_4(q) $  do not exist."
+    },
+    {
+      "id": "lemma-28-24ea8be5",
+      "type": "lemma",
+      "content": "\\label{lm:psuc5}\nSuppose $G_0=\\mathrm{PSU}_n(q)$ and $H_0 \\in\\mathcal{C}_5$. \nThen $H_1$ is large in $G_1$ if and only if  \n $H_0$ is of type $\\mathrm{Sp}_n(q)$ or $\\mathrm{GO}_{n}^{\\epsilon}(q)$, or $\\mathrm{GU}_n(q^{1/r})$, where $r=2$ or $3$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _5. Then H_1 is large in G_1 if and only if H_0 is of type _n(q) or _n^(q), or _n(q^1/r), where r=2 or 3.",
+      "display_name": "Lemma",
+      "label": "lm:psuc5",
+      "position": {
+        "line_start": 1303,
+        "line_end": 1307
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "q_0+1,\\frac{q+1}{(q+1,n)}]^{-1}(q+1) $. \nBy Lemma~\\ref{lm:LUSO}, we have $|\\mathrm{PGU}_n(q_0)| < q_0^{n^2-1}$.\nH",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "^{n^2-1}$.\nHence, $|H_0|<q_0^{n^2-1}$. \nFrom Eqs.~\\eqref{eq:H1} we have  \n\\[\nq_0^{r(n^2-2)}= q^{n^2-2}<|G_0|\\leq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psuc5",
+          "reference_type": "external",
+          "context": "2}(5)>\\log_{q_0}(5)$, a contradiction. \nThus, Eq.~\\eqref{eq:psuc5} holds if and only if $r\\in \\{2,3\\}$. \nIf $r=2$, t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $H_0$ is of type $\\mathrm{Sp}_n(q)$ or $\\mathrm{GO}_{n}^{\\epsilon}(q)$, then $H_0$ is large in $G_0$, see~\\cite[Propostion~4.17]{AB2015}. \nBy~\\cite[Table 3.5.B]{K-Lie}, it remains to consider the case where $H_0$ is of type  $\\mathrm{GU}_n(q_0)$ with $q=q_0^r$, $r$ prime.\nSuppose this case happen. \nBy~\\cite[Proposition 4.5.3]{K-Lie}, $|H_0|=c(q+1)^{-1} |\\mathrm{PGU}_n(q_0)|$, where $c= [q_0+1,\\frac{q+1}{(q+1,n)}]^{-1}(q+1) $. \nBy Lemma~\\ref{lm:LUSO}, we have $|\\mathrm{PGU}_n(q_0)| < q_0^{n^2-1}$.\nHence, $|H_0|<q_0^{n^2-1}$. \nFrom Eqs.~\\eqref{eq:H1} we have  \n\\[\nq_0^{r(n^2-2)}= q^{n^2-2}<|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_1 \\vert^2< q_0^{3n^2-3}(5q^3)<5 q_0^{3n^2 }  .  \n\\]  \nIt follows that\n\\begin{equation}\\label{eq:psuc5}\nn^2(r-3)-2r <\\log_{q_0}(5).\n\\end{equation} \n\nNotice that  $r$ is a prime and $r\\mid n$.\nIf $r\\geq 5$, then $n^2(r-3)-2r\\geq r^2(r-3)-2r \\geq 5^2\\cdot 2-10 >\\log_{2}(5)>\\log_{q_0}(5)$, a contradiction. \nThus, Eq.~\\eqref{eq:psuc5} holds if and only if $r\\in \\{2,3\\}$. \nIf $r=2$, then $H_0$ is large in $G_0$ by ~\\cite[Propostion~4.17]{AB2015}."
+    },
+    {
+      "id": "lemma-29-31ed3546",
+      "type": "lemma",
+      "content": "\\label{lm:psuc6}\nSuppose $G_0=\\mathrm{PSU}_n(q)$ and $H_0 \\in\\mathcal{C}_6$.\nThen $H_1$ is large in $G_1$ if and only if  $(G_0,H_0)$ is one of the following\n\\[\n (\\mathrm{PSU}_{3}(5),3^{2}.\\mathrm{Q}_{8} ),  \n (\\mathrm{PSU}_{4}(3),2^{4}.\\mathrm{A}_{6} ),   (\\mathrm{PSU}_{4}(7),2^{4}.\\mathrm{S}_{6} ) . \n\\]",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _6. Then H_1 is large in G_1 if and only if (G_0,H_0) is one of the following [ (_3(5),3^2._8 ), (_4(3),2^4.",
+      "display_name": "Lemma",
+      "label": "lm:psuc6",
+      "position": {
+        "line_start": 1333,
+        "line_end": 1340
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "r)|\\leq  r^{2m+m(2m+1)}=r^{m(2m+3)} .\n\\]\nFrom Eq.~\\eqref{eq:H1} we have \n\\[\n  \\frac{1}{2}q^{n^2-2} <|G_0|\\leq  |H",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psuc61",
+          "reference_type": "external",
+          "context": "nequality holds if and only if $m=1$.  \nThen  Eq.~\\eqref{eq:psuc61} is reduced to \n\\[\nr^{2}-5<15\\log_q(r)+\\log_{q}(18",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "cal{O}_1|=2(3,q+1)/c$.\nComputation shows that Eq.~\\eqref{eq:H1} holds if and only if $q=5$, giving the pair $(G_0",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psuc61",
+          "reference_type": "external",
+          "context": "q 2$ and $H_0=2^{2m}.\\mathrm{Sp}_{2m}(2)$. Now Eq~\\eqref{eq:psuc61} also holds, that is,\n\\[\n2^{2m}-5 <3m(2m+3)\\log_q(",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "|\\mathcal{O}_1|=2$.\nComputation shows  that  Eq.~\\eqref{eq:H1} does not hold for any $q\\leq 17$. Hence the case",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "$|\\mathcal{O}_1|=2$. \nComputation shows that Eq.~\\eqref{eq:H1} holds if and only if $q\\in \\{3,7 \\}$, giving $(\\m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~4.6.B]{K-Lie},  $H_0$ has two types, $r^{1+2m}.\\mathrm{Sp}_{2m}(r)$ and   $(4\\circ 2^{1+2m}).\\mathrm{Sp}_{2m}(2)$.\n\nAssume that $H_0$ is of type  $r^{1+2m}.\\mathrm{Sp}_{2m}(r)$, where $n=r^{m},m\\geq 1$ and $r$ is an odd prime divisor of $q+1$.\nBy~\\cite[Proposition 4.6.5]{K-Lie}, if $n=3$ and $q\\equiv 2,5\\pmod{9}$, then $H_0=3^2:\\mathrm{Q}_8$, otherwise  $H_0=r^{2m}.\\mathrm{Sp}_{2m}(r)$.\nThen\n\\[\n|H_0|\\leq r^{2m}|\\mathrm{Sp}_{2m}(r)|\\leq  r^{2m+m(2m+1)}=r^{m(2m+3)} .\n\\]\nFrom Eq.~\\eqref{eq:H1} we have \n\\[\n  \\frac{1}{2}q^{n^2-2} <|G_0|\\leq  |H_0|^3 \\vert \\mathcal{O}_1\\vert^2< r^{3m(2m+3)}(9q^3) .  \n\\] \nIt follows that\n\\begin{equation}\\label{eq:psuc61}\nr^{2m}-5=n^2-5 <3m(2m+3)\\log_q(r)+\\log_{q}(18).\n\\end{equation}\nSince $r \\mid (q+1)$, we have $\\log_q(r)\\leq \\log_2(3)<1.6$. Then \n\\[\n3^{2m}-5<4.8m(2m+3)+\\log_{2}(18).\n\\]\nThis inequality holds if and only if $m=1$.  \nThen  Eq.~\\eqref{eq:psuc61} is reduced to \n\\[\nr^{2}-5<15\\log_q(r)+\\log_{q}(18).\n\\]\nIf $r\\geq 5$, then $15\\log_q(r)+\\log_{q}(18)<15\\log_{4}(5)+\\log_{4}(18)<20 \\leq r^{2}-5$, a contradiction.\nTherefore, $r=3$, and hence $n=3$. By~\\cite[Table~8.5]{BHRD2013}, $q=p=2\\pmod{3}$,   $H_0=3^2:\\mathrm{Q}_8.c$, where $c=(9,q+1)/3$, and $|\\mathcal{O}_1|=2(3,q+1)/c$.\nComputation shows that Eq.~\\eqref{eq:H1} holds if and only if $q=5$, giving the pair $(G_0,H_0)=(\\mathrm{PSU}_3(5),3^2:\\mathrm{Q}_8)$. \n\nAssume that $H_0$ is of type   $(4\\circ 2^{1+2m}).\\mathrm{Sp}_{2m}(2)$, where $n=2^m$. \nBy~\\cite[Proposition 4.6.6]{K-Lie}, if $n=4$ and $q\\equiv 3\\pmod{8}$, then $H_0=2^4:\\mathrm{A}_6$, otherwise  $H_0=2^{2m}.\\mathrm{Sp}_{2m}(2)$.\n \nSuppose $n>4$. Then $m\\geq 2$ and $H_0=2^{2m}.\\mathrm{Sp}_{2m}(2)$. Now Eq~\\eqref{eq:psuc61} also holds, that is,\n\\[\n2^{2m}-5 <3m(2m+3)\\log_q(2)+\\log_{q}(18).\n\\] \nIf $m\\geq 3$, then $3m(2m+3)\\log_q(2)+\\log_{q}(18)<81\\log_3(2)+\\log_{3}(18)<54$, while $2^{2m}-5\\geq 59$, a contradiction.\nTherefore, $m=2$.\nThen $11<42\\log_q(2)+\\log_{q}(18)$, forcing $q\\leq 17$.\nBy~\\cite[Table 8.46]{BHRD2013} $q=p=3\\pmod{4}$ and $ |\\mathcal{O}_1|=2$.\nComputation shows  that  Eq.~\\eqref{eq:H1} does not hold for any $q\\leq 17$. Hence the case $n>4$ can not happen.\n\nLet $n=4$. By~\\cite[Table~8.10]{BHRD2013}, either  $H_0=2^4:\\mathrm{A}_6$, $q=p=3\\pmod{8}$ and $|\\mathcal{O}_1|=4$, or  $H_0=2^4:\\mathrm{S}_6$, $q=p=7\\pmod{8}$ and $|\\mathcal{O}_1|=2$. \nComputation shows that Eq.~\\eqref{eq:H1} holds if and only if $q\\in \\{3,7 \\}$, giving $(\\mathrm{PSU}_3(3),2^4:\\mathrm{A}_6)$ and $(\\mathrm{PSU}_3(3),2^4:\\mathrm{S}_6)$."
+    },
+    {
+      "id": "lemma-30-a2d88a59",
+      "type": "lemma",
+      "content": "\\label{lm:psuc7}\nSuppose $G_0=\\mathrm{PSU}_n(q)$ and $H_0 \\in \\mathcal{C}_7 $.\nThen $H_1$ is non-large in $G_1$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _7 . Then H_1 is non-large in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:psuc7",
+      "position": {
+        "line_start": 1391,
+        "line_end": 1394
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "2^{t\\log_2(\\frac{t+1}{2})}$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\frac{1}{2}q^{m^{2t}-2} <|G_0|\\leq |H_0|",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose for a contradiction that $H_1$ is large in $G_1$. \nBy~\\cite[Table~4.6.B and Proposition 4.7.3]{K-Lie},  $H_0$ is  of type $\\mathrm{GU}_{m}(q) \\wr \\mathrm{S}_t$, where $n=m^t$ with $m\\geq 3$ and $t \\geq 2$, and $(m,q)\\neq (3,2)$, and $|H_0|<|\\mathrm{SU}_{m}(q)|^{t}t! $.  \nSince $|\\mathrm{SU}_{m}(q)|<q^{m^2-1}$, $|G_0|\\geq q^{n^2-2}/2$, $\\vert \\mathcal{O}_1 \\vert^2<9q^3$ and $t!<2^{t\\log_2(\\frac{t+1}{2})}$, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\frac{1}{2}q^{m^{2t}-2} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_1 \\vert^2< (q^{t(m^2-1)}t!)^3\\cdot (9q^3)<9q^{3t(m^2-1)+3}\\cdot 2^{3t\\log_2(\\frac{t+1}{2})} .  \n\\] \nIt follows that \n\\[\n m^{2t}-3t(m^2-1)-5<\\log_2(18) +3t\\log_2(\\frac{t+1}{2}).\n\\]\nSince $m\\geq 3$, we have\n\\[\n 3^{2t}-24t-5 <\\log_2(18) +3t\\log_2(\\frac{t+1}{2}). \n\\]\nHowever, there is no $t\\geq 2$ satisfying the above inequality. \nThis contradiction proves the lemma."
+    },
+    {
+      "id": "lemma-31-1b4c8f77",
+      "type": "lemma",
+      "content": "[{\\cite[Proposition 4.22]{AB2015}}]\\label{lm:pspc1}\nSuppose $G_0=\\mathrm{PSp}_n(q)$.\nIf $H_0\\in \\mathcal{C}_1 \\cup \\mathcal{C}_8$, then $H_0$ is large in $G_0$.",
+      "content_preview": "[] Suppose G_0=_n(q). If H_0 _1 _8, then H_0 is large in G_0.",
+      "display_name": "Lemma",
+      "label": "lm:pspc1",
+      "position": {
+        "line_start": 1440,
+        "line_end": 1443
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-32-77b059d9",
+      "type": "lemma",
+      "content": "\\label{lm:pspc2}\nSuppose $G_0=\\mathrm{PSp}_n(q)$ and $H_0 \\in\\mathcal{C}_2$.\nIf $H_0$ is of type $\\mathrm{GL}_{n/2}(q)$, then $H_0$ is large in $G_0$ if and only if   $H_0$  is of type $\\mathrm{GL}_{n/2}(q).2$ or of type $\\mathrm{Sp}_{n/t}(q)\\wr \\mathrm{S}_t$, where  $t\\in \\{2,3\\}$, or $(n,t)=(8,4)$, or $(q,n,t)= (3,10,5)$ or $(4,10,5)$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _2. If H_0 is of type _n/2(q), then H_0 is large in G_0 if and only if H_0 is of type _n/2(q).",
+      "display_name": "Lemma",
+      "label": "lm:pspc2",
+      "position": {
+        "line_start": 1446,
+        "line_end": 1449
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "athrm{Sp}_m(q)|<q^{\\frac{m(m+1)}{2}}$, see Lemmas~\\ref{lm:LUSO} and~\\ref{lm:LUSO1}, and $\\log_p(q)^2<9q/8$.\nFrom",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO1",
+          "reference_type": "internal",
+          "context": "{\\frac{m(m+1)}{2}}$, see Lemmas~\\ref{lm:LUSO} and~\\ref{lm:LUSO1}, and $\\log_p(q)^2<9q/8$.\nFrom Eq.~\\eqref{eq:H} we",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "~\\ref{lm:LUSO1}, and $\\log_p(q)^2<9q/8$.\nFrom Eq.~\\eqref{eq:H} we have   \n\\[ \n\\frac{1}{2d}q^{\\frac{tm(tm+1)}{2}}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "iples $(q,m,t)$ above, computation shows that Eq.~\\eqref{eq:H1} holds if and only if $(q,m,t)= (3,2,5)$ or $(4,2,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~3.5.C]{K-Lie}, $H_0$ has two types $\\mathrm{GL}_{n/2}(q).2 $ and $\\mathrm{Sp}_m(q)\\wr \\mathrm{S}_t$. If $H_0$ is of type $\\mathrm{GL}_{n/2}(q).2 $, then $H_0$ is large in $G_0$, see  ~\\cite[Proposition 4.22]{AB2015}. \n\nNext, we suppose that  $H_0$ is of type $\\mathrm{Sp}_m(q)\\wr \\mathrm{S}_t$. Now, $n=mt$, $m$ even and $t\\geq 2$.\nMoreover, $(m,q)\\neq (2,2)$, see~\\cite[Proposition 2.3.6]{BHRD2013}. \nBy~\\cite[Proposition~4.2.10]{K-Lie}, $ |\\mathcal{O}_{1}| =d\\log_p(q)$, and $|H_0|=d^{-1} |\\mathrm{Sp}_m(q)|^t t!$.  \nNotice that $  |G_0|> (2d)^{-1}q^{\\frac{n(n+1)}{2}} $ and $|\\mathrm{Sp}_m(q)|<q^{\\frac{m(m+1)}{2}}$, see Lemmas~\\ref{lm:LUSO} and~\\ref{lm:LUSO1}, and $\\log_p(q)^2<9q/8$.\nFrom Eq.~\\eqref{eq:H} we have   \n\\[ \n\\frac{1}{2d}q^{\\frac{tm(tm+1)}{2}} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (d^{-3} q^{\\frac{3tm(m+1)}{2}} (t!)^3 ) \\cdot (\\frac{9}{8}q d ^2) . \n\\] \nThen\n\\[\nq^{\\frac{tm(m(t-3)-2)}{2}-1}<\\frac{9}{4}(t!)^3\n\\]\nComputation shows that  the above inequality holds if and only if $t\\in \\{2,3\\}$, $(m,t)=(2,4)$ or $(q,m,t)$ is one of the following\n\\[ \n( 2 ,  3 ,  4 ),\n( 3 ,  2 ,  5 ),\n( 3 ,  3 ,  4 ),\n( 4 ,  2 ,  5 ),\n( 4 ,  3 ,  4 ),\n( 5 ,  2 ,  5 ),\n( 5 ,  3 ,  4 ),\n( 7 ,  3 ,  4 ).\n\\] \nIf $t\\in \\{2,3\\}$ or $(m,t)=(2,4)$, then $H_0$ is large in $G_0$ by~\\cite[Proposition 4.21]{AB2015}. \nFor those triples $(q,m,t)$ above, computation shows that Eq.~\\eqref{eq:H1} holds if and only if $(q,m,t)= (3,2,5)$ or $(4,2,5)$."
+    },
+    {
+      "id": "lemma-33-3601dbe4",
+      "type": "lemma",
+      "content": "\\label{lm:pspc3}\nSuppose $G _0=\\mathrm{PSp}_n(q)$ and $H_0 \\in\\mathcal{C}_3$.\nThen $H_1$ is large in $G_1$ if and only if  $H_0$  is large in $G_0$, and  $H_0$ is of type $\\mathrm{GU}_{n/2}(q)$, $\\mathrm{Sp}_{n/2}(q^2)$ or $\\mathrm{Sp}_{n/3}(q^3)$.",
+      "content_preview": "Suppose G _0=_n(q) and H_0 _3. Then H_1 is large in G_1 if and only if H_0 is large in G_0, and H_0 is of type _n/2(q), _n/2(q^2) or _n/3(q^3).",
+      "display_name": "Lemma",
+      "label": "lm:pspc3",
+      "position": {
+        "line_start": 1482,
+        "line_end": 1485
+      },
+      "references": [
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "e}, $|H_0|=d^{-1}r|\\mathrm{Sp}_m(q^r)|$.\nFrom Eq.~\\eqref{eq:H} we have  \n\\[ \n\\frac{1}{2d}q^{\\frac{rm(rm+1)}{2}}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Proposition~4.22]{AB2015}, if $H_0$ is of type $\\mathrm{GU}_{n/2}(q)$, $\\mathrm{Sp}_{m}(q^2)$ or $\\mathrm{Sp}_{m}(q^3)$, then $H_0$ is large in $G_0$.\nHence, it suffices  to prove that $H_1$ is non-large in $G_1$  in when $H_0$ is of type $\\mathrm{Sp}_{m}(q^r)$ with $r\\geq 5$. \nSuppose for a contradiction that this case happen.  \nBy~\\cite[Proposition 4.3.10]{K-Lie}, $|H_0|=d^{-1}r|\\mathrm{Sp}_m(q^r)|$.\nFrom Eq.~\\eqref{eq:H} we have  \n\\[ \n\\frac{1}{2d}q^{\\frac{rm(rm+1)}{2}} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (d^{-3}r^3 q^{\\frac{3rm(m+1)}{2}} ) \\cdot (\\frac{9}{8}q d ^2) . \n\\]  \nThen \n\\[\nq^{\\frac{rm(m(r-3)-2)}{2}-1}<\\frac{9}{4}r^3.\n\\]\nSince $m\\geq 2$, we derive \n\\[\n\\frac{r(2(r-3)-2)}{2}-1 <\\log_2(\\frac{9}{4})+3\\log_2(r).\n\\]\nHowever, there is no $r\\geq 5$ satisfying the above inequality."
+    },
+    {
+      "id": "lemma-34-27206f51",
+      "type": "lemma",
+      "content": "\\label{lm:pspc4}\nSuppose $G_0=\\mathrm{PSp}_n(q)$ and $H_0\\in  \\mathcal{C}_4$.\nThen $H_1$ is non-large in $G_1$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _4. Then H_1 is non-large in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:pspc4",
+      "position": {
+        "line_start": 1508,
+        "line_end": 1511
+      },
+      "references": [
+        {
+          "target_id": "prop:orders",
+          "reference_type": "internal",
+          "context": ".(2,{n_2})|.\n\\] \nSince $q$ is odd, by Proposition~\\ref{prop:orders} and Lemma~\\ref{lm:LUSO} we have $|(\\mathrm{PSp}_{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "s odd, by Proposition~\\ref{prop:orders} and Lemma~\\ref{lm:LUSO} we have $|(\\mathrm{PSp}_{n_1}(q) |\\leq \\frac{1}{2",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": ")^2\\leq  q$ (as $q$ is odd), we conclude from Eq.~\\eqref{eq:H} that  \n\\[ \n\\frac{1}{4}q^{\\frac{{n_1}{n_2}({n_1}{n",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose for a contradiction that $H_1$ is large in $G_1$.\nBy~\\cite[Table~3.5.C and Proposition~4.4.11]{K-Lie}, $H_0$ is of type $\\mathrm{Sp}_{n_1}(q)\\otimes \\mathrm{GO}_{n_2}^{\\epsilon}(q) $, where $q$ is odd, $n_2\\geq 3$ and $n={n_1}{n_2}$, and \n\\[\n|H_0|= |(\\mathrm{PSp}_{n_1}(q) \\times \\mathrm{PGO}_{n_2}^{\\epsilon}(q)).(2,{n_2})|.\n\\] \nSince $q$ is odd, by Proposition~\\ref{prop:orders} and Lemma~\\ref{lm:LUSO} we have $|(\\mathrm{PSp}_{n_1}(q) |\\leq \\frac{1}{2}q^{\\frac{1}{2}n_1(n_1+1)}$ and $|\\mathrm{PGO}_{n_2}^{\\epsilon}(q)|=|\\mathrm{SO}_{n_2}^{\\epsilon}(q)|\\leq q^{\\frac{1}{2}n_2(n_2-1)}$. \nHence, $|H_0|\\leq q^{\\frac{n_1(n_1-1)+n_2(n_2-1)}{2}}$. \nSince $  |G_0|>  q^{\\frac{n(n+1)}{2}}/4 $ and $\\log_p(q)^2\\leq  q$ (as $q$ is odd), we conclude from Eq.~\\eqref{eq:H} that  \n\\[ \n\\frac{1}{4}q^{\\frac{{n_1}{n_2}({n_1}{n_2}-1)}{2}} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (  q^{\\frac{ 3{n_1}({n_1}+1)+3{n_2}({n_2}-1)}{2}} ) \\cdot (4q ) . \n\\]   \nThen $q^{f({n_1},{n_2})}\\leq 16$, where \n\\[\nf({n_1},{n_2}):= \\frac{{n_1}{n_2}({n_1}{n_2}-1)-3{n_1}({n_1}-1)-3{n_2}({n_2}-1)}{2}-1.\n\\]\nIt is easy to verify that $f({n_1},{n_2})$ is increasing in both $n_1$ and $n_2$.\nThe only possibility for $(n_1,n_2,q)$ satsifying $q^{f({n_1},{n_2})}\\leq 16$ is $(2,3,3)$, where $f(2,3)=2$.\nNow $n=6$. However, ~\\cite[Table 8.28]{BHRD2013} tells us that $\\mathrm{Sp}_{6}(3)$ has no such a maximal subgroup of type $\\mathrm{Sp}_{2}(3)\\otimes \\mathrm{GO}_{3}^{\\epsilon}(3) $."
+    },
+    {
+      "id": "lemma-35-f4c5a82c",
+      "type": "lemma",
+      "content": "\\label{lm:pspc5}\nSuppose $G_0=\\mathrm{PSp}_n(q)$ and $H_0 \\in\\mathcal{C}_5$. Then $H_1$ is large in $G_1$ if and only if  $H_0$ is of type $\\mathrm{Sp}_n(q^{1/r})$,  where  $r=2$ or $3$. \nIn particular, if $r=2$, then $H_0$ is large in $G_0$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _5. Then H_1 is large in G_1 if and only if H_0 is of type _n(q^1/r), where r=2 or 3.",
+      "display_name": "Lemma",
+      "label": "lm:pspc5",
+      "position": {
+        "line_start": 1535,
+        "line_end": 1538
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "2}n(n+1)}$ and $|\\mathcal{O}_1|^2\\leq 4q$, by Eq.~\\eqref{eq:H1} we have \n\\[\n  q_0^{\\frac{1}{2}rn(n+1)} <|G_0|\\leq",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "q_0)|^3}{|\\mathrm{Sp}_n(q_0^3)|} .\n  \\] \nBy Lemma~\\ref{lm:LUSO}, we have $\\frac{1}{2}q_0^{\\frac{1}{2}n(n+1)}<|\\ma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~3.5.C]{K-Lie}, $H_0$ has only one type $\\mathrm{Sp}_n(q_0 )$, where $q=q_0^r$, $r$ prime. \nIf $r=2$, then $H_0$ is large in $G_0$ by~\\cite[Proposition~4.22]{AB2015}.\nHence, we assume $r\\geq 3$. \nBy~\\cite[Proposition 4.5.4]{K-Lie}, $H_0=| \\mathrm{PSp}_n(q_0).c|$, where $c=(2,q-1,r)$.\nThus, $|H_0|\\leq |\\mathrm{Sp}_n(q_0)|\\leq q_0^{\\frac{1}{2}n(n+1)}$.\nSince $|G_0|\\geq \\frac{1}{4}q^{\\frac{1}{2}n(n+1)}$ and $|\\mathcal{O}_1|^2\\leq 4q$, by Eq.~\\eqref{eq:H1} we have \n\\[\n  q_0^{\\frac{1}{2}rn(n+1)} <|G_0|\\leq  |H_0|^3 |\\mathcal{O}_1|^2< q_0^{\\frac{1}{2}3n(n+1)} 4q_0^r .  \n\\]\nIt follows that\n\\[ \n  n(n+1)(r-3)-2r <\\log_{q_0}(4).\n\\] \nIf $r\\geq 5$, then $n^2(r-3)-2r-3>4^2\\cdot 2-10-3=19$, while $\\log_{q_0}(4)\\leq 2$, a contradiction.\nTherefore, $r=3$.\nNow,  \n\\[\n  \\frac{|H_0|^3|\\mathcal{O}_1|^2}{|G_0|}=\\frac{ c|\\mathrm{Out}(G_0)|^2\\cdot  |\\mathrm{PSp}_n(q_0)|^3}{ |\\mathrm{PSp}_n(q_0^3)|}=   c\\log_p(q)^2 \\cdot \\frac{|\\mathrm{Sp}_n(q_0)|^3}{|\\mathrm{Sp}_n(q_0^3)|} .\n  \\] \nBy Lemma~\\ref{lm:LUSO}, we have $\\frac{1}{2}q_0^{\\frac{1}{2}n(n+1)}<|\\mathrm{Sp}_n(q_0)|< q_0^{\\frac{1}{2}n(n+1)} $.\nHence, ${|\\mathrm{Sp}_n(q_0)|^3}/{|\\mathrm{Sp}_n(q_0^3)|}\\geq \\frac{1}{8}$.\nSince $3\\leq r\\leq \\log_p(q)$, we have $\\log_p(q)^2\\geq 9$, and hence $|H_0|^3|\\mathcal{O}_1|^2>|G_0|$, that is, $H_1$ is large in $G_1$."
+    },
+    {
+      "id": "lemma-36-0274ab2b",
+      "type": "lemma",
+      "content": "\\label{lm:pspc6}\nSuppose $G_0=\\mathrm{PSp}_n(q)$ and $H_0 \\in\\mathcal{C}_6$.\nThen $H_1$ is large in $G_1$ if and only if  $(G_0,H_0)$ is one of the following\n\\[\n (\\mathrm{PSp}_{4}(3),2^{4}:\\mathrm{\\Omega}^{-}_{4}(2) ),  \n (\\mathrm{PSp}_{4}(5),2^{4}.\\mathrm{\\Omega}^{-}_{4}(2) ),   (\\mathrm{PSU}_{4}(7),2^{4}.\\mathrm{SO}^{-}_{4}(2),    (\\mathrm{PSp}_{8}(3),2^{6}.\\mathrm{\\Omega}^{-}_{6}(2) . \n\\]",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _6. Then H_1 is large in G_1 if and only if (G_0,H_0) is one of the following [ (_4(3),2^4:^-_4(2) ), (_4(5),2^4.",
+      "display_name": "Lemma",
+      "label": "lm:pspc6",
+      "position": {
+        "line_start": 1566,
+        "line_end": 1573
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "\\]\n \nIf  $m=2$, then computation shows that Eq.~\\eqref{eq:H1} holds if and only if $q \\in \\{3,5,7 \\}$, giving p",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "m{SO}^{-}_{4}(2) )$ .\n\nAssume $m\\geq 3$. By Lemma~\\ref{lm:LUSO}, $|\\mathrm{SO}_{2m}^{-}(2)|<  2^{m(2m-1)}$. Hence",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "d $|\\mathcal{O}_1| \\leq 2 $, we conclude from Eq.~\\eqref{eq:H} that  \n\\[ \n\\frac{1}{4}q^{\\frac{2^m(2^m+1)}{2}} <|",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "3$. In the case $m=3$, computation shows that Eq.~\\eqref{eq:H1} holds if and only if $q=3$, giving the pair $(\\ma",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~3.5.C and Proposition~4.3.9]{K-Lie}, $H_0$ has only one type $2^{1+2m}.\\mathrm{\\Omega}_{2m}^{-}(2)$, where $n=2^m$, $q=p$, and $|\\mathcal{O}_1|=1$ if $q\\equiv \\pm 1\\pmod{8}$, otherwise $|\\mathcal{O}_1|=2$, and \n\\[\n  H_0=\\begin{cases}\n    2^{2m}:\\mathrm{SO}_{2m}^{-}(2) & \\text{if $q\\equiv \\pm 1\\pmod{8}$}  \\\\\n    2^{2m}:\\mathrm{\\Omega}_{2m}^{-}(2)  & \\text{if $q\\equiv \\pm 3\\pmod{8}$}.  \n  \\end{cases} \n\\]\n \nIf  $m=2$, then computation shows that Eq.~\\eqref{eq:H1} holds if and only if $q \\in \\{3,5,7 \\}$, giving pairs $(\\mathrm{PSp}_{4}(3),2^{4}:\\mathrm{\\Omega}^{-}_{4}(2) )$,   $(\\mathrm{PSp}_{4}(5),2^{4}:\\mathrm{\\Omega}^{-}_{4}(2)  )$ and $(\\mathrm{PSp}_{4}(7),2^{4}:\\mathrm{SO}^{-}_{4}(2) )$ .\n\nAssume $m\\geq 3$. By Lemma~\\ref{lm:LUSO}, $|\\mathrm{SO}_{2m}^{-}(2)|<  2^{m(2m-1)}$. Hence  $\n|H_0|\\leq 2^{2m}|\\mathrm{SO}_{2m}^{-}(2)|\\leq   2^{2m^2+m+1}$. \nSince $  |G_0|> (2d)^{-1}q^{\\frac{n(n+1)}{2}}=  q^{\\frac{2^m(2^m+1)}{2}}/4$ and $|\\mathcal{O}_1| \\leq 2 $, we conclude from Eq.~\\eqref{eq:H} that  \n\\[ \n\\frac{1}{4}q^{\\frac{2^m(2^m+1)}{2}} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < 2^{6m^2+3m+3} \\cdot 4 . \n\\]   \nIt follows that $q^{ 2^{m-1}(2^m+1) }< 2^{6m^2+3m+7}$, implying\n\\[\n 2^{m-1}(2^m+1) <(6m^2+3m+7)\\log_q(2).\n\\]\nIf $m\\geq 4$, then $2^{m-1}(2^m+1) \\geq 136$, while   $(6m^2+3m+4)\\log_q(2)  <73$, a contradiction.\nTherefore, $m=3$. In the case $m=3$, computation shows that Eq.~\\eqref{eq:H1} holds if and only if $q=3$, giving the pair $(\\mathrm{PSp}_{8}(3),2^{6}:\\mathrm{\\Omega}_6(2))$."
+    },
+    {
+      "id": "lemma-37-bc17470b",
+      "type": "lemma",
+      "content": "\\label{lm:pspc7}\nSuppose $G_0=\\mathrm{PSp}_n(q)$ and $H_0 \\in \\mathcal{C}_7 $.\nThen $H_1$ is non-large in $G_1$.",
+      "content_preview": "Suppose G_0=_n(q) and H_0 _7 . Then H_1 is non-large in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:pspc7",
+      "position": {
+        "line_start": 1602,
+        "line_end": 1605
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "0|=d^{-1}|\\mathrm{Sp}_{m}(q)|^{t}t! $.  \nFrom Eq.~\\eqref{eq:H1} we have \n\\[ \n\\frac{1}{2d}q^{\\frac{m^t(m^t+1)}{2}}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pspc7",
+          "reference_type": "external",
+          "context": "5^8$, a contradiction.\nTherefore, $q=3$. Now  Eq.~\\eqref{eq:pspc7} is reduced to\n\\[\n \\frac{m^3(m^3+1)-9m(m+1)}{2}-1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Suppose for a contradiction that $H_1$ is large in $G_1$.\nNow, $H_0$ is  of type $\\mathrm{Sp}_{m}(q) \\wr \\mathrm{S}_t$, where $n=m^t$, and $qt$ is odd, and $(m,q)\\neq (2,3)$, and $|H_0|=d^{-1}|\\mathrm{Sp}_{m}(q)|^{t}t! $.  \nFrom Eq.~\\eqref{eq:H1} we have \n\\[ \n\\frac{1}{2d}q^{\\frac{m^t(m^t+1)}{2}} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (d^{-3} q^{\\frac{3tm(m+1)}{2}} (t!)^3 ) \\cdot (\\frac{9}{8}q d ^2) . \n\\] \nThen\n\\begin{equation}\\label{eq:pspc7}\nq^{\\frac{m^t(m^t+1)-3tm(m+1))}{2}-1}<\\frac{9}{4}(t!)^3.\n\\end{equation} \nComputation shows that  the above inequality holds if and only if $(q,m,t)=(3,2,3)$.\nSince $t!<(t+1)^t$, $m\\geq 2$ and $q\\geq 3$, we have\n\\[ \n 2^{t-1}(2^t+1)-9t -1  \\leq  \\frac{m^t(m^t+1)-3tm(m+1))}{2}-1 <\\log_q(\\frac{9}{4})+3t\\log_q(t+1). \n\\] \nIf $t\\geq 5$, then $2^{t-1}(2^t+1)-9t -1\\geq 466$, while $\\log_q(\\frac{9}{4})+3t\\log_q(t+1)\\leq \\log_3(\\frac{9}{4})+3t\\log_3(t+1)<26$, a contradiction.\nTherefore, $t=3$.\nThen $2^{t-1}(2^t+1)-9t -1=8$.\nIf $q\\geq 5$, then $q^{\\frac{m^t(m^t+1)-3tm(m+1))}{2}-1}\\geq 5^8$, while $\\frac{9}{4}(t!)^3< 5^8$, a contradiction.\nTherefore, $q=3$. Now  Eq.~\\eqref{eq:pspc7} is reduced to\n\\[\n \\frac{m^3(m^3+1)-9m(m+1)}{2}-1 <\\log_3(486).\n\\]\nIt holds only for $m=2$. However, this contradicts $(m,q)\\neq (2,3)$."
+    },
+    {
+      "id": "lemma-38-e5ed6a83",
+      "type": "lemma",
+      "content": "[{\\cite[Proposition 4.23]{AB2015}}]\\label{lm:psoc1}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\nIf $H_0\\in \\mathcal{C}_1 $, then $H_0$ is large in $G_0$.",
+      "content_preview": "[] Suppose G_0=_n^(q). If H_0 _1 , then H_0 is large in G_0.",
+      "display_name": "Lemma",
+      "label": "lm:psoc1",
+      "position": {
+        "line_start": 1661,
+        "line_end": 1664
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-39-dd061020",
+      "type": "lemma",
+      "content": "\\label{lm:psoc2}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\nIf $H_0\\in \\mathcal{C}_2 $, then $H_1$ is large in $G_1$ if and only if one of the following holds:\n\\begin{enumerate}[\\rm (1)]\n\t\\item $H_0$ is of type  $\\mathrm{GL}_{n / 2}(q). 2$ or $\\mathrm{GO}_{n / 2}^{\\circ}(q)^{2}$; \n\t\\item $H_0$ is of type $\\mathrm{GO}_{m}^{\\epsilon_{1}}(q) \\wr \\mathrm{S}_{t}$ with $t=2$; \n\t\\item $(G_0,H_0)=(\\mathrm{P\\Omega}_7(5),2^5.\\mathrm{S}_5)$, $(\\mathrm{P\\Omega}_n^{\\epsilon}(3), 2^{n-(2,n)-1}.\\mathrm{A}_n)$, where $7\\leq n\\leq 13$, $ (\\mathrm{P\\Omega}_8^{+}(5),2^6.\\mathrm{A}_8)$, $(\\mathrm{P\\Omega}_{14}^{-}(3),2^{12}.\\mathrm{A}_{14})$, $(\\mathrm{P\\Omega}_8^{+}(2),3^4.2^3.\\mathrm{S}_4)$, $(\\mathrm{P\\Omega}_8^{+}(3),[2^9].\\mathrm{S}_4)$, $(\\mathrm{P\\Omega}_{10}^{-}(2),3^5.2^4.\\mathrm{S}_5)$,  or $(\\mathrm{P\\Omega}_{12}^{-}(2), \\mathrm{A}_5^3.2^2.\\mathrm{S}_3)$. \n\\end{enumerate} \nIn particular, $H_0$ is not large in $G_0$ if and only if $(G_0,H_0)=   (\\mathrm{P\\Omega}_8^{+}(5),2^7.\\mathrm{A}_8)$, $(\\mathrm{P\\Omega}_{14}^{-}(3),2^{12}.\\mathrm{A}_{14})$, or  $(\\mathrm{P\\Omega}_8^{+}(3),[2^9].\\mathrm{S}_4)$.",
+      "content_preview": "Suppose G_0=_n^(q). If H_0 _2 , then H_1 is large in G_1 if and only if one of the following holds: [ (1)] H_0 is of type _n / 2(q).",
+      "display_name": "Lemma",
+      "label": "lm:psoc2",
+      "position": {
+        "line_start": 1667,
+        "line_end": 1676
+      },
+      "references": [
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "}_1|\\leq 2d\\log_p(q)\\leq 8$, we conclude from Eq.~\\eqref{eq:H} that\n\\[\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_0|\\le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "1}{8}q^{\\frac{n(n-1)}{2}}$,  we conclude from Eq.~\\eqref{eq:H} that\n\\begin{equation}\\label{eq:psoc2-1}\n \\frac{1}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:Omega",
+          "reference_type": "internal",
+          "context": "frac{1}{3}} \\leq \t|H_0|.\n\\end{equation} \nBy Lemma~\\ref{lm:Omega},   $|\\Omega^{-}_2(q)|=\\frac{q+1}{(2,q-1)}$, and $",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~2.4]{BHRD2013}, $H_0$ has four types: $\\mathrm{GO}_{1}(p) \\wr \\mathrm{S}_{n}$, $\\mathrm{GO}_{m}^{\\epsilon_{1}}(q) \\wr \\mathrm{S}_{t}$, $\\mathrm{GL}_{n / 2}(q). 2$ and $\\mathrm{GO}_{n / 2}^{\\circ}(q)^{2}$.\nIf $H_0$ is of type  $\\mathrm{GL}_{n / 2}(q). 2$ or $\\mathrm{GO}_{n / 2}^{\\circ}(q)^{2}$, then $H_0$ is large in $G_0$, see~\\cite[Proposition 4.23]{AB2015}. \n \nAssume that $H_0$ is of type $\\mathrm{GO}_{1}(p) \\wr \\mathrm{S}_{n}$. Then $q=p$ is odd and $|H_0|\\leq 2^{n-1}n!$, see~\\cite[Proposition~4.2.15]{K-Lie}. \nSince $|G_0|>\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}$ and $|\\mathcal{O}_1|\\leq 2d\\log_p(q)\\leq 8$, we conclude from Eq.~\\eqref{eq:H} that\n\\[\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (2^{n-1}n!)^3 \\cdot 8^2.\n\\] \nComputation shows that the above inequality holds only if $(n,q)=(7,7)$, or $q=5$ and $7\\leq n\\leq 9$, or $q=3$ and $7\\leq n \\leq 15$.\nIf $(n,q)=(7,5)$, or $q=3$ and $7\\leq n \\leq 13$, then $H_0$ is large in $G_0$ by~\\cite[Proposition 4.23]{AB2015}, given $(\\mathrm{P\\Omega}_7(5),2^5.\\mathrm{S}_5)$ and $(\\mathrm{P\\Omega}_n^{\\epsilon}(3), 2^{n-(2,n)-1}.\\mathrm{A}_n)$, where $7\\leq n\\leq 13$ (note that $\\epsilon=-$ only when $n \\equiv 2\\pmod{4}$, see~\\cite[Table 2.4]{BHRD2013}).\n\nIf $(n,q)=(7,7)$, then $|\\mathcal{O}_1|=1$ by~\\cite[Proposition~4.2.15]{K-Lie}.\nHowever,  this case is impossible by~\\cite[Proposition 4.23]{AB2015}. \nFor  $(n,q)=(8,5)$, $(9,5)$, $(14,3)$ and $(15,3)$, by~\\cite[Proposition~4.2.15]{K-Lie},  $(G_0,H_0)=(\\mathrm{P\\Omega}_8^{+}(5),2^6.\\mathrm{A}_8)$, $(\\mathrm{P\\Omega}_9^{+}(5),2^8.\\mathrm{A}_9)$, \n$(\\mathrm{P\\Omega}_{14}^{-}(3),2^{12}.\\mathrm{A}_{14})$\n and $(\\mathrm{P\\Omega}_{15}(3),2^{14}.\\mathrm{A}_{15})$, respectively.\nFurhtermore,  $|\\mathcal{O}_1|=4$, $2$, $4$, $2$, respectively.\nComputation shows that $H_1$ is  large in $G_1$ if and only if $(G_0,H_0)=(\\mathrm{P\\Omega}_8^{+}(5),2^6.\\mathrm{A}_8)$ or $(\\mathrm{P\\Omega}_{14}^{-}(3),2^{12}.\\mathrm{A}_{14})$.\n\nAssume that $H_0$ is of type $\\mathrm{GO}_{m}^{\\epsilon_{1}}(q) \\wr \\mathrm{S}_{t}$ with $m\\geq 1$. By~\\cite[Table~2.5]{BHRD2013}, $|H_0|\\leq |\\Omega^{\\epsilon_1}_m(q)|^t\\cdot 2^{(2,q-1)(t-1)}t!$.\n\nSince $|\\mathcal{O}_1|^2\\leq 64q$ and $|G_0|>\\frac{1}{8}q^{\\frac{n(n-1)}{2}}$,  we conclude from Eq.~\\eqref{eq:H} that\n\\begin{equation}\\label{eq:psoc2-1}\n \\frac{1}{8}q^{\\frac{mt(mt-1)}{6}-\\frac{1}{3}} \\leq \t|H_0|.\n\\end{equation} \nBy Lemma~\\ref{lm:Omega},   $|\\Omega^{-}_2(q)|=\\frac{q+1}{(2,q-1)}$, and $|\\Omega^{\\epsilon_1}_m(q)|<\\frac{1}{(2,q-1)}q^{\\frac{m(m-1)}{2}}$ for $(m,\\epsilon_1)\\neq (2,-)$. Then\n\\[\n\t\\frac{1}{8}q^{\\frac{mt(mt-1)}{6}-\\frac{1}{3}}\\leq |H_0| \\leq \\begin{cases}\n(q+1)^t\\cdot 2^{t-1}\\cdot t!, & \\text{if } m=2, \\\\\n(q^{\\frac{m(m-1)}{2}})^t\\cdot 2^{t-1}\\cdot t!, & \\text{if } m\\geq 3.\n\\end{cases}\n\\]\nThe above inequalities hold only if $(q,m,t)=(2,2,4)$, $(3,2,4)$, $(4,2,4)$, $(5,2,4)$, $(2,2,5)$, $(3,2,5)$,  $(3,3,3)$, $(5,3,3)$, $(7,3,3)$, $(2,3,4)$, $(2,4,3)$, $(3,4,3)$, $(4,4,3)$, $(3,5,3)$, $(2,6,3)$. \nNotice that $\\epsilon=\\epsilon_1^t$ when $m$ is even, and $\\epsilon=(-1)^{(q-1)n/4}$ when $m$ is odd and $t$ is even, see~\\cite[Table 2.4]{BHRD2013}.\nAlso notice that $q\\geq 5$ when $m=2$, $t=4$ and $\\epsilon=+$, see~\\cite[Proposition 2.3.6]{BHRD2013}. \nVerification shows that $H_1$ is large in $G_1$ if and only if $(q,m,t,\\epsilon,\\epsilon_1)=(2,2,4,+,-)$, $(3,2,4,+,-)$, \n  $(2,2,5,-,-)$,  $(2,4,3,-,-)$, giving  $(\\mathrm{P\\Omega}_8^{+}(2),3^4.2^3.\\mathrm{S}_4)$, $(\\mathrm{P\\Omega}_8^{+}(3),[2^9].\\mathrm{S}_4)$, $(\\mathrm{P\\Omega}_{10}^{-}(2),3^5.2^4.\\mathrm{S}_5)$, $(\\mathrm{P\\Omega}_{12}^{-}(2), \\mathrm{A}_5^3.2^2.\\mathrm{S}_3)$, respectively.\nIn particular, if  $(q,m,t,\\epsilon,\\epsilon_1)=(2,2,4,+,-)$, $(2,2,5,-,-)$,  $(2,4,3,-,-)$, then $H_0$ is large in $G_0$, see~\\cite[Proposition 4.23]{AB2015}."
+    },
+    {
+      "id": "lemma-40-4a0c6dc8",
+      "type": "lemma",
+      "content": "\\label{lm:psoc3}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\nIf $H_0\\in \\mathcal{C}_3 $, then $H_1$ is large in $G_1$ if and only if $H_0$ is of type  $\\mathrm{GO}_{n/2}^{\\varepsilon}(q^{2})$, $\\mathrm{GO}_{n/2}^{\\circ}(q^{2})$ or $\\mathrm{GU}_{n/2}(q)$. In particular, $H_0$ is large in $G_0$.",
+      "content_preview": "Suppose G_0=_n^(q). If H_0 _3 , then H_1 is large in G_1 if and only if H_0 is of type _n/2^(q^2), _n/2^(q^2) or _n/2(q).",
+      "display_name": "Lemma",
+      "label": "lm:psoc3",
+      "position": {
+        "line_start": 1742,
+        "line_end": 1745
+      },
+      "references": [
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "}_1|\\leq \\frac{9}{2}q$ when $q$ is even. \n\nBy Eq.~\\eqref{eq:H} we have \n\\[\t\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pso-c3-1",
+          "reference_type": "external",
+          "context": "). \n\\end{equation} \nIt is easy to verify that Eq.~\\eqref{eq:pso-c3-1} does not hold for $s\\geq 5$.\nHence, $s=3$. Comput",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pso-c3-1",
+          "reference_type": "external",
+          "context": "\\geq 5$.\nHence, $s=3$. Computation shows that Eq.~\\eqref{eq:pso-c3-1} holds only for $(q,m)=(3, 3)$, $(5,3)$, $(7,3)$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "or $(2,6)$.\n \nFurther verification shows that Eq.~\\eqref{eq:H1} does not hold for any of them.\nIt completes the p",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~2.6]{BHRD2013}, $H_0$ has three types: $\\mathrm{GO}_{m}^{\\varepsilon}(q^{s})$, $\\mathrm{GO}_{n/2}^{\\circ}(q^{2})$ and $\\mathrm{GU}_{n/2}(q)$.\nIf $H_0$ is of type  $\\mathrm{GO}_{n/2}^{\\varepsilon}(q^{2})$, $\\mathrm{GO}_{n/2}^{\\circ}(q^{2})$ or $\\mathrm{GU}_{n/2}(q)$, then $H_0$ is large in $G_0$ by~\\cite[Proposition 4.23]{AB2015}.\n\nAssume that $H_0$ is of type $\\mathrm{GO}_{m}^{\\varepsilon}(q^{s})$, where $n=ms$,  $m\\geq 3$ and  $s$ is prime.\n\nBy~\\cite[Table~2.6]{BHRD2013}, \nthe preimage of $H_0$ in $\\Omega_{n}^{\\epsilon}(q)$ is $\\Omega_{m}^{\\epsilon}(q^s).s$. Hence, $|H_0|\\leq  \\frac{(2,q)}{2}sq^{\\frac{1}{2}sm(m-1)}$. Notice that $|\\mathcal{O}_1|\\leq 64q$ when $q$ is odd, and $|\\mathcal{O}_1|\\leq \\frac{9}{2}q$ when $q$ is even. \n\nBy Eq.~\\eqref{eq:H} we have \n\\[\t\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (\\frac{1}{2}sq^{\\frac{1}{2}sm(m-1)})^3 \\cdot 64q.\n\\]\nHence, $q^{\\frac{1}{2} ms(ms-1-3(m-1)-1)}<2^{6}s^3q$, which equals to \n\\begin{equation}\\label{eq:pso-c3-1}\n  ms(ms-3m+1)< 2(6\\log_q(2)+3\\log_q(s)+1). \n\\end{equation} \nIt is easy to verify that Eq.~\\eqref{eq:pso-c3-1} does not hold for $s\\geq 5$.\nHence, $s=3$. Computation shows that Eq.~\\eqref{eq:pso-c3-1} holds only for $(q,m)=(3, 3)$, $(5,3)$, $(7,3)$, $(2,4)$, $(3,4)$, $(4,4)$, $(3,5)$  or $(2,6)$.\n \nFurther verification shows that Eq.~\\eqref{eq:H1} does not hold for any of them.\nIt completes the proof."
+    },
+    {
+      "id": "lemma-41-a89558ec",
+      "type": "lemma",
+      "content": "\\label{lm:psoc4}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\nIf $H_0\\in \\mathcal{C}_4$, then $H_1$ is large in $G_1$ if and only if  $H_0$ is of type  $\\mathrm{Sp}_{2}(q) \\otimes \\mathrm{Sp}_{n/2}(q)$ and $(n,\\epsilon)=(8,+)$ or $(12,+)$. In particular, $H_0$ is large in $G_0$.",
+      "content_preview": "Suppose G_0=_n^(q). If H_0 _4, then H_1 is large in G_1 if and only if H_0 is of type _2(q) _n/2(q) and (n,)=(8,+) or (12,+).",
+      "display_name": "Lemma",
+      "label": "lm:psoc4",
+      "position": {
+        "line_start": 1773,
+        "line_end": 1776
+      },
+      "references": [
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "q^{\\frac{1}{2}(n_1(n_1+1)+n_2(n_2+1))}$.\n\nBy Eq.~\\eqref{eq:H} we have \n\\[\t\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pso-c4-1",
+          "reference_type": "external",
+          "context": "equation}  \nIf $n_1=2$, then $n_2\\geq 8$, and Eq.~\\eqref{eq:pso-c4-1} becomes $3n_2^2-3n_2-6<20$, which is impossible f",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:pso-c4-1",
+          "reference_type": "external",
+          "context": "1\\geq 4$. Now   $n_1,n_2\\leq \\frac{n}{4}$.\nBy Eq.~\\eqref{eq:pso-c4-1} we have $20> n(n-1)-2\\frac{n}{4}(\\frac{n}{4}+1)=\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "that $H_0$ is as  (ii), (iii) or (iv). \nBy Lemma~\\ref{lm:LUSO}, $|H_0|\\leq 4q^{\\frac{1}{2}(n_1(n_1-1)+n_2(n_2-1)",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "4q^{\\frac{1}{2}(n_1(n_1-1)+n_2(n_2-1))}$. By Eq.~\\eqref{eq:H1}, we obtain\n\\[\n  n(n-1)-n_1(n_1-1)-n_2(n_2-1)< 2(1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 2.7]{BHRD2013}, $H_0$ has four types:\n\\begin{enumerate} [\\rm (i)]\n  \\item $\\epsilon=+$, $H_0$ is of type $\\mathrm{Sp}_{n_1}(q) \\otimes \\mathrm{Sp}_{n_2}(q)$, where $n=n_1n_2$ and $n_1 < \\sqrt{n}$, and the preimage of $H_0$ is $ (\\mathrm{Sp}_{n_1}(q) \\circ \\mathrm{Sp}_{n_2}(q)).(2,q - 1,n/4)$.\n  \\item $\\epsilon=\\pm$, $H_0$ is of type $\\mathrm{GO}_{n_1}^{\\circ}(q) \\otimes \\mathrm{GO}_{n_2}^{\\pm}(q) $, where $n=n_1n_2$,  $q$ is odd, $n_1 \\geq 3$, $n_2 \\geq 4$, and the preimage of $H_0$ is $\\mathrm{SO}_{n_1}^{\\circ}(q) \\times \\Omega_{n_2}^{\\pm}(q)$.\n  \\item $\\epsilon=\\circ$, $H_0$ is of type $ \\mathrm{GO}_{n_1}^{\\circ}(q) \\otimes \\mathrm{GO}_{n_2}^{\\circ}(q) $, where $n=n_1n_2$, $3 \\leq n_1 < \\sqrt{n}$, and the preimage of $H_0$ is $  (\\Omega_{n_1}(q) \\times \\Omega_{n_2}(q)).2$.\n  \\item $\\epsilon=+$, $H_0$ is of type $\\mathrm{GO}_{n_1}^{\\varepsilon_1}(q) \\otimes \\mathrm{GO}_{n_2}^{\\varepsilon_2}(q) $, where $n=n_1n_2$, $n_i \\geq 4$ even, $q$ odd, if $\\varepsilon_1 = \\varepsilon_2$ then $ n_1 < \\sqrt{n}$, and the preimage of $H_0$ is $  (\\mathrm{SO}_{n_1}^{\\varepsilon_1}(q) \\circ \\mathrm{SO}_{n_2}^{\\varepsilon_2}(q)).[c]$ (where $c=2$ or $4$, see~\\cite[Proposition 4.4.15]{K-Lie}).\n\\end{enumerate}\n\n \nSuppose that $H_0$ is as (i). By~\\cite[Proposition 4.23]{AB2015}, $H_0$ is large in $G_0$ whenever $n=8$ or $12$. Notice that both $n_1$ and $n_2$ are even. Hence, $n\\equiv 0 \\pmod{4}$, and we assume $n\\geq 16$.\nNow $|H_0|\\leq |\\mathrm{Sp}_{n_1}(q)|\\cdot|\\mathrm{Sp}_{n_2}(q)|$. Hence, $|H_0|\\leq q^{\\frac{1}{2}(n_1(n_1+1)+n_2(n_2+1))}$.\n\nBy Eq.~\\eqref{eq:H} we have \n\\[\t\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (q^{\\frac{1}{2}(n_1(n_1+1)+n_2(n_2+1))})^3 \\cdot 64q.\n\\]\nIt follows that  \n\\begin{equation}\\label{eq:pso-c4-1}\n  n(n-1)-n_1(n_1+1)-n_2(n_2+1)< 2(9\\log_q(2)+1)<20. \n\\end{equation}  \nIf $n_1=2$, then $n_2\\geq 8$, and Eq.~\\eqref{eq:pso-c4-1} becomes $3n_2^2-3n_2-6<20$, which is impossible for any $n_2\\geq 8$.\nLet $n_1\\geq 4$. Now   $n_1,n_2\\leq \\frac{n}{4}$.\nBy Eq.~\\eqref{eq:pso-c4-1} we have $20> n(n-1)-2\\frac{n}{4}(\\frac{n}{4}+1)=\\frac{1}{8}(7n^2-12n) $.\nSince $n\\geq 16$, we have $\\frac{1}{8}(7n^2-12n)\\geq 200 $, a contradiction. Therefore, the case $n\\geq 16$ can not happen.\n\n\nSuppose that $H_0$ is as  (ii), (iii) or (iv). \nBy Lemma~\\ref{lm:LUSO}, $|H_0|\\leq 4q^{\\frac{1}{2}(n_1(n_1-1)+n_2(n_2-1))}$. By Eq.~\\eqref{eq:H1}, we obtain\n\\[\n  n(n-1)-n_1(n_1-1)-n_2(n_2-1)< 2(15\\log_q(2)+1)<32.\n\\]\n Since $n_1(n_1-1)\\cdot n_2(n_2-1)< n_1n_2(n_1n_2-1)$, we have\n\\[\n  n_1n_2(n_1n_2-1)-n_1(n_1-1)-n_2(n_2-1)<(n_1(n_1-1)-1)(n_2(n_2-1)-1).\n\\]\nHence, \n\\[\n  (n_1(n_1-1)-1)(n_2(n_2-1)-1)  <32. \n\\]\nSince $n_1\\geq 3$ and $n_2\\geq 4$, we see $(n_1(n_1-1)-1)(n_2(n_2-1)-1)  \\geq 55$, a contradiction."
+    },
+    {
+      "id": "lemma-42-04d7f2c1",
+      "type": "lemma",
+      "content": "\\label{lm:psoc5}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\n  If $H_0\\in \\mathcal{C}_5$, then $H_1$ is large in $G_1$ if and only if $H_0$ is of type $\\mathrm{GO}_{n}^{\\epsilon'}(q_0)$ with $q=q_0^2$ or $\\mathrm{GO}_{n}^{\\epsilon}(q_0)$ with $q=q_0^3$.",
+      "content_preview": "Suppose G_0=_n^(q). If H_0 _5, then H_1 is large in G_1 if and only if H_0 is of type _n^'(q_0) with q=q_0^2 or _n^(q_0) with q=q_0^3.",
+      "display_name": "Lemma",
+      "label": "lm:psoc5",
+      "position": {
+        "line_start": 1824,
+        "line_end": 1827
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "f $H_0$ is $\\Omega_{n}^{\\epsilon}(q_0)$. \n\nBy Eq.~\\eqref{eq:H1}, we obtain\n\\[\n  \\frac{1}{8}q_0^{\\frac{1}{2}rn(n-1",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "&\\text{ if $q$ is even.} \n\\end{cases}\n\\]\nBy Lemma~\\ref{lm:LUSO},\n\\begin{align*} \n  &(1-q^{-2}-q^{-4}) q^{\\frac{1}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Proposition 4.23]{AB2015}, if $H_0$ is of type $\\mathrm{GO}_{n}^{\\epsilon'}(q_0)$ with $q=q_0^2$, then $H_0$ is large in $G_0$.\nBy~\\cite[Table 2.8]{BHRD2013}, we remain to consider the case where $H_0$ is of type $\\mathrm{GO}_{n}^{\\epsilon}(q_0)$ with $\\epsilon=\\pm$ and $q=q_0^r$, where $r$ is an odd prime.\nFurthermore, the preimage of $H_0$ is $\\Omega_{n}^{\\epsilon}(q_0)$. \n\nBy Eq.~\\eqref{eq:H1}, we obtain\n\\[\n  \\frac{1}{8}q_0^{\\frac{1}{2}rn(n-1)}<|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < (q_0^{\\frac{1}{2}n(n-1)})^3 \\cdot 64q_0^r.\n\\]\nHence,\n\\[\n  (r-3)n(n-1)-2r\\leq 18\\log_{q_0}(2)\\leq 18.\n\\]\nIf $r\\geq 5$, then $(r-3)n(n-1)-2r\\geq (r-3)42-2r\\geq 74$, a contradiction.\nTherefore, $r=3$.\n\nNotice that \n$|H_0|=\\frac{1}{(2,q_0-1)}|\\Omega_{n}^{\\epsilon}(q_0)|$,\n$|G_0|=\\frac{1}{(2,q-1)}|\\Omega_{n}^{\\epsilon}(q)|$, \n$|\\mathrm{SO}_n^{\\epsilon}(q)|=2| \\Omega_{n}^{\\epsilon}(q )|$.\nThen\n\\[\n  \\frac{|H_0|^3}{|G_0|}=\n\\begin{cases}\n \\frac{|\\Omega_{n}^{\\epsilon}(q_0)|}{4|\\Omega_{n}^{\\epsilon}(q)|} =\\frac{|\\mathrm{SO}_n^{\\epsilon}(q_0)|}{16|\\mathrm{SO}_n^{\\epsilon}(q)|}= \\frac{|\\mathrm{SO}_n^{\\epsilon}(q_0)|/(2,q_0)}{16|\\mathrm{SO}_n^{\\epsilon}(q)|/(2,q_0)}&\\text{ if $q$ is odd,}\\\\\n \\frac{|\\Omega_{n}^{\\epsilon}(q_0)|}{ |\\Omega_{n}^{\\epsilon}(q)|} =\\frac{|\\mathrm{SO}_n^{\\epsilon}(q_0)|}{4|\\mathrm{SO}_n^{\\epsilon}(q)|}= \\frac{|\\mathrm{SO}_n^{\\epsilon}(q_0)|/(2,q_0)}{ |\\mathrm{SO}_n^{\\epsilon}(q)|/(2,q_0)}&\\text{ if $q$ is even.} \n\\end{cases}\n\\]\nBy Lemma~\\ref{lm:LUSO},\n\\begin{align*} \n  &(1-q^{-2}-q^{-4}) q^{\\frac{1}{2}n(n-1)} <\\frac{|\\mathrm{SO}_n^{\\epsilon}(q)|}{(2,q)} <(1-q^{-2}) q^{\\frac{1}{2}n(n-1)}.  \n  \\end{align*} \nHence,\n\\[\nmf(q_0)  \\leq \\frac{|H_0|^3}{|G_0|} \\leq  mg(q_0),\n\\]\nwhere $m=16^{-1}$ if $q$ is odd, or $1$ if $q$ is even, and \n\\[\nf(q_0)=\\frac{(1-q_0^{-2}-q_0^{-4})^3 }{(1-q_0^{-6}) },\\ g(q_0)=\\frac{(1-q_0^{-2} )^3 }{(1-q_0^{-6}-q_0^{-12}) }.\n\\]  \nComputation shows that $0.33<f(q_0)<g(q_0)<1$.\nBy~\\cite[Tables 3.5.E and 3.5.F]{K-Lie}, $|\\mathcal{O}_1|=|\\mathrm{Out}(G_0)|=2d\\log_p(q)$.\nHence, $|\\mathcal{O}_1|\\geq 2r\\geq 6$ if $q$ is even, or $|\\mathcal{O}_1|\\geq 4r\\geq 12$ if $q$ is odd.\nIt follows that  $\\frac{|H_0|^3|\\mathcal{O}_1|^2}{|G_0|}\\geq m\\cdot 0.33\\cdot 6^2 >1 $, implying $H_1$ is large in $G_1$."
+    },
+    {
+      "id": "lemma-43-71ef5c5f",
+      "type": "lemma",
+      "content": "\\label{lm:psoc6}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\nIf $H_0\\in \\mathcal{C}_6$, then $H_1$ is large in $G_1$ if and only if  $(G_0,H_0)=(\\mathrm{P\\Omega}_8^{+}(3),2^6.\\Omega_{6}^+(2))$.  In particular, $H_0$ is large in $G_0$.",
+      "content_preview": "Suppose G_0=_n^(q). If H_0 _6, then H_1 is large in G_1 if and only if (G_0,H_0)=(_8^+(3),2^6._6^+(2)). In particular, H_0 is large in G_0.",
+      "display_name": "Lemma",
+      "label": "lm:psoc6",
+      "position": {
+        "line_start": 1875,
+        "line_end": 1878
+      },
+      "references": [
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "=8 $ and so $|\\mathcal{O}_1|=8/c\\leq 2$.\nBy Lemma~\\ref{lm:LUSO}, $|\\Omega_{2m}^{+}(2)|< 2^{m(2m-1)}$.\nHence, $|H_",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table 4.6.B and Proposition 4.6.8]{K-Lie}, we have $\\epsilon=+$, $q=p\\geq 3$, $|H_0|=2^{2m+2}|\\Omega_{2m}^{+}(2)|/c$, \nwhere $n=2^m$, $c=4$ if $p\\equiv \\pm 3\\pmod{8}$ or $c=8$ if $p\\equiv \\pm 1\\pmod{8}$.\nLet $m=3$. By a direct verification we find only one pair $(G_0,H_0)=(\\mathrm{P\\Omega}_8^{+}(3),2^6.\\Omega_{6}^+(2))$. \nLet $m\\geq 4$. Then $|\\mathrm{Out}(G_0)|=8 $ and so $|\\mathcal{O}_1|=8/c\\leq 2$.\nBy Lemma~\\ref{lm:LUSO}, $|\\Omega_{2m}^{+}(2)|< 2^{m(2m-1)}$.\nHence, $|H_0|\\leq 2^m|\\Omega_{2m}^{+}(2)|< 2^{2m^2}$.\nThen  \n\\[ \n\\frac{1}{8}q^{\\frac{2^{m-1}(2^m-1)}{2}} <|G_0|\\leq |H_0|^3 \\vert \\mathcal{O}_{1}\\vert^2 < 2^{6m^2+2} . \n\\]   \nIt follows that $q^{ 2^{m-1}(2^m-1) }< 2^{6m^2 +7}$, implying\n\\[\n 2^{m-1}(2^m-1) <(6m^2 +7)\\log_q(2).\n\\]\nSince $m\\geq 4$, we have $2^{m-1}(2^m-1) \\geq 120$, while   $(6m^2+7)\\log_q(2)  <65$, a contradiction."
+    },
+    {
+      "id": "lemma-44-d9b61a6a",
+      "type": "lemma",
+      "content": "\\label{lm:psoc7}\nSuppose $G_0=\\mathrm{P\\Omega}_n^{\\epsilon}(q)$.\nIf $H_0\\in \\mathcal{C}_7$, then $H_1$ is not large in $G_1$.",
+      "content_preview": "Suppose G_0=_n^(q). If H_0 _7, then H_1 is not large in G_1.",
+      "display_name": "Lemma",
+      "label": "lm:psoc7",
+      "position": {
+        "line_start": 1899,
+        "line_end": 1902
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "$|\\mathcal{O}_1|^2\\leq 64q$.\nIt follows from Eq.~\\eqref{eq:H1} that\n\\[\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_0|\\le",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "$|\\Omega_{m} (q)|<q^{\\frac{1}{2}m(m-1)} $.\nBy Eq.~\\eqref{eq:H1}, we  have\n\\begin{equation}\\label{eq:psoc7-2}\n  m^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "epsilon'}(q)|\\leq q^{\\frac{1}{2}m(m-1)}$ by Lemma~\\ref{lm:LUSO} (now $q$ is odd), we see that Eq.~\\eqref{eq:psoc7",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:psoc7-2",
+          "reference_type": "external",
+          "context": "a~\\ref{lm:LUSO} (now $q$ is odd), we see that Eq.~\\eqref{eq:psoc7-2} also holds here. Notice that $m\\geq 4$.\nHence, th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~2.10]{BHRD2013}, there are three cases:\n\\begin{enumerate} [\\rm (i)]\n\\item $\\epsilon=+$,  $H_0$ is of type  $\\mathrm{Sp}_{m}(q)\\wr\\mathrm{S}_{t}$, where $n=m^t$, $qt$ is even and  $(m,q)\\notin\\{(2,2),(2,3)\\}$; \n\\item $\\epsilon=\\circ$, $H_0$ is of type  $\\mathrm{GO}_{m}(q)\\wr\\mathrm{S}_{t}$, where $n=m^t$, $m\\geq3$ and $(m,q)\\neq(3,3)$;\n\\item  $\\epsilon=+$,  $H_0$ is of type  $\\mathrm{GO}_{m}^{\\epsilon'}(q)\\wr\\mathrm{S}_{t}$, where $n=m^t$,  $q $ is odd, and $m\\geq 4$ if $\\epsilon' = +$, and $m\\geq 6$ if $ \\epsilon' = -$.\n\\end{enumerate}\n\nSuppose that (i) happens. From~\\cite[Table 8.50]{BHRD2013}, we see that, if $n=8$, then $G_1$ has no such maximal subgroups $H_1$ of type $\\mathrm{Sp}_{2}(q)\\wr\\mathrm{S}_{3}$. Hence, we assmue that $(m,t)\\neq (2,3)$. \n\nBy~\\cite[Proposition 4.7.5]{K-Lie}, $|H_0|\\leq |\\mathrm{PSp}_m(q)|^t 2^{t-1}\\mathrm{S}_t$.\nNotice that $|\\mathrm{PSp}_m(q)|\\leq q^{\\frac{1}{2}m(m+1)}$, $|G_0|\\geq \\frac{1}{8}q^{\\frac{1}{2}n(n-1)}$, $t!\\leq 2^{t\\log_2(\\frac{t+1}{2})}$ and $|\\mathcal{O}_1|^2\\leq 64q$.\nIt follows from Eq.~\\eqref{eq:H1} that\n\\[\n\\frac{1}{8}q^{\\frac{1}{2}n(n-1)}<|G_0|\\leq |H_0|^3|\\mathcal{O}_1|^2\\leq (q^{\\frac{1}{2}mt(m+1)}2^{t-1}2^{t\\log_2(\\frac{t+1}{2})})^3\\cdot 64q.\n\\]\nThen we derive  \n\\begin{equation}\\label{eq:psoc7-1}\nm^t(m^t-1)-3mt(m+1)-1<\\log_q(2)( 6+3t +3t\\log_2(\\frac{t+1}{2})).   \n\\end{equation} \nIt is easy to see that $m^t(m^t-1)-3mt(m+1)-1$ is increasing on $m$.\nTherefore, \n\\[\n 2^t(2^t-1)-18t-1 \\leq m^t(m^t-1)-3mt(m+1)-1< 6+3t +3t\\log_2(\\frac{t+1}{2}) .   \n\\]\nIt is easy to verify that there is no $t\\geq 4$ satisfying the above inequality. Hence, case (i) can not happen.\n\n\nSuppose that (ii) happens. \nBy~\\cite[Proposition 4.7.8]{K-Lie}, $|H_0|=|\\Omega_{m} (q)^{t}.2^{t - 1}.\\mathrm{S}_{t}|$.\nNotice that $|\\Omega_{m} (q)|<q^{\\frac{1}{2}m(m-1)} $.\nBy Eq.~\\eqref{eq:H1}, we  have\n\\begin{equation}\\label{eq:psoc7-2}\n  m^t(m^t-1)-3mt(m-1)-1<\\log_q(2)(6+ 3t+3t\\log_2(\\frac{t+1}{2})).   \n\\end{equation} \nNow both $m $ and $q$ are odd and greater than $2$. Then we have\n\\[\n3^t(3^t-1)-18t-1\\leq m^t(m^t-1)-3mt(m-1)-1< 6+ 3t+3t\\log_2(\\frac{t+1}{2}).\n\\]\nIt is easy to verify that there is no $t\\geq 3$ satisfying the above inequality. \n\nSuppose that (iii) happens. By~\\cite[Proposition 4.7.5]{K-Lie}, $|H_0|\\leq |\\mathrm{SO}_m^{\\epsilon'}(q)|^t 2^{t-1}\\mathrm{S}_t$.\nSince $|\\mathrm{SO}_m^{\\epsilon'}(q)|\\leq q^{\\frac{1}{2}m(m-1)}$ by Lemma~\\ref{lm:LUSO} (now $q$ is odd), we see that Eq.~\\eqref{eq:psoc7-2} also holds here. Notice that $m\\geq 4$.\nHence, this case also can not happen."
+    },
+    {
+      "id": "lemma-45-4880ec8c",
+      "type": "lemma",
+      "content": "\\label{lm:exsp4q}\nSuppose that $G_0=\\mathrm{Sp}_4(q)$ with  even $q\\geq 4$, and $G_1$ contains a graph automorphism. Then $H_1$ is large in $G_1$ if and only if $H_0$ is large in $G_0$, and $H_0$ is $[q^4]:(q-1)^2$, $\\mathrm{Sp}_4(q_0)$ with $q=q_0^2$ or $q=q_0^3$, or  ${}^2\\mathrm{B}_2(q)$.",
+      "content_preview": "Suppose that G_0=_4(q) with even q 4, and G_1 contains a graph automorphism. Then H_1 is large in G_1 if and only if H_0 is large in G_0, and H_0 is...",
+      "display_name": "Lemma",
+      "label": "lm:exsp4q",
+      "position": {
+        "line_start": 1951,
+        "line_end": 1953
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "|=q^2(q^2+1)(q-1)$.\nIt is easy to verify that Eq.~\\eqref{eq:H1} does not hold if $H_0$ is $(q-1)^2:\\mathrm{D}_8$,",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "q=q_0^r$ and $r\\geq 5$. \nNow $q\\geq 32$.\nBy Lemma~\\ref{lm:LUSO}, $|H_0|^3<q_0^{18}$.\nSince $|\\mathrm{Out}(G_0)|^2",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:q2f",
+          "reference_type": "internal",
+          "context": "thrm{Out}(G_0)|^2=(2\\log_p(q))^2\\leq 4q$ by Lemma~\\ref{lm:q2f}, and $|G_0|>\\frac{1}{2}q^6$ by Lemma~\\ref{lm:LUSO",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "\\ref{lm:q2f}, and $|G_0|>\\frac{1}{2}q^6$ by Lemma~\\ref{lm:LUSO}, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\fra",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "q^6$ by Lemma~\\ref{lm:LUSO}, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\frac{1}{2}q_0^{6r}<|G_0|<|H_0|^3|\\mathr",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Since $G_1$ contains a graph automorphism, by~\\cite[Table~8.14]{BHRD2013}, the candidates for $H_0$ are $[q^4]:(q-1)^2$,  $(q-1)^2:\\mathrm{D}_8$,  $(q+1)^2:\\mathrm{D}_8$, $(q^2+1):4$, $\\mathrm{Sp}_4(q_0)$ with $q=q_0^t$, $t$ prime, and $\\mathrm{Sz}(q)$.\nNotice that $|G_0|=q^4(q^4-1)(q^2-1)$ and $|\\mathrm{Out}(G_0)|=2\\log_p(q)$, and $|\\mathrm{Sz}(q)|=q^2(q^2+1)(q-1)$.\nIt is easy to verify that Eq.~\\eqref{eq:H1} does not hold if $H_0$ is $(q-1)^2:\\mathrm{D}_8$,  $(q+1)^2:\\mathrm{D}_8$ or $(q^2+1):4$. \nBy~\\cite[Propositions 4.22 and 4.28]{AB2015}, $H_0$ is large in $G_0$ is large if $H_0$ is $[q^4]:(q-1)^2$, $\\mathrm{Sp}_4(q_0)$ with $q=q_0^2$ or $q=q_0^3$, or  ${}^2\\mathrm{B}_2(q)$. \nIt remains to consider $\\mathrm{Sp}_4(q_0)$ with $q=q_0^r$ and $r\\geq 5$.  \n\nSuppose that $H_0=\\mathrm{Sp}_4(q_0)$ with $q=q_0^r$ and $r\\geq 5$. \nNow $q\\geq 32$.\nBy Lemma~\\ref{lm:LUSO}, $|H_0|^3<q_0^{18}$.\nSince $|\\mathrm{Out}(G_0)|^2=(2\\log_p(q))^2\\leq 4q$ by Lemma~\\ref{lm:q2f}, and $|G_0|>\\frac{1}{2}q^6$ by Lemma~\\ref{lm:LUSO}, we conclude from Eq.~\\eqref{eq:H1} that \n\\[\n\\frac{1}{2}q_0^{6r}<|G_0|<|H_0|^3|\\mathrm{Out}(G_0)|^2<4q_0^{18+r} .\n\\]\nThen $5r<\\log_{q_0}(8)+18<\\log_2(8)+18=23$, which is impossible for any $r\\geq 5$."
+    },
+    {
+      "id": "lemma-46-47ef490c",
+      "type": "lemma",
+      "content": "\\label{lm:exo8q}\nSuppose that $G_0=\\mathrm{P\\Omega}_8^{+}(q)$, and $G_1$ contains a graph automorphism of order $3$.\nThen $H_1$ is large in $G_1$ if and only if either $H_0$ is large in $G_0$, or \n\n\n\n\n\n\n\n\n\n\n\n\n\none of the following holds:\n \\begin{enumerate}[\\rm (a)]\n \\item $H_0$ is a $\\mathcal{C}_5$-subgroup of type $\\mathrm{GO}_{8}^{+}(q^{1/3})$;\n \\item $H_0={}^3\\mathrm{D}_4(q^{1/3})$ with $q $ even; \n \\item $H_0=5^2.2.\\mathrm{S}_2$ with $q=2$.\n \\end{enumerate}",
+      "content_preview": "Suppose that G_0=_8^+(q), and G_1 contains a graph automorphism of order 3. Then H_1 is large in G_1 if and only if either H_0 is large in G_0, or...",
+      "display_name": "Lemma",
+      "label": "lm:exo8q",
+      "position": {
+        "line_start": 1972,
+        "line_end": 1995
+      },
+      "references": [
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "$.\nSince $|\\mathcal{O}_1 |^2 \\leq 648q$, from Eq.~\\eqref{eq:H1} we derive $243^3\\cdot 648\\cdot  8>q^{23}$.\nThis i",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": ".\n Since $|\\mathcal{O}_1 |^2 \\leq 648q$, from Eq.~\\eqref{eq:H1} we have $25^3\\cdot 648\\cdot  8>q^{23}$, which hol",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:psoc5",
+          "reference_type": "internal",
+          "context": ".\nIf $r=3$, then $H_1$ is large in $G_1$ by Lemma~\\ref{lm:psoc5} (notice that $|\\mathcal{O}_1|$ here is greater th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:psoc5",
+          "reference_type": "internal",
+          "context": "t $|\\mathcal{O}_1|$ here is greater than in Lemma~\\ref{lm:psoc5}).\nThis gives rise to part (a) of the lemma. \nSupp",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO1",
+          "reference_type": "internal",
+          "context": "leq q_0^{84}$ and $|G_0|\\geq q^{28 }/8 $ by Lemma~\\ref{lm:LUSO1}.\nSince $|\\mathcal{O}_1 |^2 \\leq 648q $, by Eq.~\\e",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "1}.\nSince $|\\mathcal{O}_1 |^2 \\leq 648q $, by Eq.~\\eqref{eq:H1} we have $q^{28 }/8 <648q\\cdot q_0^{84}$ and hence",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "neq 2$.\nThen $|H_0|=|\\mathrm{SU}_3(q)|$.\nBy Lemma~\\ref{lm:LUSO}, $(1-q^{-2})q^{8}<|\\mathrm{SU}_{a}(q) |\\leq (1-q^",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "1}|^2= 36\\log_p(q)^2\\leq 81q/2<41q$. \nThen by Eq.~\\eqref{eq:H} we have $q^{28}/8<(q^{8})^3\\cdot 41q$ and so $q^{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "\\in \\{5,8\\}$.\nHowever, computation shows that Eq.~\\eqref{eq:H1} does not hold for  $q\\in \\{5,8\\}$.\nNow, assume th",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H1",
+          "reference_type": "external",
+          "context": "on shows that $q\\in \\{4,7\\}$ does not satisfy Eq.~\\eqref{eq:H1}.\nTherefore, for case (x), $H$ is non-large.\n\nSupp",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lm:LUSO",
+          "reference_type": "internal",
+          "context": "})(1-q_0^{-6}) }{1+q_0^{-2}}q_0^{28}.\n\\]\nBy Lemma~\\ref{lm:LUSO} we have\n\\[\nf(q_0):=\\frac{ (1-q_0^{-12})^3(1-q_0^{",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "eq:H",
+          "reference_type": "external",
+          "context": "$0.49<f(2)<0.5$ and $ g(q_0)<1$. \nTherefore, Eq.~\\eqref{eq:H} holds if and only if $|\\mathcal{O}_1|\\geq 2$.\nSin",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "By~\\cite[Table~8.50]{BHRD2013} the candidates for $H_0$ are \n\\begin{enumerate}[\\rm (i)]\n\n\\item a parabolic subgroup of type $\\mathrm{A}_1(q)$ or $ \\mathrm{A}_1(q)^3$;\n\\item  $\\mathrm{G}_2(q)$;\n\\item  a $\\mathcal{C}_2$-subgroup of type $\\mathrm{GO}_{2}^{+}(q)\\perp \\mathrm{GO}_{6}^{+}(q)$, or $\\mathrm{GO}_{2}^{-}(q)\\perp \\mathrm{GO}_{6}^{-}(q)$;\n\\item $2^3.2^6.\\mathrm{PSL}_3(2)$ with $q=p$ odd;\n\n\\item  a $\\mathcal{C}_2$-subgroup of type $\\mathrm{GO}_{2}^{-}(q)\\wr \\mathrm{S}_4$;\n\\item a $\\mathcal{C}_2$-subgroup of type $\\mathrm{GO}_{2}^{+}(q)\\wr \\mathrm{S}_4$ with $q\\geq 5$;\n\n\\item a $\\mathcal{C}_2$-subgroup of type $\\mathrm{GO}_{4}^{+}(q)\\wr \\mathrm{S}_2$ with $q\\geq 3$;\n\\item $(\\mathrm{D}_{2(q^2+1)/d})^2.[2d].\\mathrm{S}_2$ with $d=(2,q-1)$;\n\\item a $\\mathcal{C}_5$-subgroup of type $\\mathrm{GO}_{8}^{+}(q_0)$ with $q=q_0^r$, $r$ prime;\n\\item  $\\mathrm{PSL}_3(q).3$ with $q \\equiv 1\\pmod{3}$, or $\\mathrm{PSU}_3(q).3$ with $q \\equiv 2\\pmod{3}$ and $q\\neq 2$;\n\\item  ${}^3\\mathrm{D}_4(q_0)$ with $q=q_0^3$;\n\\item $\\mathrm{P\\Omega}_8^{+}(2)$ with $q $ odd prime;\n\\item  ${}^2\\mathrm{B}_2(8)$ with $q=5$.\n\n\\end{enumerate}\n  \n\nNotice that $|G_0|>q^{28}/8$ and  \n\\[ |\\mathcal{O}_1 |^2\\leq  |\\mathrm{Out}(G_0)|^2=(6(4,q^4-1)\\log_p(q))^2\\leq 24^2\\cdot 9q/8=648q.\\]  \n \nSuppose that $H_0$ is a parabolic subgroup, as (i).\nThen $|H_0|$ contains a Sylow $p$-subgroup of $G_0$, and so $|H_0|\\geq q^{12}$. Since $|G_0|< q^{28}$, $H_0$ is large in $G_0$.\n\n \nThe groups $H_0$ in (ii), (iii), and (vii) are also large in $G_0$, as stated in~\\cite[Tables 3 and 7]{AB2015}.\nBy direct computation, we obtain the following results:\n\\begin{itemize}\n\\item Suppose that $H_0$ is as (iv). Then $H$ is large in $G$ if and only if $q=3$. Moreover, $H_0$ is large in $G_0$.\n\\item Suppose that $H_0$ is as (xii). Then $H$ is large in $G$ if and only if $q\\in \\{3,5,7\\}$. Moreover, $H_0$ is large in $G_0$.\n\\item If $H_0$ is as (xiii), then $H_1$ is non-large in $G$.\n\\end{itemize} \n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSuppose that $H_0$ is as (v). Now the preimage of $H_0$ in $\\Omega_{8}^{+}(q)$ is $\\Omega_{2}^{-}(q)^4.(2d)^3.\\mathrm{S}_4$, where $d=(2,q-1)$.\nThen $|H_0|=(\\frac{q+1}{2})^4\\cdot   2^3\\cdot (2,q-1)^2\\cdot (4!)<48\\cdot (\\frac{3}{2})^4 \\cdot q^4< 243 q^4$.\nSince $|\\mathcal{O}_1 |^2 \\leq 648q$, from Eq.~\\eqref{eq:H1} we derive $243^3\\cdot 648\\cdot  8>q^{23}$.\nThis inequality holds only for $q=2$.\nMoreover, if $q=2$, then it is known from~\\cite[Proposition 4.23]{AB2015} that $H_0$ is large in $G_0$. \n\n\n  \n \n\nSuppose that $H_0$ is as (vi). Now the preimage of $H_0$ in $\\Omega_{8}^{+}(q)$ is $\\Omega_{2}^{+}(q)^4.(2d)^3.\\mathrm{S}_4$, where $d=(2,q-1)$. By the above paragraph, we only need to consider $q=2$. However, the condition in (vi) is $q\\geq 5$, a contradiction. Therefore, in this case $H$ is non-large.\n\n Suppose that $H_0$ is as (viii).\n Now $|H_0|\\leq 2^4(q^2+1)^2\\leq 2^4\\cdot (\\frac{5}{4})^2q^4=25q^4$.\n Since $|\\mathcal{O}_1 |^2 \\leq 648q$, from Eq.~\\eqref{eq:H1} we have $25^3\\cdot 648\\cdot  8>q^{23}$, which holds only for $q=2$. \nLet $q=2$. Then $|H_0|^3=400^3=64000000$ and $|G_0|=174182400 $. \nNotice that $H$ is a novel maximal subgroup of $G$, and $G=G_0.3$ or $G_0.\\mathrm{S}_3$.\nTherefore, $H$ is large in $G$, giving part (c) of the lemma. \n \nSuppose that $H_0$ is as (ix).\nIf $r=2$, then by~\\cite[Proposition 4.23]{AB2015}, $H_0$ is large in $G_0$.\nIf $r=3$, then $H_1$ is large in $G_1$ by Lemma~\\ref{lm:psoc5} (notice that $|\\mathcal{O}_1|$ here is greater than in Lemma~\\ref{lm:psoc5}).\nThis gives rise to part (a) of the lemma. \nSuppose that $r\\geq 5$.\nThen $|H_0|^3\\leq q_0^{84}$ and $|G_0|\\geq q^{28 }/8 $ by Lemma~\\ref{lm:LUSO1}.\nSince $|\\mathcal{O}_1 |^2 \\leq 648q $, by Eq.~\\eqref{eq:H1} we have $q^{28 }/8 <648q\\cdot q_0^{84}$ and hence $27r-84< \\log_{q_0}(648\\cdot 8)< 13$, which does not hold for any $r\\geq 5$. \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n  Suppose that $H_0$ is as (x).\n  Assume at first that $H_0= \\mathrm{PSU}_3(q).3$ with $q \\equiv 2\\pmod{3}$ and $q\\neq 2$.\nThen $|H_0|=|\\mathrm{SU}_3(q)|$.\nBy Lemma~\\ref{lm:LUSO}, $(1-q^{-2})q^{8}<|\\mathrm{SU}_{a}(q) |\\leq (1-q^{-2} ) (1+q^{-3} )q^{8}<q^{8}$.\nBy~\\cite[Table~8.50]{BHRD2013}, $|\\mathcal{O}_1| =6\\log_p(q)$ and so $|\\mathcal{O}_{1}|^2= 36\\log_p(q)^2\\leq 81q/2<41q$. \nThen by Eq.~\\eqref{eq:H} we have $q^{28}/8<(q^{8})^3\\cdot 41q$ and so $q^{3}<328$.\nThis hold only for $q\\in \\{5,8\\}$.\nHowever, computation shows that Eq.~\\eqref{eq:H1} does not hold for  $q\\in \\{5,8\\}$.\nNow, assume that $H_0= \\mathrm{PSL}_3(q).3$ with $q \\equiv 1\\pmod{3}$.\nSince $|\\mathrm{PSL}_3(q)|<|\\mathrm{PSU}_3(q)|$, by the argument for $\\mathrm{PSU}_3(q).3$, we only need to consider $q\\in \\{4,7\\}$. Computation shows that $q\\in \\{4,7\\}$ does not satisfy Eq.~\\eqref{eq:H1}.\nTherefore, for case (x), $H$ is non-large.\n\nSuppose that $H_0$ is as (xi). By~\\cite[Table~3]{AB2015}, if $p\\neq 2$ then $H_0$ is large in $G_0$.\nHence, we assume that $p=2$.  \nNotice that\n\\[ \n |H_0|=|{}^3\\mathrm{D}_4(q_0)|=\\frac{ q_0^{12}( q_0^{12}-1)( q_0^{6}-1)( q_0^{2}-1)}{( q_0^{4}-1)} =\\frac{ (1-q_0^{-12})(1-q_0^{-6}) }{1+q_0^{-2}}q_0^{28}.\n\\]\nBy Lemma~\\ref{lm:LUSO} we have\n\\[\nf(q_0):=\\frac{ (1-q_0^{-12})^3(1-q_0^{-6})^3 }{(1+q_0^{-2})^3(1-q_0^{-6} ) (1-q_0^{-12})}<\\frac{|H_0|^3}{|G_0|}<\\frac{ (1-q_0^{-12})^3(1-q_0^{-6})^3 }{(1+q_0^{-2})^3(1-q_0^{-6}-q_0^{-12}))(1-q_0^{-12})}:=g(q_0)\n\\]\nOne can verify that both $f(q_0)$ and $g(q_0)$  are increasing, and that $0.49<f(2)<0.5$ and $ g(q_0)<1$. \nTherefore, Eq.~\\eqref{eq:H} holds if and only if $|\\mathcal{O}_1|\\geq 2$.\nSince $|\\mathcal{O}_1|\\geq 3$, we conclude that $H_1$ is large in $G_1$, giving part (b)."
+    },
+    {
+      "id": "external_tab:A",
+      "type": "unknown",
+      "content": "External reference to 'tab:A'",
+      "content_preview": "External reference to 'tab:A'",
+      "display_name": "Unknown",
+      "label": "tab:A",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_tab:B",
+      "type": "unknown",
+      "content": "External reference to 'tab:B'",
+      "content_preview": "External reference to 'tab:B'",
+      "display_name": "Unknown",
+      "label": "tab:B",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_tb:orderofsimplegroups",
+      "type": "unknown",
+      "content": "External reference to 'tb:orderofsimplegroups'",
+      "content_preview": "External reference to 'tb:orderofsimplegroups'",
+      "display_name": "Unknown",
+      "label": "tb:orderofsimplegroups",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslout",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslout'",
+      "content_preview": "External reference to 'eq:pslout'",
+      "display_name": "Unknown",
+      "label": "eq:pslout",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:H1",
+      "type": "unknown",
+      "content": "External reference to 'eq:H1'",
+      "content_preview": "External reference to 'eq:H1'",
+      "display_name": "Unknown",
+      "label": "eq:H1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslc2-qm",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslc2-qm'",
+      "content_preview": "External reference to 'eq:pslc2-qm'",
+      "display_name": "Unknown",
+      "label": "eq:pslc2-qm",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslc2qt2",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslc2qt2'",
+      "content_preview": "External reference to 'eq:pslc2qt2'",
+      "display_name": "Unknown",
+      "label": "eq:pslc2qt2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslc2qt1",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslc2qt1'",
+      "content_preview": "External reference to 'eq:pslc2qt1'",
+      "display_name": "Unknown",
+      "label": "eq:pslc2qt1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_sec:techniques",
+      "type": "unknown",
+      "content": "External reference to 'sec:techniques'",
+      "content_preview": "External reference to 'sec:techniques'",
+      "display_name": "Unknown",
+      "label": "sec:techniques",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslc5",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslc5'",
+      "content_preview": "External reference to 'eq:pslc5'",
+      "display_name": "Unknown",
+      "label": "eq:pslc5",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslc62",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslc62'",
+      "content_preview": "External reference to 'eq:pslc62'",
+      "display_name": "Unknown",
+      "label": "eq:pslc62",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pslc61",
+      "type": "unknown",
+      "content": "External reference to 'eq:pslc61'",
+      "content_preview": "External reference to 'eq:pslc61'",
+      "display_name": "Unknown",
+      "label": "eq:pslc61",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:psuout",
+      "type": "unknown",
+      "content": "External reference to 'eq:psuout'",
+      "content_preview": "External reference to 'eq:psuout'",
+      "display_name": "Unknown",
+      "label": "eq:psuout",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:psuc2-1",
+      "type": "unknown",
+      "content": "External reference to 'eq:psuc2-1'",
+      "content_preview": "External reference to 'eq:psuc2-1'",
+      "display_name": "Unknown",
+      "label": "eq:psuc2-1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:psuc4",
+      "type": "unknown",
+      "content": "External reference to 'eq:psuc4'",
+      "content_preview": "External reference to 'eq:psuc4'",
+      "display_name": "Unknown",
+      "label": "eq:psuc4",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:psuc5",
+      "type": "unknown",
+      "content": "External reference to 'eq:psuc5'",
+      "content_preview": "External reference to 'eq:psuc5'",
+      "display_name": "Unknown",
+      "label": "eq:psuc5",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:psuc61",
+      "type": "unknown",
+      "content": "External reference to 'eq:psuc61'",
+      "content_preview": "External reference to 'eq:psuc61'",
+      "display_name": "Unknown",
+      "label": "eq:psuc61",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:H",
+      "type": "unknown",
+      "content": "External reference to 'eq:H'",
+      "content_preview": "External reference to 'eq:H'",
+      "display_name": "Unknown",
+      "label": "eq:H",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pspc7",
+      "type": "unknown",
+      "content": "External reference to 'eq:pspc7'",
+      "content_preview": "External reference to 'eq:pspc7'",
+      "display_name": "Unknown",
+      "label": "eq:pspc7",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pso-c3-1",
+      "type": "unknown",
+      "content": "External reference to 'eq:pso-c3-1'",
+      "content_preview": "External reference to 'eq:pso-c3-1'",
+      "display_name": "Unknown",
+      "label": "eq:pso-c3-1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:pso-c4-1",
+      "type": "unknown",
+      "content": "External reference to 'eq:pso-c4-1'",
+      "content_preview": "External reference to 'eq:pso-c4-1'",
+      "display_name": "Unknown",
+      "label": "eq:pso-c4-1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_eq:psoc7-2",
+      "type": "unknown",
+      "content": "External reference to 'eq:psoc7-2'",
+      "content_preview": "External reference to 'eq:psoc7-2'",
+      "display_name": "Unknown",
+      "label": "eq:psoc7-2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-1-b43553c5",
+      "target": "external_tab:A",
+      "type": null
+    },
+    {
+      "source": "theorem-1-b43553c5",
+      "target": "external_tab:B",
+      "type": null
+    },
+    {
+      "source": "theorem-2-fe5d5c0c",
+      "target": "external_tab:A",
+      "type": null
+    },
+    {
+      "source": "theorem-2-fe5d5c0c",
+      "target": "external_tab:B",
+      "type": null
+    },
+    {
+      "source": "theorem-3-e937e360",
+      "target": "external_tab:A",
+      "type": null
+    },
+    {
+      "source": "theorem-3-e937e360",
+      "target": "external_tab:B",
+      "type": null
+    },
+    {
+      "source": "theorem-4-eb6887f1",
+      "target": "external_tab:A",
+      "type": null
+    },
+    {
+      "source": "theorem-4-eb6887f1",
+      "target": "external_tab:B",
+      "type": null
+    },
+    {
+      "source": "proposition-5-1413d511",
+      "target": "external_tb:orderofsimplegroups",
+      "type": null
+    },
+    {
+      "source": "lemma-14-d8f0b28c",
+      "target": "external_tab:A",
+      "type": null
+    },
+    {
+      "source": "lemma-15-9f17b71e",
+      "target": "external_tab:B",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "lemma-8-e637ef6f",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "external_eq:pslout",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "lemma-10-a16f15b1",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "external_eq:pslc2-qm",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "external_eq:pslc2qt2",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "external_eq:pslc2qt1",
+      "type": null
+    },
+    {
+      "source": "lemma-17-43d72dc6",
+      "target": "external_sec:techniques",
+      "type": null
+    },
+    {
+      "source": "lemma-18-5c963de8",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-18-5c963de8",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-19-4d50b61b",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-19-4d50b61b",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-20-4a6699bc",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-20-4a6699bc",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-20-4a6699bc",
+      "target": "external_eq:pslc5",
+      "type": null
+    },
+    {
+      "source": "remark-21-8b2b6529",
+      "target": "lemma-20-4a6699bc",
+      "type": null
+    },
+    {
+      "source": "remark-21-8b2b6529",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "remark-21-8b2b6529",
+      "target": "external_sec:techniques",
+      "type": null
+    },
+    {
+      "source": "lemma-22-67ad58ce",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-22-67ad58ce",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-22-67ad58ce",
+      "target": "external_eq:pslc62",
+      "type": null
+    },
+    {
+      "source": "lemma-22-67ad58ce",
+      "target": "external_eq:pslc61",
+      "type": null
+    },
+    {
+      "source": "lemma-23-81ebb8ed",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-25-6c8a2ebd",
+      "target": "lemma-8-e637ef6f",
+      "type": null
+    },
+    {
+      "source": "lemma-25-6c8a2ebd",
+      "target": "external_eq:psuout",
+      "type": null
+    },
+    {
+      "source": "lemma-25-6c8a2ebd",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-25-6c8a2ebd",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-25-6c8a2ebd",
+      "target": "external_eq:psuc2-1",
+      "type": null
+    },
+    {
+      "source": "lemma-26-9135e732",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-26-9135e732",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-27-01b0fc41",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-27-01b0fc41",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-27-01b0fc41",
+      "target": "external_eq:psuc4",
+      "type": null
+    },
+    {
+      "source": "lemma-28-24ea8be5",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-28-24ea8be5",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-28-24ea8be5",
+      "target": "external_eq:psuc5",
+      "type": null
+    },
+    {
+      "source": "lemma-29-31ed3546",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-29-31ed3546",
+      "target": "external_eq:psuc61",
+      "type": null
+    },
+    {
+      "source": "lemma-30-a2d88a59",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-32-77b059d9",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-32-77b059d9",
+      "target": "lemma-8-e637ef6f",
+      "type": null
+    },
+    {
+      "source": "lemma-32-77b059d9",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-32-77b059d9",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-33-3601dbe4",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-34-27206f51",
+      "target": "proposition-5-1413d511",
+      "type": null
+    },
+    {
+      "source": "lemma-34-27206f51",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-34-27206f51",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-35-f4c5a82c",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-35-f4c5a82c",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-36-0274ab2b",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-36-0274ab2b",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-36-0274ab2b",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-37-bc17470b",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-37-bc17470b",
+      "target": "external_eq:pspc7",
+      "type": null
+    },
+    {
+      "source": "lemma-39-dd061020",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-39-dd061020",
+      "target": "lemma-9-57d353a4",
+      "type": null
+    },
+    {
+      "source": "lemma-40-4a0c6dc8",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-40-4a0c6dc8",
+      "target": "external_eq:pso-c3-1",
+      "type": null
+    },
+    {
+      "source": "lemma-40-4a0c6dc8",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-41-a89558ec",
+      "target": "external_eq:H",
+      "type": null
+    },
+    {
+      "source": "lemma-41-a89558ec",
+      "target": "external_eq:pso-c4-1",
+      "type": null
+    },
+    {
+      "source": "lemma-41-a89558ec",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-41-a89558ec",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-42-04d7f2c1",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-42-04d7f2c1",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-43-71ef5c5f",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-44-d9b61a6a",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-44-d9b61a6a",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-44-d9b61a6a",
+      "target": "external_eq:psoc7-2",
+      "type": null
+    },
+    {
+      "source": "lemma-45-4880ec8c",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-45-4880ec8c",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-45-4880ec8c",
+      "target": "lemma-11-e763be81",
+      "type": null
+    },
+    {
+      "source": "lemma-46-47ef490c",
+      "target": "external_eq:H1",
+      "type": null
+    },
+    {
+      "source": "lemma-46-47ef490c",
+      "target": "lemma-42-04d7f2c1",
+      "type": null
+    },
+    {
+      "source": "lemma-46-47ef490c",
+      "target": "lemma-8-e637ef6f",
+      "type": null
+    },
+    {
+      "source": "lemma-46-47ef490c",
+      "target": "lemma-7-d8a0116e",
+      "type": null
+    },
+    {
+      "source": "lemma-46-47ef490c",
+      "target": "external_eq:H",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 68,
+    "edge_count": 89,
+    "extractor_used": "regex-only"
+  }
+}

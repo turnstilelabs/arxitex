@@ -1,0 +1,149 @@
+{
+  "arxiv_id": "2506.14324v1",
+  "nodes": [
+    {
+      "id": "theorem-1-8dca29d1",
+      "type": "theorem",
+      "content": "\\label{comp}\n\tThe only Rota--Baxter operators on a compact simple Lie group \\( G \\) are \\( 1_G \\) and \\( (\\cdot)^{-1} \\).",
+      "content_preview": "The only Rota--Baxter operators on a compact simple Lie group ( G ) are ( 1_G ) and ( ()^-1 ).",
+      "display_name": "Theorem",
+      "label": "comp",
+      "position": {
+        "line_start": 76,
+        "line_end": 78
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-f03e8026",
+      "type": "theorem",
+      "content": "\\label{alg}\n\tThe only Rota--Baxter operators on a compact simple Lie algebra are \\( 0 \\) and \\( -\\mathrm{id} \\).",
+      "content_preview": "The only Rota--Baxter operators on a compact simple Lie algebra are ( 0 ) and ( - ).",
+      "display_name": "Theorem",
+      "label": "alg",
+      "position": {
+        "line_start": 92,
+        "line_end": 94
+      },
+      "references": [
+        {
+          "target_id": "comp",
+          "reference_type": "internal",
+          "context": "\\to G \\) such that \\( \\B = T_1 B \\).\n\tBy Theorem~\\ref{comp}, we have \\( B = 1_G \\) or \\( B = (\\cdot)^{-1} \\),",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let \\( \\g \\) be a compact simple Lie algebra with a Rota--Baxter operator \\( \\B : \\g \\to \\g \\).\n\tBy Lie's third theorem~\\cite[Theorem~1.14.3]{dkolk}, there exists a connected simply connected Lie group \\( G \\) with the Lie algebra~\\( \\g \\).\n\tBy Weyl's theorem~\\cite[Theorem~4.69]{knapp}, it is compact, and hence by~\\cite[Corollary~2.19]{sheng},\n\tthere exists a Rota--Baxter operator \\( B : G \\to G \\) such that \\( \\B = T_1 B \\).\n\tBy Theorem~\\ref{comp}, we have \\( B = 1_G \\) or \\( B = (\\cdot)^{-1} \\), and the claim follows by computing the tangent maps."
+    },
+    {
+      "id": "lemma-3-9fd6e731",
+      "type": "lemma",
+      "content": "[{\\cite[Theorem~3.20]{kirillov}}]\\label{lie}\n\tLet \\( G \\) and \\( H \\) be Lie groups with Lie algebras \\( \\g \\) and \\( \\mathfrak{h} \\), respectively.\n\tAssume \\( G \\) to be connected.\n\tIf \\( f, k : G \\to H \\) are Lie group homomorphisms and \\( T_1 f = T_1 k \\), then \\( f = k \\).",
+      "content_preview": "[] Let ( G ) and ( H ) be Lie groups with Lie algebras ( ) and ( ), respectively. Assume ( G ) to be connected.",
+      "display_name": "Lemma",
+      "label": "lie",
+      "position": {
+        "line_start": 120,
+        "line_end": 124
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-c701af43",
+      "type": "lemma",
+      "content": "[{\\cite[Proposition~2.13]{gls}}]\\label{mul}\n\tLet \\( (G, \\cdot) \\) be a Lie group with the Lie algebra \\( (\\g, [\\cdot, \\cdot]) \\),\n\tand let \\( B : G \\to G \\) be a Rota-Baxter operator on~\\( G \\) with the tangent map \\( \\B = T_1 B : \\g \\to \\g \\).\n\tDefine \\( * : G \\times G \\to G \\) by \\( g * h = gB(g)hB(g)^{-1} \\) for all \\( g, h \\in G \\).\n\tThen \\( (G, *) \\) is a Lie group with the Lie algebra \\( (\\g, [\\cdot, \\cdot]_{\\B}) \\), where\n\t\\[ [u, v]_{\\B} = [\\B(u), v] + [u, \\B(v)] + [u, v] \\text{ for all } u, v \\in \\g. \\]\n\tThe map \\( B \\) is a Lie group homomorphism from \\( (G, *) \\) to \\( (G, \\cdot) \\),\n\twhile \\( \\B \\) is a Lie algebra homomorphism from \\( (\\g, [\\cdot, \\cdot]_{\\B}) \\) to \\( (\\g, [\\cdot, \\cdot]) \\).",
+      "content_preview": "[] Let ( (G, ) ) be a Lie group with the Lie algebra ( (, [, ]) ), and let ( B : G G ) be a Rota-Baxter operator on~( G ) with the tangent map ( =...",
+      "display_name": "Lemma",
+      "label": "mul",
+      "position": {
+        "line_start": 129,
+        "line_end": 137
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-ade9f2bf",
+      "type": "lemma",
+      "content": "\\label{zeroinv}\n\tLet \\( G \\) be a compact simple Lie group with the associated Lie algebra~\\( \\g \\).\n\tLet \\( B : G \\to G \\) be a Rota--Baxter operator on \\( G \\), and let \\( \\B = T_1 B : \\g \\to \\g \\) be the tangent map.\n\tIf \\( \\B = 0 \\), then \\( B = 1_G \\), and if \\( \\B = -\\mathrm{id} \\), then \\( B = (\\cdot)^{-1} \\).",
+      "content_preview": "Let ( G ) be a compact simple Lie group with the associated Lie algebra~( ). Let ( B : G G ) be a Rota--Baxter operator on ( G ), and let ( = T_1 B :...",
+      "display_name": "Lemma",
+      "label": "zeroinv",
+      "position": {
+        "line_start": 143,
+        "line_end": 147
+      },
+      "references": [
+        {
+          "target_id": "mul",
+          "reference_type": "internal",
+          "context": "Rota--Baxter operator with \\( \\B = 0 \\). By Lemma~\\ref{mul}, there exists another multiplication\n\t\\( * : G \\t",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "mul",
+          "reference_type": "internal",
+          "context": "\\( f : (G, \\cdot) \\to (G, *) \\).\n\n\tBy Proposition~\\ref{mul}, the map \\( B \\) is a Lie group homomorphism from",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lie",
+          "reference_type": "internal",
+          "context": "\\cdot) \\) also has a zero tangent, hence by Lemma~\\ref{lie},\n\twe have \\( B \\circ f = 1_G \\). Since \\( f \\) is",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let \\( B \\) be a Rota--Baxter operator with \\( \\B = 0 \\). By Lemma~\\ref{mul}, there exists another multiplication\n\t\\( * : G \\times G \\to G \\) such that the associated Lie algebra of the Lie group \\( (G, *) \\)\n\tis \\( (\\g, [\\cdot, \\cdot]_{\\B}) \\), where\n\t\\[ [u, v]_{\\B} = [\\B(u), v] + [u, \\B(v)] + [u, v] \\text{ for all } u, v \\in \\g. \\]\n\tSince \\( \\B(u) = \\B(v) = 0 \\) in our case, we yield \\( [u, v]_{\\B} = [u, v] \\) for all \\( u, v \\in \\g \\).\n\tTherefore Lie algebras \\( (\\g, [\\cdot,\\cdot]) \\) and \\( (\\g, [\\cdot,\\cdot]_{\\B}) \\) are isomorphic.\n\n\tLie groups \\( (G, \\cdot) \\) and \\( (G, *) \\) have the same underlying manifolds, in particular, they have the same homotopy type\n\tand are both connected and compact.\n\tSince \\( (G, \\cdot) \\) is a simple Lie group, its Lie algebra \\( (\\g, [\\cdot, \\cdot]) \\) is simple~\\cite[Theorem~1.11.7]{dkolk}.\n\tHence the algebra \\( (\\g, [\\cdot, \\cdot]_{\\B}) \\) is also simple, and by~\\cite[Theorem~1.11.7]{dkolk} the group \\( (G, *) \\) is simple.\n\tBy~\\cite[Theorem~9.3]{baum}, two compact simple Lie groups of the same homotopy type are isomorphic (as Lie groups),\n\thence there exists a smooth group isomorphism \\( f : (G, \\cdot) \\to (G, *) \\).\n\n\tBy Proposition~\\ref{mul}, the map \\( B \\) is a Lie group homomorphism from \\( (G, *) \\) to \\( (G, \\cdot) \\).\n\tHence the composition \\( B \\circ f : (G, \\cdot) \\to (G, \\cdot) \\) is a Lie group homomorphism from \\( (G, \\cdot) \\) into itself.\n\tConsider its tangent at the identity:\n\t\\[ T_1 (B \\circ f) = T_{f(1)} B \\circ T_1 f = T_1 B \\circ T_1 f = 0, \\]\n\twhere \\( f(1) = 1 \\) since \\( f \\) is a homomorphism, and \\( T_1 B = 0 \\) by our assumption.\n\tThe trivial map \\( 1_G : (G, \\cdot) \\to (G, \\cdot) \\) also has a zero tangent, hence by Lemma~\\ref{lie},\n\twe have \\( B \\circ f = 1_G \\). Since \\( f \\) is an isomorphism, we derive \\( B = 1_G \\), as claimed.\n\n\tNow, if \\( B \\) is a Rota-Baxter operator with \\( \\B = -\\mathrm{id} \\), then by~\\cite[Proposition~2.4]{gls},\n\ta smooth map \\( \\tilde{B}(g) = g^{-1} B(g^{-1}) \\), \\( g \\in G \\), is also a Rota--Baxter operator on \\( G \\).\n\tLet \\( \\exp : \\g \\to G \\) denote the exponential map. For \\( u \\in \\g \\) we have\n\t\\begin{multline*}\n\t(T_1 \\tilde{B})(u) = \\left.\\frac{d}{dt}\\right|_{t=0} \\tilde{B}(\\exp(tu)) = \\left.\\frac{d}{dt}\\right|_{t=0} \\exp(-tu)B(\\exp(-tu)) =\\\\\n\t\t= -u + \\left.\\frac{d}{dt}\\right|_{t=0} B(\\exp(-tu)) = -u + (T_1 B)(-u) = -u + u = 0.\n\t\\end{multline*}\n\tTherefore \\( T_1 \\tilde{B} = 0 \\), so by the preceding paragraphs, \\( \\tilde{B}(g) = 1 \\) for all \\( g \\in G \\).\n\tThis immediately implies \\( B(g) = g^{-1} \\), \\( g \\in G \\), as claimed."
+    },
+    {
+      "id": "lemma-6-6efdcce3",
+      "type": "lemma",
+      "content": "[{\\cite[Theorem~4.1 and Table~7]{onish}}]\\label{decs}\n\tLet \\( \\g \\) be a compact simple Lie algebra, and let \\( \\g_1, \\g_2 \\) be proper nonzero subalgebras of \\( \\g \\) such that \\( \\g = \\g_1 + \\g_2 \\).\n\tThen \\( \\g_1 \\cap \\g_2 \\) is nonzero and at least one of the summands \\( \\g_i \\), \\( i = 1, 2 \\),\n\tis a compact simple Lie algebra of rank smaller than the rank of \\( \\g \\).",
+      "content_preview": "[] Let ( ) be a compact simple Lie algebra, and let ( _1, _2 ) be proper nonzero subalgebras of ( ) such that ( = _1 + _2 ).",
+      "display_name": "Lemma",
+      "label": "decs",
+      "position": {
+        "line_start": 211,
+        "line_end": 215
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-2-f03e8026",
+      "target": "theorem-1-8dca29d1",
+      "type": null
+    },
+    {
+      "source": "lemma-5-ade9f2bf",
+      "target": "lemma-4-c701af43",
+      "type": null
+    },
+    {
+      "source": "lemma-5-ade9f2bf",
+      "target": "lemma-3-9fd6e731",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 6,
+    "edge_count": 3,
+    "extractor_used": "regex-only"
+  }
+}

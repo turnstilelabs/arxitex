@@ -1,0 +1,98 @@
+{
+  "arxiv_id": "2507.01730v2",
+  "nodes": [
+    {
+      "id": "example-1-d03e46f7",
+      "type": "example",
+      "content": "\\label{ex: 1}\nLet $\\lambda=(3,2,2)$, then $X=\\{7,5,4,1,0\\}$ is a $\\beta$-set for $\\lambda$. We observe that $h_{1,2}(\\lambda)=4$, and in fact, by direct inspection of the hook lengths in the Young diagram $Y(\\lambda)$ we see that $H_{1,2}(\\lambda)$ is the only hook of length $4$ in $\\lambda$. This can be easily read off the $\\beta$-set $X$ as well. In fact, $3\\notin X$, $7\\in X$ and $7-3=4$. This shows that $H(7,3)$ is a hook of length $4$ in $\\lambda$. Moreover, if $x\\in X$ and $y\\notin X$ then $|H(x,y)|=4$ implies $x=7$ and $y=3$. We conclude that $H(7,3)$ is the only hook of length $4$ in $\\lambda$ and therefore that $H(7,3)=H_{1,2}(\\lambda)$. If we now let $Y=(X\\smallsetminus\\{7\\})\\cup\\{3\\}$, we have that $Y=\\{5,4,3,1,0\\}$ is a $\\beta$-set for the partition $(1,1,1)$. As explained in the discussion after Proposition \\ref{prop: hooksbetaset}, we have that $(1,1,1)=\\lambda\\setminus H_{1,2}(\\lambda)$.",
+      "content_preview": "Let =(3,2,2), then X=7,5,4,1,0 is a -set for . We observe that h_1,2()=4, and in fact, by direct inspection of the hook lengths in the Young diagram...",
+      "display_name": "Example",
+      "label": "ex: 1",
+      "position": {
+        "line_start": 303,
+        "line_end": 305
+      },
+      "references": [
+        {
+          "target_id": "prop: hooksbetaset",
+          "reference_type": "external",
+          "context": "As explained in the discussion after Proposition \\ref{prop: hooksbetaset}, we have that $(1,1,1)=\\lambda\\setminus H_{1,2}(\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "example-2-807307eb",
+      "type": "example",
+      "content": "Let $\\lambda=(7,5,5,3,3)\\in\\mathcal{P}(18)$ and let $s=5$. The set $$X=\\{16,12,9,8,4,3,2,1,0\\}$$ is a $\\beta$-set for $\\lambda$. Considering the corresponding $5$-Abacus configuration we see that $C_5(\\lambda)=(1,1,1,1)$ and that $$Q_5(\\lambda)=(\\emptyset,(2),(1),\\emptyset,\\emptyset).$$ It follows that $N_5(\\lambda)=2$. \n\nOn the other hand, given $\\mu=(7,7,4,3,2,2,1\\6{8})\\in\\mathcal{P}(33)$ we have that the set \n$$Y=\\{23,22,18,16,14,13,11,10,9,8,7,6,5,4,2,1,0\\},$$\nis a $\\beta$-set for $\\mu$. It follows that \n$C_5(\\mu)=(2,1)$ and that $$Q_5(\\mu)=(\\emptyset,\\emptyset,(2), (1\\6{3}),\\emptyset).$$\nWe conclude that $N_5(\\mu)=3$. \nIt is important to notice that $$\\lambda_1=7\\leq 4+5\\cdot 2=|C_5(\\lambda)|+5\\cdot N_5(\\lambda),\\\n\\text{and that}\\ \\ell(\\mu)=14\\leq 3+5\\cdot 3=|C_5(\\mu)|+5\\cdot N_5(\\mu).$$\nThe two equations displayed above are instances of a more general fact, that is fully explained by Proposition \\ref{prop: decisiva} below.",
+      "content_preview": "Let =(7,5,5,3,3)(18) and let s=5. The set X=16,12,9,8,4,3,2,1,0 is a -set for . Considering the corresponding 5-Abacus configuration we see that...",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 609,
+        "line_end": 620
+      },
+      "references": [
+        {
+          "target_id": "prop: decisiva",
+          "reference_type": "external",
+          "context": "eral fact, that is fully explained by Proposition \\ref{prop: decisiva} below.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "external_prop: hooksbetaset",
+      "type": "unknown",
+      "content": "External reference to 'prop: hooksbetaset'",
+      "content_preview": "External reference to 'prop: hooksbetaset'",
+      "display_name": "Unknown",
+      "label": "prop: hooksbetaset",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_prop: decisiva",
+      "type": "unknown",
+      "content": "External reference to 'prop: decisiva'",
+      "content_preview": "External reference to 'prop: decisiva'",
+      "display_name": "Unknown",
+      "label": "prop: decisiva",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "example-1-d03e46f7",
+      "target": "external_prop: hooksbetaset",
+      "type": null
+    },
+    {
+      "source": "example-2-807307eb",
+      "target": "external_prop: decisiva",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 4,
+    "edge_count": 2,
+    "extractor_used": "regex-only"
+  }
+}

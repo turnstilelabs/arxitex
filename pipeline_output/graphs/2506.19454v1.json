@@ -1,0 +1,884 @@
+{
+  "arxiv_id": "2506.19454v1",
+  "nodes": [
+    {
+      "id": "theorem-1-b16355c6",
+      "type": "theorem",
+      "content": "[See Theorem \\ref{lem:completed2}]\\label{def:(T)intro}\n    A unimodular random graph $(G, o)$ has Property (T) if and only if for every $0 < \\alpha < 1$ there exists $\\kappa > 0$ such that any unimodular random 2-colouring $c$ of $(G,o)$ with $\\alpha \\leq \\PP [\\text{o is coloured red in } c(G,o)]\\leq 1 - \\alpha$ satisfies\n    \\[\n    \\EE [\\#\\{\\text{neighbours of $o$ in $G$ with a different colour to $o$'s}\\}] \\geq \\kappa. \n    \\]",
+      "content_preview": "[See Theorem ] A unimodular random graph (G, o) has Property (T) if and only if for every 0 < < 1 there exists > 0 such that any unimodular random...",
+      "display_name": "Theorem",
+      "label": "def:(T)intro",
+      "position": {
+        "line_start": 318,
+        "line_end": 323
+      },
+      "references": [
+        {
+          "target_id": "lem:completed2",
+          "reference_type": "internal",
+          "context": "[See Theorem \\ref{lem:completed2}]\\label{def:(T)intro}\n    A unimodular random grap",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-2-aac61773",
+      "type": "theorem",
+      "content": "[See Theorem \\ref{thm:HP}]\\label{thm:HP.intro}\n    Unimodular random graphs with Property (T) have cost one.",
+      "content_preview": "[See Theorem ] Unimodular random graphs with Property (T) have cost one.",
+      "display_name": "Theorem",
+      "label": "thm:HP.intro",
+      "position": {
+        "line_start": 333,
+        "line_end": 335
+      },
+      "references": [
+        {
+          "target_id": "thm:HP",
+          "reference_type": "internal",
+          "context": "[See Theorem \\ref{thm:HP}]\\label{thm:HP.intro}\n    Unimodular random graphs",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-3-73bbbcf5",
+      "type": "theorem",
+      "content": "[See Theorem \\ref{thm:completed1}]\\label{thm:rew.intro}\n    If $(G,o)$ is an URG with Property (T) and $(G,H,o)$ is an extended rewiring, then $(H,o)$ has Property (T).",
+      "content_preview": "[See Theorem ] If (G,o) is an URG with Property (T) and (G,H,o) is an extended rewiring, then (H,o) has Property (T).",
+      "display_name": "Theorem",
+      "label": "thm:rew.intro",
+      "position": {
+        "line_start": 339,
+        "line_end": 341
+      },
+      "references": [
+        {
+          "target_id": "thm:completed1",
+          "reference_type": "internal",
+          "context": "[See Theorem \\ref{thm:completed1}]\\label{thm:rew.intro}\n    If $(G,o)$ is an URG wi",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-4-8427920d",
+      "type": "theorem",
+      "content": "[See Theorems \\ref{TForGroupImpliesTForPalm} and \\ref{otherway}]\\label{thm:Palm.intro}\n    An lcscu group $H$ has Property (T) if and only if $\\mathcal{G}(\\Pi_0)$ has Property (T) as an URG.",
+      "content_preview": "[See Theorems and ] An lcscu group H has Property (T) if and only if (_0) has Property (T) as an URG.",
+      "display_name": "Theorem",
+      "label": "thm:Palm.intro",
+      "position": {
+        "line_start": 345,
+        "line_end": 347
+      },
+      "references": [
+        {
+          "target_id": "TForGroupImpliesTForPalm",
+          "reference_type": "internal",
+          "context": "[See Theorems \\ref{TForGroupImpliesTForPalm} and \\ref{otherway}]\\label{thm:Palm.intro}\n    An",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "otherway",
+          "reference_type": "internal",
+          "context": "[See Theorems \\ref{TForGroupImpliesTForPalm} and \\ref{otherway}]\\label{thm:Palm.intro}\n    An lcscu group $H$ has",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-5-61f418ad",
+      "type": "theorem",
+      "content": "[Theorem \\ref{thm:realgs}]\n    Let $G$ be a noncompact lcsc group with Property (T). Then $G$ has cost one.",
+      "content_preview": "[Theorem ] Let G be a noncompact lcsc group with Property (T). Then G has cost one.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 351,
+        "line_end": 353
+      },
+      "references": [
+        {
+          "target_id": "thm:realgs",
+          "reference_type": "internal",
+          "context": "[Theorem \\ref{thm:realgs}]\n    Let $G$ be a noncompact lcsc group with Prop",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "theorem-6-92a9b224",
+      "type": "theorem",
+      "content": "[Generalized Glasner-Weiss]\\label{thm:Glasner.intro}\n     An URG $(G,o)$ has Property (T) if and only if the limit of any weakly convergent sequence of ergodic  DURGs over $(G,o)$ is ergodic.",
+      "content_preview": "[Generalized Glasner-Weiss] An URG (G,o) has Property (T) if and only if the limit of any weakly convergent sequence of ergodic DURGs over (G,o) is...",
+      "display_name": "Theorem",
+      "label": "thm:Glasner.intro",
+      "position": {
+        "line_start": 368,
+        "line_end": 370
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-7-e2e8af52",
+      "type": "theorem",
+      "content": "[Gaboriau's Induction Formula \\cite{Gab}]\n    Let $(X,R,\\mu)$ be a pmp cber and $A\\subseteq X$ a Borel subset with $\\mu (A) > 0$. Then $$\n    \\cost (R) - 1 = \\mu(A) (\\cost (R|_A) -1).\n    $$",
+      "content_preview": "[Gaboriau's Induction Formula ] Let (X,R,) be a pmp cber and A X a Borel subset with (A) > 0. Then (R) - 1 = (A) ( (R|_A) -1).",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 431,
+        "line_end": 435
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-8-b0c67353",
+      "type": "theorem",
+      "content": "[Jones-Schmidt \\cite{Jones}]\nAn ergodic pmp cber is strongly ergodic if and only if it is $E_0$-ergodic.",
+      "content_preview": "[Jones-Schmidt ] An ergodic pmp cber is strongly ergodic if and only if it is E_0-ergodic.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 461,
+        "line_end": 463
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-9-cdc0b1b7",
+      "type": "proposition",
+      "content": "\\label{prop-ergodic}\nLet $(X,R,\\mu), (Y,Q,\\nu)$ be pmp cbers, suppose $Q$ is ergodic and let $\\Phi\\colon Y \\to X$ be a factor map. Let $(Z,\\rho)$ be the ergodic decomposition of $Q$. Then for almost every $z\\in Z$ we have that $\\Phi_\\ast(\\nu_z)= \\mu$.",
+      "content_preview": "Let (X,R,), (Y,Q,) be pmp cbers, suppose Q is ergodic and let Y X be a factor map. Let (Z,) be the ergodic decomposition of Q.",
+      "display_name": "Proposition",
+      "label": "prop-ergodic",
+      "position": {
+        "line_start": 475,
+        "line_end": 477
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "definition-10-d9d79a2e",
+      "type": "definition",
+      "content": "A ergodic pmp cber has \\emph{(measured) Property (T)} if and only if every representation of it with non-trivial almost invariant fields has non-trivial invariant fields.",
+      "content_preview": "A ergodic pmp cber has if and only if every representation of it with non-trivial almost invariant fields has non-trivial invariant fields.",
+      "display_name": "Definition",
+      "label": null,
+      "position": {
+        "line_start": 510,
+        "line_end": 512
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-11-0e5c82e7",
+      "type": "theorem",
+      "content": "[{\\cite[Theorem 6]{pichot}}]\n    Let $(R,\\mu)$ be a pmp cber with Property (T) and $(\\pi,\\cal H)$ a representation. If $(\\xi_n)_n$ is a sequence of normalized almost invariant fields then, upon possibly passing to a subsequence, there exists a sequence of normalized invariant fields $(\\eta_n)_n$ such that $$\n    \\|\\xi_n - \\eta_n\\| \\rightarrow 0,\n    $$\n    almost surely.",
+      "content_preview": "[] Let (R,) be a pmp cber with Property (T) and (, H) a representation. If (_n)_n is a sequence of normalized almost invariant fields then, upon...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 516,
+        "line_end": 521
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-12-d9420db9",
+      "type": "lemma",
+      "content": "[Correlation lemma]\nLet $(X,R,\\mu)$ be an ergodic pmp cber and $(\\pi,H)$ an orthogonal representation. Suppose there exist $\\delta > 0$, a non-null Borel subset $A \\subseteq X$, and a normalised field $\\xi$ such that for every $(y,x) \\in R|_A$, \\begin{equation}\\label{eq:prelim1}\n\\langle \\pi(y,x) \\xi(x) , \\xi(y) \\rangle \\geq \\delta.\n\\end{equation}\nThen $(\\pi,H)$ has non-trivial invariant fields.",
+      "content_preview": "[Correlation lemma] Let (X,R,) be an ergodic pmp cber and (,H) an orthogonal representation. Suppose there exist > 0, a non-null Borel subset A X,...",
+      "display_name": "Lemma",
+      "label": "eq:prelim1",
+      "position": {
+        "line_start": 525,
+        "line_end": 530
+      },
+      "references": [
+        {
+          "target_id": "eq:prelim1",
+          "reference_type": "internal",
+          "context": "ve that $\\| \\eta^x\\| \\geq \\delta$ since Equation (\\ref{eq:prelim1}) implies that for every $v \\in U_x$, and in parti",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Consider the field $\\eta$ on $A$ defined by letting $\\eta(x)$ be the unique norm minimum of the set $$\nU_x := \\overline{\\conv}\\{\\pi(x,y)\\xi (y) : y\\in [x]_R \\cap A\\} \\subseteq H^x,\n$$ \nwhere $\\overline{\\conv}$ denotes closed convex hull. We have that the field of sets $(U_x)_x$ is invariant, in the sense that $\\pi(y,x) U_x = U_y$ for every $(y,x)\\in R\\cap (A\\times A)$. Therefore, by uniqueness of the norm minimum of closed convex sets and orthogonality of $\\pi$ we must have $\\eta(y) = \\pi(y,x) \\eta(x)$ for every $(y,x)\\in R\\cap (A\\times A)$. For every $x\\in A$ we also have that $\\| \\eta^x\\| \\geq \\delta$ since Equation (\\ref{eq:prelim1}) implies that for every $v \\in U_x$, and in particular for $\\eta(x)$, one has $\\left<\\xi(x), v \\right>\\geq \\delta$. \n\nWe can then extend $\\eta$ to an invariant field on the saturation of $A$ by letting $\\eta(y) = \\pi(y,x)\\eta(x)$, for every $y\\in X\\backslash A$ and some $x\\in A$ measurably chosen, say, by the Lusin-Novikov Theorem. By ergodicity, the field $\\eta$ is non-null almost surely and hence its normalization proves the lemma."
+    },
+    {
+      "id": "theorem-13-f5076b5a",
+      "type": "theorem",
+      "content": "[{\\cite[Proposition 13]{pichot}}]\n  Measured Property (T) is preserved by weak orbit equivalence.",
+      "content_preview": "[] Measured Property (T) is preserved by weak orbit equivalence.",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 544,
+        "line_end": 546
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-14-05d47987",
+      "type": "theorem",
+      "content": "[{\\cite[Proposition 16]{pichot}}]\nLet $(X,R,\\mu)$ be a pmp cber with Property (T). If $R = \\cup_{n\\in \\NN} R_n$, where $R_1 \\subseteq R_2 \\subseteq\\dots\\subseteq R_n \\subseteq \\dots$ is an increasing sequence of subequivalence relations, then $R|_A=R_N|_A$ for some non-null Borel $A\\subseteq X$ and $N$ sufficiently large.",
+      "content_preview": "[] Let (X,R,) be a pmp cber with Property (T). If R = _n R_n, where R_1 R_2 R_n is an increasing sequence of subequivalence relations, then...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 550,
+        "line_end": 552
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "corollary-15-7397b2d2",
+      "type": "corollary",
+      "content": "[{\\cite[Corollary 18]{pichot}}]\nPmp cbers with Property (T) admit bounded degree graphings.",
+      "content_preview": "[] Pmp cbers with Property (T) admit bounded degree graphings.",
+      "display_name": "Corollary",
+      "label": null,
+      "position": {
+        "line_start": 556,
+        "line_end": 558
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-16-43055aad",
+      "type": "proposition",
+      "content": "\\label{prop:realiza}\n    Let $(\\cal G,\\mu)$ be a graphing and $\\pi$ a partition as above. Then the pushforward $\\sigma_* \\mu$ is a DURG. Conversely, for every DURG $\\Lambda$ there exists a graphing $(\\cal G,\\mu)$ together with a partition $\\pi$ satisfying that $\\sigma_* \\mu = \\Lambda$.",
+      "content_preview": "Let ( G,) be a graphing and a partition as above. Then the pushforward _* is a DURG. Conversely, for every DURG there exists a graphing ( G,)...",
+      "display_name": "Proposition",
+      "label": "prop:realiza",
+      "position": {
+        "line_start": 582,
+        "line_end": 584
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-17-1945d149",
+      "type": "proposition",
+      "content": "\\label{prop:est}\n    Let $f \\colon M^d \\to \\RR$ be a continuous function and $\\Lambda$ a dURG. Then $f^\\to$ is continuous and $$\n    \\|f^\\to\\|_{1,\\Lambda^\\to} \\leq 2D \\|f\\|_{1,\\Lambda}.\n    $$",
+      "content_preview": "Let f M^d be a continuous function and a dURG. Then f^ is continuous and |f^|_1,^ 2D |f|_1,.",
+      "display_name": "Proposition",
+      "label": "prop:est",
+      "position": {
+        "line_start": 600,
+        "line_end": 604
+      },
+      "references": [],
+      "proof": "It is routine to check continuity. The norm estimate follows from unimodularity: \\begin{align*}\n        \\|f^\\to\\|_{1,\\Lambda^\\to} &= \\int_{M^d} \\sum_{(u,v)\\in E(G)} |f(G,v) - f(G,u)| d\\Lambda (G,u)\\\\\n        &\\leq \\int_{M^d} \\sum_{(u,v)\\in E(G)} |f(G,v)| + |f(G,u)| d\\Lambda (G,u)\\\\\n        &\\leq D\\|f\\|_{1,\\Lambda} + \\int_{M^d} \\sum_{(u,v)\\in E(G)} |f(G,v)|  d\\Lambda (G,u) \\\\\n        &\\leq 2D\\|f\\|_{1,\\Lambda}.\\qedhere     \n    \\end{align*}"
+    },
+    {
+      "id": "example-18-bb26003b",
+      "type": "example",
+      "content": "The most fundamental example of an invariant point process is the Poisson point process of intensity $t$. For its definition and basic properties see \\cite{LastPenrose}. It defines an essentially free pmp action of $G$. We denote its distribution by $\\mathcal{P}_t$. Let $\\alpha : \\MM \\to \\MM_0$ be the ``root adding'' map given by $\\alpha(\\omega) = \\omega \\cup \\{0\\}$. Then the Palm measure of the Poisson point process is simply $\\alpha_* \\mathcal{P}$ (in fact, this characterises the Poisson point process).",
+      "content_preview": "The most fundamental example of an invariant point process is the Poisson point process of intensity t. For its definition and basic properties see .",
+      "display_name": "Example",
+      "label": null,
+      "position": {
+        "line_start": 656,
+        "line_end": 658
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-19-37648a37",
+      "type": "theorem",
+      "content": "[Voronoi Inversion Formula]\n    Let $G$ be a lcsc group and $\\mu$ a invariant point process. Then, for any Borel function $f\\colon \\MM \\rightarrow \\RR$, the following equality holds $$\n    \\int_{\\MM} f d\\mu = \\intensity (\\mu)\\int_{\\MM_0} \\int_{V_0 (\\omega)} f(g\\omega) dh (g) d\\mu_0 (\\omega)\n    $$",
+      "content_preview": "[Voronoi Inversion Formula] Let G be a lcsc group and a invariant point process. Then, for any Borel function f , the following equality holds _ f d...",
+      "display_name": "Theorem",
+      "label": null,
+      "position": {
+        "line_start": 685,
+        "line_end": 689
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-20-d7b75927",
+      "type": "lemma",
+      "content": "\\label{lem:gauss}\n    Let $(\\Omega,\\nu)$ be a standard probability space and $X,Y$ normalized centered gaussians in $L^2(\\Omega,\\nu)$. Then $$\n    \\nu(\\{X \\geq 0\\}\\cap \\{Y<0\\}) = \\frac{1}{\\pi} \\cos^{-1} \\EE[XY]\n    $$",
+      "content_preview": "Let (,) be a standard probability space and X,Y normalized centered gaussians in L^2(,). Then (X 0 Y<0) = ^-1",
+      "display_name": "Lemma",
+      "label": "lem:gauss",
+      "position": {
+        "line_start": 728,
+        "line_end": 732
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-21-d47f48a0",
+      "type": "proposition",
+      "content": "\\label{prop:passup}\nErgodic extensions of pmp cbers with Property (T) have Property (T).",
+      "content_preview": "Ergodic extensions of pmp cbers with Property (T) have Property (T).",
+      "display_name": "Proposition",
+      "label": "prop:passup",
+      "position": {
+        "line_start": 742,
+        "line_end": 744
+      },
+      "references": [],
+      "proof": "Let $(X,R,\\mu)$ and $(Y,Q, \\nu)$ be ergodic cbers on and $h\\colon Y \\rightarrow X$ an extension. Assume $(R,\\mu)$ has Property (T) and fix a representation $(\\pi,\\cal H)$ of $(Q,\\nu)$. We begin by constructing a representation $(\\bar\\pi, \\overline{ \\cal H})$ of $R$. \n\nThe measurable field of Hilbert spaces $\\overline{ \\cal H}$ is defined by\\begin{equation*}\nx\\in X \\longmapsto \\overline{ \\cal H}^x=\\int_{h^{-1} \\{x\\}}^\\oplus \\cal H^y d\\nu_x (y),\n\\end{equation*}\nwhere $(\\nu_x)_{x\\in X}$ is the disintegration of $\\nu$ with respect to $h$. Given $x\\in X$ and $y\\in Y$ such that $h(y) R x$, we let $x_y$ be the unique element of $Y$ such that $x_y Q y $ and $h(x_y)=x$. This is defined for almost every $x\\in X$. We then define the unitaries of the representation by\\begin{equation*}\n\\bar\\pi(x',x)=\\int_{h^{-1} \\{x\\}}^\\oplus \\pi(x'_y,x_y)d\\nu_{x} (y),\n\\end{equation*}\nfor every $(x',x)\\in R$.\n\nIf $(\\xi_n)_n$ is an almost invariant sequence of normalised fields for $(\\pi,\\cal H)$, then one may consider the normalized fields in $\\overline{\\cal H}$ given by \\begin{equation*}\nx\\in X \\longmapsto \\bar\\xi_n^x := \\int_{h^{-1} \\{x\\}}^\\oplus \\xi_n (y) d\\nu_x (y)\n\\end{equation*}\nfor each $n\\in \\NN$. Observe that for almost every $(x',x)\\in R$, $$\n\\|\\pi(x',x)\\bar\\xi_n (x) - \\bar\\xi_n (x')\\|^2 = \\int_{h^{-1}\\{x'\\}} \\|\\pi(x'_y,x_y)\\xi_n(x_y) - \\xi_n ({x'_y})\\| ^2 d\\nu_{x'} (y),\n$$\nso by the Dominated Convergence Theorem and almost invariance of the $(\\xi_n)_n$, it follows that $(\\bar\\xi_n)_n$ is an almost invariant sequence of normalized vectors for $(\\bar\\pi,\\overline{\\cal H})$. Therefore, by Property (T), there exists an invariant normalised field $\\bar\\eta$ for $\\overline{\\cal H}$. \n\nConsider the field $y\\in Y \\mapsto\\eta (y) := \\bar\\eta (h(y))(y)$. Defined as such, $\\eta$ is normalised and, for almost every $(y',y)\\in Q$, \\begin{align*}\n\\pi(y',y) \\eta(y) &= \\pi(y',y) [\\bar\\eta(h(y)) (y)]\\\\\n&=  [\\bar\\pi(h(y'),h(y))\\bar \\eta (h(y))](y') \\\\\n&= \\bar\\eta (h(y'))(y')\\\\\n&= \\eta (y'),\n\\end{align*}\nso it is also invariant. Therefore $(Q,\\nu)$ has Property (T) by definition."
+    },
+    {
+      "id": "proposition-22-5f6605a4",
+      "type": "proposition",
+      "content": "\\label{prop:ergodiplust}\nPmp cbers with measured Property (T) are strongly ergodic.",
+      "content_preview": "Pmp cbers with measured Property (T) are strongly ergodic.",
+      "display_name": "Proposition",
+      "label": "prop:ergodiplust",
+      "position": {
+        "line_start": 780,
+        "line_end": 782
+      },
+      "references": [],
+      "proof": "Let $(X,R,\\mu)$ be a pmp cber with Property (T) which is not strongly ergodic. Then by the Jones-Schmidt Theorem, there exists a Borel homomorphism $f \\colon X \\to 2^\\NN$ such that there exists no $y \\in E_0$ for which $f(x) E_0 y$ for almost every $x\\in X$. \n\nLet $R_n = f^{-1} (F_n)\\cap R$, where $(F_n)_n$ is an increasing sequence of finite Borel subequivalence relations of $E_0$ such that $\\bigcup_n F_n = E_0$. For $f$ being a Borel homomorphism, we have that $R = \\bigcup_n R_n$, so by non-approximability of Property (T) cbers there exists $A \\subseteq X$ non-null such that $R|_A = R_N|_A$ for some $N$ sufficiently large. \n\nLet $s$ be a Borel selector for $F_N$ and consider the map $h:=s\\circ f|_A$. Due to our assumptions on $f$, we have that the measure $h_*\\mu|_A$, where $\\mu|_A$ is the normalization of the restriction of $\\mu$ to $A$, is not supported on a single atom. Therefore, if $B$ is a Borel subset of $2^\\NN$ such that $0<h_*\\mu|_A (B) <1$, we have that $h^{-1}(B)$ is an $R|_A$-invariant set with $0 < \\mu (h^{-1}(B)) < \\mu (A)$. This implies that $R$ is not ergodic, contradicting our assumptions."
+    },
+    {
+      "id": "theorem-23-38c666a0",
+      "type": "theorem",
+      "content": "[Connes-Weiss for cbers]\\label{thm:CW}\nAn ergodic pmp cber has Property (T) if and only if every ergodic extension of it is strongly ergodic.",
+      "content_preview": "[Connes-Weiss for cbers] An ergodic pmp cber has Property (T) if and only if every ergodic extension of it is strongly ergodic.",
+      "display_name": "Theorem",
+      "label": "thm:CW",
+      "position": {
+        "line_start": 797,
+        "line_end": 799
+      },
+      "references": [],
+      "proof": "It is only left to show sufficiency. Let $(X,R,\\mu)$ be an ergodic pmp cber without Property (T). We will show that $(X,R,\\mu)$ admits an ergodic extension which is not strongly ergodic. Since $(X,R,\\mu)$ does not have Property (T), after considering the realification of an appropriate unitary representation, there exists an orthogonal representation $(\\pi,\\cal K)$ of $(X,R,\\mu)$ with an almost invariant sequence of normalised fields $(Z_n)_n$ but no invariant normalised fields. \n\nBy ergodicity, we can assume that $\\cal K^x = K$ for a fixed GHS $K$ on a standard probability space $(\\Omega,\\nu)$ in which the Gaussians generate the $\\sigma$-algebra. For every $(y,x) \\in R$ we then have that $\\pi (y,x) = \\theta_{y,x}^*$ for a measure-preserving automorphism $\\theta_{y,x}$ of $\\Omega$. Moreover, we have that $\\theta_{z,y}\\theta_{y,x} = \\theta_{z,x}$ almost surely. \n\nWe consider the extension $Q$ of $R$ defined on the standard probability space $(X\\times \\Omega, \\mu\\otimes\\nu)$ by $$\n(x,\\omega) Q (y,\\omega') \\iff xRy \\text{ and } \\theta_{y,x}^{-1} \\omega = \\omega'.\n$$\nIn order to ease notation, let us denote $Z_n (x)(\\omega) := Z_n (x,\\omega)$. We will show that the Borel subsets $$\n    A_n := \\{(x,\\omega)\\in X\\times \\Omega : Z_n(x,\\omega) \\geq 0 \\}\n$$\nform an asymptotically invariant sequence for $Q$. We will then conclude the proof by passing to an ergodic component where they are still asymptotically invariant and non-trivial.\n\nFor each $\\alpha \\in [R]$, we let $\\theta_{\\alpha,x} := \\theta_{\\alpha x,x}$ and then define a full group automorphism $\\tilde\\alpha \\in [Q]$ by $$\n\\tilde\\alpha (x,\\omega) := (\\alpha x, \\theta_{\\alpha, x}^{-1} \\omega).\n$$\n\nWe may then compute that for any such $\\alpha\\in [R]$, \\begin{align*}\n\\notag (\\mu\\otimes \\nu) (A_n \\triangle  \\tilde\\alpha A_n) &= \\int_{X} \\nu\\left(\\{Z_n (x,\\cdot) \\geq 0 \\}\\triangle \\{Z_n (\\alpha^{-1} x, \\theta_{\\alpha^{-1},x} \\cdot )  \\geq 0\\} \\right) d\\mu(x) \\label{eq:CW1}\\\\\n&= \\int_{X} \\nu\\left(\\{Z_n(x) \\geq 0 \\}\\triangle \\{\\pi(x,\\alpha^{-1}x)Z_n(\\alpha^{-1} x) \\geq 0\\} \\right) d\\mu(x)\\\\\n&\\notag =\\int_{X} \\nu\\left(\\{Z_n(x) \\geq 0\\} \\cap \\{(\\pi(x,\\alpha^{-1} x) Z_n(\\alpha^{-1} x)   < 0\\} \\right) d\\mu(x) \\\\\n&  +\\int_{X} \\nu\\left(\\{Z_n(x) < 0\\} \\cap \\{(\\pi(x,\\alpha^{-1} x) Z_n(\\alpha^{-1} x)   \\geq 0\\} \\right) d\\mu(x) \\\\\n&= \\frac{2}{\\pi} \\int_X \\cos^{-1}\\EE_\\nu [Z_n (x) (\\pi(x, \\alpha^{-1} x) Z_n(\\alpha^{-1}x))] d\\mu(x)\\\\\n&= \\frac{2}{\\pi} \\int_X \\cos^{-1}\\EE_\\nu [Z_n (\\alpha x) (\\pi(\\alpha x,  x) Z_n(x))] d\\mu(x)\n\\end{align*}\n\nBy almost invariance of the $(Z_n)_n$ we have that $\\EE_\\nu [Z_n (\\alpha x) (\\pi(\\alpha x,  x) Z_n(x))] \\rightarrow 1$ for almost every $x\\in X$. Hence, for the $Z_n$ being normalized fields we deduce from the Dominated Convergence Theorem that $(\\mu\\otimes \\nu) (A_n \\triangle \\tilde\\alpha A_n) \\rightarrow 0$ for every $\\alpha \\in [R]$. For $Q$ being an extension of $R$, we have that $[x]_Q = \\{\\tilde\\alpha x: \\alpha \\in [R]\\}$, and so $(\\mu\\otimes \\nu) (A_n \\triangle \\alpha A_n) \\rightarrow 0$ for every $\\alpha \\in [Q]$.\n\nLet $(B,\\beta, ((\\mu\\otimes\\nu)_b)_{b\\in B})$ be the ergodic decomposition of $(X\\times \\Omega , Q,\\mu\\otimes \\nu)$. We show that there exists a positive measure subset of ergodic components for which $(\\mu\\otimes\\nu)_b (A_n)$ stays bounded away from 0. To do this, fix $n\\in \\NN$ and consider the Borel set $$\n\\Phi := \\left\\{\\{y,x\\}\\in [X]^2 : yRx \\text{ and } \\EE_\\nu [Z_n (y) (\\pi(y,  x) Z_n(x))]\\leq \\frac{1}{2}\\right\\}.\n$$\nBy \\cite[Lemma 7.3]{KM}, there exists a $\\Phi$-maximal finite partial subequivalence relation $F$. We may regard $F$ as a partial matching with $\\graph (\\alpha_n) \\subseteq R$. \n\nWe now show that actually $\\alpha_n \\in [R]$. For this we only need to show that $\\mu (\\dom (\\alpha_n)) = 1$. Suppose otherwise that $C:= X\\backslash \\dom (\\alpha_n) $ were not $\\mu$-null. Then, by $\\Phi$-maximality of $F$, for any $(y,x)\\in R|_{C}$ we would have that $$\n\\EE_\\nu [Z_n (y) (\\pi(y,  x) Z_n(x))]> \\frac{1}{2}.\n$$\nBut then it  would follow from the correlation lemma that $(\\pi,\\cal K)$ had normalized invariant vectors, a contradiction. \n\nWe have thus constructed for every $n\\in \\NN$ a full group element $\\alpha_n \\subseteq [R]$ such that $$\n\\EE_\\nu [Z_n (y) (\\pi(y,  x) Z_n(x))]\\leq \\frac{1}{2},\n$$\nfor almost every $(y,x)\\in R$. But then, $$\n(\\mu\\otimes \\nu)(A_n \\triangle \\tilde\\alpha_n A_n) \\geq \\frac{2}{\\pi}\\cos^{-1}\\frac{1}{2} \\geq \\frac{2}{3}.\n$$\nWe deduce that $(\\mu\\otimes\\nu)_b (A_n \\triangle \\tilde\\alpha_n A_n) $ stays bounded away from zero on a positive measure set of ergodic components, concluding the proof, as there exists then $b\\in B$ where $(A_n)_n$ is a non-trivial asymptotically invariant sequence for $(X\\times \\Omega, Q, (\\mu\\otimes\\nu)_b)$."
+    },
+    {
+      "id": "proposition-24-877eae8d",
+      "type": "proposition",
+      "content": "\\label{prop:passdown}\nFactors of pmp cbers with Property (T) have Property (T).",
+      "content_preview": "Factors of pmp cbers with Property (T) have Property (T).",
+      "display_name": "Proposition",
+      "label": "prop:passdown",
+      "position": {
+        "line_start": 851,
+        "line_end": 853
+      },
+      "references": [
+        {
+          "target_id": "prop-ergodic",
+          "reference_type": "internal",
+          "context": "es to pass to an ergodic component by Proposition \\ref{prop-ergodic}",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(X, R,\\mu)$ be a pmp cber with Property (T) and $(Y, Q,\\nu)$ an ergodic factor determined by $\\phi\\colon X\\rightarrow Y$. Consider any ergodic extension $(Z,P,\\rho)$ of $(Y,Q,\\nu)$ given by $\\psi \\colon Z\\rightarrow X$. Our goal is to show that $(Z,P,\\rho)$ is strongly ergodic, as then Property (T) for $(Y,Q,\\nu)$ follows from the Connes-Weiss Theorem for cbers.\n\nWe will show that there exists an ergodic extension $(W,S,\\lambda)$ of $R$ which factors onto $P$ by a factor map $\\delta \\colon W \\rightarrow Z$. This is enough to conclude the proof. Indeed, for $R$ having Property (T) we have that $S$ is strongly ergodic. Then if $f\\colon Z\\rightarrow 2^\\NN$ is a Borel homomorphism $P\\rightarrow E_0$, we have that its composition with $\\delta$ is a Borel homomorphism $S\\rightarrow E_0$. Hence, there exists $a\\in 2^\\NN$ such that $f(\\delta(w))E_0 a$ for almost every $w\\in W$. But then $f(z)E_0 a$ for almost every $z\\in Z$. It follows that $P$ is $E_0$-ergodic, so strongly ergodic by the Jones-Schmidt Theorem.\n\nExistence of $(W,S,\\lambda)$ follows from an adaptation of the joining construction for ergodic systems \\cite[Chapter 6]{joinings} to our setting. We sketch this construction for the convenience of the reader. Let $W$ be the following pushout $$\nW:= X\\ast_Y Z = \\{(x,z) \\in X\\times Z : \\phi (x) = \\psi (z)\\}.\n$$\nThe equivalence relation $S$ is then defined as a skew-product. For each $(x,z)\\in W$ and $x' Rx$ we define $(x',x) z$ as the unique element of $Z$ satisfying $$\n\\psi((x',x) z) = \\phi (x') \\text{ and } (x',x) z P z\n$$\nThen we let $(x,z)S(x',z')$ if and only if $x'Rx$ and $z' = (x',x)z$. The extension and factor maps on $R$ and $P$ are given by projection on first and second components respectively. Letting $(\\mu_y)_{y\\in Y}$ and $(\\rho_y)_{y\\in Y}$ be the decompositions of $\\mu$ and $\\rho$ respectively over $(Y,\\nu)$, we define $$\n\\lambda := \\int_Y \\mu_y \\otimes \\rho_y d\\nu (y).\n$$ \nThis measure is invariant, though not necessarilly ergodic. To conclude the proof it suffices to pass to an ergodic component by Proposition \\ref{prop-ergodic}"
+    },
+    {
+      "id": "proposition-25-7d828544",
+      "type": "proposition",
+      "content": "\\label{prop:fini}\n    Let $(X,R,\\mu)$ be an ergodic pmp cber and $Q \\leq R$ an ergodic finite index subequivalence relation. Then $R$ has Property (T) if and only if $Q$ has Property (T).",
+      "content_preview": "Let (X,R,) be an ergodic pmp cber and Q R an ergodic finite index subequivalence relation. Then R has Property (T) if and only if Q has Property (T).",
+      "display_name": "Proposition",
+      "label": "prop:fini",
+      "position": {
+        "line_start": 875,
+        "line_end": 877
+      },
+      "references": [],
+      "proof": "It suffices to show that there exists an ergodic extension $(Y,\\tilde R,\\tilde\\mu)$ of $(X,R,\\mu)$ which is weakly orbit equivalent to $(X,Q,\\mu)$. Then Property (T) of $(X,R,\\mu)$ will be equivalent to that of $(Y,\\tilde R,\\tilde\\mu)$, by invariance under extensions and factors, which will also be equivalent to  Property (T) of $(X,Q,\\mu)$, by invariance of Property (T) under weak orbit equivalence.\n    \n    Let $n:=[Q:R]<\\infty$. Observe first that there exists a finite equivalence relation $F \\leq R$ such that $|[x]_F| = n$ for almost every $x \\in X$ and for any two $xFy$ we have that $x$ is not $Q$-related to $y$. To produce such $F$, let $$\n    \\Phi := \\{\\phi \\subseteq [X]^{n} : \\phi\\times\\phi \\subseteq R, \\forall x,y\\in \\phi\\text{ such that } x\\neq y,   x\\not\\sim_Q y \\}.\n    $$\n    By \\cite[Lemma 7.3]{KM}, there exists a $\\Phi$-maximal finite partial subequivalence relation $F$. This implies that for every $x\\in \\dom (F)$, we have that $[x]_F \\in \\Phi$. Moreover, by ergodicity of $Q$ we have that $X\\backslash \\dom (F)$ contains less than $n$ vertices in almost every $R$-class, so for $R$ being pmp it follows that $\\mu (\\dom (F))= 1$.\n\n    We define $Y:= X\\times [n]$ together with the Borel equivalence relations $(x,i) \\tilde Q (y,j)$ if and only if $x Q y$ and $i = j$, and $(x,i)\\tilde R (y,j)$ if and only if $x R y$. When $Y$ is endowed with $\\tilde\\mu$, the product measure of $\\mu$ and the normalized counting measure on $[n]$, we have that both $(X\\times [n],\\tilde Q,\\tilde\\mu)$ and $(X,\\tilde R,\\tilde\\mu)$ are pmp. \n\n    Using a Borel linear order on $X$, we may construct an essentially free action $\\ZZ/n\\ZZ \\actson X$ such that $F$ is the orbit equivalence relation of the action. Using this action we construct a Borel map $f \\colon X\\times [n] \\rightarrow X$ defined by $f(x,i):= (i-1)\\cdot x$. We then have that, by construction of $F$, the map $f$ witnesses that $\\tilde R$ is an extension of $R$. Therefore $(X\\times [n], \\tilde R,\\tilde\\mu)$ has Property (T). For Property (T) being weakly orbit equivalent, it follows that $(X\\times \\{1\\}, \\tilde R|_{X\\times \\{1\\}}, \\tilde \\mu|_{X\\times \\{1\\}} )$ has Property (T), so  $(X,Q,\\mu)$ has Property (T), since $\\tilde R|_{X\\times\\{1\\}} = \\tilde Q|_{X\\times\\{1\\}}$."
+    },
+    {
+      "id": "corollary-26-6d441391",
+      "type": "corollary",
+      "content": "\\label{cor:TandBi}\nLet $(X,\\cal G,\\mu)$ and $(Y,\\cal H, \\nu)$ be ergodic realizations of an URG $\\Lambda$. Then $\\Rel (\\cal G)$ has Property (T) if and only if $\\Rel (\\cal H)$ has Property (T).",
+      "content_preview": "Let (X, G,) and (Y, H, ) be ergodic realizations of an URG . Then ( G) has Property (T) if and only if ( H) has Property (T).",
+      "display_name": "Corollary",
+      "label": "cor:TandBi",
+      "position": {
+        "line_start": 894,
+        "line_end": 896
+      },
+      "references": [
+        {
+          "target_id": "prop-ergodic",
+          "reference_type": "internal",
+          "context": "Rel (\\cal G)$ and $\\Rel (\\cal H)$. By proposition \\ref{prop-ergodic}, we can assume  that $(\\cal I , \\rho)$ is ergodic",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "In the language of \\cite{lovasz}, the graphings $\\cal G$ and $\\cal H$ are locally equivalent by hypothesis, so they are bi-locally isomorphic by \\cite[Theorem 18.59]{lovasz}, that is, there exists a third realization $(Z,\\cal I,\\rho)$ of $\\Lambda$ such that $\\Rel (Z)$ is a common extension of $\\Rel (\\cal G)$ and $\\Rel (\\cal H)$. By proposition \\ref{prop-ergodic}, we can assume  that $(\\cal I , \\rho)$ is ergodic after passing to an ergodic component. The conclusion follows from invariance of Property (T) under extension and factor maps."
+    },
+    {
+      "id": "definition-27-4bafb363",
+      "type": "definition",
+      "content": "\\label{def:Tforurg}\n    An URG $\\Lambda$ has Property (T) if and only if it admits an ergodic realization $(X,\\cal G,\\mu)$ such that $(X,\\Rel (\\cal G),\\mu)$ has Property (T).",
+      "content_preview": "An URG has Property (T) if and only if it admits an ergodic realization (X, G,) such that (X, ( G),) has Property (T).",
+      "display_name": "Definition",
+      "label": "def:Tforurg",
+      "position": {
+        "line_start": 903,
+        "line_end": 905
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-28-f2969d27",
+      "type": "theorem",
+      "content": "\\label{thm:completed1} Let $\\La$ be a URG. The following conditions are equivalent.\n\\begin{enumerate}\n\\item $\\La$ has Property (T).\n\\item Every ergodic realization of $\\Lambda$ has Property (T).\n\\item Every ergodic realization of $\\Lambda$ is strongly ergodic.\n\\end{enumerate}",
+      "content_preview": "Let be a URG. The following conditions are equivalent. has Property (T). Every ergodic realization of has Property (T).",
+      "display_name": "Theorem",
+      "label": "thm:completed1",
+      "position": {
+        "line_start": 910,
+        "line_end": 916
+      },
+      "references": [
+        {
+          "target_id": "cor:TandBi",
+          "reference_type": "internal",
+          "context": "umerate}$(a)\\implies (b)$ follows from  Corollary \\ref{cor:TandBi}. Now $(b)$ implies that every ergodic realization",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:ergodiplust",
+          "reference_type": "internal",
+          "context": "of $\\Lambda$ has Property (T), so by Proposition \\ref{prop:ergodiplust}, every ergodic realization is strongly ergodic, p",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "$(a)\\implies (b)$ follows from  Corollary \\ref{cor:TandBi}. Now $(b)$ implies that every ergodic realization of $\\Lambda$ has Property (T), so by Proposition \\ref{prop:ergodiplust}, every ergodic realization is strongly ergodic, proving $(c)$. \n \n To conclude the proof, let us assume $(c)$ and let $(X,\\cal G,\\mu)$ be an ergodic realization of $\\Lambda$. If $(Y,Q,\\nu)$ is an ergodic extension of $(X,\\Rel (\\cal G),\\mu)$ by a Borel map $f$, then $Q$ admits a graphing $\\cal H$ defined by $(y,y')\\in \\cal H$ if and only if $(f(y),f(y'))\\in \\cal G$ and $yQy'$. For $f$ being an extension, we have that $(Y,\\cal H, \\nu)$ is an ergodic realization of $\\Lambda$, so it is strongly ergodic. Therefore, every ergodic extension of $(X,\\Rel (\\cal G),\\mu)$ is strongly ergodic and by the Connes-Weiss Theorem for cbers, it has Property (T). Hence $\\Lambda$ has Property (T) by definition."
+    },
+    {
+      "id": "theorem-29-776e8e98",
+      "type": "theorem",
+      "content": "\\label{lem:completed2}\nLet $\\Lambda$ be an URG. Then $\\Lambda$ has Property (T) if and only if for every $\\eps \\in (0,1)$ there exists $\\kappa=\\kappa_\\eps >0$ such that for every ergodic realization $(\\cal G,\\mu)$ of $ \\Lambda$ and every Borel $A \\subseteq X_{\\cal G}$ with $\\eps \\leq \\mu(A) \\leq 1-\\eps$ we have $\\mu (\\partial_{\\cal G} A) \\geq \\kappa$.",
+      "content_preview": "Let be an URG. Then has Property (T) if and only if for every (0,1) there exists =_ >0 such that for every ergodic realization ( G,) of and every...",
+      "display_name": "Theorem",
+      "label": "lem:completed2",
+      "position": {
+        "line_start": 932,
+        "line_end": 934
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "proposition-30-0f1a63c8",
+      "type": "proposition",
+      "content": "\\label{prop:ergolim}\nThe inverse limit of an inverse system of ergodic graphings is ergodic.",
+      "content_preview": "The inverse limit of an inverse system of ergodic graphings is ergodic.",
+      "display_name": "Proposition",
+      "label": "prop:ergolim",
+      "position": {
+        "line_start": 948,
+        "line_end": 950
+      },
+      "references": [
+        {
+          "target_id": "prop-ergodic",
+          "reference_type": "internal",
+          "context": "verse system of ergodic graphings. By Proposition \\ref{prop-ergodic}, almost every ergodic component of $\\mu_\\infty$ m",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(\\cal G_n , \\mu_n, \\phi_n)_{n}$ be an inverse system of ergodic graphings. By Proposition \\ref{prop-ergodic}, almost every ergodic component of $\\mu_\\infty$ makes the maps $\\pi_n$ extensions for every $n\\in \\NN$. It follows from the uniqueness clause in the Kolmogorov consistency theorem that almost every ergodic component of $\\mu_\\infty$ coincides with $\\mu_\\infty$, so $(\\cal G_\\infty,\\mu_\\infty)$ is ergodic."
+    },
+    {
+      "id": "theorem-31-3c72e7dd",
+      "type": "theorem",
+      "content": "\\label{thm:glasner}\n    An URG $\\Lambda$ has Property (T) if and only if the limit of any weakly convergent sequence of ergodic  DURGs over $\\Lambda$ is ergodic.",
+      "content_preview": "An URG has Property (T) if and only if the limit of any weakly convergent sequence of ergodic DURGs over is ergodic.",
+      "display_name": "Theorem",
+      "label": "thm:glasner",
+      "position": {
+        "line_start": 975,
+        "line_end": 977
+      },
+      "references": [
+        {
+          "target_id": "prop:realiza",
+          "reference_type": "internal",
+          "context": "he partition $A_n \\sqcup A_n^c$ as in Proposition \\ref{prop:realiza}. Upon passing to a subsequence we may assume that",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:completed2",
+          "reference_type": "internal",
+          "context": "roperty (T) by negating the conclusion of Theorem \\ref{lem:completed2}. Then, there exists a Borel re-rooting invariant",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "prop:est",
+          "reference_type": "internal",
+          "context": "$\\one_{A_k}\\to \\one_A$ in mean, so by Proposition \\ref{prop:est} we get that $\\one_{A_k}^\\to \\to \\one_A^\\to$ in me",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "lem:completed2",
+          "reference_type": "internal",
+          "context": "t $\\Lambda$ does not have Property (T) by Theorem \\ref{lem:completed2}.",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If $\\Lambda$ does not have Property (T), then by definition it admits an ergodic realization $(\\cal G,\\mu)$ which is not strongly ergodic. Hence, there exists a sequence of almost invariant sets $(A_n)_n$ of vertices such that $\\eps \\leq \\mu (A_n)\\leq 1 -\\eps$ for some $\\eps>0$ and every $n\\in \\NN$, and $\\mu (\\partial_{\\cal G} A_n) \\to 0$. Let $\\Lambda_n$ be the sequence of ergodic DURGs associated to the partition $A_n \\sqcup A_n^c$ as in Proposition \\ref{prop:realiza}. Upon passing to a subsequence we may assume that the $\\Lambda_n$ weakly converge to some $\\Lambda_\\infty$. \n\n Let \\begin{equation}\\label{eq:jag1}\nK_d := \\{(G,u,v)\\in M^d_\\to : u\\ \\text{and}\\ v\\ \\text{have a different colour}\\}.\n\\end{equation}\nSince $\\mu (\\partial_{\\cal G} A_n) \\rightarrow 0$, we have that $\\Lambda_n^\\to (K_2) \\rightarrow 0$. As $K_2$ is clopen, it follows from weak convergence $\\Lambda^\\infty (K_2) = 0$, so $\\Lambda_\\infty$-almost every graph has all vertices with the same colour. However, since $\\eps \\leq \\mu (A_n)\\leq 1 -\\eps$, both colours appear at the root with positive probability. Hence $\\Lambda_\\infty$ is not ergodic. \n\nConversely, let $(\\Lambda_n)_n$ be a weakly convergent sequence of ergodic DURGs over $\\Lambda$ and $\\Lambda_\\infty$ their limit. Suppose that $\\Lambda_\\infty$ is not ergodic. We will show that $\\Lambda$ does not have Property (T) by negating the conclusion of Theorem \\ref{lem:completed2}. Then, there exists a Borel re-rooting invariant set $A \\subseteq M^d$ with $0<\\Lambda_\\infty (A) <1$. Let $(A_k)_k$ be a sequence of clopen subsets of $M^d$ such that $\\Lambda_\\infty (A \\triangle A_k) \\to 0$. \n\nWe have that $\\one_{A_k}\\to \\one_A$ in mean, so by Proposition \\ref{prop:est} we get that $\\one_{A_k}^\\to \\to \\one_A^\\to$ in mean. Observe that $\\one_A^\\to$ is null $\\Lambda_\\infty$-almost surely, and that $\\EE_{\\Lambda_\\infty}[\\one_{A_k}^\\to] = \\Lambda_\\infty^\\to (\\partial_E A_k)$, where $$\n\\partial_E A_k := \\{(G,u,v) \\in M_\\to^d : (G,u)\\in A_k, (G,v)\\not\\in A_k\\}.\n$$\nThe latter is a clopen subset of $M_\\to^d$ corresponding to the edge boundary of $A_k$. It then follows that $\\Lambda_\\infty^\\to (\\partial_E A_k) \\rightarrow 0$. \n\nFor each $k$ there exists $n(k)$ sufficiently large such that $|\\Lambda_{n(k)} (A_k) - \\Lambda_\\infty (A_k)|<\\frac{1}{k}$ and $|\\Lambda_{n(k)}^\\to (\\partial_E A_k) - \\Lambda_{\\infty}^\\to (\\partial_E A_k)|<\\frac{1}{k}$ hold. Hence, we have that $\\Lambda_{n(k)}^\\to (\\partial_E A_k) \\rightarrow 0$ and $\\Lambda_{n(k)}(A_k) \\rightarrow \\Lambda_\\infty (A)$. Considering ergodic realizations of the $\\Lambda_{n(k)}$, we deduce that $\\Lambda$ does not have Property (T) by Theorem \\ref{lem:completed2}."
+    },
+    {
+      "id": "theorem-32-48457341",
+      "type": "theorem",
+      "content": "\\label{thm:HP}\nInfinite URGs with Property (T) have cost one. Equivalently, pmp cbers with Property (T) have a cost 1 extension.",
+      "content_preview": "Infinite URGs with Property (T) have cost one. Equivalently, pmp cbers with Property (T) have a cost 1 extension.",
+      "display_name": "Theorem",
+      "label": "thm:HP",
+      "position": {
+        "line_start": 1004,
+        "line_end": 1006
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-33-e557b5df",
+      "type": "theorem",
+      "content": "\\label{thm-hp-urg}\nLet $\\La$ be an infinite URG with Property (T) and $\\eps>0$. Then there exists  an ergodic realization $(\\cal G,\\mu)$ of $\\Lambda$ and a Borel subset $A\\subseteq X$ with $\\mu(A)<\\eps$ such that $(\\cal G,\\mu)$ has finitely many $A$-clusters.",
+      "content_preview": "Let be an infinite URG with Property (T) and >0. Then there exists an ergodic realization ( G,) of and a Borel subset A X with (A)< such that ( G,)...",
+      "display_name": "Theorem",
+      "label": "thm-hp-urg",
+      "position": {
+        "line_start": 1012,
+        "line_end": 1014
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "theorem-34-b6d19547",
+      "type": "theorem",
+      "content": "\\label{thm-optimal-existence}\nLet $\\La$ be an ergodic URG with Property (T).\n\\begin{enumerate}\n\\item For every $(\\al,\\eps)\\in \\Seq\\times[0,\\min(\\al))$ we have that $K_\\La(\\al,\\eps)>0$.\n\\item For every $(\\al,\\eps) \\in \\Seq\\times [0,\\min(\\al))$ there exists an ergodic graphing $\\cal G$ and a partition $\\pi$ of $X_{\\cal G}$ which is Kazhdan-optimal for $(\\al,\\eps)$.\n\\end{enumerate}",
+      "content_preview": "Let be an ergodic URG with Property (T). For every (,) [0,()) we have that K_(,)>0. For every (,) [0,()) there exists an ergodic graphing G and a...",
+      "display_name": "Theorem",
+      "label": "thm-optimal-existence",
+      "position": {
+        "line_start": 1073,
+        "line_end": 1079
+      },
+      "references": [
+        {
+          "target_id": "lem:completed2",
+          "reference_type": "internal",
+          "context": "\\eps<\\mu_n(\\pi_n^1)<\\alpha_1 + \\eps < 1$. Theorem \\ref{lem:completed2} would then imply that $\\Lambda$ does not have Pro",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:glasner",
+          "reference_type": "internal",
+          "context": "o \\Lambda_\\infty$ weakly. It follows from Theorem \\ref{thm:glasner} that $\\Lambda_\\infty$ is ergodic.\n\nLet $A_1 ,\\dot",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "If we had $K_\\La(\\al,\\eps)=0$, there would exist a sequence $(\\cal G_n , \\mu_n)$ of ergodic realizations of $\\Lambda$ together with partitions $\\pi_n = \\bigsqcup_{i=1}^d \\pi_n^i$ such that $d(W(\\pi_n),\\alpha) \\leq \\eps$ and $K_{(\\cal G_n,\\mu_n)}(\\pi_n)\\rightarrow 0$. Then it follows that $\\mu_n(\\partial_{\\cal G_n} \\pi_n^1) \\rightarrow 0$ whilst $0< \\alpha_1 - \\eps<\\mu_n(\\pi_n^1)<\\alpha_1 + \\eps < 1$. Theorem \\ref{lem:completed2} would then imply that $\\Lambda$ does not have Property (T), proving part (a).\n\nIn order to prove part (b), we consider a sequence $(\\cal G_n , \\mu_n)$ of ergodic realizations of $\\Lambda$ together with partitions $\\pi_n = \\bigsqcup_{i=1}^d \\pi_n^i$ such that $d(W(\\pi_n),\\alpha) \\leq \\eps$ and $K_{(\\cal G_n,\\mu_n)}(\\pi_n)\\rightarrow K_\\Lambda (\\alpha,\\eps)$. Let $\\Lambda_n$ be the sequence of ergodic DURGs associated to these graphings and their partitions. Since $M^d$ is compact, upon possibly passing to a subsequence, we may assume that there exists a DURG $\\Lambda_\\infty$ over $\\Lambda $ such that $\\Lambda_n \\to \\Lambda_\\infty$ weakly. It follows from Theorem \\ref{thm:glasner} that $\\Lambda_\\infty$ is ergodic.\n\nLet $A_1 ,\\dots,A_d$ be the Borel partition of $M^d$ defined by the colour of the root. Each of these sets is clopen, so as $\\Lambda_\\infty$ is a weak limit of the $\\Lambda_n$ we have that $|\\Lambda_\\infty (A_i) - \\alpha_i|\\leq \\eps$. Moreover, if we let now $$\nC := \\{(G,u)\\in M^d :u\\text{ has a neighbour with a different colour}\\},\n$$\nthen $C$ is clopen, thus satisfying that $$\nK_{(G_n,\\mu_n)}(\\pi_n) = \\Lambda_n (C) \\to \\Lambda_\\infty (C).\n$$\nBy ergodicity of $\\Lambda_\\infty$ it admits an ergodic realization $(\\cal G,\\mu)$. Combining all of the above, we deduce that the partition of the vertices of $\\cal G$ induced by the sampling map and the colouring in $M^d$ is Kazhdan-optimal."
+    },
+    {
+      "id": "lemma-35-47e71662",
+      "type": "lemma",
+      "content": "There exists a Borel map\n$$\n    \\cenum\\colon X \\to A^\\NN,\n$$ \nsuch that for every $x\\in X$ we have that \n$$\n    \\cluster(\\cenum_0(x)), \\cluster(\\cenum_1(x)),\\ldots\n$$ \nis an enumeration of the set $\\clusters(x)$.",
+      "content_preview": "There exists a Borel map X A^, such that for every x X we have that (_0(x)), (_1(x)), is an enumeration of the set (x).",
+      "display_name": "Lemma",
+      "label": null,
+      "position": {
+        "line_start": 1104,
+        "line_end": 1114
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-36-23ca067f",
+      "type": "lemma",
+      "content": "\\label{lem:loc-fin}\n    The (closed) Voronoi tessellation of a configuration is locally finite: if $\\omega \\in \\MM$ and $h \\in G$, then there exists an open neighbourhood of $h$ intersecting nontrivially only finitely many Voronoi cells of $\\omega$.",
+      "content_preview": "The (closed) Voronoi tessellation of a configuration is locally finite: if and h G, then there exists an open neighbourhood of h intersecting...",
+      "display_name": "Lemma",
+      "label": "lem:loc-fin",
+      "position": {
+        "line_start": 1191,
+        "line_end": 1193
+      },
+      "references": [],
+      "proof": "Let $R:=d(h,\\omega)$, and note that by local finiteness of $\\omega$ we have that $R > 0$. Moreover, there are only finitely many elements $g_1, g_2, \\ldots, g_n$ of $\\omega$ achieving the minimal distance.\n\n    Again by local finiteness, there must exist some $\\eps > 0$ such that $$\n    B_{R+\\eps}(h)\\cap \\omega = \\{g_1,\\dots,g_n\\}.\n    $$\n    We claim that $B_{\\eps/2} (h)$ intersects only the cells $V_{g_1}(\\omega),\\dots, V_{g_n}(\\omega)$. \n\n    Observe that for $k \\in B_{\\eps/2} (h)$ we have that $$\n    d(k,\\omega) < \\frac{\\eps}{2} + R.\n    $$\n    However, we have that $$\n    d(h,\\omega\\backslash \\{g_1,\\dots,g_n\\}) \\geq R + \\eps.\n    $$\n    Therefore, we necessarily have that $$\n    d (k,\\omega\\backslash \\{g_1,\\dots,g_n\\}) \\geq \\frac{\\eps}{2} + R.\n    $$\n Thus $k$ can only belong to the Voronoi cells determined by $g_1,\\dots,g_n$."
+    },
+    {
+      "id": "theorem-37-a93860cb",
+      "type": "theorem",
+      "content": "\\label{TForGroupImpliesTForPalm}\nLet $G$ be a lcsc group and $\\mu$ a (free) invariant point process on $G$. If $G$ has Property (T), then $(\\mathbb M_0 , \\mu_0)$ has Property (T).",
+      "content_preview": "Let G be a lcsc group and a (free) invariant point process on G. If G has Property (T), then ( M_0 , _0) has Property (T).",
+      "display_name": "Theorem",
+      "label": "TForGroupImpliesTForPalm",
+      "position": {
+        "line_start": 1215,
+        "line_end": 1217
+      },
+      "references": [
+        {
+          "target_id": "lem:loc-fin",
+          "reference_type": "internal",
+          "context": ") - \\xi_n (\\omega_{h^{-1}}) \\|\\to 0.\n$$\n\nBy Lemma \\ref{lem:loc-fin}, for each $h \\in V_0 (\\omega)$ there exists an op",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $(\\pi, \\cal H)$ be a representation of $(\\mathbb M_0 , \\mu_0)$ with a sequence of almost invariant fields $(\\xi_n)_n$ such that $\\|\\xi_n (\\omega)\\|_{\\cal H_\\omega} = 1$ a.s. By ergodicity we may assume that the field of Hilbert spaces $\\cal H$ is constant. In a slight abuse of notation we let $\\cal H$ denote this Hilbert space.\n\nOur goal is to show that $(\\pi,\\cal H)$ admits an non-trivial invariant field. We achieve this by means of an auxiliary  representation $\\rho$ of $G$ on the Hilbert subspace $\\cal E$ of $L^2 (\\mathbb M , \\mu; \\cal H)$ generated by the fundamental fields of $\\cal H$. This representation is defined by \\begin{equation*}\n(\\rho (g) f)(\\omega) = \\pi( \\omega_0, \\omega_{g}) f(g^{-1} \\omega),\n\\end{equation*} \nfor every $f \\in  \\cal E $ and $\\omega \\in \\mathbb M$. Each $\\rho (g)$ is unitary as it is the composition of a unitary with a measure-preserving shift. The map $\\rho : G \\rightarrow \\cal U(L^2 (\\cal M , \\mu; \\cal H))$ is also a homomorphism since, for every $f \\in \\cal E$ and $\\omega \\in \\mathbb M$, we have that for any $g,h\\in G$, \\begin{align*}\n(\\rho(h)\\rho(g) f) (\\omega) &= \\pi(\\omega_0,\\omega_{h})(\\rho(g) f)(h^{-1} \\omega) \\\\\n&= \\pi(\\omega_0,\\omega_{h}) \\pi((h^{-1} \\omega)_0, (h^{-1}\\omega)_{g}) f((hg)^{-1}\\omega)\\\\\n&=\\pi(\\omega_0,\\omega_{h}) \\pi(\\omega_h, \\omega_{hg}) f((hg)^{-1}\\omega)\\\\\n&= (\\rho (hg) f) (\\omega).\n\\end{align*}\nIt is easy to see that for every $f\\in \\cal E$, the map $g\\in G \\mapsto \\left< \\rho(g) f, f\\right>$ is measurable. Therefore $\\rho$ is strongly continuous \\cite[Lemma A.6.2]{bhv} and $(\\rho,\\cal E)$ is a representation of $G$.\n\nTo each field $\\xi_n \\colon \\MM_0 \\rightarrow \\cal H$ we associate the function $\\tilde\\xi_n \\in \\cal E$ by letting $$\n\\tilde \\xi_n (\\omega) = \\xi_n (\\omega_0)\n$$\nfor each $\\omega \\in \\mathbb M$. The functions $\\tilde \\xi_n$ are indeed in $\\cal E$. Moreover, by the Voronoi Inversion Formula we have that for every $n\\in \\NN$, \\begin{equation*}\n\\|\\tilde\\xi_n\\|^2 = \\intensity (\\mu) \\int_{\\mathbb M_0} \\lambda (V_0 (\\omega)) \\|\\xi_n (\\omega)\\|^2 d\\mu_0 (\\omega) = 1.\n\\end{equation*}\n\nThe following expression will be useful later. For every $n\\in \\NN$ and $\\omega \\in \\MM$, we have that\\begin{align*}\n(\\rho (g) \\tilde\\xi_n) (\\omega) &= \\pi( \\omega_0, \\omega_g) \\xi_n ((g^{-1}\\omega)_0 )\\\\\n&= \\pi( \\omega_0, \\omega_g) \\xi_n (\\omega_g) .\n\\end{align*}\n\nWe now show that the representation $(\\rho,\\cal E)$ almost has invariant vectors. To see this, fix a compact set $K \\subseteq G$. For each $n \\in \\NN$, by strong continuity, we have that there exists $g_n \\in K$ such that \\begin{equation*}\n\\sup_{g\\in K} \\|\\rho (g) \\tilde\\xi_n - \\tilde\\xi_n\\| = \\|\\rho (g_n) \\tilde\\xi_n - \\tilde\\xi_n\\|.\n\\end{equation*}\nBy compactness, upon possibly passing to a subsequence, we may assume that that $g_n \\rightarrow g_0 \\in K$, so \n\\begin{equation*}\n\\sup_{g\\in K} \\|\\rho (g) \\tilde\\xi_n - \\tilde\\xi_n\\| \\leq \\|\\rho(g_0^{-1}g_n)\\tilde\\xi_n - \\tilde\\xi_n\\| + \\|\\rho(g_0) \\tilde\\xi_n - \\tilde\\xi_n\\|.\n\\end{equation*}\n\nWe now proceed to show that both terms in the latter sum converge to zero. Let us begin the analysis with the second term. Observe that \\begin{align*}\n    \\|\\rho(g_0) \\tilde\\xi_n - \\tilde\\xi_n\\|^2\n    &= \\intensity (\\mu) \\int_{\\MM_0} \\int_{V_0 (\\omega)} \\|\\rho (g_0) \\tilde\\xi_n (h\\omega) - \\tilde\\xi_n (h\\omega)\\|^2 dh d\\mu_0 (\\omega)\\\\\n    &= \\intensity (\\mu) \\int_{\\MM_0} \\int_{V_0 (\\omega)}\\|\\pi((h\\omega)_0,(h\\omega)_{g_0})\\tilde\\xi_n (g_0^{-1} h\\omega) - \\xi_n ((h\\omega)_0)\\|^2 dh d\\mu_0 (\\omega)\\\\\n    &=\\intensity (\\mu) \\int_{\\MM_0} \\int_{V_0 (\\omega)}\\|\\pi(\\omega_{h^{-1}},\\omega_{h^{-1}g_0})\\xi_n (\\omega_{h^{-1}g_0}) - \\xi_n (\\omega_{h^{-1}})\\|^2 dh d\\mu_0 (\\omega).\n\\end{align*}\nHence, by almost invariance of the $\\xi_n$ and the Dominated Convergence Theorem, we deduce that $\\|\\rho(g_0) \\tilde \\xi_n - \\tilde\\xi_n\\| \\rightarrow 0$.\n\n\nIt is then only left for us to show that if $(g_n)_n$ is a sequence in $G$ such that $g_n \\rightarrow 0$, then $\\|\\rho(g_n) \\tilde\\xi_n - \\tilde\\xi_n\\| \\rightarrow 0$.  In order to prove this we start by applying the Voronoi Inversion Formula:\n \\begin{align*}\n &\\|\\rho (g_n) \\tilde\\xi_n - \\tilde\\xi_n\\|^2 \\\\\n &= \\int_{\\mathbb M}  \\|\\pi( \\omega_0,  \\omega_{g_n}) \\xi_n (\\omega_{g_n}) - \\xi_n (\\omega_0) \\|^2 d\\mu (\\omega)\\\\\n&= \\intensity (\\mu) \\int_{\\mathbb M_0} \\int_{V_0 (\\omega)} \\|\\pi( (h\\omega)_0,  (h\\omega)_{g_n}) \\xi_n ((h\\omega)_{g_n}) - \\xi_n ((h\\omega)_0) \\|^2 dh d\\mu_0 (\\omega)\\\\\n&= \\intensity (\\mu) \\int_{\\mathbb M_0} \\int_{V_0 (\\omega)} \\|\\pi( \\omega_{h^{-1}},  \\omega_{h^{-1}g_n}) \\xi_n (\\omega_{h^{-1}g_n}) - \\xi_n (\\omega_{h^{-1}}) \\|^2 dh d\\mu_0 (\\omega)\\\\\n\\end{align*}\nNote that for $\\mu_0$-almost every $\\omega \\in \\mathbb  M_0$, \\begin{equation*}\n\\int_{V_0 (\\omega)} \\|\\pi( \\omega_{h^{-1}},  \\omega_{h^{-1}g_n}) \\xi_n (\\omega_{h^{-1}g_n}) - \\xi_n (\\omega_{h^{-1}}) \\|^2 dh \\leq 4 \\lambda (V_0 (\\omega)),\n\\end{equation*}\nand $\\int_{\\MM_0}\\lambda (V_0 (\\omega))]d\\mu_0 (\\omega) = \\intensity(\\mu)^{-1}$, so by the dominated Convergence Theorem it suffices to show that for $\\mu_0$-almost every $\\omega \\in \\mathbb  M_0$, \n\\begin{equation*}\n\\int_{V_0 (\\omega)} \\|\\pi( \\omega_{h^{-1}},  \\omega_{h^{-1}g_n}) \\xi_n (\\omega_{h^{-1}g_n}) - \\xi_n (\\omega_{h^{-1}}) \\|^2 dh.\n\\end{equation*}\nAgain by the Dominated Convergence Theorem, it suffices to show that for $\\mu_0$-almost every $\\omega\\in \\MM_0$ and for Haar-almost every $h \\in V_0 (\\omega)$, $$\n\\|\\pi( \\omega_{h^{-1}},  \\omega_{h^{-1}g_n}) \\xi_n (\\omega_{h^{-1}g_n}) - \\xi_n (\\omega_{h^{-1}}) \\|\\to 0.\n$$\n\nBy Lemma \\ref{lem:loc-fin}, for each $h \\in V_0 (\\omega)$ there exists an open neighbourhood of the identity $U_h$ such that $h^{-1} U_h$ intersects only finitely many other Voronoi cells. These cells are determined by a finite subset $F_h \\subseteq \\omega$. We then have that for $n$ sufficiently large, $$\n \\|\\pi( \\omega_{h^{-1}},  \\omega_{h^{-1}g_n}) \\xi_n (\\omega_{h^{-1}g_n}) - \\xi_n (\\omega_{h^{-1}}) \\| \\leq \\sum_{g\\in F_h} \\|\\pi( \\omega_{h^{-1}},  \\omega_{g}) \\xi_n (\\omega_{g}) - \\xi_n (\\omega_{h^{-1}}) \\|,\n$$\nand the latter converge to $0$ on a $\\mu_0$-conull re-rooting invariant set. We then conclude that $(\\tilde\\xi_n)_n$ is an almost invariant sequence of vectors for the representation $\\rho$.\n\nSince $G$ has Property (T), then there exists an invariant function $\\tilde\\eta \\in  \\cal E$. By construction of $\\rho$, we must have that for $\\mu_0$-almost every $\\omega \\in \\mathbb M_0$, the function $h\\in V_0 (\\omega) \\mapsto \\tilde\\eta (h \\omega)$ is essentially constant, taking a value which we denote by $\\eta (\\omega)$. Now it is easy to see that the field $\\omega \\in \\mathbb M_0 \\mapsto \\eta (\\omega)$ is invariant for $(\\pi,\\cal H)$. It follows that $(\\mathbb M_0 , \\mu_0)$ has Property (T) by definition."
+    },
+    {
+      "id": "theorem-38-79692769",
+      "type": "theorem",
+      "content": "\\label{otherway}\nLet $G$ be a lcsc group and $\\mu$ a free invariant point process. If $(\\mathbb M_0,\\mu_0)$ has Property (T), then $G$ has Property (T).",
+      "content_preview": "Let G be a lcsc group and a free invariant point process. If ( M_0,_0) has Property (T), then G has Property (T).",
+      "display_name": "Theorem",
+      "label": "otherway",
+      "position": {
+        "line_start": 1291,
+        "line_end": 1293
+      },
+      "references": [],
+      "proof": "For convenience, in this proof we will use the groupoid description of the Palm equivalence relation, so for $\\omega \\in \\MM_0$ and $g\\in \\omega$ we will let $(g,\\omega)$ denote the edge $(g^{-1}\\omega,\\omega)$ of the re-rooting equivalence relation.\n\nLet $(\\pi, H)$ be a unitary representation of $G$ with an almost invariant sequence of normalised vectors $(\\xi_n)_n$. Consider the representation  $(\\tilde\\pi, \\cal H)$ of $\\MM_0$ defined by  the measurable field of Hilbert spaces $\\omega \\in \\mathbb M_0 \\mapsto \\cal H_\\omega := H $ and $\\tilde\\pi (g,\\omega) : \\cal H_\\omega \\rightarrow \\cal H_{g^{-1}\\omega}$ defined by $\\tilde\\pi (g, \\omega) = \\pi(g)$. It is easy to see that the sequence of constant fields $(\\omega \\in \\mathbb M_0 \\mapsto \\xi_n)_{n\\in \\NN}$ is almost invariant for $(\\tilde\\pi, \\cal H)$, so by Pichot's Lemma there is a sequence of invariant fields $\\eta_n$ such that $\\|\\eta_n (\\omega)\\| = 1$ and $\\|\\eta_n (\\omega) - \\xi_n \\| \\rightarrow 0$ a.s. \n\nWe claim that the vectors\n\\begin{equation*}\n\\rho_n = \\intensity (\\mu)\\int_{\\mathbb M_0} \\int_{V_0 (\\omega)} \\pi(h)\\eta_n (\\omega)dh d\\mu_0 (\\omega) \\in H\n\\end{equation*} \nare $(\\pi, H)$-invariant and non-null for sufficiently large $n$.\n\nFirstly, we show that they are non-null for sufficiently large $n$. For $\\pi$ being unitary, \\begin{align*}\n\\frac{1}{\\intensity (\\mu)}\\|\\rho_n - \\xi_n\\| &\\leq \\int_{\\mathbb M_0} \\int_{V_0 (\\omega)} \\|\\pi(h)\\eta_n (\\omega) - \\xi_n\\|dh d\\mu_0 (\\omega) \\\\\n&\\leq \\int_{\\mathbb M_0} \\lambda (V_0 (\\omega))\\|\\eta_n (\\omega) - \\xi_n\\| d\\mu_0 (\\omega) \\\\\n&+ \\int_{\\mathbb M_0} \\int_{V_0 (\\omega)} \\|\\pi(h)\\xi_n  - \\xi_n\\| dh d\\mu_0 (\\omega),\n\\end{align*}\nwhere $\\lambda$ is the Haar measure on $G$. Let us study the two terms separately.\n\nThe integrand of the first term may be bounded as \\begin{equation*}\n\\lambda (V_0 (\\omega))\\|\\eta_n (\\omega) - \\xi_n\\|  \\leq 2 \\lambda (V_0(\\omega)),\n\\end{equation*}\nand $\\int_{\\mathbb M_0}\\lambda (V_0(\\omega))d \\mu_0 (\\omega) = \\intensity(\\mu)^{-1} < \\infty$, where $\\gamma$ is the intensity of the process. Hence, the Dominated Convergence Theorem applies and, as $\\|\\eta_n (\\omega) - \\xi_n\\| \\rightarrow 0$ a.s., then\n \\begin{equation*}\n\\int_{\\MM_0} \\lambda(V_0 (\\omega)) \\|\\eta_n (\\omega) - \\xi_n\\| d\\mu_0 (\\omega)\\to 0.\n\\end{equation*}\n\nNow, regarding the second term, let $(K_m)_m$ be an increasing sequence of compact subsets of $G$ such that $G = \\bigcup_m K_m$. Then \\begin{align*}\n\\int_{\\mathbb M_0} \\int_{V_0 (\\omega)} &\\|\\pi(h)\\xi_n  - \\xi_n\\| dh d\\mu_0 (\\omega) \\\\\n&= \\int_{\\mathbb M_0} \\left(\\int_{V_0 (\\omega)\\cap K_m} \\|\\pi(h)\\xi_n  - \\xi_n\\| dh + \\int_{V_0 (\\omega)\\backslash K_m} \\|\\pi(h)\\xi_n  - \\xi_n\\| dh \\right) d\\mu_0 (\\omega) \\\\\n& \\leq \\left(\\sup_{g \\in K_m}  \\|\\pi(g)\\xi_n  - \\xi_n\\|\\right) \\E_{\\mu_0} [\\lambda (V_0 (\\omega) \\cap K_m)] + 2 \\E_{\\mu_0} [\\lambda (C_0 (\\omega)\\backslash K_m)] \\\\\n&\\leq \\left(\\sup_{g \\in K_m}  \\|\\pi(g)\\xi_n  - \\xi_n\\|\\right)\\intensity(\\mu)^{-1} + 2 \\E_{\\mu_0} [\\lambda (V_0 (\\omega)\\backslash K_m)].\n\\end{align*}\nBy the Dominated Convergence Theorem, \\begin{equation*}\n\\lim_{m \\rightarrow \\infty} \\E_{\\mu_0} [\\lambda (V_0 (\\omega)\\backslash K_m)] =  \\E_{\\mu_0} [\\lim_{m \\rightarrow \\infty} \\lambda (V_0 (\\omega)\\backslash K_m)] = 0,\n\\end{equation*} \nso $ 2 \\E_{\\mu_0} [\\lambda (V_0 (\\omega)\\backslash K_M)] \\to 0$. By almost invariance of the sequence $\\xi_n$,  we also have that $$\n\\left(\\sup_{g \\in K_M}  \\|\\pi(g)\\xi_n  - \\xi_n\\|\\right) \\rightarrow 0,$$\nso again $\\left(\\sup_{g \\in K_M}  \\|\\pi(g)\\xi_n  - \\xi_n\\|\\right)\\gamma^{-1} \\to 0$.\n\nThe above implies that for $n$ sufficiently large, $\\|\\rho_n - \\xi_n \\| < 1$, so $\\rho_n \\neq 0$.\n\nWe conclude by showing that the $\\rho_n$ are all $\\pi$-invariant. By the Voronoi Inversion Formula,\n\\begin{equation*}\n\\rho_n = \\int_{\\mathbb M}  \\pi (X_0 (\\omega)) \\eta_n (\\omega_0) d\\mu (\\omega) .\n\\end{equation*}\nTherefore, for any $g\\in G$,\n\\begin{align*}\n\\pi (g)\\rho_n &=  \\int_{\\mathbb M}  \\pi (gX_0 (\\omega)) \\eta_n (\\omega_0) d\\mu (\\omega) && \\\\\n&= \\int_{\\mathbb M}\\pi (g X_0(g^{-1} \\omega)) \\eta_n ( (g^{-1}\\omega)_0) d \\mu (\\omega) && (\\mu\\text{-invariance})\\\\\n&= \\int_{\\mathbb M}\\pi ( X_g( \\omega)) \\eta_n (X_0 (g^{-1}\\omega)^{-1}g^{-1}\\omega) d \\mu (\\omega) && (X_g (\\omega) = g X_0 (g^{-1} \\omega))\\\\\n&= \\int_{\\mathbb M}\\pi ( X_g( \\omega)) \\eta_n (X_g( \\omega)^{-1} X_0 (\\omega) X_0(\\omega)^{-1} \\omega)) d \\mu (\\omega) && \\\\\n&= \\int_{\\mathbb M}\\pi ( X_g( \\omega)) \\pi (X_g( \\omega)^{-1} X_0 (\\omega) )\\eta_n (X_0(\\omega)^{-1} \\omega)) d \\mu (\\omega) && \\\\\n&= \\int_{\\mathbb M}\\pi ( X_0( \\omega)) \\eta_n ( X_0(\\omega)^{-1} \\omega)) d \\mu (\\omega) && (\\eta_n\\ \\text{invariant})\\\\\n&= \\rho_n. &&\n\\end{align*}\nTherefore, $(\\pi, H)$ has invariant vectors. It follows that $G$ has Property (T) by definition."
+    },
+    {
+      "id": "theorem-39-643268a4",
+      "type": "theorem",
+      "content": "\\label{thm:realgs}\n    Let $G$ be a noncompact lcsc group with Property (T). Then $G$ has cost one.",
+      "content_preview": "Let G be a noncompact lcsc group with Property (T). Then G has cost one.",
+      "display_name": "Theorem",
+      "label": "thm:realgs",
+      "position": {
+        "line_start": 1353,
+        "line_end": 1355
+      },
+      "references": [
+        {
+          "target_id": "TForGroupImpliesTForPalm",
+          "reference_type": "internal",
+          "context": "equivalence relation has Property (T) by Theorem \\ref{TForGroupImpliesTForPalm}. Therefore it admits a cost one extension by Theo",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "thm:HP",
+          "reference_type": "internal",
+          "context": "erefore it admits a cost one extension by Theorem \\ref{thm:HP}. As discussed in Section \\ref{PPprelims}, this ex",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "PPprelims",
+          "reference_type": "external",
+          "context": "by Theorem \\ref{thm:HP}. As discussed in Section \\ref{PPprelims}, this extension of the cross-section equivalence",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "Let $G \\acts (X, \\mu)$ be an essentially free action of $G$, and $Y \\subseteq X$ a cross-section. Then the associated cross-section equivalence relation has Property (T) by Theorem \\ref{TForGroupImpliesTForPalm}. Therefore it admits a cost one extension by Theorem \\ref{thm:HP}. As discussed in Section \\ref{PPprelims}, this extension of the cross-section equivalence relation arises as the cross-section of some extension of $G \\acts (X,\\mu)$, and therefore $G$ has cost one."
+    },
+    {
+      "id": "external_PPprelims",
+      "type": "unknown",
+      "content": "External reference to 'PPprelims'",
+      "content_preview": "External reference to 'PPprelims'",
+      "display_name": "Unknown",
+      "label": "PPprelims",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "theorem-1-b16355c6",
+      "target": "theorem-29-776e8e98",
+      "type": null
+    },
+    {
+      "source": "theorem-2-aac61773",
+      "target": "theorem-32-48457341",
+      "type": null
+    },
+    {
+      "source": "theorem-3-73bbbcf5",
+      "target": "theorem-28-f2969d27",
+      "type": null
+    },
+    {
+      "source": "theorem-4-8427920d",
+      "target": "theorem-37-a93860cb",
+      "type": null
+    },
+    {
+      "source": "theorem-4-8427920d",
+      "target": "theorem-38-79692769",
+      "type": null
+    },
+    {
+      "source": "theorem-5-61f418ad",
+      "target": "theorem-39-643268a4",
+      "type": null
+    },
+    {
+      "source": "proposition-24-877eae8d",
+      "target": "proposition-9-cdc0b1b7",
+      "type": null
+    },
+    {
+      "source": "corollary-26-6d441391",
+      "target": "proposition-9-cdc0b1b7",
+      "type": null
+    },
+    {
+      "source": "theorem-28-f2969d27",
+      "target": "corollary-26-6d441391",
+      "type": null
+    },
+    {
+      "source": "theorem-28-f2969d27",
+      "target": "proposition-22-5f6605a4",
+      "type": null
+    },
+    {
+      "source": "proposition-30-0f1a63c8",
+      "target": "proposition-9-cdc0b1b7",
+      "type": null
+    },
+    {
+      "source": "theorem-31-3c72e7dd",
+      "target": "proposition-16-43055aad",
+      "type": null
+    },
+    {
+      "source": "theorem-31-3c72e7dd",
+      "target": "theorem-29-776e8e98",
+      "type": null
+    },
+    {
+      "source": "theorem-31-3c72e7dd",
+      "target": "proposition-17-1945d149",
+      "type": null
+    },
+    {
+      "source": "theorem-34-b6d19547",
+      "target": "theorem-29-776e8e98",
+      "type": null
+    },
+    {
+      "source": "theorem-34-b6d19547",
+      "target": "theorem-31-3c72e7dd",
+      "type": null
+    },
+    {
+      "source": "theorem-37-a93860cb",
+      "target": "lemma-36-23ca067f",
+      "type": null
+    },
+    {
+      "source": "theorem-39-643268a4",
+      "target": "theorem-37-a93860cb",
+      "type": null
+    },
+    {
+      "source": "theorem-39-643268a4",
+      "target": "theorem-32-48457341",
+      "type": null
+    },
+    {
+      "source": "theorem-39-643268a4",
+      "target": "external_PPprelims",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 40,
+    "edge_count": 20,
+    "extractor_used": "regex-only"
+  }
+}

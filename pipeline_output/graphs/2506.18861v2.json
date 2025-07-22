@@ -1,0 +1,55 @@
+{
+  "arxiv_id": "2506.18861v2",
+  "nodes": [
+    {
+      "id": "lemma-1-8a1bf072",
+      "type": "lemma",
+      "content": "\\label{le:im.ndg}\n  Let $\\bK$ be a compact group acting on a solvable connected Lie group $\\bL$, and $\\bT\\le \\bL$ a $\\bK$-invariant maximal torus. Every element of $\\bL\\rtimes \\bK$ whose $\\bK$-component has no 1-eigenvectors in\n  \\begin{equation*}\n    \\fl/\\ft\n    ,\\quad\n    \\fl:=Lie(\\bL)\n    ,\\quad\n    \\ft:=Lie(\\bT)\n  \\end{equation*}\n  is elliptic.",
+      "content_preview": "Let be a compact group acting on a solvable connected Lie group , and a -invariant maximal torus. Every element of whose -component has no...",
+      "display_name": "Lemma",
+      "label": "le:im.ndg",
+      "position": {
+        "line_start": 872,
+        "line_end": 882
+      },
+      "references": [
+        {
+          "target_id": "thn:dns.ell.sbgp",
+          "reference_type": "external",
+          "context": "erved in the introductory remarks to the proof of \\Cref{thn:dns.ell.sbgp}), we can assume there is no torus component to $\\",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": "\\cite[Lemma 1.7]{2506.09642v1} settles the abelian-$\\bL$ case so we can assume, inductively on the length of $\\left(\\bL^{((n))}\\right)_n$, that an element\n  \\begin{equation*}\n    t\n    =\n    (v,s)\\in \\bG:=\\bL\\rtimes \\bK\n    ,\\quad\n    1-\\Ad_s\\text{ invertible on }\\fl/\\ft\n  \\end{equation*}\n  has elliptic image in the quotient $\\bL/\\bL^{((\\mathrm{max}))}$ by the bottom (abelian) layer of the derived series. Additionally, since quotienting out compact normal subgroups is harmless (as observed in the introductory remarks to the proof of \\Cref{thn:dns.ell.sbgp}), we can assume there is no torus component to $\\bL^{((\\mathrm{max}))}\\cong \\bR^d$. \n\n  The image of $t$ in $\\bG/\\bL^{((\\mathrm{max}))}$ belongs to some maximal compact subgroup thereof, which surjects onto $\\bK$ and hence splits as\n  \\begin{equation*}\n    \\bM\\rtimes \\bK\n    ,\\quad\n    \\bM\\le \\bL/\\bL^{((\\mathrm{max}))}\\text{ maximal compact}.\n  \\end{equation*}\n  We can thus substitute for $\\bG$ the (automatically split \\cite[\\S VII.3.2, Proposition 3]{bourb_int_7-9_en}) extension\n  \\begin{equation*}\n    \\{1\\}\n    \\to\n    \\bL^{((\\mathrm{max}))}\n    \\lhook\\joinrel\\xrightarrow{\\quad}\n    \\bL^{((\\mathrm{max}))}\\rtimes \\left(\\bM\\rtimes \\bK\\right)\n    \\xrightarrowdbl{\\quad}\n    \\bM\\rtimes \\bK\n    \\to \\{1\\},\n  \\end{equation*}\n  again falling back on the abelian-$\\bL$ case to conclude."
+    },
+    {
+      "id": "external_thn:dns.ell.sbgp",
+      "type": "unknown",
+      "content": "External reference to 'thn:dns.ell.sbgp'",
+      "content_preview": "External reference to 'thn:dns.ell.sbgp'",
+      "display_name": "Unknown",
+      "label": "thn:dns.ell.sbgp",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-1-8a1bf072",
+      "target": "external_thn:dns.ell.sbgp",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 2,
+    "edge_count": 1,
+    "extractor_used": "regex-only"
+  }
+}

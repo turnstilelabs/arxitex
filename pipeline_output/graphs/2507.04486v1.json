@@ -1,0 +1,261 @@
+{
+  "arxiv_id": "2507.04486v1",
+  "nodes": [
+    {
+      "id": "lemma-1-ab85df23",
+      "type": "lemma",
+      "content": "\\label{lem:T}\nIf $\\Phi:S\\times S\\to\\N$ is a tight twisting, then for all $a,b,c\\in S$, the following hold:\n\\begin{enumerate}[label=\\textup{\\textsf{(T\\arabic*)}},leftmargin=10mm]\\addtocounter{enumi}{2}\n\\item \\label{T3} $a\\leqL b \\implies \\Phi(a,c) \\geq \\Phi(b,c)$, and $a\\L b \\implies \\Phi(a,c) = \\Phi(b,c)$,\n\\item \\label{T4} $a\\leqR b \\implies \\Phi(c,a) \\geq \\Phi(c,b)$, and $a\\R b \\implies \\Phi(c,a) = \\Phi(c,b)$, \n\\item \\label{T5} $\\Phi(1,a) = \\Phi(a,1) = 0$,\n\\item \\label{T6} there exist $a',c'\\in S$ such that $abc=a'bc'$ and $\\Phi(a',b,c')=0$.\n\\end{enumerate}",
+      "content_preview": "If :S S is a tight twisting, then for all a,b,c S, the following hold: [label=,leftmargin=10mm] a b (a,c) (b,c), and a b (a,c) = (b,c), a b (c,a)...",
+      "display_name": "Lemma",
+      "label": "lem:T",
+      "position": {
+        "line_start": 1330,
+        "line_end": 1338
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-2-cbd97314",
+      "type": "lemma",
+      "content": "\\label{lem:ae}\nIf $\\Phi$ is a twisting of a monoid $S$, and if $a\\in S$ and $e\\in E(S)$, then\n\\[\na\\leqL e \\implies \\Phi(a,e)=\\Phi(e,e)\n\\AND\na\\leqR e \\implies \\Phi(e,a)=\\Phi(e,e).\n\\]",
+      "content_preview": "If is a twisting of a monoid S, and if a S and e E(S), then [ a e (a,e)=(e,e) a e (e,a)=(e,e). ]",
+      "display_name": "Lemma",
+      "label": "lem:ae",
+      "position": {
+        "line_start": 1376,
+        "line_end": 1383
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-3-fd1ece4a",
+      "type": "lemma",
+      "content": "\\label{lem:T2}\nIf $\\Phi$ is a $*$-symmetric twisting of a monoid $S$ with involution, then \\ref{T2}\\ref{T2a} and \\ref{T2}\\ref{T2b} are equivalent.  Consequently, $\\Phi$ is tight if and only if either of these holds.",
+      "content_preview": "If is a *-symmetric twisting of a monoid S with involution, then and are equivalent. Consequently, is tight if and only if either of these holds.",
+      "display_name": "Lemma",
+      "label": "lem:T2",
+      "position": {
+        "line_start": 1402,
+        "line_end": 1404
+      },
+      "references": [
+        {
+          "target_id": "T2",
+          "reference_type": "external",
+          "context": "ic twisting of a monoid $S$ with involution, then \\ref{T2}\\ref{T2a} and \\ref{T2}\\ref{T2b} are equivalent.  C",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "T2a",
+          "reference_type": "external",
+          "context": "ing of a monoid $S$ with involution, then \\ref{T2}\\ref{T2a} and \\ref{T2}\\ref{T2b} are equivalent.  Consequent",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "T2",
+          "reference_type": "external",
+          "context": "d $S$ with involution, then \\ref{T2}\\ref{T2a} and \\ref{T2}\\ref{T2b} are equivalent.  Consequently, $\\Phi$ is",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        },
+        {
+          "target_id": "T2b",
+          "reference_type": "external",
+          "context": "th involution, then \\ref{T2}\\ref{T2a} and \\ref{T2}\\ref{T2b} are equivalent.  Consequently, $\\Phi$ is tight if",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-4-be7006d8",
+      "type": "lemma",
+      "content": "\\label{lem:PPn}\nFor any $a\\in\\PP_n$ with $\\rank(a)\\geq1$, there exists $c\\in\\PP_n$ such that $ac\\R a$, $\\codom(ac)=\\bn$ and $\\Phi(a,c)=0$.",
+      "content_preview": "For any a_n with (a)1, there exists c_n such that ac a, (ac)= and (a,c)=0.",
+      "display_name": "Lemma",
+      "label": "lem:PPn",
+      "position": {
+        "line_start": 1441,
+        "line_end": 1443
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-5-f59973aa",
+      "type": "lemma",
+      "content": "\\label{lem:Phirm}\nLet $S$ be a monoid, $r:S\\to\\Z$ an arbitrary function, and $m\\in\\Z$ an arbitrary integer.  Then the function\n\\[\n\\Phi_{r,m}:S\\times S\\to\\Z \\GIVENBY \\Phi_{r,m}(a,b) = m - r(a) - r(b) + r(ab) \\qquad\\text{for $a,b\\in S$}\n\\]\nsatisfies \\ref{T1}.  Consequently, $\\Phi_{r,m}$ is a twisting of $S$ if and only if the following inequality holds:\n\\begin{equation}\\label{eq:Sylvester}\nr(a) + r(b) \\leq r(ab) + m \\qquad\\text{for all $a,b\\in S$.}\n\\end{equation}\nIf additionally $S$ has an involution ${}^*$ for which the identity $r(a^*)=r(a)$ holds, then $\\Phi_{r,m}$ is $*$-symmetric.",
+      "content_preview": "Let S be a monoid, r:S an arbitrary function, and m an arbitrary integer. Then the function [ _r,m:S S _r,m(a,b) = m - r(a) - r(b) + r(ab) ]...",
+      "display_name": "Lemma",
+      "label": "lem:Phirm",
+      "position": {
+        "line_start": 1501,
+        "line_end": 1511
+      },
+      "references": [
+        {
+          "target_id": "T1",
+          "reference_type": "external",
+          "context": "+ r(ab) \\qquad\\text{for $a,b\\in S$}\n\\]\nsatisfies \\ref{T1}.  Consequently, $\\Phi_{r,m}$ is a twisting of $S$",
+          "position": {
+            "line_start": 0,
+            "line_end": null
+          }
+        }
+      ],
+      "proof": null
+    },
+    {
+      "id": "lemma-6-a44f0225",
+      "type": "lemma",
+      "content": "\\label{lem:SylvesterEqX}\nIf $\\ve,\\eta\\in\\Eq(X)$ for a finite set $X$, then $\\Vert\\ve\\Vert+\\Vert\\eta\\Vert \\leq \\Vert\\ve\\vee\\eta\\Vert + |X|$.",
+      "content_preview": "If ,(X) for a finite set X, then + + |X|.",
+      "display_name": "Lemma",
+      "label": "lem:SylvesterEqX",
+      "position": {
+        "line_start": 1746,
+        "line_end": 1748
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-7-8f115f93",
+      "type": "lemma",
+      "content": "\\label{lem:Hk}\nIf $H$ is a group $\\H^M$-class of $M$, and if $k\\in M$, then the following are equivalent:\n\\ben\n\\item \\label{Hki} $H = H+k$,\n\\item \\label{Hkii} $i\\leqJ^M k$ for some $i\\in H$,\n\\item \\label{Hkiii} $i\\leqJ^M k$ for all $i\\in H$.  \\epfres\n\\een",
+      "content_preview": "If H is a group ^M-class of M, and if k M, then the following are equivalent: H = H+k, i^M k for some i H, i^M k for all i H.",
+      "display_name": "Lemma",
+      "label": "lem:Hk",
+      "position": {
+        "line_start": 3355,
+        "line_end": 3362
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-8-b1cbe1cf",
+      "type": "lemma",
+      "content": "\\label{lem:SingPn}\nFor any $a\\in\\Sing(\\P_n)\\cup\\{1\\}$ we have\n\\[\na = e_1\\cdots e_k \\qquad\\text{for some $e_1,\\ldots,e_k\\in E_0(\\P_n)$ with $\\Phi(e_1,\\ldots,e_k) = 0$.}\n\\]",
+      "content_preview": "For any a(_n)1 we have [ a = e_1 e_k ]",
+      "display_name": "Lemma",
+      "label": "lem:SingPn",
+      "position": {
+        "line_start": 3934,
+        "line_end": 3939
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "lemma-9-b36ba3df",
+      "type": "lemma",
+      "content": "\\label{lem:SingPn2}\nFor any $a\\in\\Sing(\\P_n)$ we have $a = agh$ for some $g,h\\in E_0(\\P_n)$ with $\\Phi(a,g,h) = 1$.",
+      "content_preview": "For any a(_n) we have a = agh for some g,h E_0(_n) with (a,g,h) = 1.",
+      "display_name": "Lemma",
+      "label": "lem:SingPn2",
+      "position": {
+        "line_start": 3981,
+        "line_end": 3983
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_T2",
+      "type": "unknown",
+      "content": "External reference to 'T2'",
+      "content_preview": "External reference to 'T2'",
+      "display_name": "Unknown",
+      "label": "T2",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_T2a",
+      "type": "unknown",
+      "content": "External reference to 'T2a'",
+      "content_preview": "External reference to 'T2a'",
+      "display_name": "Unknown",
+      "label": "T2a",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_T2b",
+      "type": "unknown",
+      "content": "External reference to 'T2b'",
+      "content_preview": "External reference to 'T2b'",
+      "display_name": "Unknown",
+      "label": "T2b",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    },
+    {
+      "id": "external_T1",
+      "type": "unknown",
+      "content": "External reference to 'T1'",
+      "content_preview": "External reference to 'T1'",
+      "display_name": "Unknown",
+      "label": "T1",
+      "position": {
+        "line_start": 0,
+        "line_end": null
+      },
+      "references": [],
+      "proof": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "lemma-3-fd1ece4a",
+      "target": "external_T2",
+      "type": null
+    },
+    {
+      "source": "lemma-3-fd1ece4a",
+      "target": "external_T2a",
+      "type": null
+    },
+    {
+      "source": "lemma-3-fd1ece4a",
+      "target": "external_T2b",
+      "type": null
+    },
+    {
+      "source": "lemma-5-f59973aa",
+      "target": "external_T1",
+      "type": null
+    }
+  ],
+  "stats": {
+    "node_count": 13,
+    "edge_count": 4,
+    "extractor_used": "regex-only"
+  }
+}
