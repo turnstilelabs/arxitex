@@ -3,7 +3,6 @@ from arxitex.symdef.utils import Definition
 from arxitex.llms.prompt import Prompt
 
 class SymbolEnhancementPromptGenerator:
-    """Generates specific prompts for the artifact enhancement tasks."""
 
     def make_term_extraction_prompt(self, artifact_content: str) -> str:
         system = f"""
@@ -14,11 +13,11 @@ class SymbolEnhancementPromptGenerator:
         - Do NOT include common mathematical operators (+, -, \\cup) or generic words ('set', 'element', 'theorem').
         - The goal is to identify terms whose meaning is likely defined within this document."""
 
-        user = f"""Text:
+
+        user = f"""Analyze the following single mathematical artifact and extract its specialized prerequisite terms according to ALL the rules.
         ---
         {artifact_content}
         ---
-
         Respond ONLY with the requested structured JSON format:
         {{
             "terms": ["term1", "term2", "..."]
@@ -60,7 +59,7 @@ class SymbolEnhancementPromptGenerator:
         return Prompt(system=system, user=user, id="definition_extraction")
     
     def make_definition_synthesis_prompt(self, term: str, context_snippets: str, base_definition: Optional[Definition]) -> str:        
-        system = system = """You are a text-extraction assistant. Your task is to construct a definition for a specific term by ONLY using verbatim sentences from the provided context.
+        system = """You are a text-extraction assistant. Your task is to construct a definition for a specific term by ONLY using verbatim sentences from the provided context.
         - **DO NOT** rephrase, summarize, interpret, or generate new text.
         - Your entire response for the `definition` field must be a direct copy-and-paste of sentences from the context.
         - If multiple sentences from the context are needed to form a complete definition, concatenate them.
