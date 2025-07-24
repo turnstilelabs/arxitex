@@ -14,7 +14,7 @@ from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.extractor.utils import ArtifactNode, ArtifactType
-from arxitex.symdef.utils import async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
+from arxitex.symdef.utils import clean_latex_for_llm, async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 def determine_output_path(
     user_path: Optional[Path], 
@@ -184,23 +184,21 @@ class DocumentEnhancer:
         """
         sanitized_terms = []
         for term in raw_terms:
-            # Rule 1: Start by removing any non-printable control characters.
+            # Remove any non-printable control characters.
             clean_term = re.sub(r'[^\x20-\x7E\n\t\r]', '', term)
 
-            # Rule 2: Replace newlines, tabs, and multiple spaces with a single space.
+            # Replace newlines, tabs, and multiple spaces with a single space.
             clean_term = re.sub(r'\s+', ' ', clean_term)
 
-            # Rule 3: Normalize excessive backslashes from LLM hallucinations (e.g., \\phi -> \phi).
+            # Normalize excessive backslashes from LLM hallucinations (e.g., \\phi -> \phi).
             clean_term = re.sub(r'\\{2,}', r'\\', clean_term)
             
-            # Rule 4: Strip leading/trailing punctuation often left by LLMs.
+            # Strip leading/trailing punctuation often left by LLMs.
             clean_term = clean_term.strip('.,;:- ')
 
-            # Rule 5: Fix mismatched LaTeX delimiters as a common heuristic.
-            # If a term starts with '$' but doesn't end with one, it's likely a mistake.
+            # Fix mismatched LaTeX delimiters as a common heuristic.
             if clean_term.startswith('$') and not clean_term.endswith('$'):
                 clean_term += '$'
-            # Do the same for `{` and `}`.
             if clean_term.startswith('{') and not clean_term.endswith('}'):
                 clean_term += '}'
                 
@@ -237,7 +235,6 @@ class DocumentEnhancer:
 
         extraction_results = await asyncio.gather(*[self._extract_and_sanitize_for_artifact(a) for a in artifacts])
         
-        # Gather all raw terms from the document
         all_raw_terms = set()
         for artifact_id, raw_terms in extraction_results:
             sanitized_terms = self._filter_and_sanitize_extracted_terms(raw_terms)
@@ -311,7 +308,10 @@ class DocumentEnhancer:
             preceding_context = self.context_finder.find_context_around_first_occurrence(
                 term, text_to_search_before
             )
-
+            
+            #artifact_content = clean_latex_for_llm(artifact_content)
+            #preceding_context = clean_latex_for_llm(preceding_context)
+            
             context_parts = []
             if preceding_context:
                 context_parts.append(f"CONTEXT PRECEDING THE TERM'S FIRST USE:\n---\n{preceding_context}\n---")

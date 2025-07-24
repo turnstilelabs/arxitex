@@ -58,53 +58,90 @@ class ContextFinder:
         Finds the first occurrence of a term and returns the full paragraph containing it.
         """
         try:
-            if len(term) == 1 and term.isalpha():
-                # For single letters like 'f', we want to avoid matching it inside words.
-                # We look for the letter surrounded by non-alphanumeric characters,
-                # or inside TeX math delimiters. This is more robust than \b.
-                pattern = r'(?<![a-zA-Z])' + re.escape(term) + r'(?![a-zA-Z])'
-            elif '$' in term or '\\' in term:
-                # For explicit symbols like '$f$' or '\varphi', use exact matching.
-                pattern = re.escape(term)
+            # Step 1: Build the single, safest, most appropriate pattern.
+            escaped_term = re.escape(term)
+            pattern = ""
+
+            # For simple, purely alphabetic terms ('f', 'G', 'phi'), we must use
+            # strict boundaries to prevent false positives.
+            if term.isalpha():
+                # The SAFEST "whole word" boundary for LaTeX:
+                # 1. (?<!\\)       - Not preceded by a backslash (rejects '\f', '\F').
+                # 2. (?<![a-zA-Z]) - Not preceded by another letter (rejects 'if').
+                # 3. {escaped_term} - The term itself.
+                # 4. (?![a-zA-Z])  - Not followed by another letter (rejects 'function').
+                # This combination is precise and safe.
+                pattern = fr'(?<!\\)(?<![a-zA-Z]){escaped_term}(?![a-zA-Z])'
             else:
-                # For multi-word concepts, whole-word matching is perfect.
-                pattern = r'\b' + re.escape(term) + r'\b'
+                # For any term containing non-alphabetic characters ('h(x)', '$F_1$',
+                # 'c-approximate'), a literal search is the only reliable method.
+                # The risk of it being an accidental substring is negligible.
+                pattern = escaped_term
 
-            matches = list(re.finditer(pattern, text_to_search, re.IGNORECASE if len(term) > 1 else 0))
-
-            if not matches:
-                if len(term) == 1 and term.isalpha():
-                    fallback_pattern = re.escape(f"${term}$")
-                    matches = list(re.finditer(fallback_pattern, text_to_search))
-                
-                if not matches:
-                    logger.warning(f"Term '{term}' not found in the preceding text.")
-                    return ""
+            logger.debug(f"Searching for term '{term}' with pattern: {pattern}")
+            
+            # Step 2: Find the first match in the original text.
+            # No IGNORECASE flag is used, ensuring a case-sensitive search.
+            first_match = next(re.finditer(pattern, text_to_search), None)
+            
+            if not first_match:
+                logger.warning(f"Term '{term}' not found in the preceding text.")
+                return ""
 
         except re.error as e:
-            logger.error(f"Regex error for term '{term}': {e}")
+            logger.error(f"Regex error for term '{term}' with pattern '{pattern}': {e}")
             return ""
 
-        first_match = matches[0]
+        # Step 3: Extract the paragraph containing the match.
         match_start_pos = first_match.start()
-        
+
         para_start_pos = text_to_search.rfind('\n\n', 0, match_start_pos)
         if para_start_pos == -1:
-            # If no double newline is found, the paragraph starts at the beginning of the text
             para_start_pos = 0
         else:
-            # Move past the double newline characters to the actual text
             para_start_pos += 2 
 
         para_end_pos = text_to_search.find('\n\n', match_start_pos)
         if para_end_pos == -1:
-            # If no double newline is found, the paragraph ends at the end of the text
             para_end_pos = len(text_to_search)
 
         definitional_paragraph = text_to_search[para_start_pos:para_end_pos].strip()
         
         return definitional_paragraph
         
+def clean_latex_for_llm(text: str) -> str:
+    """
+    Removes common LaTeX structural and metadata commands to clean up context for an LLM.
+
+    This function removes commands that define document structure but not content,
+    such as environments, labels, and sectioning commands.
+
+    Examples:
+        - '\\begin{claim}' -> ''
+        - '\\label{f_min}' -> ''
+        - '\\end{theorem}' -> ''
+        - '\\section*{Introduction}' -> 'Introduction'
+    """
+    if not text:
+        return ""
+
+    # Rule 1: Remove \begin{...} and \end{...} commands
+    cleaned_text = re.sub(r'\\(begin|end)\{[a-zA-Z0-9_*]+\}\s*', '', text)
+
+    # Rule 2: Remove \label{...} commands
+    cleaned_text = re.sub(r'\\label\{[^\}]+\}\s*', '', cleaned_text)
+
+    # Rule 3: Remove common no-argument commands like \item or \centering
+    cleaned_text = re.sub(r'\\(item|centering|newpage|clearpage)\b\s*', '', cleaned_text)
+
+    # Rule 4: Handle sectioning commands by keeping their title but removing the command itself.
+    cleaned_text = re.sub(r'\\(part|chapter|section|subsection|subsubsection|paragraph|subparagraph)\*?\{([^}]+)\}', r'\2', cleaned_text)
+
+    # Rule 5: Collapse multiple blank lines into a single one for readability.
+    cleaned_text = re.sub(r'(\n\s*){3,}', '\n\n', cleaned_text).strip()
+
+    return cleaned_text
+
 def load_artifacts_from_json(file_path: Path) -> List[ArtifactNode]:
     """Loads artifacts from a JSON file and validates them."""
     if not file_path.exists():
@@ -123,7 +160,6 @@ def load_artifacts_from_json(file_path: Path) -> List[ArtifactNode]:
     except (ValidationError, json.JSONDecodeError) as e:
         logger.error(f"Failed to load or validate artifacts from {file_path}: {e}")
         sys.exit(1)
-
 
 def load_latex_content(file_path: Path) -> str:
     """Loads the full LaTeX source code from a file."""
