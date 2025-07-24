@@ -49,6 +49,62 @@ class ContextFinder:
             logger.error(f"Regex error for term '{term}': {e}")
             return ""
         
+    def find_context_around_first_occurrence(
+        self, 
+        term: str, 
+        text_to_search: str
+    ) -> str:
+        """
+        Finds the first occurrence of a term and returns the full paragraph containing it.
+        """
+        try:
+            if len(term) == 1 and term.isalpha():
+                # For single letters like 'f', we want to avoid matching it inside words.
+                # We look for the letter surrounded by non-alphanumeric characters,
+                # or inside TeX math delimiters. This is more robust than \b.
+                pattern = r'(?<![a-zA-Z])' + re.escape(term) + r'(?![a-zA-Z])'
+            elif '$' in term or '\\' in term:
+                # For explicit symbols like '$f$' or '\varphi', use exact matching.
+                pattern = re.escape(term)
+            else:
+                # For multi-word concepts, whole-word matching is perfect.
+                pattern = r'\b' + re.escape(term) + r'\b'
+
+            matches = list(re.finditer(pattern, text_to_search, re.IGNORECASE if len(term) > 1 else 0))
+
+            if not matches:
+                if len(term) == 1 and term.isalpha():
+                    fallback_pattern = re.escape(f"${term}$")
+                    matches = list(re.finditer(fallback_pattern, text_to_search))
+                
+                if not matches:
+                    logger.warning(f"Term '{term}' not found in the preceding text.")
+                    return ""
+
+        except re.error as e:
+            logger.error(f"Regex error for term '{term}': {e}")
+            return ""
+
+        first_match = matches[0]
+        match_start_pos = first_match.start()
+        
+        para_start_pos = text_to_search.rfind('\n\n', 0, match_start_pos)
+        if para_start_pos == -1:
+            # If no double newline is found, the paragraph starts at the beginning of the text
+            para_start_pos = 0
+        else:
+            # Move past the double newline characters to the actual text
+            para_start_pos += 2 
+
+        para_end_pos = text_to_search.find('\n\n', match_start_pos)
+        if para_end_pos == -1:
+            # If no double newline is found, the paragraph ends at the end of the text
+            para_end_pos = len(text_to_search)
+
+        definitional_paragraph = text_to_search[para_start_pos:para_end_pos].strip()
+        
+        return definitional_paragraph
+        
 def load_artifacts_from_json(file_path: Path) -> List[ArtifactNode]:
     """Loads artifacts from a JSON file and validates them."""
     if not file_path.exists():

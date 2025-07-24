@@ -50,6 +50,13 @@ class DefinitionBank:
         """Finds a definition by its canonical form, ensuring task-safe access."""
         async with self._lock:
             return self._find_unlocked(term)
+        
+    async def find_many(self, terms: List[str]) -> List[Definition]:
+        """
+        Finds all definitions for a given list of terms in a single, efficient operation.
+        """
+        async with self._lock:
+            return self._find_many_unlocked(terms)
 
     async def find_best_base_definition(self, term: str) -> Optional[Definition]:
         """Finds the best base definition, ensuring task-safe access."""
@@ -83,15 +90,27 @@ class DefinitionBank:
             return self._definitions[primary_canonical_term]
         return None
 
+    def _find_many_unlocked(self, terms: List[str]) -> List[Definition]:
+        found_definitions = []
+        found_canonical_terms = set() 
+
+        for term in terms:
+            definition = self._find_unlocked(term)
+            if definition:
+                canonical_key = self._normalize_term(definition.term)
+                if canonical_key not in found_canonical_terms:
+                    found_definitions.append(definition)
+                    found_canonical_terms.add(canonical_key)
+
+        return found_definitions
+    
     def _find_best_base_definition_unlocked(self, term: str) -> Optional[Definition]:
-        """The actual base definition logic. Assumes lock is already held."""
         new_term_parts = self._normalize_term(term).split()
 
         # Step 1: Exact Sub-phrase Matching
         if len(new_term_parts) > 1:
             for i in range(1, len(new_term_parts)):
                 sub_phrase_str = " ".join(new_term_parts[i:])
-                # NOTE: Calling the private _unlocked helper, NOT the public async method.
                 definition = self._find_unlocked(sub_phrase_str)
                 if definition:
                     logger.debug(f"Found base via exact sub-phrase: '{definition.term}' for new term '{term}'.")
@@ -101,7 +120,6 @@ class DefinitionBank:
         best_param_match_def = None
         max_match_len = 0
         for known_canonical_term, definition in self._definitions.items():
-            # ... (rest of the logic is the same) ...
             known_term_parts = known_canonical_term.split()
             k_len = len(known_term_parts)
             if k_len <= 1 or k_len > len(new_term_parts):
@@ -121,7 +139,6 @@ class DefinitionBank:
         return None
 
     def _to_dict_unlocked(self) -> Dict[str, Dict[str, Any]]:
-        """The actual dictionary export logic. Assumes lock is already held."""
         bank_data = {}
         for term, definition_obj in self._definitions.items():
             bank_data[term] = {

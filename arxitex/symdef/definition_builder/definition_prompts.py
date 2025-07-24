@@ -6,19 +6,41 @@ class SymbolEnhancementPromptGenerator:
 
     def make_term_extraction_prompt(self, artifact_content: str) -> str:
         system = f"""
-        Analyze the following mathematical text. Your task is to identify and list all non-trivial mathematical symbols 
-        (like $\\F$, $G_i$) and specialized concepts (like 'union-closed family', 'Frobenius norm') 
-        that are crucial for understanding this specific text.
+        You are a highly precise mathematical term extraction engine. Your task is to analyze a given text and extract a list of specialized, non-trivial mathematical terms.
 
-        - Do NOT include common mathematical operators (+, -, \\cup) or generic words ('set', 'element', 'theorem').
-        - The goal is to identify terms whose meaning is likely defined within this document."""
+You will perform this task by following a strict two-step process in your reasoning:
 
+**Step 1: Candidate Identification**
+First, mentally scan the text and identify all potential mathematical symbols, concepts, and named entities.
+
+**Step 2: Strict Filtering**
+Next, review your list of candidates and discard any that violate THE FOLLOWING RULES. Only terms that pass ALL rules should be in your final output.
+
+**FILTERING RULES:**
+
+1.  **MUST BE A TERM, NOT AN EXPRESSION:** The output must be the name of a concept, not a statement.
+    -   GOOD: `$f$`, `\\varphi`, `union-closed family`, `c-approximate union closed`
+    -   BAD: `$f = x^2$`, `A \\cup B`, `$x \\in [0, 1]$`, `$f(\\rho, \\rho)$`
+    -   RULE: The term MUST NOT contain operators like `=`, `\\in`, `\\leq`, `\\cup`, `+`.
+
+2.  **MUST BE NON-TRIVIAL:** Do not extract concepts that are common knowledge for a math graduate student.
+    -   GOOD: `Frobenius norm`, `sunflower conjecture`
+    -   BAD: `set`, `group`, `isomorphism`, `independent random variables`
+
+3.  **MUST BE A SPECIFIC ENTITY:** Do not extract generic variables used for placeholders.
+    -   GOOD: `$\\mathcal F$` (if it represents a specific family of sets), `$G$` (if defined as a specific graph).
+    -   BAD: `$x$` (when used as a generic variable in an integral), `n` (when used as a generic integer).
+    -   HEURISTIC: If a symbol is explicitly defined (e.g., "Let `\\mathcal F` be...") it IS a term. If it's just used in a formula without prior definition, it is likely NOT a term.
+
+4.  **MUST BE CLEAN:** The term cannot be a formatting character like a newline (`\\n`).
+
+Your final output MUST be a single, valid JSON object and nothing else. Do not include any explanation or preamble."""
 
         user = f"""Analyze the following single mathematical artifact and extract its specialized prerequisite terms according to ALL the rules.
         ---
         {artifact_content}
         ---
-        Respond ONLY with the requested structured JSON format:
+        Respond ONLY with the requested structured JSON format. The "terms" list can be empty.:
         {{
             "terms": ["term1", "term2", "..."]
         }}

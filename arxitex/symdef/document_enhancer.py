@@ -104,6 +104,7 @@ class DocumentEnhancer:
             - A DefinitionBank instance containing all definitions found or synthesized.
         """
         sorted_artifacts = sorted(artifacts, key=lambda a: a.position.line_start)
+        artifact_start_positions = self._calculate_start_positions(sorted_artifacts, latex_content)
         artifact_end_positions = self._calculate_end_positions(sorted_artifacts, latex_content)
 
         logger.info("Phase 1: Populating bank from explicit definitions...")
@@ -111,7 +112,7 @@ class DocumentEnhancer:
 
         logger.info("Phase 2: Synthesizing definitions for remaining terms...")
         artifact_to_terms_map = await self._discover_and_synthesize_terms(
-        sorted_artifacts, artifact_end_positions, latex_content
+        sorted_artifacts, artifact_start_positions, artifact_end_positions, latex_content
         )
 
         logger.info("Phase 3: Generating enhanced content for all artifacts...")
@@ -121,6 +122,39 @@ class DocumentEnhancer:
 
         logger.success("Document enhancement complete.")
         return enhanced_artifacts, self.bank
+    
+    def _calculate_start_positions(self, artifacts: List[ArtifactNode], latex_content: str) -> Dict[str, int]:
+        """Pre-calculates the character offset of the start of each artifact."""
+        line_start_offsets = [0]
+        current_offset = 0
+        while True:
+            current_offset = latex_content.find('\n', current_offset)
+            if current_offset == -1:
+                break
+            line_start_offsets.append(current_offset + 1)
+            current_offset += 1
+
+        positions = {}
+        for artifact in artifacts:
+            if (not artifact.position or
+                artifact.position.line_start is None or
+                artifact.position.col_start is None):
+                logger.warning(
+                    f"Artifact '{artifact.id}' is missing start position data. "
+                    "Skipping its start offset calculation."
+                )
+                continue
+            
+            start_line_index = artifact.position.line_start - 1
+            
+            if start_line_index >= len(line_start_offsets):
+                continue
+
+            start_of_line_offset = line_start_offsets[start_line_index]
+            final_offset = start_of_line_offset + (artifact.position.col_start - 1)
+            positions[artifact.id] = final_offset
+
+        return positions
 
     def _calculate_end_positions(self, artifacts: List[ArtifactNode], latex_content: str) -> Dict[str, int]:
         """Pre-calculates the character offset of the end of each artifact."""
@@ -165,8 +199,31 @@ class DocumentEnhancer:
             else:
                 logger.error(f"Failed to extract definition from artifact {artifact.id}.")
 
+    def sanitize_for_llm(text: str) -> str:
+        """
+        Removes non-printable ASCII control characters from text that can confuse
+        LLM tokenizers. Allows standard whitespace like newline, tab, and carriage return.
+        """
+        # This regex matches any character that is NOT a standard printable ASCII
+        # character (hex 20 to 7E) or one of the allowed whitespace characters.
+        return re.sub(r'[^\x20-\x7E\n\t\r]', '', text)
+
+    async def _extract_and_sanitize_for_artifact(self, artifact):
+        """
+        Sanitizes artifact content and extracts terms using the LLM.
+        Now a proper class method.
+        """
+        try:
+            clean_content = re.sub(r'[^\x20-\x7E\n\t\r]', '', artifact.content)
+            raw_terms = await self.llm_enhancer.aextract_terms(clean_content)
+            return artifact.id, raw_terms
+        except Exception as e:
+            logger.error(f"Failed to extract terms from artifact {artifact.id}: {e}", exc_info=True)
+            return artifact.id, []
+    
     async def _discover_and_synthesize_terms(
-        self, artifacts: List[ArtifactNode], end_positions: Dict[str, int], latex_content: str
+        self, artifacts: List[ArtifactNode], start_positions: Dict[str, int],
+        end_positions: Dict[str, int], latex_content: str
     ) -> Dict[str, List[str]]:
         """
         Discovers all terms in all artifacts, synthesizes definitions for missing ones,
@@ -175,17 +232,8 @@ class DocumentEnhancer:
         logger.info("Starting term discovery and mapping to source artifacts...")
         artifact_to_terms_map: Dict[str, List[str]] = {}
         term_to_first_artifact_map: Dict[str, str] = {}
-        
-        async def extract_and_sanitize_for_artifact(artifact):
-            try:
-                raw_terms = await self.llm_enhancer.aextract_terms(artifact.content)
-                # TODO: Implement a more robust sanitization
-                return artifact.id, raw_terms
-            except Exception as e:
-                logger.error(f"Failed to extract/sanitize terms from artifact {artifact.id}: {e}")
-                return artifact.id, []
 
-        extraction_results = await asyncio.gather(*[extract_and_sanitize_for_artifact(a) for a in artifacts])
+        extraction_results = await asyncio.gather(*[self._extract_and_sanitize_for_artifact(a) for a in artifacts])
         
         for artifact_id, terms in extraction_results:
             artifact_to_terms_map[artifact_id] = terms
@@ -199,10 +247,13 @@ class DocumentEnhancer:
             return artifact_to_terms_map
 
         logger.info(f"Discovered {len(all_terms_in_doc)} unique, sanitized terms. Checking against definition bank...")
-        missing_terms_tasks = [self._is_term_missing(term) for term in all_terms_in_doc]
-        #TODO instead of _is_term_missing which does find, should we do find_best_base_definition?
-        results = await asyncio.gather(*missing_terms_tasks)
-        missing_terms = {term for term, is_missing in zip(all_terms_in_doc, results) if is_missing}
+        existing_defs = await self.bank.find_many(list(all_terms_in_doc))
+        # re-normalize here to ensure a perfect match for set subtraction.
+        existing_canonical_terms = {self.bank._normalize_term(d.term) for d in existing_defs}        
+        missing_terms = {
+            term for term in all_terms_in_doc 
+            if self.bank._normalize_term(term) not in existing_canonical_terms
+        }
 
         if not missing_terms:
             logger.info("No new terms to synthesize; all are present in the bank.")
@@ -217,6 +268,7 @@ class DocumentEnhancer:
             self._synthesize_term_group_sequentially(
                 term_group=group,
                 term_to_first_artifact_map=term_to_first_artifact_map,
+                start_positions=start_positions,
                 end_positions=end_positions,
                 latex_content=latex_content
             )
@@ -230,6 +282,7 @@ class DocumentEnhancer:
         self,
         term_group: List[str],
         term_to_first_artifact_map: Dict[str, str],
+        start_positions: Dict[str, int],
         end_positions: Dict[str, int],
         latex_content: str
     ):
@@ -241,6 +294,7 @@ class DocumentEnhancer:
             await self._synthesize_single_term(
                 term=term,
                 source_artifact_id=term_to_first_artifact_map[term],
+                start_positions=start_positions,
                 end_positions=end_positions,
                 latex_content=latex_content,
             )
@@ -250,10 +304,16 @@ class DocumentEnhancer:
         return await self.bank.find(term) is None
 
     async def _synthesize_single_term(
-        self, term: str, source_artifact_id: str, end_positions: Dict[str, int], latex_content: str
+        self,
+        term: str,
+        source_artifact_id: str,
+        start_positions: Dict[str, int],
+        end_positions: Dict[str, int],
+        latex_content: str
     ):
         """
-        Defines a single term using a reliable source artifact for context
+        Defines a single term by combining the context from the preceding paragraph
+        and the content of the source artifact itself.
         """
         log_prefix = f"[{term} @ {source_artifact_id}]"
 
@@ -264,26 +324,46 @@ class DocumentEnhancer:
 
             logger.info(f"{log_prefix} Term is new. Beginning synthesis process...")
 
-            # Get the end position for the context search boundary.
+            start_pos = start_positions.get(source_artifact_id)
             end_pos = end_positions.get(source_artifact_id)
-            if not end_pos:
-                logger.error(f"{log_prefix} Logic error: Could not find pre-calculated end position for artifact ID. Cannot synthesize.")
+
+            if start_pos is None or end_pos is None:
+                logger.error(
+                    f"{log_prefix} Logic error: Could not find pre-calculated start/end positions "
+                    f"for artifact ID. Cannot synthesize."
+                )
                 return
 
-            context_snippets = self.context_finder.find_prior_occurrences(term, latex_content, end_pos)
-            if not context_snippets:
-                logger.error(f"{log_prefix} No prior context found in document. Cannot define.")
-                return
+            artifact_content = latex_content[start_pos:end_pos].strip()
 
-            logger.debug(f"{log_prefix} Finding best base definition...")
+            text_to_search_before = latex_content[:start_pos]
+            preceding_context = self.context_finder.find_context_around_first_occurrence(
+                term, text_to_search_before
+            )
+
+            context_parts = []
+            if preceding_context:
+                context_parts.append(
+                    "Preceding Context (potential definition location):\n---\n"
+                    f"{preceding_context}\n---"
+                )
+            
+            context_parts.append(
+                "Primary Artifact Content (where the term is used):\n---\n"
+                f"{artifact_content}\n---"
+            )
+
+            combined_context = "\n\n".join(context_parts)
+            logger.debug(f"{log_prefix} Providing combined context to LLM:\n{combined_context}")
+            
             base_definition = await self.bank.find_best_base_definition(term)
             if base_definition:
                 logger.debug(f"{log_prefix} Found base definition '{base_definition.term}'.")
-
+            
             synthesized_text = None
             try:
                 synthesized_text = await self.llm_enhancer.asynthesize_definition(
-                    term, context_snippets, base_definition
+                    term, combined_context, base_definition
                 )
             except asyncio.TimeoutError:
                 logger.error(f"{log_prefix} LLM call timed out. Cannot synthesize this term.")
@@ -385,7 +465,6 @@ class DocumentEnhancer:
         logger.debug("LLM-generated definition passed validation.")
         return True
      
-
 async def main():
     parser = argparse.ArgumentParser(
         description="Enhance mathematical artifacts from a LaTeX paper to make them self-contained.",

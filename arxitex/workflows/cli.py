@@ -11,7 +11,7 @@ os.environ["TQDM_DISABLE"] = "1"
 from arxitex.workflows.runner import ArxivPipelineComponents
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
-from arxitex.extractor.core.pipeline import agenerate_artifact_graph
+from arxitex.extractor.pipeline import agenerate_artifact_graph
 
 async def process_single_paper(arxiv_id: str, args):
     """
@@ -29,12 +29,15 @@ async def process_single_paper(arxiv_id: str, args):
     try:
         temp_base_dir = Path(components.output_dir) / "temp_processing"
         
-        graph_data = await agenerate_artifact_graph(
+        results = await agenerate_artifact_graph(
             arxiv_id=arxiv_id,
-            use_llm=args.use_llm,
+            enrich_content=args.enrich_content,
+            infer_dependencies=args.infer_dependencies,
             source_dir=temp_base_dir
         )
 
+        graph = results.get("graph")
+        graph_data = graph.to_dict(arxiv_id=arxiv_id)
         graphs_output_dir = os.path.join(components.output_dir, "graphs")
         os.makedirs(graphs_output_dir, exist_ok=True)
         safe_paper_id = arxiv_id.replace('/', '_')
@@ -70,14 +73,22 @@ async def main():
     )
 
     subparsers = parser.add_subparsers(dest="command", required=True, help="Available commands")
-
     # --- 'single' command ---
     parser_single = subparsers.add_parser(
         "single", 
         help="Temporarily download and process a single paper by its ID."
     )
     parser_single.add_argument("arxiv_id", help="The arXiv ID to process (e.g., '2305.15334').")
-    parser_single.add_argument('--use-llm', action='store_true', help="Use the LLM-based extractor.")
+    parser_single.add_argument(
+        '--enrich-content', 
+        action='store_true', 
+        help="Use LLM to find and synthesize term definitions."
+    )
+    parser_single.add_argument(
+        '--infer-dependencies', 
+        action='store_true', 
+        help="Use LLM to infer dependencies between artifacts."
+    )
     parser_single.add_argument('--force', action='store_true', help="Force re-processing even if it's in the index.")
 
     # --- 'discover' command ---
@@ -112,7 +123,7 @@ async def main():
     parser_process.add_argument(
         '-n', '--max-papers', 
         type=int, 
-        default=500, 
+        default=50, 
         help="Maximum number of papers from the queue to process in this run."
     )
     parser_process.add_argument(
@@ -122,9 +133,14 @@ async def main():
         help="Number of concurrent processing tasks (match to CPU cores)."
     )
     parser_process.add_argument(
-        '--use-llm', 
+        '--enrich-content', 
         action='store_true', 
-        help="Use the LLM-based extractor (requires OPENAI_API_KEY)."
+        help="Use LLM to find and synthesize term definitions for papers in the batch."
+    )
+    parser_process.add_argument(
+        '--infer-dependencies', 
+        action='store_true', 
+        help="Use LLM to infer dependencies between artifacts for papers in the batch."
     )
 
     args = parser.parse_args()
@@ -148,14 +164,14 @@ async def main():
         components = ArxivPipelineComponents(output_dir=args.output_dir)
         workflow = ProcessingWorkflow(
             components=components,
-            use_llm=args.use_llm,
+            enrich_content=args.enrich_content,
+            infer_dependencies=args.infer_dependencies,
             max_concurrent_tasks=args.workers
         )
         await workflow.run(max_papers=args.max_papers)
 
     logger.info(f"Command '{args.command}' has completed.")
     return exit_code
-
 
 if __name__ == '__main__':
     exit_code = asyncio.run(main())
