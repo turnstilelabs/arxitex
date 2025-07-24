@@ -20,33 +20,36 @@ from typing import Dict, Optional
 from loguru import logger
 
 from arxitex.downloaders.async_downloader import AsyncSourceDownloader
-from arxitex.extractor.core import base_extractor
-from arxitex.extractor.core import enhanced_extractor
+from arxitex.extractor.core.base_extractor import LatexGraphBuilder
+from arxitex.extractor.core.enhanced_extractor import HybridGraphEnhancer
 from arxitex.extractor.visualization import graph_viz
 from arxitex.extractor.utils import ArxivExtractorError
 
-def get_examples_dir():
-    script_dir = Path(__file__).parent
-    examples_dir = script_dir.parent.parent / "data"
-    examples_dir.mkdir(exist_ok=True)
+def get_examples_dir() -> Path:
+    script_dir = Path(__file__).parent.resolve()    
+    project_root = script_dir.parent    
+    examples_dir = project_root / "data"
+    examples_dir.mkdir(exist_ok=True, parents=True)
     return examples_dir
 
-async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool, source_dir: Optional[Path] = None) -> Dict:
+
+async def agenerate_artifact_graph(arxiv_id: str, infer_dependencies: bool,
+    enrich_content: bool, source_dir: Optional[Path] = None) -> Dict:
     """
-    Orchestrates the full pipeline to generate a dependency graph from an arXiv paper
-    by downloading the source to a self-deleting temporary directory.
+    Orchestrates the full pipeline to generate a dependency graph from an arXiv paper.
+    
+    This function now acts as a high-level controller, delegating the graph
+    building task to the appropriate class.
     
     Args:
         arxiv_id: The arXiv identifier (e.g., '2103.14030').
-        use_llm: Flag to determine whether to use the hybrid LLM-based extractor.
-        source_dir: The base directory where temporary processing folders will be created.
+        infer_dependencies: Flag to enable Pass 2 (LLM dependency inference).
+        enrich_content: Flag to enable Pass 3 (LLM content enrichment).
+        source_dir: The base directory for temporary processing folders.
         
     Returns:
         A dictionary containing the full graph data and statistics.
-    """
-    if use_llm and not os.getenv("OPENAI_API_KEY"):
-        raise ArxivExtractorError("The --use-llm flag requires the OPENAI_API_KEY environment variable to be set.")
-    
+    """  
     log_location = source_dir if source_dir else "system's default temp directory"
     logger.debug(f"[{arxiv_id}] Creating temporary directory inside: {log_location}")
 
@@ -59,86 +62,92 @@ async def agenerate_artifact_graph(arxiv_id: str, use_llm: bool, source_dir: Opt
             if not latex_content:
                 raise ArxivExtractorError(f"Failed to retrieve LaTeX content for {arxiv_id}")
 
-            if use_llm:
-                logger.info(f"[{arxiv_id}] Using Hybrid (Regex + LLM) graph builder.")
-                graph = await enhanced_extractor.build_graph_with_hybrid_model(latex_content)
-            else:
-                logger.info(f"[{arxiv_id}] Using Regex-only graph builder.")
-                graph = base_extractor.build_graph_from_latex(latex_content)
+            logger.info(f"[{arxiv_id}] Instantiating HybridGraphEnhancer...")
+            enhancer = HybridGraphEnhancer()
             
-            nodes = [node.to_dict() for _, node in enumerate(graph.nodes, 1)]
+            graph, bank = await enhancer.build_graph(
+                latex_content,
+                source_file=f"arxiv:{arxiv_id}",
+                infer_dependencies=infer_dependencies,
+                enrich_content=enrich_content
+            )
             
-            edges = []
-            for edge in graph.edges:
-                edge_dict = {
-                    "source": edge.source_id,
-                    "target": edge.target_id,
-                    "type": edge.dependency_type.value if edge.dependency_type is not None else None,
-                }
-                if edge.dependency:
-                    edge_dict["dependency"] = edge.dependency
-                edges.append(edge_dict)
-            
-            logger.info(f"[{arxiv_id}] Finalizing graph statistics...")
-            stats = graph.get_statistics()
-            logger.info(f"[{arxiv_id}] Graph statistics: {stats}")
-            
-            return {
-                "arxiv_id": arxiv_id,
-                "nodes": nodes,
-                "edges": edges,
-                "stats": {
-                    "node_count": stats["total_nodes"],
-                    "edge_count": stats["total_edges"],
-                    "extractor_used": "hybrid-llm" if use_llm else "regex-only"
-                }
-            }
+            return {"graph": graph, "bank": bank}
 
 async def run_async_pipeline(args):
-    """Asynchronously runs the artifact generation and handles output."""
     try:
-        graph_data = await agenerate_artifact_graph(args.arxiv_id, args.use_llm)
+        results = await agenerate_artifact_graph(
+            arxiv_id=args.arxiv_id,
+            infer_dependencies=args.infer_deps,
+            enrich_content=args.enrich_content
+        )
         
-        if not graph_data["nodes"]:
-             logger.warning("No artifacts were extracted. The paper might be empty, unscannable, or the extraction failed.")
+        graph = results.get("graph")
+        bank = results.get("bank")
+
+        if not graph or not graph.nodes:
+             logger.warning("No artifacts were extracted.")
              sys.exit(0)
-
-        if args.output is not None:
-            json_indent = 2 if args.pretty else None
-            json_output = json.dumps(graph_data, indent=json_indent, ensure_ascii=False)
-
-            if args.output is True:
-                examples_dir = get_examples_dir()
-                (examples_dir / "graphs").mkdir(exist_ok=True)
-                output_path = examples_dir / "graphs" / f"{args.arxiv_id.replace('/', '_')}.json"
-            else:
-                output_path = Path(args.output)
-
-            output_path.write_text(json_output, encoding='utf-8')
-            logger.info(f"JSON output written to {output_path}")
         
+        extractor_mode = "regex-only"
+        if args.infer_deps and args.enrich_content:
+            extractor_mode = "full-hybrid (deps + content)"
+        elif args.infer_deps:
+            extractor_mode = "hybrid (deps-only)"
+        elif args.enrich_content:
+            extractor_mode = "hybrid (content-only)"
+
+        graph_data_to_save = graph.to_dict(
+            arxiv_id=args.arxiv_id,
+            extractor_mode=extractor_mode
+        )
+
+        examples_dir = get_examples_dir()
+        graph_dir = examples_dir / "graphs"
+        graph_dir.mkdir(exist_ok=True)
+        graph_output_path = graph_dir / f"{args.arxiv_id.replace('/', '_')}.json"
+        
+        json_indent = 2 if args.pretty else None
+        json_output = json.dumps(graph_data_to_save, indent=json_indent, ensure_ascii=False)
+        graph_output_path.write_text(json_output, encoding='utf-8')
+        logger.success(f"Document graph saved to {graph_output_path}")
+
+        if bank:
+            logger.info("Serializing definition bank for output...")
+            bank_data_to_save = await bank.to_dict()
+
+            if bank_data_to_save:
+                bank_dir = examples_dir / "definition_banks"
+                bank_dir.mkdir(exist_ok=True)
+                bank_output_path = bank_dir / f"{args.arxiv_id.replace('/', '_')}_bank.json"
+
+                json_output = json.dumps(bank_data_to_save, indent=json_indent, ensure_ascii=False)
+                bank_output_path.write_text(json_output, encoding='utf-8')
+                logger.success(f"Definition bank saved to {bank_output_path}")
+            else:
+                logger.info("Definition bank was empty, no file was saved.")
+
         if args.visualize:
             if args.viz_output:
                 viz_path = args.viz_output
             else:
-                examples_dir = get_examples_dir()
-                (examples_dir / "viz").mkdir(exist_ok=True)
-                viz_path = examples_dir / "viz" / f"arxiv_{args.arxiv_id.replace('/', '_')}_graph.html"
+                viz_dir = examples_dir / "viz"
+                viz_dir.mkdir(exist_ok=True)
+                viz_path = viz_dir / f"arxiv_{args.arxiv_id.replace('/', '_')}_graph.html"
             
-            graph_viz.create_visualization_html(graph_data, viz_path)
+            graph_viz.create_visualization_html(graph_data_to_save, viz_path)
             try:
                 file_url = viz_path.resolve().as_uri()
                 webbrowser.open(file_url)
                 logger.info(f"Opening visualization in browser: {file_url}")
             except Exception as e:
                 logger.warning(f"Could not open browser automatically: {e}")
-                logger.info(f"Please open this file manually: {viz_path.resolve()}")
             
     except (ArxivExtractorError, FileNotFoundError, ValueError) as e:
         logger.error(f"A processing error occurred: {e}")
         sys.exit(1)
     except Exception as e:
-        logger.error(f"An unexpected error occurred: {e}")
+        logger.error(f"An unexpected error occurred: {e}", exc_info=True)
         sys.exit(1)
 
 
@@ -149,36 +158,59 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter,
         epilog="""
 Examples:
-  # Fast regex-only extraction
-  python -m arxiv_graph_extractor.main 2103.14030 --visualize
+  # Fast regex-only extraction, output to stdout
+  python pipeline.py 2211.11689
 
-  # Powerful Hybrid (Regex+LLM) extraction (requires OPENAI_API_KEY)
-  python -m arxiv_graph_extractor.main 2305.15334 --use-llm --visualize -p
+  # Regex + enrich artifact content with definitions
+  python pipeline.py 2211.11689 --enrich-content -o enriched.json
 
-  # Output to JSON
-  python -m arxiv_graph_extractor.main 2211.11689 --use-llm -o graph.json --pretty
+  # Regex + infer dependency links
+  python pipeline.py 2211.11689 --infer-deps --visualize -p
+
+  # Output to a specific JSON file
+  python pipeline.py 2211.11689 --all-enhancements -o my_graph.json --pretty
 """
     )
     parser.add_argument(
         "arxiv_id", help="arXiv identifier (e.g., '2103.14030', 'math.AG/0601001')"
     )
     parser.add_argument(
-        "--use-llm", action="store_true", help="Use the Hybrid (Regex+LLM) extractor. Requires OPENAI_API_KEY."
+        "--infer-deps", 
+        action="store_true", 
+        help="Enable Pass 2: Use LLM to infer dependency links between artifacts."
     )
     parser.add_argument(
-        "-o", "--output", nargs="?", const=True, type=str, help="Output JSON file path (default: print to stdout)."
+        "--enrich-content", 
+        action="store_true", 
+        help="Enable Pass 3: Use LLM to enrich artifact content with prerequisite definitions."
+    )
+    parser.add_argument(
+        "--all-enhancements", 
+        action="store_true", 
+        help="Convenience flag to enable both --infer-deps and --enrich-content."
+    )
+    parser.add_argument(
+        "-o", "--output", nargs="?", const=True, default=None,
+        help="Output JSON file. If path is omitted, a default is used. If flag is omitted, prints to stdout."
     )
     parser.add_argument(
         "-viz", "--visualize", action="store_true", help="Create and open an interactive HTML visualization."
     )
     parser.add_argument(
-        "--viz-output", type=Path, help="Custom path for visualization HTML file (default: arxiv_ID_graph.html)."
+        "--viz-output", type=Path, help="Custom path for visualization HTML file."
     )
     parser.add_argument(
         "-p", "--pretty", action="store_true", help="Pretty-print the JSON output."
     )
     
     args = parser.parse_args()
+    if args.all_enhancements:
+        args.infer_deps = True
+        args.enrich_content = True
+
+    if (args.infer_deps or args.enrich_content) and not os.getenv("OPENAI_API_KEY"):
+        parser.error("The --infer-deps and --enrich-content flags require the OPENAI_API_KEY environment variable.")
+        
     asyncio.run(run_async_pipeline(args))
 
 if __name__ == "__main__":
