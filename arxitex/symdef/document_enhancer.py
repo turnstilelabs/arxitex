@@ -5,6 +5,7 @@ from loguru import logger
 import json
 import re
 from pathlib import Path
+from collections import defaultdict
 import asyncio
 import aiofiles
 
@@ -62,33 +63,6 @@ class DocumentEnhancer:
         self.bank = definition_bank
         self._synthesis_lock = asyncio.Lock()
 
-    def _group_similar_terms(self, terms: Set[str]) -> List[List[str]]:
-        """
-        Groups semantically similar terms into "families" to be processed sequentially.
-        This is a heuristic approach.
-        
-        Example: {'h(x)', 'h(y)', 'group'} -> [['h(x)', 'h(y)'], ['group']]
-        """
-        # This regex identifies a "base" part of a function-like term.
-        # e.g., 'h(x)' -> 'h', 'Entropy(X)' -> 'Entropy'
-        # It will not match simple nouns like 'group'.
-        func_pattern = re.compile(r'^(\\\w+|\w+)\s*\(.*\)$')
-        groups: Dict[str, List[str]] = {}
-        
-        for term in sorted(list(terms)): # Sort for deterministic order
-            match = func_pattern.match(term)
-            if match:
-                # It's a function-like term, group by the function name (e.g., 'h')
-                base_name = match.group(1)
-                if base_name not in groups:
-                    groups[base_name] = []
-                groups[base_name].append(term)
-            else:
-                # It's a standalone term, it gets its own group.
-                groups[term] = [term]
-                
-        return list(groups.values())
-    
     async def enhance_document(
         self, artifacts: List[ArtifactNode], latex_content: str
     ) -> Tuple[Dict[str, str], DefinitionBank]:
@@ -122,7 +96,11 @@ class DocumentEnhancer:
 
         logger.success("Document enhancement complete.")
         return enhanced_artifacts, self.bank
-    
+
+    async def _is_term_missing(self, term: str) -> bool:
+        """Helper to check if a term is in the bank using the proper find method."""
+        return await self.bank.find(term) is None   
+     
     def _calculate_start_positions(self, artifacts: List[ArtifactNode], latex_content: str) -> Dict[str, int]:
         """Pre-calculates the character offset of the start of each artifact."""
         line_start_offsets = [0]
@@ -196,22 +174,46 @@ class DocumentEnhancer:
                     source_artifact_id=artifact.id,
                 )
                 await self.bank.register(new_def)
+                logger.success(f"Registered definition for term '{new_def.term}': '{new_def.definition_text}'")
             else:
                 logger.error(f"Failed to extract definition from artifact {artifact.id}.")
 
-    def sanitize_for_llm(text: str) -> str:
+    def _filter_and_sanitize_extracted_terms(self, raw_terms: List[str]) -> List[str]:
         """
-        Removes non-printable ASCII control characters from text that can confuse
-        LLM tokenizers. Allows standard whitespace like newline, tab, and carriage return.
+        Cleans a list of terms returned by the LLM.
         """
-        # This regex matches any character that is NOT a standard printable ASCII
-        # character (hex 20 to 7E) or one of the allowed whitespace characters.
-        return re.sub(r'[^\x20-\x7E\n\t\r]', '', text)
+        sanitized_terms = []
+        for term in raw_terms:
+            # Rule 1: Start by removing any non-printable control characters.
+            clean_term = re.sub(r'[^\x20-\x7E\n\t\r]', '', term)
+
+            # Rule 2: Replace newlines, tabs, and multiple spaces with a single space.
+            clean_term = re.sub(r'\s+', ' ', clean_term)
+
+            # Rule 3: Normalize excessive backslashes from LLM hallucinations (e.g., \\phi -> \phi).
+            clean_term = re.sub(r'\\{2,}', r'\\', clean_term)
+            
+            # Rule 4: Strip leading/trailing punctuation often left by LLMs.
+            clean_term = clean_term.strip('.,;:- ')
+
+            # Rule 5: Fix mismatched LaTeX delimiters as a common heuristic.
+            # If a term starts with '$' but doesn't end with one, it's likely a mistake.
+            if clean_term.startswith('$') and not clean_term.endswith('$'):
+                clean_term += '$'
+            # Do the same for `{` and `}`.
+            if clean_term.startswith('{') and not clean_term.endswith('}'):
+                clean_term += '}'
+                
+            if not clean_term:
+                continue
+
+            sanitized_terms.append(clean_term)
+        
+        return sorted(list(set(sanitized_terms)))
 
     async def _extract_and_sanitize_for_artifact(self, artifact):
         """
         Sanitizes artifact content and extracts terms using the LLM.
-        Now a proper class method.
         """
         try:
             clean_content = re.sub(r'[^\x20-\x7E\n\t\r]', '', artifact.content)
@@ -235,23 +237,21 @@ class DocumentEnhancer:
 
         extraction_results = await asyncio.gather(*[self._extract_and_sanitize_for_artifact(a) for a in artifacts])
         
-        for artifact_id, terms in extraction_results:
-            artifact_to_terms_map[artifact_id] = terms
-            for term in terms:
+        # Gather all raw terms from the document
+        all_raw_terms = set()
+        for artifact_id, raw_terms in extraction_results:
+            sanitized_terms = self._filter_and_sanitize_extracted_terms(raw_terms)
+            logger.debug(f"Sanitized term for {raw_terms}: {sanitized_terms}")
+            artifact_to_terms_map[artifact_id] = sanitized_terms
+            for term in sanitized_terms:
+                all_raw_terms.add(term)
                 if term not in term_to_first_artifact_map:
                     term_to_first_artifact_map[term] = artifact_id
-        
-        all_terms_in_doc = set(term_to_first_artifact_map.keys())
-        if not all_terms_in_doc:
-            logger.warning("No valid, non-trivial terms were found after filtering.")
-            return artifact_to_terms_map
 
-        logger.info(f"Discovered {len(all_terms_in_doc)} unique, sanitized terms. Checking against definition bank...")
-        existing_defs = await self.bank.find_many(list(all_terms_in_doc))
-        # re-normalize here to ensure a perfect match for set subtraction.
+        existing_defs = await self.bank.find_many(list(all_raw_terms))
         existing_canonical_terms = {self.bank._normalize_term(d.term) for d in existing_defs}        
         missing_terms = {
-            term for term in all_terms_in_doc 
+            term for term in all_raw_terms 
             if self.bank._normalize_term(term) not in existing_canonical_terms
         }
 
@@ -259,49 +259,22 @@ class DocumentEnhancer:
             logger.info("No new terms to synthesize; all are present in the bank.")
             return artifact_to_terms_map
             
-        logger.warning(f"Found {len(missing_terms)} high-quality missing terms to synthesize: {missing_terms}")
+        logger.warning(f"Found {len(existing_canonical_terms)} existing terms in the bank:{existing_canonical_terms}")
+        logger.warning(f"Found {len(missing_terms)} missing terms to synthesize: {missing_terms}")
     
-        term_groups = self._group_similar_terms(missing_terms)
-        logger.info(f"Grouped missing terms into {len(term_groups)} families for intelligent synthesis.")
-        
-        group_synthesis_tasks = [
-            self._synthesize_term_group_sequentially(
-                term_group=group,
-                term_to_first_artifact_map=term_to_first_artifact_map,
-                start_positions=start_positions,
-                end_positions=end_positions,
-                latex_content=latex_content
+        synthesis_tasks = [
+        self._synthesize_single_term(
+            term=term,
+            source_artifact_id=term_to_first_artifact_map[term],
+            start_positions=start_positions,
+            end_positions=end_positions,
+            latex_content=latex_content
             )
-            for group in term_groups
+            for term in missing_terms
         ]
-        await asyncio.gather(*group_synthesis_tasks)
+        await asyncio.gather(*synthesis_tasks)
 
         return artifact_to_terms_map
-
-    async def _synthesize_term_group_sequentially(
-        self,
-        term_group: List[str],
-        term_to_first_artifact_map: Dict[str, str],
-        start_positions: Dict[str, int],
-        end_positions: Dict[str, int],
-        latex_content: str
-    ):
-        """
-        Processes a group of similar terms sequentially to leverage prior syntheses.
-        """
-        logger.debug(f"Starting sequential synthesis for group: {term_group}")
-        for term in term_group:
-            await self._synthesize_single_term(
-                term=term,
-                source_artifact_id=term_to_first_artifact_map[term],
-                start_positions=start_positions,
-                end_positions=end_positions,
-                latex_content=latex_content,
-            )
-
-    async def _is_term_missing(self, term: str) -> bool:
-        """Helper to check if a term is in the bank using the proper find method."""
-        return await self.bank.find(term) is None
 
     async def _synthesize_single_term(
         self,
@@ -335,7 +308,6 @@ class DocumentEnhancer:
                 return
 
             artifact_content = latex_content[start_pos:end_pos].strip()
-
             text_to_search_before = latex_content[:start_pos]
             preceding_context = self.context_finder.find_context_around_first_occurrence(
                 term, text_to_search_before
@@ -343,17 +315,11 @@ class DocumentEnhancer:
 
             context_parts = []
             if preceding_context:
-                context_parts.append(
-                    "Preceding Context (potential definition location):\n---\n"
-                    f"{preceding_context}\n---"
-                )
-            
-            context_parts.append(
-                "Primary Artifact Content (where the term is used):\n---\n"
-                f"{artifact_content}\n---"
-            )
+                context_parts.append(f"CONTEXT PRECEDING THE TERM'S FIRST USE:\n---\n{preceding_context}\n---")
+            context_parts.append(f"THE ARTIFACT WHERE THE TERM WAS FOUND:\n---\n{artifact_content}\n---")
 
             combined_context = "\n\n".join(context_parts)
+            # TODO: remove stuff like \begin{corollary} \label{h_analytic}
             logger.debug(f"{log_prefix} Providing combined context to LLM:\n{combined_context}")
             
             base_definition = await self.bank.find_best_base_definition(term)

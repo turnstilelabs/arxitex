@@ -130,7 +130,7 @@ async def arun_together(prompt, model, output_class):
     return json_extractor.extract_json(response, output_class)
 
 async def _arun_prompt(prompt: Prompt, model: str, output_class):
-    logger.info("Run async LLM prompt: " + json.dumps(dataclasses.asdict(prompt), indent=2))
+    #logger.info("Run async LLM prompt: " + json.dumps(dataclasses.asdict(prompt), indent=2))
     start_time = time.time()
 
     openai_models = [
