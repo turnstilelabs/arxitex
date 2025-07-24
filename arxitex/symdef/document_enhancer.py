@@ -241,7 +241,6 @@ class DocumentEnhancer:
         all_raw_terms = set()
         for artifact_id, raw_terms in extraction_results:
             sanitized_terms = self._filter_and_sanitize_extracted_terms(raw_terms)
-            logger.debug(f"Sanitized term for {raw_terms}: {sanitized_terms}")
             artifact_to_terms_map[artifact_id] = sanitized_terms
             for term in sanitized_terms:
                 all_raw_terms.add(term)
