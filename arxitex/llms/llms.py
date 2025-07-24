@@ -1,10 +1,7 @@
-# llms.py
-
-import asyncio
 import dataclasses
 import json
 import time
-
+import httpx
 from loguru import logger
 from openai import AsyncOpenAI, OpenAI
 from pydantic import BaseModel
@@ -14,6 +11,7 @@ from .json_extractor import JSONExtractor
 from .prompt import Prompt
 from .prompt_cache import get_prompt_result, save_prompt_result
 
+timeout = httpx.Timeout(30.0, connect=5.0)
 
 def run_openai(prompt, model, output_class):
     client = OpenAI()
@@ -112,6 +110,7 @@ async def arun_openai(prompt, model, output_class):
         model=model,
         messages=messages,
         response_format=output_class,
+        timeout=timeout
     )
     return response.choices[0].message.parsed
 
@@ -131,7 +130,7 @@ async def arun_together(prompt, model, output_class):
     return json_extractor.extract_json(response, output_class)
 
 async def _arun_prompt(prompt: Prompt, model: str, output_class):
-    logger.info("Run async LLM prompt: " + json.dumps(dataclasses.asdict(prompt), indent=2))
+    #logger.info("Run async LLM prompt: " + json.dumps(dataclasses.asdict(prompt), indent=2))
     start_time = time.time()
 
     openai_models = [
@@ -159,12 +158,12 @@ async def _arun_prompt(prompt: Prompt, model: str, output_class):
     if model not in model_runners:
         raise ValueError(f"Unsupported model: {model}")
 
-    logger.info(f"LLM model: {model}")
+   #logger.info(f"LLM model: {model}")
     
     result = await model_runners[model](prompt, model, output_class)
     
     logger.info(f"LLM Output: {result}")
-    logger.info(f"Got LLM response: {time.time() - start_time:.1f} seconds")
+    #logger.info(f"Got LLM response: {time.time() - start_time:.1f} seconds")
     return result
 
 
