@@ -10,7 +10,7 @@ import sys
 import aiofiles 
 
 from pydantic import ValidationError, TypeAdapter 
-from arxitex.graph.utils import ArtifactNode
+from arxitex.extractor.utils import ArtifactNode
 
 
 @dataclass
@@ -27,7 +27,6 @@ class ContextFinder:
     def find_prior_occurrences(self, term: str, full_text: str, end_char_pos: int) -> str:
         """Finds snippets of prior occurrences of a term using regex."""
         text_to_search = full_text[:end_char_pos]
-        # Regex to find the term as a whole word, ignoring case for notions
         # This is a simple regex; it can be improved for symbols like `\F`
         try:
             # For symbols, use exact match. For notions, case-insensitive.
