@@ -50,7 +50,7 @@ class GraphEnhancer:
         
         if enrich_content:
             logger.info("--- Starting Pass 3: Enriching artifact content with definitions ---")
-            bank = await self._enrich_artifact_content(graph, latex_content)
+            bank, artifact_to_terms_map = await self._enrich_artifact_content(graph, latex_content)
        
         reference_edges = len([e for e in graph.edges if e.reference_type])
         dependency_edges = len([e for e in graph.edges if e.dependency_type])
@@ -59,7 +59,7 @@ class GraphEnhancer:
         )
         logger.info(f"Edge breakdown: {reference_edges} reference-based, {dependency_edges} dependency-based.")
         
-        return graph, bank
+        return graph, bank, artifact_to_terms_map
 
     async def _infer_and_add_dependencies(self, graph: DocumentGraph):
         """
@@ -127,9 +127,12 @@ class GraphEnhancer:
             
         logger.info(f"Enhancing content for {len(nodes_to_enhance)} artifacts...")
         
-        enhanced_content_map, populated_bank = await self.document_enhancer.enhance_document(
+        enhanced_results = await self.document_enhancer.enhance_document(
             nodes_to_enhance, latex_content
         )
+        enhanced_content_map = enhanced_results.get("artifacts", {})
+        populated_bank = enhanced_results.get("definition_bank", {})
+        artifact_to_terms_map = enhanced_results.get("artifact_to_terms_map", {})
         
         updated_count = 0
         for node in graph.nodes:
@@ -138,4 +141,4 @@ class GraphEnhancer:
                 updated_count += 1
         
         logger.success(f"Successfully enriched the content of {updated_count} artifacts.")
-        return populated_bank
+        return populated_bank, artifact_to_terms_map
