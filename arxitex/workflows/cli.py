@@ -100,7 +100,7 @@ async def main():
         '-q', '--query', 
         type=str, 
         required=True, 
-        help="ArXiv API search query (e.g., 'cat:cs.AI AND all:conjecture')."
+        help="ArXiv API search query (e.g., 'cat:math.GR')."
     )
     parser_discover.add_argument(
         '-n', '--max-papers', 
