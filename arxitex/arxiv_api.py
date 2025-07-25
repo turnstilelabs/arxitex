@@ -104,18 +104,18 @@ class ArxivAPI:
             logger.warning(f"Paper {arxiv_id} missing title or abstract, skipping")
             return None
             
+        author_elements = entry.findall('atom:author/atom:name', self.ns)
+        authors = [name.text.strip() for name in author_elements]
         title = title_elem.text.replace('\n', ' ').strip()
-        abstract = abstract_elem.text.replace('\n', ' ').strip()
-        
-        has_conjecture = 'conjecture' in abstract.lower()
+        abstract = abstract_elem.text.replace('\n', ' ').strip()        
 
         paper = {
             'id': id_elem.text,
             'title': title,
+            'authors': authors,
             'abstract': abstract,
             'pdf_url': f"https://arxiv.org/pdf/{arxiv_id}.pdf",
             'source_url': f"https://arxiv.org/e-print/{arxiv_id}",
-            'has_conjecture_in_abstract': has_conjecture,
             'arxiv_id': arxiv_id
         }
 
