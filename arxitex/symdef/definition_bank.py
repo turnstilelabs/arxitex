@@ -84,8 +84,10 @@ class DefinitionBank:
         """The actual find logic. Assumes lock is already held."""
         canonical_term = self._normalize_term(term)
         if canonical_term in self._definitions:
+            logger.debug(f"Found definition for '{term}' as '{canonical_term}'.")
             return self._definitions[canonical_term]
         if canonical_term in self._alias_map:
+            logger.debug(f"Found alias '{term}' for canonical term '{canonical_term}'.")
             primary_canonical_term = self._alias_map[canonical_term]
             return self._definitions[primary_canonical_term]
         return None
