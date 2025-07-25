@@ -120,6 +120,7 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             )
             
             logger.success(f"SUCCESS: Fully processed {arxiv_id}.")
+            self.components.discovery_index.remove_paper(arxiv_id)
             
             return {
                 "status": "success",
@@ -127,24 +128,11 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                 "output_path": str(graph_filepath),
                 "stats": graph_data.get("stats", {})
             }
-                    
+            
         except Exception as e:
             self.components.processing_index.update_processed_papers_index(
                 arxiv_id, status='failure', reason=str(e)
             )
             raise e
         
-        finally:
-            self.components.discovery_index.remove_paper(arxiv_id)
-
-    # TODO remove this now
-    def _save_graph_data(self, arxiv_id: str, graph_data: dict) -> Path:
-        """Saves the generated graph data to a persistent JSON file."""
-        safe_paper_id = arxiv_id.replace('/', '_')
-        graph_filename = f"{safe_paper_id}.json"
-        graph_filepath = Path(self.graphs_output_dir) / graph_filename
         
-        with open(graph_filepath, 'w', encoding='utf-8') as f:
-            json.dump(graph_data, f, indent=2)
-        return graph_filepath
-    
