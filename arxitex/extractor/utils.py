@@ -119,6 +119,7 @@ class ArtifactNode:
         Generate a display name for the artifact.
         Uses the type capitalized (e.g., "Theorem", "Definition").
         """
+        #TODO: consider using label if available
         return self.type.value.capitalize()
     
     @property
@@ -136,8 +137,8 @@ class ArtifactNode:
             "id": self.id,
             "type": self.type.value,
             "content": self.content,
-            "content_preview": self.content_preview,
-            "display_name": self.display_name,
+            #"content_preview": self.content_preview,
+            #"display_name": self.display_name,
             "label": self.label,
             "position": self.position.to_dict(),
             "references": [ref.to_dict() for ref in self.references],
