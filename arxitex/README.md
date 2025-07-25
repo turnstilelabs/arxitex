@@ -1,0 +1,139 @@
+# ArxiTex: Building Large-Scale Searchable Knowledge Graph
+Our goal is to build a structured, machine-readable knowledge graph representing the logical dependencies and symbolic definitions within a paper.
+
+# 1. Building a graph from an ArXiv paper
+## 1.1 Initial Graph Construction (`extractor/graph_building`)
+We collect all artifacts (definition, proposition, claim, theorem,...) with regular expressions as well as the explicit dependencies between thoses (through the use of `\ref{...}`).
+
+For instance, for the `2506.14029v1` paper, an example node artifact is:
+
+```json
+{
+    "id": "corollary-7-d53a3c16",
+    "type": "corollary",
+    "content": "Let $G$ be a countable discrete group with an ICC quotient. For every candidate boundary $B$, there is a compatible probability measure $\\mu$ such that $B$ equipped with the hitting measure is not the Poisson boundary of $(G,\\mu).$",
+    "content_preview": "Let G be a countable discrete group with an ICC quotient. For every candidate boundary B, there is a compatible probability measure such that B...",
+    "display_name": "Corollary",
+    "label": null,
+    "position": {
+    "line_start": 225,
+    "line_end": 226
+      }
+}
+```
+
+with a reference to a previous theorem in its proof:  
+
+```json
+{ ... ,
+"references": [
+    {
+        "target_id": "thm:always-bigger",
+        "reference_type": "internal",
+        "context": "let $\\mu_\\tau$ be the measure coming from Theorem \\ref{thm:always-bigger}. Since $\\mu_\\tau$ is a randomized stopping time t",
+        "position": {
+        "line_start": 0,
+        "line_end": null
+        }
+    }
+    ]
+}
+```
+
+## 1.2 LLM-Powered Dependency Inference (`extractor/dependency_inference`)
+The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.
+
+## 1.3 LLM-Powered Symbol Definition Enhancement (`symdef`)
+A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well.
+
+It is organised as follows.
+
+- Term & Definition Extraction (`definition_builder/`): Utilizes specialized LLM prompts to perform two key tasks:
+
+    Term Extraction: Scans an artifact and extracts a list of non-trivial mathematical terms.
+
+    Definition Extraction: When an artifact is explicitly a definition, it extracts the defined term, its aliases (e.g., F), and the full definition text.
+
+- Centralized Knowledge Store (`definition_bank.py`): we build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper. 
+
+First, for all definition artifacts, an LLM (`aextract_definition`) extracts the defined term, its aliases, and the full definition text.
+
+```json
+{
+  "union closed set system": {
+    "term": "union closed set system",
+    "aliases": [
+      "$\\F$"
+    ],
+    "definition_text": "A set system $\\F$ is \\emph{union closed} if for all $A,B \\in \\F$ we have $A \\cup B \\in \\F$",
+    "source_artifact_id": "definition-1-33775d",
+    "dependencies": []
+  }
+}
+```
+
+Then for each artifact, we extract all the list of its non-trivial mathematical terms with another LLM call (`aextract_terms`). If it's not yet in the paper's definition bank, we synthetize its definition (`asynthesize_definition`).
+
+```json
+{
+"f": {
+    "term": "f",
+    "aliases": [],
+    "definition_text": "Let $f:[0,1]^2 \\to \\mathbb{R}_{\\ge 0}$ be defined as $$ f(x,y) := \\frac{h(xy)}{h(x)y + h(y)x} $$ for $(x,y) \\in (0,1)^2$ and extended (continuously) to $[0,1]^2$ by setting $f(x,y) = 1$ if $x \\in \\{0,1\\}$ or $y \\in \\{0,1\\}$. ",
+    "source_artifact_id": "synthesized_from_context_for_claim-6-5aac5c",
+    "dependencies": []
+  }
+}
+```
+
+Last but not least, we enhanced each artifact with the definition of all its terms
+
+```json
+{
+      "content": "--- Prerequisite Definitions ---\n**\\varphi**: Let \\varphi = 1-\\psi =\\frac{\\sqrt{5}-1}{2} be the positive root of x^2+x-1=0.\n\n---\n\n\\label{f_min}\nThe function $f$ is minimized at $(\\varphi,\\varphi)$. At this point $f(\\varphi,\\varphi)=\\frac{1}{2 \\varphi}$.",
+}
+```
+
+## 1.4 Paper Processing Pipeline 
+Examples:
+
+```bash
+  # Fast regex-only extraction, output to stdout
+  python pipeline.py 2211.11689
+
+  # Regex + enrich artifact content with definitions + output to a specific JSON file
+  python pipeline.py 2211.11689 --enrich-content -o enriched.json
+
+  # Regex + infer dependency links
+  python pipeline.py 2211.11689 --infer-deps
+
+  # Regex + infer dependency links + enrich artifact 
+  python pipeline.py 2211.11689 --all-enhancements --pretty
+```
+
+## 1.5 Graph Visualization
+Just for fun, we propose a rudimentary visualization of the output graph
+
+```bash
+python pipeline.py 2211.11689 --infer-deps --visualize -p
+```
+
+# 2. Workflow Orchestration
+The core workflow is designed around a simple two-step loop: Discover and Process. This allows  to first build a large queue of relevant papers and then process them efficiently in batches. 
+
+## 2.1 Discover: Finding and Queuing Relevant Papers
+
+The `discover` command is the entry point for finding papers. It automatically finds all matching papers that haven't been seen before, adding them to a processing queue.
+
+```bash
+python -m arxitex.workflows.cli discover  --query "cat:math.GR AND all:\"Language Model\""  --max-papers 50
+```
+
+# 2.2 Process: Analyzing Papers in Parallel Batches
+
+The `process` command is the workhorse of the pipeline. It takes papers from the queue, downloads their LaTeX source, and runs the full analysis pipeline as explained above on them concurrently to generate their knowledge graphs.
+
+```bash
+python -m arxitex.workflows.cli process --max-papers 20 --workers 8  --enrich-content --infer-dependencies
+```
+
