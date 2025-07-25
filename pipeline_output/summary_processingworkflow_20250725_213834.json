@@ -1,0 +1,18 @@
+{
+  "workflow_name": "ProcessingWorkflow",
+  "run_timestamp_utc": "2025-07-25T19:38:34.791079+00:00",
+  "papers_attempted_in_this_run": 1,
+  "successful_in_this_run": [
+    {
+      "status": "success",
+      "arxiv_id": "2507.05033v1",
+      "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/arxitex/pipeline_output/graphs/2507.05033v1.json",
+      "stats": {
+        "node_count": 18,
+        "edge_count": 18,
+        "extractor_used": null
+      }
+    }
+  ],
+  "failed_in_this_run": []
+}
