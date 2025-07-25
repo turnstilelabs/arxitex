@@ -120,7 +120,6 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             )
             
             logger.success(f"SUCCESS: Fully processed {arxiv_id}.")
-            self.components.discovery_index.remove_paper(arxiv_id)
             
             return {
                 "status": "success",
@@ -135,4 +134,6 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             )
             raise e
         
+        finally:
+            self.components.discovery_index.remove_paper(arxiv_id)        
         
