@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from loguru import logger
 from arxitex.workflows.runner import ArxivPipelineComponents,AsyncWorkflowRunnerBase
-from arxitex.extractor.core.pipeline import agenerate_artifact_graph
+from arxitex.extractor.pipeline import agenerate_artifact_graph
 
 
 class ProcessingWorkflow(AsyncWorkflowRunnerBase):
@@ -12,9 +12,11 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
     Processes papers from the DiscoveryIndex queue. For each paper, it performs
     a temporary download, generates a graph, saves the result, and cleans up.
     """
-    def __init__(self, components: ArxivPipelineComponents, use_llm: bool, max_concurrent_tasks: int):
+    def __init__(self, components: ArxivPipelineComponents, infer_dependencies: bool, 
+        enrich_content: bool, max_concurrent_tasks: int):
         super().__init__(components, max_concurrent_tasks)
-        self.use_llm = use_llm
+        self.infer_dependencies = infer_dependencies
+        self.enrich_content = enrich_content
         self.graphs_output_dir = os.path.join(self.components.output_dir, "graphs")
         os.makedirs(self.graphs_output_dir, exist_ok=True)
 
@@ -64,12 +66,15 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             temp_base_dir = Path(self.components.output_dir) / "temp_processing"
             os.makedirs(temp_base_dir, exist_ok=True)
             
-            graph_data = await agenerate_artifact_graph(
+            results = await agenerate_artifact_graph(
                 arxiv_id=arxiv_id,
-                use_llm=self.use_llm,
+                infer_dependencies=self.infer_dependencies,
+                enrich_content=self.enrich_content,
                 source_dir=temp_base_dir
             )
 
+            graph = results.get("graph")
+            graph_data = graph.to_dict(arxiv_id=arxiv_id)
             graph_filepath = self._save_graph_data(arxiv_id, graph_data)
 
             self.components.processing_index.update_processed_papers_index(

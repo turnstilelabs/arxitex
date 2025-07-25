@@ -42,43 +42,76 @@ class DefinitionBank:
             return core_term.lower() # Lowercase 'varphi', 'f_1', 'union-closed', etc.
 
     async def register(self, definition: Definition):
-        """Adds or updates a definition using its canonical form as the key."""
+        """Adds or updates a definition, ensuring task-safe access."""
         async with self._lock:
-            canonical_term = self._normalize_term(definition.term)
+            self._register_unlocked(definition)
 
-            if canonical_term in self._definitions:
-                logger.debug(f"Overwriting definition for canonical term '{canonical_term}'. Original term: '{definition.term}'.")
-            
-            logger.info(f"Registering definition for '{definition.term}' (canonical: '{canonical_term}').")
-            self._definitions[canonical_term] = definition
-
-            for alias in definition.aliases:
-                canonical_alias = self._normalize_term(alias)
-                if canonical_alias != canonical_term:
-                    self._alias_map[canonical_alias] = canonical_term
-
-    def find(self, term: str) -> Optional[Definition]:
-        """Finds a definition by its canonical form, checking primary terms and aliases."""
-        canonical_term = self._normalize_term(term)
+    async def find(self, term: str) -> Optional[Definition]:
+        """Finds a definition by its canonical form, ensuring task-safe access."""
+        async with self._lock:
+            return self._find_unlocked(term)
         
+    async def find_many(self, terms: List[str]) -> List[Definition]:
+        """
+        Finds all definitions for a given list of terms in a single, efficient operation.
+        """
+        async with self._lock:
+            return self._find_many_unlocked(terms)
+
+    async def find_best_base_definition(self, term: str) -> Optional[Definition]:
+        """Finds the best base definition, ensuring task-safe access."""
+        async with self._lock:
+            return self._find_best_base_definition_unlocked(term)
+
+    async def to_dict(self) -> Dict[str, Dict[str, Any]]:
+        """Exports a task-safe snapshot of the bank's definitions."""
+        async with self._lock:
+            return self._to_dict_unlocked()
+
+    def _register_unlocked(self, definition: Definition):
+        """The actual registration logic. Assumes lock is already held."""
+        canonical_term = self._normalize_term(definition.term)
+        if canonical_term in self._definitions:
+            logger.debug(f"Overwriting definition for canonical term '{canonical_term}'.")
+        logger.info(f"Registering definition for '{definition.term}': '{definition.definition_text}').")
+        self._definitions[canonical_term] = definition
+        for alias in definition.aliases:
+            canonical_alias = self._normalize_term(alias)
+            if canonical_alias != canonical_term:
+                self._alias_map[canonical_alias] = canonical_term
+
+    def _find_unlocked(self, term: str) -> Optional[Definition]:
+        """The actual find logic. Assumes lock is already held."""
+        canonical_term = self._normalize_term(term)
         if canonical_term in self._definitions:
             return self._definitions[canonical_term]
-            
         if canonical_term in self._alias_map:
             primary_canonical_term = self._alias_map[canonical_term]
             return self._definitions[primary_canonical_term]
-            
         return None
 
-    def find_best_base_definition(self, term: str) -> Optional[Definition]:
-        """Finds the best base definition, operating on canonical forms."""
+    def _find_many_unlocked(self, terms: List[str]) -> List[Definition]:
+        found_definitions = []
+        found_canonical_terms = set() 
+
+        for term in terms:
+            definition = self._find_unlocked(term)
+            if definition:
+                canonical_key = self._normalize_term(definition.term)
+                if canonical_key not in found_canonical_terms:
+                    found_definitions.append(definition)
+                    found_canonical_terms.add(canonical_key)
+
+        return found_definitions
+    
+    def _find_best_base_definition_unlocked(self, term: str) -> Optional[Definition]:
         new_term_parts = self._normalize_term(term).split()
 
         # Step 1: Exact Sub-phrase Matching
         if len(new_term_parts) > 1:
             for i in range(1, len(new_term_parts)):
                 sub_phrase_str = " ".join(new_term_parts[i:])
-                definition = self.find(sub_phrase_str)
+                definition = self._find_unlocked(sub_phrase_str)
                 if definition:
                     logger.debug(f"Found base via exact sub-phrase: '{definition.term}' for new term '{term}'.")
                     return definition
@@ -86,47 +119,26 @@ class DefinitionBank:
         # Step 2: Parameterized Term Matching
         best_param_match_def = None
         max_match_len = 0
-
         for known_canonical_term, definition in self._definitions.items():
             known_term_parts = known_canonical_term.split()
             k_len = len(known_term_parts)
-
-            # CRITICAL GUARD: The parameterized matching heuristic is only meaningful
-            # for multi-word terms (k_len > 1).
-            # Also, the known term cannot be longer than the new term??
             if k_len <= 1 or k_len > len(new_term_parts):
                 continue
-
-            # Use a "sliding window" to check every sub-phrase of the new term
-            # that has the same length as the known term.
             for i in range(len(new_term_parts) - k_len + 1):
                 sub_phrase_parts = new_term_parts[i : i + k_len]
-                
-                # Now, perform the single-difference check between the known term and the sub-phrase.
-                diff_count = sum(1 for known_part, sub_part in zip(known_term_parts, sub_phrase_parts) if known_part != sub_part)
-                
-                # If they differ by exactly one, it's a parameterized match.
+                diff_count = sum(1 for kp, sp in zip(known_term_parts, sub_phrase_parts) if kp != sp)
                 if diff_count == 1:
                     if len(known_canonical_term) > max_match_len:
                         max_match_len = len(known_canonical_term)
                         best_param_match_def = definition
-                        break 
-        
+                        break
         if best_param_match_def:
             logger.debug(f"Found base via parameterized match: '{best_param_match_def.term}' for new term '{term}'.")
             return best_param_match_def
 
         return None
 
-    def get_all_known_terms(self) -> List[str]:
-        return list(self._definitions.keys()) + list(self._alias_map.keys())
-    
-    def to_dict(self) -> Dict[str, Dict[str, Any]]:
-        """
-        Exports the bank's definitions to a JSON-serializable dictionary.
-        The structure is { "primary_term_lower": { ...definition_data... } }.
-        This format is suitable for writing to a JSON file.
-        """
+    def _to_dict_unlocked(self) -> Dict[str, Dict[str, Any]]:
         bank_data = {}
         for term, definition_obj in self._definitions.items():
             bank_data[term] = {
@@ -134,5 +146,6 @@ class DefinitionBank:
                 "aliases": definition_obj.aliases,
                 "definition_text": getattr(definition_obj, 'definition_text', 'N/A'),
                 "source_artifact_id": definition_obj.source_artifact_id,
+                "dependencies": definition_obj.dependencies,
             }
         return bank_data

@@ -1,8 +1,0 @@
-- [ ] Clean display_name if it's just  type (do the cleaning in visualization.py)
-- [ ] Remove the char stuff
-- [ ] Get the same numbering of artifacts as in the paper.
-- [ ] Resolve External reference: find them in the paper bibliography and extract it from the external paper.
-- [ ] Make statement self-sustained.
-- [ ] Write to disk when there is a match between new terms and terms in the bank
-- [ ] Make _validate_definition_in_context proof
-- [ ] Make graph_builder.build_graph_from_latex async

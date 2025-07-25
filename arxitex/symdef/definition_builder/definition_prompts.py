@@ -1,9 +1,10 @@
+import codecs
+import re
 from typing import Optional
 from arxitex.symdef.utils import Definition
 from arxitex.llms.prompt import Prompt
 
 class SymbolEnhancementPromptGenerator:
-    """Generates specific prompts for the artifact enhancement tasks."""
 
     def make_term_extraction_prompt(self, artifact_content: str) -> str:
         system = f"""
@@ -13,13 +14,12 @@ class SymbolEnhancementPromptGenerator:
 
         - Do NOT include common mathematical operators (+, -, \\cup) or generic words ('set', 'element', 'theorem').
         - The goal is to identify terms whose meaning is likely defined within this document."""
-
-        user = f"""Text:
+        
+        user = f"""Analyze the following single mathematical artifact and extract its specialized prerequisite terms according to ALL the rules.
         ---
         {artifact_content}
         ---
-
-        Respond ONLY with the requested structured JSON format:
+        Respond ONLY with the requested structured JSON format. The "terms" list can be empty.:
         {{
             "terms": ["term1", "term2", "..."]
         }}
@@ -60,16 +60,13 @@ class SymbolEnhancementPromptGenerator:
         return Prompt(system=system, user=user, id="definition_extraction")
     
     def make_definition_synthesis_prompt(self, term: str, context_snippets: str, base_definition: Optional[Definition]) -> str:        
-        system = system = """You are a text-extraction assistant. Your task is to construct a definition for a specific term by ONLY using verbatim sentences from the provided context.
+        system = """You are a text-extraction assistant. Your task is to construct a definition for a specific term by ONLY using verbatim sentences from the provided context.
         - **DO NOT** rephrase, summarize, interpret, or generate new text.
         - Your entire response for the `definition` field must be a direct copy-and-paste of sentences from the context.
         - If multiple sentences from the context are needed to form a complete definition, concatenate them.
         - If the context does not contain any sentence that clearly and directly defines the term, you MUST indicate that the context is insufficient."""
-        
-        user = f"""
-            You are defining the term: '{term}'.
-
-            Context from the document:
+                
+        user = f"""You are defining the term: '{term}'. Context from the document:
             ---
             {context_snippets}
             ---
@@ -84,12 +81,10 @@ class SymbolEnhancementPromptGenerator:
         
         user += """
     Carefully evaluate if the provided context contains verbatim sentences that define the term.
-
     - If YES, set `context_was_sufficient` to `true` and construct the `definition` by extracting and concatenating the relevant sentences.
     - If NO, set `context_was_sufficient` to `false` and set the `definition` field to `null`.
 
     Respond ONLY with the following structured JSON format:
-
     {
     "context_was_sufficient": true | false,
     "definition": "..." | null

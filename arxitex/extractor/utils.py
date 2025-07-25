@@ -34,12 +34,16 @@ class Position:
     """Represents a position in the source document."""
     line_start: int
     line_end: Optional[int] = None
+    col_start: Optional[int] = None
+    col_end: Optional[int] = None
 
     def to_dict(self) -> Dict[str, Optional[int]]:
         """Converts the Position object to a JSON-serializable dictionary."""
         return {
             "line_start": self.line_start,
-            "line_end": self.line_end
+            "line_end": self.line_end,
+            "col_start": self.col_start,
+            "col_end": self.col_end
         }
 
 @dataclass
@@ -196,6 +200,15 @@ class DocumentGraph:
         """Get all edges pointing to a node."""
         return [edge for edge in self.edges if edge.target_id == node_id]
     
+    def find_edge(self, source_id: str, target_id: str) -> Optional[Edge]:
+        """
+        Finds and returns a specific edge between two nodes, if it exists.
+        """
+        return next((
+            edge for edge in self.edges 
+            if edge.source_id == source_id and edge.target_id == target_id
+        ), None)
+    
     def add_node(self, node: ArtifactNode) -> None:
         """Add a node to the graph."""
         if not any(n.id == node.id for n in self.nodes):
@@ -214,9 +227,35 @@ class DocumentGraph:
             "total_edges": len(self.edges)
         }
     
-    def to_dict(self):
+    def to_dict(self, arxiv_id: str, extractor_mode: str=None) -> Dict[str, Any]:
+        """
+        Serializes the entire graph into a dictionary suitable for JSON output.
+        This method is the single source of truth for the final JSON structure.
+        """
+        nodes_list = [node.to_dict() for node in self.nodes]
+        
+        edges_list = []
+        for edge in self.edges:
+            edge_dict = {
+                "source": edge.source_id,
+                "target": edge.target_id,
+                "type": edge.dependency_type.value if edge.dependency_type else "reference",
+            }
+            if edge.dependency:
+                edge_dict["dependency"] = edge.dependency
+            if edge.context:
+                edge_dict["context"] = edge.context
+            edges_list.append(edge_dict)
+        
+        stats = self.get_statistics()
+        
         return {
-            "source_file": self.source_file,
-            "nodes": [node.to_dict() for node in self.nodes],
-            "edges": [edge.to_dict() for edge in self.edges]
+            "arxiv_id": arxiv_id,
+            "nodes": nodes_list,
+            "edges": edges_list,
+            "stats": {
+                "node_count": stats.get("total_nodes", 0),
+                "edge_count": stats.get("total_edges", 0),
+                "extractor_used": extractor_mode
+            }
         }
