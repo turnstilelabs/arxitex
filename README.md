@@ -25,7 +25,7 @@ For instance, for the `2506.14029v1` paper, an example node artifact is:
 with a reference to a previous theorem in its proof:  
 
 ```json
-{ ... ,
+{ 
 "references": [
     {
         "target_id": "thm:always-bigger",
@@ -44,17 +44,9 @@ with a reference to a previous theorem in its proof:
 The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.
 
 ## 1.3 LLM-Powered Symbol Definition Enhancement (`symdef`)
-A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well.
+A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well. It is organised as follows.
 
-It is organised as follows.
-
-- Term & Definition Extraction (`definition_builder/`): Utilizes specialized LLM prompts to perform two key tasks:
-
-    Term Extraction: Scans an artifact and extracts a list of non-trivial mathematical terms.
-
-    Definition Extraction: When an artifact is explicitly a definition, it extracts the defined term, its aliases (e.g., F), and the full definition text.
-
-- Centralized Knowledge Store (`definition_bank.py`): we build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper. 
+We build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper. 
 
 First, for all definition artifacts, an LLM (`aextract_definition`) extracts the defined term, its aliases, and the full definition text.
 
