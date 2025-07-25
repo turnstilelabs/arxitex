@@ -213,6 +213,7 @@ async def async_load_latex_content(file_path: Path) -> str:
 async def async_save_enhanced_artifacts(results: dict, output_path: Path):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     logger.info(f"Saving enhanced artifacts to {output_path}...")
+    enhanced_artifacts = results.get("artifacts", {})
     async with aiofiles.open(output_path, "w", encoding="utf-8") as f:
-        await f.write(json.dumps(results, indent=2))
+        await f.write(json.dumps(enhanced_artifacts, indent=2))
     logger.success(f"Results saved successfully.")

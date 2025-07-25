@@ -65,7 +65,7 @@ class DocumentEnhancer:
 
     async def enhance_document(
         self, artifacts: List[ArtifactNode], latex_content: str
-    ) -> Tuple[Dict[str, str], DefinitionBank]:
+    ) -> Dict[str, str]:
         """
         Enhances the document by processing all artifacts to ensure they are self-contained
         Args:
@@ -73,8 +73,9 @@ class DocumentEnhancer:
             latex_content: The full LaTeX source content.
 
         Returns:
-            A tuple containing:
+            A dictionay containing:
             - A dictionary mapping artifact IDs to their enhanced content string.
+            - A dictionary mapping artifact IDs to their terms.
             - A DefinitionBank instance containing all definitions found or synthesized.
         """
         sorted_artifacts = sorted(artifacts, key=lambda a: a.position.line_start)
@@ -95,7 +96,9 @@ class DocumentEnhancer:
         )
 
         logger.success("Document enhancement complete.")
-        return enhanced_artifacts, self.bank
+        return {"artifacts": enhanced_artifacts,
+                "artifact_to_terms_map": artifact_to_terms_map,
+                "definition_bank": self.bank}
 
     async def _is_term_missing(self, term: str) -> bool:
         """Helper to check if a term is in the bank using the proper find method."""
@@ -318,7 +321,6 @@ class DocumentEnhancer:
             context_parts.append(f"THE ARTIFACT WHERE THE TERM WAS FOUND:\n---\n{artifact_content}\n---")
 
             combined_context = "\n\n".join(context_parts)
-            # TODO: remove stuff like \begin{corollary} \label{h_analytic}
             logger.debug(f"{log_prefix} Providing combined context to LLM:\n{combined_context}")
             
             base_definition = await self.bank.find_best_base_definition(term)
