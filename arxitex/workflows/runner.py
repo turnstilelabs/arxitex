@@ -36,7 +36,7 @@ class AsyncWorkflowRunnerBase(abc.ABC):
         """
         A generic wrapper to manage concurrency and exceptions for single item processing.
         """
-        item_id = paper.get('arxiv_id') or paper.get('id', 'unknown')
+        item_id = paper.get('arxiv_id')
         async with semaphore:
             try:
                 return await self._process_single_item(paper)
