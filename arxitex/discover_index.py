@@ -1,70 +1,80 @@
 import os
 import json
+from typing import Dict, List, Any
 from threading import Lock
 from loguru import logger
 
 class DiscoveryIndex:
     """
-    Manages a persistent, thread-safe, on-disk list of discovered arXiv IDs
-    that are pending processing.
+    Manages a persistent, on-disk dictionary of discovered arXiv papers
+    and their associated metadata, keyed by arxiv_id.
     """
     def __init__(self, output_dir: str):
         self.index_file_path = os.path.join(output_dir, "discovered_papers.json")
         self._lock = Lock()
-        self.discovered_ids = self._load()
-        logger.info(f"Discovery index initialized. Loaded {len(self.discovered_ids)} pending IDs from '{self.index_file_path}'.")
+        self.papers: Dict[str, Dict[str, Any]] = self._load()
+        logger.info(f"Discovery index initialized. Loaded metadata for {len(self.papers)} papers from '{self.index_file_path}'.")
 
-    def _load(self) -> set:
-        """Loads the set of IDs from the JSON file."""
+    def _load(self) -> Dict[str, Dict[str, Any]]:
+        """Loads the dictionary of paper metadata from the JSON file."""
         with self._lock:
             if not os.path.exists(self.index_file_path):
-                return set()
+                return {}
             try:
                 with open(self.index_file_path, 'r', encoding='utf-8') as f:
-                    # Storing as a list in JSON, but using a set in memory for efficiency
-                    return set(json.load(f))
+                    return json.load(f)
             except (json.JSONDecodeError, IOError) as e:
                 logger.error(f"Could not load or parse discovery index '{self.index_file_path}', starting fresh: {e}")
-                return set()
+                return {}
 
     def _save(self):
-        """Saves the current set of IDs to disk. Assumes lock is already held."""
+        """Saves the current dictionary of papers to disk. Assumes lock is already held."""
         try:
+            # Sort keys for deterministic output, making file diffs meaningful
+            sorted_papers = {k: self.papers[k] for k in sorted(self.papers.keys())}
             with open(self.index_file_path, 'w', encoding='utf-8') as f:
-                # Convert set to a sorted list for clean, deterministic JSON output
-                json.dump(sorted(list(self.discovered_ids)), f, indent=2)
+                json.dump(sorted_papers, f, indent=2)
         except IOError as e:
             logger.error(f"CRITICAL: Could not save discovery index to '{self.index_file_path}': {e}")
 
-    def add_ids(self, new_ids: list[str]) -> int:
+    def add_papers(self, new_papers: List[Dict[str, Any]]) -> int:
         """
-        Adds new, unique IDs to the index and returns the count of newly added IDs.
-        Saves to disk if changes were made.
+        Adds new, unique papers to the index.
+        Returns the count of newly added papers.
         """
-        if not new_ids:
+        if not new_papers:
             return 0
         
+        newly_added_count = 0
         with self._lock:
-            initial_count = len(self.discovered_ids)
-            self.discovered_ids.update(new_ids)
-            newly_added_count = len(self.discovered_ids) - initial_count
+            for paper in new_papers:
+                arxiv_id = paper.get('arxiv_id')
+                if arxiv_id and arxiv_id not in self.papers:
+                    self.papers[arxiv_id] = paper
+                    newly_added_count += 1
+            
             if newly_added_count > 0:
                 self._save()
         
         return newly_added_count
 
-    def get_pending_ids(self, limit: int = None) -> list[str]:
-        """Returns a list of IDs pending processing, sorted for deterministic order."""
+    def get_pending_papers(self, limit: int = None) -> List[Dict[str, Any]]:
+        """
+        Returns a list of paper metadata dicts that are pending processing.
+        """    
         with self._lock:
-            pending = sorted(list(self.discovered_ids))
-            return pending[:limit] if limit is not None else pending
+            all_paper_ids = sorted(list(self.papers.keys()))
+            
+            if limit is not None:
+                all_paper_ids = all_paper_ids[:limit]
+                
+            return [self.papers[pid] for pid in all_paper_ids]
 
-    def remove_id(self, arxiv_id: str):
+    def remove_paper(self, arxiv_id: str):
         """
-        Removes a single ID from the index, typically after it has been processed
-        (either successfully or with a terminal failure).
+        Removes a single paper from the discovery index by its ID.
         """
         with self._lock:
-            if arxiv_id in self.discovered_ids:
-                self.discovered_ids.remove(arxiv_id)
+            if arxiv_id in self.papers:
+                del self.papers[arxiv_id]
                 self._save()

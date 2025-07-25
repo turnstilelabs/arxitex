@@ -64,14 +64,14 @@ async def agenerate_artifact_graph(arxiv_id: str, infer_dependencies: bool,
             logger.info(f"[{arxiv_id}] Instantiating GraphEnhancer...")
             enhancer = GraphEnhancer()
             
-            graph, bank = await enhancer.build_graph(
+            graph, bank, artifact_to_terms_map = await enhancer.build_graph(
                 latex_content,
                 source_file=f"arxiv:{arxiv_id}",
                 infer_dependencies=infer_dependencies,
                 enrich_content=enrich_content
             )
             
-            return {"graph": graph, "bank": bank}
+            return {"graph": graph, "bank": bank, "artifact_to_terms_map": artifact_to_terms_map}
 
 async def run_async_pipeline(args):
     try:
@@ -111,7 +111,7 @@ async def run_async_pipeline(args):
         graph_output_path.write_text(json_output, encoding='utf-8')
         logger.success(f"Document graph saved to {graph_output_path}")
 
-        if bank:
+        if bank and args.save_bank:
             logger.info("Serializing definition bank for output...")
             bank_data_to_save = await bank.to_dict()
 
@@ -166,7 +166,7 @@ Examples:
   # Regex + infer dependency links
   python pipeline.py 2211.11689 --infer-deps --visualize -p
 
-  # Output to a specific JSON file
+  # Regex + infer dependency links + enrich artifact + output to a specific JSON file
   python pipeline.py 2211.11689 --all-enhancements -o my_graph.json --pretty
 """
     )
@@ -191,6 +191,11 @@ Examples:
     parser.add_argument(
         "-o", "--output", nargs="?", const=True, default=None,
         help="Output JSON file. If path is omitted, a default is used. If flag is omitted, prints to stdout."
+    )
+    parser.add_argument(
+    "--save-bank",
+    action="store_true",
+    help="Save the definition bank to a separate JSON file if available."
     )
     parser.add_argument(
         "-viz", "--visualize", action="store_true", help="Create and open an interactive HTML visualization."

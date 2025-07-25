@@ -12,11 +12,11 @@ from arxitex.workflows.runner import ArxivPipelineComponents
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
 from arxitex.extractor.pipeline import agenerate_artifact_graph
+from arxitex.workflows.utils import save_graph_data
 
 async def process_single_paper(arxiv_id: str, args):
     """
-    Handles a single paper by running the temporary download and processing logic
-    end-to-end, providing immediate feedback. This is ideal for testing.
+    Handles a single paper by running the temporary download and processing logic.
     """
     logger.info(f"Starting end-to-end processing for single paper: {arxiv_id}")
     
@@ -37,14 +37,13 @@ async def process_single_paper(arxiv_id: str, args):
         )
 
         graph = results.get("graph")
+        if not graph or not graph.nodes:
+            raise ValueError("Graph generation resulted in an empty or invalid graph.")
+        
         graph_data = graph.to_dict(arxiv_id=arxiv_id)
         graphs_output_dir = os.path.join(components.output_dir, "graphs")
         os.makedirs(graphs_output_dir, exist_ok=True)
-        safe_paper_id = arxiv_id.replace('/', '_')
-        graph_filename = f"{safe_paper_id}.json"
-        graph_filepath = Path(graphs_output_dir) / graph_filename
-        with open(graph_filepath, 'w', encoding='utf-8') as f:
-            json.dump(graph_data, f, indent=2)
+        graph_filepath = save_graph_data(arxiv_id, graphs_output_dir, graph_data)
 
         components.processing_index.update_processed_papers_index(
             arxiv_id, status='success', output_path=str(graph_filepath), stats=graph_data.get("stats", {})
@@ -63,15 +62,18 @@ async def process_single_paper(arxiv_id: str, args):
 
 async def main():
     """Parses command-line arguments and runs the selected workflow."""
+    script_path = Path(__file__).resolve()
+    project_root = script_path.parents[2]
+    default_output_dir = project_root / "pipeline_output"
+
     parser = argparse.ArgumentParser(
         description="ArxiTex: A pipeline for discovering and processing ArXiv papers.",
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument(
-        '-o', '--output-dir', type=str, default="pipeline_output",
-        help="Directory for all outputs (indices, logs, graphs)"
+        '-o', '--output-dir', type=str, default=str(default_output_dir),
+        help=f"Directory for all outputs (default: {default_output_dir})"
     )
-
     subparsers = parser.add_subparsers(dest="command", required=True, help="Available commands")
     # --- 'single' command ---
     parser_single = subparsers.add_parser(
@@ -142,6 +144,11 @@ async def main():
         action='store_true', 
         help="Use LLM to infer dependencies between artifacts for papers in the batch."
     )
+    parser_process.add_argument(
+    '--format-for-search', 
+    action='store_true', 
+    help="Additionally, transform and append artifacts to a .jsonl file."
+    ) 
 
     args = parser.parse_args()
         
@@ -166,7 +173,8 @@ async def main():
             components=components,
             enrich_content=args.enrich_content,
             infer_dependencies=args.infer_dependencies,
-            max_concurrent_tasks=args.workers
+            max_concurrent_tasks=args.workers,
+            format_for_search=args.format_for_search
         )
         await workflow.run(max_papers=args.max_papers)
 
