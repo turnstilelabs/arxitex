@@ -1,15 +1,4 @@
 {
-  "2507.05087v1": {
-    "id": "http://arxiv.org/abs/2507.05087v1",
-    "title": "On the conjugacy problem for subdirect products of hyperbolic groups",
-    "authors": [
-      "Martin R. Bridson"
-    ],
-    "abstract": "If $G_1$ and $G_2$ are torsion-free hyperbolic groups and $P<G_1\\times G_2$ is a finitely generated subdirect product, then the conjugacy problem in $P$ is solvable if and only if there is a uniform algorithm to decide membership of the cyclic subgroups in the finitely presented group $G_1/(P\\cap G_1)$. The proof of this result relies on a new technique for perturbing elements in a hyperbolic group to ensure that they are not proper powers.",
-    "pdf_url": "https://arxiv.org/pdf/2507.05087v1.pdf",
-    "source_url": "https://arxiv.org/e-print/2507.05087v1",
-    "arxiv_id": "2507.05087v1"
-  },
   "2507.05437v1": {
     "id": "http://arxiv.org/abs/2507.05437v1",
     "title": "Higher Segal spaces and partial groups",
