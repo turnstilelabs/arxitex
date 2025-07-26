@@ -118,7 +118,7 @@ The core workflow is designed around a simple two-step loop: Discover and Proces
 The `discover` command is the entry point for finding papers. It automatically finds all matching papers that haven't been seen before, adding them to a processing queue.
 
 ```bash
-python -m arxitex.workflows.cli discover  --query "cat:math.GR AND all:\"Language Model\""  --max-papers 50
+python -m arxitex.workflows.cli discover  --query cat:math.GR  --max-papers 10
 ```
 
 # 2.2 Process: Analyzing Papers in Parallel Batches
@@ -129,3 +129,15 @@ The `process` command is the workhorse of the pipeline. It takes papers from the
 python -m arxitex.workflows.cli process --max-papers 20 --workers 8  --enrich-content --infer-dependencies
 ```
 
+# 2.3 Search format
+We can convert the graph data to a better format for search witht the `--format-for-search` flag. Each artifact is saved with its extracted `terms` and the paper's `title`, `authors`, `abstract`.
+
+```bash
+python workflows/cli.py process -n 1 --enrich-content --format-for-search
+```
+
+This saves all processed papers into `search_index.jsonl`
+
+```jsonl
+{"title": "On the conjugacy problem for subdirect products of hyperbolic groups", "authors": ["Martin R. Bridson"], "arxiv_id": "2507.05087v1", "abstract": "If $G_1$ and $G_2$ are torsion-free hyperbolic groups and $P<G_1\\times G_2$ is a finitely generated subdirect product, then the conjugacy problem in $P$ is solvable if and only if there is a uniform algorithm to decide membership of the cyclic subgroups in the finitely presented group $G_1/(P\\cap G_1)$. The proof of this result relies on a new technique for perturbing elements in a hyperbolic group to ensure that they are not proper powers.", "artifact_id": "lemma-6-2c644b", "artifact_type": "lemma", "content": "**C_G(w)**: we write $C_G(w)$ to denote the centraliser in $G$ of the image of $w\\in F(X)$. \n\n**G**: The rel-cyclics Dehn function of a finitely presented group $\\G=\\<X\\mid R\\>$ is $$ \\d^{c}(n) : = \\max_{w,u} \\{ {\\rm{Area}}(w\\,u^p) +|pn| \\colon |w|+|u|\\le n,\\ w=_\\G u^{-p},\\ |p|\\le  o(u)/2\\}, $$ where $o(u)\\in\\N\\cup\\{\\infty\\}$ is the order of $u$ in $\\G$.\n\n---\n\n\\label{l:find-root}\nIf $G$ is torsion-free and hyperbolic, then there is an algorithm that, given a word $w$ in the generators, will decide if \n$w$ is non-trivial in $G$ and, if it is,  will produce a word $w_0$ such that $C_G(w) = \\<w_0\\>$.", "terms": ["<w_0>", "C_G(w)", "G", "generators", "hyperbolic", "non-trivial", "torsion-free", "word"]}
+```
