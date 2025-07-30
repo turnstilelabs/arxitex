@@ -107,13 +107,16 @@ class ArxivAPI:
         author_elements = entry.findall('atom:author/atom:name', self.ns)
         authors = [name.text.strip() for name in author_elements]
         title = title_elem.text.replace('\n', ' ').strip()
-        abstract = abstract_elem.text.replace('\n', ' ').strip()        
+        abstract = abstract_elem.text.replace('\n', ' ').strip()   
+        primary_cat_elem = entry.find('atom:category', self.ns)
+        primary_category = primary_cat_elem.get('term') if primary_cat_elem is not None else 'unknown'     
 
         paper = {
             'id': id_elem.text,
             'title': title,
             'authors': authors,
             'abstract': abstract,
+            'primary_category': primary_category,
             'pdf_url': f"https://arxiv.org/pdf/{arxiv_id}.pdf",
             'source_url': f"https://arxiv.org/e-print/{arxiv_id}",
             'arxiv_id': arxiv_id

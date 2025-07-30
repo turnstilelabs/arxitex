@@ -20,14 +20,13 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         self.infer_dependencies = infer_dependencies
         self.enrich_content = enrich_content
         self.max_concurrent_tasks = max_concurrent_tasks
-       
         self.format_for_search = format_for_search
-        if self.format_for_search:
-            self.search_index_path = Path(self.components.output_dir) / "search_index.jsonl"
-            self.lock_path = Path(self.components.output_dir) / "search_index.jsonl.lock"
         
         self.graphs_output_dir = os.path.join(self.components.output_dir, "graphs")
+        self.search_indices_base_dir = os.path.join(self.components.output_dir, "search_indices")
+
         os.makedirs(self.graphs_output_dir, exist_ok=True)
+        os.makedirs(self.search_indices_base_dir, exist_ok=True)
 
     async def run(self, max_papers: int):
         """
@@ -74,6 +73,7 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         """
         arxiv_id = item['arxiv_id']
         paper_metadata = item
+        category = paper_metadata.get('primary_category', 'unknown').replace('.', '_')
 
         try:
             temp_base_dir = Path(self.components.output_dir) / "temp_processing"
@@ -90,8 +90,10 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             if not graph or not graph.nodes:
                 raise ValueError("Graph generation resulted in an empty graph.")
 
+            category_graph_dir = os.path.join(self.graphs_base_dir, category)
+            os.makedirs(category_graph_dir, exist_ok=True)
             graph_data = graph.to_dict(arxiv_id=arxiv_id)
-            graph_filepath = save_graph_data(arxiv_id, self.graphs_output_dir, graph_data)
+            graph_filepath = save_graph_data(arxiv_id, category_graph_dir, graph_data)
             logger.info(f"Saved primary graph for {arxiv_id} to {graph_filepath}")
 
             if self.format_for_search:
@@ -106,8 +108,11 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                 )
                 
                 if searchable_artifacts:
+                    search_index_path = os.path.join(self.search_indices_base_dir, f"{category}.jsonl")
+                    lock_path = os.path.join(self.search_indices_base_dir, f"{category}.jsonl.lock")
+
                     with FileLock(self.lock_path):
-                        with open(self.search_index_path, "a", encoding="utf-8") as f:
+                        with open(search_index_path, "a", encoding="utf-8") as f:
                             for artifact_doc in searchable_artifacts:
                                 f.write(json.dumps(artifact_doc) + "\n")
                     logger.success(f"Appended {len(searchable_artifacts)} artifacts from {arxiv_id} to search index.")
