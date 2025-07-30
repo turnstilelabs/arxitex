@@ -1,6 +1,7 @@
 import requests
 import time
 import xml.etree.ElementTree as ET
+import re
 from loguru import logger
 from urllib.parse import urlparse
 
@@ -16,7 +17,8 @@ class ArxivAPI:
         })
         self.ns = {
             'atom': 'http://www.w3.org/2005/Atom',
-            'opensearch': 'http://a9.com/-/spec/opensearch/1.1/'
+            'opensearch': 'http://a9.com/-/spec/opensearch/1.1/',
+            'arxiv': 'http://arxiv.org/schemas/atom'
         }
     
     def fetch_papers(self, search_query, start=0, batch_size=100):
@@ -99,7 +101,7 @@ class ArxivAPI:
         
         title_elem = entry.find('atom:title', self.ns)
         abstract_elem = entry.find('atom:summary', self.ns)
-        
+
         if title_elem is None or abstract_elem is None:
             logger.warning(f"Paper {arxiv_id} missing title or abstract, skipping")
             return None
@@ -108,8 +110,27 @@ class ArxivAPI:
         authors = [name.text.strip() for name in author_elements]
         title = title_elem.text.replace('\n', ' ').strip()
         abstract = abstract_elem.text.replace('\n', ' ').strip()   
-        primary_cat_elem = entry.find('atom:category', self.ns)
-        primary_category = primary_cat_elem.get('term') if primary_cat_elem is not None else 'unknown'     
+
+        primary_category = 'unknown'
+        all_categories = []
+
+        ARXIV_CATEGORY_SCHEME = "http://arxiv.org/schemas/atom"
+        CATEGORY_PATTERN = re.compile(r'^[a-z-]+(\.[A-Z]{2,}|-[a-zA-Z]{2,})$')
+        all_cat_elems = entry.findall('.//atom:category', self.ns)
+        for cat_elem in all_cat_elems:
+            term = cat_elem.get('term')
+            scheme = cat_elem.get('scheme')
+
+            if term and scheme == ARXIV_CATEGORY_SCHEME and CATEGORY_PATTERN.match(term):
+                all_categories.append(term)
+            else:
+                logger.debug(f"Ignoring non-arXiv category '{term}' with scheme '{scheme}'")
+
+        primary_cat_elem = entry.find('.//arxiv:primary_category', self.ns)
+        if primary_cat_elem is not None and primary_cat_elem.get('term'):
+            primary_category = primary_cat_elem.get('term')
+        elif all_categories:
+            primary_category = all_categories[0]
 
         paper = {
             'id': id_elem.text,
@@ -117,12 +138,10 @@ class ArxivAPI:
             'authors': authors,
             'abstract': abstract,
             'primary_category': primary_category,
+            'all_categories': all_categories,
             'pdf_url': f"https://arxiv.org/pdf/{arxiv_id}.pdf",
             'source_url': f"https://arxiv.org/e-print/{arxiv_id}",
             'arxiv_id': arxiv_id
         }
-
-        authors = entry.findall('atom:author/atom:name', self.ns)
-        paper['authors'] = [author.text for author in authors if author.text]
 
         return paper
