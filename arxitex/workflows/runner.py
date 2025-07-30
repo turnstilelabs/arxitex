@@ -160,11 +160,11 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
                 if self.force:
                     papers_to_process.append(paper)
                 else:
-                    logger.info(f"Skipping {paper_id}: already in processing index.")
+                    logger.info(f"Skipping {paper_id}: already in processing index. Use --force to override.")
             else:
                 papers_to_process.append(paper)
 
-        logger.info(f"Worker thread found {len(papers_to_process)} new papers to consider in this batch.")
+        logger.info(f"Found {len(papers_to_process)} new papers to consider in this batch of {len(entries)}.")
         return (papers_to_process, True)
 
     async def _get_papers_to_process(self, search_query: str, start: int, batch_size: int):
