@@ -1,3 +1,4 @@
+import asyncio
 from loguru import logger
 
 from arxitex.workflows.runner import AsyncArxivWorkflowRunner
@@ -13,7 +14,9 @@ class DiscoveryWorkflow(AsyncArxivWorkflowRunner):
         if not arxiv_id:
             return {"status": "failure", "reason": "item_missing_arxiv_id"}
         
-        newly_added_count = self.components.discovery_index.add_papers([item])
+        newly_added_count = await asyncio.to_thread(
+            self.components.discovery_index.add_papers, [item]
+        )
         
         if newly_added_count > 0:
             logger.debug(f"Added new ID to discovery queue: {arxiv_id}")
