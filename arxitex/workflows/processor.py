@@ -22,10 +22,10 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         self.max_concurrent_tasks = max_concurrent_tasks
         self.format_for_search = format_for_search
         
-        self.graphs_output_dir = os.path.join(self.components.output_dir, "graphs")
+        self.graphs_base_dir = os.path.join(self.components.output_dir, "graphs")
         self.search_indices_base_dir = os.path.join(self.components.output_dir, "search_indices")
 
-        os.makedirs(self.graphs_output_dir, exist_ok=True)
+        os.makedirs(self.graphs_base_dir, exist_ok=True)
         os.makedirs(self.search_indices_base_dir, exist_ok=True)
 
     async def run(self, max_papers: int):
@@ -111,7 +111,7 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                     search_index_path = os.path.join(self.search_indices_base_dir, f"{category}.jsonl")
                     lock_path = os.path.join(self.search_indices_base_dir, f"{category}.jsonl.lock")
 
-                    with FileLock(self.lock_path):
+                    with FileLock(lock_path):
                         with open(search_index_path, "a", encoding="utf-8") as f:
                             for artifact_doc in searchable_artifacts:
                                 f.write(json.dumps(artifact_doc) + "\n")
