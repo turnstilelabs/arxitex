@@ -1,21 +1,36 @@
 {
-  "2507.05033v1": {
-    "processed_timestamp_utc": "2025-07-25T19:38:34.788192+00:00",
+  "2507.09636v1": {
+    "processed_timestamp_utc": "2025-07-30T19:03:30.161585+00:00",
+    "status": "failure",
+    "reason": "cannot unpack non-iterable DocumentGraph object"
+  },
+  "2507.09666v1": {
+    "processed_timestamp_utc": "2025-07-30T19:05:56.738947+00:00",
     "status": "success",
-    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/arxitex/pipeline_output/graphs/2507.05033v1.json",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/math_FA/2507.09666v1.json",
     "stats": {
-      "node_count": 18,
-      "edge_count": 18,
+      "node_count": 41,
+      "edge_count": 40,
       "extractor_used": null
     }
   },
-  "2507.05087v1": {
-    "processed_timestamp_utc": "2025-07-26T06:30:39.980213+00:00",
+  "2507.09745v1": {
+    "processed_timestamp_utc": "2025-07-30T19:32:19.143854+00:00",
     "status": "success",
-    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/2507.05087v1.json",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/math_GR/2507.09745v1.json",
     "stats": {
-      "node_count": 8,
-      "edge_count": 3,
+      "node_count": 56,
+      "edge_count": 32,
+      "extractor_used": null
+    }
+  },
+  "2506.14047v1": {
+    "processed_timestamp_utc": "2025-07-30T19:47:33.543258+00:00",
+    "status": "success",
+    "output_path": "/Users/leodreyfusschmidt/Desktop/Repos/arxitex/pipeline_output/graphs/math_GR/2506.14047v1.json",
+    "stats": {
+      "node_count": 2,
+      "edge_count": 0,
       "extractor_used": null
     }
   }
