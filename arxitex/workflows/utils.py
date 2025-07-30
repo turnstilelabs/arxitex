@@ -34,6 +34,10 @@ def transform_graph_to_search_format(
     """
     searchable_artifacts = []
     
+    base_paper_info = {
+        key: value for key, value in paper_metadata.items() if key != 'id'
+    }
+    
     for node in graph_nodes:
         if node.is_external:
             continue
@@ -42,22 +46,16 @@ def transform_graph_to_search_format(
         content_full = node.content
         prereq_header = "--- Prerequisite Definitions ---"
         if prereq_header in node.content:
-            content_full = node.content.replace(prereq_header, "").strip()
+            content_full = node.content.split(prereq_header, 1)[-1].strip()
+            content_full = content_full.split("---\n\n", 1)[-1].strip()
        
-        paper_title = paper_metadata.get("title")
-        paper_authors = paper_metadata.get("authors", [])
-        abstract = paper_metadata.get("abstract", "")
-        
         search_doc = {
-            "title": paper_title,  
-            "authors": paper_authors,  
-            "arxiv_id": arxiv_id,
-            "abstract": abstract,
+            **base_paper_info,        
             "artifact_id": node.id,
             "artifact_type": node.type.value,
-            "content":  content_full,
+            "content": content_full,
             "terms": artifact_to_terms_map.get(node.id, []),
-    
+            "proof": node.proof
         }
         searchable_artifacts.append(search_doc)
 
