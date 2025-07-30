@@ -123,20 +123,22 @@ class ArxivAPI:
 
             if term and scheme == ARXIV_CATEGORY_SCHEME and CATEGORY_PATTERN.match(term):
                 all_categories.append(term)
-            else:
-                logger.debug(f"Ignoring non-arXiv category '{term}' with scheme '{scheme}'")
-
+        
         primary_cat_elem = entry.find('.//arxiv:primary_category', self.ns)
         if primary_cat_elem is not None and primary_cat_elem.get('term'):
             primary_category = primary_cat_elem.get('term')
         elif all_categories:
             primary_category = all_categories[0]
 
+        comment_elem = entry.find('arxiv:comment', self.ns)
+        comment = comment_elem.text.strip() if comment_elem is not None and comment_elem.text else None
+
         paper = {
             'id': id_elem.text,
             'title': title,
             'authors': authors,
             'abstract': abstract,
+            'comment': comment,
             'primary_category': primary_category,
             'all_categories': all_categories,
             'pdf_url': f"https://arxiv.org/pdf/{arxiv_id}.pdf",

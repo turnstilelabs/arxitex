@@ -2,11 +2,14 @@
 import abc
 import asyncio
 import os
+import re
 from loguru import logger
+from typing import Optional, Tuple, List, Dict
 import json
 from datetime import datetime, timezone
 from arxitex.paper_index import PaperIndex
 from arxitex.discover_index import DiscoveryIndex
+from arxitex.skipped_index import SkippedIndex
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.search_cursor import SearchCursorManager
 
@@ -21,6 +24,7 @@ class ArxivPipelineComponents:
         self.search_cursors = SearchCursorManager(self.output_dir)
         self.discovery_index = DiscoveryIndex(self.output_dir)
         self.processing_index = PaperIndex(self.output_dir)
+        self.skipped_index = SkippedIndex(self.output_dir)
         
 class AsyncWorkflowRunnerBase(abc.ABC):
     """
@@ -82,8 +86,41 @@ class AsyncWorkflowRunnerBase(abc.ABC):
 class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
     """A workflow runner specifically for fetching and processing papers from the ArXiv API."""
 
-    def _get_papers_to_process(self, search_query: str, start: int, batch_size: int):
-        """Fetches papers using the date cursor and filters out those already processed."""
+    def __init__(self, components: ArxivPipelineComponents, **kwargs):
+        super().__init__(components, **kwargs)
+        
+        self.max_pages = kwargs.get('max_pages', 50)
+        self.title_exclude_keywords = kwargs.get('title_exclude_keywords', ["lecture", "course", "notes on", "introduction to"])
+        logger.info(f"Workflow initialized with filtering: max_pages={self.max_pages}, exclude_keywords={self.title_exclude_keywords}")
+        
+    def _is_title_disqualified(self, title: str) -> Optional[str]:
+        """Checks if the title contains any disqualifying keywords. Returns the keyword if found."""
+        lower_title = title.lower()
+        for keyword in self.title_exclude_keywords:
+            if keyword.lower() in lower_title:
+                return keyword
+        return None
+
+    def _is_page_count_excessive(self, comment: Optional[str]) -> Optional[int]:
+        """
+        Parses the page count from the comment string using a robust regex.
+        Returns the page count *only if* it exceeds the configured maximum.
+        """
+        if not comment:
+            return None
+        
+        match = re.search(r'(\d+)\s*pages?', comment, re.IGNORECASE)
+        if match:
+            try:
+                page_count = int(match.group(1))
+                if page_count > self.max_pages:
+                    return page_count
+            except (ValueError, IndexError):
+                logger.warning(f"Regex found a non-integer page count in comment: '{comment}'")
+                return None
+        return None
+    
+    def _fetch_and_filter_batch_sync(self, search_query: str, start: int, batch_size: int) -> Optional[Tuple[List[Dict], bool]]:
         query_to_run = search_query
         if start == 0:
             query_to_run = self.components.search_cursors.get_query_with_cursor(search_query)
@@ -94,20 +131,33 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
         _, _, entries = self.components.arxiv_api.parse_response(response_text)
         if not entries: return ([], False)
 
-        self.components.search_cursors.update_cursor(
-            search_query, entries, self.components.arxiv_api.ns
-        )
+        self.components.search_cursors.update_cursor(search_query, entries, self.components.arxiv_api.ns)
 
         papers_to_process = []
         for entry in entries:
             paper = self.components.arxiv_api.entry_to_paper(entry)
-            if not paper:
-                continue
+            if not paper: continue
 
             paper_id = paper['arxiv_id']
+
+            if paper_id in self.components.skipped_index.skipped_papers and not self.force:
+                logger.debug(f"Skipping {paper_id}: already in skipped index.")
+                continue
+            
+            disqualifying_keyword = self._is_title_disqualified(paper['title'])
+            if disqualifying_keyword:
+                reason = f"skipped_title_keyword: '{disqualifying_keyword}'"
+                self.components.skipped_index.add_skipped(paper_id, reason)
+                continue
+
+            excessive_page_count = self._is_page_count_excessive(paper.get('comment'))
+            if excessive_page_count:
+                reason = f"skipped_too_long: {excessive_page_count} pages (limit {self.max_pages})"
+                self.components.skipped_index.add_skipped(paper_id, reason)
+                continue
+
             if self.components.processing_index.is_paper_processed(paper_id):
                 if self.force:
-                    logger.warning(f"Re-processing {paper_id} due to --force flag.")
                     papers_to_process.append(paper)
                 else:
                     logger.info(f"Skipping {paper_id}: already in processing index. Use --force to override.")
@@ -117,8 +167,12 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
         logger.info(f"Found {len(papers_to_process)} new papers to consider in this batch of {len(entries)}.")
         return (papers_to_process, True)
 
+    async def _get_papers_to_process(self, search_query: str, start: int, batch_size: int):
+        return await asyncio.to_thread(
+            self._fetch_and_filter_batch_sync, search_query, start, batch_size
+        )
+
     async def run(self, search_query: str, max_papers: int, batch_size: int = 20):
-        """Main entry point to run the async workflow"""
         session_success_count = 0
         start_index = 0
         
@@ -130,7 +184,7 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
         semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
 
         while session_success_count < max_papers:
-            result_tuple = self._get_papers_to_process(search_query, start_index, batch_size)
+            result_tuple = await self._get_papers_to_process(search_query, start_index, batch_size)
             if result_tuple is None:
                 logger.warning("API did not return papers. Ending run.")
                 break
