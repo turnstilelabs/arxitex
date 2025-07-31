@@ -7,9 +7,9 @@ from loguru import logger
 from typing import Optional, Tuple, List, Dict
 import json
 from datetime import datetime, timezone
-from arxitex.paper_index import PaperIndex
-from arxitex.discover_index import DiscoveryIndex
-from arxitex.skipped_index import SkippedIndex
+from arxitex.indices.discover import DiscoveryIndex
+from arxitex.indices.processed import ProcessedIndex
+from arxitex.indices.skipped import SkippedIndex
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.search_cursor import SearchCursorManager
 
@@ -23,7 +23,7 @@ class ArxivPipelineComponents:
         self.arxiv_api = ArxivAPI()
         self.search_cursors = SearchCursorManager(self.output_dir)
         self.discovery_index = DiscoveryIndex(self.output_dir)
-        self.processing_index = PaperIndex(self.output_dir)
+        self.processing_index = ProcessedIndex(self.output_dir)
         self.skipped_index = SkippedIndex(self.output_dir)
         
 class AsyncWorkflowRunnerBase(abc.ABC):
@@ -156,7 +156,7 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
                 self.components.skipped_index.add_skipped(paper_id, reason)
                 continue
 
-            if self.components.processing_index.is_paper_processed(paper_id):
+            if self.components.processing_index.is_successfully_processed(paper_id):
                 if self.force:
                     papers_to_process.append(paper)
                 else:
