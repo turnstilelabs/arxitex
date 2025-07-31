@@ -26,7 +26,7 @@ from arxitex.extractor.utils import ArxivExtractorError
 
 def get_examples_dir() -> Path:
     script_dir = Path(__file__).parent.resolve()    
-    project_root = script_dir.parents[2]   
+    project_root = script_dir.parents[1]   
     examples_dir = project_root / "data"
     examples_dir.mkdir(exist_ok=True, parents=True)
     return examples_dir

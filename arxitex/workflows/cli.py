@@ -44,7 +44,7 @@ async def process_single_paper(arxiv_id: str, args):
         os.makedirs(graphs_output_dir, exist_ok=True)
         graph_filepath = save_graph_data(arxiv_id, graphs_output_dir, graph_data)
 
-        components.processing_index.update_processed_papers_index(
+        components.processing_index.update_processed_papers_status(
             arxiv_id, status='success', output_path=str(graph_filepath), stats=graph_data.get("stats", {})
         )
         logger.info(f"SUCCESS: Processed {arxiv_id} and saved graph to {graph_filepath}")
@@ -53,7 +53,7 @@ async def process_single_paper(arxiv_id: str, args):
     except Exception as e:
         reason = f"End-to-end processing failed for {arxiv_id}: {e}"
         logger.error(reason, exc_info=True)
-        components.processing_index.update_processed_papers_index(
+        components.processing_index.update_processed_papers_status(
             arxiv_id, status='failure', reason=str(e)
         )
         return {"status": "failure", "reason": reason}

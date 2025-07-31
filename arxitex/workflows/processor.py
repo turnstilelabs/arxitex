@@ -105,7 +105,6 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                 artifact_to_terms_map = results.get("artifact_to_terms_map", {})
                 
                 searchable_artifacts = transform_graph_to_search_format(
-                    arxiv_id=arxiv_id,
                     graph_nodes=graph.nodes,
                     artifact_to_terms_map=artifact_to_terms_map,
                     paper_metadata=paper_metadata
@@ -139,7 +138,7 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             }
             
         except Exception as e:
-            self.components.processing_index.update_processed_papers_index(
+            self.components.processing_index.update_processed_papers_status(
                 arxiv_id, status='failure', reason=str(e)
             )
             logger.error(f"FAILURE processing {arxiv_id}: {e}. It will remain in the discovery queue for a future retry.")

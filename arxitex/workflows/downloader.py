@@ -22,7 +22,7 @@ class DownloaderWorkflow(AsyncArxivWorkflowRunner):
             async with AsyncSourceDownloader(cache_dir=self.persistent_source_dir) as downloader:
                 extracted_path = await downloader.download_and_extract_source(arxiv_id)
 
-            self.components.processing_index.update_processed_papers_index(
+            self.components.processing_index.update_processed_papers_status(
                 arxiv_id, 
                 status='downloaded', 
                 source_path=str(extracted_path)
@@ -36,7 +36,7 @@ class DownloaderWorkflow(AsyncArxivWorkflowRunner):
                 "source_path": str(extracted_path)
             }
         except Exception as e:
-            self.components.processing_index.update_processed_papers_index(
+            self.components.processing_index.update_processed_papers_status(
                 arxiv_id, status='download_failed', reason=str(e)
             )
             raise e
