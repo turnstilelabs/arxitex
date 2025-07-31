@@ -41,8 +41,12 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                 break
             
             arxiv_id = paper_metadata['arxiv_id']
-            if not self.components.processing_index.is_paper_processed(arxiv_id):
-                papers_to_process.append(paper_metadata)
+            if self.components.processing_index.is_successfully_processed(arxiv_id):
+                logger.debug(f"Skipping {arxiv_id}: already successfully processed. Removing from discovery queue.")
+                self.components.discovery_index.remove_paper(arxiv_id)
+                continue
+
+            papers_to_process.append(paper_metadata)
         
         if not papers_to_process:
             logger.info("No new papers in the discovery queue are pending processing. Exiting.")
@@ -117,14 +121,15 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                                 f.write(json.dumps(artifact_doc) + "\n")
                     logger.success(f"Appended {len(searchable_artifacts)} artifacts from {arxiv_id} to search index.")
             
-            self.components.processing_index.update_processed_papers_index(
+            self.components.processing_index.update_processed_papers_status(
                 arxiv_id, 
                 status='success', 
                 output_path=str(graph_filepath),
                 stats=graph_data.get("stats", {})
             )
-            
-            logger.success(f"SUCCESS: Fully processed {arxiv_id}.")
+            self.components.discovery_index.remove_paper(arxiv_id)
+
+            logger.success(f"SUCCESS: Fully processed {arxiv_id} and removed from discovery queue.")
             
             return {
                 "status": "success",
@@ -137,8 +142,7 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             self.components.processing_index.update_processed_papers_index(
                 arxiv_id, status='failure', reason=str(e)
             )
+            logger.error(f"FAILURE processing {arxiv_id}: {e}. It will remain in the discovery queue for a future retry.")
             raise e
-        
-        finally:
-            self.components.discovery_index.remove_paper(arxiv_id)        
+              
         

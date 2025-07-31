@@ -1,5 +1,4 @@
 import asyncio
-import json
 from pathlib import Path
 from loguru import logger
 import argparse
@@ -22,8 +21,8 @@ async def process_single_paper(arxiv_id: str, args):
     
     components = ArxivPipelineComponents(output_dir=args.output_dir)
     
-    if not args.force and components.processing_index.is_paper_processed(arxiv_id):
-        logger.warning(f"Paper {arxiv_id} already exists in the processing index. Use --force to override.")
+    if not args.force and components.processing_index.is_successfully_processed(arxiv_id):
+        logger.warning(f"Paper {arxiv_id} already successfully processed. Use --force to override.")
         return {"status": "skipped"}
 
     try:
