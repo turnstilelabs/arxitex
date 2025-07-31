@@ -44,6 +44,7 @@ class GraphEnhancer:
             return DocumentGraph()
         
         bank = None
+        artifact_to_terms_map = {}
         if infer_dependencies:
             logger.info("--- Starting Pass 2: Enhancing graph with LLM-inferred dependencies ---")
             graph = await self._infer_and_add_dependencies(graph)
