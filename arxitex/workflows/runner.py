@@ -147,13 +147,13 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
             disqualifying_keyword = self._is_title_disqualified(paper['title'])
             if disqualifying_keyword:
                 reason = f"skipped_title_keyword: '{disqualifying_keyword}'"
-                self.components.skipped_index.add_skipped(paper_id, reason)
+                self.components.skipped_index.add(paper_id, reason)
                 continue
 
             excessive_page_count = self._is_page_count_excessive(paper.get('comment'))
             if excessive_page_count:
                 reason = f"skipped_too_long: {excessive_page_count} pages (limit {self.max_pages})"
-                self.components.skipped_index.add_skipped(paper_id, reason)
+                self.components.skipped_index.add(paper_id, reason)
                 continue
 
             if self.components.processing_index.is_successfully_processed(paper_id):
