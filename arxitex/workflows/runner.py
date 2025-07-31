@@ -19,12 +19,13 @@ class ArxivPipelineComponents:
     def __init__(self, output_dir="output"):
         self.output_dir = os.path.abspath(output_dir)
         os.makedirs(self.output_dir, exist_ok=True)
+        self.db_path = os.path.join(self.output_dir, "arxitex_indices.db")
 
         self.arxiv_api = ArxivAPI()
         self.search_cursors = SearchCursorManager(self.output_dir)
-        self.discovery_index = DiscoveryIndex(self.output_dir)
-        self.processing_index = ProcessedIndex(self.output_dir)
-        self.skipped_index = SkippedIndex(self.output_dir)
+        self.discovery_index = DiscoveryIndex(self.db_path)
+        self.processing_index = ProcessedIndex(self.db_path)
+        self.skipped_index = SkippedIndex(self.db_path)
         
 class AsyncWorkflowRunnerBase(abc.ABC):
     """
@@ -140,7 +141,7 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
 
             paper_id = paper['arxiv_id']
 
-            if paper_id in self.components.skipped_index.skipped_papers and not self.force:
+            if paper_id in self.components.skipped_index and not self.force:
                 logger.debug(f"Skipping {paper_id}: already in skipped index.")
                 continue
             
@@ -176,10 +177,8 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
         session_success_count = 0
         start_index = 0
         
-        total_in_index = len(self.components.processing_index.processed_papers)
         logger.info(f"Starting async workflow '{self.__class__.__name__}'.")
         logger.info(f"Goal for this run: Successfully process {max_papers} new papers.")
-        logger.info(f"Persistent processing index already contains {total_in_index} entries.")
         
         semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
 
@@ -231,7 +230,7 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
             except Exception as e:
                 reason = f"Unhandled exception in workflow: {str(e)}"
                 logger.error(f"UNHANDLED_FAILURE for {paper_id}: {reason}", exc_info=True)
-                self.components.processing_index.update_processed_papers_index(paper_id, status='failure', reason=reason)
+                self.components.processing_index.update_processed_papers_status(paper_id, status='failure', reason=reason)
                 return {"status": "failure", "arxiv_id": paper_id, "reason": reason}
     
     def _write_summary_report(self):
