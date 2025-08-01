@@ -33,13 +33,12 @@ class ArxivAPI:
             'sortOrder': 'descending'
         }
 
-        # Add timeout and retry mechanism for API robustness
         max_retries = 3
         retry_count = 0
         while retry_count < max_retries:
             try:
                 response = self.session.get(self.base_url, params=params, timeout=30)
-                response.raise_for_status()  # Raise exception for HTTP errors
+                response.raise_for_status()
                 break
             except (requests.RequestException, requests.Timeout) as e:
                 retry_count += 1
@@ -50,9 +49,9 @@ class ArxivAPI:
                     time.sleep(wait_time)
                 else:
                     logger.error("Failed to fetch papers after multiple attempts")
-                    return None, 0
+                    return None
 
-        return response.text if response.status_code == 200 else None, 0
+        return response.text if response.status_code == 200 else None
     
     def parse_response(self, response_text):
         """Parse XML response from ArXiv API"""
@@ -60,14 +59,21 @@ class ArxivAPI:
             root = ET.fromstring(response_text)
         except ET.ParseError as e:
             logger.error(f"XML parsing error: {e}")
-            logger.debug(f"Response content: {response_text[:500]}...")  # Log start of response
+            logger.debug(f"Response content: {response_text[:500]}...")
             return 0, 0, []
 
+        error_entry = root.find(".//atom:entry[atom:title='Error']", self.ns)
+        if error_entry is not None:
+            error_summary = error_entry.find('.//atom:summary', self.ns)
+            if error_summary is not None and "start_index" in error_summary.text:
+                logger.warning(f"ArXiv API returned a pagination limit error: {error_summary.text}")
+                return 0, 0, []
+        
         total_results_elem = root.find('.//opensearch:totalResults', self.ns)
         if total_results_elem is None:
-            logger.error("Could not find totalResults element in response")
-            return 0, 0, []
-            
+                logger.error("Could not find totalResults element in response")
+                return 0, 0, []
+                
         total_results = int(total_results_elem.text)
         if total_results == 0:
             logger.warning("ArXiv API returned 0 total results. Check your search query.")
@@ -75,7 +81,7 @@ class ArxivAPI:
 
         entries = root.findall('.//atom:entry', self.ns)
         if not entries:
-            logger.warning(f"No entries found in response despite total_results={total_results}")
+            logger.info(f"Pagination complete: No entries found in response despite total_results={total_results}")
             return 0, total_results, []
             
         return len(entries), total_results, entries
@@ -134,16 +140,17 @@ class ArxivAPI:
         comment = comment_elem.text.strip() if comment_elem is not None and comment_elem.text else None
 
         paper = {
-            'id': id_elem.text,
+            'arxiv_id': arxiv_id,
             'title': title,
             'authors': authors,
             'abstract': abstract,
             'comment': comment,
             'primary_category': primary_category,
-            'all_categories': all_categories,
-            'pdf_url': f"https://arxiv.org/pdf/{arxiv_id}.pdf",
-            'source_url': f"https://arxiv.org/e-print/{arxiv_id}",
-            'arxiv_id': arxiv_id
+            'all_categories': all_categories
         }
 
         return paper
+
+    def close(self):
+        logger.info("Closing ArxivAPI session...")
+        self.session.close()
