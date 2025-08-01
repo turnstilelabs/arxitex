@@ -106,13 +106,11 @@ class SearchCursorManager:
 class BackfillStateManager:
     """
     Manages the state of a monthly historical backfill.
-    This version is corrected to prevent all deadlocks.
     """
 
     def __init__(self, output_dir: str):
         self.state_file_path = os.path.join(output_dir, "backfill_state.json")
         self._lock = Lock()
-        # Initial load does not need a lock.
         self.states = self._load_state()
         logger.info(f"Backfill state manager initialized. Loaded {len(self.states)} states.")
 
@@ -127,11 +125,6 @@ class BackfillStateManager:
             return {}
 
     def _save_state(self):
-        """
-        Saves the current state to disk.
-        IMPORTANT: This method assumes the caller is already holding self._lock.
-        It does not acquire the lock itself.
-        """
         try:
             with open(self.state_file_path, 'w', encoding='utf-8') as f:
                 json.dump(self.states, f, indent=2)
@@ -142,7 +135,7 @@ class BackfillStateManager:
         return quote_plus(search_query.lower().strip())
 
     def get_next_interval(self, search_query: str) -> tuple[int, int]:
-        """Gets the next (year, month) to process. This method is thread-safe."""
+        """Gets the next (year, month) to process."""
         key = self._get_query_key(search_query)
         
         # Quick check without a lock for performance.
@@ -150,13 +143,12 @@ class BackfillStateManager:
             state = self.states[key]
             return state['year'], state['month']
         
-        # If the key doesn't exist, acquire the lock to create it.
         with self._lock:
             # Re-check inside the lock to prevent a race condition.
             if key not in self.states:
                 now = datetime.now()
                 self.states[key] = {'year': now.year, 'month': now.month}
-                self._save_state()  # This call is now safe.
+                self._save_state()
             
             state = self.states[key]
             return state['year'], state['month']
@@ -166,7 +158,6 @@ class BackfillStateManager:
         key = self._get_query_key(search_query)
         logger.success(f"Completed processing for query '{key}' for {year}-{month:02d}.")
         
-        # Acquire the lock for the entire read-modify-write operation.
         with self._lock:
             current_year = self.states.get(key, {}).get('year')
             current_month = self.states.get(key, {}).get('month')
@@ -179,5 +170,5 @@ class BackfillStateManager:
                     new_year -= 1
                 
                 self.states[key] = {'year': new_year, 'month': new_month}
-                self._save_state() # This call is now safe.
+                self._save_state()
                 logger.info(f"State updated. Next run will process {new_year}-{new_month:02d}.")
