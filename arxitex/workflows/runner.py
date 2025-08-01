@@ -3,6 +3,7 @@ import abc
 import asyncio
 import os
 import re
+import calendar
 from loguru import logger
 from typing import Optional, Tuple, List, Dict
 import json
@@ -11,7 +12,7 @@ from arxitex.indices.discover import DiscoveryIndex
 from arxitex.indices.processed import ProcessedIndex
 from arxitex.indices.skipped import SkippedIndex
 from arxitex.arxiv_api import ArxivAPI
-from arxitex.search_cursor import SearchCursorManager
+from arxitex.search_cursor import BackfillStateManager
 
 
 class ArxivPipelineComponents:
@@ -22,7 +23,7 @@ class ArxivPipelineComponents:
         self.db_path = os.path.join(self.output_dir, "arxitex_indices.db")
 
         self.arxiv_api = ArxivAPI()
-        self.search_cursors = SearchCursorManager(self.output_dir)
+        self.backfill_state = BackfillStateManager(self.output_dir)
         self.discovery_index = DiscoveryIndex(self.db_path)
         self.processing_index = ProcessedIndex(self.db_path)
         self.skipped_index = SkippedIndex(self.db_path)
@@ -122,22 +123,23 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
         return None
     
     def _fetch_and_filter_batch_sync(self, search_query: str, start: int, batch_size: int) -> Optional[Tuple[List[Dict], bool]]:
-        query_to_run = search_query
-        if start == 0:
-            query_to_run = self.components.search_cursors.get_query_with_cursor(search_query)
+        """
+        Fetches a single batch of papers using a pre-built query, then filters the
+        results against existing indexes and heuristics.
+        """
+        response_text = self.components.arxiv_api.fetch_papers(search_query, start, batch_size)
+        if not response_text:
+            return None
 
-        response_text, _ = self.components.arxiv_api.fetch_papers(query_to_run, start, batch_size)
-        if not response_text: return None
-
-        _, _, entries = self.components.arxiv_api.parse_response(response_text)
-        if not entries: return ([], False)
-
-        self.components.search_cursors.update_cursor(search_query, entries, self.components.arxiv_api.ns)
+        entries_in_batch, _, entries = self.components.arxiv_api.parse_response(response_text)
+        if not entries:
+            return ([], False)
 
         papers_to_process = []
         for entry in entries:
             paper = self.components.arxiv_api.entry_to_paper(entry)
-            if not paper: continue
+            if not paper:
+                continue
 
             paper_id = paper['arxiv_id']
 
@@ -161,11 +163,12 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
                 if self.force:
                     papers_to_process.append(paper)
                 else:
-                    logger.info(f"Skipping {paper_id}: already in processing index. Use --force to override.")
+                    logger.debug(f"Skipping {paper_id}: already successfully processed.")
             else:
                 papers_to_process.append(paper)
 
-        logger.info(f"Found {len(papers_to_process)} new papers to consider in this batch of {len(entries)}.")
+        logger.info(f"Found {len(papers_to_process)} new papers to process in this batch of {entries_in_batch}.")
+        
         return (papers_to_process, True)
 
     async def _get_papers_to_process(self, search_query: str, start: int, batch_size: int):
@@ -173,52 +176,56 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
             self._fetch_and_filter_batch_sync, search_query, start, batch_size
         )
 
-    async def run(self, search_query: str, max_papers: int, batch_size: int = 20):
-        session_success_count = 0
-        start_index = 0
-        
-        logger.info(f"Starting async workflow '{self.__class__.__name__}'.")
+    async def run(self, search_query: str, max_papers: int, batch_size: int = 100):
+        """Runs a stateful, multi-month backfill until the 'max_papers' goal is reached."""
+        logger.info(f"--- Starting backfill for query '{search_query}' ---")
         logger.info(f"Goal for this run: Successfully process {max_papers} new papers.")
         
+        session_success_count = 0
         semaphore = asyncio.Semaphore(self.max_concurrent_tasks)
 
         while session_success_count < max_papers:
-            result_tuple = await self._get_papers_to_process(search_query, start_index, batch_size)
-            if result_tuple is None:
-                logger.warning("API did not return papers. Ending run.")
-                break
             
-            papers_to_process, api_had_entries = result_tuple
+            year, month = self.components.backfill_state.get_next_interval(search_query)
+            logger.info(f"--- Now processing month {year}-{month:02d} ---")
 
-            if not api_had_entries:
-                logger.info("No more papers found from the API for this query. Ending run.")
-                break
+            # Construct the query for this specific month.
+            _, last_day = calendar.monthrange(year, month)
+            start_date = f"{year}{month:02d}01"
+            end_date = f"{year}{month:02d}{last_day}"
+            date_query = f" AND submittedDate:[{start_date} TO {end_date}]"
+            monthly_query = f"({search_query}){date_query}"
+            
+            start_index = 0
+            month_complete = False
+            
+            while not month_complete:
+                result_tuple = await self._get_papers_to_process(monthly_query, start_index, batch_size)
+                
+                if result_tuple is None or not result_tuple[1]:
+                    month_complete = True
+                    self.components.backfill_state.complete_interval(search_query, year, month)
+                    logger.info(f"No more papers found for {year}-{month:02d}. Month complete.")
+                    continue
 
-            if not papers_to_process:
-                logger.info("This batch contained no new papers to process. Fetching next batch.")
+                papers_to_process, _ = result_tuple
+                if papers_to_process:
+                    tasks = [self._process_and_handle_paper(paper, semaphore) for paper in papers_to_process]
+                    batch_results = await asyncio.gather(*tasks)
+                    self.results.extend(filter(None, batch_results))
+                    session_success_count += sum(1 for r in batch_results if r and r.get('status') == 'success')
+                    logger.info(f"Batch complete. Total successes this run: {session_success_count}/{max_papers}.")
+
+                if session_success_count >= max_papers:
+                    logger.success(f"Session goal of {max_papers} successful papers met.")
+                    break
+
                 start_index += batch_size
-                continue 
-            
-            tasks = [self._process_and_handle_paper(paper, semaphore) for paper in papers_to_process]
-            
-            batch_results = await asyncio.gather(*tasks)
-            self.results.extend(filter(None, batch_results))
-
-            successes_in_batch = sum(1 for r in batch_results if r and r.get('status') == 'success')
-            session_success_count += successes_in_batch
-
-            logger.info(
-                f"Batch complete. Successful in this run: {session_success_count}/{max_papers}"
-            )
 
             if session_success_count >= max_papers:
-                logger.info(f"Session goal of {max_papers} successful papers met.")
                 break
-
-            start_index += batch_size
-            
-        logger.info(f"Workflow finished. Processed {session_success_count} new papers successfully in this run.")
-        logger.info("Writing summary report for this run...")
+                
+        logger.info(f"Workflow finished. Processed {session_success_count} new papers successfully.")
         self._write_summary_report()
 
     async def _process_and_handle_paper(self, paper: dict, semaphore: asyncio.Semaphore):
