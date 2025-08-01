@@ -55,6 +55,10 @@ class ArxivAPI:
     
     def parse_response(self, response_text):
         """Parse XML response from ArXiv API"""
+        if not response_text:
+            logger.warning("Received empty response text from API.")
+            return 0, 0, []
+        
         try:
             root = ET.fromstring(response_text)
         except ET.ParseError as e:
