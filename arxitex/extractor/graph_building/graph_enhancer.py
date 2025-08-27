@@ -43,12 +43,12 @@ class GraphEnhancer:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
             return DocumentGraph()
         
-        bank = None
-        artifact_to_terms_map = {}
         if infer_dependencies:
             logger.info("--- Starting Pass 2: Enhancing graph with LLM-inferred dependencies ---")
             graph = await self._infer_and_add_dependencies(graph)
         
+        bank = None
+        artifact_to_terms_map = {}
         if enrich_content:
             logger.info("--- Starting Pass 3: Enriching artifact content with definitions ---")
             bank, artifact_to_terms_map = await self._enrich_artifact_content(graph, latex_content)
