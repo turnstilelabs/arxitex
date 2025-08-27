@@ -42,6 +42,7 @@ def transform_graph_to_search_format(
             continue
 
         # The prerequisite block is identified by a consistent header.
+        # See document_enhancer.py for where this is added.
         content_full = node.content
         prereq_header = "--- Prerequisite Definitions ---"
         if prereq_header in node.content:

@@ -91,6 +91,7 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
     def __init__(self, components: ArxivPipelineComponents, **kwargs):
         super().__init__(components, **kwargs)
         
+        # limitations and heuristics for filtering papers
         self.max_pages = kwargs.get('max_pages', 50)
         self.title_exclude_keywords = kwargs.get('title_exclude_keywords', ["lecture", "course", "notes on", "introduction to"])
         logger.info(f"Workflow initialized with filtering: max_pages={self.max_pages}, exclude_keywords={self.title_exclude_keywords}")
