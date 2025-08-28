@@ -35,7 +35,7 @@ def get_examples_dir() -> Path:
 async def agenerate_artifact_graph(arxiv_id: str, infer_dependencies: bool,
     enrich_content: bool, source_dir: Optional[Path] = None) -> Dict:
     """
-    Orchestrates the full pipeline to generate a dependency graph from an arXiv paper.
+    Orchestrates the full pipeline to generate a dependency graph fromve an arXiv paper.
     
     This function now acts as a high-level controller, delegating the graph
     building task to the appropriate class.
@@ -193,10 +193,10 @@ Examples:
         help="Output JSON file. If path is omitted, a default is used. If flag is omitted, prints to stdout."
     )
     parser.add_argument(
-    "--save-bank",
-    action="store_true",
-    help="Save the definition bank to a separate JSON file if available."
-    )
+        "--save-bank",
+        action="store_true",
+        help="Save the definition bank to a separate JSON file if available."
+        )
     parser.add_argument(
         "-viz", "--visualize", action="store_true", help="Create and open an interactive HTML visualization."
     )
