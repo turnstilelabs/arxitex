@@ -20,7 +20,7 @@ def extract_after_think(text: str) -> str:
 class JSONExtractor:
     """This is a poor man fix to get structure outputs for calling together.ai models"""
 
-    def __init__(self, model: str = "gpt-4o-2024-08-06"):
+    def __init__(self, model: str = "gpt-5-nano-2025-08-07"):
         self.client = OpenAI()
         self.model = model
 

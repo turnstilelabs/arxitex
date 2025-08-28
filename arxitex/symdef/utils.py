@@ -65,23 +65,27 @@ class ContextFinder:
             # For simple, purely alphabetic terms ('f', 'G', 'phi'), we must use
             # strict boundaries to prevent false positives.
             if term.isalpha():
-                # The SAFEST "whole word" boundary for LaTeX:
-                # 1. (?<!\\)       - Not preceded by a backslash (rejects '\f', '\F').
-                # 2. (?<![a-zA-Z]) - Not preceded by another letter (rejects 'if').
-                # 3. {escaped_term} - The term itself.
-                # 4. (?![a-zA-Z])  - Not followed by another letter (rejects 'function').
-                # This combination is precise and safe.
-                pattern = fr'(?<!\\)(?<![a-zA-Z]){escaped_term}(?![a-zA-Z])'
+                # A term must be preceded by:
+                #   (?:^|\s|[\(\[\{,=+\-*/<>,])
+                #   - ^           : the start of the string
+                #   - \s          : any whitespace character
+                #   - [...]       : a set of common opening delimiters and operators
+                # It must be followed by:
+                #   (?=[\s\)\]\},.=+\-*/<>,]|$)
+                #   - \s, delimiters, or operators
+                #   - $           : the end of the string
+                
+                prefix = r'(?:^|\s|[\(\[\{,=+\-*/<>,])'
+                suffix = r'(?=[\s\)\]\},.=+\-*/<>,]|$)'                
+                pattern = f'{prefix}({escaped_term}){suffix}'
             else:
-                # For any term containing non-alphabetic characters ('h(x)', '$F_1$',
-                # 'c-approximate'), a literal search is the only reliable method.
-                # The risk of it being an accidental substring is negligible.
+                # For any term containing non-alphabetic characters
+                # a literal search is the only reliable method.
                 pattern = escaped_term
 
             logger.debug(f"Searching for term '{term}' with pattern: {pattern}")
             
             # Step 2: Find the first match in the original text.
-            # No IGNORECASE flag is used, ensuring a case-sensitive search.
             first_match = next(re.finditer(pattern, text_to_search), None)
             
             if not first_match:
@@ -93,17 +97,13 @@ class ContextFinder:
             return ""
 
         # Step 3: Extract the paragraph containing the match.
-        match_start_pos = first_match.start()
+        match_start_pos = first_match.start(1) if term.isalpha() else first_match.start()
 
         para_start_pos = text_to_search.rfind('\n\n', 0, match_start_pos)
-        if para_start_pos == -1:
-            para_start_pos = 0
-        else:
-            para_start_pos += 2 
+        para_start_pos = 0 if para_start_pos == -1 else para_start_pos + 2 
 
         para_end_pos = text_to_search.find('\n\n', match_start_pos)
-        if para_end_pos == -1:
-            para_end_pos = len(text_to_search)
+        para_end_pos = len(text_to_search) if para_end_pos == -1 else para_end_pos
 
         definitional_paragraph = text_to_search[para_start_pos:para_end_pos].strip()
         

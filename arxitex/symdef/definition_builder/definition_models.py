@@ -10,6 +10,16 @@ class TermExtractionResult(BaseModel):
         description="A list of non-trivial mathematical symbols and specialized concepts found in the text."
     )
 
+
+class DocumentTermExtractionResult(BaseModel):
+    """
+    The structured response for the list of all terms extracted from a full document.
+    """
+    terms: List[str] = Field(
+        ...,
+        description="A comprehensive list of all non-trivial mathematical terms, symbols, and concepts found in the document."
+    )
+    
 class DefinitionSynthesisResult(BaseModel):
     """
     The structured response for synthesizing a definition for a given term.

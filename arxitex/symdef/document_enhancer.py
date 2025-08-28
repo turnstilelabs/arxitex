@@ -1,5 +1,5 @@
 import argparse
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 import tempfile 
 from loguru import logger
 import json
@@ -13,7 +13,7 @@ from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.extractor.utils import ArtifactNode, ArtifactType
-from arxitex.symdef.utils import clean_latex_for_llm, async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
+from arxitex.symdef.utils import async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 def determine_output_path(
     user_path: Optional[Path], 
@@ -63,13 +63,15 @@ class DocumentEnhancer:
         self._synthesis_lock = asyncio.Lock()
 
     async def enhance_document(
-        self, artifacts: List[ArtifactNode], latex_content: str
+        self, artifacts: List[ArtifactNode], latex_content: str,
+        use_global_extraction: bool = True
     ) -> Dict[str, str]:
         """
         Enhances the document by processing all artifacts to ensure they are self-contained
         Args:
             artifacts: A list of ArtifactNodes sorted by their position in the document.
             latex_content: The full LaTeX source content.
+            use_global_extraction: If True, uses single-call global term extraction.
 
         Returns:
             A dictionay containing:
@@ -78,6 +80,7 @@ class DocumentEnhancer:
             - A DefinitionBank instance containing all definitions found or synthesized.
         """
         sorted_artifacts = sorted(artifacts, key=lambda a: a.position.line_start)
+        all_artifacts_map = {a.id: a for a in sorted_artifacts}
         artifact_start_positions = self._calculate_start_positions(sorted_artifacts, latex_content)
         artifact_end_positions = self._calculate_end_positions(sorted_artifacts, latex_content)
 
@@ -85,13 +88,14 @@ class DocumentEnhancer:
         await self._populate_bank_from_definitions(sorted_artifacts)
 
         logger.info("Phase 2: Synthesizing definitions for remaining terms...")
-        artifact_to_terms_map = await self._discover_and_synthesize_terms(
-        sorted_artifacts, artifact_start_positions, artifact_end_positions, latex_content
+        artifact_to_terms_map, term_to_first_artifact_map = await self._discover_and_synthesize_terms(
+            sorted_artifacts, artifact_start_positions, artifact_end_positions, latex_content,
+            use_global_extraction=use_global_extraction
         )
 
         logger.info("Phase 3: Generating enhanced content for all artifacts...")
         enhanced_artifacts = await self._enhance_all_artifacts(
-        sorted_artifacts, artifact_to_terms_map
+        sorted_artifacts, artifact_to_terms_map, term_to_first_artifact_map, all_artifacts_map
         )
 
         logger.success("Document enhancement complete.")
@@ -186,24 +190,22 @@ class DocumentEnhancer:
         """
         sanitized_terms = []
         for term in raw_terms:
-            # Remove any non-printable control characters.
             clean_term = re.sub(r'[^\x20-\x7E\n\t\r]', '', term)
 
-            # Replace newlines, tabs, and multiple spaces with a single space.
-            clean_term = re.sub(r'\s+', ' ', clean_term)
-
-            # Normalize excessive backslashes from LLM hallucinations (e.g., \\phi -> \phi).
+            # Rule 2: Normalize excessive backslashes from LLM hallucinations (e.g., \\phi -> \phi).
             clean_term = re.sub(r'\\{2,}', r'\\', clean_term)
             
-            # Strip leading/trailing punctuation often left by LLMs.
-            clean_term = clean_term.strip('.,;:- ')
+            # Rule 3: ONLY strip leading/trailing whitespace. Do NOT collapse internal whitespace.
+            clean_term = clean_term.strip()
 
-            # Fix mismatched LaTeX delimiters as a common heuristic.
-            if clean_term.startswith('$') and not clean_term.endswith('$'):
-                clean_term += '$'
-            if clean_term.startswith('{') and not clean_term.endswith('}'):
-                clean_term += '}'
+            # Rule 4: Remove ONLY common sentence-ending punctuation if it's trailing.
+            if clean_term.endswith('.') or clean_term.endswith(','):
+                clean_term = clean_term[:-1]
                 
+            if len(clean_term) == 1 and clean_term.isalpha():
+                logger.warning(f"Discarding ambiguous single-character alphabetic term: '{clean_term}'")
+                continue
+            
             if not clean_term:
                 continue
 
@@ -223,56 +225,120 @@ class DocumentEnhancer:
             logger.error(f"Failed to extract terms from artifact {artifact.id}: {e}", exc_info=True)
             return artifact.id, []
     
-    async def _discover_and_synthesize_terms(
-        self, artifacts: List[ArtifactNode], start_positions: Dict[str, int],
-        end_positions: Dict[str, int], latex_content: str
-    ) -> Dict[str, List[str]]:
-        """
-        Discovers all terms in all artifacts, synthesizes definitions for missing ones,
-        and returns a map of artifact IDs to their contained terms.
-        """
-        logger.info("Starting term discovery and mapping to source artifacts...")
+    async def _extract_terms_globally(
+        self, artifacts: List[ArtifactNode]
+    ) -> Tuple[set, Dict[str, List[str]], Dict[str, str]]:
+        """Extracts terms using the single-call global strategy."""
+        # 1. Concatenate, sanitize for LLM, and make a single API call
+        logger.info("Using GLOBAL term extraction strategy.")
+        full_document_content = "\n\n---\n---\n\n".join([a.content for a in artifacts])
+        raw_valid_terms = await self.llm_enhancer.aextract_document_terms(full_document_content)
+
+        # 2. Sanitize the LLM's output
+        all_valid_terms_sanitized = self._filter_and_sanitize_extracted_terms(raw_valid_terms)
+        all_valid_terms_set = set(all_valid_terms_sanitized)
+        logger.success(f"Global strategy found {len(all_valid_terms_set)} unique, valid terms.")
+
+        # 3. Map terms back to artifacts
+        artifact_to_terms_map: Dict[str, List[str]] = {}
+        term_to_first_artifact_map: Dict[str, str] = {}
+        for artifact in artifacts:
+            searchable_content = re.sub(r'\s+', ' ', artifact.content)
+            found_terms = []
+            for term in all_valid_terms_set:            
+                escaped_term = re.escape(term)
+                pattern = ""
+
+                # Case 1: Self-Delimited Terms. If a term is enclosed in '$...$' or '\[...\]',
+                if (term.startswith('$') and term.endswith('$')) or \
+                (term.startswith('\\[' ) and term.endswith('\\]')) or \
+                (term.startswith('\\(' ) and term.endswith('\\)')):
+                    pattern = escaped_term
+                
+                # Case 2: Free Terms (all others). This includes 'G', 'G'', '\alpha', 'nilpotent group'.
+                else:
+                    # A valid boundary is the start/end of the string, whitespace, or a common operator/delimiter.
+                    prefix = r'(?:^|\s|[\(\[\{,=+\-*/<>,])'
+                    suffix = r'(?=[\s\)\]\},.=+\-*/<>,]|$)'
+                    pattern = f'{prefix}({escaped_term}){suffix}'
+
+                if re.search(pattern, searchable_content):
+                    found_terms.append(term)
+                    if term not in term_to_first_artifact_map:
+                        term_to_first_artifact_map[term] = artifact.id
+            artifact_to_terms_map[artifact.id] = sorted(found_terms)
+        
+        return all_valid_terms_set, artifact_to_terms_map, term_to_first_artifact_map
+
+    async def _extract_terms_per_artifact(
+        self, artifacts: List[ArtifactNode]
+    ) -> Tuple[set, Dict[str, List[str]], Dict[str, str]]:
+        """Extracts terms using per-artifact iteration strategy."""
+        logger.info("Using PER-ARTIFACT term extraction strategy.")
+        all_valid_terms_set = set()
         artifact_to_terms_map: Dict[str, List[str]] = {}
         term_to_first_artifact_map: Dict[str, str] = {}
 
-        extraction_results = await asyncio.gather(*[self._extract_and_sanitize_for_artifact(a) for a in artifacts])
-        
-        all_raw_terms = set()
-        for artifact_id, raw_terms in extraction_results:
-            sanitized_terms = self._filter_and_sanitize_extracted_terms(raw_terms)
-            artifact_to_terms_map[artifact_id] = sanitized_terms
-            for term in sanitized_terms:
-                all_raw_terms.add(term)
-                if term not in term_to_first_artifact_map:
-                    term_to_first_artifact_map[term] = artifact_id
+        extraction_tasks = [self.llm_enhancer.aextract_single_artifact_terms(a.content) for a in artifacts]
+        results = await asyncio.gather(*extraction_tasks, return_exceptions=True)
 
-        existing_defs = await self.bank.find_many(list(all_raw_terms))
+        for artifact, raw_terms_result in zip(artifacts, results):
+            if isinstance(raw_terms_result, Exception):
+                logger.error(f"Failed to extract terms for artifact {artifact.id}: {raw_terms_result}")
+                sanitized_terms = []
+            else:
+                sanitized_terms = self._filter_and_sanitize_extracted_terms(raw_terms_result)
+            
+            artifact_to_terms_map[artifact.id] = sanitized_terms
+            all_valid_terms_set.update(sanitized_terms)
+            for term in sanitized_terms:
+                if term not in term_to_first_artifact_map:
+                    term_to_first_artifact_map[term] = artifact.id
+        
+        logger.success(f"Per-artifact strategy found {len(all_valid_terms_set)} unique, valid terms.")
+        return all_valid_terms_set, artifact_to_terms_map, term_to_first_artifact_map
+    
+    async def _discover_and_synthesize_terms(
+        self, artifacts: List[ArtifactNode], start_positions: Dict[str, int],
+        end_positions: Dict[str, int], latex_content: str,
+        use_global_extraction: bool
+    ) -> Tuple[Dict[str, List[str]], Dict[str, str]]:
+        """
+        Discovers all terms via a single LLM call, sanitizes the result, then synthesizes definitions.
+        """
+        if use_global_extraction:
+            all_valid_terms_set, artifact_to_terms_map, term_to_first_artifact_map = \
+                await self._extract_terms_globally(artifacts)
+        else:
+            all_valid_terms_set, artifact_to_terms_map, term_to_first_artifact_map = \
+                await self._extract_terms_per_artifact(artifacts)
+
+        existing_defs = await self.bank.find_many(list(all_valid_terms_set))
         existing_canonical_terms = {self.bank._normalize_term(d.term) for d in existing_defs}        
         missing_terms = {
-            term for term in all_raw_terms 
+            term for term in all_valid_terms_set 
             if self.bank._normalize_term(term) not in existing_canonical_terms
         }
 
         if not missing_terms:
             logger.info("No new terms to synthesize; all are present in the bank.")
-            return artifact_to_terms_map
+            return artifact_to_terms_map, term_to_first_artifact_map
             
-        logger.warning(f"Found {len(existing_canonical_terms)} existing terms in the bank:{existing_canonical_terms}")
-        logger.warning(f"Found {len(missing_terms)} missing terms to synthesize: {missing_terms}")
-    
+        logger.info(f"Found {len(missing_terms)} missing terms to synthesize: {missing_terms}")
+
         synthesis_tasks = [
-        self._synthesize_single_term(
-            term=term,
-            source_artifact_id=term_to_first_artifact_map[term],
-            start_positions=start_positions,
-            end_positions=end_positions,
-            latex_content=latex_content
+            self._synthesize_single_term(
+                term=term,
+                source_artifact_id=term_to_first_artifact_map[term],
+                start_positions=start_positions,
+                end_positions=end_positions,
+                latex_content=latex_content
             )
-            for term in missing_terms
+            for term in missing_terms if term in term_to_first_artifact_map
         ]
         await asyncio.gather(*synthesis_tasks)
 
-        return artifact_to_terms_map
+        return artifact_to_terms_map, term_to_first_artifact_map
 
     async def _synthesize_single_term(
         self,
@@ -310,9 +376,6 @@ class DocumentEnhancer:
             preceding_context = self.context_finder.find_context_around_first_occurrence(
                 term, text_to_search_before
             )
-            
-            #artifact_content = clean_latex_for_llm(artifact_content)
-            #preceding_context = clean_latex_for_llm(preceding_context)
             
             context_parts = []
             if preceding_context:
@@ -367,18 +430,24 @@ class DocumentEnhancer:
                 logger.warning(f"{log_prefix} LLM returned no content for the definition.")
 
     async def _enhance_all_artifacts(
-        self, artifacts: List[ArtifactNode], artifact_to_terms_map: Dict[str, List[str]]
+        self, artifacts: List[ArtifactNode], artifact_to_terms_map: Dict[str, List[str]],
+        term_to_first_artifact_map: Dict[str, str],
+        all_artifacts_map: Dict[str, ArtifactNode]  
     ) -> Dict[str, str]:
         """Concurrently enhances all artifacts using the pre-computed terms map."""
         tasks = [
-            self._enhance_single_artifact(artifact, artifact_to_terms_map.get(artifact.id, []))
+            self._enhance_single_artifact(artifact,
+                                          artifact_to_terms_map.get(artifact.id, []),
+                                          term_to_first_artifact_map,
+                                          all_artifacts_map)
             for artifact in artifacts
         ]
         results = await asyncio.gather(*tasks)
         return {artifact_id: content for artifact_id, content in results}
 
     async def _enhance_single_artifact(
-        self, artifact: ArtifactNode, terms_in_artifact: List[str]
+        self, artifact: ArtifactNode, terms_in_artifact: List[str], term_to_first_artifact_map: Dict[str, str],
+        all_artifacts_map: Dict[str, ArtifactNode]
     ) -> tuple[str, str]:
         """Enhances a single artifact by prepending necessary definitions from the pre-computed term list."""
         logger.info(f"Enhancing content for artifact '{artifact.id}' using pre-discovered terms...")
@@ -389,16 +458,38 @@ class DocumentEnhancer:
             if definition:
                 definitions_needed[term] = definition
 
-        enhanced_content = self._create_enhanced_content(artifact, definitions_needed)
+        enhanced_content = self._create_enhanced_content(artifact,
+                                                        definitions_needed,
+                                                        term_to_first_artifact_map,
+                                                        all_artifacts_map)
         logger.success(f"Successfully enhanced artifact '{artifact.id}'.")
         return artifact.id, enhanced_content
 
-    def _create_enhanced_content(self, artifact: ArtifactNode, definitions: Dict[str, Definition]) -> str:
+    def _create_enhanced_content(
+        self, 
+        artifact: ArtifactNode, 
+        definitions: Dict[str, Definition],
+        term_to_first_artifact_map: Dict[str, str],
+        all_artifacts_map: Dict[str, ArtifactNode]
+    ) -> str:
         """Builds the final string for the self-contained artifact."""
         if not definitions:
             return artifact.content
 
-        sorted_defs = sorted(definitions.items(), key=lambda item: item[0])
+        def get_sort_key(term_tuple: tuple[str, Definition]) -> int:
+            term, _ = term_tuple
+        
+            source_artifact_id = term_to_first_artifact_map.get(term)
+            if not source_artifact_id:
+                return 0 # Place terms without a source (e.g., from a base bank) at the beginning
+
+            source_artifact = all_artifacts_map.get(source_artifact_id)
+            if source_artifact and source_artifact.position:
+                return source_artifact.position.line_start
+            
+            return 0
+
+        sorted_defs = sorted(definitions.items(), key=get_sort_key)
 
         definitions_list = [f"**{term}**: {definition.definition_text}" for term, definition in sorted_defs]
         definitions_block = "--- Prerequisite Definitions ---\n" + "\n\n".join(definitions_list)
@@ -501,7 +592,7 @@ async def main():
         logger.error("Could not obtain LaTeX content or artifacts. Exiting.")
         return
 
-    # --- 2. Instantiate Dependencies (Dependency Injection) ---
+    # --- 2. Instantiate Dependencies ---
     logger.info("Initializing components...")
     llm_enhancer = DefinitionBuilder()
     context_finder = ContextFinder()
