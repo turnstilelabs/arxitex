@@ -1,5 +1,3 @@
-# dependency.py
-
 from loguru import logger
 from arxitex.llms import llms
 
@@ -20,7 +18,7 @@ class GraphDependencyInference:
             return llms.execute_prompt(
                 prompt,
                 output_class=PairwiseDependencyCheck,
-                model="gpt-4o-2024-08-06"
+                model="gpt-5-mini-2025-08-07"
             )
         except Exception as e:
             logger.error(f"Error during dependency inference: {e}")
@@ -33,7 +31,7 @@ class GraphDependencyInference:
             return await llms.aexecute_prompt(
                 prompt,
                 output_class=PairwiseDependencyCheck,
-                model="gpt-4o-2024-08-06"
+                model="gpt-5-mini-2025-08-07"
             )
         except Exception as e:
             logger.error(f"Error during async dependency inference: {e}")
