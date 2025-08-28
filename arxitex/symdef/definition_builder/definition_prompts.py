@@ -1,5 +1,3 @@
-import codecs
-import re
 from typing import Optional
 from arxitex.symdef.utils import Definition
 from arxitex.llms.prompt import Prompt
@@ -25,8 +23,66 @@ class SymbolEnhancementPromptGenerator:
         }}
         """
 
-        return Prompt(system=system, user=user, id="term_extraction")
+        return Prompt(system=system, user=user, id="single_artifact_term_extraction")
 
+    def make_document_term_extraction_prompt(self, full_document_content: str) -> Prompt:
+        """
+        Generates a prompt to extract all significant terms from the entire document content at once.
+        """
+        system = """
+    You are an expert mathematician and research assistant creating a "prerequisite glossary" for a graduate-level student who is about to read this paper.
+    Your task is to analyze the entire document and compile a single, comprehensive list of all specialized mathematical terms, symbols, and concepts that are **crucial for understanding this specific text**.
+
+    The key is to distinguish between specialized knowledge introduced in the paper and foundational knowledge the reader is expected to have.
+
+    **CRITICAL EXTRACTION RULES:**
+
+    **1. WHAT TO EXTRACT (Inclusions):**
+        - **Specialized Concepts:** Multi-word terms that are specific to this field or defined in the paper (e.g., 'union-closed family', 'Frobenius norm', 'simplicial complex').
+        - **Key Notations & Symbols:** All non-trivial LaTeX commands or symbols that represent core objects of study in this paper (e.g., `\mathcal{F}`, `$G_i$`, `$\hat{X}$`).
+        - **Acronyms/Abbreviations:** Any mathematical acronyms defined and used in the text.
+
+    **2. WHAT TO IGNORE (Exclusions):**
+        - **DO NOT EXTRACT Foundational Knowledge:** Aggressively filter out any standard, undergraduate-level mathematical concepts. Assume the reader already knows what these are.
+          Examples to ignore: 'set', 'function', 'group', 'ring', 'field', 'vector space', 'matrix', 'derivative', 'integral', 'topology'.
+        - **DO NOT EXTRACT Procedural & Structural Words:** Ignore all words related to the structure of the paper or logical reasoning.
+          Examples to ignore: 'theorem', 'proof', 'lemma', 'corollary', 'proposition', 'definition', 'remark', 'example', 'assumption', 'conclusion', 'let', 'suppose', 'consider'.
+        - **DO NOT EXTRACT Common Operators & Relations:** Ignore common mathematical symbols and operators.
+          Examples to ignore: `\sum`, `\int`, `\cap`, `\cup`, `\in`, `=`, `\le`, `\ge`, `+`, `-`.
+
+    **CRITICAL FORMATTING AND ATOMICITY RULES:**
+        - **ONE TERM PER ENTRY:** Each string in the final JSON list must be a single, atomic mathematical term. Do not bundle multiple terms together, even if they are related.
+        - **EXTRACT THE TERM ONLY:** The string should be the pure term as it appears in the text. DO NOT include any explanatory notes, commentary, or definitions in parentheses.
+        - **Split Comma-Separated Lists:** If you encounter multiple related terms separated by commas, extract each term as a separate entry.
+        - **SEPARATE SYMBOLS AND DESCRIPTIONS:** If a concept and its symbol are mentioned together (e.g., "the upper central series ($Z_i$)"), they should be separate entries in the list if both are significant.
+        - **PRESERVE LATEX COMMANDS VERBATIM:** LaTeX commands (e.g., `\bar`, `\mathcal`, `\mathbb`, `\gamma`) are atomic units. They must be extracted **exactly** as they appear in the source text. Do not break them apart, misspell them, or attempt to approximate them.
+        - **Examples of CORRECT extraction:**
+            - From "$H^1(X)$ and $H^2(X)$ (cohomology groups)" → Extract: "$H^1(X)$" and "$H^2(X)$" as separate entries
+            - From "compact space, Hausdorff space, normal space" → Extract: "compact space", "Hausdorff space", "normal space" as separate entries
+            - From "$\nabla f$ (gradient of function)" → Extract: "$\nabla f$" only
+            - From "both $\mathcal{L}(V,W)$ and $\text{Hom}(V,W)$ (linear maps)" → Extract: "$\mathcal{L}(V,W)$" and "$\text{Hom}(V,W)$" as separate entries
+                    
+    **3. DEDUPLICATION RULES:**
+        - **Avoid Exact Duplicates:** Ensure no term appears twice in the final list.
+        - **Avoid Near-Duplicates:** If terms differ only by minor variations (e.g., with/without context in parentheses, subgroup vs group of same type, same symbol with/without descriptive text), include only the most complete or general version.
+
+    """
+
+        user = f"""
+        Analyze the following concatenated content from a mathematical paper. Based on the strict rules, identify only the specialized prerequisite terms needed to understand this paper.
+
+        **Full Document Content:**
+        ---
+        {full_document_content}
+        ---
+
+        Respond ONLY with a single structured JSON object containing a flat list of all unique, crucial terms found.
+        {{
+            "terms": ["term1", "term2", "..."]
+        }}
+        """
+        return Prompt(system=system, user=user, id="document_term_extraction")
+    
     def make_definition_extraction_prompt(self, artifact_content: str) -> str:
         """
         Generates a prompt to extract the primary term, its definition, and any aliases
