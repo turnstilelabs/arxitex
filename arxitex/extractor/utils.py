@@ -78,41 +78,51 @@ class ArtifactNode:
     references: List[Reference] = field(default_factory=list)
     is_external: bool = False
     proof: Optional[str] = None
+    prerequisite_defs: Dict[str, str] = field(default_factory=dict)
 
     @property
     def content_preview(self) -> str:
         """
-        Generate a preview of the content (first 150 characters).
-        Strips LaTeX commands and formatting for cleaner display.
+        Generates a clean, MathJax-compatible preview of the content.
         """
         if not self.content:
             return ""
         
-        # Remove common LaTeX commands and formatting
-        clean_content = re.sub(r'\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^}]*\})*', '', self.content)
-        clean_content = re.sub(r'[{}$\\]', '', clean_content)  # Remove braces, dollar signs, backslashes
-        clean_content = re.sub(r'\s+', ' ', clean_content)  # Normalize whitespace
-        clean_content = clean_content.strip()
-        
+        # 1. Escape backticks, which can break JS template literals.
+        # 2. Replace newlines with <br> for HTML rendering.
+        # 3. Escape backslashes for JSON compatibility.
+        clean_content = self.content.replace('`', '\\`')
+        clean_content = clean_content.replace('\n', '<br>')
+        # A double escape is often needed for JSON -> JS pipeline.
+        clean_content = clean_content.replace('\\', '\\\\')
+            
         # Truncate to preview length
-        max_length = 150
+        max_length = 250
         if len(clean_content) <= max_length:
             return clean_content
         
         truncated = clean_content[:max_length]
-        
-        # Try to break at sentence end
-        last_sentence = max(truncated.rfind('.'), truncated.rfind('!'), truncated.rfind('?'))
-        if last_sentence > max_length * 0.7:  # If sentence break is reasonably close
-            return truncated[:last_sentence + 1]
-        
-        # Otherwise break at word boundary
         last_space = truncated.rfind(' ')
-        if last_space > max_length * 0.7:
+        if last_space != -1:
             return truncated[:last_space] + "..."
         
         return truncated + "..."
-    
+        
+    @property
+    def prerequisites_preview(self) -> str:
+        """Generates a clean, HTML-formatted list of prerequisite definitions."""
+        if not self.prerequisite_defs:
+            return ""
+            
+        items = []
+        for term, definition in self.prerequisite_defs.items():
+            # Sanitize each part for HTML/JS
+            clean_term = term.replace('`', '\\`').replace('\\', '\\\\')
+            clean_def = definition.replace('`', '\\`').replace('\n', '<br>').replace('\\', '\\\\')
+            items.append(f"<b>{clean_term}</b>: {clean_def}")
+            
+        return "<br><br>".join(items)
+
     @property
     def display_name(self) -> str:
         """
@@ -137,8 +147,9 @@ class ArtifactNode:
             "id": self.id,
             "type": self.type.value,
             "content": self.content,
-            #"content_preview": self.content_preview,
-            #"display_name": self.display_name,
+            "content_preview": self.content_preview,
+            "prerequisites_preview": self.prerequisites_preview,
+            "display_name": self.display_name,
             "label": self.label,
             "position": self.position.to_dict(),
             "references": [ref.to_dict() for ref in self.references],
@@ -146,13 +157,36 @@ class ArtifactNode:
         }
 
 class DependencyType(str, Enum):
-    """Enumerates the specific types of relationships between artifacts."""
-    PROVES = "PROVES"
-    USES_DEFINITION = "USES_DEFINITION"
-    BUILDS_UPON = "BUILDS_UPON"
-    CITES = "CITES"
-    PROVIDES_EXAMPLE_FOR = "PROVIDES_EXAMPLE_FOR"
-    CONTRADICTS = "CONTRADICTS"
+    """
+    Defines the types of logical or structural dependencies between two artifacts in a document.
+    """
+    
+    # --- Logical Dependencies ---
+    USES_RESULT = "uses_result"
+    """The source artifact's proof relies on a theorem, lemma, or proposition from the target."""
+    
+    USES_DEFINITION = "uses_definition"
+    """The source artifact uses a term, notation, or concept formally defined in the target."""
+
+    PROVES = "proves"
+    """The source artifact is the formal proof of the statement made in the target."""
+
+    # --- Illustrative Dependencies ---
+    PROVIDES_EXAMPLE = "provides_example"
+    """The source artifact is a concrete example illustrating the concept from the target."""
+
+    PROVIDES_REMARK = "provides_remark"
+    """The source artifact is a remark that provides context or commentary on the target."""
+
+    # --- Hierarchical Dependencies ---
+    IS_COROLLARY_OF = "is_corollary_of"
+    """The source artifact is a direct and immediate consequence of the target theorem."""
+
+    IS_SPECIAL_CASE_OF = "is_special_case_of"
+    """The source artifact is a more specific version of a general result in the target."""
+    
+    IS_GENERALIZATION_OF = "is_generalization_of"
+    """The source artifact presents a result that extends a more specific result from the target."""
     
 @dataclass
 class Edge:
@@ -166,14 +200,21 @@ class Edge:
     context: Optional[str] = None
     reference_type: Optional[ReferenceType] = None
 
-    def to_dict(self):
+    def to_dict(self) -> Dict:
+        """
+        Converts the Edge object to a fully JSON-serializable dictionary.
+        """
+        dep_type_str = self.dependency_type.value if self.dependency_type else None
+        ref_type_str = self.reference_type.value if self.reference_type else None
+
         return {
-            "source_id": self.source_id,
-            "target_id": self.target_id,
-            "dependency_type": self.dependency_type.value if self.dependency_type else None,
-            "dependency": self.dependency,
+            "source": self.source_id,
+            "target": self.target_id,
             "context": self.context,
-            "reference_type": self.reference_type.value,
+            "reference_type": ref_type_str,
+            "dependency_type": dep_type_str,
+            "dependency": self.dependency,
+            "type": dep_type_str or ref_type_str or "generic_dependency"
         }
 
 @dataclass
@@ -228,35 +269,26 @@ class DocumentGraph:
             "total_edges": len(self.edges)
         }
     
-    def to_dict(self, arxiv_id: str, extractor_mode: str=None) -> Dict[str, Any]:
+    def to_dict(self, arxiv_id: str, extractor_mode: str) -> Dict:
         """
-        Serializes the entire graph into a dictionary suitable for JSON output.
-        This method is the single source of truth for the final JSON structure.
+        Serializes the entire graph, including nodes and edges, into a
+        JSON-serializable dictionary for output.
         """
-        nodes_list = [node.to_dict() for node in self.nodes]
+        # Correctly call .to_dict() on each node object
+        serialized_nodes = [node.to_dict() for node in self.nodes]
         
-        edges_list = []
-        for edge in self.edges:
-            edge_dict = {
-                "source": edge.source_id,
-                "target": edge.target_id,
-                "type": edge.dependency_type.value if edge.dependency_type else "reference",
-            }
-            if edge.dependency:
-                edge_dict["dependency"] = edge.dependency
-            if edge.context:
-                edge_dict["context"] = edge.context
-            edges_list.append(edge_dict)
-        
-        stats = self.get_statistics()
-        
+        # --- THE CRITICAL FIX IS HERE ---
+        # The old, buggy version was not calling .to_dict() on each edge.
+        # This new version correctly serializes each edge, including the dependency_type.
+        serialized_edges = [edge.to_dict() for edge in self.edges]
+
         return {
             "arxiv_id": arxiv_id,
-            "nodes": nodes_list,
-            "edges": edges_list,
+            "extractor_mode": extractor_mode,
             "stats": {
-                "node_count": stats.get("total_nodes", 0),
-                "edge_count": stats.get("total_edges", 0),
-                "extractor_used": extractor_mode
-            }
+                "node_count": len(self.nodes),
+                "edge_count": len(self.edges)
+            },
+            "nodes": serialized_nodes,
+            "edges": serialized_edges
         }
