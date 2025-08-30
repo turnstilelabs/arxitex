@@ -47,14 +47,19 @@ class GraphEnhancer:
         
         bank = None
         artifact_to_terms_map = {}
-        if enrich_content:
-            logger.info("--- Starting Pass 2: Enriching artifact content with definitions ---")
-            enrichment_results = await self._enrich_artifact_content(graph, latex_content)
-            bank = enrichment_results["definition_bank"]
-            artifact_to_terms_map = enrichment_results["artifact_to_terms_map"]
+        should_enrich = enrich_content or infer_dependencies
 
-        # TODO: if no enrich_content, we can do that, we would need the older infer_and_add_dependencies method
-        # Maybe by default infer_dependencies should set enrich_content to True
+        if should_enrich:
+            logger.info("--- Starting Pass 2: Enriching artifact content with definitions ---")
+            try:
+                enrichment_results = await self._enrich_artifact_content(graph, latex_content)
+                bank = enrichment_results["definition_bank"]
+                artifact_to_terms_map = enrichment_results["artifact_to_terms_map"]
+            except Exception as e:
+                logger.error(f"Content enrichment failed: {e}. Proceeding without enriched content.", exc_info=True)
+                bank = None
+                artifact_to_terms_map = {}
+
         if infer_dependencies:
             logger.info("--- Starting Pass 3: Enhancing graph with LLM-inferred dependencies ---")
             graph = await self._infer_and_add_dependencies(graph, artifact_to_terms_map, bank)
@@ -92,61 +97,6 @@ class GraphEnhancer:
         logger.success(f"Successfully added prerequisite definitions to {updated_count} artifacts.")
         return enhanced_results
 
-    async def old_infer_and_add_dependencies(self, graph: DocumentGraph):
-        """
-        Analyzes all pairs of nodes to infer dependencies and updates the graph.
-        """
-        node_pairs = list(combinations(graph.nodes, 2))
-        if not node_pairs:
-            logger.info("Not enough nodes to form pairs. Skipping LLM pass.")
-            return
-        
-        logger.info(f"Concurrently analyzing {len(node_pairs)} artifact pairs with LLM.")
-        
-        tasks_with_context = []
-        for source_node, target_node in node_pairs:
-            # Skip pairs involving external nodes for dependency analysis
-            if source_node.is_external or target_node.is_external:
-                continue
-
-            task = asyncio.create_task(
-                self.llm_dependency_checker.ainfer_dependency(
-                    source_node.to_dict(), target_node.to_dict()
-                )
-            )
-            tasks_with_context.append({'source': source_node, 'target': target_node, 'task': task})
-
-        tasks = [t['task'] for t in tasks_with_context]
-        all_results = []
-        if tasks:
-            all_results = await asyncio.gather(*tasks, return_exceptions=True)
-        
-        for context, result in zip(tasks_with_context, all_results):
-            source_node = context['source']
-            target_node = context['target']
-            
-            if isinstance(result, Exception):
-                logger.error(f"Error processing pair ({source_node.id}, {target_node.id}): {result}")
-                continue
-            
-            if result and result.has_dependency:
-                existing_edge = graph.find_edge(source_node.id, target_node.id)
-                
-                if existing_edge:
-                    existing_edge.dependency_type = result.dependency_type
-                    existing_edge.dependency = result.justification or "Justification not provided by LLM."
-                    logger.debug(f"Updated existing edge {source_node.id} -> {target_node.id} with type: {result.dependency_type}")
-                else:
-                    new_edge = Edge(
-                        source_id=source_node.id,
-                        target_id=target_node.id,
-                        dependency_type=result.dependency_type,
-                        dependency=result.justification or "Justification not provided by LLM."
-                    )
-                    graph.add_edge(new_edge)
-                    logger.debug(f"Created new dependency edge: {source_node.id} -> {target_node.id} (Type: {result.dependency_type})")
-        return graph
-
     def _is_subword_of(self, term_a: str, term_b: str) -> bool:
         """
         Checks if term_a is a subword of term_b.
@@ -180,54 +130,70 @@ class GraphEnhancer:
             logger.info("Not enough internal nodes to infer dependencies. Skipping.")
             return graph
 
-        # --- Phase 1: Build the "Conceptual Footprint" for Each Artifact ---
-        logger.info("Building conceptual footprint for each artifact by including term dependencies...")
-        artifact_footprints = defaultdict(set)
-        for artifact in internal_nodes:
-            direct_terms = artifact_to_terms_map.get(artifact.id, [])
-            artifact_footprints[artifact.id].update(direct_terms)
-            
-            for term in direct_terms:
-                definition = await bank.find(term)
-                if definition and definition.dependencies:
-                    artifact_footprints[artifact.id].update(definition.dependencies)
-
-        # --- Phase 2: Generate Candidate Pairs from Overlaps ---
-        logger.info("Generating candidate pairs from conceptual and subword overlap...")
-        candidate_pairs_unordered = set()
         id_to_node_map = {node.id: node for node in internal_nodes}
-
-        # Create all unique combinations of artifact IDs to compare.
-        for id1, id2 in combinations(id_to_node_map.keys(), 2):
-            footprint1 = artifact_footprints[id1]
-            footprint2 = artifact_footprints[id2]
-
-            # Rule 1: Check for direct conceptual overlap.
-            if not footprint1.isdisjoint(footprint2):
-                candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
-                continue
-
-            # Rule 2: If no direct overlap, check for subword overlap.
-            found_subword_link = False
-            for term1 in footprint1:
-                for term2 in footprint2:
-                    if self._is_subword_of(term1, term2) or self._is_subword_of(term2, term1):
-                        candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
-                        found_subword_link = True
-                        break
-                if found_subword_link:
-                    break
-    
-        # --- Phase 3: Filter, Finalize, and Verify with LLM ---
         final_candidate_pairs = []
-        for id1, id2 in candidate_pairs_unordered:
-            node1, node2 = id_to_node_map[id1], id_to_node_map[id2]
-            source_node, target_node = (node2, node1) if node1.position.line_start < node2.position.line_start else (node1, node2)
-            
-            # Filter out pairs that already have a direct \ref edge in the graph.
-            if not graph.find_edge(source_node.id, target_node.id):
-                final_candidate_pairs.append((source_node, target_node))
 
+        # --- THIS IS THE KEY LOGIC BRANCH ---
+        # Check if we have the necessary data to be "smart".
+        has_enrichment_data = bool(bank and artifact_to_terms_map)
+        
+        if has_enrichment_data:
+            # --- Phase 1: Build the "Conceptual Footprint" for Each Artifact ---
+            logger.info("Building conceptual footprint for each artifact by including term dependencies...")
+            artifact_footprints = defaultdict(set)
+            for artifact in internal_nodes:
+                direct_terms = artifact_to_terms_map.get(artifact.id, [])
+                artifact_footprints[artifact.id].update(direct_terms)
+                
+                for term in direct_terms:
+                    definition = await bank.find(term)
+                    if definition and definition.dependencies:
+                        artifact_footprints[artifact.id].update(definition.dependencies)
+
+            # --- Phase 2: Generate Candidate Pairs from Overlaps ---
+            logger.info("Generating candidate pairs from conceptual and subword overlap...")
+            candidate_pairs_unordered = set()
+
+            # Create all unique combinations of artifact IDs to compare.
+            for id1, id2 in combinations(id_to_node_map.keys(), 2):
+                footprint1 = artifact_footprints[id1]
+                footprint2 = artifact_footprints[id2]
+
+                # Rule 1: Check for direct conceptual overlap.
+                if not footprint1.isdisjoint(footprint2):
+                    candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
+                    continue
+
+                # Rule 2: If no direct overlap, check for subword overlap.
+                found_subword_link = False
+                for term1 in footprint1:
+                    for term2 in footprint2:
+                        if self._is_subword_of(term1, term2) or self._is_subword_of(term2, term1):
+                            candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
+                            found_subword_link = True
+                            break
+                    if found_subword_link:
+                        break
+        
+            # --- Phase 3: Filter, Finalize, and Verify with LLM ---
+            for id1, id2 in candidate_pairs_unordered:
+                node1, node2 = id_to_node_map[id1], id_to_node_map[id2]
+                source_node, target_node = (node2, node1) if node1.position.line_start < node2.position.line_start else (node1, node2)
+                
+                # Filter out pairs that already have a direct \ref edge in the graph.
+                if not graph.find_edge(source_node.id, target_node.id):
+                    final_candidate_pairs.append((source_node, target_node))
+
+        else:
+            logger.warning("No enrichment data found. Falling back to checking all artifact pairs.")
+            logger.info("This will be less efficient and may produce lower-quality results, but ensures all possibilities are checked.")
+            
+            for node1, node2 in combinations(internal_nodes, 2):
+                source_node, target_node = (node1, node2) if node1.position.line_start < node2.position.line_start else (node2, node1)
+                
+                if not graph.find_edge(source_node.id, target_node.id):
+                    final_candidate_pairs.append((source_node, target_node))
+            
         if not final_candidate_pairs:
             logger.debug("No promising candidate pairs found after filtering. Skipping LLM verification.")
             return graph
