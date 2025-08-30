@@ -176,12 +176,12 @@ Examples:
     parser.add_argument(
         "--infer-deps", 
         action="store_true", 
-        help="Enable Pass 2: Use LLM to infer dependency links between artifacts."
+        help="Enable Pass 3: Use LLM to infer dependency links between artifacts. This automatically enables content enrichment for best results."
     )
     parser.add_argument(
         "--enrich-content", 
         action="store_true", 
-        help="Enable Pass 3: Use LLM to enrich artifact content with prerequisite definitions."
+        help="Enable Pass 2: Use LLM to enrich artifact content with prerequisite definitions."
     )
     parser.add_argument(
         "--all-enhancements", 

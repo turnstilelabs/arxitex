@@ -40,11 +40,11 @@ class SymbolEnhancementPromptGenerator:
     **1. WHAT TO EXTRACT (Inclusions):**
         - **Specialized Concepts:** Multi-word terms that are specific to this field or defined in the paper (e.g., 'union-closed family', 'Frobenius norm', 'simplicial complex').
         - **Key Notations & Symbols:** All non-trivial LaTeX commands or symbols that represent core objects of study in this paper (e.g., `\mathcal{F}`, `$G_i$`, `$\hat{X}$`).
+            - **This includes specific, named functions or variables (like `f`, `g`, `h`, `X`) that are used consistently as objects of study, even if the general concept (e.g., "function") is foundational.**
         - **Acronyms/Abbreviations:** Any mathematical acronyms defined and used in the text.
 
     **2. WHAT TO IGNORE (Exclusions):**
         - **DO NOT EXTRACT Foundational Knowledge:** Aggressively filter out any standard, undergraduate-level mathematical concepts. Assume the reader already knows what these are.
-          Examples to ignore: 'set', 'function', 'group', 'ring', 'field', 'vector space', 'matrix', 'derivative', 'integral', 'topology'.
         - **DO NOT EXTRACT Procedural & Structural Words:** Ignore all words related to the structure of the paper or logical reasoning.
           Examples to ignore: 'theorem', 'proof', 'lemma', 'corollary', 'proposition', 'definition', 'remark', 'example', 'assumption', 'conclusion', 'let', 'suppose', 'consider'.
         - **DO NOT EXTRACT Common Operators & Relations:** Ignore common mathematical symbols and operators.

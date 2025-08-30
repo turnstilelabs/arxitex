@@ -1,8 +1,11 @@
 
 from typing import Any, List, Dict, Optional
+import re
 from loguru import logger
 import asyncio
 from arxitex.symdef.utils import Definition
+from collections import defaultdict
+from arxitex.symdef.utils import create_canonical_search_string
 
 class DefinitionBank:
     """The 'working memory' holding all definitions found so far."""
@@ -21,6 +24,8 @@ class DefinitionBank:
         - Converts multi-character terms to lowercase for consistency.
         """
         canonical = term.strip()
+        canonical = re.sub(r'\s*\([^)]*\)$', '', canonical).strip()
+
         stripped = True
         while stripped:
             stripped = False
@@ -151,3 +156,93 @@ class DefinitionBank:
                 "dependencies": definition_obj.dependencies,
             }
         return bank_data
+    
+    async def merge_redundancies(self):
+        """
+        Scans the bank for definitions with identical text and merges them.
+        The term with the shortest name is kept as the primary key.
+        All other terms and aliases become aliases of the primary term.
+        """
+        async with self._lock:
+            logger.info("Scanning for and merging redundant definitions...")
+            defs_by_text = defaultdict(list)
+            
+            # 1. Group definitions by their exact definition_text
+            for definition in self._definitions.values():
+                if definition.definition_text:
+                    defs_by_text[definition.definition_text].append(definition)
+            
+            definitions_to_remove = set()
+            
+            # 2. Find groups with more than one definition and merge them
+            for text, group in defs_by_text.items():
+                if len(group) <= 1:
+                    continue
+
+                logger.info(f"Found {len(group)} definitions with the same text to merge: '{text}'")
+                
+                # 3. Choose the primary definition (shortest term)
+                group.sort(key=lambda d: len(d.term))
+                primary_def = group[0]
+                
+                all_aliases = set(primary_def.aliases)
+                
+                # 4. Collect all other terms/aliases and mark definitions for removal
+                for redundant_def in group[1:]:
+                    all_aliases.add(redundant_def.term)
+                    all_aliases.update(redundant_def.aliases)
+                    definitions_to_remove.add(self._normalize_term(redundant_def.term))
+
+                # Remove the primary term itself from its alias list, if present
+                all_aliases.discard(primary_def.term)
+                primary_def.aliases = sorted(list(all_aliases))
+
+                logger.success(f"Merged into primary term '{primary_def.term}' with aliases: {primary_def.aliases}")
+
+            # 5. Remove the redundant definitions from the bank
+            if definitions_to_remove:
+                self._definitions = {
+                    k: v for k, v in self._definitions.items() 
+                    if k not in definitions_to_remove
+                }
+                # Rebuild the alias map from scratch to ensure consistency
+                self._alias_map.clear()
+                for defn in self._definitions.values():
+                    canonical_term = self._normalize_term(defn.term)
+                    for alias in defn.aliases:
+                        self._alias_map[self._normalize_term(alias)] = canonical_term
+                logger.info(f"Removed {len(definitions_to_remove)} redundant definitions.")
+
+    async def resolve_internal_dependencies(self):
+        """
+        Post-processes the bank to find and register compositional dependencies.
+        Iterates through each definition and searches its text for the presence of other
+        defined terms.
+        """
+        logger.info("Starting internal dependency resolution for the definition bank...")
+        all_definitions = list(self._definitions.values())
+        update_count = 0
+
+        for definition in all_definitions:
+            canonical_definition_text = create_canonical_search_string(definition.definition_text)
+            
+            for potential_dependency in all_definitions:
+                if potential_dependency.term == definition.term:
+                    continue
+
+                if potential_dependency.term in definition.dependencies:
+                    continue
+
+                canonical_dependency_term = create_canonical_search_string(potential_dependency.term)                
+                if not canonical_dependency_term:
+                    continue
+                
+                if f' {canonical_dependency_term} ' in f' {canonical_definition_text} ':
+                    logger.debug(f"Found dependency: '{definition.term}' -> '{potential_dependency.term}'")
+                    definition.dependencies.append(potential_dependency.term)
+                    update_count += 1
+        
+        if update_count > 0:
+            logger.success(f"Successfully resolved and added {update_count} new compositional dependencies.")
+        else:
+            logger.info("No new compositional dependencies were found.")

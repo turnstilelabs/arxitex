@@ -24,30 +24,6 @@ class Definition:
 
 
 class ContextFinder:
-    def find_prior_occurrences(self, term: str, full_text: str, end_char_pos: int) -> str:
-        """Finds snippets of prior occurrences of a term using regex."""
-        text_to_search = full_text[:end_char_pos]
-        # This is a simple regex; it can be improved for symbols like `\F`
-        try:
-            # For symbols, use exact match. For notions, case-insensitive.
-            if '$' in term or '\\' in term:
-                pattern = re.escape(term)
-            else:
-                pattern = r'\b' + re.escape(term) + r'\b'
-            
-            snippets = []
-            for match in re.finditer(pattern, text_to_search, re.IGNORECASE):
-                start, end = match.span()
-                line_num = text_to_search.count('\n', 0, start) + 1
-                snippet_start = max(0, start - 100)
-                snippet_end = min(len(text_to_search), end + 100)
-                snippet = text_to_search[snippet_start:snippet_end].replace('\n', ' ')
-                snippets.append(f"Line ~{line_num}: ...{snippet}...")
-            
-            return "\n".join(snippets)
-        except re.error as e:
-            logger.error(f"Regex error for term '{term}': {e}")
-            return ""
         
     def find_context_around_first_occurrence(
         self, 
@@ -58,49 +34,57 @@ class ContextFinder:
         Finds the first occurrence of a term and returns the full paragraph containing it.
         """
         try:
-            # Step 1: Build the single, safest, most appropriate pattern.
-            escaped_term = re.escape(term)
-            pattern = ""
+            # Step 1: Pre-process the term.
+            search_term = term[1:-1] if term.startswith('$') and term.endswith('$') and len(term) > 2 else term
+            escaped_term = re.escape(search_term)
+            first_match = None
 
-            # For simple, purely alphabetic terms ('f', 'G', 'phi'), we must use
-            # strict boundaries to prevent false positives.
-            if term.isalpha():
-                # A term must be preceded by:
-                #   (?:^|\s|[\(\[\{,=+\-*/<>,])
-                #   - ^           : the start of the string
-                #   - \s          : any whitespace character
-                #   - [...]       : a set of common opening delimiters and operators
-                # It must be followed by:
-                #   (?=[\s\)\]\},.=+\-*/<>,]|$)
-                #   - \s, delimiters, or operators
-                #   - $           : the end of the string
-                
-                prefix = r'(?:^|\s|[\(\[\{,=+\-*/<>,])'
-                suffix = r'(?=[\s\)\]\},.=+\-*/<>,]|$)'                
-                pattern = f'{prefix}({escaped_term}){suffix}'
-            else:
-                # For any term containing non-alphabetic characters
-                # a literal search is the only reliable method.
-                pattern = escaped_term
+            # A common, robust suffix for all patterns.
+            suffix = r'(?=[\s\(\)\[\]\{\},.=+\-*/<>,]|\$|$)'
 
-            logger.debug(f"Searching for term '{term}' with pattern: {pattern}")
+            # Step 2: Check if the term is an ambiguous single-character alphabetic term.
+            is_ambiguous_term = len(search_term) == 1 and search_term.isalpha()
+
+            if is_ambiguous_term:
+                # STAGE 1: Strict, high-confidence search for math-mode variables (e.g., "$f").
+                # Pattern must be preceded by a literal dollar sign.
+                # This search is CASE-SENSITIVE by default.
+                strict_pattern = rf'\$({escaped_term}){suffix}'
+                logger.debug(f"Ambiguous term '{term}'. First trying strict pattern: {strict_pattern}")
+                first_match = next(re.finditer(strict_pattern, text_to_search), None)
+
+                if not first_match:
+                    # STAGE 2: Fallback for definitions like "Let f be..."
+                    # The prefix MUST NOT be a backslash, to avoid matching inside \mathcalF, etc.
+                    # This uses a negative lookbehind `(?<!\\)` to assert this.
+                    fallback_prefix = r'(?<!\\)(?:^|\s|[\(\[\{,=+\-*/<>,])'
+                    fallback_pattern = rf'{fallback_prefix}({escaped_term}){suffix}'
+                    logger.debug(f"Strict pattern failed. Falling back to general pattern: {fallback_pattern}")
+                    first_match = next(re.finditer(fallback_pattern, text_to_search, re.IGNORECASE), None)
             
-            # Step 2: Find the first match in the original text.
-            first_match = next(re.finditer(pattern, text_to_search), None)
-            
+            if not is_ambiguous_term or first_match is None:
+                # Use the general, flexible pattern for all non-ambiguous terms (like 'h(x)', '\varphi')
+                # or if the ambiguous search still needs a final attempt.
+                prefix = r'(?:^|\s|[\(\[\{,=+\-*/<>,]|\$)'
+                pattern = rf'{prefix}({escaped_term}){suffix}'
+                logger.debug(f"Using general pattern for term '{term}': {pattern}")
+                match_flags = re.IGNORECASE if search_term.isalpha() else 0
+                first_match = next(re.finditer(pattern, text_to_search, match_flags), None)
+
             if not first_match:
                 logger.warning(f"Term '{term}' not found in the preceding text.")
                 return ""
 
         except re.error as e:
-            logger.error(f"Regex error for term '{term}' with pattern '{pattern}': {e}")
+            logger.error(f"Regex error for term '{term}': {e}", exc_info=True)
             return ""
 
-        # Step 3: Extract the paragraph containing the match.
-        match_start_pos = first_match.start(1) if term.isalpha() else first_match.start()
+        # Step 4: Extract the paragraph containing the match.
+        # Group 1 always contains our desired term.
+        match_start_pos = first_match.start(1)
 
         para_start_pos = text_to_search.rfind('\n\n', 0, match_start_pos)
-        para_start_pos = 0 if para_start_pos == -1 else para_start_pos + 2 
+        para_start_pos = 0 if para_start_pos == -1 else para_start_pos + 2
 
         para_end_pos = text_to_search.find('\n\n', match_start_pos)
         para_end_pos = len(text_to_search) if para_end_pos == -1 else para_end_pos
@@ -217,3 +201,13 @@ async def async_save_enhanced_artifacts(results: dict, output_path: Path):
     async with aiofiles.open(output_path, "w", encoding="utf-8") as f:
         await f.write(json.dumps(enhanced_artifacts, indent=2))
     logger.success(f"Results saved successfully.")
+
+def create_canonical_search_string(text: str) -> str:
+        """
+        Transforms a string into a delimiter-free canonical format for robust searching.
+        (This is the same robust helper we developed before).
+        """
+        text = text.replace('$', '')
+        text = re.sub(r'([\[\]\(\)\{\},=+\-*/<>:])', r' \1 ', text)
+        canonical_string = re.sub(r'\s+', ' ', text).strip()
+        return canonical_string

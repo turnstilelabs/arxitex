@@ -13,7 +13,7 @@ from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.extractor.utils import ArtifactNode, ArtifactType
-from arxitex.symdef.utils import async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
+from arxitex.symdef.utils import create_canonical_search_string, async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 def determine_output_path(
     user_path: Optional[Path], 
@@ -92,14 +92,17 @@ class DocumentEnhancer:
             sorted_artifacts, artifact_start_positions, artifact_end_positions, latex_content,
             use_global_extraction=use_global_extraction
         )
-
+        
+        await self.bank.merge_redundancies()
+        await self.bank.resolve_internal_dependencies()
+        
         logger.info("Phase 3: Generating enhanced content for all artifacts...")
-        enhanced_artifacts = await self._enhance_all_artifacts(
+        definitions_map = await self._enhance_all_artifacts(
         sorted_artifacts, artifact_to_terms_map, term_to_first_artifact_map, all_artifacts_map
         )
-
+        
         logger.success("Document enhancement complete.")
-        return {"artifacts": enhanced_artifacts,
+        return {"definitions_map": definitions_map,
                 "artifact_to_terms_map": artifact_to_terms_map,
                 "definition_bank": self.bank}
 
@@ -189,8 +192,9 @@ class DocumentEnhancer:
         Cleans a list of terms returned by the LLM.
         """
         sanitized_terms = []
+        control_char_re = re.compile(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]')
         for term in raw_terms:
-            clean_term = re.sub(r'[^\x20-\x7E\n\t\r]', '', term)
+            clean_term = control_char_re.sub('', term)
 
             # Rule 2: Normalize excessive backslashes from LLM hallucinations (e.g., \\phi -> \phi).
             clean_term = re.sub(r'\\{2,}', r'\\', clean_term)
@@ -201,10 +205,6 @@ class DocumentEnhancer:
             # Rule 4: Remove ONLY common sentence-ending punctuation if it's trailing.
             if clean_term.endswith('.') or clean_term.endswith(','):
                 clean_term = clean_term[:-1]
-                
-            if len(clean_term) == 1 and clean_term.isalpha():
-                logger.warning(f"Discarding ambiguous single-character alphabetic term: '{clean_term}'")
-                continue
             
             if not clean_term:
                 continue
@@ -242,30 +242,25 @@ class DocumentEnhancer:
         # 3. Map terms back to artifacts
         artifact_to_terms_map: Dict[str, List[str]] = {}
         term_to_first_artifact_map: Dict[str, str] = {}
+        canonical_artifacts = {
+            artifact.id: create_canonical_search_string(artifact.content)
+            for artifact in artifacts
+        }
+
         for artifact in artifacts:
-            searchable_content = re.sub(r'\s+', ' ', artifact.content)
+            canonical_content = canonical_artifacts[artifact.id]
             found_terms = []
-            for term in all_valid_terms_set:            
-                escaped_term = re.escape(term)
-                pattern = ""
+            for term in all_valid_terms_set:                
+                canonical_term = create_canonical_search_string(term)
 
-                # Case 1: Self-Delimited Terms. If a term is enclosed in '$...$' or '\[...\]',
-                if (term.startswith('$') and term.endswith('$')) or \
-                (term.startswith('\\[' ) and term.endswith('\\]')) or \
-                (term.startswith('\\(' ) and term.endswith('\\)')):
-                    pattern = escaped_term
-                
-                # Case 2: Free Terms (all others). This includes 'G', 'G'', '\alpha', 'nilpotent group'.
-                else:
-                    # A valid boundary is the start/end of the string, whitespace, or a common operator/delimiter.
-                    prefix = r'(?:^|\s|[\(\[\{,=+\-*/<>,])'
-                    suffix = r'(?=[\s\)\]\},.=+\-*/<>,]|$)'
-                    pattern = f'{prefix}({escaped_term}){suffix}'
+                if not canonical_term:
+                    continue
 
-                if re.search(pattern, searchable_content):
+                if f' {canonical_term} ' in f' {canonical_content} ':
                     found_terms.append(term)
                     if term not in term_to_first_artifact_map:
                         term_to_first_artifact_map[term] = artifact.id
+                        
             artifact_to_terms_map[artifact.id] = sorted(found_terms)
         
         return all_valid_terms_set, artifact_to_terms_map, term_to_first_artifact_map
@@ -361,6 +356,13 @@ class DocumentEnhancer:
 
             logger.info(f"{log_prefix} Term is new. Beginning synthesis process...")
 
+            doc_body_start_pos = latex_content.find('\\begin{document}')
+            if doc_body_start_pos == -1:
+                logger.warning("Could not find '\\begin{document}'. Searching for context in the entire file.")
+                doc_body_start_pos = 0 # Default to start of file if not found
+            else:
+                doc_body_start_pos += len('\\begin{document}')
+
             start_pos = start_positions.get(source_artifact_id)
             end_pos = end_positions.get(source_artifact_id)
 
@@ -371,12 +373,14 @@ class DocumentEnhancer:
                 )
                 return
 
-            artifact_content = latex_content[start_pos:end_pos].strip()
-            text_to_search_before = latex_content[:start_pos]
+            search_start = max(doc_body_start_pos, 0)
+            search_end = max(search_start, start_pos)
+            text_to_search_before = latex_content[search_start:search_end]
             preceding_context = self.context_finder.find_context_around_first_occurrence(
                 term, text_to_search_before
             )
-            
+            artifact_content = latex_content[start_pos:end_pos].strip()
+
             context_parts = []
             if preceding_context:
                 context_parts.append(f"CONTEXT PRECEDING THE TERM'S FIRST USE:\n---\n{preceding_context}\n---")
@@ -491,10 +495,7 @@ class DocumentEnhancer:
 
         sorted_defs = sorted(definitions.items(), key=get_sort_key)
 
-        definitions_list = [f"**{term}**: {definition.definition_text}" for term, definition in sorted_defs]
-        definitions_block = "--- Prerequisite Definitions ---\n" + "\n\n".join(definitions_list)
-
-        return f"{definitions_block}\n\n---\n\n{artifact.content}"
+        return {term: definition.definition_text for term, definition in sorted_defs}
 
     #TODO FIX this :)
     def _validate_definition_in_context(self, definition_text: str, context: str) -> bool:
