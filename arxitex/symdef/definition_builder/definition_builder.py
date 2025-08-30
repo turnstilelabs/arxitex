@@ -32,7 +32,7 @@ class DefinitionBuilder:
         Asynchronously extracts all significant terms from the full document content in a single call.
         """
         prompt = self.prompt_generator.make_document_term_extraction_prompt(full_document_content)
-        logger.debug(f"Document-wide term extraction prompt: {prompt.system}\n{prompt.user}")
+        logger.debug(f"Document-wide term extraction prompt: {prompt}")
         try:
             result = await llms.aexecute_prompt(
                 prompt,
