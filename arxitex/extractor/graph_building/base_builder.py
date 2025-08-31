@@ -35,11 +35,15 @@ class BaseGraphBuilder:
         graph = DocumentGraph(source_file=source_file)
         self.label_to_node_id_map.clear()
 
-        # --- Pass 1: Parse all environments and create nodes ---
-        nodes_to_process = self._parse_all_environments()
-        for node in nodes_to_process:
+        # --- Pass 1A: Discover all artifacts AND all proof environments ---
+        nodes, detached_proofs, node_char_offsets = self._parse_all_environments_and_proofs()
+        
+        # --- Pass 1B: Link detached proofs to their statements ---
+        self._link_proofs(nodes, detached_proofs, node_char_offsets)
+
+        for node in nodes:
             graph.add_node(node)
-        logger.info(f"Pass 1: Parsed {len(graph.nodes)} initial artifact nodes.")
+        logger.info(f"Pass 1: Parsed {len(graph.nodes)} artifacts and linked detached proofs.")
 
         # --- Pass 2: Resolve references and create all links (edges) ---
         edges_to_add, external_nodes_to_add = self._resolve_and_create_graph_links(graph.nodes)
@@ -53,10 +57,17 @@ class BaseGraphBuilder:
         logger.success(f"Regex-based graph extraction complete. Found {len(graph.nodes)} nodes and {len(graph.edges)} edges.")
         return graph
 
-    def _parse_all_environments(self) -> List[ArtifactNode]:
-        """Iterates through the content to find and parse all known artifact environments."""
+    def _parse_all_environments_and_proofs(self) -> Tuple[List[ArtifactNode], List[Dict], Dict[str, Tuple[int, int]]]:
+        """
+        Iterates through the content to find all artifacts and all proof environments.
+        Returns nodes, temporary proof dictionaries, and a temporary map of node character offsets.
+        """
         nodes: List[ArtifactNode] = []
-        pattern = re.compile(rf'\\begin\{{({"|".join(self.ARTIFACT_TYPES)})(\*?)\}}')
+        detached_proofs: List[Dict] = []
+        node_char_offsets: Dict[str, Tuple[int, int]] = {}
+        
+        all_env_types = "|".join(list(self.ARTIFACT_TYPES) + [self.PROOF_ENV_TYPE])
+        pattern = re.compile(rf'\\begin\{{({all_env_types})(\*?)\}}(?:\[([^\]]*)\])?')
 
         artifact_counter = 0
         cursor = 0
@@ -65,7 +76,7 @@ class BaseGraphBuilder:
             if not match:
                 break
 
-            env_type, star = match.group(1).lower(), match.group(2) or ""
+            env_type, star, optional_arg = match.group(1).lower(), match.group(2) or "", match.group(3)
             block_start = match.end()
             end_tag_pos = self._find_matching_end(env_type, star, block_start)
             
@@ -73,35 +84,88 @@ class BaseGraphBuilder:
                 cursor = match.end()
                 continue
             
-            next_cursor_pos = end_tag_pos + len(f"\\end{{{env_type}{star}}}")
+            full_end_pos = end_tag_pos + len(f"\\end{{{env_type}{star}}}")
             raw_content = self.content[block_start:end_tag_pos].strip()
             
-            proof_content, next_cursor_pos = self._extract_following_proof(next_cursor_pos)
-            
-            artifact_counter += 1
-            node_id = f"{env_type}-{artifact_counter}-{uuid.uuid4().hex[:6]}"
-            label = self._extract_label(raw_content)
+            if env_type == self.PROOF_ENV_TYPE:
+                proof_block = {
+                    "content": raw_content, "optional_arg": optional_arg,
+                    "start_char": match.start(), "end_char": full_end_pos,
+                    "used": False
+                }
+                detached_proofs.append(proof_block)
+            else:
+                artifact_counter += 1
+                node_id = f"{env_type}-{artifact_counter}-{uuid.uuid4().hex[:6]}"
+                label = self._extract_label(raw_content)
 
-            if label:
-                if label in self.label_to_node_id_map:
-                    logger.warning(f"Duplicate LaTeX label '{label}' found. References may be ambiguous.")
-                self.label_to_node_id_map[label] = node_id
+                if label: self.label_to_node_id_map[label] = node_id
 
-            node = ArtifactNode(
-                id=node_id,
-                type=self.artifact_type_map[env_type],
-                content=raw_content,
-                label=label,
-                position=self._calculate_position(match.start(), end_tag_pos),
-                references=self._extract_references_from_content(raw_content, proof_content),
-                is_external=False,
-                proof=proof_content
-            )
-            nodes.append(node)
-            cursor = next_cursor_pos
+                node = ArtifactNode(
+                    id=node_id, type=self.artifact_type_map[env_type],
+                    content=raw_content, label=label,
+                    position=self._calculate_position(match.start(), full_end_pos),
+                    is_external=False, proof=None
+                )
+                nodes.append(node)
+                # Store the character offsets in our temporary dictionary.
+                node_char_offsets[node.id] = (match.start(), full_end_pos)
+            cursor = full_end_pos
         
-        return nodes
+        for node in nodes:
+            node.references = self._extract_references_from_content(node.content, None)
 
+        return nodes, detached_proofs, node_char_offsets
+    
+    def _link_proofs(self, nodes: List[ArtifactNode], proofs: List[Dict], node_char_offsets: Dict[str, Tuple[int, int]]):
+        """
+        Links proof blocks to artifacts using a refined semantic-first, then proximity-based approach.
+        """
+        logger.info(f"Attempting to link {len(proofs)} discovered proof environments to artifacts...")
+        
+        # --- STRATEGY 1: SEMANTIC LINKING VIA OPTIONAL ARGUMENT (The Most Reliable) ---
+        for node in nodes:
+            if not node.label: continue
+
+            for proof in proofs:
+                if proof["used"] or not proof["optional_arg"]: continue
+                
+                # Pattern to find a ref/cref to this node's label.
+                ref_pattern = re.compile(r'\\(?:[cC]ref|[vV]ref|[Aa]utoref|ref)\s*\{' + re.escape(node.label) + r'\}')
+                
+                if ref_pattern.search(proof["optional_arg"]):
+                    node.proof = proof["content"]
+                    proof["used"] = True
+                    logger.debug(f"Linked proof to artifact {node.id} via explicit label '{node.label}' in proof argument.")
+                    break
+
+        # --- STRATEGY 2: PROXIMITY LINKING (A Fallback for Unlabeled Proofs) ---
+        sorted_nodes = sorted(nodes, key=lambda n: node_char_offsets[n.id][0])
+        
+        for i, node in enumerate(sorted_nodes):
+            if node.proof: continue
+
+            _, node_end_char = node_char_offsets[node.id]
+            
+            next_node_start = len(self.content)
+            if i + 1 < len(sorted_nodes):
+                next_node_start, _ = node_char_offsets[sorted_nodes[i+1].id]
+
+            for proof in sorted(proofs, key=lambda p: p["start_char"]):
+                if proof["used"]: continue
+                
+                if node_end_char < proof["start_char"] < next_node_start:
+                    if not proof["optional_arg"]:
+                        node.proof = proof["content"]
+                        proof["used"] = True
+                        logger.debug(f"Linked proof to artifact {node.id} via proximity.")
+                        break
+                        
+        # --- FINAL STEP: Update References ---
+        for node in nodes:
+            if node.proof:
+                node.references.extend(self._extract_references_from_content(None, node.proof))
+    
     def _find_matching_end(self, env_type: str, star: str, start_pos: int) -> int:
         """Finds the matching \\end{env} tag, handling nested environments."""
         begin_tag = f"\\begin{{{env_type}{star}}}"
@@ -127,24 +191,6 @@ class BaseGraphBuilder:
                 cursor = next_end + len(end_tag)
         
         return -1
-
-    def _extract_following_proof(self, start_pos: int) -> Tuple[Optional[str], int]:
-        """Looks for a proof environment immediately following an artifact."""
-        proof_pattern = re.compile(r'\s*\\begin\{proof(\*?)\}')
-        proof_match = proof_pattern.match(self.content, start_pos)
-        if not proof_match:
-            return None, start_pos
-        
-        proof_star = proof_match.group(1) or ""
-        proof_content_start = proof_match.end()
-        proof_end_pos = self._find_matching_end(self.PROOF_ENV_TYPE, proof_star, proof_content_start)
-        
-        if proof_end_pos != -1:
-            proof_content = self.content[proof_content_start:proof_end_pos].strip()
-            new_cursor_pos = proof_end_pos + len(f"\\end{{{self.PROOF_ENV_TYPE}{proof_star}}}")
-            return proof_content, new_cursor_pos
-        
-        return None, start_pos
 
     def _extract_label(self, content: str) -> Optional[str]:
         """Extracts the first \\label from a content string."""
@@ -182,7 +228,7 @@ class BaseGraphBuilder:
         references = []
         ref_pattern = re.compile(r'\\(?:[cC]ref|[vV]ref|[Aa]utoref|ref|eqref)\s*\{([^}]+)\}')
         
-        full_content = content + (f"\n\n{proof_content}" if proof_content else '')
+        full_content = (content or "") + (f"\n\n{proof_content}" if proof_content else '')
         for match in ref_pattern.finditer(full_content):
             target_labels = [label.strip() for label in match.group(1).split(',')]
             
