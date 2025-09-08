@@ -78,6 +78,7 @@ class Citation:
             "note": self.note,
         }
 
+
 @dataclass
 class ArtifactNode:
     """
@@ -290,12 +291,7 @@ class DocumentGraph:
         Serializes the entire graph, including nodes and edges, into a
         JSON-serializable dictionary for output.
         """
-        # Correctly call .to_dict() on each node object
         serialized_nodes = [node.to_dict() for node in self.nodes]
-        
-        # --- THE CRITICAL FIX IS HERE ---
-        # The old, buggy version was not calling .to_dict() on each edge.
-        # This new version correctly serializes each edge, including the dependency_type.
         serialized_edges = [edge.to_dict() for edge in self.edges]
 
         return {
