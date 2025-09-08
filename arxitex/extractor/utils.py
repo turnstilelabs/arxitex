@@ -22,8 +22,6 @@ class ArtifactType(Enum):
     OBSERVATION = "observation"
     UNKNOWN = "unknown"
 
-#Sometimes proofs are separated from their statement -- how to deal with this?
-
 class ReferenceType(Enum):
     """Types of references between artifacts."""
     INTERNAL = "internal"  # Reference within the same document
