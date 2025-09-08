@@ -9,7 +9,7 @@ import asyncio
 import aiofiles
 
 from arxitex.downloaders.async_downloader import AsyncSourceDownloader
-from arxitex.extractor.utils import read_and_combine_tex_files
+from arxitex.downloaders.utils import read_and_combine_tex_files
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder

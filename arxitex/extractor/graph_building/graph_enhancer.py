@@ -68,7 +68,7 @@ class GraphEnhancer:
                  logger.warning("Cannot infer dependencies because term extraction failed or was skipped.")
             else:
                 logger.info("--- Starting Pass 3: Inferring dependencies with efficient filtering ---")
-                graph = await self._infer_and_add_dependencies_efficiently(graph, artifact_to_terms_map, bank)
+                graph = await self._infer_and_add_dependencies(graph, artifact_to_terms_map, bank)
         
         reference_edges = len([e for e in graph.edges if e.reference_type])
         dependency_edges = len([e for e in graph.edges if e.dependency_type])
