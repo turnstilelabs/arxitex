@@ -65,6 +65,22 @@ class Reference:
 
 
 @dataclass
+class Citation:
+    """Represents a citation to an external work, including contextual notes."""
+    cite_key: str
+    full_reference: str
+    arxiv_id: Optional[str] = None
+    note: Optional[str] = None # Captures text from e.g., \cite[Theorem 3.1]{...}
+
+    def to_dict(self) -> Dict:
+        return {
+            "cite_key": self.cite_key,
+            "full_reference": self.full_reference,
+            "arxiv_id": self.arxiv_id,
+            "note": self.note,
+        }
+
+@dataclass
 class ArtifactNode:
     """
     Represents a mathematical artifact in the document graph.
@@ -79,6 +95,7 @@ class ArtifactNode:
     is_external: bool = False
     proof: Optional[str] = None
     prerequisite_defs: Dict[str, str] = field(default_factory=dict)
+    citations: List[Citation] = field(default_factory=list)
 
     @property
     def content_preview(self) -> str:
@@ -153,6 +170,7 @@ class ArtifactNode:
             "label": self.label,
             "position": self.position.to_dict(),
             "references": [ref.to_dict() for ref in self.references],
+            "citations": [cit.to_dict() for cit in self.citations],
             "proof": self.proof
         }
 
@@ -292,3 +310,4 @@ class DocumentGraph:
             "nodes": serialized_nodes,
             "edges": serialized_edges
         }
+
