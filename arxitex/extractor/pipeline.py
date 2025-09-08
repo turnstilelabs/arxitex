@@ -96,11 +96,12 @@ async def run_async_pipeline(args):
         elif args.enrich_content:
             extractor_mode = "hybrid (content-only)"
 
+        logger.info(f"Extraction completed using mode: {extractor_mode}")
         graph_data_to_save = graph.to_dict(
             arxiv_id=args.arxiv_id,
             extractor_mode=extractor_mode
         )
-
+        
         examples_dir = get_examples_dir()
         graph_dir = examples_dir / "graphs"
         graph_dir.mkdir(exist_ok=True)

@@ -80,7 +80,7 @@ class GraphEnhancer:
         nodes_to_enhance = [node for node in graph.nodes if not node.is_external]
         if not nodes_to_enhance:
             logger.info("No internal nodes to enhance. Skipping content enrichment.")
-            return
+            return {}
             
         logger.info(f"Enhancing content for {len(nodes_to_enhance)} artifacts...")
         

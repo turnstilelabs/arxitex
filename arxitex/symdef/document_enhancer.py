@@ -437,7 +437,7 @@ class DocumentEnhancer:
         self, artifacts: List[ArtifactNode], artifact_to_terms_map: Dict[str, List[str]],
         term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode]  
-    ) -> Dict[str, str]:
+    ) -> Dict[str, Dict[str, str]]:
         """Concurrently enhances all artifacts using the pre-computed terms map."""
         tasks = [
             self._enhance_single_artifact(artifact,
@@ -452,7 +452,7 @@ class DocumentEnhancer:
     async def _enhance_single_artifact(
         self, artifact: ArtifactNode, terms_in_artifact: List[str], term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode]
-    ) -> tuple[str, str]:
+    ) -> tuple[str, Dict[str, str]]:
         """Enhances a single artifact by prepending necessary definitions from the pre-computed term list."""
         logger.info(f"Enhancing content for artifact '{artifact.id}' using pre-discovered terms...")
         
@@ -462,12 +462,12 @@ class DocumentEnhancer:
             if definition:
                 definitions_needed[term] = definition
 
-        enhanced_content = self._create_enhanced_content(artifact,
+        prerequisite_defs_dict = self._create_enhanced_content(artifact,
                                                         definitions_needed,
                                                         term_to_first_artifact_map,
                                                         all_artifacts_map)
         logger.success(f"Successfully enhanced artifact '{artifact.id}'.")
-        return artifact.id, enhanced_content
+        return artifact.id, prerequisite_defs_dict
 
     def _create_enhanced_content(
         self, 
@@ -475,10 +475,12 @@ class DocumentEnhancer:
         definitions: Dict[str, Definition],
         term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode]
-    ) -> str:
-        """Builds the final string for the self-contained artifact."""
+    ) -> Dict[str, str]:
+        """
+        Creates a dictionary of prerequisite definitions, sorted by their appearance.
+        """
         if not definitions:
-            return artifact.content
+            return {}
 
         def get_sort_key(term_tuple: tuple[str, Definition]) -> int:
             term, _ = term_tuple
