@@ -54,8 +54,7 @@ class AsyncSourceDownloader:
 
     async def download_and_extract_source(self, arxiv_id: str) -> Path:
         """
-        Orchestrates the download and extraction of source files for a given arXiv ID.
-        This is the primary entry point for the DownloaderWorkflow.
+        Orchestrates the download and extraction of ALL source files for a given arXiv ID.
         
         Args:
             arxiv_id: The arXiv identifier to download.
@@ -71,25 +70,22 @@ class AsyncSourceDownloader:
             raise RuntimeError("AsyncSourceDownloader must be used as an async context manager.")
             
         # Define persistent, predictable paths
+        validated_id = self.validate_arxiv_id(arxiv_id)
         download_dir = self.cache_dir / "downloads"
-        extract_dir = self.cache_dir / "source" / arxiv_id.replace('/', '_')
+        extract_dir = self.cache_dir / "source" / validated_id.replace('/', '_')
         
-        try:
-            validated_id = self.validate_arxiv_id(arxiv_id)
-            
+        try:            
             # Step 1: Download the source archive
-            source_archive_path = await self._async_download_source(validated_id, download_dir)
+            source_archive_path = await self.download_and_extract_source(validated_id, download_dir)
             if not source_archive_path:
                 raise ArxivExtractorError(f"Failed to download source for {arxiv_id} after multiple retries.")
 
             # Step 2: Extract the archive
             await self._async_extract_source(source_archive_path, extract_dir, validated_id)
-
             logger.info(f"[{arxiv_id}] Source successfully extracted to: {extract_dir}")
             return extract_dir
 
         except Exception as e:
-            # Re-raise as our specific exception type to be handled by the workflow
             logger.error(f"Error in download/extract for {arxiv_id}: {e}")
             raise ArxivExtractorError(f"Error in download/extract for {arxiv_id}: {e}") from e
     
@@ -106,32 +102,20 @@ class AsyncSourceDownloader:
         if not self.http_client:
             raise RuntimeError("AsyncSourceDownloader must be used as an async context manager")
             
+        validated_id = self.validate_arxiv_id(arxiv_id)
         download_dir = self.cache_dir / "downloads"
-        extract_dir = self.cache_dir / "source" / arxiv_id.replace('/', '_')
+        extract_dir = self.cache_dir / "source" / validated_id.replace('/', '_')
         
-        try:
-            validated_id = self.validate_arxiv_id(arxiv_id)
-            
-            source_archive_path = await self._async_download_source(validated_id, download_dir)
-            if not source_archive_path:
-                return None
-
-            await self._async_extract_source(source_archive_path, extract_dir, validated_id)
-
-            # Find ALL .tex files
-            tex_files = await self.find_tex_files(extract_dir)
+        try:            
+            extract_dir = await self.download_and_extract_source(validated_id, download_dir)
+            tex_files = self._find_tex_files_sync(extract_dir)
             if not tex_files:
                 logger.error(f"No .tex files found in the extracted source for {arxiv_id}.")
                 return None
-            
-            logger.info(f"Found {len(tex_files)} .tex files: {[f.name for f in tex_files]}")
+            return await self._read_latex_content_async(tex_files)
 
-            # Read and combine content from ALL files
-            combined_content = await self.read_latex_content(tex_files)
-            return combined_content
-
-        except Exception as e:
-            logger.error(f"An error occurred during the download/extraction process for {arxiv_id}: {e}")
+        except (ArxivExtractorError, ValueError) as e:
+            logger.error(f"An error occurred during the download/read process for {arxiv_id}: {e}")
             return None
 
     async def _async_download_source(self, arxiv_id: str, download_dir: Path) -> Optional[Path]:
@@ -139,7 +123,6 @@ class AsyncSourceDownloader:
         download_dir.mkdir(parents=True, exist_ok=True)
         download_path = download_dir / f"{arxiv_id.replace('/', '_')}.tar.gz"
 
-        # Check if already downloaded
         if download_path.exists() and download_path.stat().st_size > 0:
             logger.info(f"Using cached download for {arxiv_id}")
             return download_path
@@ -194,21 +177,11 @@ class AsyncSourceDownloader:
         if not success:
             raise ArxivExtractorError("Unable to extract or identify downloaded file format.")
     
-    async def find_tex_files(self, source_path: Path) -> List[Path]:
-        """Find all LaTeX files in the directory."""
-        def _blocking_find_tex_files(path: Path) -> List[Path]:
-            tex_files = list(path.rglob('*.tex'))
-            if not tex_files:
-                all_files = list(path.glob('*'))
-                logger.error(f"No .tex files found. Available files: {[f.name for f in all_files]}")
-                return []
-            
-            logger.info(f"Found {len(tex_files)} .tex files: {[f.name for f in tex_files]}")
-            return tex_files
-        
-        return await asyncio.to_thread(_blocking_find_tex_files, source_path)
+    def _find_tex_files_sync(self, source_path: Path) -> List[Path]:
+        """Finds all LaTeX files in the directory."""
+        return sorted(list(source_path.rglob('*.tex')))
     
-    async def read_latex_content(self, tex_files: List[Path]) -> str:
+    async def _read_latex_content_async(self, tex_files: List[Path]) -> str:
         """Read and combine content from all found LaTeX files."""
         full_content = []
         for tex_file in sorted(tex_files):  # Sort for deterministic order
