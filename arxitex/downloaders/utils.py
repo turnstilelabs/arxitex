@@ -93,3 +93,31 @@ def try_handle_plain_text(file_path: Path, dest_path: Path, arxiv_id: str) -> bo
     except Exception:
         pass
     return False
+
+
+def read_and_combine_tex_files(project_dir: Path) -> str:
+    """
+    Finds all .tex files in a directory, reads them, and concatenates their content
+    into a single string, adding source file comments.
+    """
+    if not project_dir.is_dir():
+        logger.error(f"Provided path is not a directory: {project_dir}")
+        return ""
+
+    tex_files = sorted(list(project_dir.rglob('*.tex')))
+    if not tex_files:
+        logger.warning(f"No .tex files found in directory: {project_dir}")
+        return ""
+
+    logger.info(f"Found {len(tex_files)} .tex files to parse: {[f.name for f in tex_files]}")
+    full_content = []
+    for tex_file in tex_files:
+        try:
+            content = tex_file.read_text(encoding='utf-8', errors='ignore')
+            full_content.append(f"\n% --- Source File: {tex_file.name} ---\n{content}")
+        except Exception as e:
+            logger.warning(f"Could not read {tex_file.name}: {e}")
+            
+    combined_content = "".join(full_content)
+    logger.info(f"Combined total LaTeX content: {len(combined_content)} characters")
+    return combined_content
