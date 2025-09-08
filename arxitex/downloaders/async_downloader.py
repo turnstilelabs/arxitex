@@ -1,19 +1,17 @@
 import asyncio
 import httpx
 import aiofiles
-import logging
 from pathlib import Path
 from typing import Optional, List
+from loguru import logger
 from arxitex.downloaders.utils import (
     detect_file_type,
-    is_gzipped,
     try_extract_tar,
     try_extract_zip,
     try_extract_gzip,
     try_handle_plain_text,
 )
 
-logger = logging.getLogger(__name__)
 
 DEFAULT_CONFIG = {
     'timeout': 30,
