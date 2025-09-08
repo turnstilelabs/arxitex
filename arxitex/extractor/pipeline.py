@@ -56,16 +56,16 @@ async def agenerate_artifact_graph(arxiv_id: str, infer_dependencies: bool,
         temp_path = Path(temp_dir)
         
         async with AsyncSourceDownloader(cache_dir=temp_path) as downloader:
-            latex_content = await downloader.async_download_and_read_latex(arxiv_id)
+            project_dir = await downloader.download_and_extract_source(arxiv_id)
         
-            if not latex_content:
+            if not project_dir:
                 raise ArxivExtractorError(f"Failed to retrieve LaTeX content for {arxiv_id}")
 
             logger.info(f"[{arxiv_id}] Instantiating GraphEnhancer...")
             enhancer = GraphEnhancer()
             
             graph, bank, artifact_to_terms_map = await enhancer.build_graph(
-                latex_content,
+                project_dir=project_dir,
                 source_file=f"arxiv:{arxiv_id}",
                 infer_dependencies=infer_dependencies,
                 enrich_content=enrich_content
