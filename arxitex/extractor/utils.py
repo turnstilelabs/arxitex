@@ -24,8 +24,8 @@ class ArtifactType(Enum):
 
 class ReferenceType(Enum):
     """Types of references between artifacts."""
-    INTERNAL = "internal"  # Reference within the same document
-    EXTERNAL = "external"  # Reference to external document/citation
+    INTERNAL = "internal"
+    EXTERNAL = "external"
 
 @dataclass
 class Position:
