@@ -1,6 +1,7 @@
 import asyncio
 import httpx
 import aiofiles
+import re
 from pathlib import Path
 from typing import Optional, List
 from loguru import logger
@@ -10,6 +11,7 @@ from arxitex.downloaders.utils import (
     try_extract_zip,
     try_extract_gzip,
     try_handle_plain_text,
+    read_and_combine_tex_files
 )
 
 
@@ -42,7 +44,6 @@ class AsyncSourceDownloader:
             await self.http_client.aclose()
 
     def validate_arxiv_id(self, arxiv_id: str) -> str:
-        import re
         arxiv_id = arxiv_id.strip().lower()
         patterns = [
             r'^\d{4}\.\d{4,5}(v\d+)?$',
@@ -69,14 +70,17 @@ class AsyncSourceDownloader:
         if not self.http_client:
             raise RuntimeError("AsyncSourceDownloader must be used as an async context manager.")
             
-        # Define persistent, predictable paths
         validated_id = self.validate_arxiv_id(arxiv_id)
         download_dir = self.cache_dir / "downloads"
         extract_dir = self.cache_dir / "source" / validated_id.replace('/', '_')
         
+        if extract_dir.exists() and any(extract_dir.iterdir()):
+             logger.info(f"Using cached source directory for {arxiv_id}: {extract_dir}")
+             return extract_dir
+        
         try:            
             # Step 1: Download the source archive
-            source_archive_path = await self.download_and_extract_source(validated_id, download_dir)
+            source_archive_path = await self._async_download_source(validated_id, download_dir)
             if not source_archive_path:
                 raise ArxivExtractorError(f"Failed to download source for {arxiv_id} after multiple retries.")
 
@@ -88,35 +92,6 @@ class AsyncSourceDownloader:
         except Exception as e:
             logger.error(f"Error in download/extract for {arxiv_id}: {e}")
             raise ArxivExtractorError(f"Error in download/extract for {arxiv_id}: {e}") from e
-    
-    async def async_download_and_read_latex(self, arxiv_id: str) -> Optional[str]:
-        """
-        Main async method to download, extract, and read LaTeX files.
-        
-        Args:
-            arxiv_id: The arXiv identifier (e.g., '2305.12345').
-            
-        Returns:
-            The combined content of all .tex files as a string, or None on failure.
-        """
-        if not self.http_client:
-            raise RuntimeError("AsyncSourceDownloader must be used as an async context manager")
-            
-        validated_id = self.validate_arxiv_id(arxiv_id)
-        download_dir = self.cache_dir / "downloads"
-        extract_dir = self.cache_dir / "source" / validated_id.replace('/', '_')
-        
-        try:            
-            extract_dir = await self.download_and_extract_source(validated_id, download_dir)
-            tex_files = self._find_tex_files_sync(extract_dir)
-            if not tex_files:
-                logger.error(f"No .tex files found in the extracted source for {arxiv_id}.")
-                return None
-            return await self._read_latex_content_async(tex_files)
-
-        except (ArxivExtractorError, ValueError) as e:
-            logger.error(f"An error occurred during the download/read process for {arxiv_id}: {e}")
-            return None
 
     async def _async_download_source(self, arxiv_id: str, download_dir: Path) -> Optional[Path]:
         url = f"https://arxiv.org/e-print/{arxiv_id}"
@@ -176,24 +151,3 @@ class AsyncSourceDownloader:
 
         if not success:
             raise ArxivExtractorError("Unable to extract or identify downloaded file format.")
-    
-    def _find_tex_files_sync(self, source_path: Path) -> List[Path]:
-        """Finds all LaTeX files in the directory."""
-        return sorted(list(source_path.rglob('*.tex')))
-    
-    async def _read_latex_content_async(self, tex_files: List[Path]) -> str:
-        """Read and combine content from all found LaTeX files."""
-        full_content = []
-        for tex_file in sorted(tex_files):  # Sort for deterministic order
-            try:
-                async with aiofiles.open(tex_file, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = await f.read()
-                # Add a comment to mark the beginning of each file
-                full_content.append(f"\n% --- Source File: {tex_file.name} ---\n{content}")
-                logger.debug(f"Read {len(content)} characters from {tex_file.name}")
-            except Exception as e:
-                logger.warning(f"Could not read {tex_file.name}: {e}")
-        
-        combined_content = ''.join(full_content)
-        logger.info(f"Combined total LaTeX content: {len(combined_content)} characters")
-        return combined_content
