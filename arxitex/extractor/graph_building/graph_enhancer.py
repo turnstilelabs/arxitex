@@ -2,11 +2,13 @@ import asyncio
 from itertools import combinations
 from typing import Dict, List, Optional
 import re
+from pathlib import Path
 from collections import defaultdict
 from loguru import logger
 
 from arxitex.extractor.utils import (
     Edge, DocumentGraph)
+from arxitex.downloaders.async_downloader import read_and_combine_tex_files
 from arxitex.extractor.dependency_inference.dependency_inference import GraphDependencyInference
 from arxitex.extractor.graph_building.base_builder import BaseGraphBuilder
 from arxitex.symdef.document_enhancer import DocumentEnhancer
@@ -36,15 +38,16 @@ class GraphEnhancer:
             definition_bank=definition_bank
         )
 
-    async def build_graph(self, latex_content: str, source_file: Optional[str] = None, 
+    async def build_graph(self, project_dir: Path, source_file: Optional[str] = None, 
                           infer_dependencies: bool = True, enrich_content: bool = True ) -> DocumentGraph:
         logger.info("Starting Pass 1: Building base graph from LaTeX structure...")
-        graph = self.regex_builder.build_graph(latex_content, source_file)
+        graph = self.regex_builder.build_graph(project_dir, source_file)
 
         if not graph.nodes:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
             return DocumentGraph()
-        
+
+        latex_content = read_and_combine_tex_files(project_dir)        
         bank = None
         artifact_to_terms_map = {}
         should_enrich = enrich_content or infer_dependencies
@@ -57,12 +60,15 @@ class GraphEnhancer:
                 artifact_to_terms_map = enrichment_results["artifact_to_terms_map"]
             except Exception as e:
                 logger.error(f"Content enrichment failed: {e}. Proceeding without enriched content.", exc_info=True)
-                bank = None
+                bank = DefinitionBank() 
                 artifact_to_terms_map = {}
 
         if infer_dependencies:
-            logger.info("--- Starting Pass 3: Enhancing graph with LLM-inferred dependencies ---")
-            graph = await self._infer_and_add_dependencies(graph, artifact_to_terms_map, bank)
+            if not artifact_to_terms_map:
+                 logger.warning("Cannot infer dependencies because term extraction failed or was skipped.")
+            else:
+                logger.info("--- Starting Pass 3: Inferring dependencies with efficient filtering ---")
+                graph = await self._infer_and_add_dependencies_efficiently(graph, artifact_to_terms_map, bank)
         
         reference_edges = len([e for e in graph.edges if e.reference_type])
         dependency_edges = len([e for e in graph.edges if e.dependency_type])
