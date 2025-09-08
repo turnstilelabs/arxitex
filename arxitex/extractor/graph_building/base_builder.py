@@ -1,5 +1,6 @@
 import re
 import uuid
+from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 from loguru import logger
 
@@ -7,6 +8,10 @@ from arxitex.extractor.utils import (
     ArtifactNode, Edge, DocumentGraph, Position, Reference,
     ArtifactType, ReferenceType
 )
+
+from arxitex.extractor.graph_building.proof_linker import ProofLinker
+from arxitex.extractor.graph_building.citation_enricher import CitationEnricher
+from arxitex.downloaders.utils import read_and_combine_tex_files
 
 class BaseGraphBuilder:
     """
@@ -28,18 +33,29 @@ class BaseGraphBuilder:
         self.content: str = ""
         self.label_to_node_id_map: Dict[str, str] = {}
 
-    def build_graph(self, latex_content: str, source_file: Optional[str] = None) -> DocumentGraph:
+        self.proof_linker = ProofLinker()
+        self.citation_enricher = CitationEnricher()
+
+    def build_graph(
+        self, 
+        project_dir: Optional[Path] = None,
+        source_file: Optional[str] = None,
+    ) -> DocumentGraph:
         logger.debug("Starting LaTeX graph extraction.")
-        self.content = re.sub(r'(?<!\\)%.*', '', latex_content)
+        self.content = read_and_combine_tex_files(project_dir)
+        self.content = re.sub(r'(?<!\\)%.*', '', self.content)
         
         graph = DocumentGraph(source_file=source_file)
         self.label_to_node_id_map.clear()
 
-        # --- Pass 1A: Discover all artifacts AND all proof environments ---
+        # 1. Discover all artifacts AND all proof environments
         nodes, detached_proofs, node_char_offsets = self._parse_all_environments_and_proofs()
         
-        # --- Pass 1B: Link detached proofs to their statements ---
-        self._link_proofs(nodes, detached_proofs, node_char_offsets)
+        # 2. Link detached proofs to their statements
+        self.proof_linker.link_proofs(nodes, detached_proofs, node_char_offsets, self.content)
+
+        # 3. Enrich citations
+        self.citation_enricher.enrich(project_dir, nodes)
 
         for node in nodes:
             graph.add_node(node)
@@ -115,56 +131,7 @@ class BaseGraphBuilder:
         for node in nodes:
             node.references = self._extract_references_from_content(node.content, None)
 
-        return nodes, detached_proofs, node_char_offsets
-    
-    def _link_proofs(self, nodes: List[ArtifactNode], proofs: List[Dict], node_char_offsets: Dict[str, Tuple[int, int]]):
-        """
-        Links proof blocks to artifacts using a refined semantic-first, then proximity-based approach.
-        """
-        logger.info(f"Attempting to link {len(proofs)} discovered proof environments to artifacts...")
-        
-        # --- STRATEGY 1: SEMANTIC LINKING VIA OPTIONAL ARGUMENT (The Most Reliable) ---
-        for node in nodes:
-            if not node.label: continue
-
-            for proof in proofs:
-                if proof["used"] or not proof["optional_arg"]: continue
-                
-                # Pattern to find a ref/cref to this node's label.
-                ref_pattern = re.compile(r'\\(?:[cC]ref|[vV]ref|[Aa]utoref|ref)\s*\{' + re.escape(node.label) + r'\}')
-                
-                if ref_pattern.search(proof["optional_arg"]):
-                    node.proof = proof["content"]
-                    proof["used"] = True
-                    logger.debug(f"Linked proof to artifact {node.id} via explicit label '{node.label}' in proof argument.")
-                    break
-
-        # --- STRATEGY 2: PROXIMITY LINKING (A Fallback for Unlabeled Proofs) ---
-        sorted_nodes = sorted(nodes, key=lambda n: node_char_offsets[n.id][0])
-        
-        for i, node in enumerate(sorted_nodes):
-            if node.proof: continue
-
-            _, node_end_char = node_char_offsets[node.id]
-            
-            next_node_start = len(self.content)
-            if i + 1 < len(sorted_nodes):
-                next_node_start, _ = node_char_offsets[sorted_nodes[i+1].id]
-
-            for proof in sorted(proofs, key=lambda p: p["start_char"]):
-                if proof["used"]: continue
-                
-                if node_end_char < proof["start_char"] < next_node_start:
-                    if not proof["optional_arg"]:
-                        node.proof = proof["content"]
-                        proof["used"] = True
-                        logger.debug(f"Linked proof to artifact {node.id} via proximity.")
-                        break
-                        
-        # --- FINAL STEP: Update References ---
-        for node in nodes:
-            if node.proof:
-                node.references.extend(self._extract_references_from_content(None, node.proof))
+        return nodes, detached_proofs, node_char_offsets 
     
     def _find_matching_end(self, env_type: str, star: str, start_pos: int) -> int:
         """Finds the matching \\end{env} tag, handling nested environments."""
