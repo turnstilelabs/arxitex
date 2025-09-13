@@ -54,14 +54,19 @@ class BaseGraphBuilder:
         # 2. Link detached proofs to their statements
         self.proof_linker.link_proofs(nodes, detached_proofs, node_char_offsets, self.content)
 
-        # 3. Enrich citations
+        # 3. Enrich citations using .bbl or .bib files if available
         self.citation_enricher.enrich(project_dir, nodes)
 
+        # 4. Extract references from all content (including proofs)
+        logger.info("Extracting internal references from all artifact content (including proofs)...")
+        for node in nodes:
+            node.references = self._extract_references_from_content(node.content, node.proof)
+            
         for node in nodes:
             graph.add_node(node)
         logger.info(f"Pass 1: Parsed {len(graph.nodes)} artifacts and linked detached proofs.")
 
-        # --- Pass 2: Resolve references and create all links (edges) ---
+        # 5. Resolve references and create all links (edges) ---
         edges_to_add, external_nodes_to_add = self._resolve_and_create_graph_links(graph.nodes)
         
         for node in external_nodes_to_add:
@@ -127,9 +132,6 @@ class BaseGraphBuilder:
                 # Store the character offsets in our temporary dictionary.
                 node_char_offsets[node.id] = (match.start(), full_end_pos)
             cursor = full_end_pos
-        
-        for node in nodes:
-            node.references = self._extract_references_from_content(node.content, None)
 
         return nodes, detached_proofs, node_char_offsets 
     
