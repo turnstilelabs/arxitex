@@ -52,15 +52,20 @@ class Reference:
     context: Optional[str] = None  # Surrounding text for context
     position: Optional[Position] = None  # Where the reference appears
 
+    full_reference: Optional[str] = None # The full text from the bibliography entry.
+    arxiv_id: Optional[str] = None # The arXiv ID, if found.
+    note: Optional[str] = None # e.g., "Theorem 3.1" from \cite[Theorem 3.1]{...}
+
     def to_dict(self) -> Dict:
-        """Converts the Reference object to a JSON-serializable dictionary."""
         return {
             "target_id": self.target_id,
             "reference_type": self.reference_type.value,
             "context": self.context,
             "position": self.position.to_dict() if self.position else None,
+            "full_reference": self.full_reference,
+            "arxiv_id": self.arxiv_id,
+            "note": self.note,
         }
-
 
 @dataclass
 class Citation:
@@ -94,7 +99,6 @@ class ArtifactNode:
     is_external: bool = False
     proof: Optional[str] = None
     prerequisite_defs: Dict[str, str] = field(default_factory=dict)
-    citations: List[Citation] = field(default_factory=list)
 
     @property
     def content_preview(self) -> str:
@@ -169,7 +173,6 @@ class ArtifactNode:
             "label": self.label,
             "position": self.position.to_dict(),
             "references": [ref.to_dict() for ref in self.references],
-            "citations": [cit.to_dict() for cit in self.citations],
             "proof": self.proof
         }
 
