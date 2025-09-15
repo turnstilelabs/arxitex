@@ -9,8 +9,12 @@ class ProofLinker:
     Helper class responsible for linking detached proof environments
     to their corresponding artifact statements.
     """
+    def __init__(self, content: str):
+        """Initializes the linker with the document content it needs to operate on."""
+        self.content = content
+        
     def link_proofs(self, nodes: List[ArtifactNode], proofs: List[Dict],
-                    node_char_offsets: Dict[str, Tuple[int, int]], full_content: str):
+                    node_char_offsets: Dict[str, Tuple[int, int]]):
         """
         Links proof blocks to artifacts using a semantic-first, then proximity-based approach.
         This method mutates the `nodes` list by attaching proofs.
@@ -36,7 +40,7 @@ class ProofLinker:
             if node.proof: continue
 
             _, node_end_char = node_char_offsets[node.id]
-            next_node_start = len(full_content)
+            next_node_start = len(self.content)
             if i + 1 < len(sorted_nodes):
                 next_node_start, _ = node_char_offsets[sorted_nodes[i+1].id]
 
