@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
 from enum import Enum
-import re
 
 class ArxivExtractorError(Exception):
     """Custom exception for all arxiv-extractor related errors."""
