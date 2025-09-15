@@ -40,10 +40,11 @@ with a reference to a previous theorem in its proof:
 }
 ```
 
-## 1.2 LLM-Powered Dependency Inference (`extractor/dependency_inference`)
-The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.
+The `BaseGraphBuilder` is the primary engine for parsing raw LaTeX source code into a structured dependency graph. It operates in a sophisticated, multi-pass pipeline to ensure accuracy and handle the complexities of real-world academic papers.
 
-## 1.3 LLM-Powered Symbol Definition Enhancement (`symdef`)
+Instead of a single monolithic class, it acts as an orchestrator, delegating specialized tasks to helper classes for a clean and maintainable design. The core process first parses all artifact and proof environments, then links detached proofs using a semantic-first strategy. Finally, it enriches the artifacts by parsing the bibliography (from embedded content or separate .bbl/.bib files) and extracting all internal (\ref) and external (\cite) references. 
+
+## 1.2 LLM-Powered Symbol Definition Enhancement (`symdef`)
 A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well. It is organised as follows.
 
 We build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper. 
@@ -85,6 +86,13 @@ Last but not least, we enhanced each artifact with the definition of all its ter
       "content": "--- Prerequisite Definitions ---\n**\\varphi**: Let \\varphi = 1-\\psi =\\frac{\\sqrt{5}-1}{2} be the positive root of x^2+x-1=0.\n\n---\n\n\\label{f_min}\nThe function $f$ is minimized at $(\\varphi,\\varphi)$. At this point $f(\\varphi,\\varphi)=\\frac{1}{2 \\varphi}$.",
 }
 ```
+
+## 1.3 LLM-Powered Dependency Inference (`extractor/dependency_inference`)
+The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.  
+
+For each artifact, we construct a "conceptual footprint" by combining the terms directly used in the artifact with the known dependencies of those terms from the `DefinitionBank`. We then generate a list of high-potential candidate pairs by identifying artifacts that share concepts, either through direct term overlap or through a hierarchical "subword" relationship (e.g., linking "approximate union closed set system" to "union closed set system")
+
+Finally, we send those pairs to an LLM to establish whether there is a dependency relationship between the two, and if yes what type of dependency this is.
 
 ## 1.4 Paper Processing Pipeline 
 Examples:
