@@ -5,12 +5,13 @@ from typing import Dict, List, Optional, Set, Tuple
 from loguru import logger
 
 from arxitex.extractor.utils import (
-    ArtifactNode, Edge, DocumentGraph, Position, Reference,
-    ArtifactType, ReferenceType
+    ArtifactNode, DocumentGraph, Position,
+    ArtifactType
 )
 
-from arxitex.extractor.graph_building.proof_linker import ProofLinker
 from arxitex.downloaders.utils import read_and_combine_tex_files
+from arxitex.extractor.graph_building.proof_linker import ProofLinker
+from arxitex.extractor.graph_building.reference_resolver import ReferenceResolver
 
 class BaseGraphBuilder:
     """
@@ -31,7 +32,6 @@ class BaseGraphBuilder:
         self.artifact_type_map = {name: ArtifactType(name) for name in self.ARTIFACT_TYPES}
         self.content: str = ""
         self.label_to_node_id_map: Dict[str, str] = {}
-        self.proof_linker = ProofLinker()
 
     def build_graph(
         self, 
@@ -45,32 +45,24 @@ class BaseGraphBuilder:
         graph = DocumentGraph(source_file=source_file)
         self.label_to_node_id_map.clear()
 
+        self.proof_linker = ProofLinker(self.content)
+        self.reference_resolver = ReferenceResolver(self.content)
+
         # 1. Discover all artifacts and proof environments
         nodes, detached_proofs, node_char_offsets = self._parse_all_environments_and_proofs()
         
         # 2. Link proofs to their statements
-        self.proof_linker.link_proofs(nodes, detached_proofs, node_char_offsets, self.content)
+        self.proof_linker.link_proofs(nodes, detached_proofs, node_char_offsets)
 
-        # 3. Parse the bibliography ONCE to create the lookup map.
-        bibliography_map = self._find_and_parse_bibliography(project_dir)
+        # 3. Delegate ALL reference and citation handling to the new resolver.
+        edges, external_nodes = self.reference_resolver.resolve_all_references(
+            project_dir, nodes, self.label_to_node_id_map
+        )
 
-        # 4. Extract references from all content
-        logger.info("Extracting references from artifact content...")
-        for node in nodes:
-            node.references = self._extract_references(node, bibliography_map)
-            
-        for node in nodes:
-            graph.add_node(node)
-        logger.info(f"Pass 1: Parsed {len(graph.nodes)} artifacts and linked detached proofs.")
-
-        # 5. Resolve references and create all links (edges) ---
-        edges_to_add, external_nodes_to_add = self._resolve_and_create_graph_links(graph.nodes)
-        
-        for node in external_nodes_to_add:
-            graph.add_node(node)
-        for edge in edges_to_add:
-            graph.add_edge(edge)
-        logger.info(f"Pass 2: Resolved references, creating {len(edges_to_add)} edges.")
+        # 4. Build the final graph.
+        for node in nodes: graph.add_node(node)
+        for node in external_nodes: graph.add_node(node)
+        for edge in edges: graph.add_edge(edge)
         
         logger.success(f"Regex-based graph extraction complete. Found {len(graph.nodes)} nodes and {len(graph.edges)} edges.")
         return graph
@@ -188,258 +180,3 @@ class BaseGraphBuilder:
             col_start=col_start,
             col_end=col_end
         )
-
-    def _find_and_parse_bibliography(self, project_dir: Path) -> Dict[str, Dict]:
-        """
-        Finds and parses ALL bibliography files in the project, prioritizing .bbl files
-        and merging the contents of all found files.
-        """
-        # Strategy 1: Search for an embedded bibliography first
-        embedded_bib_match = re.search(r'\\begin\{thebibliography\}(.*?)\\end\{thebibliography\}', self.content, re.DOTALL)
-        if embedded_bib_match:
-            logger.info("Found embedded 'thebibliography' environment. Parsing it.")
-            embedded_bbl_content = embedded_bib_match.group(1)
-            return self._parse_bbl_content(embedded_bbl_content)
-        
-        # Strategy 2: Look for .bbl files
-        bbl_files = list(project_dir.rglob('*.bbl'))
-        if bbl_files:
-            logger.info(f"Found {len(bbl_files)} .bbl file(s). Parsing all of them.")
-            final_bib_map = {}
-            for bbl_file in bbl_files:
-                try:
-                    bbl_content = bbl_file.read_text(encoding='utf-8', errors='ignore')
-                    parsed_map = self._parse_bbl_content(bbl_content)
-                    final_bib_map.update(parsed_map)
-                except Exception as e:
-                    logger.warning(f"Could not parse .bbl file {bbl_file.name}: {e}")
-            return final_bib_map
-
-        # Strategy 3: Fallback to .bib files
-        bib_files = list(project_dir.rglob('*.bib'))
-        if bib_files:
-            logger.info(f"No .bbl files found. Found {len(bib_files)} .bib file(s). Parsing all of them.")
-            final_bib_map = {}
-            for bib_file in bib_files:
-                try:
-                    bib_content = bib_file.read_text(encoding='utf-8', errors='ignore')
-                    parsed_map = self._parse_bib_content(bib_content)
-                    final_bib_map.update(parsed_map)
-                except Exception as e:
-                    logger.warning(f"Could not parse .bib file {bib_file.name}: {e}")
-            return final_bib_map
-        
-        logger.warning("No .bbl or .bib files found in the project directory. Cannot parse bibliography.")
-        return {}
-
-    def _parse_bbl_content(self, bbl_content: str) -> Dict[str, Dict]:
-        bib_map = {}
-        pattern = re.compile(r'\\bibitem(?:\[(.*?)\])?\{(.*?)\}(.*?)(?=\\bibitem|\s*\\end)', re.DOTALL)
-        for match in pattern.finditer(bbl_content):
-            optional_key, mandatory_key, ref_text = match.groups()
-            ref_text = re.sub(r'\s+', ' ', ref_text).strip()
-            arxiv_match = re.search(r'(?:arxiv[:\s]*|eprint\s*=\s*\{s*)([\d\.\/v-]+)', ref_text, re.IGNORECASE)
-            
-            reference_data = {
-                "full_reference": ref_text,
-                "arxiv_id": arxiv_match.group(1).strip() if arxiv_match else None
-            }
-            
-            if mandatory_key:
-                bib_map[mandatory_key.strip()] = reference_data
-            if optional_key:
-                bib_map[optional_key.strip()] = reference_data
-                
-        logger.info(f"Parsed {len(bib_map)} unique cite keys from .bbl content.")
-        return bib_map
-
-    def _parse_bib_content(self, bib_content: str) -> Dict[str, Dict]:
-        bib_map = {}
-        pattern = re.compile(r'@\w+\s*\{(.*?),(.*?)(?=\n@|\Z)', re.DOTALL)
-        for match in pattern.finditer(bib_content):
-            cite_key, fields_str = match.groups()
-            ref_text = f"{cite_key}: {fields_str.strip()}"
-            arxiv_match = re.search(r'(?:archivePrefix|eprint)\s*=\s*.*?([\d\.\/v-]+)', fields_str)
-            bib_map[cite_key.strip()] = { "full_reference": ref_text, "arxiv_id": arxiv_match.group(1).strip() if arxiv_match else None }
-        return bib_map
-    
-    def _extract_references(self, node: ArtifactNode, bib_map: Dict[str, Dict]) -> List[Reference]:
-        """Extract all references (\ref-style and \cite-style) from artifact and proof content."""
-        references = []
-        parts = []
-        if node.content: parts.append(node.content)
-        if node.proof: parts.append(node.proof)
-        full_content = "\n\n".join(parts)
-
-        if not full_content:
-            logger.warning(f"Node {node.id} has no content or proof to extract references from.")
-            return references
-        
-        explicit_pattern = re.compile(
-            r'\\(?P<ref_cmd>[cC]ref|[vV]ref|[Aa]utoref|ref|eqref)\s*\{(?P<ref_keys>[^}]+)\}|'
-            r'\\(?P<cite_cmd>cite[pt]?\*?)(?:\[(?P<cite_note>[^\]]*)\])?\{(?P<cite_keys>[^}]+)\}'
-        )
-        
-        found_cite_keys = set()
-        
-        for match in explicit_pattern.finditer(full_content):
-            context_start = max(0, match.start() - 50)
-            context_end = min(len(full_content), match.end() + 50)
-            context = full_content[context_start:context_end].replace('\n', ' ').strip()
-            position = self._calculate_position(match.start(), match.end())
-
-            # Case 1: It was an internal reference (\ref, \Cref, etc.)
-            if match.group('ref_cmd'):
-                for key in match.group('ref_keys').split(','):
-                    references.append(Reference(
-                        target_id=key.strip(),
-                        reference_type=ReferenceType.INTERNAL,
-                        context=context,
-                        position=position
-                    ))
-            
-            # Case 2: It was an external citation (\cite, \citep, etc.)
-            elif match.group('cite_cmd'):
-                note = match.group('cite_note')
-                for key in match.group('cite_keys').split(','):
-                    key = key.strip()
-                    found_cite_keys.add(key) 
-                    
-                    if key in bib_map:
-                        bib_entry = bib_map[key]
-                        references.append(Reference(
-                            target_id=key,
-                            reference_type=ReferenceType.EXTERNAL,
-                            context=context,
-                            position=position,
-                            full_reference=bib_entry["full_reference"],
-                            arxiv_id=bib_entry["arxiv_id"],
-                            note=note.strip() if note else None
-                        ))
-                    else:
-                        logger.warning(
-                            f"Unresolved citation: Found cite key '{key}' in the text, "
-                            f"but it was not found in the parsed bibliography."
-                        )
-                        references.append(Reference(
-                            target_id=key,
-                            reference_type=ReferenceType.EXTERNAL,
-                            context=context,
-                            position=position,
-                            full_reference=f"UNRESOLVED: Citation key '{key}' not found in bibliography.",
-                            arxiv_id=None,
-                            note=note.strip() if note else None
-                        ))
-
-        # Now, search for any bib keys that were NOT found via an explicit \cite command.
-        # This ensures we match "Rou01" before we match "Rou".
-        sorted_bib_keys = sorted(bib_map.keys(), key=len, reverse=True)
-
-        for cite_key in sorted_bib_keys:
-            if cite_key in found_cite_keys:
-                continue
-
-            # This finds the key when it's used as a "word" like [AuthorYear, Theorem X].
-            escaped_key = re.escape(cite_key)
-            manual_pattern = re.compile(
-                r'([\(\[][^[\]\(\)]*\b' + escaped_key + r'\b[^[\]\(\)]*[\)\]])'
-            )
-
-            for match in manual_pattern.finditer(full_content):
-                logger.debug(f"Found manual citation for key '{cite_key}' in node {node.id}")
-                
-                context_start = max(0, match.start() - 50)
-                context_end = min(len(full_content), match.end() + 50)
-                context = full_content[context_start:context_end].replace('\n', ' ').strip()
-                position = self._calculate_position(match.start(), match.end())
-                bib_entry = bib_map[cite_key]
-                
-                full_match_text = match.group(1)            
-                inner_content = full_match_text.strip("[]()")           
-                note_text = re.sub(r'\b' + escaped_key + r'\b', '', inner_content)
-                note = note_text.strip(" ,")
-                
-                if not note:
-                    note = None
-
-                if not any(r.target_id == cite_key and r.note == note for r in references):
-                    references.append(Reference(
-                        target_id=cite_key, 
-                        reference_type=ReferenceType.EXTERNAL,
-                        context=context, 
-                        position=position,
-                        full_reference=bib_entry["full_reference"], 
-                        arxiv_id=bib_entry["arxiv_id"],
-                        note=note
-                    ))
-                break
-            
-        return references
-    
-    def _resolve_and_create_graph_links(self, nodes: List[ArtifactNode]) -> Tuple[List[Edge], List[ArtifactNode]]:
-        """Uses the label map to resolve references and create graph components."""
-        edges: List[Edge] = []
-        new_external_nodes: List[ArtifactNode] = []
-        created_external_nodes_map: Dict[str, str] = {} # Maps target_id to node_id
-
-        for source_node in nodes:
-            if source_node.is_external:
-                continue
-            
-            for ref in source_node.references:
-                if ref.reference_type == ReferenceType.INTERNAL:
-                    target_label = ref.target_id
-                    if target_label in self.label_to_node_id_map:
-                        target_node_id = self.label_to_node_id_map[target_label]
-                        if target_node_id != source_node.id:
-                            edges.append(Edge(
-                                source_id=source_node.id,
-                                target_id=target_node_id,
-                                context=ref.context,
-                                reference_type=ReferenceType.INTERNAL
-                            ))
-                    else:
-                        logger.warning(f"Dangling internal reference found: \
-            Node '{source_node.id}' refers to missing label '{target_label}'.")
-                        if target_label not in created_external_nodes_map:
-                            external_node_id = f"external_{target_label}"
-                            external_node = ArtifactNode(
-                                id=external_node_id,
-                                label=target_label,
-                                type=ArtifactType.UNKNOWN,
-                                content=f"Dangling reference to missing internal label: '{target_label}'",
-                                is_external=True
-                            )
-                            new_external_nodes.append(external_node)
-                            created_external_nodes_map[target_label] = external_node_id
-                        
-                        edges.append(Edge(
-                            source_id=source_node.id,
-                            target_id=created_external_nodes_map[target_label],
-                            context=ref.context,
-                            reference_type=ReferenceType.EXTERNAL
-                        ))
-                                        
-                elif ref.reference_type == ReferenceType.EXTERNAL:
-                    target_key = ref.target_id                    
-                    if target_key in created_external_nodes_map:
-                        external_node_id = created_external_nodes_map[target_key]
-                    else:
-                        external_node_id = f"external_{target_key}"
-                        external_node = ArtifactNode(
-                            id=external_node_id,
-                            label=target_key,
-                            type=ArtifactType.UNKNOWN,
-                            is_external=True
-                        )
-                        new_external_nodes.append(external_node)
-                        created_external_nodes_map[target_key] = external_node_id
-
-                    edges.append(Edge(
-                        source_id=source_node.id,
-                        target_id=external_node_id,
-                        context=ref.context,
-                        reference_type=ReferenceType.EXTERNAL
-                    ))
-
-        return edges, new_external_nodes
