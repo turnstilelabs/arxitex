@@ -25,20 +25,39 @@ class CitationEnricher:
         logger.info("Citation enrichment complete.")
 
     def _find_and_parse_bibliography(self, project_dir: Path) -> Dict[str, Dict]:
-        """Finds and parses bibliography, prioritizing .bbl files."""
+        """
+        Finds and parses ALL bibliography files in the project, prioritizing .bbl files
+        and merging the contents of all found files.
+        """
+        # --- STRATEGY 1: Look for .bbl files first ---
         bbl_files = list(project_dir.rglob('*.bbl'))
         if bbl_files:
-            logger.info(f"Found .bbl file: {bbl_files[0].name}. Parsing it.")
-            bbl_content = bbl_files[0].read_text(encoding='utf-8', errors='ignore')
-            return self._parse_bbl_content(bbl_content)
+            logger.info(f"Found {len(bbl_files)} .bbl file(s). Parsing all of them.")
+            final_bib_map = {}
+            for bbl_file in bbl_files:
+                try:
+                    bbl_content = bbl_file.read_text(encoding='utf-8', errors='ignore')
+                    parsed_map = self._parse_bbl_content(bbl_content)
+                    final_bib_map.update(parsed_map)
+                except Exception as e:
+                    logger.warning(f"Could not parse .bbl file {bbl_file.name}: {e}")
+            return final_bib_map
 
+        # --- STRATEGY 2: Fallback to .bib files ---
         bib_files = list(project_dir.rglob('*.bib'))
         if bib_files:
-            logger.info(f"No .bbl file found. Found .bib file: {bib_files[0].name}. Parsing it.")
-            bib_content = bib_files[0].read_text(encoding='utf-8', errors='ignore')
-            return self._parse_bib_content(bib_content)
+            logger.info(f"No .bbl files found. Found {len(bib_files)} .bib file(s). Parsing all of them.")
+            final_bib_map = {}
+            for bib_file in bib_files:
+                try:
+                    bib_content = bib_file.read_text(encoding='utf-8', errors='ignore')
+                    parsed_map = self._parse_bib_content(bib_content)
+                    final_bib_map.update(parsed_map)
+                except Exception as e:
+                    logger.warning(f"Could not parse .bib file {bib_file.name}: {e}")
+            return final_bib_map
         
-        logger.warning("No .bbl or .bib file found. Cannot parse bibliography.")
+        logger.warning("No .bbl or .bib files found in the project directory. Cannot parse bibliography.")
         return {}
 
     def _parse_bbl_content(self, bbl_content: str) -> Dict[str, Dict]:
