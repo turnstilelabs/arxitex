@@ -13,7 +13,7 @@ from arxitex.downloaders.utils import read_and_combine_tex_files
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
-from arxitex.extractor.utils import ArtifactNode, ArtifactType
+from arxitex.extractor.models import ArtifactNode, ArtifactType
 from arxitex.symdef.utils import create_canonical_search_string, async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 def determine_output_path(

@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 from typing import Dict, List, Tuple
 from loguru import logger
-from arxitex.extractor.utils import (
+from arxitex.extractor.models import (
     ArtifactNode, Edge, Reference, ArtifactType, ReferenceType
 )
 

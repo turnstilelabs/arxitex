@@ -22,7 +22,7 @@ from loguru import logger
 from arxitex.downloaders.async_downloader import AsyncSourceDownloader
 from arxitex.extractor.graph_building.graph_enhancer import GraphEnhancer
 from arxitex.extractor.visualization import graph_viz
-from arxitex.extractor.utils import ArxivExtractorError
+from arxitex.extractor.models import ArxivExtractorError
 
 def get_examples_dir() -> Path:
     script_dir = Path(__file__).parent.resolve()    

@@ -2,7 +2,7 @@
 import re
 from typing import Dict, List, Tuple
 from loguru import logger
-from arxitex.extractor.utils import ArtifactNode
+from arxitex.extractor.models import ArtifactNode
 
 class ProofLinker:
     """

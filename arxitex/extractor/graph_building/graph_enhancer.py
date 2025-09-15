@@ -6,7 +6,7 @@ from pathlib import Path
 from collections import defaultdict
 from loguru import logger
 
-from arxitex.extractor.utils import (
+from arxitex.extractor.models import (
     Edge, DocumentGraph)
 from arxitex.downloaders.async_downloader import read_and_combine_tex_files
 from arxitex.extractor.dependency_inference.dependency_inference import GraphDependencyInference
