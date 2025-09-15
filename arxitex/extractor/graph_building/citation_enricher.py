@@ -84,6 +84,7 @@ class CitationEnricher:
     def _attach_citations_to_nodes(self, nodes: List[ArtifactNode], bib_map: Dict[str, Dict]):
         """Attaches citation data to nodes based on the bibliography map."""
         if not bib_map:
+            logger.warning("Bibliography map is empty. No citations will be attached.")
             return
 
         cite_pattern = re.compile(r'\\cite[pt]?\*?(?:\[([^\]]*)\])?\{([^}]+)\}')
