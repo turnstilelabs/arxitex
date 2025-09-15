@@ -50,8 +50,6 @@ class Reference:
     target_id: str
     reference_type: ReferenceType
     context: Optional[str] = None  # Surrounding text for context
-    position: Optional[Position] = None  # Where the reference appears
-
     full_reference: Optional[str] = None # The full text from the bibliography entry.
     arxiv_id: Optional[str] = None # The arXiv ID, if found.
     note: Optional[str] = None # e.g., "Theorem 3.1" from \cite[Theorem 3.1]{...}
@@ -61,7 +59,6 @@ class Reference:
             "target_id": self.target_id,
             "reference_type": self.reference_type.value,
             "context": self.context,
-            "position": self.position.to_dict() if self.position else None,
             "full_reference": self.full_reference,
             "arxiv_id": self.arxiv_id,
             "note": self.note,
@@ -307,4 +304,3 @@ class DocumentGraph:
             "nodes": serialized_nodes,
             "edges": serialized_edges
         }
-
