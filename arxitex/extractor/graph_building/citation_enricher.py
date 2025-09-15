@@ -3,8 +3,7 @@ import re
 from pathlib import Path
 from typing import Dict, List
 from loguru import logger
-from arxitex.extractor.utils import ArtifactNode, Citation
-
+from arxitex.extractor.utils import ArtifactNode, Reference, ReferenceType
 
 class CitationEnricher:
     """
@@ -17,12 +16,11 @@ class CitationEnricher:
         This method mutates the `nodes` list.
         """
         logger.info("Starting citation enrichment process...")
-        # Step 1: Find and parse the bibliography to create the lookup map.
         bib_map = self._find_and_parse_bibliography(project_dir)
         
-        # Step 2: Use the map to attach citation data to the nodes.
-        self._attach_citations_to_nodes(nodes, bib_map)
-        logger.info("Citation enrichment complete.")
+        if bib_map:
+            self._attach_citations_to_nodes(nodes, bib_map)
+            logger.info("Citation enrichment complete.")
 
     def _find_and_parse_bibliography(self, project_dir: Path) -> Dict[str, Dict]:
         """
@@ -93,14 +91,17 @@ class CitationEnricher:
             for match in cite_pattern.finditer(full_content):
                 note, cite_keys_str = match.groups()
                 cite_keys = [key.strip() for key in cite_keys_str.split(',')]
+                
                 for key in cite_keys:
-                    if key in bib_map and not any(c.cite_key == key for c in node.citations):
+                    if key in bib_map and not any(r.target_id == key for r in node.references if r.reference_type == ReferenceType.EXTERNAL):
                         bib_entry = bib_map[key]
-                        node.citations.append(
-                            Citation(
-                                cite_key=key,
+                        node.references.append(
+                            Reference(
+                                target_id=key,
+                                reference_type=ReferenceType.EXTERNAL,
                                 full_reference=bib_entry["full_reference"],
                                 arxiv_id=bib_entry["arxiv_id"],
                                 note=note.strip() if note else None
+                                # Context and Position can be extracted here as well if needed
                             )
                         )
