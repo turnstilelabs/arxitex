@@ -1,7 +1,6 @@
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict, Any
 from enum import Enum
-import re
 
 class ArxivExtractorError(Exception):
     """Custom exception for all arxiv-extractor related errors."""
@@ -22,12 +21,10 @@ class ArtifactType(Enum):
     OBSERVATION = "observation"
     UNKNOWN = "unknown"
 
-#Sometimes proofs are separated from their statement -- how to deal with this?
-
 class ReferenceType(Enum):
     """Types of references between artifacts."""
-    INTERNAL = "internal"  # Reference within the same document
-    EXTERNAL = "external"  # Reference to external document/citation
+    INTERNAL = "internal"
+    EXTERNAL = "external"
 
 @dataclass
 class Position:
@@ -52,15 +49,34 @@ class Reference:
     target_id: str
     reference_type: ReferenceType
     context: Optional[str] = None  # Surrounding text for context
-    position: Optional[Position] = None  # Where the reference appears
+    full_reference: Optional[str] = None # The full text from the bibliography entry.
+    arxiv_id: Optional[str] = None # The arXiv ID, if found.
+    note: Optional[str] = None # e.g., "Theorem 3.1" from \cite[Theorem 3.1]{...}
 
     def to_dict(self) -> Dict:
-        """Converts the Reference object to a JSON-serializable dictionary."""
         return {
             "target_id": self.target_id,
             "reference_type": self.reference_type.value,
             "context": self.context,
-            "position": self.position.to_dict() if self.position else None,
+            "full_reference": self.full_reference,
+            "arxiv_id": self.arxiv_id,
+            "note": self.note,
+        }
+
+@dataclass
+class Citation:
+    """Represents a citation to an external work, including contextual notes."""
+    cite_key: str
+    full_reference: str
+    arxiv_id: Optional[str] = None
+    note: Optional[str] = None # Captures text from e.g., \cite[Theorem 3.1]{...}
+
+    def to_dict(self) -> Dict:
+        return {
+            "cite_key": self.cite_key,
+            "full_reference": self.full_reference,
+            "arxiv_id": self.arxiv_id,
+            "note": self.note,
         }
 
 
@@ -274,12 +290,7 @@ class DocumentGraph:
         Serializes the entire graph, including nodes and edges, into a
         JSON-serializable dictionary for output.
         """
-        # Correctly call .to_dict() on each node object
         serialized_nodes = [node.to_dict() for node in self.nodes]
-        
-        # --- THE CRITICAL FIX IS HERE ---
-        # The old, buggy version was not calling .to_dict() on each edge.
-        # This new version correctly serializes each edge, including the dependency_type.
         serialized_edges = [edge.to_dict() for edge in self.edges]
 
         return {

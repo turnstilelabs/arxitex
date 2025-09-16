@@ -1,12 +1,17 @@
 import re
 import uuid
+from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 from loguru import logger
 
-from arxitex.extractor.utils import (
-    ArtifactNode, Edge, DocumentGraph, Position, Reference,
-    ArtifactType, ReferenceType
+from arxitex.extractor.models import (
+    ArtifactNode, DocumentGraph, Position,
+    ArtifactType
 )
+
+from arxitex.downloaders.utils import read_and_combine_tex_files
+from arxitex.extractor.graph_building.proof_linker import ProofLinker
+from arxitex.extractor.graph_building.reference_resolver import ReferenceResolver
 
 class BaseGraphBuilder:
     """
@@ -28,31 +33,36 @@ class BaseGraphBuilder:
         self.content: str = ""
         self.label_to_node_id_map: Dict[str, str] = {}
 
-    def build_graph(self, latex_content: str, source_file: Optional[str] = None) -> DocumentGraph:
+    def build_graph(
+        self, 
+        project_dir: Optional[Path] = None,
+        source_file: Optional[str] = None,
+    ) -> DocumentGraph:
         logger.debug("Starting LaTeX graph extraction.")
-        self.content = re.sub(r'(?<!\\)%.*', '', latex_content)
+        self.content = read_and_combine_tex_files(project_dir)
+        self.content = re.sub(r'(?<!\\)%.*', '', self.content)
         
         graph = DocumentGraph(source_file=source_file)
         self.label_to_node_id_map.clear()
 
-        # --- Pass 1A: Discover all artifacts AND all proof environments ---
+        self.proof_linker = ProofLinker(self.content)
+        self.reference_resolver = ReferenceResolver(self.content)
+
+        # 1. Discover all artifacts and proof environments
         nodes, detached_proofs, node_char_offsets = self._parse_all_environments_and_proofs()
         
-        # --- Pass 1B: Link detached proofs to their statements ---
-        self._link_proofs(nodes, detached_proofs, node_char_offsets)
+        # 2. Link proofs to their statements
+        self.proof_linker.link_proofs(nodes, detached_proofs, node_char_offsets)
 
-        for node in nodes:
-            graph.add_node(node)
-        logger.info(f"Pass 1: Parsed {len(graph.nodes)} artifacts and linked detached proofs.")
+        # 3. Delegate ALL reference and citation handling to the new resolver.
+        edges, external_nodes = self.reference_resolver.resolve_all_references(
+            project_dir, nodes, self.label_to_node_id_map
+        )
 
-        # --- Pass 2: Resolve references and create all links (edges) ---
-        edges_to_add, external_nodes_to_add = self._resolve_and_create_graph_links(graph.nodes)
-        
-        for node in external_nodes_to_add:
-            graph.add_node(node)
-        for edge in edges_to_add:
-            graph.add_edge(edge)
-        logger.info(f"Pass 2: Resolved references, creating {len(edges_to_add)} edges.")
+        # 4. Build the final graph.
+        for node in nodes: graph.add_node(node)
+        for node in external_nodes: graph.add_node(node)
+        for edge in edges: graph.add_edge(edge)
         
         logger.success(f"Regex-based graph extraction complete. Found {len(graph.nodes)} nodes and {len(graph.edges)} edges.")
         return graph
@@ -111,60 +121,8 @@ class BaseGraphBuilder:
                 # Store the character offsets in our temporary dictionary.
                 node_char_offsets[node.id] = (match.start(), full_end_pos)
             cursor = full_end_pos
-        
-        for node in nodes:
-            node.references = self._extract_references_from_content(node.content, None)
 
-        return nodes, detached_proofs, node_char_offsets
-    
-    def _link_proofs(self, nodes: List[ArtifactNode], proofs: List[Dict], node_char_offsets: Dict[str, Tuple[int, int]]):
-        """
-        Links proof blocks to artifacts using a refined semantic-first, then proximity-based approach.
-        """
-        logger.info(f"Attempting to link {len(proofs)} discovered proof environments to artifacts...")
-        
-        # --- STRATEGY 1: SEMANTIC LINKING VIA OPTIONAL ARGUMENT (The Most Reliable) ---
-        for node in nodes:
-            if not node.label: continue
-
-            for proof in proofs:
-                if proof["used"] or not proof["optional_arg"]: continue
-                
-                # Pattern to find a ref/cref to this node's label.
-                ref_pattern = re.compile(r'\\(?:[cC]ref|[vV]ref|[Aa]utoref|ref)\s*\{' + re.escape(node.label) + r'\}')
-                
-                if ref_pattern.search(proof["optional_arg"]):
-                    node.proof = proof["content"]
-                    proof["used"] = True
-                    logger.debug(f"Linked proof to artifact {node.id} via explicit label '{node.label}' in proof argument.")
-                    break
-
-        # --- STRATEGY 2: PROXIMITY LINKING (A Fallback for Unlabeled Proofs) ---
-        sorted_nodes = sorted(nodes, key=lambda n: node_char_offsets[n.id][0])
-        
-        for i, node in enumerate(sorted_nodes):
-            if node.proof: continue
-
-            _, node_end_char = node_char_offsets[node.id]
-            
-            next_node_start = len(self.content)
-            if i + 1 < len(sorted_nodes):
-                next_node_start, _ = node_char_offsets[sorted_nodes[i+1].id]
-
-            for proof in sorted(proofs, key=lambda p: p["start_char"]):
-                if proof["used"]: continue
-                
-                if node_end_char < proof["start_char"] < next_node_start:
-                    if not proof["optional_arg"]:
-                        node.proof = proof["content"]
-                        proof["used"] = True
-                        logger.debug(f"Linked proof to artifact {node.id} via proximity.")
-                        break
-                        
-        # --- FINAL STEP: Update References ---
-        for node in nodes:
-            if node.proof:
-                node.references.extend(self._extract_references_from_content(None, node.proof))
+        return nodes, detached_proofs, node_char_offsets 
     
     def _find_matching_end(self, env_type: str, star: str, start_pos: int) -> int:
         """Finds the matching \\end{env} tag, handling nested environments."""
@@ -222,72 +180,3 @@ class BaseGraphBuilder:
             col_start=col_start,
             col_end=col_end
         )
-
-    def _extract_references_from_content(self, content: str, proof_content: Optional[str]) -> List[Reference]:
-        """Extract all references from artifact and proof content."""
-        references = []
-        ref_pattern = re.compile(r'\\(?:[cC]ref|[vV]ref|[Aa]utoref|ref|eqref)\s*\{([^}]+)\}')
-        
-        full_content = (content or "") + (f"\n\n{proof_content}" if proof_content else '')
-        for match in ref_pattern.finditer(full_content):
-            target_labels = [label.strip() for label in match.group(1).split(',')]
-            
-            for target_label in target_labels:
-                start = max(0, match.start() - 50)
-                end = min(len(full_content), match.end() + 50)
-                context = full_content[start:end].replace('\n', ' ').strip()
-                
-                references.append(Reference(
-                    target_id=target_label,
-                    reference_type=ReferenceType.INTERNAL,  # Assume internal until resolved
-                    context=context,
-                    position=self._calculate_position(match.start(), match.end())
-                ))
-        return references
-    
-    def _resolve_and_create_graph_links(self, nodes: List[ArtifactNode]) -> Tuple[List[Edge], List[ArtifactNode]]:
-        """Uses the label map to resolve references and create graph components."""
-        edges: List[Edge] = []
-        new_external_nodes: List[ArtifactNode] = []
-        created_external_labels: Set[str] = set()
-
-        for source_node in nodes:
-            if source_node.is_external:
-                continue
-            
-            for ref in source_node.references:
-                target_label = ref.target_id
-                
-                if target_label in self.label_to_node_id_map:
-                    target_node_id = self.label_to_node_id_map[target_label]
-                    ref.reference_type = ReferenceType.INTERNAL
-                    
-                    if target_node_id != source_node.id:
-                        edges.append(Edge(
-                            source_id=source_node.id,
-                            target_id=target_node_id,
-                            context=ref.context,
-                            reference_type=ReferenceType.INTERNAL
-                        ))
-                else:
-                    ref.reference_type = ReferenceType.EXTERNAL
-                    external_node_id = f"external_{target_label}"
-                    
-                    if target_label not in created_external_labels:
-                        external_node = ArtifactNode(
-                            id=external_node_id,
-                            label=target_label,
-                            type=ArtifactType.UNKNOWN,
-                            content=f"External reference to '{target_label}'",
-                            is_external=True
-                        )
-                        new_external_nodes.append(external_node)
-                        created_external_labels.add(target_label)
-                    
-                    edges.append(Edge(
-                        source_id=source_node.id,
-                        target_id=external_node_id,
-                        context=ref.context,
-                        reference_type=ReferenceType.EXTERNAL
-                    ))
-        return edges, new_external_nodes

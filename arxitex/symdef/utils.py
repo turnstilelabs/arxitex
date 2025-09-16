@@ -10,7 +10,7 @@ import sys
 import aiofiles 
 
 from pydantic import ValidationError, TypeAdapter 
-from arxitex.extractor.utils import ArtifactNode
+from arxitex.extractor.models import ArtifactNode
 
 
 @dataclass

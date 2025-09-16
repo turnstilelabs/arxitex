@@ -9,10 +9,11 @@ import asyncio
 import aiofiles
 
 from arxitex.downloaders.async_downloader import AsyncSourceDownloader
+from arxitex.downloaders.utils import read_and_combine_tex_files
 from arxitex.symdef.utils import Definition, ContextFinder
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
-from arxitex.extractor.utils import ArtifactNode, ArtifactType
+from arxitex.extractor.models import ArtifactNode, ArtifactType
 from arxitex.symdef.utils import create_canonical_search_string, async_load_artifacts_from_json, async_load_latex_content, async_save_enhanced_artifacts
 
 def determine_output_path(
@@ -462,7 +463,7 @@ class DocumentEnhancer:
             if definition:
                 definitions_needed[term] = definition
 
-        prerequisite_defs_dict = self._create_enhanced_content(artifact,
+        prerequisite_defs_dict = self._create_enhanced_content(
                                                         definitions_needed,
                                                         term_to_first_artifact_map,
                                                         all_artifacts_map)
@@ -471,7 +472,6 @@ class DocumentEnhancer:
 
     def _create_enhanced_content(
         self, 
-        artifact: ArtifactNode, 
         definitions: Dict[str, Definition],
         term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode]
@@ -582,7 +582,8 @@ async def main():
         try:
             with tempfile.TemporaryDirectory(prefix=f"arxiv_{file_id}_") as temp_dir:
                 async with AsyncSourceDownloader(cache_dir=Path(temp_dir)) as downloader:
-                    latex_content = await downloader.async_download_and_read_latex(args.arxiv_id)
+                    project_dir = await downloader.download_and_extract_source(args.arxiv_id)
+                    latex_content = read_and_combine_tex_files(project_dir)
         except Exception as e:
             logger.error(f"Failed to download or process arXiv source for '{args.arxiv_id}': {e}", exc_info=True)
             return
