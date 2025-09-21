@@ -22,10 +22,10 @@ For instance, for the `2506.14029v1` paper, an example node artifact is:
 }
 ```
 
-with a reference to a previous theorem in its proof:  
+with a reference to a previous theorem in its proof:
 
 ```json
-{ 
+{
 "references": [
     {
         "target_id": "thm:always-bigger",
@@ -46,7 +46,7 @@ The initial regex-based graph is often incomplete, as many dependencies are ofte
 ## 1.3 LLM-Powered Symbol Definition Enhancement (`symdef`)
 A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well. It is organised as follows.
 
-We build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper. 
+We build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper.
 
 First, for all definition artifacts, an LLM (`aextract_definition`) extracts the defined term, its aliases, and the full definition text.
 
@@ -86,7 +86,7 @@ Last but not least, we enhanced each artifact with the definition of all its ter
 }
 ```
 
-## 1.4 Paper Processing Pipeline 
+## 1.4 Paper Processing Pipeline
 Examples:
 
 ```bash
@@ -99,7 +99,7 @@ Examples:
   # Regex + infer dependency links
   python pipeline.py 2211.11689 --infer-deps
 
-  # Regex + infer dependency links + enrich artifact 
+  # Regex + infer dependency links + enrich artifact
   python pipeline.py 2211.11689 --all-enhancements --pretty
 ```
 
@@ -111,7 +111,7 @@ python pipeline.py 2211.11689 --infer-deps --visualize -p
 ```
 
 # 2. Workflow Orchestration
-The core workflow is designed around a simple two-step loop: Discover and Process. This allows  to first build a large queue of relevant papers and then process them efficiently in batches. 
+The core workflow is designed around a simple two-step loop: Discover and Process. This allows  to first build a large queue of relevant papers and then process them efficiently in batches.
 
 ## 2.1 Discover: Finding and Queuing Relevant Papers
 
