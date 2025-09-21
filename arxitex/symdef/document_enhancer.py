@@ -10,7 +10,8 @@ import aiofiles
 from loguru import logger
 
 from arxitex.downloaders.async_downloader import AsyncSourceDownloader
-from arxitex.extractor.utils import ArtifactNode, ArtifactType
+from arxitex.downloaders.utils import read_and_combine_tex_files
+from arxitex.extractor.models import ArtifactNode, ArtifactType
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.symdef.utils import (
@@ -568,14 +569,13 @@ class DocumentEnhancer:
                 definitions_needed[term] = definition
 
         prerequisite_defs_dict = self._create_enhanced_content(
-            artifact, definitions_needed, term_to_first_artifact_map, all_artifacts_map
+            definitions_needed, term_to_first_artifact_map, all_artifacts_map
         )
         logger.success(f"Successfully enhanced artifact '{artifact.id}'.")
         return artifact.id, prerequisite_defs_dict
 
     def _create_enhanced_content(
         self,
-        artifact: ArtifactNode,
         definitions: Dict[str, Definition],
         term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode],
@@ -694,9 +694,10 @@ async def main():
                 async with AsyncSourceDownloader(
                     cache_dir=Path(temp_dir)
                 ) as downloader:
-                    latex_content = await downloader.async_download_and_read_latex(
+                    project_dir = await downloader.download_and_extract_source(
                         args.arxiv_id
                     )
+                    latex_content = read_and_combine_tex_files(project_dir)
         except Exception as e:
             logger.error(
                 f"Failed to download or process arXiv source for '{args.arxiv_id}': {e}",

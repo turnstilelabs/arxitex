@@ -1,6 +1,6 @@
 from typing import Dict
 
-from arxitex.extractor.utils import DependencyType
+from arxitex.extractor.models import DependencyType
 from arxitex.llms.prompt import Prompt
 
 

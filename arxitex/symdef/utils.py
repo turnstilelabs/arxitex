@@ -9,7 +9,7 @@ import aiofiles
 from loguru import logger
 from pydantic import TypeAdapter, ValidationError
 
-from arxitex.extractor.utils import ArtifactNode
+from arxitex.extractor.models import ArtifactNode
 
 
 @dataclass

@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
-from arxitex.extractor.utils import ArtifactNode
+from arxitex.extractor.models import ArtifactNode
 
 
 def save_graph_data(arxiv_id: str, graphs_output_dir: str, graph_data: dict) -> Path:
