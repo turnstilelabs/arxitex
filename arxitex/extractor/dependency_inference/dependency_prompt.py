@@ -1,10 +1,13 @@
 from typing import Dict
 
+from arxitex.extractor.models import DependencyType
 from arxitex.llms.prompt import Prompt
-from arxitex.extractor.models import DependencyType 
+
 
 class DependencyInferencePromptGenerator:
-    def make_dependency_prompt(self, source_artifact: Dict, target_artifact: Dict) -> Prompt:
+    def make_dependency_prompt(
+        self, source_artifact: Dict, target_artifact: Dict
+    ) -> Prompt:
         dependency_options = ", ".join([f"`{dtype.value}`" for dtype in DependencyType])
         system = f"""
         You are an expert mathematician and logician acting as a high-precision proof-checker. Your task is to determine if a direct logical or conceptual dependency exists between two provided mathematical artifacts.
@@ -29,7 +32,7 @@ class DependencyInferencePromptGenerator:
             - You MUST then choose the single most fitting relationship type for `dependency_type` from this exact list: {dependency_options}.
             - You MUST provide a concise `justification` that explains **how** the Source depends on the Target. Quote the specific words from the Source that provide the evidence.
             - If, after careful analysis, you conclude the shared terms are used coincidentally and there is no logical dependency, you MUST set `has_dependency` to `false`.
-        
+
         4.  **RESPONSE REQUIREMENTS:**
             - If you find a dependency, you MUST set `has_dependency` to `true`.
             - You MUST then choose the single most fitting relationship type for the `dependency_type` field from this exact list: {dependency_options}.
@@ -62,7 +65,7 @@ class DependencyInferencePromptGenerator:
         ```
         - Proof:
         ```latex
-        {source_artifact.get('proof', 'No proof provided')}    
+        {source_artifact.get('proof', 'No proof provided')}
         ```
         ---
         """

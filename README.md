@@ -22,10 +22,10 @@ For instance, for the `2506.14029v1` paper, an example node artifact is:
 }
 ```
 
-with a reference to a previous theorem in its proof:  
+with a reference to a previous theorem in its proof:
 
 ```json
-{ 
+{
 "references": [
     {
         "target_id": "thm:always-bigger",
@@ -42,12 +42,12 @@ with a reference to a previous theorem in its proof:
 
 The `BaseGraphBuilder` is the primary engine for parsing raw LaTeX source code into a structured dependency graph. It operates in a sophisticated, multi-pass pipeline to ensure accuracy and handle the complexities of real-world academic papers.
 
-Instead of a single monolithic class, it acts as an orchestrator, delegating specialized tasks to helper classes for a clean and maintainable design. The core process first parses all artifact and proof environments, then links detached proofs using a semantic-first strategy. Finally, it enriches the artifacts by parsing the bibliography (from embedded content or separate .bbl/.bib files) and extracting all internal (\ref) and external (\cite) references. 
+Instead of a single monolithic class, it acts as an orchestrator, delegating specialized tasks to helper classes for a clean and maintainable design. The core process first parses all artifact and proof environments, then links detached proofs using a semantic-first strategy. Finally, it enriches the artifacts by parsing the bibliography (from embedded content or separate .bbl/.bib files) and extracting all internal (\ref) and external (\cite) references.
 
 ## 1.2 LLM-Powered Symbol Definition Enhancement (`symdef`)
 A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well. It is organised as follows.
 
-We build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper. 
+We build for each paper its `DefinitionBank` as a central repository for all discovered definitions of a paper.
 
 First, for all definition artifacts, an LLM (`aextract_definition`) extracts the defined term, its aliases, and the full definition text.
 
@@ -88,13 +88,13 @@ Last but not least, we enhanced each artifact with the definition of all its ter
 ```
 
 ## 1.3 LLM-Powered Dependency Inference (`extractor/dependency_inference`)
-The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.  
+The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.
 
 For each artifact, we construct a "conceptual footprint" by combining the terms directly used in the artifact with the known dependencies of those terms from the `DefinitionBank`. We then generate a list of high-potential candidate pairs by identifying artifacts that share concepts, either through direct term overlap or through a hierarchical "subword" relationship (e.g., linking "approximate union closed set system" to "union closed set system")
 
 Finally, we send those pairs to an LLM to establish whether there is a dependency relationship between the two, and if yes what type of dependency this is.
 
-## 1.4 Paper Processing Pipeline 
+## 1.4 Paper Processing Pipeline
 Examples:
 
 ```bash
@@ -107,7 +107,7 @@ Examples:
   # Regex + infer dependency links
   python pipeline.py 2211.11689 --infer-deps
 
-  # Regex + infer dependency links + enrich artifact 
+  # Regex + infer dependency links + enrich artifact
   python pipeline.py 2211.11689 --all-enhancements --pretty
 ```
 
@@ -119,7 +119,7 @@ python pipeline.py 2211.11689 --infer-deps --visualize -p
 ```
 
 # 2. Workflow Orchestration
-The core workflow is designed around a simple two-step loop: Discover and Process. This allows  to first build a large queue of relevant papers and then process them efficiently in batches. 
+The core workflow is designed around a simple two-step loop: Discover and Process. This allows  to first build a large queue of relevant papers and then process them efficiently in batches.
 
 ## 2.1 Discover: Finding and Queuing Relevant Papers
 

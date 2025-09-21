@@ -1,8 +1,10 @@
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Dict
+
 from loguru import logger
-from datetime import datetime
+
 
 def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
     """
@@ -26,7 +28,7 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arXiv Paper Dependency Graph - {arxiv_id}</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-    
+
     <!-- MATHJAX INTEGRATION: Add MathJax scripts to the head -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -95,7 +97,7 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
             .attr("id", "arrowhead").attr("viewBox", "-0 -5 10 10").attr("refX", 25)
             .attr("refY", 0).attr("orient", "auto").attr("markerWidth", 8).attr("markerHeight", 8)
             .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", "#999");
-        
+
         const zoom = d3.zoom().scaleExtent([0.1, 5]).on("zoom", (event) => g.attr("transform", event.transform));
         svg.call(zoom);
         const g = svg.append("g");
@@ -117,13 +119,13 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         const label = g.append("g").selectAll("text")
             .data(graphData.nodes).enter().append("text").attr("class", "node-label")
             .attr("dy", 28).text(d => d.display_name);
-        
+
         const tooltip = d3.select("#tooltip");
 
         // --- UPDATED TOOLTIP LOGIC FOR NODES ---
         node.on("mouseover", (event, d) => {{
             // Build the prerequisites section only if it exists
-            let prereqHtml = d.prerequisites_preview ? 
+            let prereqHtml = d.prerequisites_preview ?
                 `<h4>Prerequisites</h4><p>${{d.prerequisites_preview}}</p>` : '';
 
             tooltip.style("display", "block")
@@ -155,7 +157,7 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
                        <p><strong>Justification:</strong> ${{d.dependency || 'N/A'}}</p>`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
-            
+
             // Also typeset math in the justification text, if any.
             if (window.MathJax) {{
                 MathJax.typesetPromise([tooltip.node()]);
@@ -170,7 +172,7 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
             node.attr("cx", d => d.x).attr("cy", d => d.y);
             label.attr("x", d => d.x).attr("y", d => d.y);
         }});
-        
+
         const legendContainer = d3.select("#legend-container");
         nodeTypes.forEach(type => {{
             const item = legendContainer.append("div").attr("class", "legend-item");
@@ -194,7 +196,7 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
             if (!isPlaying) {{ d3.select("#play-pause").dispatch('click'); }}
         }});
         d3.select("#center").on("click", () => svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity));
-        
+
         function dragstarted(event, d) {{ if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }}
         function dragged(event, d) {{ d.fx = event.x; d.fy = event.y; }}
         function dragended(event, d) {{ if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }}
@@ -202,30 +204,29 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
 </body>
 </html>
 """
-    
+
     # Safely extract data from the input dictionary
-    nodes_for_json = graph_data.get('nodes', [])
-    edges_for_json = graph_data.get('edges', [])
-    stats = graph_data.get('stats', {})
-    arxiv_id = graph_data.get('arxiv_id', 'N/A')
+    nodes_for_json = graph_data.get("nodes", [])
+    edges_for_json = graph_data.get("edges", [])
+    stats = graph_data.get("stats", {})
+    arxiv_id = graph_data.get("arxiv_id", "N/A")
 
     # Format graph data for JSON embedding
     graph_data_json = json.dumps(
-        {"nodes": nodes_for_json, "edges": edges_for_json},
-        indent=2
+        {"nodes": nodes_for_json, "edges": edges_for_json}, indent=2
     )
-    
+
     # Format the HTML template with all the necessary data
     html_content = html_template.format(
         arxiv_id=arxiv_id,
-        timestamp=datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        node_count=stats.get('node_count', 0),
-        edge_count=stats.get('edge_count', 0),
-        graph_data_json=graph_data_json
+        timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        node_count=stats.get("node_count", 0),
+        edge_count=stats.get("edge_count", 0),
+        graph_data_json=graph_data_json,
     )
 
     try:
-        output_path.write_text(html_content, encoding='utf-8')
+        output_path.write_text(html_content, encoding="utf-8")
         logger.success(f"Interactive visualization saved to {output_path}")
     except Exception as e:
         logger.error(f"Failed to save visualization HTML file: {e}")

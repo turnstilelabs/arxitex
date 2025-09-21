@@ -1,18 +1,20 @@
 from typing import Optional
-from arxitex.symdef.utils import Definition
+
 from arxitex.llms.prompt import Prompt
+from arxitex.symdef.utils import Definition
+
 
 class SymbolEnhancementPromptGenerator:
 
     def make_term_extraction_prompt(self, artifact_content: str) -> str:
-        system = f"""
-        Analyze the following mathematical text. Your task is to identify and list all non-trivial mathematical symbols 
-        (like $\\F$, $G_i$) and specialized concepts (like 'union-closed family', 'Frobenius norm') 
+        system = """
+        Analyze the following mathematical text. Your task is to identify and list all non-trivial mathematical symbols
+        (like $\\F$, $G_i$) and specialized concepts (like 'union-closed family', 'Frobenius norm')
         that are crucial for understanding this specific text.
 
         - Do NOT include common mathematical operators (+, -, \\cup) or generic words ('set', 'element', 'theorem').
         - The goal is to identify terms whose meaning is likely defined within this document."""
-        
+
         user = f"""Analyze the following single mathematical artifact and extract its specialized prerequisite terms according to ALL the rules.
         ---
         {artifact_content}
@@ -25,11 +27,13 @@ class SymbolEnhancementPromptGenerator:
 
         return Prompt(system=system, user=user, id="single_artifact_term_extraction")
 
-    def make_document_term_extraction_prompt(self, full_document_content: str) -> Prompt:
+    def make_document_term_extraction_prompt(
+        self, full_document_content: str
+    ) -> Prompt:
         """
         Generates a prompt to extract all significant terms from the entire document content at once.
         """
-        system = """
+        system = r"""
     You are an expert mathematician and research assistant creating a "prerequisite glossary" for a graduate-level student who is about to read this paper.
     Your task is to analyze the entire document and compile a single, comprehensive list of all specialized mathematical terms, symbols, and concepts that are **crucial for understanding this specific text**.
 
@@ -61,7 +65,7 @@ class SymbolEnhancementPromptGenerator:
             - From "compact space, Hausdorff space, normal space" → Extract: "compact space", "Hausdorff space", "normal space" as separate entries
             - From "$\nabla f$ (gradient of function)" → Extract: "$\nabla f$" only
             - From "both $\mathcal{L}(V,W)$ and $\text{Hom}(V,W)$ (linear maps)" → Extract: "$\mathcal{L}(V,W)$" and "$\text{Hom}(V,W)$" as separate entries
-                    
+
     **3. DEDUPLICATION RULES:**
         - **Avoid Exact Duplicates:** Ensure no term appears twice in the final list.
         - **Avoid Near-Duplicates:** If terms differ only by minor variations (e.g., with/without context in parentheses, subgroup vs group of same type, same symbol with/without descriptive text), include only the most complete or general version.
@@ -82,7 +86,7 @@ class SymbolEnhancementPromptGenerator:
         }}
         """
         return Prompt(system=system, user=user, id="document_term_extraction")
-    
+
     def make_definition_extraction_prompt(self, artifact_content: str) -> str:
         """
         Generates a prompt to extract the primary term, its definition, and any aliases
@@ -114,14 +118,16 @@ class SymbolEnhancementPromptGenerator:
         }}
         """
         return Prompt(system=system, user=user, id="definition_extraction")
-    
-    def make_definition_synthesis_prompt(self, term: str, context_snippets: str, base_definition: Optional[Definition]) -> str:        
+
+    def make_definition_synthesis_prompt(
+        self, term: str, context_snippets: str, base_definition: Optional[Definition]
+    ) -> str:
         system = """You are a text-extraction assistant. Your task is to construct a definition for a specific term by ONLY using verbatim sentences from the provided context.
         - **DO NOT** rephrase, summarize, interpret, or generate new text.
         - Your entire response for the `definition` field must be a direct copy-and-paste of sentences from the context.
         - If multiple sentences from the context are needed to form a complete definition, concatenate them.
         - If the context does not contain any sentence that clearly and directly defines the term, you MUST indicate that the context is insufficient."""
-                
+
         user = f"""You are defining the term: '{term}'. Context from the document:
             ---
             {context_snippets}
@@ -134,7 +140,7 @@ class SymbolEnhancementPromptGenerator:
             "{base_definition.definition_text}"
             Your new definition for '{term}' MUST build upon this existing knowledge, explaining the specialization using verbatim sentences from the context.
             """
-        
+
         user += """
     Carefully evaluate if the provided context contains verbatim sentences that define the term.
     - If YES, set `context_was_sufficient` to `true` and construct the `definition` by extracting and concatenating the relevant sentences.
@@ -145,5 +151,5 @@ class SymbolEnhancementPromptGenerator:
     "context_was_sufficient": true | false,
     "definition": "..." | null
     }"""
-        
+
         return Prompt(system=system, user=user, id="definition_synthesis")

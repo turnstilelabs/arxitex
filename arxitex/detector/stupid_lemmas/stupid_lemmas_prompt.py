@@ -61,5 +61,5 @@ Provide only a JSON object with this exact structure:
 """
         user = f"""Evaluate the following lemma or proposition:
 {statement}"""
-        
+
         return Prompt(id="stupid-lemma", system=system, user=user)

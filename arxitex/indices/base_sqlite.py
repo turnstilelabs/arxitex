@@ -1,12 +1,14 @@
-import sqlite3
 import abc
 import json
+import sqlite3
 from typing import Dict
+
 
 class BaseSQLiteIndex(abc.ABC):
     """
     An abstract base class for indices backed by tables in a shared SQLite database.
     """
+
     def __init__(self, db_path: str):
         """
         Initializes the index, pointing to a shared SQLite database file.
