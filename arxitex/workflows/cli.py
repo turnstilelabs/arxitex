@@ -207,6 +207,11 @@ async def main():
     return exit_code
 
 
+def cli_main():
+    """Synchronous wrapper for setuptools console_scripts entry point."""
+    return asyncio.run(main())
+
+
 if __name__ == "__main__":
-    exit_code = asyncio.run(main())
+    exit_code = cli_main()
     exit(exit_code)
