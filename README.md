@@ -1,6 +1,26 @@
 # ArxiTex: Building Large-Scale Searchable Knowledge Graph
 Our goal is to build a structured, machine-readable knowledge graph representing the logical dependencies and symbolic definitions within a paper.
 
+## Quick summary
+- Parse LaTeX sources to discover mathematical artifacts (theorems, lemmas, definitions, proofs,...).
+- Build a dependency graph linking statements using explicit references and inferred semantic dependencies.
+- Optionally enrich artifacts with synthesized definitions using an LLM.
+- Export graphs and optional search indices / visualizations.
+
+## Getting started
+### Prerequisites
+- Python 3.11+ recommended
+- If you want LLM-based features, set at least one provider credential (`OPENAI_API_KEY` or `TOGETHER_API_KEY`).
+
+### Install
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+# or for editable install:
+pip install -e .
+```
+
 # 1. Building a graph from an ArXiv paper
 ## 1.1 Initial Graph Construction (`extractor/graph_building`)
 We collect all artifacts (definition, proposition, claim, theorem,...) with regular expressions as well as the explicit dependencies between thoses (through the use of `\ref{...}`).
