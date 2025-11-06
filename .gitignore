@@ -208,3 +208,14 @@ __marimo__/
 
 # Prompts cache
 *prompts_cache*
+# Generated pipeline outputs (build artifacts and indices)
+pipeline_output/
+pipeline_output/**
+# Local data artifacts (generated) — remove these from the repo if you don't want to redistribute processed papers
+data/graphs/
+data/definition_banks/
+data/viz/
+# Egg-info and build metadata
+*.egg-info
+conjecture.egg-info/
+arxitex/conjecture.egg-info/
