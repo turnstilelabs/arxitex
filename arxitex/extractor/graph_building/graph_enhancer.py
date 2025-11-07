@@ -54,7 +54,7 @@ class GraphEnhancer:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
             return DocumentGraph()
 
-        from arxitex.downloaders.async_downloader import read_and_combine_tex_files
+        from arxitex.downloaders.utils import read_and_combine_tex_files
 
         latex_content = read_and_combine_tex_files(project_dir)
         bank = None
