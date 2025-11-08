@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Awaitable, Callable, Dict, List, Optional
 
 from loguru import logger
 
@@ -166,7 +166,6 @@ class GraphEnhancer:
         id_to_node_map = {node.id: node for node in internal_nodes}
         final_candidate_pairs = []
 
-        # --- THIS IS THE KEY LOGIC BRANCH ---
         # Check if we have the necessary data to be "smart".
         has_enrichment_data = bool(bank and artifact_to_terms_map)
 
@@ -299,5 +298,147 @@ class GraphEnhancer:
 
         logger.success(
             f"Added {added_edges_count} new dependency edges based on LLM verification."
+        )
+        return graph
+
+    async def ainfer_dependencies_streaming(
+        self,
+        graph: DocumentGraph,
+        artifact_to_terms_map: Dict[str, List[str]],
+        bank: DefinitionBank,
+        on_edge: Callable[[Edge], Awaitable[None]],
+        on_progress: Optional[Callable[[int, int], Awaitable[None]]] = None,
+        concurrency: int = 6,
+    ) -> DocumentGraph:
+        """
+        Streaming variant of dependency inference.
+        Emits each confirmed edge via the on_edge callback as soon as it is verified.
+        Calls on_progress(processed, total) after each verification attempt.
+        """
+        internal_nodes = [node for node in graph.nodes if not node.is_external]
+        if len(internal_nodes) < 2:
+            logger.info("Not enough internal nodes to infer dependencies. Skipping.")
+            return graph
+
+        id_to_node_map = {node.id: node for node in internal_nodes}
+        final_candidate_pairs: List[tuple] = []
+
+        has_enrichment_data = bool(bank and artifact_to_terms_map)
+        if has_enrichment_data:
+            logger.info(
+                "Building conceptual footprint for each artifact by including term dependencies..."
+            )
+            from collections import defaultdict
+
+            artifact_footprints = defaultdict(set)
+            for artifact in internal_nodes:
+                direct_terms = artifact_to_terms_map.get(artifact.id, [])
+                artifact_footprints[artifact.id].update(direct_terms)
+
+                for term in direct_terms:
+                    definition = await bank.find(term)
+                    if definition and definition.dependencies:
+                        artifact_footprints[artifact.id].update(definition.dependencies)
+
+            logger.info(
+                "Generating candidate pairs from conceptual and subword overlap..."
+            )
+            candidate_pairs_unordered = set()
+            from itertools import combinations
+
+            for id1, id2 in combinations(id_to_node_map.keys(), 2):
+                footprint1 = artifact_footprints[id1]
+                footprint2 = artifact_footprints[id2]
+
+                if not footprint1.isdisjoint(footprint2):
+                    candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
+                    continue
+
+                found_subword_link = False
+                for term1 in footprint1:
+                    for term2 in footprint2:
+                        if self._is_subword_of(term1, term2) or self._is_subword_of(
+                            term2, term1
+                        ):
+                            candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
+                            found_subword_link = True
+                            break
+                    if found_subword_link:
+                        break
+
+            for id1, id2 in candidate_pairs_unordered:
+                node1, node2 = id_to_node_map[id1], id_to_node_map[id2]
+                source_node, target_node = (
+                    (node2, node1)
+                    if node1.position.line_start < node2.position.line_start
+                    else (node1, node2)
+                )
+                if not graph.find_edge(source_node.id, target_node.id):
+                    final_candidate_pairs.append((source_node, target_node))
+        else:
+            logger.warning(
+                "No enrichment data found. Falling back to checking all artifact pairs."
+            )
+            from itertools import combinations
+
+            for node1, node2 in combinations(internal_nodes, 2):
+                source_node, target_node = (
+                    (node1, node2)
+                    if node1.position.line_start < node2.position.line_start
+                    else (node2, node1)
+                )
+                if not graph.find_edge(source_node.id, target_node.id):
+                    final_candidate_pairs.append((source_node, target_node))
+
+        if not final_candidate_pairs:
+            logger.debug(
+                "No promising candidate pairs found after filtering. Skipping LLM verification."
+            )
+            return graph
+
+        total = len(final_candidate_pairs)
+        processed = 0
+        sem = asyncio.Semaphore(concurrency)
+
+        async def verify_pair(pair):
+            nonlocal processed
+            source_node, target_node = pair
+            result = None
+            async with sem:
+                try:
+                    result = await self.llm_dependency_checker.ainfer_dependency(
+                        source_node.to_dict(), target_node.to_dict()
+                    )
+                except Exception as e:
+                    logger.error(
+                        f"Error processing pair ({source_node.id}, {target_node.id}): {e}"
+                    )
+            # progress update
+            processed += 1
+            if on_progress:
+                try:
+                    await on_progress(processed, total)
+                except Exception as e:
+                    logger.warning(f"on_progress callback failed: {e}")
+
+            # edge emission
+            if result and result.has_dependency:
+                new_edge = Edge(
+                    source_id=source_node.id,
+                    target_id=target_node.id,
+                    dependency_type=result.dependency_type,
+                    dependency=result.justification
+                    or "Inferred by LLM based on shared terminology.",
+                )
+                graph.add_edge(new_edge)
+                if on_edge:
+                    try:
+                        await on_edge(new_edge)
+                    except Exception as e:
+                        logger.warning(f"on_edge callback failed: {e}")
+
+        await asyncio.gather(*(verify_pair(p) for p in final_candidate_pairs))
+        logger.success(
+            f"Streaming dependency inference completed for {total} candidates."
         )
         return graph

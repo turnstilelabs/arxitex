@@ -1,7 +1,7 @@
 import asyncio
 import re
 from collections import defaultdict
-from typing import Any, Dict, List, Optional
+from typing import Any, Awaitable, Callable, Dict, List, Optional
 
 from loguru import logger
 
@@ -15,6 +15,7 @@ class DefinitionBank:
         self._definitions: Dict[str, Definition] = {}
         self._alias_map: Dict[str, str] = {}
         self._lock = asyncio.Lock()
+        self._on_register: Optional[Callable[[Definition], Awaitable[None]]] = None
 
     def _normalize_term(self, term: str) -> str:
         """
@@ -59,6 +60,19 @@ class DefinitionBank:
         """Adds or updates a definition, ensuring task-safe access."""
         async with self._lock:
             self._register_unlocked(definition)
+            cb = self._on_register
+        if cb:
+            try:
+                await cb(definition)
+            except Exception as e:
+                logger.warning(f"DefinitionBank on_register callback failed: {e}")
+
+    def set_on_register(
+        self, cb: Optional[Callable[[Definition], Awaitable[None]]]
+    ) -> None:
+        """Registers a coroutine callback invoked after a definition is added."""
+        # Best-effort swap without locking; register() snapshots the callback under lock.
+        self._on_register = cb
 
     async def find(self, term: str) -> Optional[Definition]:
         """Finds a definition by its canonical form, ensuring task-safe access."""
