@@ -85,7 +85,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
             .attr("width", "100%")
             .attr("height", h)
             .attr("viewBox", `0 0 ${width} ${h}`)
-            .style("background", "#ffffff");
+            .style("background", "var(--surface)");
 
         // create persistent controls container (so legend doesn't flicker on relayout)
         // Placed at bottom-center and collapsible
@@ -111,20 +111,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
         // create a single controls block inside the host
         const controlsSel = (d3.select(graphControlsEl) as any)
             .append("div")
-            .attr("class", "__d3_controls")
-            // render controls as a normal block after the SVG so they do not overlay the viz
-            .style("position", "static")
-            .style("margin", "8px auto 0 auto")
-            .style("max-width", "880px")
-            .style("background", "rgba(255,255,255,0.98)")
-            .style("padding", "8px")
-            .style("border-radius", "10px")
-            .style("box-shadow", "0 8px 30px rgba(2,6,23,0.08)")
-            .style("font-family", "Inter, sans-serif")
-            .style("font-size", "12px")
-            .style("max-height", "50vh")
-            .style("overflow", "auto")
-            .style("pointer-events", "auto");
+            .attr("class", "__d3_controls");
         const controls = controlsSel.attr("role", "region").attr("aria-label", `Graph controls for ${graph?.arxiv_id || ""}`);
 
         // Start controls expanded by default so the legend/types are visible.
@@ -136,15 +123,11 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
         const legendRoot = controls
             .append("div")
             .style("margin-bottom", "8px")
-            // make the legend box visually tappable and large enough to display swatches
             .style("min-height", "40px")
             .style("display", "flex")
             .style("align-items", "center")
             .style("gap", "12px")
             .style("padding", "8px 12px")
-            .style("background", "rgba(255,255,255,0.98)")
-            .style("border", "1px solid rgba(0,0,0,0.04)")
-            .style("border-radius", "8px")
             .attr("role", "button")
             .attr("tabindex", "0")
             .attr("aria-expanded", String(!controls.classed("collapsed")))
@@ -183,7 +166,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                 .style("padding", "6px 8px")
                 .style("border-radius", "8px")
                 .style("cursor", "pointer")
-                .style("background", filterTypes[t] ? "rgba(0,0,0,0.02)" : "transparent")
+                .style("background", filterTypes[t] ? "color-mix(in srgb, var(--card) 96%, transparent)" : "transparent")
                 .on("click", (event: any) => {
                     const cur = selectedType;
                     const nextType = cur === t ? null : t;
@@ -219,7 +202,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                 .append("div")
                 .text(t)
                 .style("font-size", "12px")
-                .style("color", "#0f172a");
+                .style("color", "var(--text)");
         });
 
         // Prepare nodes/links filtered by type and search
@@ -318,7 +301,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                         const mx = (s.x + t.x) / 2;
                         return `M${s.x},${s.y} C ${mx},${s.y} ${mx},${t.y} ${t.x},${t.y}`;
                     })
-                    .attr("stroke", "#8b95a5")
+                    .attr("stroke", "var(--muted)")
                     .attr("stroke-width", 1.6)
                     .attr("fill", "none")
                     .attr("opacity", 0.9);
@@ -355,7 +338,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     .append("circle")
                     .attr("r", 18)
                     .attr("fill", (d, i) => PASTEL_PALETTE[i % PASTEL_PALETTE.length])
-                    .attr("stroke", "#1f2937")
+                    .attr("stroke", "var(--text)")
                     .attr("stroke-width", (d: any) => (selectedType ? (d.type === selectedType ? 3 : 1.2) : 1.5))
                     .attr("opacity", (d: any) => (selectedType ? (d.type === selectedType ? 1 : 0.25) : 1));
 
@@ -366,12 +349,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     .attr("x", 22)
                     .attr("y", -30)
                     .append("xhtml:div")
-                    .style("font-family", "Merriweather, serif")
-                    .style("font-weight", "700")
-                    .style("font-size", "13px")
-                    .style("color", "#0f172a")
-                    .style("padding", "2px 6px")
-                    .html((d: ArtifactNode) => `<div data-id="${d.id}" style="color:#000 !important;">${d.type}</div>`);
+                    .html((d: ArtifactNode) => `<div data-id="${d.id}">${d.type}</div>`);
 
                 // Hover & click interactions
                 const tooltip = d3
@@ -380,11 +358,6 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     .attr("class", "d3-tooltip")
                     .style("position", "absolute")
                     .style("pointer-events", "none")
-                    .style("background", "rgba(0,0,0,0.75)")
-                    .style("color", "white")
-                    .style("padding", "6px 8px")
-                    .style("border-radius", "4px")
-                    .style("font-size", "12px")
                     .style("display", "none");
 
                 node
@@ -475,8 +448,8 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     const path = shortestPath(pathEndpoints.a, pathEndpoints.b);
                     if (path && path.length > 0) {
                         const setP = new Set(path);
-                        node.select("circle").attr("stroke", (d: any) => (setP.has(d.id) ? "#111827" : "#111827")).attr("stroke-width", (d: any) => (setP.has(d.id) ? 3 : 1.5));
-                        linkEls.attr("stroke", (l: any) => (setP.has(l.source) && setP.has(l.target) ? "#1f2937" : "#94a3b8")).attr("stroke-width", (l: any) => (setP.has(l.source) && setP.has(l.target) ? 2.6 : 1.2));
+                        node.select("circle").attr("stroke", (d: any) => (setP.has(d.id) ? "var(--text)" : "var(--text)")).attr("stroke-width", (d: any) => (setP.has(d.id) ? 3 : 1.5));
+                        linkEls.attr("stroke", (l: any) => (setP.has(l.source) && setP.has(l.target) ? "var(--text)" : "var(--muted)")).attr("stroke-width", (l: any) => (setP.has(l.source) && setP.has(l.target) ? 2.6 : 1.2));
                     }
                 }
 

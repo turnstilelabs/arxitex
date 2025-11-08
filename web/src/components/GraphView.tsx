@@ -119,6 +119,7 @@ export default function GraphView({ graph, onSelectNode, height = "70vh" }: Prop
                     },
                     label: "data(label)",
                     color: "#111827",
+                    "font-family": "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
                     "font-weight": 600,
                     "font-size": "10px",
                     "text-wrap": "wrap",

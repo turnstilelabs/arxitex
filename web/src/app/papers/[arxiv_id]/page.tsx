@@ -30,7 +30,7 @@ function DefinitionBankView({ bank }: { bank: PaperResponse["definition_bank"] }
     }
 
     return (
-        <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1 text-black" ref={rootRef}>
+        <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1 text-[var(--text)]" ref={rootRef}>
             {entries.map((e) => {
                 const defId = `defn-${e.key.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
                 const isOpen = !!open[e.key];
@@ -86,7 +86,7 @@ function ArtifactDetails({ node }: { node: ArtifactNode | null }) {
     }
 
     return (
-        <div className="space-y-3 artifact-details-root" ref={detailsRef} style={{ color: "#000" }}>
+        <div className="space-y-3 artifact-details-root text-[var(--text)]" ref={detailsRef}>
             <div>
                 <div className="text-sm font-semibold">{node.display_name}</div>
                 {node.label && <div className="text-xs text-gray-600">Label: {node.label}</div>}
@@ -157,7 +157,7 @@ export default function PaperPage() {
     if (isLoading) {
         return (
             <>
-                <header className="sticky top-0 z-40 bg-white border-b text-black">
+                <header className="sticky top-0 z-40 bg-[var(--surface)] border-b text-[var(--text)]">
                     <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 justify-start">
                         <Link href="/" className="inline-flex items-center gap-2 leading-none shrink-0">
                             <Logo className="h-12 w-auto" withText={true} />
@@ -165,7 +165,7 @@ export default function PaperPage() {
                         <span className="text-xs sm:text-sm text-slate-600">Loading…</span>
                     </div>
                 </header>
-                <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
+                <main className="min-h-screen p-6 md:p-12">
                     <div className="max-w-5xl mx-auto">
                         <div className="text-sm text-gray-600">Loading paper {arxivId}…</div>
                     </div>
@@ -177,14 +177,14 @@ export default function PaperPage() {
     if (error || !data) {
         return (
             <>
-                <header className="sticky top-0 z-40 bg-white border-b text-black">
+                <header className="sticky top-0 z-40 bg-[var(--surface)] border-b text-[var(--text)]">
                     <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 justify-start">
                         <Link href="/" className="inline-flex items-center gap-2 leading-none shrink-0">
                             <Logo className="h-12 w-auto" withText={true} />
                         </Link>
                     </div>
                 </header>
-                <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
+                <main className="min-h-screen p-6 md:p-12">
                     <div className="max-w-5xl mx-auto">
                         <div className="text-sm text-red-600">
                             Failed to load paper: {(error as any)?.message || "Unknown error"}
@@ -199,14 +199,14 @@ export default function PaperPage() {
 
     return (
         <>
-            <header className="sticky top-0 z-40 bg-white border-b text-black">
+            <header className="sticky top-0 z-40 bg-[var(--surface)] border-b text-[var(--text)]">
                 <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 justify-start">
                     <Link href="/" className="inline-flex items-center gap-2 leading-none shrink-0">
                         <Logo className="h-12 w-auto" withText={true} />
                     </Link>
                 </div>
             </header>
-            <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
+            <main className="min-h-screen p-6 md:p-12">
                 <div className="max-w-5xl mx-auto">
                     <div className="flex items-center gap-2 mb-6">
                         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -227,18 +227,18 @@ export default function PaperPage() {
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                        <div className="lg:col-span-8 bg-white rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
+                        <div className="lg:col-span-8 bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
                             <D3GraphView graph={graph} onSelectNode={setSelected} height="68vh" />
                         </div>
 
                         <div className="lg:col-span-4 flex flex-col gap-4">
-                            <div className="bg-white rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
-                                <div className="text-sm font-semibold mb-2 text-black">Artifact Details</div>
+                            <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
+                                <div className="text-sm font-semibold mb-2 text-[var(--text)]">Artifact Details</div>
                                 <ArtifactDetails node={selected} />
                             </div>
 
-                            <div className="bg-white rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
-                                <div className="text-sm font-semibold mb-2 text-black">Definition Bank</div>
+                            <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
+                                <div className="text-sm font-semibold mb-2 text-[var(--text)]">Definition Bank</div>
                                 <DefinitionBankView bank={definition_bank} />
                             </div>
                         </div>

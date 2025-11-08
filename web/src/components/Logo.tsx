@@ -4,9 +4,10 @@ type LogoProps = {
     className?: string;
     withText?: boolean;
     title?: string;
+    textSize?: number;
 };
 
-export default function Logo({ className = "", withText = true, title = "ArxiTex" }: LogoProps) {
+export default function Logo({ className = "", withText = true, title = "ArxiTex", textSize = 28 }: LogoProps) {
     // Responsive SVG: size is controlled by the parent via className (e.g., h-10 w-auto)
     return (
         <svg
@@ -52,9 +53,9 @@ export default function Logo({ className = "", withText = true, title = "ArxiTex
                 <text
                     x="78"
                     y="40"
-                    fill="#0F172A"
-                    fontSize="28"
-                    fontWeight="700"
+                    fill="var(--text)"
+                    fontSize={textSize}
+                    fontWeight="600"
                     letterSpacing="0.4"
                     fontFamily='"STIX Two Text", Merriweather, Georgia, "Times New Roman", serif'
                 >
