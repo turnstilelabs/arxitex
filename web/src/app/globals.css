@@ -1,107 +1,178 @@
 @import "tailwindcss";
 
+/* Design tokens (colors, fonts) tuned for mathematics reading & clean UI */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background / surfaces */
+  --bg: #f8fafc;
+  /* soft off-white for long reading */
+  --surface: #ffffff;
+  --card: rgba(255, 255, 255, 0.92);
+  --glass: rgba(255, 255, 255, 0.64);
+
+  /* Text */
+  --text: #0f172a;
+  /* slate-900 */
+  --muted: #6b7280;
+  /* slate-500 */
+
+  /* Accent */
+  --accent: #6366F1;
+  /* indigo-500 */
+  --accent-600: #4f46e5;
+  /* indigo-600 */
+  --accent-700: #4338ca;
+  /* indigo-700 */
+
+  /* Dark mode */
+  --bg-dark: #071022;
+  --surface-dark: #0b1220;
+  --card-dark: rgba(10, 12, 18, 0.7);
+  --text-dark: #e6eef8;
+
+  /* Fonts (layout.tsx already defines Geist variables) */
+  --font-sans: var(--font-inter, var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace);
+  --font-serif: "STIX Two Text", Merriweather, Georgia, "Times New Roman", serif;
+
+  /* Small helpers */
+  --control-radius: 10px;
+  --control-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+  --card-shadow: 0 8px 30px rgba(2, 6, 23, 0.06);
 }
 
+/* Tailwind theme mapping (legacy) */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Global body: serif for comfortable mathematical reading */
+@media (prefers-color-scheme: light) {
+  body {
+    background: var(--bg);
+    color: var(--text);
   }
 }
 
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "STIX Two Text", Merriweather, Georgia, "Times New Roman", serif;
+  font-family: var(--font-inter, var(--font-sans));
+  font-size: 18px;
+  /* slightly larger for dense math reading */
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-attachment: fixed;
+  margin: 0;
 }
 
-/* Artifact details improvements: larger, more readable math/preview text */
+/* UI controls / inputs use sans for clarity and smaller size */
+button,
+input,
+select,
+textarea,
+label,
+.__d3_controls,
+.__d3_controls * {
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+/* Forms & buttons */
+input,
+textarea {
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: var(--surface);
+  padding: 10px 12px;
+  border-radius: 8px;
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+button:focus {
+  box-shadow: 0 2px 10px rgba(79, 70, 229, 0.12);
+}
+
+button[type="submit"] {
+  background: var(--accent-600);
+  color: white;
+  border: none;
+  box-shadow: var(--control-shadow);
+  border-radius: var(--control-radius);
+  padding: 10px 14px;
+}
+
+/* Prose and artifact details - tuned for math reading */
 .artifact-details-root {
   padding: 0.5rem;
 }
 
 .artifact-details-root .prose {
-  font-size: 1rem;
-  /* ~16px */
-  color: #000 !important;
-  line-height: 1.55;
+  font-size: 17px;
+  /* slightly larger than default */
+  color: var(--text);
+  line-height: 1.65;
   word-break: break-word;
-  background: transparent !important;
+  background: transparent;
 }
 
-/* D3 controls (legend) polished: elevated, slightly translucent, hover lift */
-.__d3_controls {
-  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
-  backdrop-filter: blur(6px);
-  opacity: 0.98;
+/* KaTeX / math tuning: align math's typography with page serif */
+.katex,
+.katex .katex-html {
+  font-size: 1.03em;
+  line-height: 1.35;
+  color: inherit;
 }
 
-.__d3_controls:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08);
-  backdrop-filter: none;
+.katex-display {
+  margin: 0.9em 0;
+  text-align: center;
+  font-size: 1.05em;
 }
 
-/* Tooltip style */
+/* Tooltip style (graph hover) */
 .d3-tooltip {
   font-size: 13px;
   line-height: 1.3;
   pointer-events: none;
+  background: rgba(2, 6, 23, 0.85);
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
 }
 
-/* Ensure graph container children don't get clipped by controls */
-.__d3_controls,
-.d3-tooltip {
-  pointer-events: auto;
+/* D3 controls (legend) polished: elevated, translucent, hover lift */
+.__d3_controls {
+  transition: transform 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+  backdrop-filter: blur(6px);
+  opacity: 0.98;
+  background: var(--card);
+  padding: 8px;
+  border-radius: 10px;
+  box-shadow: var(--card-shadow);
+  color: var(--text);
+  max-width: 880px;
 }
 
-/* Make foreignObject labels readable on dark/light themes */
-svg foreignObject div {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Hover lift */
+.__d3_controls:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(2, 6, 23, 0.08);
+  backdrop-filter: none;
 }
 
-/* Small responsive adjustment for controls on narrow screens */
-@media (max-width: 900px) {
-  .__d3_controls {
-    right: 8px !important;
-    top: 8px !important;
-    max-width: 48vw !important;
-  }
-}
-
-/* Ensure node labels are readable: give foreignObject label a subtle card background */
-svg foreignObject>div>div {
-  /* stronger contrast and enforced foreground color so labels remain visible */
-  background: rgba(255, 255, 255, 0.96) !important;
-  padding: 6px 10px;
-  border-radius: 8px;
-  color: var(--foreground) !important;
-  font-weight: 600;
-  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
-  display: inline-block;
-  max-width: 240px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-/* Collapsed controls state (used by toggle) */
-/* Collapsible controls with smooth animation */
+/* Collapsible controls layout */
 .__d3_controls {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  position: static !important;
+  /* keep below interactive overlays */
+  margin: 8px auto 0 auto !important;
+  z-index: 1 !important;
 }
 
 /* Header toggle */
@@ -113,26 +184,15 @@ svg foreignObject>div>div {
   padding: 6px 10px;
   border-radius: 8px;
   background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.04);
   cursor: pointer;
   font-size: 12px;
   user-select: none;
 }
 
-/* chevron using pseudo element */
-.__d3_controls .collapse-toggle::after {
-  content: "▼";
-  display: inline-block;
-  transform-origin: center;
-  transition: transform 220ms ease;
-  font-size: 11px;
-  color: rgba(15, 23, 42, 0.8);
-}
-
 /* controls body animates its max-height and opacity */
 .__d3_controls .controls-body {
   max-height: 420px;
-  /* expanded max */
   overflow: hidden;
   transition: max-height 240ms ease, opacity 180ms ease;
   opacity: 1;
@@ -145,43 +205,67 @@ svg foreignObject>div>div {
   opacity: 0;
 }
 
-/* rotate chevron when collapsed */
-.__d3_controls.collapsed .collapse-toggle::after {
-  transform: rotate(-180deg);
+/* Ensure node labels are readable: foreignObject label as subtle translucent card */
+svg foreignObject div {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Force controls to render as document flow block (defensive: override any inline/style from old bundles)
-   This makes the legend appear below the SVG and prevents it from overlaying the graph.
-*/
-.__d3_controls {
-  position: static !important;
-  left: unset !important;
-  right: unset !important;
-  top: unset !important;
-  bottom: unset !important;
-  margin: 8px auto 0 auto !important;
-  max-width: 880px !important;
-  z-index: 1 !important;
-  /* keep below interactive overlays */
+svg foreignObject>div>div {
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+  display: inline-block;
+  max-width: 260px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 13px;
 }
 
-/* If some builds still insert absolute positioning inline, ensure the collapsed header remains visible but tiny */
-.__d3_controls.collapsed {
-  max-height: 40px !important;
+/* Small responsive adjustment for controls on narrow screens */
+@media (max-width: 900px) {
+  .__d3_controls {
+    right: 8px !important;
+    top: 8px !important;
+    max-width: 48vw !important;
+  }
+}
+
+/* Legend / control children styling */
+.__d3_controls .controls-body>div[data-type] {
+  padding: 6px 8px;
+  border-radius: 8px;
+  margin: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.__d3_controls .controls-body>div[data-type][aria-pressed="true"] {
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+}
+
+/* Small utility classes used by the app */
+.text-muted {
+  color: var(--muted);
+}
+
+/* Accessibility helpers */
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
   overflow: hidden !important;
-  padding: 6px !important;
-}
-
-/* Legend text color & contrast improvements
-   Make legend labels clearly visible on both light and dark backgrounds.
-*/
-.__d3_controls,
-.__d3_controls * {
-  color: #000 !important;
-}
-
-.__d3_controls .collapse-toggle,
-.__d3_controls .controls-body>div {
-  color: #000 !important;
-  background: rgba(255, 255, 255, 0.96) !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
