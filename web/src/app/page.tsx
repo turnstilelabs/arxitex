@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ingestPaper, getJob, getLlmStatus } from "@/lib/api";
 import type { IngestRequest, Job } from "@/lib/types";
+import Logo from "@/components/Logo";
 
 export default function HomePage() {
   const router = useRouter();
@@ -86,18 +87,20 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen p-6 md:p-10">
+    <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-3xl mx-auto">
-        <h1 className="text-3xl font-semibold mb-2">ArxiTex</h1>
-        <p className="text-gray-600 mb-8">
-          Extract artifacts, dependency graph, and a definition bank from an arXiv paper.
+        <div className="flex justify-center mt-6 mb-3">
+          <Logo className="h-12 w-auto" withText={true} />
+        </div>
+        <p className="text-slate-700 mb-10 max-w-2xl mx-auto text-center text-lg md:text-xl leading-relaxed">
+          Explore the structure behind the mathematics.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4 bg-white rounded-lg border p-4">
+        <form onSubmit={handleSubmit} className="space-y-5 bg-white rounded-xl ring-1 ring-slate-200 p-5 md:p-6 shadow-sm">
           <div>
-            <label className="block text-sm font-medium mb-1">arXiv URL or ID</label>
+            <label className="block text-sm font-medium mb-1 text-black">arXiv URL or ID</label>
             <input
-              className="w-full border rounded px-3 py-2"
+              className="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
               placeholder="e.g. https://arxiv.org/abs/2211.11689 or 2211.11689"
               value={arxivUrlOrId}
               onChange={(e) => setArxivUrlOrId(e.target.value)}
@@ -114,7 +117,7 @@ export default function HomePage() {
                 disabled={llmAvailable === false}
                 title={llmAvailable === false ? "LLM features are not available on the server" : ""}
               />
-              <span className="text-sm">Infer dependencies (LLM)</span>
+              <span className="text-sm text-black">Infer dependencies (LLM)</span>
             </label>
 
             <label className="inline-flex items-center gap-2">
@@ -125,22 +128,33 @@ export default function HomePage() {
                 disabled={llmAvailable === false}
                 title={llmAvailable === false ? "LLM features are not available on the server" : ""}
               />
-              <span className="text-sm">Enrich content with definitions (LLM)</span>
+              <span className="text-sm text-black">Enrich content with definitions (LLM)</span>
             </label>
 
             <label className="inline-flex items-center gap-2">
               <input type="checkbox" checked={force} onChange={(e) => setForce(e.target.checked)} />
-              <span className="text-sm">Force re-process</span>
+              <span className="text-sm text-black">Force re-process</span>
             </label>
           </div>
+
 
           <div className="flex items-center gap-3">
             <button
               type="submit"
-              className="px-4 py-2 border rounded bg-indigo-600 text-white disabled:opacity-60"
+              className="px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-60 inline-flex items-center gap-2"
               disabled={!arxivUrlOrId || submitting}
             >
-              {submitting ? "Processing…" : "Process"}
+              {submitting ? (
+                <>
+                  <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                  </svg>
+                  Processing…
+                </>
+              ) : (
+                "Process"
+              )}
             </button>
             {job && (
               <span className="text-sm text-gray-600">
@@ -152,7 +166,6 @@ export default function HomePage() {
           {error && <div className="text-sm text-red-600">{error}</div>}
 
           <div className="text-xs text-gray-500 pt-2">
-            Note: LLM features require an API key configured on the server (OPENAI_API_KEY or TOGETHER_API_KEY).
             {llmAvailable === false && (
               <div className="text-xs text-red-600 mt-1">
                 LLM features are not available on the server. Set OPENAI_API_KEY or TOGETHER_API_KEY to enable them.
