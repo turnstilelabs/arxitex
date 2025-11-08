@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ingestPaper, getJob, getLlmStatus } from "@/lib/api";
-import type { IngestRequest, Job } from "@/lib/types";
+import { getLlmStatus } from "@/lib/api";
+import type { Job } from "@/lib/types";
 import Logo from "@/components/Logo";
 
 export default function HomePage() {
@@ -43,48 +43,17 @@ export default function HomePage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+    setSubmitting(true);
 
-    const payload: IngestRequest = {
-      arxiv_url_or_id: arxivUrlOrId.trim(),
-      infer_dependencies: inferDependencies,
-      enrich_content: enrichContent,
-      force,
-    };
-
-    try {
-      setSubmitting(true);
-      const j = await ingestPaper(payload);
-      setJob(j);
-
-      // Poll job until done/failed
-      let attempts = 0;
-      const maxAttempts = 120; // ~2 minutes at 1s interval
-
-      while (true) {
-        attempts++;
-        const cur = await getJob(j.job_id);
-        setJob(cur);
-
-        if (cur.status === "done") {
-          // Navigate to paper page
-          router.push(`/papers/${cur.arxiv_id}`);
-          break;
-        }
-        if (cur.status === "failed") {
-          setError(cur.error || "Processing failed");
-          break;
-        }
-        if (attempts >= maxAttempts) {
-          setError("Timed out waiting for processing to complete.");
-          break;
-        }
-        await new Promise((r) => setTimeout(r, 1000));
-      }
-    } catch (err: any) {
-      setError(err?.message || "Failed to start ingestion");
-    } finally {
-      setSubmitting(false);
-    }
+    const id = arxivUrlOrId.trim();
+    // Always navigate immediately and let the paper page stream the build via SSE.
+    const qs = new URLSearchParams({
+      stream: "1",
+      infer: String(inferDependencies),
+      enrich: String(enrichContent),
+      force: String(force),
+    });
+    router.push(`/papers/${id}?${qs.toString()}`);
   }
 
   return (

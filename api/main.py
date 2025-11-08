@@ -8,11 +8,24 @@ from urllib.parse import urlparse
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from loguru import logger
 from pydantic import BaseModel, Field
 
+from arxitex.arxiv_api import ArxivAPI
+from arxitex.downloaders.async_downloader import AsyncSourceDownloader
+from arxitex.downloaders.utils import read_and_combine_tex_files
+
+# Streaming/build helpers
+from arxitex.extractor.graph_building.base_builder import BaseGraphBuilder
+from arxitex.extractor.graph_building.graph_enhancer import GraphEnhancer
+
 # Reuse your pipeline
 from arxitex.extractor.pipeline import agenerate_artifact_graph
+from arxitex.symdef.definition_bank import DefinitionBank
+from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
+from arxitex.symdef.document_enhancer import DocumentEnhancer
+from arxitex.symdef.utils import ContextFinder, Definition
 from arxitex.workflows.runner import ArxivPipelineComponents
 from arxitex.workflows.utils import save_graph_data
 
@@ -143,13 +156,27 @@ JOB_STORE = InMemoryJobStore()
 app = FastAPI(title="ArxiTex API", version="1.0.0")
 
 # CORS (open for dev; tighten for prod)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=os.getenv("ALLOWED_ORIGINS", "*").split(","),
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# CORS (dev-friendly defaults). If ALLOWED_ORIGINS is set, use it (CSV of origins).
+# Otherwise, allow typical local dev hosts via a regex while keeping credentials support.
+origins_env = os.getenv("ALLOWED_ORIGINS")
+default_regex = r"https?://(localhost|127\.0\.0\.1)(:\d+)?"
+if origins_env:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[o.strip() for o in origins_env.split(",") if o.strip()],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[],  # when credentials=True, '*' is not permitted; use regex instead
+        allow_origin_regex=default_regex,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 # -----------------------------------------------------------------------------
@@ -325,10 +352,29 @@ async def get_paper(arxiv_id: str):
         except Exception as e:
             logger.warning(f"Failed to read definition bank for {arxiv_id}: {e}")
 
+    # Fetch basic metadata (title, authors) from arXiv
+    title = None
+    authors = []
+    try:
+        api = ArxivAPI()
+        resp = api.session.get(api.base_url, params={"id_list": arxiv_id}, timeout=30)
+        resp.raise_for_status()
+        _, _, entries = api.parse_response(resp.text)
+        if entries:
+            paper_meta = api.entry_to_paper(entries[0])
+            if paper_meta:
+                title = paper_meta.get("title")
+                authors = paper_meta.get("authors", []) or []
+        api.close()
+    except Exception as e:
+        logger.warning(f"Failed to fetch metadata for {arxiv_id}: {e}")
+
     return {
         "arxiv_id": arxiv_id,
         "graph": graph_data,
         "definition_bank": bank_data,
+        "title": title,
+        "authors": authors,
     }
 
 
@@ -354,6 +400,228 @@ async def get_paper_definitions(arxiv_id: str):
     except Exception as e:
         logger.exception(f"Failed to read definition bank for {arxiv_id}: {e}")
         raise HTTPException(status_code=500, detail="Failed to read definition bank")
+
+
+@app.get("/api/v1/papers/{arxiv_id}/stream-build")
+async def stream_build(
+    arxiv_id: str,
+    infer_dependencies: bool = False,
+    enrich_content: bool = False,
+    force: bool = False,
+):
+    """
+    Streams the build process via Server-Sent Events (SSE).
+    Events:
+      - nodes_seeded: { graph }
+      - term_inferred: { term, aliases, definition_text, source_artifact_id, dependencies }
+      - prerequisite_link: { artifact_id, term }
+      - progress: { stage }
+      - error: { message }
+      - done: { status }
+    """
+
+    async def event_stream():
+        queue: asyncio.Queue = asyncio.Queue()
+
+        async def emit(event_type: str, payload: dict):
+            await queue.put((event_type, payload))
+
+        async def sse(event_type: str, payload: dict) -> bytes:
+            return f"event: {event_type}\ndata: {json.dumps(payload, ensure_ascii=False)}\n\n".encode(
+                "utf-8"
+            )
+
+        async def worker():
+            components = ArxivPipelineComponents(output_dir=str(DEFAULT_OUTPUT_DIR))
+            try:
+                # Download source
+                await emit("progress", {"stage": "downloading"})
+                async with AsyncSourceDownloader(
+                    cache_dir=DEFAULT_OUTPUT_DIR / "temp_stream"
+                ) as downloader:
+                    project_dir = await downloader.download_and_extract_source(arxiv_id)
+                    if not project_dir:
+                        raise RuntimeError(
+                            f"Failed to retrieve LaTeX content for {arxiv_id}"
+                        )
+
+                    # Fast regex/base graph
+                    builder = BaseGraphBuilder()
+                    graph = builder.build_graph(
+                        project_dir=project_dir, source_file=f"arxiv:{arxiv_id}"
+                    )
+                    extractor_mode = compute_extractor_mode(
+                        infer_dependencies=infer_dependencies,
+                        enrich_content=enrich_content,
+                    )
+                    graph_data = graph.to_dict(
+                        arxiv_id=arxiv_id, extractor_mode=extractor_mode
+                    )
+                    await emit("nodes_seeded", {"graph": graph_data})
+
+                    has_llm = bool(
+                        os.getenv("OPENAI_API_KEY") or os.getenv("TOGETHER_API_KEY")
+                    )
+                    if (infer_dependencies or enrich_content) and not has_llm:
+                        await emit(
+                            "error",
+                            {
+                                "message": "LLM features requested but no server-side API key is configured."
+                            },
+                        )
+                        # Save regex-only graph and finish
+                        save_graph_data(arxiv_id, str(GRAPHS_DIR), graph_data)
+                        await emit("done", {"status": "regex-only"})
+                        return
+
+                    # Build definition bank and enriched content with streaming callbacks
+                    latex_content = read_and_combine_tex_files(project_dir)
+
+                    async def on_term_inferred(defn: Definition):
+                        try:
+                            await emit(
+                                "term_inferred",
+                                {
+                                    "term": defn.term,
+                                    "aliases": defn.aliases,
+                                    "definition_text": getattr(
+                                        defn, "definition_text", "N/A"
+                                    ),
+                                    "source_artifact_id": defn.source_artifact_id,
+                                    "dependencies": getattr(defn, "dependencies", []),
+                                },
+                            )
+                        except Exception as e:
+                            logger.warning(f"term_inferred emit failed: {e}")
+
+                    async def on_prereq_link(artifact_id: str, term: str):
+                        try:
+                            await emit(
+                                "prerequisite_link",
+                                {"artifact_id": artifact_id, "term": term},
+                            )
+                        except Exception as e:
+                            logger.warning(f"prerequisite_link emit failed: {e}")
+
+                    definition_builder = DefinitionBuilder()
+                    context_finder = ContextFinder()
+                    bank = DefinitionBank()
+                    enhancer = DocumentEnhancer(
+                        llm_enhancer=definition_builder,
+                        context_finder=context_finder,
+                        definition_bank=bank,
+                        on_term_inferred=on_term_inferred,
+                        on_prerequisite_link=on_prereq_link,
+                    )
+
+                    await emit("progress", {"stage": "enriching_content"})
+                    nodes_to_enhance = [n for n in graph.nodes if not n.is_external]
+                    enhanced = await enhancer.enhance_document(
+                        nodes_to_enhance, latex_content
+                    )
+                    definitions_map = enhanced.get("definitions_map", {})
+                    artifact_to_terms_map = enhanced.get("artifact_to_terms_map", {})
+                    bank = enhanced.get("definition_bank", bank)
+
+                    # Put prerequisite_defs back into nodes for serialization
+                    for node in graph.nodes:
+                        if node.id in definitions_map:
+                            node.prerequisite_defs = definitions_map[node.id]
+
+                    if infer_dependencies:
+                        await emit("progress", {"stage": "dependency_inference"})
+                        ge = GraphEnhancer()
+
+                        async def _on_dep_edge(e):
+                            try:
+                                await emit(
+                                    "dependency_edge",
+                                    {
+                                        "source_id": e.source_id,
+                                        "target_id": e.target_id,
+                                        "dependency_type": e.dependency_type,
+                                        "dependency": getattr(e, "dependency", None),
+                                        "context": getattr(e, "context", None),
+                                    },
+                                )
+                            except Exception as ex:
+                                logger.warning(f"dependency_edge emit failed: {ex}")
+
+                        async def _on_dep_progress(done: int, total: int):
+                            try:
+                                await emit(
+                                    "dependency_progress",
+                                    {"processed": done, "total": total},
+                                )
+                            except Exception as ex:
+                                logger.warning(f"dependency_progress emit failed: {ex}")
+
+                        graph = await ge.ainfer_dependencies_streaming(
+                            graph,
+                            artifact_to_terms_map,
+                            bank,
+                            on_edge=_on_dep_edge,
+                            on_progress=_on_dep_progress,
+                        )
+
+                    await emit("progress", {"stage": "serializing"})
+                    # Serialize graph
+                    graph_data = graph.to_dict(
+                        arxiv_id=arxiv_id, extractor_mode=extractor_mode
+                    )
+                    graph_filepath = save_graph_data(
+                        arxiv_id, str(GRAPHS_DIR), graph_data
+                    )
+
+                    # Serialize definition bank
+                    bank_dict = await bank.to_dict()
+                    if bank_dict:
+                        bank_path = (
+                            BANKS_DIR / f"{arxiv_id.replace('/', '_')}_bank.json"
+                        )
+                        bank_path.write_text(
+                            json.dumps(bank_dict, ensure_ascii=False),
+                            encoding="utf-8",
+                        )
+
+                    # Update processing index
+                    components.processing_index.update_processed_papers_status(
+                        arxiv_id,
+                        status="success",
+                        output_path=str(graph_filepath),
+                        stats=graph_data.get("stats", {}),
+                    )
+
+                    await emit("done", {"status": "completed"})
+            except Exception as e:
+                logger.exception(f"SSE build failed for {arxiv_id}: {e}")
+                try:
+                    components.processing_index.update_processed_papers_status(
+                        arxiv_id, status="failure", reason=str(e)
+                    )
+                except Exception:
+                    pass
+                await emit("error", {"message": str(e)})
+                await emit("done", {"status": "failed"})
+
+        task = asyncio.create_task(worker())
+
+        try:
+            while True:
+                evt, data = await queue.get()
+                yield await sse(evt, data)
+                if evt == "done":
+                    break
+        finally:
+            task.cancel()
+
+    headers = {
+        "Cache-Control": "no-cache",
+        "X-Accel-Buffering": "no",
+    }
+    return StreamingResponse(
+        event_stream(), media_type="text/event-stream", headers=headers
+    )
 
 
 @app.get("/api/v1/llm/status")
@@ -382,9 +650,11 @@ async def health():
 if __name__ == "__main__":
     import uvicorn
 
+    # Run directly with the instantiated app to avoid import path issues in dev.
+    # Reload is disabled to keep this simple; use an external watcher if desired.
     uvicorn.run(
-        "api.main:app",
+        app,
         host="127.0.0.1",
         port=int(os.getenv("PORT", "8000")),
-        reload=True,
+        reload=False,
     )
