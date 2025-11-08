@@ -2,9 +2,9 @@
 
 import { useEffect, useMemo, useState, useRef } from "react";
 import useSWR from "swr";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { getPaper } from "@/lib/api";
-import type { ArtifactNode, PaperResponse } from "@/lib/types";
+import type { ArtifactNode, PaperResponse, DocumentGraph, DefinitionBank } from "@/lib/types";
 import D3GraphView from "@/components/D3GraphView";
 import { unescapeLatex } from "@/lib/latex";
 import { sanitizePreview } from "@/lib/sanitize";
@@ -142,10 +142,188 @@ export default function PaperPage() {
     const params = useParams<{ arxiv_id: string }>();
     const arxivId = params.arxiv_id;
 
-    const { data, error, isLoading } = useSWR<PaperResponse>(
+    const { data, error, isLoading, mutate } = useSWR<PaperResponse>(
         arxivId ? `/papers/${arxivId}` : null,
         () => getPaper(arxivId)
     );
+
+    // Live streaming state
+    const [liveGraph, setLiveGraph] = useState<DocumentGraph | null>(null);
+    const [liveBank, setLiveBank] = useState<DefinitionBank | null>(null);
+    const [streaming, setStreaming] = useState(false);
+    const [stage, setStage] = useState<string | null>(null);
+    const [depProg, setDepProg] = useState<{ processed: number; total: number } | null>(null);
+    const linksRef = useRef<Record<string, Set<string>>>({});
+    const esRef = useRef<EventSource | null>(null);
+    const bankRef = useRef<DefinitionBank | null>(null);
+    const API_BASE =
+        process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "http://127.0.0.1:8000";
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        setLiveGraph(data?.graph || null);
+        setLiveBank(data?.definition_bank || null);
+        bankRef.current = data?.definition_bank || null;
+        linksRef.current = {};
+    }, [data]);
+
+    useEffect(() => {
+        bankRef.current = liveBank;
+    }, [liveBank]);
+
+    useEffect(() => {
+        // Cleanup on unmount
+        return () => {
+            try {
+                esRef.current?.close();
+            } catch { }
+            esRef.current = null;
+        };
+    }, []);
+
+    // Auto-start streaming based on URL params (?stream=1&infer=true&enrich=true&force=true)
+    useEffect(() => {
+        if (!searchParams) return;
+        const shouldStream = searchParams.get("stream") === "1";
+        const inferParam = searchParams.get("infer") === "true";
+        const enrichParam = searchParams.get("enrich") === "true";
+        const forceParam = searchParams.get("force") === "true";
+        if (shouldStream && !streaming && !esRef.current) {
+            startStream({ infer: inferParam, enrich: enrichParam, force: forceParam });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [arxivId, searchParams]);
+
+    const startStream = (opts: { infer: boolean; enrich: boolean; force?: boolean }) => {
+        try {
+            esRef.current?.close();
+        } catch { }
+        const url = `${API_BASE}/api/v1/papers/${arxivId}/stream-build?infer_dependencies=${opts.infer}&enrich_content=${opts.enrich}&force=${Boolean(opts.force)}`;
+        const es = new EventSource(url);
+        esRef.current = es;
+        setStreaming(true);
+        setStage("starting");
+
+        es.addEventListener("nodes_seeded", (ev: MessageEvent) => {
+            try {
+                const payload = JSON.parse(ev.data);
+                if (payload?.graph) {
+                    setLiveGraph(payload.graph);
+                }
+            } catch { }
+        });
+
+        es.addEventListener("term_inferred", (ev: MessageEvent) => {
+            try {
+                const p = JSON.parse(ev.data);
+                setLiveBank((prev) => {
+                    const next: DefinitionBank = { ...(prev || {}) };
+                    const key = p.term as string;
+                    next[key] = {
+                        term: p.term,
+                        aliases: p.aliases || [],
+                        definition_text: p.definition_text || "",
+                        source_artifact_id: p.source_artifact_id || "",
+                        dependencies: p.dependencies || [],
+                    };
+                    return next;
+                });
+            } catch { }
+        });
+
+        es.addEventListener("prerequisite_link", (ev: MessageEvent) => {
+            try {
+                const p = JSON.parse(ev.data) as { artifact_id: string; term: string };
+                const map = linksRef.current;
+                if (!map[p.artifact_id]) map[p.artifact_id] = new Set<string>();
+                map[p.artifact_id].add(p.term);
+
+                setLiveGraph((prev) => {
+                    if (!prev) return prev;
+                    const nodes = prev.nodes.map((n) => {
+                        if (n.id !== p.artifact_id) return n;
+                        const terms = Array.from(map[p.artifact_id] || []);
+                        const bank = bankRef.current || {};
+                        const defsHtml = terms
+                            .map((t) => {
+                                const def = (bank as any)[t];
+                                const text = def?.definition_text || "";
+                                return `<div><strong>${t}:</strong> ${text}</div>`;
+                            })
+                            .join("");
+                        return { ...n, prerequisites_preview: defsHtml };
+                    });
+                    return { ...prev, nodes };
+                });
+            } catch { }
+        });
+
+        // New: stream dependency edges as soon as they are inferred
+        es.addEventListener("dependency_edge", (ev: MessageEvent) => {
+            try {
+                const p = JSON.parse(ev.data) as {
+                    source_id: string;
+                    target_id: string;
+                    dependency_type?: string | null;
+                    dependency?: string | null;
+                    context?: string | null;
+                };
+                setLiveGraph((prev) => {
+                    if (!prev) return prev;
+                    const exists = prev.edges.some(
+                        (e) => e.source === p.source_id && e.target === p.target_id && (e.dependency_type || e.type) === (p.dependency_type || "generic_dependency")
+                    );
+                    if (exists) return prev;
+                    const newEdge = {
+                        source: p.source_id,
+                        target: p.target_id,
+                        context: p.context ?? null,
+                        reference_type: null,
+                        dependency_type: (p.dependency_type as any) ?? "generic_dependency",
+                        dependency: p.dependency ?? null,
+                        type: (p.dependency_type as any) ?? "generic_dependency",
+                    };
+                    return { ...prev, edges: [...prev.edges, newEdge] };
+                });
+            } catch { }
+        });
+
+        // New: dependency inference progress
+        es.addEventListener("dependency_progress", (ev: MessageEvent) => {
+            try {
+                const p = JSON.parse(ev.data) as { processed: number; total: number };
+                setDepProg(p);
+            } catch { }
+        });
+
+        es.addEventListener("progress", (ev: MessageEvent) => {
+            try {
+                const p = JSON.parse(ev.data);
+                setStage(p.stage || null);
+            } catch { }
+        });
+
+        es.addEventListener("done", (_ev: MessageEvent) => {
+            setStreaming(false);
+            try {
+                es.close();
+            } catch { }
+            esRef.current = null;
+            mutate(); // refresh persisted snapshot from backend
+        });
+
+        es.onerror = () => {
+            // Connection errors are expected on server restart; FastAPI will also send error/done
+        };
+    };
+
+    const stopStream = () => {
+        try {
+            esRef.current?.close();
+        } catch { }
+        esRef.current = null;
+        setStreaming(false);
+    };
 
     const [selected, setSelected] = useState<ArtifactNode | null>(null);
 
@@ -186,9 +364,52 @@ export default function PaperPage() {
                 </header>
                 <main className="min-h-screen p-6 md:p-12">
                     <div className="max-w-5xl mx-auto">
-                        <div className="text-sm text-red-600">
-                            Failed to load paper: {(error as any)?.message || "Unknown error"}
+                        <div className="mb-4">
+                            <div className="text-sm text-red-600">
+                                Failed to load paper: {(error as any)?.message || "Unknown error"}
+                            </div>
+                            <div className="mt-3 flex items-center gap-3">
+                                <button
+                                    className="text-xs px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
+                                    onClick={() => startStream({ infer: true, enrich: true })}
+                                    disabled={streaming}
+                                >
+                                    {streaming ? "Streaming..." : "Start live build (deps + content)"}
+                                </button>
+                                <button
+                                    className="text-xs px-3 py-1 rounded bg-gray-200 text-gray-800 disabled:opacity-50"
+                                    onClick={stopStream}
+                                    disabled={!streaming}
+                                >
+                                    Stop
+                                </button>
+                                {stage ? (
+                                    <span className="text-xs text-slate-600">Stage: {stage}</span>
+                                ) : null}
+                            </div>
                         </div>
+
+                        {liveGraph ? (
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                                <div className="lg:col-span-8 bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
+                                    <D3GraphView graph={liveGraph} onSelectNode={setSelected} height="68vh" />
+                                </div>
+                                <div className="lg:col-span-4 flex flex-col gap-4">
+                                    <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
+                                        <div className="text-sm font-semibold mb-2 text-[var(--text)]">Artifact Details</div>
+                                        <ArtifactDetails node={selected} />
+                                    </div>
+                                    <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
+                                        <div className="text-sm font-semibold mb-2 text-[var(--text)]">Definition Bank</div>
+                                        <DefinitionBankView bank={liveBank ?? null} />
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="text-sm text-gray-600">
+                                Not processed yet. Use the live build button above to stream the graph and definitions.
+                            </div>
+                        )}
                     </div>
                 </main>
             </>
@@ -229,11 +450,32 @@ export default function PaperPage() {
                             Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
                             {graph.stats?.edge_count ?? graph.edges.length} · Mode: {graph.extractor_mode}
                         </div>
+
+                        <div className="mt-3 flex items-center gap-3">
+                            <button
+                                className="text-xs px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
+                                onClick={() => startStream({ infer: true, enrich: true })}
+                                disabled={streaming}
+                            >
+                                {streaming ? "Streaming..." : "Start live build (deps + content)"}
+                            </button>
+                            <button
+                                className="text-xs px-3 py-1 rounded bg-gray-200 text-gray-800 disabled:opacity-50"
+                                onClick={stopStream}
+                                disabled={!streaming}
+                            >
+                                Stop
+                            </button>
+                            <span className="text-xs text-slate-600">
+                                {stage ? `Stage: ${stage}` : ""}
+                                {depProg ? ` · Deps: ${depProg.processed}/${depProg.total}` : ""}
+                            </span>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                         <div className="lg:col-span-8 bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
-                            <D3GraphView graph={graph} onSelectNode={setSelected} height="68vh" />
+                            <D3GraphView graph={liveGraph ?? graph} onSelectNode={setSelected} height="68vh" />
                         </div>
 
                         <div className="lg:col-span-4 flex flex-col gap-4">
@@ -244,7 +486,7 @@ export default function PaperPage() {
 
                             <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
                                 <div className="text-sm font-semibold mb-2 text-[var(--text)]">Definition Bank</div>
-                                <DefinitionBankView bank={definition_bank} />
+                                <DefinitionBankView bank={liveBank ?? definition_bank} />
                             </div>
                         </div>
                     </div>

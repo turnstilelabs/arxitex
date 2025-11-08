@@ -35,8 +35,6 @@ const PASTEL_PALETTE = [
 export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Props) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [filterTypes, setFilterTypes] = useState<Record<string, boolean>>({});
-    const [query, setQuery] = useState("");
-    const [kHop, setKHop] = useState<number>(1);
     const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
     const [pathEndpoints, setPathEndpoints] = useState<{ a?: string; b?: string }>({});
     const [selectedType, setSelectedType] = useState<string | null>(null);
@@ -59,8 +57,6 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
             String(graph?.nodes?.length || 0),
             String(graph?.edges?.length || 0),
             Object.keys(filterTypes || {}).sort().join(","),
-            query || "",
-            String(kHop),
             selectedNodeId || "",
             pathEndpoints?.a || "",
             pathEndpoints?.b || "",
@@ -69,7 +65,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
             selectedType || "",
         ];
         return keyParts.join("|");
-    }, [graph?.arxiv_id, graph?.nodes?.length, graph?.edges?.length, filterTypes, query, kHop, selectedNodeId, pathEndpoints?.a, pathEndpoints?.b, onSelectNode, height, selectedType]);
+    }, [graph?.arxiv_id, graph?.nodes?.length, graph?.edges?.length, filterTypes, selectedNodeId, pathEndpoints?.a, pathEndpoints?.b, onSelectNode, height, selectedType]);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -87,101 +83,88 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
             .attr("viewBox", `0 0 ${width} ${h}`)
             .style("background", "var(--surface)");
 
-        // create persistent controls container (so legend doesn't flicker on relayout)
-        // Placed at bottom-center and collapsible
-        // Render controls outside the SVG container so they don't overlay the graph.
-        // Prefer the parent element (the right-hand column) when available.
-        const controlsRoot = (containerRef.current && containerRef.current.parentElement) ? containerRef.current.parentElement : containerRef.current;
+        // Define arrowhead markers for edge direction, sized for visibility
+        const defs = svg.append("defs");
 
-        // Create (or reuse) a dedicated host element for graph controls so we never create duplicates.
-        const graphControlsId = "graph-controls";
-        let graphControlsEl = document.getElementById(graphControlsId);
-        if (!graphControlsEl) {
-            const host = (containerRef.current && containerRef.current.parentElement) ? containerRef.current.parentElement : document.body;
-            graphControlsEl = document.createElement("div");
-            graphControlsEl.id = graphControlsId;
-            graphControlsEl.className = "graph-controls-host";
-            // append the host after the graph container to keep document flow
-            host.appendChild(graphControlsEl);
+        function appendArrow(id: string, fill: string) {
+            const m = defs
+                .append("marker")
+                .attr("id", id)
+                .attr("viewBox", "0 0 12 12")
+                .attr("refX", 12) // push a bit forward so arrow sits at end
+                .attr("refY", 6)
+                .attr("markerWidth", 8)
+                .attr("markerHeight", 8)
+                .attr("orient", "auto")
+                .attr("markerUnits", "userSpaceOnUse");
+            m.append("path").attr("d", "M 0 0 L 12 6 L 0 12 z").attr("fill", fill);
         }
 
-        // remove any prev legend inside the host (defensive for HMR)
-        graphControlsEl.querySelectorAll("div.__d3_controls").forEach((el) => el.remove());
+        // Blue for dependency edges, muted for others
+        appendArrow("arrow-dep", "#5561ff");
+        appendArrow("arrow-ref", "var(--muted)");
+        appendArrow("arrow-gen", "var(--muted)");
 
-        // create a single controls block inside the host
-        const controlsSel = (d3.select(graphControlsEl) as any)
+        // Bottom legend overlay inside the graph container (no collapsible header; no extra top spacing)
+        // Clear any previous overlay (HMR/relayout safety)
+        d3.select(containerRef.current).selectAll("div.__legend_overlay").remove();
+
+        const legendOverlay = d3
+            .select(containerRef.current)
             .append("div")
-            .attr("class", "__d3_controls");
-        const controls = controlsSel.attr("role", "region").attr("aria-label", `Graph controls for ${graph?.arxiv_id || ""}`);
-
-        // Start controls expanded by default so the legend/types are visible.
-        // The legend box remains clickable to collapse; this makes the UI discoverable.
-        controls.classed("collapsed", false);
-        controls.selectAll("*").remove();
-
-        // create legend root (clickable area) and attach toggle handlers
-        const legendRoot = controls
-            .append("div")
-            .style("margin-bottom", "8px")
-            .style("min-height", "40px")
+            .attr("class", "__legend_overlay")
+            .style("position", "absolute")
+            .style("left", "0")
+            .style("right", "0")
+            .style("bottom", "8px")
             .style("display", "flex")
-            .style("align-items", "center")
-            .style("gap", "12px")
+            .style("justify-content", "center")
+            .style("pointer-events", "none"); // allow clicking through except legend box
+
+        const legendBox = legendOverlay
+            .append("div")
+            .style("pointer-events", "auto")
             .style("padding", "8px 12px")
-            .attr("role", "button")
-            .attr("tabindex", "0")
-            .attr("aria-expanded", String(!controls.classed("collapsed")))
-            .style("cursor", "pointer")
-            .on("click", (event: any) => {
-                const collapsed = controls.classed("collapsed");
-                controls.classed("collapsed", !collapsed);
-                d3.select(event.currentTarget as HTMLElement).attr("aria-expanded", String(!collapsed));
-            })
-            .on("keydown", (event: any) => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    (event.currentTarget as HTMLElement).click();
-                }
-            });
-
-        // body wrapper for the actual controls (so the header stays visible when collapsed)
-        controls.append("div").attr("class", "controls-body").style("margin-top", "8px");
-
-        // Render legend synchronously (outside the async layout) so artifact types are visible immediately.
-        // Use nodeTypes derived from the graph to list all types.
+            .style("background", "rgba(255,255,255,0.9)")
+            .style("backdrop-filter", "saturate(180%) blur(4px)")
+            .style("border", "1px solid rgba(0,0,0,0.06)")
+            .style("border-radius", "10px")
+            .style("box-shadow", "0 4px 12px rgba(0,0,0,0.06)")
+            .style("display", "flex")
+            .style("flex-wrap", "wrap")
+            .style("gap", "8px 12px")
+            .style("max-width", "min(92%, 780px)")
+            .style("align-items", "center");
 
         const syncTypes = Array.from(new Set(graph.nodes.map((n) => n.type)));
-        const syncTypesBody = controls.select(".controls-body");
         syncTypes.forEach((t: string, i: number) => {
-            const row = syncTypesBody
+            const row = legendBox
                 .append("div")
                 .attr("data-type", t)
                 .attr("role", "button")
                 .attr("tabindex", "0")
-                .attr("aria-pressed", "false")
+                .attr("aria-pressed", selectedType === t ? "true" : "false")
                 .style("display", "inline-flex")
                 .style("align-items", "center")
                 .style("gap", "8px")
-                .style("margin", "6px")
                 .style("padding", "6px 8px")
                 .style("border-radius", "8px")
                 .style("cursor", "pointer")
-                .style("background", filterTypes[t] ? "color-mix(in srgb, var(--card) 96%, transparent)" : "transparent")
+                .style("background", selectedType ? (selectedType === t ? "rgba(0,0,0,0.03)" : "transparent") : "transparent")
+                .style("opacity", selectedType ? (selectedType === t ? "1" : "0.5") : "1")
                 .on("click", (event: any) => {
                     const cur = selectedType;
                     const nextType = cur === t ? null : t;
                     setSelectedType(nextType);
-                    syncTypesBody
-                        .selectAll("[data-type]")
-                        .each((d: any, i: number, nodes: ArrayLike<HTMLElement>) => {
-                            const el = nodes[i] as HTMLElement;
-                            const tt = el.getAttribute("data-type") || "";
-                            d3.select(el).style("opacity", nextType ? (tt === nextType ? "1" : "0.38") : "1");
-                            d3.select(el).style("background", nextType && tt === nextType ? "rgba(0,0,0,0.02)" : "transparent");
-                            d3.select(el).attr("aria-pressed", nextType && tt === nextType ? "true" : "false");
-                        });
-                    d3.select(event.currentTarget).style("opacity", nextType ? (nextType === t ? "1" : "0.38") : "1");
-                    d3.select(event.currentTarget as HTMLElement).attr("aria-pressed", nextType ? (nextType === t ? "true" : "false") : "false");
+                    // update visual press/opacity (use this-typed callback to satisfy d3 typings)
+                    legendBox.selectAll("[data-type]").each(function () {
+                        const el = this as HTMLElement;
+                        const tt = el.getAttribute("data-type") || "";
+                        d3.select(el)
+                            .attr("aria-pressed", nextType && tt === nextType ? "true" : "false")
+                            .style("background", nextType && tt === nextType ? "rgba(0,0,0,0.03)" : "transparent")
+                            .style("opacity", nextType ? (tt === nextType ? "1" : "0.5") : "1");
+                    });
                 })
                 .on("keydown", (event: any) => {
                     if (event.key === "Enter" || event.key === " ") {
@@ -206,10 +189,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
         });
 
         // Prepare nodes/links filtered by type and search
-        const searchLower = query.trim().toLowerCase();
-        const visibleNodes = graph.nodes.filter(
-            (n) => filterTypes[n.type] && (!searchLower || (n.display_name || "").toLowerCase().includes(searchLower) || (n.label || "").toLowerCase().includes(searchLower))
-        );
+        const visibleNodes = graph.nodes.filter((n) => filterTypes[n.type]);
         const visibleIds = new Set(visibleNodes.map((n) => n.id));
         const visibleLinks = graph.edges.filter((e) => visibleIds.has(e.source) && visibleIds.has(e.target));
 
@@ -287,24 +267,140 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     });
                 }
 
-                // Draw links (paths)
+                // Draw links (paths) with direction and styling by type
                 const linkG = svg.append("g").attr("class", "links");
+                // Stabilize path IDs so dependency labels attach to the correct edge even after filtering
+                (visibleLinks as any[]).forEach((l, i) => ((l as any).__edgeId = `edge-${i}`));
                 const linkEls = linkG
                     .selectAll("path")
                     .data(visibleLinks)
                     .enter()
                     .append("path")
+                    .attr("id", (d: any) => d.__edgeId)
+                    .attr("class", (d: any) => {
+                        const kind = d.dependency_type ? "dep" : (d.reference_type ? "ref" : "gen");
+                        return `link ${kind}`;
+                    })
                     .attr("d", (d) => {
                         const s = positions[d.source];
                         const t = positions[d.target];
                         if (!s || !t) return "";
-                        const mx = (s.x + t.x) / 2;
-                        return `M${s.x},${s.y} C ${mx},${s.y} ${mx},${t.y} ${t.x},${t.y}`;
+                        // Offset start/end so the path touches the node circle instead of its center
+                        // Draw a straight line so the arrowhead is perfectly aligned between centers.
+                        const nodeR = 18;            // circle radius
+                        const pad = 2;               // small pad so arrow tip is just outside the circle
+                        const dx = t.x - s.x;
+                        const dy = t.y - s.y;
+                        const len = Math.max(1e-6, Math.hypot(dx, dy));
+                        const ux = dx / len;
+                        const uy = dy / len;
+
+                        // start just outside the source circle
+                        const sx = s.x + ux * (nodeR + pad);
+                        const sy = s.y + uy * (nodeR + pad);
+                        // end just outside the target circle; marker tip sits at the path end
+                        const tx = t.x - ux * (nodeR + pad);
+                        const ty = t.y - uy * (nodeR + pad);
+
+                        return `M${sx},${sy} L ${tx},${ty}`;
                     })
-                    .attr("stroke", "var(--muted)")
-                    .attr("stroke-width", 1.6)
+                    .attr("stroke", (d: any) => {
+                        // Emphasize dependency edges; keep references muted
+                        if (d.dependency_type) return "#5561ff"; // primary for deps
+                        if (d.reference_type) return "var(--muted)";
+                        return "var(--muted)";
+                    })
+                    // All edges full (no dashes)
+                    .attr("stroke-dasharray", null)
+                    .attr("stroke-width", (d: any) => (d.dependency_type ? 2.2 : 1.6))
                     .attr("fill", "none")
-                    .attr("opacity", 0.9);
+                    .attr("opacity", 0.95)
+                    .attr("marker-end", (d: any) => {
+                        if (d.dependency_type) return "url(#arrow-dep)";
+                        if (d.reference_type) return "url(#arrow-ref)";
+                        return "url(#arrow-gen)";
+                    });
+
+                // Edge tooltip shown on hover (instead of writing on the edge)
+                const edgeTip = d3
+                    .select(containerRef.current)
+                    .append("div")
+                    .attr("class", "d3-edge-tooltip")
+                    .style("position", "absolute")
+                    .style("pointer-events", "none")
+                    .style("display", "none")
+                    .style("padding", "4px 6px")
+                    .style("font-size", "12px")
+                    .style("background", "rgba(255,255,255,0.95)")
+                    .style("border", "1px solid rgba(0,0,0,0.1)")
+                    .style("border-radius", "6px")
+                    .style("box-shadow", "0 2px 6px rgba(0,0,0,0.08)")
+                    .style("color", "#111827"); // slate-900
+
+                const nameMap: Record<string, string> = {};
+                graph.nodes.forEach((n) => {
+                    nameMap[n.id] = n.display_name || n.label || n.id;
+                });
+
+                let pinnedEdge: SVGPathElement | null = null;
+
+                function showEdgeTipForPath(el: SVGPathElement, d: any) {
+                    // midpoint of the path
+                    const len = el.getTotalLength();
+                    const mid = el.getPointAtLength(len / 2);
+                    // position relative to container
+                    const container = containerRef.current!;
+                    const rect = (container.firstElementChild as SVGSVGElement).getBoundingClientRect();
+                    // container is relatively positioned; we can place absolutely within
+                    edgeTip
+                        .style("left", `${mid.x + 8}px`)
+                        .style("top", `${mid.y + 8}px`)
+                        .style("display", "block")
+                        .html(() => {
+                            const kind = (d.dependency_type || d.type || "").toString().replace(/_/g, " ");
+                            const src = nameMap[d.source] || d.source;
+                            const tgt = nameMap[d.target] || d.target;
+                            const just = d.dependency || "";
+                            const badge = kind ? `<span style="font-weight:600;color:#374151">${kind}</span>` : `<span style="color:#6b7280">reference</span>`;
+                            const arrow = "→";
+                            const ctx = just ? `<div style="margin-top:2px;color:#4b5563">${just}</div>` : "";
+                            return `${badge}<div style="color:#1f2937">${src} ${arrow} ${tgt}</div>${ctx}`;
+                        });
+                }
+
+                linkEls
+                    .on("mouseenter", function (_ev: MouseEvent, d: any) {
+                        d3.select(this).attr("stroke-width", (d: any) => (d.dependency_type ? 3 : 2));
+                        showEdgeTipForPath(this as SVGPathElement, d);
+                    })
+                    .on("mousemove", function (_ev: MouseEvent, d: any) {
+                        // follow cursor slightly by recomputing midpoint (keeps label near edge)
+                        showEdgeTipForPath(this as SVGPathElement, d);
+                    })
+                    .on("mouseleave", function () {
+                        d3.select(this).attr("stroke-width", (d: any) => (d.dependency_type ? 2.2 : 1.6));
+                        if (pinnedEdge !== this) {
+                            edgeTip.style("display", "none");
+                        }
+                    })
+                    .on("click", function (_ev: MouseEvent, d: any) {
+                        // Toggle pinning
+                        if (pinnedEdge === this) {
+                            pinnedEdge = null;
+                            edgeTip.style("display", "none");
+                        } else {
+                            pinnedEdge = this as SVGPathElement;
+                            showEdgeTipForPath(this as SVGPathElement, d);
+                        }
+                    });
+
+                // Clicking empty space unpins
+                svg.on("click", function (ev: any) {
+                    // Ignore if the target is a path (handled above)
+                    if (ev && ev.target && ev.target.tagName === "path") return;
+                    pinnedEdge = null;
+                    edgeTip.style("display", "none");
+                });
 
                 // Node group
                 const nodeG = svg.append("g").attr("class", "nodes");
@@ -352,24 +448,14 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     .html((d: ArtifactNode) => `<div data-id="${d.id}">${d.type}</div>`);
 
                 // Hover & click interactions
-                const tooltip = d3
-                    .select(containerRef.current)
-                    .append("div")
-                    .attr("class", "d3-tooltip")
-                    .style("position", "absolute")
-                    .style("pointer-events", "none")
-                    .style("display", "none");
+                // Node hover tooltip disabled per UX: no floating text on hover.
 
                 node
-                    .on("mouseenter", function (event: MouseEvent, d: ArtifactNode) {
-                        tooltip.style("display", "block").html(d.display_name || d.label || "");
+                    .on("mouseenter", function () {
                         d3.select(this).select("circle").attr("stroke-width", 2.5);
                     })
-                    .on("mousemove", function (event: MouseEvent) {
-                        tooltip.style("left", (event as MouseEvent).pageX + 12 + "px").style("top", (event as MouseEvent).pageY + 12 + "px");
-                    })
+                    .on("mousemove", null)
                     .on("mouseleave", function () {
-                        tooltip.style("display", "none");
                         d3.select(this).select("circle").attr("stroke-width", 1.5);
                     })
                     .on("click", function (event: MouseEvent, d: ArtifactNode) {
@@ -384,27 +470,6 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                         }
                     });
 
-                // k-hop highlighting
-                function computeKHop(rootId: string, k: number) {
-                    const visited = new Set<string>();
-                    let frontier = new Set<string>([rootId]);
-                    visited.add(rootId);
-                    for (let step = 0; step < k; step++) {
-                        const next = new Set<string>();
-                        for (const u of frontier) {
-                            const neigh = adj[u] || [];
-                            for (const v of neigh) {
-                                if (!visited.has(v)) {
-                                    visited.add(v);
-                                    next.add(v);
-                                }
-                            }
-                        }
-                        frontier = next;
-                        if (frontier.size === 0) break;
-                    }
-                    return visited;
-                }
 
                 // shortest path (BFS)
                 function shortestPath(a: string, b: string) {
@@ -437,12 +502,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     return null;
                 }
 
-                // apply k-hop or path if requested
-                if (selectedNodeId) {
-                    const inKHop = computeKHop(selectedNodeId, kHop);
-                    node.select("circle").attr("opacity", (d: any) => (inKHop.has(d.id) ? 1 : 0.25));
-                    linkEls.attr("opacity", (l: any) => (inKHop.has(l.source) && inKHop.has(l.target) ? 1 : 0.12));
-                }
+                // k-hop highlighting removed per UX request
 
                 if (pathEndpoints.a && pathEndpoints.b) {
                     const path = shortestPath(pathEndpoints.a, pathEndpoints.b);
@@ -471,40 +531,6 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
 
                 // search + controls with accessible label and live region
                 // hidden label for screen-readers
-                controls
-                    .append("label")
-                    .attr("for", "graph-search")
-                    .attr("class", "sr-only")
-                    .text("Search artifacts by name or label");
-
-                const inputs = controls.append("div").style("display", "flex").style("flex-direction", "column").style("gap", "6px");
-                inputs
-                    .append("input")
-                    .attr("id", "graph-search")
-                    .attr("aria-label", "Search artifacts by name or label")
-                    .attr("placeholder", "Search by name or label")
-                    .attr("type", "text")
-                    .attr("value", query)
-                    .on("input", (event: Event) => {
-                        setQuery((event.target as HTMLInputElement).value);
-                    })
-                    .style("width", "100%")
-                    .style("padding", "6px")
-                    .style("box-sizing", "border-box");
-
-                // aria-live status region intentionally removed per UX request
-
-                const row2 = inputs.append("div").style("display", "flex").style("gap", "6px").style("align-items", "center");
-                row2
-                    .append("input")
-                    .attr("type", "number")
-                    .attr("min", 1)
-                    .attr("value", kHop.toString())
-                    .on("input", (event: any) => setKHop(Math.max(1, Number(event.target.value) || 1)))
-                    .style("width", "64px")
-                    .style("padding", "6px");
-
-                row2.append("div").text("k-hop").style("font-size", "12px").style("color", "#334155");
 
                 // shortest-path inputs removed from legend per UX request
                 // (path endpoints can still be set programmatically or via other UI if desired)
