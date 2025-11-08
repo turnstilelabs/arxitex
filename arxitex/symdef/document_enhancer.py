@@ -4,7 +4,7 @@ import json
 import re
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Awaitable, Callable, Dict, List, Optional, Tuple
 
 import aiofiles
 from loguru import logger
@@ -59,6 +59,8 @@ class DocumentEnhancer:
         llm_enhancer: DefinitionBuilder,
         context_finder: ContextFinder,
         definition_bank: DefinitionBank,
+        on_term_inferred: Optional[Callable[[Definition], Awaitable[None]]] = None,
+        on_prerequisite_link: Optional[Callable[[str, str], Awaitable[None]]] = None,
     ):
         """
         Initializes the DocumentEnhancer with its dependencies.
@@ -72,6 +74,9 @@ class DocumentEnhancer:
         self.context_finder = context_finder
         self.bank = definition_bank
         self._synthesis_lock = asyncio.Lock()
+        # Add streaming callbacks
+        self._on_term_inferred = on_term_inferred
+        self._on_prereq_link = on_prerequisite_link
 
     async def enhance_document(
         self,
@@ -100,6 +105,17 @@ class DocumentEnhancer:
         artifact_end_positions = self._calculate_end_positions(
             sorted_artifacts, latex_content
         )
+
+        # If a streaming callback is provided, emit term_inferred for explicit definitions, too.
+        if self._on_term_inferred:
+
+            async def _emit_term_only(defn: Definition):
+                try:
+                    await self._on_term_inferred(defn)
+                except Exception as e:
+                    logger.warning(f"on_term_inferred callback failed: {e}")
+
+            self.bank.set_on_register(_emit_term_only)
 
         logger.info("Phase 1: Populating bank from explicit definitions...")
         await self._populate_bank_from_definitions(sorted_artifacts)
@@ -393,6 +409,37 @@ class DocumentEnhancer:
         logger.info(
             f"Found {len(missing_terms)} missing terms to synthesize: {missing_terms}"
         )
+
+        # Upgrade the bank callback to also stream prerequisite links now that we know the map.
+        if self._on_term_inferred or self._on_prereq_link:
+            norm = self.bank._normalize_term
+            artifacts_by_norm: Dict[str, set] = {}
+            for aid, terms in artifact_to_terms_map.items():
+                for t in terms:
+                    artifacts_by_norm.setdefault(norm(t), set()).add(aid)
+
+            async def _on_register_cb(defn: Definition):
+                try:
+                    if self._on_term_inferred:
+                        await self._on_term_inferred(defn)
+                    if self._on_prereq_link:
+                        key = norm(defn.term)
+                        for aid in artifacts_by_norm.get(key, set()):
+                            await self._on_prereq_link(aid, defn.term)
+                except Exception as e:
+                    logger.warning(f"on_register callback error: {e}")
+
+            self.bank.set_on_register(_on_register_cb)
+            # Emit prerequisite links for any terms already present in the bank
+            try:
+                snapshot = await self.bank.to_dict()
+                for _, d in snapshot.items():
+                    key = norm(d["term"])
+                    for aid in artifacts_by_norm.get(key, set()):
+                        if self._on_prereq_link:
+                            await self._on_prereq_link(aid, d["term"])
+            except Exception as e:
+                logger.warning(f"initial prerequisite_link emission failed: {e}")
 
         synthesis_tasks = [
             self._synthesize_single_term(
