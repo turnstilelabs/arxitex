@@ -208,7 +208,7 @@ export default function PaperPage() {
             </header>
             <main className="min-h-screen p-6 md:p-12">
                 <div className="max-w-5xl mx-auto">
-                    <div className="flex items-center gap-2 mb-6">
+                    <div className="mb-6">
                         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
                             <a
                                 href={`https://arxiv.org/abs/${arxivId}`}
@@ -217,10 +217,15 @@ export default function PaperPage() {
                                 className="hover:underline underline-offset-4"
                                 title={`Open ${arxivId} on arXiv`}
                             >
-                                Paper {arxivId}
+                                {data.title || `Paper ${arxivId}`}
                             </a>
                         </h1>
-                        <div className="text-sm text-slate-600">
+                        {data.authors && data.authors.length ? (
+                            <div className="mt-1 text-sm text-slate-700">
+                                {data.authors.join(", ")}
+                            </div>
+                        ) : null}
+                        <div className="mt-2 text-sm text-slate-600">
                             Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
                             {graph.stats?.edge_count ?? graph.edges.length} · Mode: {graph.extractor_mode}
                         </div>
