@@ -36,6 +36,10 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap"
           rel="stylesheet"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}

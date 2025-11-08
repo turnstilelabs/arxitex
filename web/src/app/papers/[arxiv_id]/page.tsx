@@ -8,6 +8,8 @@ import type { ArtifactNode, PaperResponse } from "@/lib/types";
 import D3GraphView from "@/components/D3GraphView";
 import { unescapeLatex } from "@/lib/latex";
 import { sanitizePreview } from "@/lib/sanitize";
+import Logo from "@/components/Logo";
+import Link from "next/link";
 
 function DefinitionBankView({ bank }: { bank: PaperResponse["definition_bank"] }) {
     const entries = useMemo(() => {
@@ -154,61 +156,95 @@ export default function PaperPage() {
 
     if (isLoading) {
         return (
-            <main className="min-h-screen p-4 md:p-6">
-                <div className="text-sm text-gray-600">Loading paper {arxivId}…</div>
-            </main>
+            <>
+                <header className="sticky top-0 z-40 bg-white border-b text-black">
+                    <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 justify-start">
+                        <Link href="/" className="inline-flex items-center gap-2 leading-none shrink-0">
+                            <Logo className="h-12 w-auto" withText={true} />
+                        </Link>
+                        <span className="text-xs sm:text-sm text-slate-600">Loading…</span>
+                    </div>
+                </header>
+                <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-sm text-gray-600">Loading paper {arxivId}…</div>
+                    </div>
+                </main>
+            </>
         );
     }
 
     if (error || !data) {
         return (
-            <main className="min-h-screen p-4 md:p-6">
-                <div className="text-sm text-red-600">
-                    Failed to load paper: {(error as any)?.message || "Unknown error"}
-                </div>
-            </main>
+            <>
+                <header className="sticky top-0 z-40 bg-white border-b text-black">
+                    <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 justify-start">
+                        <Link href="/" className="inline-flex items-center gap-2 leading-none shrink-0">
+                            <Logo className="h-12 w-auto" withText={true} />
+                        </Link>
+                    </div>
+                </header>
+                <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
+                    <div className="max-w-5xl mx-auto">
+                        <div className="text-sm text-red-600">
+                            Failed to load paper: {(error as any)?.message || "Unknown error"}
+                        </div>
+                    </div>
+                </main>
+            </>
         );
     }
 
     const { graph, definition_bank } = data;
 
     return (
-        <main className="min-h-screen p-4 md:p-6">
-            <div className="flex items-center gap-2 mb-3">
-                <h1 className="text-xl font-semibold">Paper {arxivId}</h1>
-                <div className="text-sm text-gray-600">
-                    Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
-                    {graph.stats?.edge_count ?? graph.edges.length} · Mode: {graph.extractor_mode}
+        <>
+            <header className="sticky top-0 z-40 bg-white border-b text-black">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center gap-4 justify-start">
+                    <Link href="/" className="inline-flex items-center gap-2 leading-none shrink-0">
+                        <Logo className="h-12 w-auto" withText={true} />
+                    </Link>
                 </div>
-                <div className="ml-auto">
-                    <a
-                        className="text-sm underline text-indigo-600"
-                        href={`https://arxiv.org/abs/${arxivId}`}
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Open on arXiv ↗
-                    </a>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                <div className="lg:col-span-8 bg-white border rounded p-2">
-                    <D3GraphView graph={graph} onSelectNode={setSelected} height="68vh" />
-                </div>
-
-                <div className="lg:col-span-4 flex flex-col gap-4">
-                    <div className="bg-white border rounded p-3">
-                        <div className="text-sm font-semibold mb-2 text-black">Artifact Details</div>
-                        <ArtifactDetails node={selected} />
+            </header>
+            <main className="min-h-screen p-6 md:p-12 bg-gradient-to-b from-slate-50 to-white">
+                <div className="max-w-5xl mx-auto">
+                    <div className="flex items-center gap-2 mb-6">
+                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                            <a
+                                href={`https://arxiv.org/abs/${arxivId}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:underline underline-offset-4"
+                                title={`Open ${arxivId} on arXiv`}
+                            >
+                                Paper {arxivId}
+                            </a>
+                        </h1>
+                        <div className="text-sm text-slate-600">
+                            Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
+                            {graph.stats?.edge_count ?? graph.edges.length} · Mode: {graph.extractor_mode}
+                        </div>
                     </div>
 
-                    <div className="bg-white border rounded p-3">
-                        <div className="text-sm font-semibold mb-2 text-black">Definition Bank</div>
-                        <DefinitionBankView bank={definition_bank} />
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+                        <div className="lg:col-span-8 bg-white rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
+                            <D3GraphView graph={graph} onSelectNode={setSelected} height="68vh" />
+                        </div>
+
+                        <div className="lg:col-span-4 flex flex-col gap-4">
+                            <div className="bg-white rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
+                                <div className="text-sm font-semibold mb-2 text-black">Artifact Details</div>
+                                <ArtifactDetails node={selected} />
+                            </div>
+
+                            <div className="bg-white rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
+                                <div className="text-sm font-semibold mb-2 text-black">Definition Bank</div>
+                                <DefinitionBankView bank={definition_bank} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </>
     );
 }
