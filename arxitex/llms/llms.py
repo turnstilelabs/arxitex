@@ -11,6 +11,14 @@ from together import AsyncTogether, Together
 from .json_extractor import JSONExtractor
 from .prompt import Prompt
 from .prompt_cache import get_prompt_result, save_prompt_result
+from .registry import (
+    DEFAULT_ASYNC_MODEL,
+    DEFAULT_MODEL,
+    Provider,
+    is_supported_model,
+    list_supported_models,
+    provider_for_model,
+)
 
 timeout = httpx.Timeout(30.0, connect=5.0)
 
@@ -52,32 +60,23 @@ def _run_prompt(prompt: Prompt, model: str, output_class):
     logger.info("Run LLM prompt: " + json.dumps(dataclasses.asdict(prompt), indent=4))
     start_time = time.time()
 
-    openai_models = [
-        "gpt-4.1-mini-2025-04-14",
-        "gpt-5-mini-2025-08-07",
-        "gpt-5-nano-2025-08-07",
-    ]
-
-    together_models = [
-        "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
-        "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
-    ]
-
-    model_runners = {
-        **{m: run_openai for m in openai_models},
-        **{m: run_together for m in together_models},
-    }
-
     if not model:
-        logger.warning("No model specified, defaulting to gpt-4o-2024-08-06")
-        model = "gpt-4o-2024-08-06"
+        logger.warning(f"No model specified, defaulting to {DEFAULT_MODEL}")
+        model = DEFAULT_MODEL
 
-    if model not in model_runners:
-        raise ValueError(f"Unsupported model: {model}")
+    if not is_supported_model(model):
+        supported = list_supported_models()
+        raise ValueError(
+            f"Unsupported model: {model}. Supported models: {json.dumps(supported)}"
+        )
 
+    provider = provider_for_model(model)
     logger.info(f"LLM model: {model}")
 
-    result = model_runners[model](prompt, model, output_class)
+    if provider == Provider.OPENAI:
+        result = run_openai(prompt, model, output_class)
+    else:
+        result = run_together(prompt, model, output_class)
 
     logger.info(f"LLM Output: {result}")
     logger.info(f"Got LLM response: {time.time() - start_time:.1f} seconds")
@@ -138,33 +137,22 @@ async def arun_together(prompt, model, output_class):
 
 
 async def _arun_prompt(prompt: Prompt, model: str, output_class):
-
-    openai_models = [
-        "gpt-4.1-2025-04-14",
-        "gpt-5-mini-2025-08-07",
-        "gpt-5-2025-08-07",
-        "gpt-5-nano-2025-08-07",
-    ]
-
-    together_models = [
-        "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
-        "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
-        "deepseek-ai/DeepSeek-V3.1",
-        "openai/gpt-oss-120b",
-    ]
-
-    model_runners = {
-        **{m: arun_openai for m in openai_models},
-        **{m: arun_together for m in together_models},
-    }
-
     if not model:
-        logger.warning("No model specified, defaulting to gpt-4o-2024-08-06")
-        model = "gpt-4o-2024-08-06"
+        logger.warning(f"No model specified, defaulting to {DEFAULT_ASYNC_MODEL}")
+        model = DEFAULT_ASYNC_MODEL
 
-    if model not in model_runners:
-        raise ValueError(f"Unsupported model: {model}")
-    result = await model_runners[model](prompt, model, output_class)
+    if not is_supported_model(model):
+        supported = list_supported_models()
+        raise ValueError(
+            f"Unsupported model: {model}. Supported models: {json.dumps(supported)}"
+        )
+
+    provider = provider_for_model(model)
+
+    if provider == Provider.OPENAI:
+        result = await arun_openai(prompt, model, output_class)
+    else:
+        result = await arun_together(prompt, model, output_class)
 
     logger.info(f"LLM Output: {result}")
     return result

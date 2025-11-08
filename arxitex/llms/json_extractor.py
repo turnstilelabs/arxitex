@@ -6,6 +6,8 @@ from loguru import logger
 from openai import OpenAI
 from pydantic import BaseModel, ValidationError
 
+from .registry import JSON_EXTRACTION_MODEL
+
 T = TypeVar("T", bound=BaseModel)
 
 
@@ -20,9 +22,9 @@ def extract_after_think(text: str) -> str:
 class JSONExtractor:
     """This is a poor man fix to get structure outputs for calling together.ai models"""
 
-    def __init__(self, model: str = "gpt-5-nano-2025-08-07"):
-        self.client = OpenAI()
-        self.model = model
+    def __init__(self, model: str | None = None, client: OpenAI | None = None):
+        self.client = client or OpenAI()
+        self.model = model or JSON_EXTRACTION_MODEL
 
     def extract_json(self, text: str, output_class: Type[T]) -> Optional[T]:
         """
