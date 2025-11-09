@@ -3,13 +3,17 @@
 import { useEffect, useMemo, useState, useRef } from "react";
 import useSWR from "swr";
 import { useParams, useSearchParams } from "next/navigation";
-import { getPaper } from "@/lib/api";
-import type { ArtifactNode, PaperResponse, DocumentGraph, DefinitionBank } from "@/lib/types";
+import { getPaper, getPdfUrl, getAnchors } from "@/lib/api";
+import type { ArtifactNode, PaperResponse, DocumentGraph, DefinitionBank, ArtifactAnchorIndex } from "@/lib/types";
 import D3GraphView from "@/components/D3GraphView";
 import { unescapeLatex } from "@/lib/latex";
 import { sanitizePreview } from "@/lib/sanitize";
 import Logo from "@/components/Logo";
 import Link from "next/link";
+import type { PaperReaderHandle } from "@/components/PaperReader";
+import dynamic from "next/dynamic";
+const PaperReader = dynamic(() => import("@/components/PaperReader"), { ssr: false });
+import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
 
 function DefinitionBankView({ bank }: { bank: PaperResponse["definition_bank"] }) {
     const entries = useMemo(() => {
@@ -70,7 +74,7 @@ function DefinitionBankView({ bank }: { bank: PaperResponse["definition_bank"] }
     );
 }
 
-function ArtifactDetails({ node }: { node: ArtifactNode | null }) {
+function ArtifactDetails({ node, bank }: { node: ArtifactNode | null; bank: DefinitionBank | null }) {
     const detailsRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         if (detailsRef.current) {
@@ -80,6 +84,72 @@ function ArtifactDetails({ node }: { node: ArtifactNode | null }) {
 
     // Local UI state for collapsible proof section
     const [proofOpen, setProofOpen] = useState<boolean>(false);
+
+    // Resolve prerequisite symbols to full definitions from the bank when possible
+    const resolvedPrereqs = useMemo(() => {
+        if (!node || !bank) return [] as Array<{ term: string; html: string }>;
+
+        // Build a lookup of normalized term/aliases -> definition entry
+        const norm = (s: string) => (s || "").toLowerCase().replace(/\s+/g, " ").trim();
+        const entries = Object.values(bank as any) as Array<{
+            term?: string;
+            aliases?: string[];
+            definition_text?: string;
+        }>;
+
+        const map: Record<string, { term: string; definition_text: string }> = {};
+        for (const e of entries) {
+            const t = e?.term || "";
+            const def = e?.definition_text || "";
+            if (t) map[norm(t)] = { term: t, definition_text: def };
+            if (Array.isArray(e?.aliases)) {
+                for (const a of e.aliases) {
+                    if (!a) continue;
+                    map[norm(a)] = { term: a, definition_text: def };
+                }
+            }
+        }
+
+        // Candidate prerequisite names
+        const explicitList = (node as any).prerequisites as string[] | undefined;
+
+        let candidates: string[] = [];
+        if (Array.isArray(explicitList) && explicitList.length) {
+            candidates = explicitList;
+        } else if (typeof node.prerequisites_preview === "string" && node.prerequisites_preview) {
+            // Extract plain text from preview and attempt to match known terms
+            const plain = node.prerequisites_preview
+                .replace(/<[^>]*>/g, " ") // strip tags
+                .replace(/\s+/g, " ")
+                .trim()
+                .toLowerCase();
+
+            // Pick those terms that actually appear in the preview text (simple contains heuristic)
+            const seen = new Set<string>();
+            for (const key of Object.keys(map)) {
+                if (plain.includes(key) && !seen.has(key)) {
+                    candidates.push(map[key].term);
+                    seen.add(key);
+                }
+            }
+        }
+
+        // Build resolved list
+        const out: Array<{ term: string; html: string }> = [];
+        const added = new Set<string>();
+        for (const cand of candidates) {
+            const k = norm(cand);
+            const hit = map[k];
+            if (hit && !added.has(hit.term)) {
+                out.push({
+                    term: hit.term,
+                    html: hit.definition_text || "",
+                });
+                added.add(hit.term);
+            }
+        }
+        return out;
+    }, [node, bank]);
 
     if (!node) {
         return <div className="text-sm text-gray-500">Select a node to see details.</div>;
@@ -104,13 +174,30 @@ function ArtifactDetails({ node }: { node: ArtifactNode | null }) {
                     dangerouslySetInnerHTML={{ __html: sanitizePreview(unescapeLatex(node.content)) }}
                 />
             </div>
-            {node.prerequisites_preview ? (
+            {resolvedPrereqs.length > 0 ? (
+                <div>
+                    <div className="text-xs uppercase text-gray-500 mb-1">Prerequisites</div>
+                    <div className="space-y-2">
+                        {resolvedPrereqs.map((p) => (
+                            <div key={p.term} className="text-sm prose max-w-none">
+                                <div className="font-semibold inline-block mr-1">{p.term}:</div>
+                                <span
+                                    dangerouslySetInnerHTML={{
+                                        __html: sanitizePreview(unescapeLatex(p.html || "")),
+                                    }}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : node.prerequisites_preview ? (
                 <div>
                     <div className="text-xs uppercase text-gray-500 mb-1">Prerequisites</div>
                     <div
                         className="text-sm prose max-w-none"
-                        // For prerequisites we render the available preview (no nonexistent `prerequisites` prop).
-                        dangerouslySetInnerHTML={{ __html: sanitizePreview(unescapeLatex(node.prerequisites_preview || "")) }}
+                        dangerouslySetInnerHTML={{
+                            __html: sanitizePreview(unescapeLatex(node.prerequisites_preview || "")),
+                        }}
                     />
                 </div>
             ) : null}
@@ -159,6 +246,40 @@ export default function PaperPage() {
     const API_BASE =
         process.env.NEXT_PUBLIC_API_BASE?.replace(/\/$/, "") || "http://127.0.0.1:8000";
     const searchParams = useSearchParams();
+    const readerRef = useRef<PaperReaderHandle | null>(null);
+    const pdfUrl = useMemo(() => getPdfUrl(arxivId), [arxivId]);
+    const [anchors, setAnchors] = useState<ArtifactAnchorIndex | null>(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        if (!arxivId) return;
+        getAnchors(arxivId)
+            .then((a) => {
+                if (!cancelled) setAnchors(a);
+            })
+            .catch(() => {
+                if (!cancelled) setAnchors(null); // 404 or network -> treat as no anchors yet
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [arxivId]);
+
+    const artifactLookup = useMemo(() => {
+        const g = (liveGraph ?? data?.graph) || null;
+        const map: Record<string, string[]> = {};
+        if (g) {
+            g.nodes.forEach((n) => {
+                const arr: string[] = [];
+                if (n.display_name) arr.push(n.display_name);
+                if (n.label) arr.push(String(n.label));
+                arr.push(n.type);
+                const uniq = Array.from(new Set(arr.filter(Boolean).map((s) => s.trim())));
+                map[n.id] = uniq;
+            });
+        }
+        return map;
+    }, [liveGraph, data]);
 
     useEffect(() => {
         setLiveGraph(data?.graph || null);
@@ -246,9 +367,26 @@ export default function PaperPage() {
                         const bank = bankRef.current || {};
                         const defsHtml = terms
                             .map((t) => {
-                                const def = (bank as any)[t];
+                                const bankObj = bank as any;
+                                // 1) Direct key lookup
+                                let def = bankObj ? bankObj[t] : null;
+
+                                // 2) Fallback: find by exact term (case-insensitive)
+                                if (!def && bankObj) {
+                                    const values = Object.values(bankObj) as any[];
+                                    const norm = (s: string) => (s || "").toLowerCase().trim();
+                                    def =
+                                        values.find((e: any) => norm(e?.term) === norm(t)) ||
+                                        // 3) Fallback: find by alias match
+                                        values.find(
+                                            (e: any) => Array.isArray(e?.aliases) && e.aliases.some((a: string) => norm(a) === norm(t))
+                                        ) ||
+                                        null;
+                                }
+
                                 const text = def?.definition_text || "";
-                                return `<div><strong>${t}:</strong> ${text}</div>`;
+                                // Keep term visible and show its resolved definition text (if any)
+                                return `<div style="margin-bottom:6px"><strong>${t}:</strong> ${text}</div>`;
                             })
                             .join("");
                         return { ...n, prerequisites_preview: defsHtml };
@@ -326,6 +464,8 @@ export default function PaperPage() {
     };
 
     const [selected, setSelected] = useState<ArtifactNode | null>(null);
+    const [graphModalOpen, setGraphModalOpen] = useState(false);
+    const [defsOpen, setDefsOpen] = useState(true);
 
     useEffect(() => {
         // Reset when paper changes
@@ -343,7 +483,7 @@ export default function PaperPage() {
                         <span className="text-xs sm:text-sm text-slate-600">Loading…</span>
                     </div>
                 </header>
-                <main className="min-h-screen p-6 md:p-12">
+                <main className="min-h-screen p-6 md:p-12 bg-slate-50">
                     <div className="max-w-5xl mx-auto">
                         <div className="text-sm text-gray-600">Loading paper {arxivId}…</div>
                     </div>
@@ -362,54 +502,28 @@ export default function PaperPage() {
                         </Link>
                     </div>
                 </header>
-                <main className="min-h-screen p-6 md:p-12">
-                    <div className="max-w-5xl mx-auto">
-                        <div className="mb-4">
-                            <div className="text-sm text-red-600">
-                                Failed to load paper: {(error as any)?.message || "Unknown error"}
-                            </div>
-                            <div className="mt-3 flex items-center gap-3">
-                                <button
-                                    className="text-xs px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
-                                    onClick={() => startStream({ infer: true, enrich: true })}
-                                    disabled={streaming}
-                                >
-                                    {streaming ? "Streaming..." : "Start live build (deps + content)"}
-                                </button>
-                                <button
-                                    className="text-xs px-3 py-1 rounded bg-gray-200 text-gray-800 disabled:opacity-50"
-                                    onClick={stopStream}
-                                    disabled={!streaming}
-                                >
-                                    Stop
-                                </button>
-                                {stage ? (
-                                    <span className="text-xs text-slate-600">Stage: {stage}</span>
-                                ) : null}
-                            </div>
+                <main className="min-h-screen p-6 md:p-12 bg-slate-50">
+                    <div className="max-w-5xl mx-auto space-y-4">
+                        <div className="text-sm text-red-600">
+                            Failed to load paper: {(error as any)?.message || "Unknown error"}
                         </div>
-
-                        {liveGraph ? (
-                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                                <div className="lg:col-span-8 bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
-                                    <D3GraphView graph={liveGraph} onSelectNode={setSelected} height="68vh" />
-                                </div>
-                                <div className="lg:col-span-4 flex flex-col gap-4">
-                                    <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
-                                        <div className="text-sm font-semibold mb-2 text-[var(--text)]">Artifact Details</div>
-                                        <ArtifactDetails node={selected} />
-                                    </div>
-                                    <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
-                                        <div className="text-sm font-semibold mb-2 text-[var(--text)]">Definition Bank</div>
-                                        <DefinitionBankView bank={liveBank ?? null} />
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="text-sm text-gray-600">
-                                Not processed yet. Use the live build button above to stream the graph and definitions.
-                            </div>
-                        )}
+                        <div className="mt-3 flex items-center gap-3">
+                            <button
+                                className="text-xs px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
+                                onClick={() => startStream({ infer: true, enrich: true })}
+                                disabled={streaming}
+                            >
+                                {streaming ? "Streaming..." : "Start live build (deps + content)"}
+                            </button>
+                            <button
+                                className="text-xs px-3 py-1 rounded bg-gray-200 text-gray-800 disabled:opacity-50"
+                                onClick={stopStream}
+                                disabled={!streaming}
+                            >
+                                Stop
+                            </button>
+                            {stage ? <span className="text-xs text-slate-600">Stage: {stage}</span> : null}
+                        </div>
                     </div>
                 </main>
             </>
@@ -427,7 +541,7 @@ export default function PaperPage() {
                     </Link>
                 </div>
             </header>
-            <main className="min-h-screen p-6 md:p-12">
+            <main className="min-h-screen p-6 md:p-12 bg-slate-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-6">
                         <h1 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -442,9 +556,7 @@ export default function PaperPage() {
                             </a>
                         </h1>
                         {data.authors && data.authors.length ? (
-                            <div className="mt-1 text-sm text-slate-700">
-                                {data.authors.join(", ")}
-                            </div>
+                            <div className="mt-1 text-sm text-slate-700">{data.authors.join(", ")}</div>
                         ) : null}
                         <div className="mt-2 text-sm text-slate-600">
                             Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
@@ -473,24 +585,125 @@ export default function PaperPage() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-                        <div className="lg:col-span-8 bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
-                            <D3GraphView graph={liveGraph ?? graph} onSelectNode={setSelected} height="68vh" />
-                        </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-3 md:p-5">
+                        <PanelGroup direction="horizontal">
+                            <Panel defaultSize={66} minSize={35}>
+                                <div className="flex flex-col gap-2 h-full">
+                                    <div className="bg-white rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
+                                        <PaperReader
+                                            ref={readerRef}
+                                            arxivId={arxivId}
+                                            pdfUrl={pdfUrl}
+                                            selectedArtifactId={selected?.id || null}
+                                            artifactLookup={artifactLookup}
+                                            anchors={anchors ?? undefined}
+                                            onArtifactClick={(id) => {
+                                                const g = liveGraph ?? graph;
+                                                const node = g?.nodes.find((n) => n.id === id) || null;
+                                                if (node) setSelected(node);
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="bg-white rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
+                                        <div className="flex items-center justify-between">
+                                            <div className="text-xs font-medium text-slate-600">Definition Bank</div>
+                                            <button
+                                                className="text-xs px-2 py-1 rounded bg-gray-100"
+                                                onClick={() => setDefsOpen((o) => !o)}
+                                                aria-pressed={defsOpen}
+                                            >
+                                                {defsOpen ? "Hide" : "Show"}
+                                            </button>
+                                        </div>
+                                        {defsOpen ? (
+                                            <div className="mt-2 overflow-auto max-h-[28vh]">
+                                                <DefinitionBankView bank={liveBank ?? definition_bank} />
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                </div>
+                            </Panel>
+                            <PanelResizeHandle className="w-1 bg-slate-200 hover:bg-slate-300 transition-colors" />
+                            <Panel defaultSize={34} minSize={25}>
+                                <div className="flex flex-col gap-2 h-full">
+                                    <div className="bg-white rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <div className="text-xs font-medium text-slate-600">Graph</div>
+                                            <button
+                                                className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
+                                                onClick={() => setGraphModalOpen(true)}
+                                                aria-label="Open fullscreen graph"
+                                                title="Open fullscreen graph"
+                                            >
+                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                    <path d="M7 3H3v4M17 3h4v4M7 21H3v-4M21 17v4h-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <D3GraphView
+                                            graph={liveGraph ?? graph}
+                                            onSelectNode={(node) => {
+                                                if (!node) return;
+                                                setSelected(node);
+                                                try {
+                                                    readerRef.current?.scrollToArtifact(node.id);
+                                                    readerRef.current?.pulseArtifact(node.id);
+                                                } catch { }
+                                            }}
+                                            selectedNodeId={selected?.id || null}
+                                            height="42vh"
+                                        />
+                                    </div>
+                                    <div className="bg-white rounded-xl ring-1 ring-slate-200 p-3 shadow-sm h-full overflow-auto">
+                                        <div className="text-sm font-semibold mb-2 text-[var(--text)]">Artifact Details</div>
+                                        <ArtifactDetails node={selected} bank={liveBank ?? definition_bank} />
+                                    </div>
+                                </div>
+                            </Panel>
+                        </PanelGroup>
+                    </div>
+                </div>
 
-                        <div className="lg:col-span-4 flex flex-col gap-4">
-                            <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
-                                <div className="text-sm font-semibold mb-2 text-[var(--text)]">Artifact Details</div>
-                                <ArtifactDetails node={selected} />
+                {graphModalOpen ? (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center">
+                        <div
+                            className="absolute inset-0 bg-black/50"
+                            aria-hidden
+                            onClick={() => setGraphModalOpen(false)}
+                        />
+                        <div className="relative bg-white rounded-xl shadow-xl ring-1 ring-slate-200 w-[min(96vw,1100px)] max-w-[1100px]">
+                            <div className="flex items-center justify-between p-2 border-b">
+                                <div className="text-xs font-medium text-slate-600 px-1">Graph</div>
+                                <button
+                                    className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
+                                    onClick={() => setGraphModalOpen(false)}
+                                    aria-label="Close graph"
+                                    title="Close"
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </button>
                             </div>
-
-                            <div className="bg-[var(--surface)] rounded-xl ring-1 ring-slate-200 p-3 shadow-sm">
-                                <div className="text-sm font-semibold mb-2 text-[var(--text)]">Definition Bank</div>
-                                <DefinitionBankView bank={liveBank ?? definition_bank} />
+                            <div className="p-2">
+                                <D3GraphView
+                                    graph={liveGraph ?? graph}
+                                    onSelectNode={(node) => {
+                                        if (!node) return;
+                                        setSelected(node);
+                                        try {
+                                            readerRef.current?.scrollToArtifact(node.id);
+                                            readerRef.current?.pulseArtifact(node.id);
+                                        } catch { }
+                                    }}
+                                    selectedNodeId={selected?.id || null}
+                                    height="78vh"
+                                />
                             </div>
                         </div>
                     </div>
-                </div>
+                ) : null}
+
             </main>
         </>
     );

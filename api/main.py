@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Dict, Literal, Optional
 from urllib.parse import urlparse
 
+import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
@@ -38,9 +39,11 @@ DEFAULT_OUTPUT_DIR = Path(
 ).resolve()
 GRAPHS_DIR = DEFAULT_OUTPUT_DIR / "graphs"
 BANKS_DIR = DEFAULT_OUTPUT_DIR / "definition_banks"
+PDFS_DIR = DEFAULT_OUTPUT_DIR / "pdfs"
+ANCHORS_DIR = DEFAULT_OUTPUT_DIR / "anchors"
 LOGS_DIR = DEFAULT_OUTPUT_DIR / "logs"
 
-for d in (GRAPHS_DIR, BANKS_DIR, LOGS_DIR):
+for d in (GRAPHS_DIR, BANKS_DIR, PDFS_DIR, ANCHORS_DIR, LOGS_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
 
@@ -378,6 +381,43 @@ async def get_paper(arxiv_id: str):
     }
 
 
+@app.get("/api/v1/papers/{arxiv_id}/pdf")
+def get_paper_pdf(arxiv_id: str):
+    """
+    Streams the PDF for a given arXiv ID via proxy and caches it on disk.
+    """
+    safe_id = arxiv_id.replace("/", "_")
+    pdf_path = PDFS_DIR / f"{safe_id}.pdf"
+    try:
+        if pdf_path.exists():
+
+            def iterfile():
+                with open(pdf_path, "rb") as f:
+                    for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                        yield chunk
+
+            return StreamingResponse(iterfile(), media_type="application/pdf")
+        # Fetch from arXiv
+        url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
+        with requests.get(url, stream=True, timeout=60) as r:
+            r.raise_for_status()
+            # Save to disk while streaming
+            with open(pdf_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=1024 * 1024):
+                    if chunk:
+                        f.write(chunk)
+
+        def iterfile2():
+            with open(pdf_path, "rb") as f:
+                for chunk in iter(lambda: f.read(1024 * 1024), b""):
+                    yield chunk
+
+        return StreamingResponse(iterfile2(), media_type="application/pdf")
+    except Exception as e:
+        logger.exception(f"Failed to proxy PDF for {arxiv_id}: {e}")
+        raise HTTPException(status_code=502, detail="Failed to fetch PDF from arXiv")
+
+
 @app.get("/api/v1/papers/{arxiv_id}/graph")
 async def get_paper_graph(arxiv_id: str):
     graph_path = GRAPHS_DIR / f"{arxiv_id.replace('/', '_')}.json"
@@ -388,6 +428,22 @@ async def get_paper_graph(arxiv_id: str):
     except Exception as e:
         logger.exception(f"Failed to read graph for {arxiv_id}: {e}")
         raise HTTPException(status_code=500, detail="Failed to read graph file")
+
+
+@app.get("/api/v1/papers/{arxiv_id}/anchors")
+async def get_paper_anchors(arxiv_id: str):
+    """
+    Returns ArtifactAnchorIndex for this paper if available.
+    File layout: pipeline_output/anchors/{arxiv_id}.json
+    """
+    anchors_path = ANCHORS_DIR / f"{arxiv_id.replace('/', '_')}.json"
+    if not anchors_path.exists():
+        raise HTTPException(status_code=404, detail="Anchors not found")
+    try:
+        return json.loads(anchors_path.read_text(encoding="utf-8"))
+    except Exception as e:
+        logger.exception(f"Failed to read anchors for {arxiv_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to read anchors file")
 
 
 @app.get("/api/v1/papers/{arxiv_id}/definitions")
