@@ -20,6 +20,8 @@ type Props = {
     graph: DocumentGraph;
     height?: number | string;
     onSelectNode?: (node: ArtifactNode | null) => void;
+    selectedNodeId?: string | null;
+    showLabels?: boolean;
 };
 
 const PASTEL_PALETTE = [
@@ -32,10 +34,10 @@ const PASTEL_PALETTE = [
     "#8fbcbb",
 ];
 
-export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Props) {
+export default function D3GraphView({ graph, height = "70vh", onSelectNode, selectedNodeId, showLabels = true }: Props) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [filterTypes, setFilterTypes] = useState<Record<string, boolean>>({});
-    const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+    const [selectedNodeIdState, setSelectedNodeIdState] = useState<string | null>(null);
     const [pathEndpoints, setPathEndpoints] = useState<{ a?: string; b?: string }>({});
     const [selectedType, setSelectedType] = useState<string | null>(null);
 
@@ -57,15 +59,16 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
             String(graph?.nodes?.length || 0),
             String(graph?.edges?.length || 0),
             Object.keys(filterTypes || {}).sort().join(","),
-            selectedNodeId || "",
+            String((selectedNodeId ?? selectedNodeIdState) || ""),
             pathEndpoints?.a || "",
             pathEndpoints?.b || "",
             Boolean(onSelectNode) ? "1" : "0",
             String(height),
             selectedType || "",
+            String(showLabels),
         ];
         return keyParts.join("|");
-    }, [graph?.arxiv_id, graph?.nodes?.length, graph?.edges?.length, filterTypes, selectedNodeId, pathEndpoints?.a, pathEndpoints?.b, onSelectNode, height, selectedType]);
+    }, [graph?.arxiv_id, graph?.nodes?.length, graph?.edges?.length, filterTypes, selectedNodeId, pathEndpoints?.a, pathEndpoints?.b, onSelectNode, height, selectedType, showLabels]);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -420,13 +423,10 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                         if ((event as KeyboardEvent).key === "Enter" || (event as KeyboardEvent).key === " ") {
                             (event as KeyboardEvent).preventDefault();
                             // emulate click behaviour
-                            setSelectedNodeId(d.id);
+                            setSelectedNodeIdState(d.id);
                             const full = graph.nodes.find((n) => n.id === d.id) || d;
                             onSelectNode?.((full as unknown) as ArtifactNode);
-                            const detailsEl = document.querySelector(".artifact-details-root");
-                            if (detailsEl) {
-                                (detailsEl as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
-                            }
+                            // Do not scroll the page to details; keep reader centered behavior only.
                         }
                     });
 
@@ -435,17 +435,26 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                     .attr("r", 18)
                     .attr("fill", (d, i) => PASTEL_PALETTE[i % PASTEL_PALETTE.length])
                     .attr("stroke", "var(--text)")
-                    .attr("stroke-width", (d: any) => (selectedType ? (d.type === selectedType ? 3 : 1.2) : 1.5))
+                    .attr("stroke-width", (d: any) => {
+                        if (selectedType) return d.type === selectedType ? 3 : 1.2;
+                        const selId = (selectedNodeId ?? selectedNodeIdState) || null;
+                        return selId && d.id === selId ? 3.2 : 1.5;
+                    })
                     .attr("opacity", (d: any) => (selectedType ? (d.type === selectedType ? 1 : 0.25) : 1));
 
-                node
-                    .append("foreignObject")
-                    .attr("width", 220)
-                    .attr("height", 60)
-                    .attr("x", 22)
-                    .attr("y", -30)
-                    .append("xhtml:div")
-                    .html((d: ArtifactNode) => `<div data-id="${d.id}">${d.type}</div>`);
+                if (showLabels) {
+                    node
+                        .append("foreignObject")
+                        .attr("width", 220)
+                        .attr("height", 60)
+                        .attr("x", 22)
+                        .attr("y", -30)
+                        .append("xhtml:div")
+                        .html((d: ArtifactNode) => {
+                            const name = d.display_name || d.label || d.id;
+                            return `<div data-id="${d.id}" style="font-size:12px;color:var(--text)">${name}</div>`;
+                        });
+                }
 
                 // Hover & click interactions
                 // Node hover tooltip disabled per UX: no floating text on hover.
@@ -459,15 +468,11 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode }: Pr
                         d3.select(this).select("circle").attr("stroke-width", 1.5);
                     })
                     .on("click", function (event: MouseEvent, d: ArtifactNode) {
-                        setSelectedNodeId(d.id);
+                        setSelectedNodeIdState(d.id);
                         // Find the full artifact node from the original graph (ensure content_preview is available)
                         const full = graph.nodes.find((n) => n.id === d.id) || d;
                         onSelectNode?.((full as unknown) as ArtifactNode);
-                        // scroll details into view for better discoverability
-                        const detailsEl = document.querySelector(".artifact-details-root");
-                        if (detailsEl) {
-                            (detailsEl as HTMLElement).scrollIntoView({ behavior: "smooth", block: "start" });
-                        }
+                        // Do not scroll the page to details; keep reader centered behavior only.
                     });
 
 
