@@ -6,7 +6,9 @@ from loguru import logger
 from openai import OpenAI
 from pydantic import BaseModel, ValidationError
 
+from .metrics import log_response_usage
 from .registry import JSON_EXTRACTION_MODEL
+from .retry_utils import retry_sync
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -81,6 +83,7 @@ class JSONExtractor:
 
         return None
 
+    @retry_sync
     def _llm_extract_json(self, text: str, output_class: Type[T]) -> Optional[T]:
         messages = [
             {"role": "system", "content": generate_extraction_prompt(output_class)},
@@ -93,6 +96,15 @@ class JSONExtractor:
                 messages=messages,
                 response_format=output_class,
             )
+            try:
+                log_response_usage(
+                    response,
+                    model=self.model,
+                    provider="openai",
+                    context="json_extractor._llm_extract_json",
+                )
+            except Exception:
+                pass
             return response.choices[0].message.parsed
 
         except Exception as e:

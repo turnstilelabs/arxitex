@@ -1,0 +1,84 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Any, Optional
+
+from loguru import logger
+
+
+@dataclass
+class TokenUsage:
+    prompt_tokens: Optional[int]
+    completion_tokens: Optional[int]
+    total_tokens: Optional[int]
+    model: str
+    provider: str
+    cached: bool = False
+    context: Optional[str] = None
+
+
+def _read_usage_fields(
+    usage: Any,
+) -> tuple[Optional[int], Optional[int], Optional[int]]:
+    """
+    Best-effort extraction of token counts from either an object with attributes
+    or a plain dict-like structure.
+    """
+    if usage is None:
+        return None, None, None
+
+    # Dict-like
+    if isinstance(usage, dict):
+        return (
+            usage.get("prompt_tokens"),
+            usage.get("completion_tokens"),
+            usage.get("total_tokens"),
+        )
+
+    # Object with attributes
+    pt = getattr(usage, "prompt_tokens", None)
+    ct = getattr(usage, "completion_tokens", None)
+    tt = getattr(usage, "total_tokens", None)
+    return pt, ct, tt
+
+
+def log_usage(u: TokenUsage) -> None:
+    logger.info(
+        "LLM usage | provider={provider} model={model} cached={cached} "
+        "prompt_tokens={pt} completion_tokens={ct} total_tokens={tt}{extra}".format(
+            provider=u.provider,
+            model=u.model,
+            cached=u.cached,
+            pt=u.prompt_tokens,
+            ct=u.completion_tokens,
+            tt=u.total_tokens,
+            extra=f" context={u.context}" if u.context else "",
+        )
+    )
+
+
+def log_response_usage(
+    response: Any,
+    *,
+    model: str,
+    provider: str,
+    context: Optional[str] = None,
+    cached: bool = False,
+) -> None:
+    """
+    Convenience helper to log usage directly from a response object when it exposes `.usage`.
+    Silently no-ops if usage is not available.
+    """
+    usage = getattr(response, "usage", None)
+    pt, ct, tt = _read_usage_fields(usage)
+    log_usage(
+        TokenUsage(
+            prompt_tokens=pt,
+            completion_tokens=ct,
+            total_tokens=tt,
+            model=model,
+            provider=provider,
+            cached=cached,
+            context=context,
+        )
+    )

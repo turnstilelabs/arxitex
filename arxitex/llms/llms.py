@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from together import AsyncTogether, Together
 
 from .json_extractor import JSONExtractor
+from .metrics import TokenUsage, log_response_usage, log_usage
 from .prompt import Prompt
 from .prompt_cache import get_prompt_result, save_prompt_result
 from .registry import (
@@ -19,10 +20,12 @@ from .registry import (
     list_supported_models,
     provider_for_model,
 )
+from .retry_utils import retry_async, retry_sync
 
 timeout = httpx.Timeout(30.0, connect=5.0)
 
 
+@retry_sync
 def run_openai(prompt, model, output_class):
     client = OpenAI()
     messages = [
@@ -35,25 +38,37 @@ def run_openai(prompt, model, output_class):
         messages=messages,
         response_format=output_class,
     )
+    # usage logging (best-effort)
+    try:
+        log_response_usage(
+            response, model=model, provider="openai", context="llms.run_openai"
+        )
+    except Exception:
+        pass
     return response.choices[0].message.parsed
 
 
+@retry_sync
 def run_together(prompt, model, output_class):
     client = Together()
     combined_prompt = f"{prompt.system}\n{prompt.user}"
-    response = (
-        client.chat.completions.create(
-            model=model,
-            messages=[{"role": "user", "content": combined_prompt}],
-            temperature=0.6,
-        )
-        .choices[0]
-        .message.content
+    resp = client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": combined_prompt}],
+        temperature=0.6,
     )
-    logger.info(f"Raw response: {response}")
+    content = resp.choices[0].message.content
+    # usage logging (best-effort)
+    try:
+        log_response_usage(
+            resp, model=model, provider="together", context="llms.run_together"
+        )
+    except Exception:
+        pass
+    logger.info(f"Raw response: {content}")
 
     json_extractor = JSONExtractor()
-    return json_extractor.extract_json(response, output_class)
+    return json_extractor.extract_json(content, output_class)
 
 
 def _run_prompt(prompt: Prompt, model: str, output_class):
@@ -89,6 +104,21 @@ def execute_prompt(
     cache_hit = get_prompt_result(prompt, model)
     if cache_hit is not None:
         logger.info("Prompt cache hit")
+        try:
+            prov = provider_for_model(model).value
+        except Exception:
+            prov = "unknown"
+        log_usage(
+            TokenUsage(
+                prompt_tokens=None,
+                completion_tokens=None,
+                total_tokens=None,
+                model=model,
+                provider=prov,
+                cached=True,
+                context="llms.execute_prompt.cache",
+            )
+        )
         if issubclass(output_class, BaseModel):
             return output_class.model_validate(cache_hit)
         elif hasattr(output_class, "from_dict"):
@@ -103,6 +133,7 @@ def execute_prompt(
 # --- ASYNCHRONOUS FUNCTIONS  ---
 
 
+@retry_async
 async def arun_openai(prompt, model, output_class):
     client = AsyncOpenAI()
     messages = [
@@ -113,27 +144,37 @@ async def arun_openai(prompt, model, output_class):
     response = await client.beta.chat.completions.parse(
         model=model, messages=messages, response_format=output_class, timeout=timeout
     )
+    # usage logging (best-effort)
+    try:
+        log_response_usage(
+            response, model=model, provider="openai", context="llms.arun_openai"
+        )
+    except Exception:
+        pass
     return response.choices[0].message.parsed
 
 
+@retry_async
 async def arun_together(prompt, model, output_class):
     client = AsyncTogether()
     combined_prompt = f"{prompt.system}\n{prompt.user}"
-    response = (
-        (
-            await client.chat.completions.create(
-                model=model,
-                messages=[{"role": "user", "content": combined_prompt}],
-                temperature=0.6,
-            )
-        )
-        .choices[0]
-        .message.content
+    resp = await client.chat.completions.create(
+        model=model,
+        messages=[{"role": "user", "content": combined_prompt}],
+        temperature=0.6,
     )
-    logger.info(f"Raw response: {response}")
+    content = resp.choices[0].message.content
+    # usage logging (best-effort)
+    try:
+        log_response_usage(
+            resp, model=model, provider="together", context="llms.arun_together"
+        )
+    except Exception:
+        pass
+    logger.info(f"Raw response: {content}")
 
     json_extractor = JSONExtractor()
-    return json_extractor.extract_json(response, output_class)
+    return json_extractor.extract_json(content, output_class)
 
 
 async def _arun_prompt(prompt: Prompt, model: str, output_class):
@@ -164,6 +205,21 @@ async def aexecute_prompt(
     cache_hit = get_prompt_result(prompt, model)
     if cache_hit is not None:
         logger.info("Prompt cache hit")
+        try:
+            prov = provider_for_model(model).value
+        except Exception:
+            prov = "unknown"
+        log_usage(
+            TokenUsage(
+                prompt_tokens=None,
+                completion_tokens=None,
+                total_tokens=None,
+                model=model,
+                provider=prov,
+                cached=True,
+                context="llms.aexecute_prompt.cache",
+            )
+        )
         if issubclass(output_class, BaseModel):
             return output_class.model_validate(cache_hit)
         elif hasattr(output_class, "from_dict"):
