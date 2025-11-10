@@ -164,7 +164,6 @@ async def arun_together(prompt, model, output_class):
         temperature=0.6,
     )
     content = resp.choices[0].message.content
-    # usage logging (best-effort)
     try:
         log_response_usage(
             resp, model=model, provider="together", context="llms.arun_together"

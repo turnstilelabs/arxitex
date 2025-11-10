@@ -21,8 +21,7 @@ def _read_usage_fields(
     usage: Any,
 ) -> tuple[Optional[int], Optional[int], Optional[int]]:
     """
-    Best-effort extraction of token counts from either an object with attributes
-    or a plain dict-like structure.
+    Best-effort extraction of token counts
     """
     if usage is None:
         return None, None, None
