@@ -22,6 +22,7 @@ type Props = {
     onSelectNode?: (node: ArtifactNode | null) => void;
     selectedNodeId?: string | null;
     showLabels?: boolean;
+    zoom?: number;
 };
 
 const PASTEL_PALETTE = [
@@ -34,12 +35,13 @@ const PASTEL_PALETTE = [
     "#8fbcbb",
 ];
 
-export default function D3GraphView({ graph, height = "70vh", onSelectNode, selectedNodeId, showLabels = true }: Props) {
+export default function D3GraphView({ graph, height = "70vh", onSelectNode, selectedNodeId, showLabels = true, zoom = 1 }: Props) {
     const containerRef = useRef<HTMLDivElement | null>(null);
     const [filterTypes, setFilterTypes] = useState<Record<string, boolean>>({});
     const [selectedNodeIdState, setSelectedNodeIdState] = useState<string | null>(null);
     const [pathEndpoints, setPathEndpoints] = useState<{ a?: string; b?: string }>({});
     const [selectedType, setSelectedType] = useState<string | null>(null);
+    const [legendCollapsed, setLegendCollapsed] = useState<boolean>(false);
 
     // derive node types once
     const nodeTypes = useMemo(() => {
@@ -66,9 +68,11 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode, sele
             String(height),
             selectedType || "",
             String(showLabels),
+            String(zoom),
+            legendCollapsed ? "lc1" : "lc0",
         ];
         return keyParts.join("|");
-    }, [graph?.arxiv_id, graph?.nodes?.length, graph?.edges?.length, filterTypes, selectedNodeId, pathEndpoints?.a, pathEndpoints?.b, onSelectNode, height, selectedType, showLabels]);
+    }, [graph?.arxiv_id, graph?.nodes?.length, graph?.edges?.length, filterTypes, selectedNodeId, pathEndpoints?.a, pathEndpoints?.b, onSelectNode, height, selectedType, showLabels, zoom, legendCollapsed]);
 
     useEffect(() => {
         if (!containerRef.current) return;
@@ -85,6 +89,9 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode, sele
             .attr("height", h)
             .attr("viewBox", `0 0 ${width} ${h}`)
             .style("background", "var(--surface)");
+
+        // Scene container to enable external zoom via transform
+        const sceneG = svg.append("g").attr("class", "scene");
 
         // Define arrowhead markers for edge direction, sized for visibility
         const defs = svg.append("defs");
@@ -134,14 +141,61 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode, sele
             .style("border-radius", "10px")
             .style("box-shadow", "0 4px 12px rgba(0,0,0,0.06)")
             .style("display", "flex")
+            .style("flex-direction", "column")
+            .style("gap", "6px")
+            .style("max-width", "min(92%, 780px)");
+
+        // Legend header with collapse toggle
+        const header = legendBox
+            .append("div")
+            .style("display", "flex")
+            .style("align-items", "center")
+            .style("justify-content", "space-between")
+            .style("gap", "8px");
+
+        header
+            .append("div")
+            .text("Legend")
+            .style("font-size", "12px")
+            .style("font-weight", "600")
+            .style("color", "var(--text)");
+
+        header
+            .append("button")
+            .attr("type", "button")
+            .attr("aria-label", legendCollapsed ? "Show legend" : "Hide legend")
+            .attr("title", legendCollapsed ? "Show legend" : "Hide legend")
+            .style("font-size", "12px")
+            .style("padding", "2px 8px")
+            .style("border", "1px solid rgba(0,0,0,0.08)")
+            .style("border-radius", "6px")
+            .style("background", "rgba(0,0,0,0.03)")
+            .style("cursor", "pointer")
+            .html(
+                legendCollapsed
+                    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                         <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                       </svg>`
+                    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                         <path d="M6 15l6-6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                       </svg>`
+            )
+            .on("click", () => setLegendCollapsed((v) => !v));
+
+        const content = legendBox
+            .append("div")
+            .attr("class", "__legend_content")
+            .style("display", "flex")
             .style("flex-wrap", "wrap")
             .style("gap", "8px 12px")
-            .style("max-width", "min(92%, 780px)")
-            .style("align-items", "center");
+            .style("align-items", "center")
+            .style("overflow", "hidden")
+            .style("max-height", legendCollapsed ? "0px" : "300px")
+            .style("transition", "max-height 200ms ease");
 
         const syncTypes = Array.from(new Set(graph.nodes.map((n) => n.type)));
         syncTypes.forEach((t: string, i: number) => {
-            const row = legendBox
+            const row = content
                 .append("div")
                 .attr("data-type", t)
                 .attr("role", "button")
@@ -271,7 +325,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode, sele
                 }
 
                 // Draw links (paths) with direction and styling by type
-                const linkG = svg.append("g").attr("class", "links");
+                const linkG = sceneG.append("g").attr("class", "links");
                 // Stabilize path IDs so dependency labels attach to the correct edge even after filtering
                 (visibleLinks as any[]).forEach((l, i) => ((l as any).__edgeId = `edge-${i}`));
                 const linkEls = linkG
@@ -406,7 +460,7 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode, sele
                 });
 
                 // Node group
-                const nodeG = svg.append("g").attr("class", "nodes");
+                const nodeG = sceneG.append("g").attr("class", "nodes");
 
                 const node = nodeG
                     .selectAll("g.node")
@@ -523,6 +577,13 @@ export default function D3GraphView({ graph, height = "70vh", onSelectNode, sele
                     const root = containerRef.current;
                     if (root) renderKatex(root).catch(() => { });
                 });
+
+                // Apply external zoom scaling around the center
+                try {
+                    const zx = width / 2;
+                    const zy = h / 2;
+                    (sceneG as any).attr("transform", `translate(${zx},${zy}) scale(${zoom}) translate(${-zx},${-zy})`);
+                } catch { }
 
                 // reuse persistent controls container created outside async — do not remove children here,
                 // keep legend and controls already rendered above.

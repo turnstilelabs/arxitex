@@ -464,7 +464,18 @@ export default function PaperPage() {
     };
 
     const [selected, setSelected] = useState<ArtifactNode | null>(null);
+    const selectedText = useMemo(() => {
+        if (!selected) return null as string | null;
+        try {
+            const html = sanitizePreview(unescapeLatex(selected.content || ""));
+            const text = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+            return text || null;
+        } catch {
+            return null;
+        }
+    }, [selected]);
     const [graphModalOpen, setGraphModalOpen] = useState(false);
+    const [graphZoom, setGraphZoom] = useState(1);
     const [defsOpen, setDefsOpen] = useState(true);
 
     useEffect(() => {
@@ -595,6 +606,7 @@ export default function PaperPage() {
                                             arxivId={arxivId}
                                             pdfUrl={pdfUrl}
                                             selectedArtifactId={selected?.id || null}
+                                            selectedArtifactText={selectedText}
                                             artifactLookup={artifactLookup}
                                             anchors={anchors ?? undefined}
                                             onArtifactClick={(id) => {
@@ -608,11 +620,20 @@ export default function PaperPage() {
                                         <div className="flex items-center justify-between">
                                             <div className="text-xs font-medium text-slate-600">Definition Bank</div>
                                             <button
-                                                className="text-xs px-2 py-1 rounded bg-gray-100"
+                                                className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
                                                 onClick={() => setDefsOpen((o) => !o)}
-                                                aria-pressed={defsOpen}
+                                                aria-label={defsOpen ? "Hide definition bank" : "Show definition bank"}
+                                                title={defsOpen ? "Hide definition bank" : "Show definition bank"}
                                             >
-                                                {defsOpen ? "Hide" : "Show"}
+                                                {defsOpen ? (
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <path d="M6 15l6-6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                ) : (
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                )}
                                             </button>
                                         </div>
                                         {defsOpen ? (
@@ -629,16 +650,38 @@ export default function PaperPage() {
                                     <div className="bg-white rounded-xl ring-1 ring-slate-200 p-2 md:p-3 shadow-sm">
                                         <div className="flex items-center justify-between mb-1">
                                             <div className="text-xs font-medium text-slate-600">Graph</div>
-                                            <button
-                                                className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
-                                                onClick={() => setGraphModalOpen(true)}
-                                                aria-label="Open fullscreen graph"
-                                                title="Open fullscreen graph"
-                                            >
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                                                    <path d="M7 3H3v4M17 3h4v4M7 21H3v-4M21 17v4h-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                                                </svg>
-                                            </button>
+                                            <div className="inline-flex items-center gap-1.5">
+                                                <button
+                                                    className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
+                                                    onClick={() => setGraphZoom((z) => Math.max(0.6, Math.round((z - 0.1) * 10) / 10))}
+                                                    aria-label="Zoom out"
+                                                    title="Zoom out"
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <path d="M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
+                                                    onClick={() => setGraphZoom((z) => Math.min(2.0, Math.round((z + 0.1) * 10) / 10))}
+                                                    aria-label="Zoom in"
+                                                    title="Zoom in"
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </button>
+                                                <button
+                                                    className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
+                                                    onClick={() => setGraphModalOpen(true)}
+                                                    aria-label="Open fullscreen graph"
+                                                    title="Open fullscreen graph"
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <path d="M7 3H3v4M17 3h4v4M7 21H3v-4M21 17v4h-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </div>
                                         <D3GraphView
                                             graph={liveGraph ?? graph}
@@ -651,6 +694,7 @@ export default function PaperPage() {
                                                 } catch { }
                                             }}
                                             selectedNodeId={selected?.id || null}
+                                            zoom={graphZoom}
                                             height="42vh"
                                         />
                                     </div>
@@ -697,6 +741,7 @@ export default function PaperPage() {
                                         } catch { }
                                     }}
                                     selectedNodeId={selected?.id || null}
+                                    zoom={graphZoom}
                                     height="78vh"
                                 />
                             </div>
