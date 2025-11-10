@@ -29,6 +29,8 @@ type Props = {
     artifactLookup?: Record<string, string[]>;
     // Controlled selection for automatic scrolling/highlight
     selectedArtifactId?: string | null;
+    // Full statement text used for regex-based matching (normalized upstream)
+    selectedArtifactText?: string | null;
     // Click handler for future reader->graph selection
     onArtifactClick?: (artifactId: string) => void;
     onLoaded?: () => void;
@@ -51,9 +53,28 @@ const ALIGN_OFFSET = 64; // pixels from top when aligning artifacts
 const PROOF_BIAS_UP = 240; // additional upward bias when anchor looks like a proof
 const CENTER_BIAS_UP = 24; // nudge center slightly upward so heading is more visible
 const MIN_SCROLL_DELTA = 8; // px; avoid micro-scroll jitter
+const HEADING_SEARCH_WINDOW = 320; // px above anchor to search for "Definition/Lemma/Theorem" heading
+const COLUMN_TOLERANCE = 96; // px tolerance to stay in the same column as the anchor
+const MAX_PARA_SEARCH_WINDOW = 900; // px below heading to search for the end of the statement paragraph
+const LINE_JOIN_TOL = 2; // px tolerance to merge spans into one line
+const LINE_BREAK_GAP = 28; // px gap between lines that indicates a paragraph break
+const HEADING_WORDS = [
+    "proof",
+    "theorem",
+    "lemma",
+    "definition",
+    "proposition",
+    "corollary",
+    "remark",
+    "example",
+    "claim",
+    "fact",
+    "observation",
+    "conjecture",
+];
 
 const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
-    { arxivId, pdfUrl, anchors, artifactLookup, selectedArtifactId, onArtifactClick, onLoaded, height = "68vh" },
+    { arxivId, pdfUrl, anchors, artifactLookup, selectedArtifactId, selectedArtifactText, onArtifactClick, onLoaded, height = "68vh" },
     ref
 ) {
     const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -355,6 +376,559 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
         }
     };
 
+    // Text-layer span extraction and highlight range computation
+    type SpanInfo = { el: HTMLSpanElement; textNorm: string; left: number; top: number; width: number; height: number };
+    const getTextSpans = (pageNumber: number): SpanInfo[] => {
+        const pageEl = pageRefs.current.get(pageNumber) || null;
+        if (!pageEl) return [];
+        const textLayer = pageEl.querySelector(".react-pdf__Page__textContent");
+        if (!textLayer) return [];
+        const pageRect = pageEl.getBoundingClientRect();
+        const spans = Array.from(textLayer.querySelectorAll("span"));
+        return spans.map((s) => {
+            const el = s as HTMLSpanElement;
+            const rect = el.getBoundingClientRect();
+            return {
+                el,
+                textNorm: normalize(el.textContent || ""),
+                left: rect.left - pageRect.left,
+                top: rect.top - pageRect.top,
+                width: rect.width,
+                height: rect.height,
+            };
+        });
+    };
+    const findHeadingTopInSameColumn = (
+        pageNumber: number,
+        px: { left: number; top: number; width: number; height: number },
+        queries: string[]
+    ): number | null => {
+        const spans = getTextSpans(pageNumber);
+        if (!spans.length) return null;
+        const normQs = Array.from(new Set((queries || []).map((q) => normalize(q)).filter((q) => q.length > 1)));
+        if (!normQs.length) return null;
+        const colTol = Math.max(COLUMN_TOLERANCE, px.width * 0.75);
+        const windowTop = Math.max(0, px.top - HEADING_SEARCH_WINDOW);
+        const candidates = spans
+            .filter(
+                (sp) =>
+                    sp.top < px.top &&
+                    sp.top >= windowTop &&
+                    Math.abs(sp.left - px.left) <= colTol &&
+                    normQs.some((q) => sp.textNorm.includes(q))
+            )
+            .sort((a, b) => b.top - a.top);
+        if (candidates.length) return candidates[0].top;
+        return null;
+    };
+    const computeHighlightRange = (
+        pageNumber: number,
+        px: { left: number; top: number; width: number; height: number },
+        queries: string[]
+    ): { top: number; bottom: number; left: number; right: number } => {
+        // 1) Resolve start at heading if available, else use anchor top
+        const start = findHeadingTopInSameColumn(pageNumber, px, queries);
+        const top = start != null ? start : px.top;
+
+        // 2) Try to extend downwards to the end of the statement paragraph using text spans in same column
+        const spans = getTextSpans(pageNumber)
+            .filter((sp) => {
+                const withinCol = Math.abs(sp.left - px.left) <= Math.max(COLUMN_TOLERANCE, px.width * 0.75);
+                const belowStart = sp.top + sp.height >= top - LINE_JOIN_TOL;
+                const withinWindow = sp.top <= top + MAX_PARA_SEARCH_WINDOW;
+                return withinCol && belowStart && withinWindow;
+            })
+            .sort((a, b) => a.top - b.top);
+
+        // Group spans into line blocks by vertical proximity
+        type Line = { top: number; bottom: number; text: string };
+        const lines: Line[] = [];
+        for (const sp of spans) {
+            const spBottom = sp.top + sp.height;
+            const last = lines[lines.length - 1];
+            if (!last || Math.abs(sp.top - last.top) > LINE_JOIN_TOL) {
+                // new line
+                lines.push({ top: sp.top, bottom: spBottom, text: sp.textNorm });
+            } else {
+                // merge into current line
+                last.bottom = Math.max(last.bottom, spBottom);
+                if (sp.textNorm) {
+                    last.text = last.text ? `${last.text} ${sp.textNorm}` : sp.textNorm;
+                }
+            }
+        }
+
+        // Walk lines until we hit a paragraph break or a new heading (e.g., "Proof", "Theorem", ...)
+        let bottom = Math.max(px.top + px.height, top + 8);
+        let prevLine: Line | null = null;
+        const isHeading = (t: string) => {
+            const txt = t.toLowerCase().trim();
+            return /^(proof|theorem|lemma|definition|proposition|corollary|remark|example|claim|fact|observation|conjecture)\b/.test(txt);
+        };
+
+        for (const line of lines) {
+            // Skip any lines that are above the starting top (robust to tiny overlaps)
+            if (line.bottom < top - LINE_JOIN_TOL) {
+                prevLine = line;
+                continue;
+            }
+
+            // If we encounter a new heading line after we started the statement, stop before it
+            if (prevLine && isHeading(line.text)) {
+                break;
+            }
+
+            // If there is a large vertical gap, treat it as paragraph end and stop before current line
+            if (prevLine && line.top - prevLine.bottom > LINE_BREAK_GAP) {
+                break;
+            }
+
+            bottom = Math.max(bottom, line.bottom);
+            prevLine = line;
+        }
+
+        // Clamp bottom within the page
+        const pageH = (pageDims[pageNumber]?.h || 0) * scale;
+        if (pageH > 0) {
+            bottom = Math.min(bottom, pageH - 2);
+        }
+
+        // Width: expand to cover the text column based on spans between [top, bottom]
+        let left = px.left;
+        let right = px.left + px.width;
+        if (spans.length) {
+            const used = spans.filter((sp) => sp.top <= bottom && sp.top + sp.height >= top - LINE_JOIN_TOL);
+            if (used.length) {
+                left = Math.min(left, ...used.map((sp) => sp.left));
+                right = Math.max(right, ...used.map((sp) => sp.left + sp.width));
+            }
+        }
+
+        return { top, bottom, left, right };
+    };
+
+    // Phase 1 (no anchors): compute highlight purely from spans on the page
+    const computeHighlightRangeFromSpans = (
+        pageNumber: number,
+        rawQueries: string[]
+    ): { top: number; bottom: number; left: number; right: number } | null => {
+        const spans = getTextSpans(pageNumber);
+        if (!spans.length) return null;
+
+        const normQs = Array.from(new Set((rawQueries || []).map((q) => normalize(q)).filter((q) => q.length > 1)));
+        const headingRe = /^(proof|theorem|lemma|definition|proposition|corollary|remark|example|claim|fact|observation|conjecture)\b/;
+
+        // Find a span matching any of the queries to infer the column
+        let querySpan: SpanInfo | null = null;
+        if (normQs.length) {
+            querySpan = spans.find((sp) => normQs.some((q) => sp.textNorm.includes(q))) || null;
+        }
+
+        // Try to find the nearest heading above the query span in the same column
+        let headingSpan: SpanInfo | null = null;
+        if (querySpan) {
+            const windowTop = Math.max(0, querySpan.top - HEADING_SEARCH_WINDOW);
+            const colLeft = querySpan.left;
+            const colTol = Math.max(COLUMN_TOLERANCE, 80);
+            const candidates = spans
+                .filter(
+                    (sp) =>
+                        sp.top < querySpan!.top &&
+                        sp.top >= windowTop &&
+                        Math.abs(sp.left - colLeft) <= colTol &&
+                        headingRe.test(sp.textNorm.trim())
+                )
+                .sort((a, b) => b.top - a.top);
+            headingSpan = candidates[0] || null;
+        }
+        // Fallback: any heading on the page
+        if (!headingSpan) {
+            const heads = spans.filter((sp) => headingRe.test(sp.textNorm.trim())).sort((a, b) => a.top - b.top);
+            headingSpan = heads[0] || null;
+        }
+
+        // Determine start top and column
+        const top = headingSpan ? headingSpan.top : querySpan ? querySpan.top : spans[0].top;
+        const colLeft = querySpan ? querySpan.left : headingSpan ? headingSpan.left : spans[0].left;
+        const colTol = Math.max(COLUMN_TOLERANCE, 80);
+
+        // Collect spans in the same column within window
+        const usable = spans
+            .filter(
+                (sp) =>
+                    Math.abs(sp.left - colLeft) <= colTol &&
+                    sp.top + sp.height >= top - LINE_JOIN_TOL &&
+                    sp.top <= top + MAX_PARA_SEARCH_WINDOW
+            )
+            .sort((a, b) => a.top - b.top);
+
+        // Group into lines
+        type Line = { top: number; bottom: number; text: string };
+        const lines: Line[] = [];
+        for (const sp of usable) {
+            const spBottom = sp.top + sp.height;
+            const last = lines[lines.length - 1];
+            if (!last || Math.abs(sp.top - last.top) > LINE_JOIN_TOL) {
+                lines.push({ top: sp.top, bottom: spBottom, text: sp.textNorm });
+            } else {
+                last.bottom = Math.max(last.bottom, spBottom);
+                if (sp.textNorm) {
+                    last.text = last.text ? `${last.text} ${sp.textNorm}` : sp.textNorm;
+                }
+            }
+        }
+
+        // Walk until paragraph end or next heading
+        let bottom = top + 8;
+        let prevLine: Line | null = null;
+        for (const line of lines) {
+            if (line.bottom < top - LINE_JOIN_TOL) {
+                prevLine = line;
+                continue;
+            }
+            if (prevLine && headingRe.test(line.text.trim())) {
+                break;
+            }
+            if (prevLine && line.top - prevLine.bottom > LINE_BREAK_GAP) {
+                break;
+            }
+            bottom = Math.max(bottom, line.bottom);
+            prevLine = line;
+        }
+
+        // Clamp bottom within page
+        const pageH = (pageDims[pageNumber]?.h || 0) * scale;
+        if (pageH > 0) {
+            bottom = Math.min(bottom, pageH - 2);
+        }
+
+        // Expand width to cover column
+        let left = colLeft;
+        let right = colLeft + 8;
+        if (usable.length) {
+            const used = usable.filter((sp) => sp.top <= bottom && sp.top + sp.height >= top - LINE_JOIN_TOL);
+            if (used.length) {
+                left = Math.min(...used.map((sp) => sp.left));
+                right = Math.max(...used.map((sp) => sp.left + sp.width));
+            }
+        }
+
+        return { top, bottom, left, right };
+    };
+
+    // ===== Regex-based statement matching helpers =====
+    const normalizeForIndex = (s: string): string => {
+        if (!s) return "";
+        // Normalize ligatures and punctuation, then collapse to words
+        return s
+            .replace(/\uFB01/g, "fi")
+            .replace(/\uFB02/g, "fl")
+            .replace(/[\u2018\u2019]/g, "'")
+            .replace(/[\u201C\u201D]/g, '"')
+            .replace(/[\u2013\u2014]/g, "-")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/gi, " ")
+            .trim()
+            .replace(/\s+/g, " ");
+    };
+    const escapeRegExp = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const buildStatementRegex = (text: string): RegExp | null => {
+        const norm = normalizeForIndex(text || "");
+        if (!norm) return null;
+        const tokens = norm.split(/\s+/).filter((w) => w.length > 1).slice(0, 120);
+        if (!tokens.length) return null;
+        const pattern = tokens.map(escapeRegExp).join("\\s+");
+        try {
+            return new RegExp(pattern, "im");
+        } catch {
+            return null;
+        }
+    };
+    const buildPageIndex = (
+        pageNumber: number
+    ): { text: string; segments: Array<{ start: number; end: number; left: number; right: number; top: number; bottom: number }> } | null => {
+        const spans = getTextSpans(pageNumber);
+        if (!spans.length) return null;
+        const segments: Array<{ start: number; end: number; left: number; right: number; top: number; bottom: number }> = [];
+        let text = "";
+        let pos = 0;
+        for (const sp of spans) {
+            const raw = (sp.el.textContent || "").toString();
+            const token = normalizeForIndex(raw);
+            if (!token) continue;
+            if (text.length > 0) {
+                text += " ";
+                pos += 1;
+            }
+            const start = pos;
+            text += token;
+            pos += token.length;
+            segments.push({
+                start,
+                end: pos,
+                left: sp.left,
+                right: sp.left + sp.width,
+                top: sp.top,
+                bottom: sp.top + sp.height,
+            });
+        }
+        return { text, segments };
+    };
+    const findRegexMatchBounds = (
+        pageNumber: number,
+        statementText?: string | null
+    ): { top: number; bottom: number; left: number; right: number } | null => {
+        if (!statementText) return null;
+        const re = buildStatementRegex(statementText);
+        if (!re) return null;
+        const idx = buildPageIndex(pageNumber);
+        if (!idx) return null;
+        const m = re.exec(idx.text);
+        if (!m || m.index == null) return null;
+        const start = m.index;
+        const end = start + (m[0]?.length || 0);
+        if (end <= start) return null;
+        let firstIdx = -1;
+        let lastIdx = -1;
+        for (let i = 0; i < idx.segments.length; i++) {
+            const sg = idx.segments[i];
+            if (firstIdx === -1 && sg.end > start) firstIdx = i;
+            if (sg.start < end) lastIdx = i;
+        }
+        if (firstIdx === -1 || lastIdx === -1) return null;
+        const involved = idx.segments.slice(firstIdx, lastIdx + 1);
+        const left = Math.min(...involved.map((s) => s.left));
+        const right = Math.max(...involved.map((s) => s.right));
+        const top = involved[0].top;
+        const bottom = involved[involved.length - 1].bottom;
+        return { top, bottom, left, right };
+    };
+
+    // Two-anchor regex: match first K tokens for start and last K tokens for end; compute union band
+    const findRegexBandTwoAnchors = (
+        pageNumber: number,
+        statementText?: string | null,
+        opts?: { kStart?: number; kEnd?: number }
+    ): { top: number; bottom: number; left: number; right: number } | null => {
+        if (!statementText) return null;
+        const idx = buildPageIndex(pageNumber);
+        if (!idx) return null;
+
+        const norm = normalizeForIndex(statementText);
+        if (!norm) return null;
+        const tokens = norm.split(/\s+/).filter(Boolean);
+        if (tokens.length < 4) return null;
+
+        const kS = Math.min(opts?.kStart ?? 15, Math.max(2, Math.ceil(tokens.length * 0.2)));
+        const kE = Math.min(opts?.kEnd ?? 15, Math.max(2, Math.ceil(tokens.length * 0.2)));
+
+        const startTokens = tokens.slice(0, kS);
+        const endTokens = tokens.slice(-kE);
+
+        const reStart = new RegExp(startTokens.map(escapeRegExp).join("\\s+"), "im");
+        const reEnd = new RegExp(endTokens.map(escapeRegExp).join("\\s+"), "im");
+
+        const mS = reStart.exec(idx.text);
+        const mE = reEnd.exec(idx.text);
+
+        if (!mS && !mE) return null;
+
+        const toSegRange = (startIdx: number, endIdx: number): { first: number; last: number } | null => {
+            let first = -1;
+            let last = -1;
+            for (let i = 0; i < idx.segments.length; i++) {
+                const sg = idx.segments[i];
+                if (first === -1 && sg.end > startIdx) first = i;
+                if (sg.start < endIdx) last = i;
+            }
+            if (first === -1 || last === -1) return null;
+            return { first, last };
+        };
+
+        const rangeS = mS ? toSegRange(mS.index, mS.index + (mS[0]?.length || 0)) : null;
+        const rangeE = mE ? toSegRange(mE.index, mE.index + (mE[0]?.length || 0)) : null;
+
+        // If both exist and start is before end, union them; else fall back to single range
+        let firstIdx = -1;
+        let lastIdx = -1;
+        if (rangeS && rangeE && mS && mE && mS.index <= mE.index) {
+            firstIdx = rangeS.first;
+            lastIdx = rangeE.last;
+        } else if (rangeS) {
+            firstIdx = rangeS.first;
+            lastIdx = rangeS.last;
+        } else if (rangeE) {
+            firstIdx = rangeE.first;
+            lastIdx = rangeE.last;
+        } else {
+            return null;
+        }
+
+        const involved = idx.segments.slice(firstIdx, lastIdx + 1);
+        if (!involved.length) return null;
+        const left = Math.min(...involved.map((s) => s.left));
+        const right = Math.max(...involved.map((s) => s.right));
+        const top = involved[0].top;
+        const bottom = involved[involved.length - 1].bottom;
+        return { top, bottom, left, right };
+    };
+    // ==================================================
+    // Paragraph-based simple matching and expansion to paragraph boundaries
+
+    function median(nums: number[]): number {
+        if (!nums.length) return 0;
+        const arr = [...nums].sort((a, b) => a - b);
+        const mid = Math.floor(arr.length / 2);
+        return arr.length % 2 ? arr[mid] : (arr[mid - 1] + arr[mid]) / 2;
+    }
+
+    // Build a single lowercased linear text of the page with explicit line and paragraph breaks.
+    // - Between spans in same line: single space
+    // - Between lines: "\n" for small gaps, "\n\n" for large gaps (paragraph break)
+    // Returns the linear text and a mapping of (start,end,rect) for each span.
+    const buildPageLinearText = (
+        pageNumber: number
+    ): {
+        textLower: string;
+        segs: Array<{ start: number; end: number; left: number; right: number; top: number; bottom: number }>;
+    } | null => {
+        const spans = getTextSpans(pageNumber);
+        if (!spans.length) return null;
+
+        // Sort spans by top then left
+        const sorted = [...spans].sort((a, b) => (a.top === b.top ? a.left - b.left : a.top - b.top));
+
+        // Dynamic tolerances
+        const heights = sorted.map((s) => s.height || (s as any).bottom ? ((s as any).bottom - s.top) : 0);
+        const medH = Math.max(1, median(heights) || 12);
+        const lineJoinTol = Math.max(2, 0.35 * medH);
+
+        // Group into lines
+        type Line = { spans: ReturnType<typeof getTextSpans>; top: number; bottom: number };
+        const lines: Line[] = [];
+        let cur: Line | null = null;
+        for (const s of sorted) {
+            if (!cur) {
+                cur = { spans: [s], top: s.top, bottom: s.top + s.height };
+                lines.push(cur);
+            } else {
+                if (Math.abs(s.top - cur.top) <= lineJoinTol) {
+                    cur.spans.push(s);
+                    cur.bottom = Math.max(cur.bottom, s.top + s.height);
+                } else {
+                    cur = { spans: [s], top: s.top, bottom: s.top + s.height };
+                    lines.push(cur);
+                }
+            }
+        }
+        // Sort spans within line by left
+        lines.forEach((ln) => (ln.spans = [...ln.spans].sort((a, b) => a.left - b.left)));
+
+        const lineHeights = lines.map((ln) => ln.bottom - ln.top);
+        const medLH = Math.max(1, median(lineHeights) || medH);
+        const paraBreakGap = Math.max(LINE_BREAK_GAP, 1.4 * medLH);
+
+        let textLower = "";
+        const segs: Array<{ start: number; end: number; left: number; right: number; top: number; bottom: number }> = [];
+        let pos = 0;
+
+        for (let i = 0; i < lines.length; i++) {
+            const ln = lines[i];
+            // Append line content
+            for (let j = 0; j < ln.spans.length; j++) {
+                const sp = ln.spans[j];
+                const raw = (sp.el.textContent || "").toString().toLowerCase();
+                // add single space between spans in same line
+                if (j > 0) {
+                    textLower += " ";
+                    pos += 1;
+                }
+                const start = pos;
+                textLower += raw;
+                pos += raw.length;
+                segs.push({
+                    start,
+                    end: pos,
+                    left: sp.left,
+                    right: sp.left + sp.width,
+                    top: sp.top,
+                    bottom: sp.top + sp.height,
+                });
+            }
+            // Append line or paragraph break
+            const next = lines[i + 1];
+            if (next) {
+                const gap = next.top - ln.bottom;
+                const br = gap > paraBreakGap ? "\n\n" : "\n";
+                textLower += br;
+                pos += br.length;
+            }
+        }
+
+        return { textLower, segs };
+    };
+
+    // Build a forgiving regex from the statement preview:
+    // - Escape regex metachars
+    // - Convert whitespace runs to \s+
+    // - Make common punctuation optional (\W*)
+    const buildStatementRegexLoose = (text: string): RegExp | null => {
+        if (!text) return null;
+        // Lowercase src to match our lowercased linear text
+        let pat = text.toLowerCase();
+
+        // Escape regex special chars
+        pat = pat.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+        // Replace punctuation with optional non-word sequences
+        pat = pat.replace(/[.,;:!?\-\u2013\u2014\u2018\u2019\u201c\u201d()\[\]\{\}]/g, "\\W*");
+
+        // Collapse whitespace runs to \s+
+        pat = pat.replace(/\s+/g, "\\s+");
+
+        try {
+            return new RegExp(pat, "im");
+        } catch {
+            return null;
+        }
+    };
+
+    // Find statement match and expand to paragraph boundaries in the page linear text
+    const findParagraphBandByPreview = (
+        pageNumber: number,
+        statementText?: string | null
+    ): { top: number; bottom: number; left: number; right: number } | null => {
+        if (!statementText) return null;
+        const idx = buildPageLinearText(pageNumber);
+        if (!idx) return null;
+
+        const re = buildStatementRegexLoose(statementText);
+        if (!re) return null;
+
+        const m = re.exec(idx.textLower);
+        if (!m || m.index == null) return null;
+
+        // Expand to paragraph boundaries using '\n\n'
+        const matchStart = m.index;
+        const matchEnd = matchStart + (m[0]?.length || 0);
+
+        let paraStart = idx.textLower.lastIndexOf("\n\n", matchStart);
+        paraStart = paraStart === -1 ? 0 : paraStart + 2;
+
+        let paraEnd = idx.textLower.indexOf("\n\n", matchEnd);
+        paraEnd = paraEnd === -1 ? idx.textLower.length : paraEnd;
+
+        // Map to overlapping spans
+        const involved = idx.segs.filter((sg) => sg.end > paraStart && sg.start < paraEnd);
+        if (!involved.length) return null;
+
+        const left = Math.min(...involved.map((s) => s.left));
+        const right = Math.max(...involved.map((s) => s.right));
+        const top = Math.min(...involved.map((s) => s.top));
+        const bottom = Math.max(...involved.map((s) => s.bottom));
+        return { top, bottom, left, right };
+    };
+
     const scrollToArtifact = async (id: string) => {
         // Phase 2: use anchors for precise page and bbox
         if (hasAnchors && anchors) {
@@ -416,7 +990,6 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
                     scrollToPage(a.page);
                 }
                 setHighlight({ page: a.page, id });
-                window.setTimeout(() => setHighlight(null), HIGHLIGHT_MS);
                 return;
             }
         }
@@ -436,7 +1009,6 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
                 scrollToPage(page);
             }
             setHighlight({ page, id });
-            window.setTimeout(() => setHighlight(null), HIGHLIGHT_MS);
             return;
         }
 
@@ -450,11 +1022,9 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
         if (hasAnchors && anchors?.[id]) {
             const p = anchors[id].page;
             setHighlight({ page: p, id });
-            window.setTimeout(() => setHighlight(null), HIGHLIGHT_MS);
         } else {
             const p = lastMatchPage.current || 1;
             setHighlight({ page: p });
-            window.setTimeout(() => setHighlight(null), HIGHLIGHT_MS);
         }
     };
 
@@ -519,6 +1089,7 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
                                 key={pageNumber}
                                 ref={(el) => setPageRef(pageNumber, el)}
                                 className="relative mx-auto my-2 rounded-md"
+                                onClick={() => setHighlight(null)}
                                 style={{
                                     width: "fit-content",
                                     outline: isHighlighted ? "3px solid rgba(59,130,246,0.7)" : "none",
@@ -545,7 +1116,7 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
                                     renderAnnotationLayer={false}
                                     renderTextLayer={true}
                                 />
-                                {anchors && pageDims[pageNumber] ? (
+                                {pageDims[pageNumber] ? (
                                     <div
                                         aria-hidden
                                         style={{
@@ -558,75 +1129,133 @@ const PaperReader = forwardRef<PaperReaderHandle, Props>(function PaperReader(
                                             zIndex: 10,
                                         }}
                                     >
-                                        {Object.values(anchors)
-                                            .filter((a) => a.page === pageNumber)
-                                            .map((a) => {
-                                                const isSel = highlight?.id === a.id;
-                                                const px = bboxPx(pageNumber, a.bbox);
-                                                return (
-                                                    <div
-                                                        key={a.id}
-                                                        title={a.text || a.id}
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            // Visibility-first scroll with calm top/center alignment using px bbox.
-                                                            const container = scrollRef.current;
-                                                            const pageEl = pageRefs.current.get(pageNumber) || null;
-                                                            if (container && pageEl) {
-                                                                const rectTop = pageEl.offsetTop + px.top;
-                                                                const rectHeight = px.height;
-                                                                const rectBottom = rectTop + rectHeight;
-                                                                const viewTop = container.scrollTop;
-                                                                const viewHeight = container.clientHeight;
-                                                                const viewBottom = viewTop + viewHeight;
-                                                                let targetTop: number | null = null;
+                                        {anchors
+                                            ? Object.values(anchors)
+                                                .filter((a) => a.page === pageNumber)
+                                                .map((a) => {
+                                                    const isSel = highlight?.id === a.id;
+                                                    const px = bboxPx(pageNumber, a.bbox);
+                                                    const q = buildQueries(a as any, artifactLookup?.[a.id] || []);
+                                                    // Gate highlighting on transient highlight state only (auto-clears)
+                                                    const isActive = !!isSel;
+                                                    // Prefer two-anchor regex band; fallback to single regex; then to heuristic
+                                                    const rx2 = isActive && selectedArtifactText ? findRegexBandTwoAnchors(pageNumber, selectedArtifactText) : null;
+                                                    const rx = !rx2 && isActive && selectedArtifactText ? findRegexMatchBounds(pageNumber, selectedArtifactText) : null;
+                                                    const pb = isActive && selectedArtifactText ? findParagraphBandByPreview(pageNumber, selectedArtifactText) : null;
+                                                    const band = pb ?? rx2 ?? rx ?? (isActive ? computeHighlightRange(pageNumber, px, q) : null);
 
-                                                                if (rectTop >= viewTop + 8 && rectBottom <= viewBottom - 8) {
-                                                                    targetTop = null; // already visible
-                                                                } else {
-                                                                    // Try refinement for overlays too
-                                                                    const q = buildQueries(a as any, []);
-                                                                    const hitTop = findTextTop(pageNumber, q);
-                                                                    if (typeof hitTop === "number") {
-                                                                        targetTop = hitTop - ALIGN_OFFSET;
-                                                                    } else if (rectHeight >= viewHeight * 0.85) {
-                                                                        targetTop = rectTop - ALIGN_OFFSET;
-                                                                    } else {
-                                                                        targetTop = rectTop + rectHeight / 2 - viewHeight / 2 - CENTER_BIAS_UP;
-                                                                    }
-                                                                }
+                                                    return (
+                                                        <React.Fragment key={a.id}>
+                                                            {/* Soft background highlight for the selected artifact's statement */}
+                                                            {band ? (
+                                                                <div
+                                                                    aria-hidden
+                                                                    style={{
+                                                                        position: "absolute",
+                                                                        left: Math.max(0, band.left - 2),
+                                                                        top: band.top,
+                                                                        width: Math.max(8, band.right - band.left) + 4,
+                                                                        height: Math.max(8, band.bottom - band.top),
+                                                                        background: "rgba(250, 204, 21, 0.24)", // slightly stronger yellow
+                                                                        borderRadius: 4,
+                                                                        pointerEvents: "none",
+                                                                        zIndex: 1,
+                                                                    }}
+                                                                />
+                                                            ) : null}
 
-                                                                if (targetTop !== null) {
-                                                                    const pageH = (pageDims[pageNumber]?.h || 0) * scale;
-                                                                    const maxScroll = Math.max(0, pageEl.offsetTop + pageH - viewHeight);
-                                                                    const clampedTop = Math.max(0, Math.min(targetTop, maxScroll));
-                                                                    if (Math.abs(clampedTop - viewTop) >= MIN_SCROLL_DELTA) {
-                                                                        container.scrollTo({ top: clampedTop, behavior: "smooth" });
+                                                            {/* Clickable anchor bbox overlay */}
+                                                            <div
+                                                                key={a.id + "__box"}
+                                                                title={a.text || a.id}
+                                                                onClick={(e) => {
+                                                                    e.stopPropagation();
+                                                                    // Visibility-first scroll with calm top/center alignment using px bbox.
+                                                                    const container = scrollRef.current;
+                                                                    const pageEl = pageRefs.current.get(pageNumber) || null;
+                                                                    if (container && pageEl) {
+                                                                        const rectTop = pageEl.offsetTop + px.top;
+                                                                        const rectHeight = px.height;
+                                                                        const rectBottom = rectTop + rectHeight;
+                                                                        const viewTop = container.scrollTop;
+                                                                        const viewHeight = container.clientHeight;
+                                                                        const viewBottom = viewTop + viewHeight;
+                                                                        let targetTop: number | null = null;
+
+                                                                        if (rectTop >= viewTop + 8 && rectBottom <= viewBottom - 8) {
+                                                                            targetTop = null; // already visible
+                                                                        } else {
+                                                                            // Try refinement for overlays too
+                                                                            const q2 = buildQueries(a as any, []);
+                                                                            const hitTop = findTextTop(pageNumber, q2);
+                                                                            if (typeof hitTop === "number") {
+                                                                                targetTop = hitTop - ALIGN_OFFSET;
+                                                                            } else if (rectHeight >= viewHeight * 0.85) {
+                                                                                targetTop = rectTop - ALIGN_OFFSET;
+                                                                            } else {
+                                                                                targetTop = rectTop + rectHeight / 2 - viewHeight / 2 - CENTER_BIAS_UP;
+                                                                            }
+                                                                        }
+
+                                                                        if (targetTop !== null) {
+                                                                            const pageH = (pageDims[pageNumber]?.h || 0) * scale;
+                                                                            const maxScroll = Math.max(0, pageEl.offsetTop + pageH - viewHeight);
+                                                                            const clampedTop = Math.max(0, Math.min(targetTop, maxScroll));
+                                                                            if (Math.abs(clampedTop - viewTop) >= MIN_SCROLL_DELTA) {
+                                                                                container.scrollTo({ top: clampedTop, behavior: "smooth" });
+                                                                            }
+                                                                        }
                                                                     }
-                                                                }
-                                                            }
-                                                            onArtifactClick?.(a.id);
-                                                            setHighlight({ page: pageNumber, id: a.id });
-                                                        }}
-                                                        style={{
-                                                            position: "absolute",
-                                                            left: px.left,
-                                                            top: px.top,
-                                                            width: px.width,
-                                                            height: px.height,
-                                                            border: isSel
-                                                                ? "2px solid rgba(59,130,246,0.9)"
-                                                                : "1.5px solid rgba(59,130,246,0.6)",
-                                                            background: isSel
-                                                                ? "rgba(59,130,246,0.15)"
-                                                                : "rgba(59,130,246,0.08)",
-                                                            borderRadius: 4,
-                                                            cursor: "pointer",
-                                                            pointerEvents: "auto",
-                                                        }}
-                                                    />
-                                                );
-                                            })}
+                                                                    onArtifactClick?.(a.id);
+                                                                    setHighlight({ page: pageNumber, id: a.id });
+                                                                }}
+                                                                style={{
+                                                                    position: "absolute",
+                                                                    left: px.left,
+                                                                    top: px.top,
+                                                                    width: px.width,
+                                                                    height: px.height,
+                                                                    border: isSel
+                                                                        ? "2px solid rgba(59,130,246,0.9)"
+                                                                        : "1.5px solid rgba(59,130,246,0.6)",
+                                                                    background: isSel
+                                                                        ? "rgba(59,130,246,0.15)"
+                                                                        : "rgba(59,130,246,0.08)",
+                                                                    borderRadius: 4,
+                                                                    cursor: "pointer",
+                                                                    pointerEvents: "auto",
+                                                                    zIndex: 2,
+                                                                }}
+                                                            />
+                                                        </React.Fragment>
+                                                    );
+                                                }) : null}
+
+                                        {/* Phase 1 highlight (no anchors) */}
+                                        {(!anchors || !anchors[(selectedArtifactId ?? "") as string]) && isHighlighted ? (() => {
+                                            const q1 = artifactLookup?.[selectedArtifactId || ""] || [];
+                                            const hl2 = computeHighlightRangeFromSpans(pageNumber, q1);
+                                            const rx2a = selectedArtifactText ? findRegexBandTwoAnchors(pageNumber, selectedArtifactText) : null;
+                                            const rx2b = !rx2a && selectedArtifactText ? findRegexMatchBounds(pageNumber, selectedArtifactText) : null;
+                                            const pb2 = selectedArtifactText ? findParagraphBandByPreview(pageNumber, selectedArtifactText) : null;
+                                            const band2 = pb2 ?? rx2a ?? rx2b ?? hl2;
+                                            return band2 ? (
+                                                <div
+                                                    aria-hidden
+                                                    style={{
+                                                        position: "absolute",
+                                                        left: Math.max(0, band2.left - 2),
+                                                        top: band2.top,
+                                                        width: Math.max(8, band2.right - band2.left) + 4,
+                                                        height: Math.max(8, band2.bottom - band2.top),
+                                                        background: "rgba(250, 204, 21, 0.24)",
+                                                        borderRadius: 4,
+                                                        pointerEvents: "none",
+                                                        zIndex: 1,
+                                                    }}
+                                                />
+                                            ) : null;
+                                        })() : null}
                                     </div>
                                 ) : null}
                             </div>
