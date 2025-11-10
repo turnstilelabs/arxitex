@@ -144,7 +144,6 @@ async def arun_openai(prompt, model, output_class):
     response = await client.beta.chat.completions.parse(
         model=model, messages=messages, response_format=output_class, timeout=timeout
     )
-    # usage logging (best-effort)
     try:
         log_response_usage(
             response, model=model, provider="openai", context="llms.arun_openai"
