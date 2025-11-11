@@ -241,6 +241,7 @@ export default function PaperPage() {
     const [streaming, setStreaming] = useState(false);
     const [stage, setStage] = useState<string | null>(null);
     const [depProg, setDepProg] = useState<{ processed: number; total: number } | null>(null);
+    const [lastDepEdge, setLastDepEdge] = useState<{ source_id: string; target_id: string; ts: number } | null>(null);
     const linksRef = useRef<Record<string, Set<string>>>({});
     const esRef = useRef<EventSource | null>(null);
     const bankRef = useRef<DefinitionBank | null>(null);
@@ -331,6 +332,7 @@ export default function PaperPage() {
         esRef.current = es;
         setStreaming(true);
         setStage("starting");
+        setLastDepEdge(null);
 
         es.addEventListener("nodes_seeded", (ev: MessageEvent) => {
             try {
@@ -430,6 +432,7 @@ export default function PaperPage() {
                     };
                     return { ...prev, edges: [...prev.edges, newEdge] };
                 });
+                setLastDepEdge({ source_id: p.source_id, target_id: p.target_id, ts: Date.now() });
             } catch { }
         });
 
@@ -540,7 +543,14 @@ export default function PaperPage() {
                             >
                                 Stop
                             </button>
-                            {stage ? <span className="text-xs text-slate-600">Stage: {stage}</span> : null}
+                            {stage ? (
+                                <span className="text-xs text-slate-600">
+                                    Stage: {stage}
+                                    {stage === "dependency_inference" && lastDepEdge
+                                        ? ` · Inferring: ${(artifactLookup[lastDepEdge.source_id]?.[0] || lastDepEdge.source_id)} -> ${(artifactLookup[lastDepEdge.target_id]?.[0] || lastDepEdge.target_id)}`
+                                        : ""}
+                                </span>
+                            ) : null}
                         </div>
                     </div>
                 </main>
@@ -599,6 +609,9 @@ export default function PaperPage() {
                             <span className="text-xs text-slate-600">
                                 {stage ? `Stage: ${stage}` : ""}
                                 {depProg ? ` · Deps: ${depProg.processed}/${depProg.total}` : ""}
+                                {stage === "dependency_inference" && lastDepEdge
+                                    ? ` · Inferring: ${(artifactLookup[lastDepEdge.source_id]?.[0] || lastDepEdge.source_id)} -> ${(artifactLookup[lastDepEdge.target_id]?.[0] || lastDepEdge.target_id)}`
+                                    : ""}
                             </span>
                         </div>
                     </div>
