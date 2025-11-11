@@ -231,7 +231,8 @@ export default function PaperPage() {
 
     const { data, error, isLoading, mutate } = useSWR<PaperResponse>(
         arxivId ? `/papers/${arxivId}` : null,
-        () => getPaper(arxivId)
+        () => getPaper(arxivId),
+        { revalidateOnFocus: false, revalidateOnReconnect: false, refreshInterval: 0 }
     );
 
     // Live streaming state
@@ -282,11 +283,17 @@ export default function PaperPage() {
     }, [liveGraph, data]);
 
     useEffect(() => {
-        setLiveGraph(data?.graph || null);
+        if (streaming) return;
+        setLiveGraph((prev) => {
+            if (!data?.graph) return null;
+            // Prevent adopting a snapshot with fewer edges than current live graph
+            if (prev && (data.graph.edges?.length ?? 0) < (prev.edges?.length ?? 0)) return prev;
+            return data.graph;
+        });
         setLiveBank(data?.definition_bank || null);
         bankRef.current = data?.definition_bank || null;
         linksRef.current = {};
-    }, [data]);
+    }, [data, streaming]);
 
     useEffect(() => {
         bankRef.current = liveBank;
