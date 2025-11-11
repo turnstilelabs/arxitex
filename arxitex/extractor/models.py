@@ -309,7 +309,7 @@ class DocumentGraph:
         """Get basic statistics about the graph."""
         return {"total_nodes": len(self.nodes), "total_edges": len(self.edges)}
 
-    def to_dict(self, arxiv_id: str, extractor_mode: str) -> Dict:
+    def to_dict(self, arxiv_id: str, extractor_mode: str | None = None) -> Dict:
         """
         Serializes the entire graph, including nodes and edges, into a
         JSON-serializable dictionary for output.
@@ -319,7 +319,7 @@ class DocumentGraph:
 
         return {
             "arxiv_id": arxiv_id,
-            "extractor_mode": extractor_mode,
+            "extractor_mode": extractor_mode or "unspecified",
             "stats": {"node_count": len(self.nodes), "edge_count": len(self.edges)},
             "nodes": serialized_nodes,
             "edges": serialized_edges,
