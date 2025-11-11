@@ -14,6 +14,7 @@ import type { PaperReaderHandle } from "@/components/PaperReader";
 import dynamic from "next/dynamic";
 const PaperReader = dynamic(() => import("@/components/PaperReader"), { ssr: false });
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
+import { buildExportBundle, downloadBundleAsJson, downloadBundleAsGzip, suggestExportFilename } from "@/lib/export";
 
 function DefinitionBankView({ bank }: { bank: PaperResponse["definition_bank"] }) {
     const entries = useMemo(() => {
@@ -251,6 +252,8 @@ export default function PaperPage() {
     const readerRef = useRef<PaperReaderHandle | null>(null);
     const pdfUrl = useMemo(() => getPdfUrl(arxivId), [arxivId]);
     const [anchors, setAnchors] = useState<ArtifactAnchorIndex | null>(null);
+    const [exportMenuOpen, setExportMenuOpen] = useState(false);
+    const [toast, setToast] = useState<string | null>(null);
 
     useEffect(() => {
         let cancelled = false;
@@ -560,6 +563,39 @@ export default function PaperPage() {
 
     const { graph, definition_bank } = data;
 
+    function doExportJson(pretty?: boolean) {
+        try {
+            const g = (liveGraph ?? graph) as DocumentGraph | null;
+            if (!g) return;
+            const bank = (liveBank ?? definition_bank) as DefinitionBank | null;
+            const bundle = buildExportBundle(arxivId, (data?.title ?? null), g, bank);
+            const filename = suggestExportFilename(arxivId, "json");
+            downloadBundleAsJson(bundle, filename, { pretty: pretty ?? true });
+            setToast(`Exported ${filename}`);
+            window.setTimeout(() => setToast(null), 2000);
+        } catch (e) {
+            setToast(`Export failed`);
+            window.setTimeout(() => setToast(null), 3000);
+        }
+    }
+
+    async function doExportGzip(pretty?: boolean) {
+        try {
+            const g = (liveGraph ?? graph) as DocumentGraph | null;
+            if (!g) return;
+            const bank = (liveBank ?? definition_bank) as DefinitionBank | null;
+            const bundle = buildExportBundle(arxivId, (data?.title ?? null), g, bank);
+            const filename = suggestExportFilename(arxivId, "json.gz");
+            await downloadBundleAsGzip(bundle, filename, { pretty: pretty ?? false });
+            setToast(`Exported ${filename}`);
+            window.setTimeout(() => setToast(null), 2000);
+        } catch (e: any) {
+            const msg = (e && e.message) ? e.message : "Compression not supported. Try JSON export.";
+            setToast(msg);
+            window.setTimeout(() => setToast(null), 4000);
+        }
+    }
+
     return (
         <>
             <header className="sticky top-0 z-40 bg-[var(--surface)] border-b text-[var(--text)]">
@@ -572,17 +608,61 @@ export default function PaperPage() {
             <main className="min-h-screen p-6 md:p-12 bg-slate-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-6">
-                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-                            <a
-                                href={`https://arxiv.org/abs/${arxivId}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="hover:underline underline-offset-4"
-                                title={`Open ${arxivId} on arXiv`}
-                            >
-                                {data.title || `Paper ${arxivId}`}
-                            </a>
-                        </h1>
+                        <div className="flex items-start justify-between gap-3">
+                            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                                <a
+                                    href={`https://arxiv.org/abs/${arxivId}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="hover:underline underline-offset-4"
+                                    title={`Open ${arxivId} on arXiv`}
+                                >
+                                    {data.title || `Paper ${arxivId}`}
+                                </a>
+                            </h1>
+                            <div className="relative">
+                                <button
+                                    className="inline-flex items-center gap-1.5 rounded bg-blue-600 text-white px-2.5 py-1.5 text-xs hover:bg-blue-700"
+                                    onClick={() => setExportMenuOpen((s) => !s)}
+                                    aria-label="Download graph and definitions"
+                                    aria-haspopup="menu"
+                                    aria-expanded={exportMenuOpen}
+                                    title="Download graph and definitions"
+                                >
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <span>Download</span>
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                </button>
+                                {exportMenuOpen ? (
+                                    <div role="menu" className="absolute right-0 mt-2 w-56 rounded-md border bg-white shadow-lg z-50">
+                                        <button
+                                            role="menuitem"
+                                            className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm"
+                                            onClick={() => {
+                                                setExportMenuOpen(false);
+                                                doExportJson(true);
+                                            }}
+                                        >
+                                            Download as JSON
+                                        </button>
+                                        <button
+                                            role="menuitem"
+                                            className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm"
+                                            onClick={() => {
+                                                setExportMenuOpen(false);
+                                                doExportGzip(false);
+                                            }}
+                                        >
+                                            Download as JSON (compressed)
+                                        </button>
+                                    </div>
+                                ) : null}
+                            </div>
+                        </div>
                         {data.authors && data.authors.length ? (
                             <div className="mt-1 text-sm text-slate-700">{data.authors.join(", ")}</div>
                         ) : null}
@@ -701,6 +781,16 @@ export default function PaperPage() {
                                                         <path d="M7 3H3v4M17 3h4v4M7 21H3v-4M21 17v4h-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                                     </svg>
                                                 </button>
+                                                <button
+                                                    className="inline-flex items-center justify-center rounded bg-gray-100 hover:bg-gray-200 p-1.5"
+                                                    onClick={() => doExportJson(true)}
+                                                    aria-label="Download graph and definitions"
+                                                    title="Download graph and definitions"
+                                                >
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                        <path d="M12 3v10m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                    </svg>
+                                                </button>
                                             </div>
                                         </div>
                                         <D3GraphView
@@ -727,6 +817,12 @@ export default function PaperPage() {
                         </PanelGroup>
                     </div>
                 </div>
+
+                {toast ? (
+                    <div className="fixed bottom-4 right-4 z-50 rounded bg-gray-900 text-white text-sm px-3 py-2 shadow-lg">
+                        {toast}
+                    </div>
+                ) : null}
 
                 {graphModalOpen ? (
                     <div className="fixed inset-0 z-50 flex items-center justify-center">
