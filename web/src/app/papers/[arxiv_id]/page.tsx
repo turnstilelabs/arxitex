@@ -608,18 +608,49 @@ export default function PaperPage() {
             <main className="min-h-screen p-6 md:p-12 bg-slate-50">
                 <div className="max-w-5xl mx-auto">
                     <div className="mb-6">
-                        <div className="flex items-start justify-between gap-3">
-                            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-                                <a
-                                    href={`https://arxiv.org/abs/${arxivId}`}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="hover:underline underline-offset-4"
-                                    title={`Open ${arxivId} on arXiv`}
+                        <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                            <a
+                                href={`https://arxiv.org/abs/${arxivId}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:underline underline-offset-4"
+                                title={`Open ${arxivId} on arXiv`}
+                            >
+                                {data.title || `Paper ${arxivId}`}
+                            </a>
+                        </h1>
+                        {data.authors && data.authors.length ? (
+                            <div className="mt-1 text-sm text-slate-700">{data.authors.join(", ")}</div>
+                        ) : null}
+                        <div className="mt-2 text-sm text-slate-600">
+                            Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
+                            {graph.stats?.edge_count ?? graph.edges.length} · Mode: {graph.extractor_mode}
+                        </div>
+
+                        <div className="mt-3 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <button
+                                    className="text-xs px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
+                                    onClick={() => startStream({ infer: true, enrich: true })}
+                                    disabled={streaming}
                                 >
-                                    {data.title || `Paper ${arxivId}`}
-                                </a>
-                            </h1>
+                                    {streaming ? "Streaming..." : "Start live build (deps + content)"}
+                                </button>
+                                <button
+                                    className="text-xs px-3 py-1 rounded bg-gray-200 text-gray-800 disabled:opacity-50"
+                                    onClick={stopStream}
+                                    disabled={!streaming}
+                                >
+                                    Stop
+                                </button>
+                                <span className="text-xs text-slate-600">
+                                    {stage ? `Stage: ${stage}` : ""}
+                                    {depProg ? ` · Deps: ${depProg.processed}/${depProg.total}` : ""}
+                                    {stage === "dependency_inference" && lastDepEdge
+                                        ? ` · Inferring: ${(artifactLookup[lastDepEdge.source_id]?.[0] || lastDepEdge.source_id)} -> ${(artifactLookup[lastDepEdge.target_id]?.[0] || lastDepEdge.target_id)}`
+                                        : ""}
+                                </span>
+                            </div>
                             <div className="relative">
                                 <button
                                     className="inline-flex items-center gap-1.5 rounded bg-blue-600 text-white px-2.5 py-1.5 text-xs hover:bg-blue-700"
@@ -662,37 +693,6 @@ export default function PaperPage() {
                                     </div>
                                 ) : null}
                             </div>
-                        </div>
-                        {data.authors && data.authors.length ? (
-                            <div className="mt-1 text-sm text-slate-700">{data.authors.join(", ")}</div>
-                        ) : null}
-                        <div className="mt-2 text-sm text-slate-600">
-                            Artifacts: {graph.stats?.node_count ?? graph.nodes.length} · Edges:{" "}
-                            {graph.stats?.edge_count ?? graph.edges.length} · Mode: {graph.extractor_mode}
-                        </div>
-
-                        <div className="mt-3 flex items-center gap-3">
-                            <button
-                                className="text-xs px-3 py-1 rounded bg-blue-600 text-white disabled:opacity-50"
-                                onClick={() => startStream({ infer: true, enrich: true })}
-                                disabled={streaming}
-                            >
-                                {streaming ? "Streaming..." : "Start live build (deps + content)"}
-                            </button>
-                            <button
-                                className="text-xs px-3 py-1 rounded bg-gray-200 text-gray-800 disabled:opacity-50"
-                                onClick={stopStream}
-                                disabled={!streaming}
-                            >
-                                Stop
-                            </button>
-                            <span className="text-xs text-slate-600">
-                                {stage ? `Stage: ${stage}` : ""}
-                                {depProg ? ` · Deps: ${depProg.processed}/${depProg.total}` : ""}
-                                {stage === "dependency_inference" && lastDepEdge
-                                    ? ` · Inferring: ${(artifactLookup[lastDepEdge.source_id]?.[0] || lastDepEdge.source_id)} -> ${(artifactLookup[lastDepEdge.target_id]?.[0] || lastDepEdge.target_id)}`
-                                    : ""}
-                            </span>
                         </div>
                     </div>
 
