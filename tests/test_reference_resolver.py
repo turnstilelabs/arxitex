@@ -70,3 +70,70 @@ def test_unresolved_citation_creates_placeholder(tmp_path):
     # Should create an external node for the unresolved citation and an external edge
     assert len(external_nodes) == 1
     assert any(e.reference_type == ReferenceType.EXTERNAL for e in edges)
+
+
+def test_ignore_non_artifact_internal_labels(tmp_path):
+    proj = Path(tmp_path)
+    # Global document contains labels for non-artifact entities
+    content = r"""
+Some text.
+\label{eq:foo}
+\label{sec:intro}
+"""
+    # Node references those labels, which are not artifacts
+    node = ArtifactNode(
+        id="n_non_art",
+        type=ArtifactType.REMARK,
+        content=r"See \eqref{eq:foo} and \ref{sec:intro}.",
+        position=Position(line_start=1),
+    )
+    resolver = ReferenceResolver(content)
+    edges, external_nodes = resolver.resolve_all_references(proj, [node], {})
+
+    # Non-artifact internal labels should be ignored (no edges or placeholder nodes)
+    assert edges == []
+    assert external_nodes == []
+
+
+def test_internal_reference_resolves_via_normalization(tmp_path):
+    proj = Path(tmp_path)
+    content = r"Refer to \ref{thm:a 1}."
+    target = ArtifactNode(
+        id="t1",
+        type=ArtifactType.THEOREM,
+        content="Theorem A1",
+        label="Thm-A_1",
+        position=Position(line_start=1),
+    )
+    referrer = ArtifactNode(
+        id="n_norm",
+        type=ArtifactType.REMARK,
+        content=r"See \ref{thm:a 1}.",
+        position=Position(line_start=2),
+    )
+    resolver = ReferenceResolver(content)
+    edges, external_nodes = resolver.resolve_all_references(
+        proj, [target, referrer], {"Thm-A_1": "t1"}
+    )
+
+    internal_edges = [e for e in edges if e.reference_type == ReferenceType.INTERNAL]
+    assert any(e.source_id == "n_norm" and e.target_id == "t1" for e in internal_edges)
+    assert external_nodes == []
+
+
+def test_unresolved_internal_label_creates_no_placeholder(tmp_path):
+    proj = Path(tmp_path)
+    # Document does NOT define the referenced label anywhere
+    content = r"Some text without the referenced label."
+    node = ArtifactNode(
+        id="n_missing",
+        type=ArtifactType.REMARK,
+        content=r"See \ref{thm:missing}.",
+        position=Position(line_start=1),
+    )
+    resolver = ReferenceResolver(content)
+    edges, external_nodes = resolver.resolve_all_references(proj, [node], {})
+
+    # No internal edges and no placeholder external nodes for unresolved internal labels
+    assert all(e.reference_type != ReferenceType.INTERNAL for e in edges)
+    assert external_nodes == []
