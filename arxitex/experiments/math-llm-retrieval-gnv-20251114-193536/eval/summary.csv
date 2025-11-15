@@ -1,9 +1,0 @@
-bucket,artifact_type,category,n,recall_at_5_rate
-older,theorem,conceptual_search,6,0.0
-older,theorem,exploratory_search,6,0.0
-older,theorem,imperfect_recall,6,0.0
-older,theorem,precise_assertion,6,0.0
-recent,theorem,conceptual_search,20,0.0
-recent,theorem,exploratory_search,20,0.0
-recent,theorem,imperfect_recall,20,0.0
-recent,theorem,precise_assertion,20,0.0
