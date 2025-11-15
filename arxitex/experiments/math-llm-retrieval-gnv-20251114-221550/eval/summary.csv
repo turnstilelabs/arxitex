@@ -1,5 +1,0 @@
-bucket,artifact_type,category,n,recall_at_5_rate
-post,theorem,conceptual_search,1,0.0
-post,theorem,exploratory_search,1,0.0
-post,theorem,imperfect_recall,1,0.0
-post,theorem,precise_assertion,1,0.0
