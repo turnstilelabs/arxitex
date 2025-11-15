@@ -15,6 +15,10 @@ OPENAI_MODELS: Set[str] = {
     "gpt-5-mini-2025-08-07",
     "gpt-5-nano-2025-08-07",
     "gpt-5-2025-08-07",
+    # Search-enabled Chat Completions models
+    "gpt-5-search-api",
+    "gpt-4o-search-preview",
+    "gpt-4o-mini-search-preview",
 }
 
 TOGETHER_MODELS: Set[str] = {
@@ -26,9 +30,7 @@ TOGETHER_MODELS: Set[str] = {
 
 
 DEFAULT_MODEL = os.environ.get("ARXITEX_DEFAULT_MODEL", "gpt-4o-2024-08-06")
-DEFAULT_ASYNC_MODEL = os.environ.get(
-    "ARXITEX_DEFAULT_ASYNC_MODEL", "gpt-5-mini-2025-08-07"
-)
+DEFAULT_ASYNC_MODEL = os.environ.get("ARXITEX_DEFAULT_ASYNC_MODEL", "gpt-5-2025-08-07")
 JSON_EXTRACTION_MODEL = os.environ.get(
     "ARXITEX_JSON_EXTRACTION_MODEL", "gpt-5-nano-2025-08-07"
 )

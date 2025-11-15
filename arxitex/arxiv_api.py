@@ -11,7 +11,7 @@ class ArxivAPI:
     """Handles communication with the ArXiv API"""
 
     def __init__(self):
-        self.base_url = "http://export.arxiv.org/api/query"
+        self.base_url = "https://export.arxiv.org/api/query"
         self.session = requests.Session()
         self.session.headers.update(
             {
@@ -56,6 +56,38 @@ class ArxivAPI:
                     time.sleep(wait_time)
                 else:
                     logger.error("Failed to fetch papers after multiple attempts")
+                    return None
+
+        return response.text if response.status_code == 200 else None
+
+    def fetch_by_ids(self, ids):
+        """Fetch specific papers by arXiv id_list (comma-separated)."""
+        if not ids:
+            return None
+        logger.info(f"Fetching by id_list with {len(ids)} ids")
+
+        params = {
+            "id_list": ",".join(ids),
+        }
+
+        max_retries = 3
+        retry_count = 0
+        while retry_count < max_retries:
+            try:
+                response = self.session.get(self.base_url, params=params, timeout=30)
+                response.raise_for_status()
+                break
+            except (requests.RequestException, requests.Timeout) as e:
+                retry_count += 1
+                wait_time = 2 * retry_count  # Exponential backoff
+                logger.warning(
+                    f"Error fetching id_list (attempt {retry_count}/{max_retries}): {e}"
+                )
+                if retry_count < max_retries:
+                    logger.info(f"Retrying in {wait_time} seconds...")
+                    time.sleep(wait_time)
+                else:
+                    logger.error("Failed to fetch id_list after multiple attempts")
                     return None
 
         return response.text if response.status_code == 200 else None

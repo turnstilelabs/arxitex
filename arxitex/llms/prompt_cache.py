@@ -44,19 +44,27 @@ def save_prompt_result(prompt: Prompt, model: str, data: Any) -> None:
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "w") as f:
         if isinstance(data, list):
-            result_dicts = [
-                (
-                    d.to_dict()
-                    if hasattr(d, "to_dict")
-                    else d.dict() if hasattr(d, "dict") else d
-                )
-                for d in data
-            ]
+
+            def _to_jsonable(x: Any) -> Any:
+                if hasattr(x, "model_dump"):
+                    return x.model_dump()
+                if hasattr(x, "to_dict"):
+                    return x.to_dict()
+                if hasattr(x, "dict"):
+                    # Deprecated in Pydantic v2, kept as last resort for non-Pydantic objects
+                    return x.dict()  # type: ignore[attr-defined]
+                return x
+
+            result_dicts = [_to_jsonable(d) for d in data]
             json.dump(result_dicts, f, indent=2)
         else:
-            result_dict = (
-                data.to_dict()
-                if hasattr(data, "to_dict")
-                else data.dict() if hasattr(data, "dict") else data
-            )
+            if hasattr(data, "model_dump"):
+                result_dict = data.model_dump()
+            elif hasattr(data, "to_dict"):
+                result_dict = data.to_dict()
+            elif hasattr(data, "dict"):
+                # Deprecated in Pydantic v2, kept as last resort for non-Pydantic objects
+                result_dict = data.dict()  # type: ignore[attr-defined]
+            else:
+                result_dict = data
             json.dump(result_dict, f, indent=2)
