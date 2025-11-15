@@ -46,6 +46,7 @@ setup(
     entry_points={
         "console_scripts": [
             "arxitex=arxitex.workflows.cli:cli_main",
+            "arxitex-viz=arxitex.extractor.visualization.cli:main",
         ]
     },
 )
