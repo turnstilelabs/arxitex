@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import os
 import time
 
 import httpx
@@ -22,7 +23,40 @@ from .registry import (
 )
 from .retry_utils import retry_async, retry_sync
 
-timeout = httpx.Timeout(30.0, connect=5.0)
+timeout = httpx.Timeout(180.0, connect=5.0)
+
+
+# Search-enabled Chat Completions models that support web_search_options
+SEARCH_MODELS = {
+    "gpt-5-search-api",
+    "gpt-4o-search-preview",
+    "gpt-4o-mini-search-preview",
+}
+
+
+def _web_search_kwargs(model: str) -> dict:
+    """
+    Returns kwargs to enable OpenAI Chat Completions web search for supported models
+    or when an env override is set.
+    """
+    try:
+        override = os.environ.get("ARXITEX_OPENAI_WEB_SEARCH", "").lower() in (
+            "1",
+            "true",
+            "yes",
+        )
+    except Exception:
+        override = False
+    if model in SEARCH_MODELS or override:
+        opts = {}
+        opts_env = os.environ.get("ARXITEX_OPENAI_WEB_SEARCH_OPTIONS")
+        if opts_env:
+            try:
+                opts = json.loads(opts_env)
+            except Exception:
+                opts = {}
+        return {"web_search_options": opts}
+    return {}
 
 
 @retry_sync
@@ -33,10 +67,12 @@ def run_openai(prompt, model, output_class):
         {"role": "user", "content": prompt.user},
     ]
 
+    extra = _web_search_kwargs(model)
     response = client.beta.chat.completions.parse(
         model=model,
         messages=messages,
         response_format=output_class,
+        **extra,
     )
     # usage logging (best-effort)
     try:
@@ -141,8 +177,13 @@ async def arun_openai(prompt, model, output_class):
         {"role": "user", "content": prompt.user},
     ]
 
+    extra = _web_search_kwargs(model)
     response = await client.beta.chat.completions.parse(
-        model=model, messages=messages, response_format=output_class, timeout=timeout
+        model=model,
+        messages=messages,
+        response_format=output_class,
+        timeout=timeout,
+        **extra,
     )
     try:
         log_response_usage(
