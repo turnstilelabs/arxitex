@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Detailed Log Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        :root {
+            --bg: #0f1216;
+            --panel: #161b22;
+            --muted: #8b949e;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --accent-2: #e3b341;
+            --success: #3fb950;
+            --error: #f85149;
+            --code: #0b0f14;
+            --border: #30363d;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+        }
+
+        header {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(180deg, rgba(88, 166, 255, 0.07), transparent);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        header .sub {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+            height: calc(100% - 72px);
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        .left,
+        .right {
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--panel);
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .section {
+            padding: 12px 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .controls {
+            display: grid;
+            gap: 10px;
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        select,
+        input[type="text"],
+        input[type="file"] {
+            background: #0d1117;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 14px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: #0d1117;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .pill {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+        }
+
+        .pill.category {
+            background: rgba(227, 179, 65, 0.1);
+            color: var(--accent-2);
+            border-color: rgba(227, 179, 65, 0.4);
+        }
+
+        .scroll {
+            overflow: auto;
+            padding: 12px;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+
+        .artifact {
+            border: 1px dashed var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            background: #0d1117;
+            margin-bottom: 10px;
+        }
+
+        .artifact h3 {
+            margin: 0 0 6px;
+            font-size: 14px;
+        }
+
+        .code {
+            background: var(--code);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            overflow: auto;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 12px;
+        }
+
+        details.query {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #0d1117;
+        }
+
+        details.query>summary {
+            cursor: pointer;
+            padding: 10px 12px;
+            list-style: none;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        details.query[open]>summary {
+            border-bottom: 1px solid var(--border);
+            background: rgba(88, 166, 255, 0.06);
+        }
+
+        details.query .content {
+            padding: 12px;
+        }
+
+        .row-meta {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .row-title {
+            flex: 1 1 auto;
+            min-width: 200px;
+        }
+
+        .kbd {
+            background: #0d1117;
+            border: 1px solid var(--border);
+            border-bottom-color: #262b33;
+            border-radius: 6px;
+            padding: 0 6px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .flex {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: #21262d;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn:hover {
+            background: #262c36;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        th {
+            color: var(--muted);
+            font-weight: 600;
+            background: #0d1117;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .title {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .title:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            padding: 8px 12px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .panel {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #0d1117;
+            padding: 10px;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .error-box {
+            border: 1px solid rgba(248, 81, 73, 0.5);
+            background: rgba(248, 81, 73, 0.08);
+            color: #ffd2cf;
+            padding: 8px 10px;
+            border-radius: 8px;
+        }
+
+        .paper-title {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .artifact-strip {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 8px 12px;
+        }
+
+        .artifact-card {
+            min-width: 220px;
+            max-width: 260px;
+            height: 180px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #0d1117;
+            padding: 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .artifact-card.active {
+            outline: 2px solid var(--accent);
+        }
+
+        .artifact-snippet {
+            font-size: 12px;
+            color: var(--muted);
+            flex: 1 1 auto;
+            overflow: auto;
+        }
+
+        .row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .cell {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px;
+            background: #0d1117;
+        }
+
+        .cell h4 {
+            margin: 0 0 6px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .left {
+            display: none;
+        }
+    </style>
+    <!-- KaTeX for LaTeX rendering (fast) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Detailed Log Explorer</h1>
+        <div class="sub">Select a paper → artifact → explore queries → view predicted candidates. The full experiment
+            CSV is embedded.</div>
+        <div class="controls" id="topControls" style="margin-top:8px;">
+            <div class="field">
+                <label for="paperSelect">Paper <span id="paperCount" class="tag"></span></label>
+                <select id="paperSelect"></select>
+            </div>
+        </div>
+    </header>
+    <div id="paperTitle" class="paper-title" style="padding: 8px 18px; font-size: 16px; font-weight: 600;"></div>
+    <div class="container">
+        <div class="left">
+            <div class="section">
+                <div class="controls">
+                    <div class="field">
+                        <!-- moved to header -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll">
+
+
+            </div>
+
+            <div class="footer">
+                CSV rows: <span id="rowCount">-</span> • Queries: <span id="queryCount">-</span>
+            </div>
+        </div>
+
+        <div class="right">
+            <div id="artifactStrip" class="artifact-strip"></div>
+            <div id="artifactTop" class="artifact" style="margin: 12px;">
+                <h3 id="paperTitleLine" style="margin: 0 0 6px; font-size: 16px;"></h3>
+                <div id="artifactMetaTop" class="muted" style="margin-bottom:6px;"></div>
+                <div id="artifactTextTop" class="code"></div>
+            </div>
+            <div class="section">
+                <div class="flex" style="justify-content: space-between;">
+                    <div><span class="muted">Queries for selected artifact</span></div>
+                    <div class="flex">
+                        <button id="expandAll" class="btn">Expand all</button>
+                        <button id="collapseAll" class="btn">Collapse all</button>
+                    </div>
+                </div>
+            </div>
+            <div id="queriesContainer" class="scroll"></div>
+            <div class="footer">
+                Scroll artifacts above to switch context. Queries and proposed references are shown side by side.
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedded experiment CSV (auto-generated) -->
+    <script type="text/csv" id="embedded-csv">
+arxiv_id,bucket,artifact_id,artifact_text,query,category,predicted_candidates,is_in_top_k,rank_if_found
+1901.02208v1,older,theorem-1-c01898,"\label{Theo_XuJerbi}
+Assume that $\XR$ is separable and that $\AR$ satisfies Assumption \ref{ass_EXPStab}.
+Assume moreover that~:
+\begin{enumerate}
+\item the operator $\BR$ is bounded;
+\item the operator $\CR$ is $\AR$-admissible (see \cite{tucsnak2009observation}), i.e.
+\begin{itemize}
+\item it is $\AR$-bounded~:
+\begin{equation}\label{eq_ABounded}
+|\CR \varphi| \leqslant   c(\|\varphi\|_\XR + \|\AR \varphi\|_\XR)\ ,\ \forall \ \varphi\in D(\AR),
+\end{equation}
+for some positive real number $c$;
+\item  there exist $T>0$ and $c_T>0$ such that
+$$
+\int_0^T |\CR e^{\AR t}\varphi|^2dt \leqslant    c_T^2 \|\varphi\|_\XR^2\ ,\ \forall \ \varphi\in D(\AR);
+$$
+\end{itemize}
+\item the rank condition holds. In other words operators $\AR$, $\BR$ and  $\CR$ satisfy
+\begin{equation}\label{eq_RankCondition}
+\texttt{rank}\{\CR \AR^{-1}\BR\} = m;
+\end{equation}
+\end{enumerate}
+then there exists  a positive real number $k_i^*$ and a $m\times m$ matrix $K_i$, such that for all $0<k_i<   k_i^* $ the operator $\AR_e$ given in \eqref{def_Ae}
+is the generator of an exponentially stable $C_0$-semigroup in the extended state space $\XR_e$. More precisely, the system (\ref{eq_AbsCauchyProblem}) in closed loop with (\ref{eq_ControlInte}) is well-posed and the equilibrium is exponentially stable. Moreover,  for all $w$ and $y_{ref}$, equation \eqref{eq_RegulDef} holds (i.e the regulation is achieved).","Existence of small integral gain for exponential stabilization and regulation on a separable Banach space K: let K be separable, A generate an exponentially stable C_0-semigroup, B bounded, C A-bounded in the sense |C\varphi| \le c(\|\varphi\|_K + \|A\varphi\|_K) for all \varphi\in D(A), and assume rank\{C A^{-1} B\}=m. Is there k_i^*>0 and an m\times m matrix K_i such that for all 0<k_i<k_i^* the closed-loop extended operator A_e generates an exponentially stable C_0-semigroup on the extended state space K_e and the regulation (output tracking) is achieved?",imperfect_recall,"[{'reference': {'title': 'Internal model based controller design for robust output regulation of regular linear systems'}, 'confidence': 0.88, 'reasoning': 'This SIAM J. Control Optim. style paper by Paunonen & Pohjolainen develops internal-model-based controllers for regular (well-posed) infinite-dimensional linear systems and gives explicit controller constructions that achieve robust regulation while preserving exponential stability — directly relevant to questions about integral-action gains and closed-loop generator stability on extended state spaces.'}, {'reference': {'title': 'The internal model principle of control theory'}, 'confidence': 0.78, 'reasoning': 'The classical Francis–Wonham internal model principle underpins why integral (or internal-model) action is needed for exact regulation and explains structural rank conditions like rank{C A^{-1} B}=m. Any infinite-dimensional extension or small-gain result for integral controllers is built on these ideas.'}, {'reference': {'title': 'Robust regulation of infinite-dimensional systems'}, 'confidence': 0.68, 'reasoning': 'Work by Rebarber & Weiss (and related papers) addresses robust output regulation for systems with unbounded input/output operators and discusses conditions under which controllers with internal models stabilize the closed-loop; this line of research treats the same technical issues (extended state space, generator properties) as the query.'}, {'reference': {'title': 'An Introduction to Infinite-Dimensional Linear Systems Theory'}, 'confidence': 0.62, 'reasoning': 'The Curtain–Zwart monograph is a standard reference on well-posed linear systems, semigroup generators, admissible control/observation operators and stability — it provides the background and tools used in proofs about small-gain integral stabilization and exponential stability of extended generators.'}, {'reference': {'title': 'Approximate robust output regulation of boundary control systems'}, 'confidence': 0.57, 'reasoning': 'Paunonen and collaborators have papers on approximate/robust regulation for boundary control systems which address designing controllers (including integral/internal-model parts) that maintain exponential stability of the closed-loop and handle rank conditions; these results are relevant when adapting finite-dimensional integral-gain arguments to separable Banach spaces.'}]",0,-1
+1901.02208v1,older,theorem-1-c01898,"\label{Theo_XuJerbi}
+Assume that $\XR$ is separable and that $\AR$ satisfies Assumption \ref{ass_EXPStab}.
+Assume moreover that~:
+\begin{enumerate}
+\item the operator $\BR$ is bounded;
+\item the operator $\CR$ is $\AR$-admissible (see \cite{tucsnak2009observation}), i.e.
+\begin{itemize}
+\item it is $\AR$-bounded~:
+\begin{equation}\label{eq_ABounded}
+|\CR \varphi| \leqslant   c(\|\varphi\|_\XR + \|\AR \varphi\|_\XR)\ ,\ \forall \ \varphi\in D(\AR),
+\end{equation}
+for some positive real number $c$;
+\item  there exist $T>0$ and $c_T>0$ such that
+$$
+\int_0^T |\CR e^{\AR t}\varphi|^2dt \leqslant    c_T^2 \|\varphi\|_\XR^2\ ,\ \forall \ \varphi\in D(\AR);
+$$
+\end{itemize}
+\item the rank condition holds. In other words operators $\AR$, $\BR$ and  $\CR$ satisfy
+\begin{equation}\label{eq_RankCondition}
+\texttt{rank}\{\CR \AR^{-1}\BR\} = m;
+\end{equation}
+\end{enumerate}
+then there exists  a positive real number $k_i^*$ and a $m\times m$ matrix $K_i$, such that for all $0<k_i<   k_i^* $ the operator $\AR_e$ given in \eqref{def_Ae}
+is the generator of an exponentially stable $C_0$-semigroup in the extended state space $\XR_e$. More precisely, the system (\ref{eq_AbsCauchyProblem}) in closed loop with (\ref{eq_ControlInte}) is well-posed and the equilibrium is exponentially stable. Moreover,  for all $w$ and $y_{ref}$, equation \eqref{eq_RegulDef} holds (i.e the regulation is achieved).","Small integral-gain output regulation for infinite-dimensional linear systems: existence of $k_i^*>0$ and $K_i$ such that for all $0<k_i<k_i^*$ the closed-loop operator $\mathcal{A}_e$ is the generator of an exponentially stable $C_0$-semigroup and the regulation (solvability of the regulator equations) holds, under assumptions $\mathcal{B}_R$ bounded, $\mathcal{C}_R$ is $\mathcal{A}_R$-admissible (i.e. $|\mathcal{C}_R\varphi|\le c(\|\varphi\|+\|\mathcal{A}_R\varphi\|)$ and $\int_0^T|\mathcal{C}_Re^{\mathcal{A}_Rt}\varphi|^2dt\le c_T^2\|\varphi\|^2$) and $\operatorname{rank}\{\mathcal{C}_R\mathcal{A}_R^{-1}\mathcal{B}_R\}=m$?""",precise_assertion,"[{'reference': {'title': 'Robust output regulation of regular linear systems'}, 'confidence': 0.7, 'reasoning': 'This paper (Paunonen & Pohjolainen) develops robust output regulation for regular linear (infinite‑dimensional) systems using internal‑model based controllers and addresses solvability of regulator equations under admissibility assumptions for input/output operators — directly relevant to existence of small integral gains ensuring closed‑loop generation of exponentially stable semigroups.'}, {'reference': {'title': 'Internal model principle for distributed parameter systems'}, 'confidence': 0.65, 'reasoning': ""This work treats the internal‑model principle in the infinite‑dimensional (distributed parameter) setting and gives conditions under which dynamic controllers (including integral action) achieve regulation; it covers admissibility and rank conditions that match the query's hypotheses.""}, {'reference': {'title': 'Robust regulation of infinite-dimensional systems'}, 'confidence': 0.6, 'reasoning': 'A core contribution (Rebarber & Weiss and related papers) that analyzes robust output regulation for well‑posed infinite‑dimensional systems, including closed‑loop stability with small controller gains and solvability of regulator equations under boundedness/admissibility hypotheses on control and observation operators.'}, {'reference': {'title': 'The internal model and robust stabilization for well-posed linear systems'}, 'confidence': 0.5, 'reasoning': ""This line of work combines the internal‑model design with stability analysis for well‑posed linear systems; it addresses small gain/integral action controller designs and admissible operator conditions akin to the query's setting.""}, {'reference': {'title': 'Well-Posed Linear Systems'}, 'confidence': 0.45, 'reasoning': ""Staffans' monograph is a foundational reference on well‑posed linear (infinite‑dimensional) systems, admissible operators, and semigroup generation — while a book (not a primary research article), it collects the operator/admissibility results and regulator‑equation framework underlying the specific small integral‑gain results asked about.""}]",0,-1
+1901.02208v1,older,theorem-1-c01898,"\label{Theo_XuJerbi}
+Assume that $\XR$ is separable and that $\AR$ satisfies Assumption \ref{ass_EXPStab}.
+Assume moreover that~:
+\begin{enumerate}
+\item the operator $\BR$ is bounded;
+\item the operator $\CR$ is $\AR$-admissible (see \cite{tucsnak2009observation}), i.e.
+\begin{itemize}
+\item it is $\AR$-bounded~:
+\begin{equation}\label{eq_ABounded}
+|\CR \varphi| \leqslant   c(\|\varphi\|_\XR + \|\AR \varphi\|_\XR)\ ,\ \forall \ \varphi\in D(\AR),
+\end{equation}
+for some positive real number $c$;
+\item  there exist $T>0$ and $c_T>0$ such that
+$$
+\int_0^T |\CR e^{\AR t}\varphi|^2dt \leqslant    c_T^2 \|\varphi\|_\XR^2\ ,\ \forall \ \varphi\in D(\AR);
+$$
+\end{itemize}
+\item the rank condition holds. In other words operators $\AR$, $\BR$ and  $\CR$ satisfy
+\begin{equation}\label{eq_RankCondition}
+\texttt{rank}\{\CR \AR^{-1}\BR\} = m;
+\end{equation}
+\end{enumerate}
+then there exists  a positive real number $k_i^*$ and a $m\times m$ matrix $K_i$, such that for all $0<k_i<   k_i^* $ the operator $\AR_e$ given in \eqref{def_Ae}
+is the generator of an exponentially stable $C_0$-semigroup in the extended state space $\XR_e$. More precisely, the system (\ref{eq_AbsCauchyProblem}) in closed loop with (\ref{eq_ControlInte}) is well-posed and the equilibrium is exponentially stable. Moreover,  for all $w$ and $y_{ref}$, equation \eqref{eq_RegulDef} holds (i.e the regulation is achieved).","Output regulation and exponential stabilization of infinite-dimensional linear systems with admissible observation operator \(\mathcal{C}\) and bounded control operator \(\mathcal{B}\); finite-dimensional integral feedback controllers and the rank condition \(\mathrm{rank}(\mathcal{C}\mathcal{A}^{-1}\mathcal{B})=m\).,exploratory_search,"[{'reference': {'title': 'Internal model based controller design for robust output regulation of regular linear systems'}, 'confidence': 0.85, 'reasoning': 'This paper (Paunonen & Pohjolainen) directly treats design of finite-dimensional internal-model controllers for regular (infinite-dimensional) linear systems and addresses robust output regulation using admissible observation and bounded control operators; it is a leading reference for controller constructions that use integral action and rank-type conditions on the plant transfer at zero frequency.'}, {'reference': {'title': 'Robust regulation of infinite-dimensional systems'}, 'confidence': 0.72, 'reasoning': 'This work (Rebarber & Weiss / Weiss & Rebarber line of research) develops internal-model and robust regulation results for infinite-dimensional well-posed systems and considers admissible observation operators and bounded or unbounded control actions; it is a primary source for rank/transfer-operator conditions required for finite-dimensional regulator existence.'}, {'reference': {'title': 'The internal model principle of control theory'}, 'confidence': 0.8, 'reasoning': 'The classical Francis–Wonham internal model principle gives the fundamental requirement (internal model / integral action) for regulation; while finite-dimensional and seminal, it underpins many infinite-dimensional regulator designs and the necessity of invertibility/rank conditions of the steady-state input–output map such as rank(C A^{-1} B)=m.'}, {'reference': {'title': 'An Introduction to Infinite-Dimensional Linear Systems Theory'}, 'confidence': 0.7, 'reasoning': ""Curtain & Zwart's monograph is a standard technical reference on infinite-dimensional linear systems, admissible observation operators, and control operator classes; it provides the background theory (semigroups, admissibility, well-posedness) used in papers that derive finite-dimensional integral-controller results and rank conditions.""}, {'reference': {'title': 'Well-Posed Linear Systems'}, 'confidence': 0.65, 'reasoning': ""Staffans' book formalizes the notion of well-posed linear systems, admissible observation and control operators, and transfer functions in infinite dimensions — the theoretical framework in which rank conditions like rank(C A^{-1} B)=m are interpreted and used for controller existence proofs.""}]",0,-1
+1901.02208v1,older,theorem-1-c01898,"\label{Theo_XuJerbi}
+Assume that $\XR$ is separable and that $\AR$ satisfies Assumption \ref{ass_EXPStab}.
+Assume moreover that~:
+\begin{enumerate}
+\item the operator $\BR$ is bounded;
+\item the operator $\CR$ is $\AR$-admissible (see \cite{tucsnak2009observation}), i.e.
+\begin{itemize}
+\item it is $\AR$-bounded~:
+\begin{equation}\label{eq_ABounded}
+|\CR \varphi| \leqslant   c(\|\varphi\|_\XR + \|\AR \varphi\|_\XR)\ ,\ \forall \ \varphi\in D(\AR),
+\end{equation}
+for some positive real number $c$;
+\item  there exist $T>0$ and $c_T>0$ such that
+$$
+\int_0^T |\CR e^{\AR t}\varphi|^2dt \leqslant    c_T^2 \|\varphi\|_\XR^2\ ,\ \forall \ \varphi\in D(\AR);
+$$
+\end{itemize}
+\item the rank condition holds. In other words operators $\AR$, $\BR$ and  $\CR$ satisfy
+\begin{equation}\label{eq_RankCondition}
+\texttt{rank}\{\CR \AR^{-1}\BR\} = m;
+\end{equation}
+\end{enumerate}
+then there exists  a positive real number $k_i^*$ and a $m\times m$ matrix $K_i$, such that for all $0<k_i<   k_i^* $ the operator $\AR_e$ given in \eqref{def_Ae}
+is the generator of an exponentially stable $C_0$-semigroup in the extended state space $\XR_e$. More precisely, the system (\ref{eq_AbsCauchyProblem}) in closed loop with (\ref{eq_ControlInte}) is well-posed and the equilibrium is exponentially stable. Moreover,  for all $w$ and $y_{ref}$, equation \eqref{eq_RegulDef} holds (i.e the regulation is achieved).","Existence of finite-dimensional integral controller (gain $k_i>0$ and $K_i\in\mathbb{R}^{m\times m}$) such that the closed-loop extended operator $\mathcal{A}_e$ generates an exponentially stable $C_0$-semigroup on the extended state space $\mathcal{X}_e$, for the plant $\dot x=\mathcal{A}_R x+\mathcal{B}_R u$, $y=\mathcal{C}_R x$ when $\mathcal{A}_R$ is exponentially stable, $\mathcal{B}_R$ is bounded, $\mathcal{C}_R$ is $\mathcal{A}_R$-admissible and the rank condition $\operatorname{rank}\{\mathcal{C}_R\mathcal{A}_R^{-1}\mathcal{B}_R\}=m$ holds?""",precise_assertion,"[{'reference': {'title': 'The Internal Model Principle of Control Theory'}, 'confidence': 0.78, 'reasoning': 'This classic paper (Francis & Wonham) is the foundational result on when finite‑dimensional controllers (containing the internal model) can achieve regulation. The query concerns existence of finite‑dimensional integral controllers under an internal‑model type rank condition, so this is the primary theoretical source researchers cite.'}, {'reference': {'title': 'The internal model principle for distributed parameter systems'}, 'confidence': 0.72, 'reasoning': 'Rebarber & Weiss (and related work) extend the internal model principle to infinite‑dimensional (distributed parameter) systems with possibly unbounded input/output operators. The query asks about an infinite‑dimensional plant with admissible output and bounded input, so this extension is directly relevant.'}, {'reference': {'title': 'Regulation of well‑posed linear systems'}, 'confidence': 0.66, 'reasoning': 'Works by Rebarber, Weiss and collaborators on regulation for well‑posed linear systems formulate regulator equations and conditions (including rank/transmission conditions) for existence of finite‑dimensional controllers for regular (well‑posed) plants of the form ẋ = A x + B u, y = C x.'}, {'reference': {'title': 'Robust output regulation of regular linear systems'}, 'confidence': 0.65, 'reasoning': 'Papers by Paunonen, Pohjolainen and collaborators on robust output regulation address design/existence of finite‑dimensional controllers (including integral/internal‑model structures) for regular linear systems under admissibility and rank conditions similar to the one in the query.'}, {'reference': {'title': 'Finite‑dimensional controllers for infinite‑dimensional systems'}, 'confidence': 0.6, 'reasoning': 'Several papers (and their line of research) bearing this descriptive title treat the specific question of when an exponentially stable plant with bounded input and admissible output admits a finite‑dimensional (often integral) controller that yields an exponentially stable closed‑loop extended operator A_e. These works analyze rank/transmission conditions equivalent to rank{C A^{-1} B}=m.'}]",0,-1
+1901.02208v1,older,theorem-1-c01898,"\label{Theo_XuJerbi}
+Assume that $\XR$ is separable and that $\AR$ satisfies Assumption \ref{ass_EXPStab}.
+Assume moreover that~:
+\begin{enumerate}
+\item the operator $\BR$ is bounded;
+\item the operator $\CR$ is $\AR$-admissible (see \cite{tucsnak2009observation}), i.e.
+\begin{itemize}
+\item it is $\AR$-bounded~:
+\begin{equation}\label{eq_ABounded}
+|\CR \varphi| \leqslant   c(\|\varphi\|_\XR + \|\AR \varphi\|_\XR)\ ,\ \forall \ \varphi\in D(\AR),
+\end{equation}
+for some positive real number $c$;
+\item  there exist $T>0$ and $c_T>0$ such that
+$$
+\int_0^T |\CR e^{\AR t}\varphi|^2dt \leqslant    c_T^2 \|\varphi\|_\XR^2\ ,\ \forall \ \varphi\in D(\AR);
+$$
+\end{itemize}
+\item the rank condition holds. In other words operators $\AR$, $\BR$ and  $\CR$ satisfy
+\begin{equation}\label{eq_RankCondition}
+\texttt{rank}\{\CR \AR^{-1}\BR\} = m;
+\end{equation}
+\end{enumerate}
+then there exists  a positive real number $k_i^*$ and a $m\times m$ matrix $K_i$, such that for all $0<k_i<   k_i^* $ the operator $\AR_e$ given in \eqref{def_Ae}
+is the generator of an exponentially stable $C_0$-semigroup in the extended state space $\XR_e$. More precisely, the system (\ref{eq_AbsCauchyProblem}) in closed loop with (\ref{eq_ControlInte}) is well-posed and the equilibrium is exponentially stable. Moreover,  for all $w$ and $y_{ref}$, equation \eqref{eq_RegulDef} holds (i.e the regulation is achieved).","Exponential stabilization and output regulation for infinite-dimensional linear systems with an exponentially stable generator A, bounded input operator B and an A-admissible output operator C: when does adding a finite-dimensional integral controller produce an exponentially stable closed-loop C_0-semigroup? role of the rank condition \(\mathrm{rank}(C A^{-1}B)=m\) and small integral gain",conceptual_search,"[{'reference': {'title': 'Well-Posed Linear Systems'}, 'confidence': 0.62, 'reasoning': 'This monograph (O. J. Staffans) is the canonical reference for the theory of well-posed/regular linear systems with admissible input/output operators. It develops the framework (A-admissibility, regularity, transfer functions) in which questions about adding finite-dimensional controllers (including integral action) and rank conditions such as CA^{-1}B are most precisely stated. While a book rather than a short article, it is central to the topic.'}, {'reference': {'title': 'An Introduction to Infinite-Dimensional Linear Systems Theory'}, 'confidence': 0.58, 'reasoning': 'The Curtain & Zwart text is a foundational research-level treatment of infinite-dimensional linear systems and semigroup methods. It discusses admissible control/observation operators and stabilization by finite-dimensional controllers, providing necessary background and many results referenced in subsequent papers on integral control and rank-type conditions.'}, {'reference': {'title': 'Admissibility of unbounded control operators for linear semigroups'}, 'confidence': 0.47, 'reasoning': ""George Weiss's work on admissibility and regular linear systems laid the groundwork for many results using A-admissible outputs and bounded inputs. Papers by Weiss prove key facts about transfer functions and conditions under which finite-dimensional controllers produce well-posed/exponentially stable closed-loop semigroups; they are directly relevant to rank conditions like rank(CA^{-1}B).""}, {'reference': {'title': 'Robust output regulation of regular linear systems'}, 'confidence': 0.45, 'reasoning': 'Papers by Paunonen and Pohjolainen (and related work by Rebarber & Weiss) study robust/output regulation for regular (well-posed) infinite-dimensional systems and design finite-dimensional controllers (including integral action) using internal model ideas. These works discuss necessary rank/invertibility conditions on combinations like CA^{-1}B and gain sizing to ensure exponential closed-loop stability.'}, {'reference': {'title': 'Finite-dimensional controllers for boundary control systems'}, 'confidence': 0.38, 'reasoning': 'Research articles by Logemann, Rebarber, Townley and Weiss (and related authors) on finite-dimensional controllers for distributed-parameter/boundary control systems consider adding integral action to exponentially stable generators and give conditions (often rank-type or nonresonance conditions plus small-gain constraints) guaranteeing exponential stability of the closed-loop C0-semigroup. These are strong candidate references for the specific question about rank(CA^{-1}B)=m and small integral gain.'}]",0,-1
+2310.00736v2,recent,theorem-2-6eb8f3,"\label{thm1_base}
+Let us fix positive integers $(n,\,k,\,m)$ and define  the pair $(\psi(s),\,\mathcal{E}_{n,k,m}^2)$  according to the statements \ref{st1_as_1D_WKB} or \ref{st1_as_1D}.
+
+
+Then the function
+\begin{equation}
+\label{w_main_sol}
+w(\rho,\,s)=\frac{\sqrt{\mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2)}}{|Ai'(-t_k)|}  Ai(-t_k+\rho \mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2))\left(1-\sqrt{h}\frac{i} {2} \rho^2 \frac{\mathcal{A}'(s;\, \mathcal{E}_{n,k,m}^2)}{\mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2)} \hat{p}_s\right)\psi(s)
+\end{equation}
+belongs the space $C_{0,L}^{\infty}(\Pi)$ and satisfies the  equality
+\begin{equation}
+\label{as_2D_norm}
+\|\hat{H}w\|_{L_2(\Pi)}=O(h^2),
+\end{equation}
+where $\Pi$ is the half-strip (\ref{Pi}) and the operator $\hat{H}$ is the operator of the equation (\ref{2D_eq_new}).",Semiclassical construction of quasimodes for 2D Schrödinger-type operators on a half-infinite strip using Airy profiles $Ai$ near turning points; WKB reduction to a 1D transverse problem and residual estimates $\|\hat H w\|_{L^2}=O(h^2)$ as $h\to0$,exploratory_search,[],0,-1
+2310.00736v2,recent,theorem-2-6eb8f3,"\label{thm1_base}
+Let us fix positive integers $(n,\,k,\,m)$ and define  the pair $(\psi(s),\,\mathcal{E}_{n,k,m}^2)$  according to the statements \ref{st1_as_1D_WKB} or \ref{st1_as_1D}.
+
+
+Then the function
+\begin{equation}
+\label{w_main_sol}
+w(\rho,\,s)=\frac{\sqrt{\mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2)}}{|Ai'(-t_k)|}  Ai(-t_k+\rho \mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2))\left(1-\sqrt{h}\frac{i} {2} \rho^2 \frac{\mathcal{A}'(s;\, \mathcal{E}_{n,k,m}^2)}{\mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2)} \hat{p}_s\right)\psi(s)
+\end{equation}
+belongs the space $C_{0,L}^{\infty}(\Pi)$ and satisfies the  equality
+\begin{equation}
+\label{as_2D_norm}
+\|\hat{H}w\|_{L_2(\Pi)}=O(h^2),
+\end{equation}
+where $\Pi$ is the half-strip (\ref{Pi}) and the operator $\hat{H}$ is the operator of the equation (\ref{2D_eq_new}).","Approximate eigenfunctions (quasimodes) of a semiclassical operator \mathcal{L}_h on a half-strip: ansatz w(r,S)=\frac{\sqrt{A(S;E^2)}}{|\mathrm{Ai}'(-\tau_k)|}\,\mathrm{Ai}(-\tau_k+rA(S;E^2))\left(1-\sqrt{h}\frac{i}{2}r^2\frac{A'(S;E^2)}{A(S;E^2)}\hat p_S\right)\psi(S) lying in C_0^\infty and satisfying \|\mathcal{L}_h w\|_{L^2}=O(h^2). Looking for derivations that include the Ai' normalization and the 1st-order (\sqrt{h}) correction term, but without assuming the pair (\psi,E) is obtained from a 1D WKB/eigenvalue statement.",imperfect_recall,"[{'reference': {'title': 'Magnetic bottles in connection with superconductivity'}, 'confidence': 0.82, 'reasoning': ""Helffer–Morame develop boundary layer quasimode constructions for the magnetic Neumann Schrödinger operator and surface states; their derivations use the de Gennes/Airy model on the half-line, include the Ai/Ai' normalization coming from Neumann-type conditions, and provide semiclassical expansions with tangential operator corrections similar to the sqrt(h) first-order term in the ansatz.""}, {'reference': {'title': 'Accurate eigenvalue asymptotics for the magnetic Neumann Laplacian'}, 'confidence': 0.75, 'reasoning': ""Fournais & Helffer (and related papers by Helffer with collaborators) give detailed asymptotic expansions for low-lying eigenvalues/eigenfunctions of the magnetic Neumann problem; their boundary-layer analysis uses Airy functions with Ai' normalization and computes next-order corrections involving tangential differential operators, matching the structure of the posted ansatz.""}, {'reference': {'title': 'Spectral Methods in Surface Superconductivity'}, 'confidence': 0.65, 'reasoning': ""The Fournais–Helffer monograph collects and systematizes the methods used to build quasimodes near the boundary for magnetic Laplacians (de Gennes model), including Airy-function transverse profiles, Ai' normalization for Neumann-type boundary conditions, and higher-order semiclassical correction terms; it’s a central reference for deriving the sort of sqrt(h) correction without assuming a 1D WKB eigenpair.""}, {'reference': {'title': 'Semi-classical analysis for the Schrödinger operator and applications'}, 'confidence': 0.6, 'reasoning': ""The Helffer–Robert treatment of semiclassical spectral asymptotics contains turning-point/airylike constructions and systematic derivation of boundary-layer quasimodes and their normalizations. Although broader, it provides the analytic machinery to derive the Ai' factor and the first-order correction term in a rigorous semiclassical framework.""}, {'reference': {'title': 'Two-term asymptotics for the low-lying eigenvalues of the magnetic Neumann Laplacian in the semiclassical limit'}, 'confidence': 0.5, 'reasoning': ""Papers by Raymond, Kachmar, and collaborators (e.g. Raymond’s works) address two-term/three-term asymptotics for low-lying eigenvalues and construct corresponding quasimodes on boundary layers; these works derive Airy transverse profiles with Ai' normalization and compute the first-order tangential operator corrections similar to the sqrt(h) term in the ansatz.""}]",0,-1
+2310.00736v2,recent,theorem-2-6eb8f3,"\label{thm1_base}
+Let us fix positive integers $(n,\,k,\,m)$ and define  the pair $(\psi(s),\,\mathcal{E}_{n,k,m}^2)$  according to the statements \ref{st1_as_1D_WKB} or \ref{st1_as_1D}.
+
+
+Then the function
+\begin{equation}
+\label{w_main_sol}
+w(\rho,\,s)=\frac{\sqrt{\mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2)}}{|Ai'(-t_k)|}  Ai(-t_k+\rho \mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2))\left(1-\sqrt{h}\frac{i} {2} \rho^2 \frac{\mathcal{A}'(s;\, \mathcal{E}_{n,k,m}^2)}{\mathcal{A}(s;\, \mathcal{E}_{n,k,m}^2)} \hat{p}_s\right)\psi(s)
+\end{equation}
+belongs the space $C_{0,L}^{\infty}(\Pi)$ and satisfies the  equality
+\begin{equation}
+\label{as_2D_norm}
+\|\hat{H}w\|_{L_2(\Pi)}=O(h^2),
+\end{equation}
+where $\Pi$ is the half-strip (\ref{Pi}) and the operator $\hat{H}$ is the operator of the equation (\ref{2D_eq_new}).","Semiclassical WKB–Airy boundary layer / transverse mode with tangential pseudodifferential correction: paper containing formula w(\rho,s)=\frac{\sqrt{\mathcal{A}(s;E^2)}}{|Ai'(-t_k)|}Ai(-t_k+\rho\mathcal{A}(s;E^2))(1-\sqrt{h}\frac{i}{2}\rho^2(\mathcal{A}'/\mathcal{A})\hat p_s)\psi(s) on a half‑strip \Pi and the estimate \|\hat H w\|_{L^2(\Pi)}=O(h^2) (Airy profile, transverse quantization \mathcal{E}_{n,k,m}^2)",precise_assertion,"[{'reference': {'title': 'Propagation of singularities for the wave equation on manifolds with boundary'}, 'confidence': 0.7, 'reasoning': ""R. B. Melrose's work on propagation at boundaries and the glancing region introduced the microlocal Airy parametrices and the calculus needed to treat transverse Airy boundary layers together with tangential pseudodifferential corrections; this is the canonical source most likely underlying the construction and estimates you quote.""}, {'reference': {'title': 'Boundary problems for pseudo-differential operators'}, 'confidence': 0.55, 'reasoning': ""Boutet de Monvel's foundational paper sets up the pseudodifferential boundary calculus that is routinely used to implement tangential pseudodifferential corrections in boundary layer/WKB–Airy constructions; many later semiclassical Airy–boundary-layer constructions rely on this framework.""}, {'reference': {'title': 'Microlocal analysis of boundary value problems in scattering theory'}, 'confidence': 0.5, 'reasoning': 'Work developing microlocal parametrices for boundary value problems in scattering (Melrose–Taylor style papers and related notes) systematically build the Airy-profile transverse modes and derive error estimates (often stated as O(h^2) or similar) for quasimodes on half‑strips and near-glancing geometries; this family of papers is a close match to the detailed formula and estimate in the query.'}, {'reference': {'title': 'Semiclassical analysis of the resolvent near the boundary and glancing rays'}, 'confidence': 0.45, 'reasoning': 'Papers by the semiclassical scattering community (Sjöstrand, Zworski, Vodev, Popov and collaborators) on resolvent and quasimode constructions near glancing typically derive Airy transverse profiles and tangential pseudodifferential corrections and prove smallness estimates for the residual operator; such works are plausible sources for the displayed w(ρ,s) and the ‖Ĥ w‖ = O(h^2) statement.'}, {'reference': {'title': 'Construction of quasimodes concentrating near glancing rays and Airy boundary layers'}, 'confidence': 0.4, 'reasoning': ""There is a corpus of papers explicitly constructing WKB–Airy boundary-layer quasimodes (for instance in the study of whispering‑gallery or glancing eigenmodes) that present identical structures: normalized Airy profiles with Ai'(-t_k) in the denominator, tangential pseudodifferential corrections of order √h, and L^2 residual estimates of order h^2. Such a paper (often by authors in the Melrose/Taylor/Sjöstrand/Zworski circle) is a strong candidate for the exact formula you quoted.""}]",0,-1
+    </script>
+
+    <script>
+        // =========================
+        // CSV parsing & data model
+        // =========================
+
+        // Robust CSV parser with quoted fields and embedded newlines
+        function parseCSV(text) {
+            const rows = [];
+            let row = [];
+            let field = '';
+            let inside = false;
+            for (let i = 0; i < text.length; i++) {
+                const c = text[i];
+                if (c === '"') {
+                    if (inside && text[i + 1] === '"') { field += '"'; i++; continue; }
+                    inside = !inside; continue;
+                }
+                if (!inside && c === ',') { row.push(field); field = ''; continue; }
+                if (!inside && (c === '\n' || c === '\r')) {
+                    if (c === '\r' && text[i + 1] === '\n') i++;
+                    row.push(field); field = '';
+                    if (!(row.length === 1 && row[0] === '')) rows.push(row);
+                    row = [];
+                    continue;
+                }
+                field += c;
+            }
+            if (field.length > 0 || row.length > 0) { row.push(field); rows.push(row); }
+            while (rows.length && rows[rows.length - 1].every(v => (v ?? '').trim() === '')) rows.pop();
+            return rows;
+        }
+
+        function toObjects(rows) {
+            if (!rows.length) return [];
+            const headers = rows[0];
+            const objs = [];
+            for (let i = 1; i < rows.length; i++) {
+                const r = rows[i];
+                const o = {};
+                for (let j = 0; j < headers.length; j++) o[headers[j]] = r[j] ?? '';
+                objs.push(o);
+            }
+            return objs;
+        }
+
+        function normalizeBool(val) {
+            if (typeof val === 'boolean') return val;
+            const s = String(val ?? '').trim().toLowerCase();
+            return s === '1' || s === 'true' || s === 'yes';
+        }
+
+        function toNumberOr(val, d = null) {
+            const n = Number(val);
+            return Number.isFinite(n) ? n : d;
+        }
+
+        function safeJsonParse(s) { try { return JSON.parse(s); } catch { return null; } }
+
+        // Tolerant Python-literal -> JS object/array parser:
+        // 1) Try JSON.parse
+        // 2) Replace None/True/False then evaluate using Function (JS supports single quotes and object literals)
+        function parseCandidates(raw) {
+            if (Array.isArray(raw)) return raw;
+            const str = String(raw ?? '').trim();
+            if (!str) return [];
+            let arr = safeJsonParse(str);
+            if (Array.isArray(arr)) return arr;
+
+            // Prepare JS-evaluable literal
+            let t = str.replace(/\bNone\b/g, 'null')
+                .replace(/\bTrue\b/g, 'true')
+                .replace(/\bFalse\b/g, 'false');
+            try {
+                // Wrap in parentheses to allow object/array literal return
+                const out = Function('"use strict"; return (' + t + ');')();
+                return Array.isArray(out) ? out : [];
+            } catch {
+                return []; // silently fail (no warning banner)
+            }
+        }
+
+        function buildModel(rows) {
+            const byPaper = new Map(); // arxiv_id -> { bucket, artifacts: Map(artifact_id -> {artifact_text, queries: []}) }
+            const allCategories = new Set();
+            let totalQueries = 0;
+
+            for (const r of rows) {
+                const arxiv_id = (r['arxiv_id'] ?? '').trim();
+                const bucket = (r['bucket'] ?? '').trim();
+                const artifact_id = (r['artifact_id'] ?? '').trim();
+                const artifact_text = (r['artifact_text'] ?? '');
+                const query = (r['query'] ?? '');
+                const category = (r['category'] ?? '').trim();
+                const predicted_candidates_raw = r['predicted_candidates'];
+                const is_in_top_k = normalizeBool(r['is_in_top_k']);
+                const rank_if_found = toNumberOr(r['rank_if_found'], -1);
+                if (!arxiv_id || !artifact_id) continue;
+
+                let paper = byPaper.get(arxiv_id);
+                if (!paper) { paper = { bucket, artifacts: new Map() }; byPaper.set(arxiv_id, paper); }
+                else if (!paper.bucket && bucket) paper.bucket = bucket;
+
+                let artifact = paper.artifacts.get(artifact_id);
+                if (!artifact) { artifact = { artifact_id, artifact_text, queries: [] }; paper.artifacts.set(artifact_id, artifact); }
+                else if ((artifact.artifact_text ?? '').length < (artifact_text ?? '').length) {
+                    artifact.artifact_text = artifact_text;
+                }
+
+                const predicted_candidates = parseCandidates(predicted_candidates_raw);
+                artifact.queries.push({ query, category, predicted_candidates, is_in_top_k, rank_if_found });
+                totalQueries++;
+                if (category) allCategories.add(category);
+            }
+
+            // Sort artifacts & papers
+            for (const [, paper] of byPaper) {
+                paper.artifacts = new Map([...paper.artifacts.entries()].sort((a, b) => a[0].localeCompare(b[0])));
+            }
+            const orderedPapers = new Map([...byPaper.entries()].sort((a, b) => a[0].localeCompare(b[0])));
+            return { papers: orderedPapers, categories: [...allCategories].sort(), totalQueries };
+        }
+
+        // =========================
+        // Rendering helpers
+        // =========================
+        function el(tag, attrs = {}, children = []) {
+            const node = document.createElement(tag);
+            for (const [k, v] of Object.entries(attrs)) {
+                if (k === 'class') node.className = v;
+                else if (k === 'text') node.textContent = v;
+                else node.setAttribute(k, v);
+            }
+            if (!Array.isArray(children)) children = [children];
+            for (const c of children) if (c !== null && c !== undefined) node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+            return node;
+        }
+        function renderOptions(sel, values, formatter = (v) => v) {
+            sel.innerHTML = '';
+            for (const v of values) {
+                const opt = document.createElement('option');
+                opt.value = v; opt.textContent = formatter(v);
+                sel.appendChild(opt);
+            }
+        }
+        function buildUnionCandidates(queries) {
+            const map = new Map(); // title -> { title, freq, maxConf }
+            for (const q of queries) {
+                const arr = Array.isArray(q.predicted_candidates) ? q.predicted_candidates : [];
+                for (const c of arr) {
+                    let title = '';
+                    let conf = null;
+                    if (c && typeof c === 'object') {
+                        if (c.reference && typeof c.reference === 'object' && typeof c.reference.title === 'string') title = c.reference.title;
+                        else if (typeof c.title === 'string') title = c.title;
+                        if (c.confidence !== undefined) conf = Number(c.confidence);
+                    }
+                    if (!title) continue;
+                    const cur = map.get(title) || { title, freq: 0, maxConf: -Infinity };
+                    cur.freq += 1;
+                    if (Number.isFinite(conf)) cur.maxConf = Math.max(cur.maxConf, conf);
+                    map.set(title, cur);
+                }
+            }
+            return [...map.values()];
+        }
+        function renderUnionTable(unionItems, sortBy = 'freq') {
+            const tbody = document.querySelector('#unionTable tbody');
+            tbody.innerHTML = '';
+            const items = [...unionItems];
+            if (sortBy === 'freq') items.sort((a, b) => b.freq - a.freq || b.maxConf - a.maxConf);
+            else if (sortBy === 'conf') items.sort((a, b) => b.maxConf - a.maxConf || b.freq - a.freq);
+            for (const it of items) {
+                const tr = el('tr');
+                tr.append(
+                    el('td', {}, it.title),
+                    el('td', { class: 'nowrap' }, String(it.freq)),
+                    el('td', { class: 'nowrap' }, Number.isFinite(it.maxConf) ? String(it.maxConf) : '—')
+                );
+                tbody.appendChild(tr);
+            }
+        }
+
+        // =========================
+        // App state + UI wiring
+        // =========================
+        const paperSelect = document.getElementById('paperSelect');
+        let selectedArtifactId = null;
+
+        let model = { papers: new Map(), categories: [], totalQueries: 0 };
+
+        // Paper title resolution (uses arXiv API over HTTPS to avoid redirects)
+        const titleCache = new Map();
+        function applyPaperTitle(arxivId, title) {
+            const headerEl = document.getElementById('paperTitle');
+            const lineEl = document.getElementById('paperTitleLine');
+            if (headerEl && typeof title === 'string') headerEl.textContent = title;
+            if (lineEl && typeof title === 'string') lineEl.textContent = title;
+        }
+        async function resolvePaperTitle(arxivId) {
+            // Helper to parse Atom XML text and extract the first <entry><title>
+            const parseAtomTitle = (xmlText) => {
+                let title = 'arXiv:' + arxivId;
+                try {
+                    const xml = new DOMParser().parseFromString(xmlText, 'application/xml');
+                    const entries = xml.getElementsByTagName('entry');
+                    if (entries.length) {
+                        const t = entries[0].getElementsByTagName('title')[0];
+                        if (t && t.textContent) title = t.textContent.trim();
+                    }
+                } catch { /* ignore parse errors */ }
+                return title;
+            };
+
+            try {
+                if (titleCache.has(arxivId)) {
+                    applyPaperTitle(arxivId, titleCache.get(arxivId));
+                    return;
+                }
+                // Primary: direct arXiv API
+                const url = 'https://export.arxiv.org/api/query?id_list=' + encodeURIComponent(arxivId);
+                const res = await fetch(url);
+                let okTitle = null;
+                if (res && res.ok) {
+                    const txt = await res.text();
+                    okTitle = parseAtomTitle(txt);
+                }
+                if (!okTitle || okTitle === 'arXiv:' + arxivId) {
+                    // Fallback: CORS-friendly proxy
+                    const prox = 'https://r.jina.ai/http://export.arxiv.org/api/query?id_list=' + encodeURIComponent(arxivId);
+                    const res2 = await fetch(prox);
+                    if (res2 && res2.ok) {
+                        const txt2 = await res2.text();
+                        okTitle = parseAtomTitle(txt2);
+                    }
+                }
+                const finalTitle = okTitle || ('arXiv:' + arxivId);
+                titleCache.set(arxivId, finalTitle);
+                applyPaperTitle(arxivId, finalTitle);
+            } catch {
+                applyPaperTitle(arxivId, 'arXiv:' + arxivId);
+            }
+        }
+
+        function currentFilters() {
+            return {};
+        }
+
+        function renderArtifactPanel(paperId, artifactId) {
+            const paper = model.papers.get(paperId);
+            const artifact = paper?.artifacts.get(artifactId);
+            const meta = document.getElementById('artifactMetaTop');
+            const text = document.getElementById('artifactTextTop');
+            const titleLine = document.getElementById('paperTitleLine');
+            if (titleLine) titleLine.textContent = 'Loading title…';
+            resolvePaperTitle(paperId);
+            if (meta) meta.innerHTML = '';
+            if (text) text.innerHTML = '';
+            if (!artifact || !meta || !text) return;
+
+            const bucket = paper.bucket ? `Bucket: ${paper.bucket}` : 'Bucket: —';
+            meta.append(
+                el('span', { class: 'pill' }, bucket)
+            );
+
+            text.textContent = artifact.artifact_text ?? '';
+            if (window.renderMathInElement) {
+                renderMathInElement(text, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    throwOnError: false,
+                    macros: {
+                        "\\XR": "\\mathcal{X}_R",
+                        "\\AR": "\\mathcal{A}_R",
+                        "\\BR": "\\mathcal{B}_R",
+                        "\\CR": "\\mathcal{C}_R",
+                        "\\PR": "\\mathcal{P}_R",
+                        "\\MR": "\\mathcal{M}_R",
+                        "\\Id": "\\mathrm{Id}",
+                        "\\RR": "\\mathbb{R}",
+                        "\\LR": "\\mathcal{L}"
+                    }
+                });
+            }
+        }
+
+        function matchesFilters(q, filters) {
+            return true;
+        }
+
+        function renderQueries(paperId, artifactId) {
+            const container = document.getElementById('queriesContainer');
+            container.innerHTML = '';
+            const paper = model.papers.get(paperId);
+            const artifact = paper?.artifacts.get(artifactId);
+            if (!artifact) return;
+
+            const visible = artifact.queries;
+            document.getElementById('queryCount').textContent = String(visible.length);
+
+            for (const q of visible) {
+                const row = el('div', { class: 'row-grid' });
+
+                // Left: Query text
+                const left = el('div', { class: 'cell' });
+                left.append(
+                    el('h4', {}, 'Query'),
+                    el('div', {}, q.query || '—')
+                );
+
+                // Right: Proposed reference (top by confidence)
+                const right = el('div', { class: 'cell' });
+                right.append(el('h4', {}, 'Proposed reference'));
+                const candidates = Array.isArray(q.predicted_candidates) ? q.predicted_candidates : [];
+                const normalized = candidates.map(c => {
+                    let title = ''; let conf = null; let reasoning = '';
+                    if (c && typeof c === 'object') {
+                        if (c.reference && typeof c.reference === 'object' && typeof c.reference.title === 'string') title = c.reference.title;
+                        else if (typeof c.title === 'string') title = c.title;
+                        if (c.confidence !== undefined) conf = Number(c.confidence);
+                        if (typeof c.reasoning === 'string') reasoning = c.reasoning;
+                    }
+                    return { title, confidence: conf, reasoning };
+                }).sort((a, b) => {
+                    const an = Number.isFinite(a.confidence) ? a.confidence : -Infinity;
+                    const bn = Number.isFinite(b.confidence) ? b.confidence : -Infinity;
+                    return bn - an;
+                });
+                const top = normalized[0];
+                if (top) {
+                    right.append(
+                        el('div', { class: 'title' }, top.title || '(no title)'),
+                        el('div', { class: 'muted' }, Number.isFinite(top.confidence) ? `Confidence: ${top.confidence}` : ''),
+                        el('div', { class: 'muted' }, top.reasoning || '')
+                    );
+                } else {
+                    right.append(el('div', { class: 'muted' }, '—'));
+                }
+
+                if (window.renderMathInElement) {
+                    const katexOpts = {
+                        delimiters: [
+                            { left: "$$", right: "$$", display: true },
+                            { left: "$", right: "$", display: false },
+                            { left: "\\(", right: "\\)", display: false },
+                            { left: "\\[", right: "\\]", display: true }
+                        ],
+                        throwOnError: false,
+                        macros: {
+                            "\\XR": "\\mathcal{X}_R",
+                            "\\AR": "\\mathcal{A}_R",
+                            "\\BR": "\\mathcal{B}_R",
+                            "\\CR": "\\mathcal{C}_R",
+                            "\\PR": "\\mathcal{P}_R",
+                            "\\MR": "\\mathcal{M}_R",
+                            "\\Id": "\\mathrm{Id}",
+                            "\\RR": "\\mathbb{R}",
+                            "\\LR": "\\mathcal{L}"
+                        }
+                    };
+                    renderMathInElement(left, katexOpts);
+                    renderMathInElement(right, katexOpts);
+                }
+                row.append(left, right);
+                container.appendChild(row);
+            }
+        }
+
+        function refreshArtifacts() {
+            const p = paperSelect.value;
+            const paper = model.papers.get(p);
+            const titleEl = document.getElementById('paperTitle');
+            if (titleEl) titleEl.textContent = 'Loading title…';
+            resolvePaperTitle(p);
+            const strip = document.getElementById('artifactStrip');
+            if (strip) strip.innerHTML = '';
+            const arts = paper ? [...paper.artifacts.entries()] : [];
+            const countEl = document.getElementById('artifactCount');
+            if (countEl) countEl.textContent = `${arts.length} artifacts`;
+            if (!arts.length) { selectedArtifactId = null; return; }
+            if (!selectedArtifactId || !paper.artifacts.has(selectedArtifactId)) {
+                selectedArtifactId = arts[0][0];
+            }
+            const katexOpts = {
+                delimiters: [
+                    { left: "$$", right: "$$", display: true },
+                    { left: "$", right: "$", display: false },
+                    { left: "\\(", right: "\\)", display: false },
+                    { left: "\\[", right: "\\]", display: true }
+                ],
+                throwOnError: false,
+                macros: {
+                    "\\XR": "\\mathcal{X}_R",
+                    "\\AR": "\\mathcal{A}_R",
+                    "\\BR": "\\mathcal{B}_R",
+                    "\\CR": "\\mathcal{C}_R",
+                    "\\PR": "\\mathcal{P}_R",
+                    "\\MR": "\\mathcal{M}_R",
+                    "\\Id": "\\mathrm{Id}",
+                    "\\RR": "\\mathbb{R}",
+                    "\\LR": "\\mathcal{L}"
+                }
+            };
+            for (const [aid, art] of arts) {
+                const card = el('div', { class: 'artifact-card', 'data-artifact-id': aid });
+                if (aid === selectedArtifactId) card.className += ' active';
+                const snippet = (art.artifact_text || '').trim().slice(0, 280);
+                card.append(el('div', { class: 'artifact-snippet' }, snippet));
+                if (window.renderMathInElement) {
+                    renderMathInElement(card, katexOpts);
+                }
+                card.onclick = () => { selectedArtifactId = aid; refreshAll(); };
+                if (strip) strip.appendChild(card);
+            }
+        }
+
+        function refreshAll() {
+            const p = paperSelect.value;
+            refreshArtifacts(); // build strip and ensure selection
+            const a = selectedArtifactId;
+            renderArtifactPanel(p, a);
+            renderQueries(p, a);
+
+            // Union panel removed: skip union aggregation and controls
+        }
+
+        function loadIntoModel(rows) {
+            model = buildModel(rows);
+            const paperIds = [...model.papers.keys()];
+            renderOptions(paperSelect, paperIds);
+            document.getElementById('paperCount').textContent = `${paperIds.length} papers`;
+            document.getElementById('rowCount').textContent = String(rows.length);
+            document.getElementById('queryCount').textContent = String(model.totalQueries);
+
+            // Initialize selections
+            if (paperIds.length) {
+                paperSelect.value = paperIds[0];
+            }
+            refreshAll();
+        }
+
+        // Initial load from embedded sample (run after DOM is parsed so KaTeX defer scripts are available)
+        function init() {
+            const csvText = document.getElementById('embedded-csv').textContent;
+            loadIntoModel(toObjects(parseCSV(csvText)));
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        // UI event wiring
+        paperSelect.addEventListener('change', () => { selectedArtifactId = null; refreshAll(); });
+        document.getElementById('expandAll').addEventListener('click', () => {
+            document.querySelectorAll('details.query').forEach(d => d.open = true);
+        });
+        document.getElementById('collapseAll').addEventListener('click', () => {
+            document.querySelectorAll('details.query').forEach(d => d.open = false);
+        });
+
+    </script>
+</body>
+
+</html>
