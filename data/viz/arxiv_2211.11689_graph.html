@@ -6,9 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>arXiv Paper Dependency Graph - 2211.11689</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
-    
-    <!-- MATHJAX INTEGRATION: Add MathJax scripts to the head -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <!-- MATHJAX INTEGRATION -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          packages: {'[+]': ['ams']}
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+          ignoreHtmlClass: 'tex2jax_ignore'
+        },
+        startup: {
+          pageReady: () => {
+            return MathJax.startup.defaultPageReady();
+          }
+        }
+      };
+    </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <style>
@@ -36,13 +54,14 @@
         .tooltip p { margin: 5px 0; }
         .tooltip .id-label { color: #aaa; font-family: monospace; font-size: 11px; }
         .tooltip .edge-type { font-weight: bold; color: #ffc107; text-transform: uppercase; }
-        .tooltip b { color: #a2d2ff; } /* Make terms in prerequisites stand out */
+        .tooltip .math-content { margin-top: 5px; background: #222; padding: 8px; border-radius: 4px; overflow-x: auto; max-height: 300px; overflow-y: auto; }
+        .tooltip .error-message { color: #ff6b6b; font-style: italic; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>arXiv Paper Dependency Graph</h1>
-        <p><strong>Paper ID:</strong> 2211.11689 | <strong>Generated:</strong> 2025-09-08 22:00:13</p>
+        <p><strong>Paper ID:</strong> 2211.11689 | <strong>Generated:</strong> 2025-11-15 20:10:00</p>
         <div class="stats">
             <div class="stat"><strong>8</strong> artifacts</div>
             <div class="stat"><strong>12</strong> references</div>
@@ -360,10 +379,18 @@
             .attr("id", "arrowhead").attr("viewBox", "-0 -5 10 10").attr("refX", 25)
             .attr("refY", 0).attr("orient", "auto").attr("markerWidth", 8).attr("markerHeight", 8)
             .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", "#999");
-        
+
         const zoom = d3.zoom().scaleExtent([0.1, 5]).on("zoom", (event) => g.attr("transform", event.transform));
         svg.call(zoom);
         const g = svg.append("g");
+
+        svg.on("click", () => {
+            if (pinned) {
+                pinned = false;
+                pinnedNode = null;
+                tooltip.style("display", "none");
+            }
+        });
 
         const simulation = d3.forceSimulation(graphData.nodes)
             .force("link", d3.forceLink(graphData.edges).id(d => d.id).distance(120))
@@ -382,51 +409,135 @@
         const label = g.append("g").selectAll("text")
             .data(graphData.nodes).enter().append("text").attr("class", "node-label")
             .attr("dy", 28).text(d => d.display_name);
-        
+
         const tooltip = d3.select("#tooltip");
+        let pinned = false;
+        let pinnedNode = null;
 
-        // --- UPDATED TOOLTIP LOGIC FOR NODES ---
-        node.on("mouseover", (event, d) => {
-            // Build the prerequisites section only if it exists
-            let prereqHtml = d.prerequisites_preview ? 
-                `<h4>Prerequisites</h4><p>${d.prerequisites_preview}</p>` : '';
+        // Helper function to clean LaTeX content for proper display
+        function cleanLatexForDisplay(content) {
+            if (!content) return '';
 
-            tooltip.style("display", "block")
+            return content
+                // Remove LaTeX labels
+                .replace(/\\label\{[^}]*\}/g, '')
+                // Remove section commands
+                .replace(/\\(sub)?(sub)?section\*?\{[^}]*\}/g, '')
+                // Remove document structure commands
+                .replace(/\\(chapter|part|paragraph|subparagraph)\*?\{[^}]*\}/g, '')
+                // Remove \title, \author, \date commands
+                .replace(/\\(title|author|date|maketitle)\*?\{[^}]*\}/g, '')
+                .replace(/\\maketitle/g, '')
+                // Remove comments (but not escaped %)
+                .replace(/(?<!\\)%.*$/gm, '')
+                // Remove \usepackage, \documentclass, etc.
+                .replace(/\\(usepackage|documentclass|begin\{document\}|end\{document\}).*$/gm, '')
+                // Normalize excessive whitespace
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
+        }
+
+        // Helper to check if content already has math delimiters
+        function needsMathDelimiters(content) {
+            if (!content) return false;
+            const trimmed = content.trim();
+            // Check if already wrapped in display math
+            if (trimmed.startsWith('$$') || trimmed.startsWith('\\[')) return false;
+            // Check if it's an equation environment (these don't need extra delimiters)
+            if (trimmed.startsWith('\\begin{equation') ||
+                trimmed.startsWith('\\begin{align') ||
+                trimmed.startsWith('\\begin{gather')) return false;
+            return true;
+        }
+
+        function renderNodeTooltip(event, d) {
+            // 1. Clean and prepare content first
+            const rawPreview = d.content_preview || '';
+            const cleanedPreview = cleanLatexForDisplay(rawPreview);
+            const finalPreview = needsMathDelimiters(cleanedPreview)
+                ? `$${cleanedPreview}$`
+                : cleanedPreview;
+
+            let prereqsHtml = '';
+            if (d.prerequisites_preview) {
+                const rawPrereqs = d.prerequisites_preview || '';
+                const cleanedPrereqs = cleanLatexForDisplay(rawPrereqs);
+                const finalPrereqs = needsMathDelimiters(cleanedPrereqs)
+                    ? `$${cleanedPrereqs}$`
+                    : cleanedPrereqs;
+                prereqsHtml = `<h4>Prerequisites</h4><div class="math-content">${finalPrereqs}</div>`;
+            }
+
+            // 2. Set complete HTML with math content included
+            tooltip
+                .style("display", "block")
                 .html(`<h4>${d.display_name}</h4>
                        <p><span class="id-label">ID: ${d.id} | Label: ${d.label || 'N/A'}</span></p>
-                       <p><strong>Preview:</strong> ${d.content_preview}</p>
-                       ${prereqHtml}`)
+                       <div><strong>Preview:</strong></div>
+                       <div class="math-content">${finalPreview}</div>
+                       ${prereqsHtml}`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
 
-            // MATHJAX INTEGRATION: Tell MathJax to typeset the content of the tooltip.
-            if (window.MathJax) {
-                MathJax.typesetPromise([tooltip.node()]);
+            // 3. Trigger MathJax to typeset the content of the tooltip
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([tooltip.node()]).catch(err => {
+                    console.error('MathJax typesetting failed:', err);
+                });
             }
-        }).on("mouseout", () => {
-            tooltip.style("display", "none");
-        });
+        }
 
-        // --- UPDATED TOOLTIP LOGIC FOR LINKS ---
+        function hideTooltipIfNotPinned() {
+            if (!pinned) {
+                tooltip.style("display", "none");
+            }
+        }
+
+        node
+            .on("mouseover", (event, d) => {
+                if (pinned) return;
+                renderNodeTooltip(event, d);
+            })
+            .on("mouseout", () => {
+                hideTooltipIfNotPinned();
+            })
+            .on("click", (event, d) => {
+                event.stopPropagation();
+                pinned = true;
+                pinnedNode = d;
+                renderNodeTooltip(event, d);
+            });
+
         link.on("mouseover", (event, d) => {
-            // Use the reliable 'type' field from Edge.to_dict() and format it.
-            const dependencyType = (d.type || 'DEPENDS ON').replace('_', ' ').toUpperCase();
+            if (pinned) return;
+            const dependencyType = (d.type || 'DEPENDS ON').replace(/_/g, ' ').toUpperCase();
 
+            // 1. Clean and prepare content
+            const rawDependency = d.dependency || 'N/A';
+            const cleanedDependency = cleanLatexForDisplay(rawDependency);
+            const finalDependency = needsMathDelimiters(cleanedDependency)
+                ? `$${cleanedDependency}$`
+                : cleanedDependency;
+
+            // 2. Set complete HTML with math content
             tooltip.style("display", "block")
                 .html(`<h4>Dependency Link</h4>
                        <p>${d.source.display_name} <br>
                           <span class="edge-type">→ ${dependencyType} →</span> <br>
                           ${d.target.display_name}</p>
-                       <p><strong>Justification:</strong> ${d.dependency || 'N/A'}</p>`)
+                       <p><strong>Justification:</strong></p>
+                       <div class="math-content">${finalDependency}</div>`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
-            
-            // Also typeset math in the justification text, if any.
-            if (window.MathJax) {
-                MathJax.typesetPromise([tooltip.node()]);
+
+            // 3. Trigger MathJax
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([tooltip.node()]).catch(err => {
+                    console.error('MathJax typesetting failed:', err);
+                });
             }
         }).on("mouseout", () => {
-            tooltip.style("display", "none");
+            hideTooltipIfNotPinned();
         });
 
         simulation.on("tick", () => {
@@ -435,7 +546,7 @@
             node.attr("cx", d => d.x).attr("cy", d => d.y);
             label.attr("x", d => d.x).attr("y", d => d.y);
         });
-        
+
         const legendContainer = d3.select("#legend-container");
         nodeTypes.forEach(type => {
             const item = legendContainer.append("div").attr("class", "legend-item");
@@ -459,7 +570,7 @@
             if (!isPlaying) { d3.select("#play-pause").dispatch('click'); }
         });
         d3.select("#center").on("click", () => svg.transition().duration(750).call(zoom.transform, d3.zoomIdentity));
-        
+
         function dragstarted(event, d) { if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }
         function dragged(event, d) { d.fx = event.x; d.fy = event.y; }
         function dragended(event, d) { if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }
