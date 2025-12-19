@@ -1,0 +1,69 @@
+{
+    "arxiv_id": "sample",
+    "extractor_mode": "sample",
+    "stats": {
+        "node_count": 3,
+        "edge_count": 2
+    },
+    "nodes": [
+        {
+            "id": "definition-1",
+            "type": "definition",
+            "content": "\\n\\n\\\\label{def:group}\\nA **group** is a set $G$ with an operation $\\\\cdot$ satisfying associativity, identity, and inverses.\\n",
+            "content_preview": "A group is a set G with an operation ...",
+            "display_name": "Definition",
+            "label": "Definition 1",
+            "position": {
+                "line_start": 1,
+                "line_end": 3
+            },
+            "references": []
+        },
+        {
+            "id": "lemma-1",
+            "type": "lemma",
+            "content": "Every group has a unique identity element.",
+            "content_preview": "Every group has a unique identity element.",
+            "display_name": "Lemma",
+            "label": "Lemma 1",
+            "position": {
+                "line_start": 5,
+                "line_end": 5
+            },
+            "references": []
+        },
+        {
+            "id": "theorem-1",
+            "type": "theorem",
+            "content": "In a group, inverses are unique.",
+            "content_preview": "In a group, inverses are unique.",
+            "display_name": "Theorem",
+            "label": "Theorem 1",
+            "position": {
+                "line_start": 7,
+                "line_end": 7
+            },
+            "references": []
+        }
+    ],
+    "edges": [
+        {
+            "source": "lemma-1",
+            "target": "definition-1",
+            "dependency_type": "uses_definition",
+            "dependency": "Uses the definition of a group.",
+            "reference_type": null,
+            "context": null,
+            "type": "uses_definition"
+        },
+        {
+            "source": "theorem-1",
+            "target": "lemma-1",
+            "dependency_type": "uses_result",
+            "dependency": "Uses Lemma 1.",
+            "reference_type": null,
+            "context": null,
+            "type": "uses_result"
+        }
+    ]
+}

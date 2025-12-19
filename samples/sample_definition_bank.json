@@ -1,0 +1,22 @@
+{
+    "group": {
+        "term": "group",
+        "aliases": [
+            "G"
+        ],
+        "definition_text": "A set $G$ with a binary operation $\\cdot$ satisfying associativity, identity, and inverses.",
+        "source_artifact_id": "definition-1",
+        "dependencies": []
+    },
+    "identity": {
+        "term": "identity",
+        "aliases": [
+            "e"
+        ],
+        "definition_text": "An element $e\\in G$ such that $e\\cdot x=x\\cdot e=x$ for all $x\\in G$.",
+        "source_artifact_id": "lemma-1",
+        "dependencies": [
+            "group"
+        ]
+    }
+}
