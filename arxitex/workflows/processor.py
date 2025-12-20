@@ -15,6 +15,9 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
     """
     Processes papers from the DiscoveryIndex queue. For each paper, it performs
     a temporary download, generates a graph, saves the result, and cleans up.
+
+    Optionally persists normalized outputs (artifacts/edges/definitions/term maps)
+    into SQLite.
     """
 
     def __init__(
@@ -24,8 +27,12 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         enrich_content: bool,
         max_concurrent_tasks: int,
         format_for_search=False,
+        persist_db: bool = False,
+        mode: str = "raw",
     ):
         super().__init__(components, max_concurrent_tasks)
+        self.persist_db = persist_db
+        self.mode = mode
         self.infer_dependencies = infer_dependencies
         self.enrich_content = enrich_content
         self.max_concurrent_tasks = max_concurrent_tasks
@@ -100,14 +107,30 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             temp_base_dir = Path(self.components.output_dir) / "temp_processing"
             os.makedirs(temp_base_dir, exist_ok=True)
 
+            # Mode drives whether we use LLM features.
+            if self.mode == "raw":
+                infer_dependencies = False
+                enrich_content = False
+            elif self.mode == "defs":
+                infer_dependencies = False
+                enrich_content = True
+            elif self.mode == "full":
+                infer_dependencies = True
+                enrich_content = True
+            else:
+                raise ValueError(f"Unknown mode: {self.mode}")
+
             results = await agenerate_artifact_graph(
                 arxiv_id=arxiv_id,
-                infer_dependencies=self.infer_dependencies,
-                enrich_content=self.enrich_content,
+                infer_dependencies=infer_dependencies,
+                enrich_content=enrich_content,
                 source_dir=temp_base_dir,
             )
 
             graph = results.get("graph")
+            bank = results.get("bank")
+            artifact_to_terms_map = results.get("artifact_to_terms_map")
+
             if not graph or not graph.nodes:
                 raise ValueError("Graph generation resulted in an empty graph.")
 
@@ -142,6 +165,18 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                     logger.success(
                         f"Appended {len(searchable_artifacts)} artifacts from {arxiv_id} to search index."
                     )
+
+            if self.persist_db:
+                from arxitex.db.persistence import persist_extraction_result
+
+                await persist_extraction_result(
+                    db_path=self.components.db_path,
+                    paper_metadata=paper_metadata,
+                    graph=graph,
+                    mode=self.mode,
+                    bank=bank,
+                    artifact_to_terms_map=artifact_to_terms_map,
+                )
 
             self.components.processing_index.update_processed_papers_status(
                 arxiv_id,

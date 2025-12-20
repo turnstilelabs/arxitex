@@ -174,6 +174,22 @@ async def main():
         action="store_true",
         help="Additionally, transform and append artifacts to a .jsonl file.",
     )
+    parser_process.add_argument(
+        "--persist-db",
+        action="store_true",
+        help="Persist normalized artifacts/edges/definitions into SQLite (arxitex_indices.db).",
+    )
+    parser_process.add_argument(
+        "--mode",
+        type=str,
+        choices=["raw", "defs", "full"],
+        default="raw",
+        help=(
+            "Extraction mode: 'raw' (regex only, no LLM), "
+            "'defs' (LLM definitions/terms, no dependency inference), "
+            "'full' (defs + dependency inference)."
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -194,12 +210,23 @@ async def main():
 
     elif args.command == "process":
         components = ArxivPipelineComponents(output_dir=args.output_dir)
+
+        # Backwards compatibility: if the user still uses the old flags,
+        # auto-select an equivalent mode.
+        mode = args.mode
+        if args.infer_dependencies:
+            mode = "full"
+        elif args.enrich_content and args.mode == "raw":
+            mode = "defs"
+
         workflow = ProcessingWorkflow(
             components=components,
             enrich_content=args.enrich_content,
             infer_dependencies=args.infer_dependencies,
             max_concurrent_tasks=args.workers,
             format_for_search=args.format_for_search,
+            persist_db=args.persist_db,
+            mode=mode,
         )
         await workflow.run(max_papers=args.max_papers)
 
