@@ -92,16 +92,33 @@ export default function Home() {
         </div>
 
         <div
-          className="flex items-center justify-center gap-6 text-sm"
+          className="mt-2 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm"
           style={{ color: 'var(--secondary-text)' }}
         >
-          <label className="flex items-center gap-2">
-            <input type="checkbox" name="enrichContent" defaultChecked className="h-4 w-4" />
-            Enhance artifacts (definitions/symbols)
+          <label
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-[var(--border-color)] bg-[var(--surface2)] cursor-pointer transition hover:border-[var(--accent)] hover:bg-[var(--surface1)]"
+          >
+            <input
+              type="checkbox"
+              name="enrichContent"
+              defaultChecked
+              className="h-3 w-3 accent-[var(--accent)]"
+            />
+            <span className="text-[0.78rem] sm:text-xs md:text-sm">
+              Enhance artifacts (definitions/symbols)
+            </span>
           </label>
-          <label className="flex items-center gap-2">
-            <input type="checkbox" name="inferDependencies" defaultChecked className="h-4 w-4" />
-            Infer dependencies
+
+          <label
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-[var(--border-color)] bg-[var(--surface2)] cursor-pointer transition hover:border-[var(--accent)] hover:bg-[var(--surface1)]"
+          >
+            <input
+              type="checkbox"
+              name="inferDependencies"
+              defaultChecked
+              className="h-3 w-3 accent-[var(--accent)]"
+            />
+            <span className="text-[0.78rem] sm:text-xs md:text-sm">Infer dependencies</span>
           </label>
         </div>
       </form>
@@ -111,10 +128,6 @@ export default function Home() {
           Error: {error}
         </p>
       )}
-
-      <p className="mt-8 text-xs text-center" style={{ color: 'var(--secondary-text)' }}>
-        Tip: This page only starts the analysis. The graph visualization opens on a dedicated paper page.
-      </p>
     </main>
   );
 }
