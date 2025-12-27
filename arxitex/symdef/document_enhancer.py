@@ -4,7 +4,7 @@ import json
 import re
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
 
 import aiofiles
 from loguru import logger
@@ -78,7 +78,10 @@ class DocumentEnhancer:
         artifacts: List[ArtifactNode],
         latex_content: str,
         use_global_extraction: bool = True,
-    ) -> Dict[str, str]:
+        on_artifact_enhanced: Optional[
+            Callable[[str, Dict[str, str]], Awaitable[None]]
+        ] = None,
+    ) -> Dict[str, Any]:
         """
         Enhances the document by processing all artifacts to ensure they are self-contained
         Args:
@@ -124,6 +127,7 @@ class DocumentEnhancer:
             artifact_to_terms_map,
             term_to_first_artifact_map,
             all_artifacts_map,
+            on_artifact_enhanced=on_artifact_enhanced,
         )
 
         logger.success("Document enhancement complete.")
@@ -536,19 +540,42 @@ class DocumentEnhancer:
         artifact_to_terms_map: Dict[str, List[str]],
         term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode],
+        *,
+        on_artifact_enhanced: Optional[
+            Callable[[str, Dict[str, str]], Awaitable[None]]
+        ] = None,
     ) -> Dict[str, Dict[str, str]]:
-        """Concurrently enhances all artifacts using the pre-computed terms map."""
+        """Concurrently enhances all artifacts using the pre-computed terms map.
+
+        If `on_artifact_enhanced` is provided, it is awaited as each artifact
+        finishes, enabling progressive streaming.
+        """
+
         tasks = [
-            self._enhance_single_artifact(
-                artifact,
-                artifact_to_terms_map.get(artifact.id, []),
-                term_to_first_artifact_map,
-                all_artifacts_map,
+            asyncio.create_task(
+                self._enhance_single_artifact(
+                    artifact,
+                    artifact_to_terms_map.get(artifact.id, []),
+                    term_to_first_artifact_map,
+                    all_artifacts_map,
+                )
             )
             for artifact in artifacts
         ]
-        results = await asyncio.gather(*tasks)
-        return {artifact_id: content for artifact_id, content in results}
+
+        results: Dict[str, Dict[str, str]] = {}
+        for task in asyncio.as_completed(tasks):
+            artifact_id, prereq_defs = await task
+            results[artifact_id] = prereq_defs
+            if on_artifact_enhanced is not None:
+                try:
+                    await on_artifact_enhanced(artifact_id, prereq_defs)
+                except Exception as e:
+                    logger.warning(
+                        f"on_artifact_enhanced callback failed for {artifact_id}: {e}"
+                    )
+
+        return results
 
     async def _enhance_single_artifact(
         self,

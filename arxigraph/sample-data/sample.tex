@@ -1,0 +1,25 @@
+% Sample LaTeX content for offline testing
+\documentclass{article}
+\begin{document}
+
+\begin{definition}\label{def:metric-space}
+A \textbf{metric space} is a pair $(X,d)$ where $X$ is a set and $d : X \times X \to \mathbb{R}_{\ge 0}$ satisfies symmetry, identity of indiscernibles, and the triangle inequality.
+\end{definition}
+
+\begin{theorem}\label{thm:complete}
+Every Cauchy sequence in a complete metric space converges to a point of that space.
+\end{theorem}
+
+\begin{lemma}\label{lem:cauchy-bound}
+Let $(x_n)$ be a Cauchy sequence in a metric space $(X,d)$. For every $\varepsilon > 0$ there exists $N$ such that $d(x_m, x_n) < \varepsilon$ whenever $m, n > N$.
+\end{lemma}
+
+\begin{proof}
+Fix $\varepsilon > 0$. Since $(x_n)$ is Cauchy there exists $N$ such that for all $m,n > N$ we have $d(x_m, x_n) < \varepsilon$. This proves the claim.
+\end{proof}
+
+\begin{corollary}\label{cor:unique-limit}
+Limits in Hausdorff spaces are unique.
+\end{corollary}
+
+\end{document}

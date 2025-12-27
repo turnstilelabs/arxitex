@@ -1,0 +1,321 @@
+/* Minimal port of Constellations styling for graph + panels */
+
+.graph-shell {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: var(--background);
+    border: 1px solid var(--border-color);
+}
+
+.graph-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#tooltip {
+    position: absolute;
+    display: none;
+    max-width: 450px;
+    z-index: 50;
+    background: var(--surface2);
+    color: var(--primary-text);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--border-color);
+    pointer-events: none;
+}
+
+#tooltip h4 {
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.math-content {
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.legend {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 20;
+    background: var(--surface1);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 12px;
+    max-width: 420px;
+    color: var(--primary-text);
+}
+
+.legend-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.legend-title {
+    margin: 0;
+    font-weight: 900;
+    font-size: 12px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--accent);
+}
+
+.legend-toggle {
+    border: 1px solid var(--border-color);
+    background: var(--surface2);
+    color: var(--primary-text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 12px;
+    width: 28px;
+    height: 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.legend-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.legend--collapsed {
+    max-width: 180px;
+}
+
+.legend--collapsed .legend-body {
+    display: none;
+}
+
+.legend h3 {
+    font-weight: 800;
+    font-size: 12px;
+    margin-bottom: 6px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--accent);
+}
+
+.legend-body h3:first-child {
+    margin-top: 0;
+}
+
+.legend-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 12px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--primary-text);
+}
+
+.legend-item.inactive {
+    opacity: 0.35;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+}
+
+.edge-legend-line {
+    width: 16px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+#info-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 360px;
+    max-width: 92%;
+    height: 100%;
+    overflow: auto;
+    z-index: 30;
+    background: var(--surface2);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(105%);
+    transition: transform 0.25s ease-in-out;
+}
+
+#info-panel.visible {
+    transform: translateX(0);
+}
+
+#info-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 14px;
+    border-bottom: 1px solid var(--border-color);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+#info-title {
+    font-weight: 800;
+    color: var(--primary-text);
+}
+
+#close-info-panel {
+    border: none;
+    background: none;
+    color: var(--secondary-text);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#close-info-panel:hover {
+    color: var(--accent);
+}
+
+.depth-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--surface2);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    color: var(--primary-text);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.depth-btn:hover {
+    background: var(--surface1);
+}
+
+.depth-btn--primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--background);
+    font-weight: 700;
+}
+
+.depth-btn--primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}
+
+.proof-controls-inline {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 6px 0 12px;
+    justify-content: center;
+}
+
+.proof-action {
+    display: flex;
+    justify-content: center;
+    margin: 6px 0 10px;
+}
+
+#info-body {
+    padding: 14px;
+    font-size: 13px;
+    color: var(--primary-text);
+}
+
+#info-body h4 {
+    margin-top: 14px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--accent);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.node {
+    stroke: var(--surface1);
+    stroke-width: 3px;
+    cursor: pointer;
+}
+
+.node:hover {
+    stroke: var(--accent);
+}
+
+.node.selected {
+    stroke: var(--accent);
+}
+
+.link {
+    stroke-opacity: 0.6;
+    stroke-width: 1.5px;
+    transition: stroke-width 0.2s, stroke-opacity 0.2s;
+    cursor: pointer;
+}
+
+.link:hover {
+    stroke-width: 4px;
+    stroke-opacity: 1;
+}
+
+.node-label {
+    font-size: 12px;
+    fill: var(--primary-text);
+    text-anchor: middle;
+    pointer-events: none;
+    font-weight: 500;
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.floating-controls {
+    position: absolute;
+    top: 85px;
+    left: 15px;
+    display: none;
+    gap: 8px;
+    z-index: 100;
+    pointer-events: all;
+}
+
+.floating-controls button {
+    padding: 6px 12px;
+    border: 1px solid var(--border-color);
+    background: var(--surface2);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    color: var(--primary-text);
+    font-family: 'Inter', system-ui, sans-serif;
+}
+
+.floating-controls button:hover {
+    background: var(--surface1);
+}
+
+.floating-controls button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--background);
+    font-weight: 700;
+}
+
+.floating-controls button.primary:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+}

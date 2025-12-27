@@ -45,3 +45,7 @@ tzdata==2025.2
 urllib3==2.4.0
 yarl==1.20.1
 tenacity==8.5.0
+
+# Web backend (ArxiGraph -> ArxiTex)
+fastapi==0.115.6
+uvicorn[standard]==0.34.0

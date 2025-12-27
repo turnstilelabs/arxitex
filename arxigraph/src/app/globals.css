@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+  --background: #121212;
+  --foreground: #e0e0e0;
+  --surface1: #1a1a1a;
+  --surface2: #242424;
+  --primary-text: #e0e0e0;
+  --secondary-text: #aaaaaa;
+  --accent: #ffdd57;
+  --accent-hover: #ffc800;
+  --border-color: #333333;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Use a single consistent dark theme (Constellations style) */
+
+body {
+  background: var(--background);
+  color: var(--primary-text);
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  background-color: var(--surface2);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+  color: var(--accent);
+}
+
+.paper-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--surface2);
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.paper-link-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.paper-link-btn img {
+  filter: invert(0.92);
+  opacity: 0.9;
+}
+
+/* Constellations-inspired graph UI */
+@import "../components/constellations/styles.css";

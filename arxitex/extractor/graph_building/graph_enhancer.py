@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, AsyncIterator, Dict, List, Optional
 
 from loguru import logger
 
@@ -148,6 +148,140 @@ class GraphEnhancer:
 
         return words_a.issubset(words_b)
 
+    async def astream_dependency_edges(
+        self,
+        *,
+        graph: DocumentGraph,
+        artifact_to_terms_map: Dict[str, List[str]],
+        bank: DefinitionBank,
+    ) -> AsyncIterator[dict]:
+        """Stream dependency edges as LLM checks complete.
+
+        This yields edge dictionaries (Edge.to_dict()) for each dependency edge
+        accepted by the LLM.
+        """
+
+        internal_nodes = [node for node in graph.nodes if not node.is_external]
+        if len(internal_nodes) < 2:
+            return
+
+        id_to_node_map = {node.id: node for node in internal_nodes}
+        final_candidate_pairs: list[tuple[Any, Any]] = []
+
+        has_enrichment_data = bool(bank and artifact_to_terms_map)
+
+        if has_enrichment_data:
+            logger.info(
+                "Building conceptual footprint for each artifact by including term dependencies..."
+            )
+            artifact_footprints = defaultdict(set)
+            for artifact in internal_nodes:
+                direct_terms = artifact_to_terms_map.get(artifact.id, [])
+                artifact_footprints[artifact.id].update(direct_terms)
+
+                for term in direct_terms:
+                    definition = await bank.find(term)
+                    if definition and definition.dependencies:
+                        artifact_footprints[artifact.id].update(definition.dependencies)
+
+            logger.info(
+                "Generating candidate pairs from conceptual and subword overlap..."
+            )
+            candidate_pairs_unordered = set()
+
+            for id1, id2 in combinations(id_to_node_map.keys(), 2):
+                footprint1 = artifact_footprints[id1]
+                footprint2 = artifact_footprints[id2]
+
+                if not footprint1.isdisjoint(footprint2):
+                    candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
+                    continue
+
+                found_subword_link = False
+                for term1 in footprint1:
+                    for term2 in footprint2:
+                        if self._is_subword_of(term1, term2) or self._is_subword_of(
+                            term2, term1
+                        ):
+                            candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
+                            found_subword_link = True
+                            break
+                    if found_subword_link:
+                        break
+
+            for id1, id2 in candidate_pairs_unordered:
+                node1, node2 = id_to_node_map[id1], id_to_node_map[id2]
+                source_node, target_node = (
+                    (node2, node1)
+                    if node1.position.line_start < node2.position.line_start
+                    else (node1, node2)
+                )
+
+                if not graph.find_edge(source_node.id, target_node.id):
+                    final_candidate_pairs.append((source_node, target_node))
+        else:
+            logger.warning(
+                "No enrichment data found. Falling back to checking all artifact pairs."
+            )
+            for node1, node2 in combinations(internal_nodes, 2):
+                source_node, target_node = (
+                    (node1, node2)
+                    if node1.position.line_start < node2.position.line_start
+                    else (node2, node1)
+                )
+
+                if not graph.find_edge(source_node.id, target_node.id):
+                    final_candidate_pairs.append((source_node, target_node))
+
+        if not final_candidate_pairs:
+            return
+
+        logger.info(
+            f"Generated {len(final_candidate_pairs)} candidate pairs for LLM verification."
+        )
+
+        async def _run_check(source_node: Any, target_node: Any):
+            """Wrapper so we never lose source/target context when awaiting results."""
+            result = await self.llm_dependency_checker.ainfer_dependency(
+                source_node.to_dict(), target_node.to_dict()
+            )
+            return source_node, target_node, result
+
+        tasks: list[asyncio.Task] = [
+            asyncio.create_task(_run_check(source_node, target_node))
+            for source_node, target_node in final_candidate_pairs
+        ]
+
+        added_edges_count = 0
+        for fut in asyncio.as_completed(tasks):
+            try:
+                source_node, target_node, result = await fut
+            except Exception as e:
+                logger.error(f"Error during dependency inference task: {e}")
+                continue
+
+            has_dep = (
+                bool(getattr(result, "has_dependency", False))
+                or getattr(result, "dependency_type", None) is not None
+            )
+            if not has_dep:
+                continue
+
+            new_edge = Edge(
+                source_id=source_node.id,
+                target_id=target_node.id,
+                dependency_type=getattr(result, "dependency_type", None),
+                dependency=getattr(result, "justification", None)
+                or "Inferred by LLM based on shared terminology.",
+            )
+            graph.add_edge(new_edge)
+            added_edges_count += 1
+            yield new_edge.to_dict()
+
+        logger.success(
+            f"Added {added_edges_count} new dependency edges based on LLM verification."
+        )
+
     async def _infer_and_add_dependencies(
         self,
         graph: DocumentGraph,
@@ -280,15 +414,19 @@ class GraphEnhancer:
                 )
                 continue
 
-            if result and result.has_dependency:
+            has_dep = (
+                bool(getattr(result, "has_dependency", False))
+                or getattr(result, "dependency_type", None) is not None
+            )
+            if has_dep:
                 source_node = context["source"]
                 target_node = context["target"]
 
                 new_edge = Edge(
                     source_id=source_node.id,
                     target_id=target_node.id,
-                    dependency_type=result.dependency_type,
-                    dependency=result.justification
+                    dependency_type=getattr(result, "dependency_type", None),
+                    dependency=getattr(result, "justification", None)
                     or "Inferred by LLM based on shared terminology.",
                 )
                 graph.add_edge(new_edge)
