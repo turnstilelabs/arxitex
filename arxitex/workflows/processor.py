@@ -6,6 +6,7 @@ from pathlib import Path
 from filelock import FileLock
 from loguru import logger
 
+from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
 from arxitex.workflows.runner import ArxivPipelineComponents, AsyncWorkflowRunnerBase
 from arxitex.workflows.utils import save_graph_data, transform_graph_to_search_format
@@ -46,9 +47,14 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         os.makedirs(self.graphs_base_dir, exist_ok=True)
         os.makedirs(self.search_indices_base_dir, exist_ok=True)
 
-    async def run(self, max_papers: int):
-        """
-        Finds and processes all papers in the discovery queue up to the max_papers limit.
+    async def run(self, max_papers: int, target_arxiv_id: str | None = None):
+        """Find and process papers from the discovery queue.
+
+        Args:
+            max_papers: Maximum number of papers to process in this run.
+            target_arxiv_id: If provided, restrict processing to this specific
+                arXiv ID (useful for reprocessing a single paper). When set,
+                other discovered papers are ignored for this run.
         """
         logger.info("Starting 'processing' workflow...")
         all_discovered_papers = self.components.discovery_index.get_pending_papers()
@@ -59,6 +65,11 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                 break
 
             arxiv_id = paper_metadata["arxiv_id"]
+
+            # If a specific target is requested, skip all others.
+            if target_arxiv_id is not None and arxiv_id != target_arxiv_id:
+                continue
+
             if self.components.processing_index.is_successfully_processed(arxiv_id):
                 logger.debug(
                     f"Skipping {arxiv_id}: already successfully processed. Removing from discovery queue."
@@ -69,9 +80,14 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             papers_to_process.append(paper_metadata)
 
         if not papers_to_process:
-            logger.info(
-                "No new papers in the discovery queue are pending processing. Exiting."
-            )
+            if target_arxiv_id is not None:
+                logger.info(
+                    f"No pending papers found in discovery queue matching arxiv_id={target_arxiv_id}. Exiting."
+                )
+            else:
+                logger.info(
+                    "No new papers in the discovery queue are pending processing. Exiting."
+                )
             return
 
         logger.info(
@@ -198,10 +214,15 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             }
 
         except Exception as e:
+            err = classify_processing_error(e)
             self.components.processing_index.update_processed_papers_status(
-                arxiv_id, status="failure", reason=str(e)
+                arxiv_id,
+                status="failure",
+                **err.to_details_dict(),
             )
             logger.error(
-                f"FAILURE processing {arxiv_id}: {e}. It will remain in the discovery queue for a future retry."
+                f"FAILURE processing {arxiv_id} [{err.code} @ {err.stage}]: {err.message}. "
+                "It will remain in the discovery queue for a future retry.",
+                exc_info=True,
             )
             raise e

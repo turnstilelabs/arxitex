@@ -10,6 +10,7 @@ from typing import Dict, List, Optional, Tuple
 from loguru import logger
 
 from arxitex.arxiv_api import ArxivAPI
+from arxitex.db.error_utils import classify_processing_error
 from arxitex.indices.discover import DiscoveryIndex
 from arxitex.indices.processed import ProcessedIndex
 from arxitex.indices.skipped import SkippedIndex
@@ -58,9 +59,17 @@ class AsyncWorkflowRunnerBase(abc.ABC):
             try:
                 return await self._process_single_item(paper)
             except Exception as e:
-                reason = f"Unhandled exception in workflow for item {item_id}: {e}"
-                logger.error(reason, exc_info=True)
-                return {"status": "failure", "id": item_id, "reason": reason}
+                err = classify_processing_error(e)
+                logger.error(
+                    f"Unhandled exception in workflow for item {item_id} "
+                    f"[{err.code} @ {err.stage}]: {err.message}",
+                    exc_info=True,
+                )
+                return {
+                    "status": "failure",
+                    "id": item_id,
+                    **err.to_details_dict(),
+                }
 
     def _write_summary_report(self):
         """
@@ -292,14 +301,21 @@ class AsyncArxivWorkflowRunner(AsyncWorkflowRunnerBase):
             try:
                 return await self._process_single_item(paper)
             except Exception as e:
-                reason = f"Unhandled exception in workflow: {str(e)}"
+                err = classify_processing_error(e)
                 logger.error(
-                    f"UNHANDLED_FAILURE for {paper_id}: {reason}", exc_info=True
+                    f"UNHANDLED_FAILURE for {paper_id} [{err.code} @ {err.stage}]: {err.message}",
+                    exc_info=True,
                 )
                 self.components.processing_index.update_processed_papers_status(
-                    paper_id, status="failure", reason=reason
+                    paper_id,
+                    status="failure",
+                    **err.to_details_dict(),
                 )
-                return {"status": "failure", "arxiv_id": paper_id, "reason": reason}
+                return {
+                    "status": "failure",
+                    "arxiv_id": paper_id,
+                    **err.to_details_dict(),
+                }
 
     def _write_summary_report(self):
         """Categorizes results from the current run and writes a summary report."""

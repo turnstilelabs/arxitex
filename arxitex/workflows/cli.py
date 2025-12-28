@@ -1,10 +1,12 @@
 import argparse
 import asyncio
 import os
+import sqlite3
 from pathlib import Path
 
 from loguru import logger
 
+from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
@@ -62,12 +64,22 @@ async def process_single_paper(arxiv_id: str, args):
         return {"status": "success"}
 
     except Exception as e:
-        reason = f"End-to-end processing failed for {arxiv_id}: {e}"
-        logger.error(reason, exc_info=True)
-        components.processing_index.update_processed_papers_status(
-            arxiv_id, status="failure", reason=str(e)
+        err = classify_processing_error(e)
+        logger.error(
+            f"End-to-end processing failed for {arxiv_id} "
+            f"[{err.code} @ {err.stage}]: {err.message}",
+            exc_info=True,
         )
-        return {"status": "failure", "reason": reason}
+        components.processing_index.update_processed_papers_status(
+            arxiv_id,
+            status="failure",
+            **err.to_details_dict(),
+        )
+        return {
+            "status": "failure",
+            "arxiv_id": arxiv_id,
+            **err.to_details_dict(),
+        }
 
 
 async def main():
@@ -191,6 +203,65 @@ async def main():
         ),
     )
 
+    # --- 'reprocess-paper' command ---
+    parser_reprocess = subparsers.add_parser(
+        "reprocess-paper",
+        help=(
+            "Reset DB state and reprocess a single paper by ID "
+            "(discover + process) with the chosen mode."
+        ),
+    )
+    parser_reprocess.add_argument(
+        "arxiv_id", help="The arXiv ID to reprocess (e.g., '2305.15334')."
+    )
+    parser_reprocess.add_argument(
+        "--mode",
+        type=str,
+        choices=["raw", "defs", "full"],
+        default="raw",
+        help=(
+            "Extraction mode: 'raw' (regex only, no LLM), "
+            "'defs' (LLM definitions/terms, no dependency inference), "
+            "'full' (defs + dependency inference)."
+        ),
+    )
+    parser_reprocess.add_argument(
+        "--enrich-content",
+        action="store_true",
+        help="Backwards-compat: if set, will upgrade mode to 'defs' unless already 'full'.",
+    )
+    parser_reprocess.add_argument(
+        "--infer-dependencies",
+        action="store_true",
+        help="Backwards-compat: if set, will force mode to 'full'.",
+    )
+    parser_reprocess.add_argument(
+        "--persist-db",
+        action="store_true",
+        help="Persist normalized artifacts/edges/definitions into SQLite.",
+    )
+    parser_reprocess.add_argument(
+        "--format-for-search",
+        action="store_true",
+        help="Additionally append artifacts to a JSONL search index.",
+    )
+    parser_reprocess.add_argument(
+        "-w",
+        "--workers",
+        type=int,
+        default=1,
+        help="Number of concurrent processing tasks (default: 1).",
+    )
+    parser_reprocess.add_argument(
+        "--reset-modes",
+        nargs="*",
+        default=None,
+        help=(
+            "Optional list of ingestion modes to reset in paper_ingestion_state "
+            "(e.g. raw defs full). Default: reset all modes for that paper."
+        ),
+    )
+
     args = parser.parse_args()
 
     exit_code = 0
@@ -229,6 +300,90 @@ async def main():
             mode=mode,
         )
         await workflow.run(max_papers=args.max_papers)
+
+    elif args.command == "reprocess-paper":
+        components = ArxivPipelineComponents(output_dir=args.output_dir)
+        db_path = components.db_path
+
+        logger.info(f"Resetting processed state for {args.arxiv_id} in {db_path}...")
+        conn = sqlite3.connect(db_path)
+        try:
+            cur = conn.cursor()
+
+            # Clear processed_papers status
+            cur.execute(
+                "DELETE FROM processed_papers WHERE arxiv_id = ?",
+                (args.arxiv_id,),
+            )
+
+            # Clear ingestion state for this paper (optionally per-mode)
+            if args.reset_modes:
+                placeholders = ",".join("?" * len(args.reset_modes))
+                sql = (
+                    "DELETE FROM paper_ingestion_state "
+                    "WHERE paper_id = ? AND mode IN (" + placeholders + ")"
+                )
+                cur.execute(sql, (args.arxiv_id, *args.reset_modes))
+            else:
+                cur.execute(
+                    "DELETE FROM paper_ingestion_state WHERE paper_id = ?",
+                    (args.arxiv_id,),
+                )
+
+            conn.commit()
+        finally:
+            conn.close()
+
+        # Re-discover this paper by ID and add it to the discovery queue
+        search_query = f"id:{args.arxiv_id}"
+        logger.info(f"Fetching metadata from ArXiv for {args.arxiv_id}...")
+
+        response_text = components.arxiv_api.fetch_papers(
+            search_query, start=0, batch_size=1
+        )
+        if not response_text:
+            logger.error(f"No response from ArXiv for {search_query}.")
+            return 1
+
+        entries_in_batch, _, entries = components.arxiv_api.parse_response(
+            response_text
+        )
+        if not entries:
+            logger.error(f"Paper {args.arxiv_id} not found on ArXiv.")
+            return 1
+
+        paper = components.arxiv_api.entry_to_paper(entries[0])
+        if not paper:
+            logger.error(f"Failed to parse ArXiv entry for {args.arxiv_id}.")
+            return 1
+
+        added_count = components.discovery_index.add_papers([paper])
+        if added_count == 0:
+            logger.info(
+                f"Paper {args.arxiv_id} was already in the discovery queue; proceeding to process."
+            )
+        else:
+            logger.info(f"Added {args.arxiv_id} to discovery queue.")
+
+        # Derive effective mode with backwards-compat flags like the 'process' command
+        mode = args.mode
+        if args.infer_dependencies:
+            mode = "full"
+        elif args.enrich_content and args.mode == "raw":
+            mode = "defs"
+
+        workflow = ProcessingWorkflow(
+            components=components,
+            enrich_content=args.enrich_content,
+            infer_dependencies=args.infer_dependencies,
+            max_concurrent_tasks=args.workers,
+            format_for_search=args.format_for_search,
+            persist_db=args.persist_db,
+            mode=mode,
+        )
+        # When reprocessing, restrict the workflow to the specific paper ID so
+        # we don't accidentally pick the first pending paper from the queue.
+        await workflow.run(max_papers=1, target_arxiv_id=args.arxiv_id)
 
     logger.info(f"Command '{args.command}' has completed.")
     return exit_code
