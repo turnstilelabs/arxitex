@@ -6,6 +6,7 @@ from typing import Dict, List, Optional, Set, Tuple
 from loguru import logger
 
 from arxitex.downloaders.utils import read_and_combine_tex_files
+from arxitex.extractor.graph_building.newtheorem_scanner import NewTheoremScanner
 from arxitex.extractor.graph_building.proof_linker import ProofLinker
 from arxitex.extractor.graph_building.reference_resolver import ReferenceResolver
 from arxitex.extractor.models import ArtifactNode, ArtifactType, DocumentGraph, Position
@@ -36,6 +37,36 @@ class BaseGraphBuilder:
     }
     PROOF_ENV_TYPE = "proof"
 
+    # Mapping from LaTeX environment names (often custom/abbreviated) to
+    # canonical artifact type names used in ARTIFACT_TYPES.
+    ENV_NAME_ALIASES: Dict[str, str] = {
+        # Theorems
+        "thm": "theorem",
+        "Thm": "theorem",
+        "THEOREM": "theorem",
+        # Definitions
+        "defn": "definition",
+        "defi": "definition",
+        "Def": "definition",
+        # Propositions
+        "prop": "proposition",
+        "Prop": "proposition",
+        # Lemmas (short aliases; canonical "lemma" is already in ARTIFACT_TYPES)
+        "lem": "lemma",
+        "Lem": "lemma",
+        # Corollaries
+        "cor": "corollary",
+        "Cor": "corollary",
+        # Claims (short alias; canonical "claim" already present)
+        "clm": "claim",
+        # Observations
+        "obs": "observation",
+        # Conjectures
+        "conj": "conjecture",
+        # Remarks
+        "Rem": "remark",
+    }
+
     def __init__(self):
         self.artifact_type_map = {
             name: ArtifactType(name) for name in self.ARTIFACT_TYPES
@@ -51,6 +82,14 @@ class BaseGraphBuilder:
         logger.debug("Starting LaTeX graph extraction.")
         self.content = read_and_combine_tex_files(project_dir)
         self.content = re.sub(r"(?<!\\)%.*", "", self.content)
+
+        # Build a per-document alias map by combining static aliases with
+        # aliases discovered from \newtheorem declarations.
+        dynamic_aliases = NewTheoremScanner.scan(self.content)
+        self.env_name_aliases: Dict[str, str] = {
+            **self.ENV_NAME_ALIASES,
+            **dynamic_aliases,
+        }
 
         graph = DocumentGraph(source_file=source_file)
         self.label_to_node_id_map.clear()
@@ -95,7 +134,15 @@ class BaseGraphBuilder:
         detached_proofs: List[Dict] = []
         node_char_offsets: Dict[str, Tuple[int, int]] = {}
 
-        all_env_types = "|".join(list(self.ARTIFACT_TYPES) + [self.PROOF_ENV_TYPE])
+        all_env_types = "|".join(
+            sorted(
+                set(
+                    list(self.ARTIFACT_TYPES)
+                    + list(self.env_name_aliases.keys())
+                    + [self.PROOF_ENV_TYPE]
+                )
+            )
+        )
         pattern = re.compile(rf"\\begin\{{({all_env_types})(\*?)\}}(?:\[([^\]]*)\])?")
 
         artifact_counter = 0
@@ -105,19 +152,22 @@ class BaseGraphBuilder:
             if not match:
                 break
 
-            env_type, star, optional_arg = (
-                match.group(1).lower(),
-                match.group(2) or "",
-                match.group(3),
-            )
+            raw_env_type = match.group(1)
+            env_type = self.env_name_aliases.get(raw_env_type, raw_env_type).lower()
+            star = match.group(2) or ""
+            optional_arg = match.group(3)
+
             block_start = match.end()
-            end_tag_pos = self._find_matching_end(env_type, star, block_start)
+            end_tag_pos = self._find_matching_end(raw_env_type, star, block_start)
 
             if end_tag_pos == -1:
                 cursor = match.end()
                 continue
 
-            full_end_pos = end_tag_pos + len(f"\\end{{{env_type}{star}}}")
+            # Use the *raw* environment name when computing the end tag length so
+            # that aliases like "thm" (canonicalized to "theorem") still produce
+            # correct character offsets.
+            full_end_pos = end_tag_pos + len(f"\\end{{{raw_env_type}{star}}}")
             raw_content = self.content[block_start:end_tag_pos].strip()
 
             if env_type == self.PROOF_ENV_TYPE:
