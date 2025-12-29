@@ -11,6 +11,7 @@
   "dependencies": {
     "@genkit-ai/core": "^1.27.0",
     "@genkit-ai/google-genai": "^1.27.0",
+    "@supabase/supabase-js": "^2.89.0",
     "@types/d3": "^7.4.3",
     "@types/pako": "^2.0.4",
     "@types/tar-stream": "^3.1.4",

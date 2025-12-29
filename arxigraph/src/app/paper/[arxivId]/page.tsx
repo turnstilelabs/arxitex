@@ -6,6 +6,7 @@ import { useParams, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 
 import Graph, { type ConstellationsGraphHandle } from '@/components/Graph';
+import GraphFeedbackModal from '@/components/GraphFeedbackModal';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_ARXITEX_BACKEND_URL ?? 'http://127.0.0.1:8000';
 
@@ -116,6 +117,11 @@ export default function PaperPage() {
         artifacts: 0,
         links: 0,
     });
+
+    const [feedbackOpen, setFeedbackOpen] = useState(false);
+    const [feedbackScope, setFeedbackScope] = useState<'graph' | 'node'>('graph');
+    const [feedbackNodeId, setFeedbackNodeId] = useState<string | null>(null);
+    const [feedbackContextLabel, setFeedbackContextLabel] = useState<string | undefined>(undefined);
 
     const statsRef = useRef({
         nodeIds: new Set<string>(),
@@ -302,6 +308,20 @@ export default function PaperPage() {
                         </div>
 
                         <div className="flex items-center gap-2">
+                            <button
+                                type="button"
+                                className="paper-link-btn"
+                                aria-label="Suggest a correction for this graph"
+                                title="Suggest a correction"
+                                onClick={() => {
+                                    setFeedbackScope('graph');
+                                    setFeedbackNodeId(null);
+                                    setFeedbackContextLabel(undefined);
+                                    setFeedbackOpen(true);
+                                }}
+                            >
+                                <Image src="/flag.svg" alt="Suggest correction" width={18} height={18} />
+                            </button>
                             <a
                                 href={absUrl}
                                 target="_blank"
@@ -334,12 +354,29 @@ export default function PaperPage() {
                     </p>
                 )}
 
+                <GraphFeedbackModal
+                    open={feedbackOpen}
+                    onClose={() => setFeedbackOpen(false)}
+                    paperId={arxivId}
+                    scope={feedbackScope}
+                    nodeId={feedbackScope === 'node' ? feedbackNodeId ?? undefined : undefined}
+                    contextLabel={feedbackContextLabel}
+                />
+
                 <div className="w-full mt-6">
                     <div
                         className="relative w-full h-[70vh] rounded-lg shadow-inner"
                         style={{ border: '1px solid var(--border-color)', background: 'var(--background)' }}
                     >
-                        <Graph ref={graphRef} />
+                        <Graph
+                            ref={graphRef}
+                            onReportNode={(n) => {
+                                setFeedbackScope('node');
+                                setFeedbackNodeId(n.id);
+                                setFeedbackContextLabel(n.label);
+                                setFeedbackOpen(true);
+                            }}
+                        />
                     </div>
                 </div>
 
