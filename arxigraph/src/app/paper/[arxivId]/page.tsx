@@ -129,7 +129,6 @@ export default function PaperPage() {
     });
 
     const absUrl = `https://arxiv.org/abs/${arxivId}`;
-    const pdfUrl = `https://arxiv.org/pdf/${arxivId}.pdf`;
 
     useEffect(() => {
         let cancelled = false;
@@ -263,12 +262,24 @@ export default function PaperPage() {
                 >
                     <div className="flex items-start justify-between gap-4 flex-wrap">
                         <div>
-                            <h1
-                                className="text-2xl sm:text-3xl font-black tracking-tight"
-                                style={{ color: 'var(--accent)' }}
-                            >
-                                {paperMeta?.title ?? 'Loading paper…'}
-                            </h1>
+                            <div className="flex items-center gap-3 flex-wrap">
+                                <h1
+                                    className="text-2xl sm:text-3xl font-black tracking-tight"
+                                    style={{ color: 'var(--accent)' }}
+                                >
+                                    {paperMeta?.title ?? 'Loading paper…'}
+                                </h1>
+                                <a
+                                    href={absUrl}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="paper-link-btn"
+                                    aria-label="Open arXiv abstract"
+                                    title="Open arXiv abstract"
+                                >
+                                    <Image src="/globe.svg" alt="arXiv" width={18} height={18} />
+                                </a>
+                            </div>
 
                             {paperMeta?.authors?.length ? (
                                 <div
@@ -286,62 +297,62 @@ export default function PaperPage() {
                                 </div>
                             ) : null}
 
+                            {/* Stats line with inline suggestion flag */}
                             <div
-                                className="mt-3 text-sm"
+                                className="mt-3 text-sm flex items-center gap-2 flex-wrap"
                                 style={{
                                     color: 'var(--secondary-text)',
                                     fontFamily: 'Inter, system-ui, sans-serif',
                                 }}
                             >
                                 <span>Extracted </span>
-                                <strong style={{ color: 'var(--primary-text)', fontWeight: 700 }}>
+                                <strong
+                                    style={{ color: 'var(--primary-text)', fontWeight: 700 }}
+                                >
                                     {stats.artifacts}
                                 </strong>
                                 <span> artifacts with </span>
-                                <strong style={{ color: 'var(--primary-text)', fontWeight: 700 }}>
+                                <strong
+                                    style={{ color: 'var(--primary-text)', fontWeight: 700 }}
+                                >
                                     {stats.links}
                                 </strong>
                                 <span> links</span>
                                 {isLoading ? <span> · processing…</span> : null}
-                                {error ? <span style={{ color: '#ff6b6b' }}> · error</span> : null}
-                            </div>
-                        </div>
+                                {error ? (
+                                    <span style={{ color: '#ff6b6b' }}> · error</span>
+                                ) : null}
 
-                        <div className="flex items-center gap-2">
-                            <button
-                                type="button"
-                                className="paper-link-btn"
-                                aria-label="Suggest a correction for this graph"
-                                title="Suggest a correction"
-                                onClick={() => {
-                                    setFeedbackScope('graph');
-                                    setFeedbackNodeId(null);
-                                    setFeedbackContextLabel(undefined);
-                                    setFeedbackOpen(true);
-                                }}
-                            >
-                                <Image src="/flag.svg" alt="Suggest correction" width={18} height={18} />
-                            </button>
-                            <a
-                                href={absUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="paper-link-btn"
-                                aria-label="Open arXiv abstract"
-                                title="Open arXiv abstract"
-                            >
-                                <Image src="/globe.svg" alt="arXiv" width={18} height={18} />
-                            </a>
-                            <a
-                                href={pdfUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="paper-link-btn"
-                                aria-label="Open PDF on arXiv"
-                                title="Open PDF on arXiv"
-                            >
-                                <Image src="/file.svg" alt="PDF" width={18} height={18} />
-                            </a>
+                                {/* Suggest a correction button after stats */}
+                                <button
+                                    type="button"
+                                    className="inline-flex items-center justify-center p-0.5 rounded hover:bg-transparent"
+                                    style={{ color: 'var(--secondary-text)' }}
+                                    aria-label="Suggest a correction for this graph"
+                                    title="Suggest a correction"
+                                    onClick={() => {
+                                        setFeedbackScope('graph');
+                                        setFeedbackNodeId(null);
+                                        setFeedbackContextLabel(undefined);
+                                        setFeedbackOpen(true);
+                                    }}
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <path d="M4 22V4" />
+                                        <path d="M4 4h12l-1.5 4L20 12H4" />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
@@ -349,7 +360,10 @@ export default function PaperPage() {
                 </div>
 
                 {error && (
-                    <p className="mt-4 font-semibold" style={{ color: '#ff6b6b' }}>
+                    <p
+                        className="mt-4 font-semibold"
+                        style={{ color: '#ff6b6b' }}
+                    >
                         Error: {error}
                     </p>
                 )}
@@ -359,14 +373,21 @@ export default function PaperPage() {
                     onClose={() => setFeedbackOpen(false)}
                     paperId={arxivId}
                     scope={feedbackScope}
-                    nodeId={feedbackScope === 'node' ? feedbackNodeId ?? undefined : undefined}
+                    nodeId={
+                        feedbackScope === 'node'
+                            ? feedbackNodeId ?? undefined
+                            : undefined
+                    }
                     contextLabel={feedbackContextLabel}
                 />
 
                 <div className="w-full mt-6">
                     <div
                         className="relative w-full h-[70vh] rounded-lg shadow-inner"
-                        style={{ border: '1px solid var(--border-color)', background: 'var(--background)' }}
+                        style={{
+                            border: '1px solid var(--border-color)',
+                            background: 'var(--background)',
+                        }}
                     >
                         <Graph
                             ref={graphRef}
