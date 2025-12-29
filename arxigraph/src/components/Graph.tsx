@@ -8,13 +8,14 @@ import type { ConstellationEdge, ConstellationNode } from '@/components/constell
 interface GraphProps {
   nodes?: ConstellationNode[];
   links?: ConstellationEdge[];
+  onReportNode?: (node: { id: string; label: string; type?: string }) => void;
 }
 
 const Graph = forwardRef<ConstellationsGraphHandle, GraphProps>(function Graph(
-  { nodes = [], links = [] },
+  { nodes = [], links = [], onReportNode },
   ref,
 ) {
-  return <ConstellationsGraph ref={ref} nodes={nodes} links={links} />;
+  return <ConstellationsGraph ref={ref} nodes={nodes} links={links} onReportNode={onReportNode} />;
 });
 
 export default Graph;

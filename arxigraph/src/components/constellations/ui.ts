@@ -89,7 +89,15 @@ export async function updateInfoPanel(
           </div>
         `;
 
-    let infoHTML = `${proofControls}<h4>Preview</h4><div class="math-content">${cleanLatex(d.content_preview || d.content || 'N/A')}</div>`;
+    const reportButton = `
+      <div class="report-action">
+        <button id="report-node-issue" class="depth-btn" title="Suggest a correction for this node">
+          Suggest correction
+        </button>
+      </div>
+    `;
+
+    let infoHTML = `${proofControls}${reportButton}<h4>Preview</h4><div class="math-content">${cleanLatex(d.content_preview || d.content || 'N/A')}</div>`;
 
     if (d.prerequisites_preview) {
         infoHTML += `<h4>Prerequisites</h4><div class="math-content">${cleanLatex(d.prerequisites_preview)}</div>`;
@@ -106,6 +114,11 @@ export async function updateInfoPanel(
     const exploreBtn = document.getElementById('proof-explore');
     if (exploreBtn) {
         exploreBtn.onclick = () => actions.enterProofMode(d.id);
+    }
+
+    const reportBtn = document.getElementById('report-node-issue');
+    if (reportBtn) {
+        reportBtn.onclick = () => actions.reportNodeIssue(d);
     }
 
     const lessBtn = document.getElementById('proof-unfold-less');

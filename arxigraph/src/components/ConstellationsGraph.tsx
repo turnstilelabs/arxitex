@@ -26,6 +26,7 @@ import type { ConstellationEdge, ConstellationNode } from './constellations/type
 type Props = {
     nodes?: ConstellationNode[];
     links?: ConstellationEdge[];
+    onReportNode?: (node: { id: string; label: string; type?: string }) => void;
 };
 
 export type GraphIngestEvent = { type: string; data?: any };
@@ -36,7 +37,7 @@ export type ConstellationsGraphHandle = {
 };
 
 const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(function ConstellationsGraph(
-    { nodes = [], links = [] },
+    { nodes = [], links = [], onReportNode },
     ref,
 ) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -174,9 +175,18 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
                 actions.recomputeProofSubgraph();
                 if (state.proofTargetId) actions.updateInfoPanel(state.refs.nodeById.get(state.proofTargetId));
             },
+
+            reportNodeIssue: (d: any) => {
+                if (!onReportNode) return;
+                const label = String(d?.display_name ?? d?.label ?? d?.id ?? '');
+                const id = String(d?.id ?? '');
+                const type = d?.type ? String(d.type) : undefined;
+                if (!id) return;
+                onReportNode({ id, label, type });
+            },
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state]);
+    }, [state, onReportNode]);
 
     useEffect(() => {
         if (!svgRef.current) return;

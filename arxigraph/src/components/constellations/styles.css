@@ -232,6 +232,12 @@
     margin: 6px 0 10px;
 }
 
+.report-action {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 10px;
+}
+
 #info-body {
     padding: 14px;
     font-size: 13px;
