@@ -8,6 +8,7 @@ from loguru import logger
 
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
+from arxitex.llms.usage_context import llm_usage_context
 from arxitex.tools.discovery_queue_dedup import dedup_discovery_queue
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
@@ -37,12 +38,19 @@ async def process_single_paper(arxiv_id: str, args):
     try:
         temp_base_dir = Path(components.output_dir) / "temp_processing"
 
-        results = await agenerate_artifact_graph(
-            arxiv_id=arxiv_id,
-            enrich_content=args.enrich_content,
-            infer_dependencies=args.infer_dependencies,
-            source_dir=temp_base_dir,
+        # Single-paper runs should also be attributed for LLM usage tracking.
+        mode = (
+            "full"
+            if args.infer_dependencies
+            else ("defs" if args.enrich_content else "raw")
         )
+        with llm_usage_context(paper_id=arxiv_id, mode=mode):
+            results = await agenerate_artifact_graph(
+                arxiv_id=arxiv_id,
+                enrich_content=args.enrich_content,
+                infer_dependencies=args.infer_dependencies,
+                source_dir=temp_base_dir,
+            )
 
         graph = results.get("graph")
         if not graph or not graph.nodes:

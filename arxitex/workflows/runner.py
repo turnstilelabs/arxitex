@@ -14,6 +14,8 @@ from arxitex.db.error_utils import classify_processing_error
 from arxitex.indices.discover import DiscoveryIndex
 from arxitex.indices.processed import ProcessedIndex
 from arxitex.indices.skipped import SkippedIndex
+from arxitex.llms.metrics import register_usage_sink
+from arxitex.llms.usage_sink_sqlite import SQLiteUsageSink
 from arxitex.search_cursor import BackfillStateManager
 
 
@@ -24,6 +26,10 @@ class ArxivPipelineComponents:
         self.output_dir = os.path.abspath(output_dir)
         os.makedirs(self.output_dir, exist_ok=True)
         self.db_path = os.path.join(self.output_dir, "arxitex_indices.db")
+
+        # Register a global LLM usage sink (token accounting) for this run.
+        # This is best-effort and will no-op if token usage isn't provided by the provider.
+        register_usage_sink(SQLiteUsageSink(self.db_path))
 
         self.arxiv_api = ArxivAPI()
         self.backfill_state = BackfillStateManager(self.output_dir)

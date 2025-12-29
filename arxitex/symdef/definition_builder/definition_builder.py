@@ -3,6 +3,7 @@ from typing import List, Optional
 from loguru import logger
 
 from arxitex.llms import llms
+from arxitex.llms.usage_context import llm_usage_stage
 from arxitex.symdef.definition_builder.definition_models import (
     DefinitionSynthesisResult,
     DocumentTermExtractionResult,
@@ -24,9 +25,12 @@ class DefinitionBuilder:
         prompt = self.prompt_generator.make_term_extraction_prompt(artifact_content)
 
         try:
-            result = await llms.aexecute_prompt(
-                prompt, output_class=TermExtractionResult, model="gpt-4.1-2025-04-14"
-            )
+            with llm_usage_stage("single_artifact_term_extraction"):
+                result = await llms.aexecute_prompt(
+                    prompt,
+                    output_class=TermExtractionResult,
+                    model="gpt-4.1-2025-04-14",
+                )
             logger.info(f"LLM extracted terms: {result.terms}")
             return result.terms
         except Exception as e:
@@ -42,11 +46,12 @@ class DefinitionBuilder:
         )
         logger.debug(f"Document-wide term extraction prompt: {prompt}")
         try:
-            result = await llms.aexecute_prompt(
-                prompt,
-                output_class=DocumentTermExtractionResult,
-                model="gpt-4.1-2025-04-14",  # "deepseek-ai/DeepSeek-V3.1"
-            )
+            with llm_usage_stage("document_term_extraction"):
+                result = await llms.aexecute_prompt(
+                    prompt,
+                    output_class=DocumentTermExtractionResult,
+                    model="gpt-4.1-2025-04-14",  # "deepseek-ai/DeepSeek-V3.1"
+                )
             logger.info(
                 f"LLM extracted {len(result.terms)} unique terms from the entire document."
             )
@@ -64,9 +69,12 @@ class DefinitionBuilder:
         )
 
         try:
-            result = await llms.aexecute_prompt(
-                prompt, output_class=ExtractedDefinition, model="gpt-4.1-2025-04-14"
-            )
+            with llm_usage_stage("definition_extraction"):
+                result = await llms.aexecute_prompt(
+                    prompt,
+                    output_class=ExtractedDefinition,
+                    model="gpt-4.1-2025-04-14",
+                )
             logger.info(
                 f"LLM extracted definition: {result.defined_term} - {result.definition_text}"
             )
@@ -85,11 +93,12 @@ class DefinitionBuilder:
             term, context_snippets, base_definition
         )
         try:
-            result = await llms.aexecute_prompt(
-                prompt,
-                output_class=DefinitionSynthesisResult,
-                model="gpt-4.1-2025-04-14",
-            )
+            with llm_usage_stage("definition_synthesis"):
+                result = await llms.aexecute_prompt(
+                    prompt,
+                    output_class=DefinitionSynthesisResult,
+                    model="gpt-4.1-2025-04-14",
+                )
             if result.context_was_sufficient:
                 return result.definition
             else:

@@ -180,6 +180,40 @@ def ensure_schema(db_path: str | Path) -> None:
             """
         )
 
+        # -- LLM usage (token accounting)
+        # One row per LLM call. This is intentionally append-only.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS llm_usage (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                created_at_utc TEXT NOT NULL,
+                paper_id TEXT,
+                mode TEXT,
+                stage TEXT,
+                provider TEXT NOT NULL,
+                model TEXT NOT NULL,
+                prompt_id TEXT,
+                context TEXT,
+                cached INTEGER NOT NULL,
+                prompt_tokens INTEGER,
+                completion_tokens INTEGER,
+                total_tokens INTEGER,
+                FOREIGN KEY (paper_id) REFERENCES papers(paper_id)
+                    ON DELETE SET NULL
+            );
+            """
+        )
+
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_llm_usage_paper ON llm_usage(paper_id);"
+        )
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_llm_usage_model ON llm_usage(model);"
+        )
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_llm_usage_created ON llm_usage(created_at_utc);"
+        )
+
         # Useful indexes
         conn.execute(
             "CREATE INDEX IF NOT EXISTS idx_artifacts_by_paper ON artifacts(paper_id);"

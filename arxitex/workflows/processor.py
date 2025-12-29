@@ -8,6 +8,7 @@ from loguru import logger
 
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
+from arxitex.llms.usage_context import llm_usage_context
 from arxitex.workflows.runner import ArxivPipelineComponents, AsyncWorkflowRunnerBase
 from arxitex.workflows.utils import save_graph_data, transform_graph_to_search_format
 
@@ -136,12 +137,13 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             else:
                 raise ValueError(f"Unknown mode: {self.mode}")
 
-            results = await agenerate_artifact_graph(
-                arxiv_id=arxiv_id,
-                infer_dependencies=infer_dependencies,
-                enrich_content=enrich_content,
-                source_dir=temp_base_dir,
-            )
+            with llm_usage_context(paper_id=arxiv_id, mode=self.mode):
+                results = await agenerate_artifact_graph(
+                    arxiv_id=arxiv_id,
+                    infer_dependencies=infer_dependencies,
+                    enrich_content=enrich_content,
+                    source_dir=temp_base_dir,
+                )
 
             graph = results.get("graph")
             bank = results.get("bank")
