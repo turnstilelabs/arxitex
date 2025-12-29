@@ -73,7 +73,31 @@ export async function updateInfoPanel(
     state: any,
     actions: any,
 ) {
-    infoTitleEl.textContent = d.display_name || d.label || d.id;
+    const nodeTitle = d.display_name || d.label || d.id;
+    infoTitleEl.innerHTML = `
+      <span class="info-title-text">${nodeTitle}</span>
+      <button
+        id="report-node-issue-header"
+        class="info-title-flag-btn"
+        title="Suggest a correction for this node"
+        aria-label="Suggest a correction for this node"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 22V4" />
+          <path d="M4 4h12l-1.5 4L20 12H4" />
+        </svg>
+      </button>
+    `;
 
     const proofControls = state?.proofMode
         ? `
@@ -119,6 +143,11 @@ export async function updateInfoPanel(
     const reportBtn = document.getElementById('report-node-issue');
     if (reportBtn) {
         reportBtn.onclick = () => actions.reportNodeIssue(d);
+    }
+
+    const reportHeaderBtn = document.getElementById('report-node-issue-header');
+    if (reportHeaderBtn) {
+        reportHeaderBtn.onclick = () => actions.reportNodeIssue(d);
     }
 
     const lessBtn = document.getElementById('proof-unfold-less');
