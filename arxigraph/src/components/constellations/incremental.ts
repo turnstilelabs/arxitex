@@ -68,8 +68,12 @@ function computeDegrees(edges: any[]) {
 }
 
 function makeRadiusScale(nodeDegrees: Map<string, number>) {
-    const maxDeg = Math.max(1, ...Array.from(nodeDegrees.values()));
-    return d3.scaleSqrt().domain([1, maxDeg]).range([5, 18]);
+    const degreeValues = Array.from(nodeDegrees.values());
+    // Ensure the scale has a reasonable spread even when most nodes have low degree
+    const maxDeg = degreeValues.length ? Math.max(3, ...degreeValues) : 3;
+    const minRadius = 10;
+    const maxRadius = 24;
+    return d3.scaleSqrt().domain([1, maxDeg]).range([minRadius, maxRadius]);
 }
 
 function ensureEdgeMarkers(defs: d3.Selection<SVGDefsElement, unknown, null, undefined>, edgeTypes: string[], edgeColors: Record<string, string>) {
@@ -267,7 +271,8 @@ export function applyMutations(ig: IncrementalGraphState, state: any, actions: a
             (update: any) => update,
             (exit: any) => exit.remove(),
         )
-        .attr('dy', (d: any) => ig.radiusScale(ig.nodeDegrees.get(d.id) || 1) + 12)
+        // Keep labels close to nodes, with a small padding
+        .attr('dy', (d: any) => ig.radiusScale(ig.nodeDegrees.get(d.id) || 1) + 6)
         .text((d: any) => d.display_name || d.label || d.id);
 
     if (entered.size) {
@@ -297,7 +302,7 @@ export function applyMutations(ig: IncrementalGraphState, state: any, actions: a
 
         ig.labelSel
             .attr('x', (d: any) => d.x)
-            .attr('y', (d: any) => d.y + ig.radiusScale(ig.nodeDegrees.get(d.id) || 1) + 12);
+            .attr('y', (d: any) => d.y + ig.radiusScale(ig.nodeDegrees.get(d.id) || 1) + 6);
     });
 
     ig.simulation.alpha(0.25).restart();

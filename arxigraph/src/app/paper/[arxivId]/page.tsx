@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useParams, useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams, useRouter } from 'next/navigation';
 
 import Image from 'next/image';
 
@@ -92,6 +92,7 @@ async function fetchArxivMetadata(arxivId: string): Promise<PaperMeta> {
 export default function PaperPage() {
     const params = useParams<{ arxivId: string }>();
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     const arxivId = params.arxivId;
 
@@ -104,6 +105,8 @@ export default function PaperPage() {
         const v = searchParams.get('enrich');
         return v == null ? true : v !== '0';
     }, [searchParams]);
+
+    const hasFullAnalysis = enrichContent && inferDependencies;
 
     const [paperMeta, setPaperMeta] = useState<PaperMeta | null>(null);
     const [paperMetaError, setPaperMetaError] = useState<string | null>(null);
@@ -122,6 +125,9 @@ export default function PaperPage() {
     const [feedbackScope, setFeedbackScope] = useState<'graph' | 'node'>('graph');
     const [feedbackNodeId, setFeedbackNodeId] = useState<string | null>(null);
     const [feedbackContextLabel, setFeedbackContextLabel] = useState<string | undefined>(undefined);
+    const [advancedAnalysisOpen, setAdvancedAnalysisOpen] = useState(false);
+    const [selectedEnrich, setSelectedEnrich] = useState(false);
+    const [selectedDeps, setSelectedDeps] = useState(false);
 
     const statsRef = useRef({
         nodeIds: new Set<string>(),
@@ -129,6 +135,33 @@ export default function PaperPage() {
     });
 
     const absUrl = `https://arxiv.org/abs/${arxivId}`;
+
+    const runAdvancedAnalysis = (nextEnrich: boolean, nextDeps: boolean) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('enrich', nextEnrich ? '1' : '0');
+        params.set('deps', nextDeps ? '1' : '0');
+
+        setAdvancedAnalysisOpen(false);
+        router.replace(`/paper/${encodeURIComponent(arxivId)}?${params.toString()}`);
+    };
+
+    useEffect(() => {
+        if (!advancedAnalysisOpen) return;
+        // Pre-select any analysis that hasn't been run yet.
+        setSelectedEnrich(!enrichContent);
+        setSelectedDeps(!inferDependencies);
+    }, [advancedAnalysisOpen, enrichContent, inferDependencies]);
+
+    const canRunSelected = (!enrichContent && selectedEnrich) || (!inferDependencies && selectedDeps);
+
+    const handleRunSelectedAnalysis = () => {
+        if (!canRunSelected || isLoading) return;
+
+        const nextEnrich = enrichContent || selectedEnrich;
+        const nextDeps = inferDependencies || selectedDeps;
+
+        runAdvancedAnalysis(nextEnrich, nextDeps);
+    };
 
     useEffect(() => {
         let cancelled = false;
@@ -297,7 +330,7 @@ export default function PaperPage() {
                                 </div>
                             ) : null}
 
-                            {/* Stats line with inline suggestion flag */}
+                            {/* Stats line */}
                             <div
                                 className="mt-3 text-sm flex items-center gap-2 flex-wrap"
                                 style={{
@@ -352,12 +385,151 @@ export default function PaperPage() {
                                         <path d="M4 4h12l-1.5 4L20 12H4" />
                                     </svg>
                                 </button>
+
+                                {!hasFullAnalysis && (
+                                    <button
+                                        type="button"
+                                        className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border shadow-sm hover:bg-[var(--surface2)] disabled:opacity-60"
+                                        style={{
+                                            borderColor: 'var(--border-color)',
+                                            color: 'var(--secondary-text)',
+                                            background: 'transparent',
+                                        }}
+                                        aria-label="Run additional analysis"
+                                        title="Run Additional Analysis"
+                                        onClick={() => setAdvancedAnalysisOpen(true)}
+                                        disabled={isLoading}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="14"
+                                            height="14"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <circle cx="12" cy="12" r="4" />
+                                            <path d="M4 12h2" />
+                                            <path d="M18 12h2" />
+                                            <path d="M12 4v2" />
+                                            <path d="M12 18v2" />
+                                        </svg>
+                                        <span>Run Additional Analysis</span>
+                                    </button>
+                                )}
                             </div>
+
                         </div>
                     </div>
 
                     {/* spacer */}
                 </div>
+
+                {advancedAnalysisOpen && !hasFullAnalysis && (
+                    <div
+                        className="fixed inset-0 z-40 flex items-center justify-center px-4"
+                        style={{ background: 'rgba(0,0,0,0.4)' }}
+                        onClick={() => setAdvancedAnalysisOpen(false)}
+                    >
+                        <div
+                            className="w-full max-w-sm rounded-lg shadow-lg"
+                            style={{
+                                background: 'var(--surface1)',
+                                border: '1px solid var(--border-color)',
+                                color: 'var(--primary-text)',
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div
+                                className="flex items-center justify-between px-4 py-3 border-b"
+                                style={{ borderColor: 'var(--border-color)' }}
+                            >
+                                <h2 className="text-sm font-semibold">Run Additional Analysis</h2>
+                                <button
+                                    type="button"
+                                    onClick={() => setAdvancedAnalysisOpen(false)}
+                                    className="p-1 rounded hover:bg-[var(--surface2)]"
+                                    aria-label="Close"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div className="px-4 py-3 text-xs sm:text-sm space-y-3">
+                                {!enrichContent && (
+                                    <label className="flex items-start gap-2 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="mt-1 h-3 w-3 accent-[var(--accent)]"
+                                            checked={selectedEnrich}
+                                            onChange={(e) => setSelectedEnrich(e.target.checked)}
+                                        />
+                                        <div>
+                                            <div className="text-xs sm:text-sm font-semibold">
+                                                Enhance artifacts
+                                            </div>
+                                            <div
+                                                className="text-[0.75rem]"
+                                                style={{ color: 'var(--secondary-text)' }}
+                                            >
+                                                Add enriched definitions and symbols.
+                                            </div>
+                                        </div>
+                                    </label>
+                                )}
+                                {!inferDependencies && (
+                                    <label className="flex items-start gap-2 cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="mt-1 h-3 w-3 accent-[var(--accent)]"
+                                            checked={selectedDeps}
+                                            onChange={(e) => setSelectedDeps(e.target.checked)}
+                                        />
+                                        <div>
+                                            <div className="text-xs sm:text-sm font-semibold">
+                                                Infer dependencies
+                                            </div>
+                                            <div
+                                                className="text-[0.75rem]"
+                                                style={{ color: 'var(--secondary-text)' }}
+                                            >
+                                                Add inferred result/definition links.
+                                            </div>
+                                        </div>
+                                    </label>
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={handleRunSelectedAnalysis}
+                                    disabled={!canRunSelected || isLoading}
+                                    className="mt-1 w-full px-3 py-2 rounded-md text-xs sm:text-sm font-semibold border shadow-sm disabled:opacity-60"
+                                    style={{
+                                        background: 'var(--accent)',
+                                        borderColor: 'var(--accent)',
+                                        color: 'var(--background)',
+                                    }}
+                                >
+                                    {isLoading ? 'Running…' : 'Run'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {error && (
                     <p

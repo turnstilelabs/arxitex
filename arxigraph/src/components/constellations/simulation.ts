@@ -15,8 +15,11 @@ export function setupSimulation(
         nodeDegrees.set(t, (nodeDegrees.get(t) || 0) + 1);
     });
 
-    const maxDeg = Math.max(1, ...Array.from(nodeDegrees.values()));
-    const radiusScale = d3.scaleSqrt().domain([1, maxDeg]).range([5, 18]);
+    const degreeValues = Array.from(nodeDegrees.values());
+    const maxDeg = degreeValues.length ? Math.max(3, ...degreeValues) : 3;
+    const minRadius = 10;
+    const maxRadius = 24;
+    const radiusScale = d3.scaleSqrt().domain([1, maxDeg]).range([minRadius, maxRadius]);
 
     const simulation = d3
         .forceSimulation(nodes as any)
@@ -54,6 +57,6 @@ export function updateSimulationTick(
 
         label
             .attr('x', (d: any) => d.x)
-            .attr('y', (d: any) => d.y + radiusScale(nodeDegrees.get(d.id) || 1) + 12);
+            .attr('y', (d: any) => d.y + radiusScale(nodeDegrees.get(d.id) || 1) + 6);
     });
 }

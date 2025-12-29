@@ -75,7 +75,8 @@ export function renderElements(
         .enter()
         .append('text')
         .attr('class', 'node-label')
-        .attr('dy', (d: any) => radiusScale(nodeDegrees.get(d.id) || 1) + 12)
+        // Position labels just below the node, with a small padding
+        .attr('dy', (d: any) => radiusScale(nodeDegrees.get(d.id) || 1) + 4)
         .text((d: any) => d.display_name || d.label || d.id);
 
     return { link, node, label };
