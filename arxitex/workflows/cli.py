@@ -8,6 +8,7 @@ from loguru import logger
 
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
+from arxitex.tools.discovery_queue_dedup import dedup_discovery_queue
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
 from arxitex.workflows.runner import ArxivPipelineComponents
@@ -262,6 +263,32 @@ async def main():
         ),
     )
 
+    # --- 'dedup-discovery-queue' command ---
+    parser_dedup = subparsers.add_parser(
+        "dedup-discovery-queue",
+        help=(
+            "Deduplicate the discovery queue by base arXiv id (strip vN), keeping only the highest version."
+        ),
+    )
+    parser_dedup.add_argument(
+        "--dry-run",
+        action="store_true",
+        help=(
+            "Do not modify the database; only print what would be deleted. "
+            "(Default: false)"
+        ),
+    )
+    parser_dedup.add_argument(
+        "--no-backup",
+        action="store_true",
+        help="Do not create a timestamped .bak backup before deleting rows.",
+    )
+    parser_dedup.add_argument(
+        "--show-ids",
+        action="store_true",
+        help="Print the specific arXiv IDs that were/would be deleted.",
+    )
+
     args = parser.parse_args()
 
     exit_code = 0
@@ -384,6 +411,27 @@ async def main():
         # When reprocessing, restrict the workflow to the specific paper ID so
         # we don't accidentally pick the first pending paper from the queue.
         await workflow.run(max_papers=1, target_arxiv_id=args.arxiv_id)
+
+    elif args.command == "dedup-discovery-queue":
+        components = ArxivPipelineComponents(output_dir=args.output_dir)
+        report = dedup_discovery_queue(
+            components.db_path,
+            dry_run=bool(args.dry_run),
+            make_backup=not bool(args.no_backup),
+        )
+
+        logger.info(
+            "Discovery queue dedup report: "
+            f"rows_before={report.rows_before}, "
+            f"base_dupes_before={report.base_ids_duplicated_before}, "
+            f"rows_to_delete={report.rows_to_delete}, "
+            f"rows_deleted={report.rows_deleted}, "
+            f"base_dupes_after={report.base_ids_duplicated_after}, "
+            f"backup={report.backup_path}"
+        )
+        if args.show_ids:
+            for aid in report.deleted_arxiv_ids:
+                logger.info(f"delete: {aid}")
 
     logger.info(f"Command '{args.command}' has completed.")
     return exit_code
