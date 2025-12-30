@@ -31,6 +31,8 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         format_for_search=False,
         persist_db: bool = False,
         mode: str = "raw",
+        dependency_mode: str = "auto",
+        dependency_config: dict | None = None,
     ):
         super().__init__(components, max_concurrent_tasks)
         self.persist_db = persist_db
@@ -39,6 +41,8 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         self.enrich_content = enrich_content
         self.max_concurrent_tasks = max_concurrent_tasks
         self.format_for_search = format_for_search
+        self.dependency_mode = dependency_mode
+        self.dependency_config = dependency_config or {}
 
         self.graphs_base_dir = os.path.join(self.components.output_dir, "graphs")
         self.search_indices_base_dir = os.path.join(
@@ -143,6 +147,8 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
                     infer_dependencies=infer_dependencies,
                     enrich_content=enrich_content,
                     source_dir=temp_base_dir,
+                    dependency_mode=self.dependency_mode,
+                    dependency_config=self.dependency_config,
                 )
 
             graph = results.get("graph")

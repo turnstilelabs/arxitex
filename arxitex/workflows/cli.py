@@ -46,10 +46,26 @@ async def process_single_paper(arxiv_id: str, args):
             else ("defs" if args.enrich_content else "raw")
         )
         with llm_usage_context(paper_id=arxiv_id, mode=mode):
+            dependency_config = {
+                "auto_max_nodes_global": getattr(args, "dependency_auto_max_nodes", 30),
+                "auto_max_tokens_global": getattr(
+                    args, "dependency_auto_max_tokens", 12000
+                ),
+                "hybrid_topk_per_source": getattr(args, "dependency_hybrid_topk", 8),
+                "hybrid_max_total_candidates": getattr(
+                    args, "dependency_hybrid_max_total", 250
+                ),
+                "global_include_proofs": True,
+                "global_proof_char_budget": getattr(
+                    args, "dependency_global_proof_char_budget", 1200
+                ),
+            }
             results = await agenerate_artifact_graph(
                 arxiv_id=arxiv_id,
                 enrich_content=args.enrich_content,
                 infer_dependencies=args.infer_dependencies,
+                dependency_mode=getattr(args, "dependency_mode", "auto"),
+                dependency_config=dependency_config,
                 source_dir=temp_base_dir,
             )
 
@@ -130,6 +146,43 @@ async def main():
         help="Use LLM to infer dependencies between artifacts.",
     )
     parser_single.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when --infer-dependencies is enabled.",
+    )
+    parser_single.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser_single.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser_single.add_argument(
+        "--dependency-hybrid-topk",
+        type=int,
+        default=8,
+        help="Hybrid: max prerequisites proposed per source artifact.",
+    )
+    parser_single.add_argument(
+        "--dependency-hybrid-max-total",
+        type=int,
+        default=250,
+        help="Hybrid: hard cap on total proposed candidates to verify.",
+    )
+    parser_single.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
+    )
+    parser_single.add_argument(
         "--force",
         action="store_true",
         help="Force re-processing even if it's in the index.",
@@ -192,6 +245,43 @@ async def main():
         help="Use LLM to infer dependencies between artifacts for papers in the batch.",
     )
     parser_process.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when infer-dependencies/full mode is enabled.",
+    )
+    parser_process.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser_process.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser_process.add_argument(
+        "--dependency-hybrid-topk",
+        type=int,
+        default=8,
+        help="Hybrid: max prerequisites proposed per source artifact.",
+    )
+    parser_process.add_argument(
+        "--dependency-hybrid-max-total",
+        type=int,
+        default=250,
+        help="Hybrid: hard cap on total proposed candidates to verify.",
+    )
+    parser_process.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
+    )
+    parser_process.add_argument(
         "--format-for-search",
         action="store_true",
         help="Additionally, transform and append artifacts to a .jsonl file.",
@@ -244,6 +334,43 @@ async def main():
         "--infer-dependencies",
         action="store_true",
         help="Backwards-compat: if set, will force mode to 'full'.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when full mode is enabled.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-hybrid-topk",
+        type=int,
+        default=8,
+        help="Hybrid: max prerequisites proposed per source artifact.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-hybrid-max-total",
+        type=int,
+        default=250,
+        help="Hybrid: hard cap on total proposed candidates to verify.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
     )
     parser_reprocess.add_argument(
         "--persist-db",
@@ -381,6 +508,15 @@ async def main():
             format_for_search=args.format_for_search,
             persist_db=args.persist_db,
             mode=mode,
+            dependency_mode=args.dependency_mode,
+            dependency_config={
+                "auto_max_nodes_global": args.dependency_auto_max_nodes,
+                "auto_max_tokens_global": args.dependency_auto_max_tokens,
+                "hybrid_topk_per_source": args.dependency_hybrid_topk,
+                "hybrid_max_total_candidates": args.dependency_hybrid_max_total,
+                "global_include_proofs": True,
+                "global_proof_char_budget": args.dependency_global_proof_char_budget,
+            },
         )
         await workflow.run(max_papers=args.max_papers)
 
@@ -463,6 +599,15 @@ async def main():
             format_for_search=args.format_for_search,
             persist_db=args.persist_db,
             mode=mode,
+            dependency_mode=args.dependency_mode,
+            dependency_config={
+                "auto_max_nodes_global": args.dependency_auto_max_nodes,
+                "auto_max_tokens_global": args.dependency_auto_max_tokens,
+                "hybrid_topk_per_source": args.dependency_hybrid_topk,
+                "hybrid_max_total_candidates": args.dependency_hybrid_max_total,
+                "global_include_proofs": True,
+                "global_proof_char_budget": args.dependency_global_proof_char_budget,
+            },
         )
         # When reprocessing, restrict the workflow to the specific paper ID so
         # we don't accidentally pick the first pending paper from the queue.

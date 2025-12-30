@@ -76,7 +76,7 @@ def test_candidate_generation_overlaps_and_subwords(monkeypatch):
     ge.llm_dependency_checker = DummyLLM()
 
     new_graph = asyncio.run(
-        ge._infer_and_add_dependencies(graph, artifact_to_terms_map, bank)
+        ge._infer_and_add_dependencies_pairwise(graph, artifact_to_terms_map, bank)
     )
     # The function returns the (possibly mutated) DocumentGraph; ensure we got the same object back.
     assert new_graph is graph

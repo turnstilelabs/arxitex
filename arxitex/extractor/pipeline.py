@@ -38,6 +38,8 @@ async def agenerate_artifact_graph(
     arxiv_id: str,
     infer_dependencies: bool,
     enrich_content: bool,
+    dependency_mode: str = "pairwise",
+    dependency_config: Optional[dict] = None,
     source_dir: Optional[Path] = None,
 ) -> Dict:
     """
@@ -74,11 +76,21 @@ async def agenerate_artifact_graph(
             logger.info(f"[{arxiv_id}] Instantiating GraphEnhancer...")
             enhancer = GraphEnhancer()
 
+            dep_cfg = None
+            if dependency_config:
+                from arxitex.extractor.dependency_inference.dependency_mode import (
+                    DependencyInferenceConfig,
+                )
+
+                dep_cfg = DependencyInferenceConfig(**dependency_config)
+
             graph, bank, artifact_to_terms_map = await enhancer.build_graph(
                 project_dir=project_dir,
                 source_file=f"arxiv:{arxiv_id}",
                 infer_dependencies=infer_dependencies,
                 enrich_content=enrich_content,
+                dependency_mode=dependency_mode,
+                dependency_config=dep_cfg,
             )
 
             return {
@@ -90,10 +102,21 @@ async def agenerate_artifact_graph(
 
 async def run_async_pipeline(args):
     try:
+        dependency_config = {
+            "auto_max_nodes_global": args.dependency_auto_max_nodes,
+            "auto_max_tokens_global": args.dependency_auto_max_tokens,
+            "hybrid_topk_per_source": args.dependency_hybrid_topk,
+            "hybrid_max_total_candidates": args.dependency_hybrid_max_total,
+            "global_include_proofs": True,
+            "global_proof_char_budget": args.dependency_global_proof_char_budget,
+        }
+
         results = await agenerate_artifact_graph(
             arxiv_id=args.arxiv_id,
             infer_dependencies=args.infer_deps,
             enrich_content=args.enrich_content,
+            dependency_mode=args.dependency_mode,
+            dependency_config=dependency_config,
         )
 
         graph = results.get("graph")
@@ -200,6 +223,44 @@ Examples:
         "--infer-deps",
         action="store_true",
         help="Enable Pass 3: Use LLM to infer dependency links between artifacts. This automatically enables content enrichment for best results.",
+    )
+
+    parser.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when --infer-deps is enabled.",
+    )
+    parser.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser.add_argument(
+        "--dependency-hybrid-topk",
+        type=int,
+        default=8,
+        help="Hybrid: max prerequisites proposed per source artifact.",
+    )
+    parser.add_argument(
+        "--dependency-hybrid-max-total",
+        type=int,
+        default=250,
+        help="Hybrid: hard cap on total proposed candidates to verify.",
+    )
+    parser.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
     )
     parser.add_argument(
         "--enrich-content",

@@ -7,8 +7,19 @@ from typing import Dict, List, Optional
 
 from loguru import logger
 
+from arxitex.extractor.dependency_inference.auto_mode import choose_mode_auto
 from arxitex.extractor.dependency_inference.dependency_inference import (
     GraphDependencyInference,
+)
+from arxitex.extractor.dependency_inference.dependency_mode import (
+    DependencyInferenceConfig,
+    DependencyInferenceMode,
+)
+from arxitex.extractor.dependency_inference.global_dependency_inference import (
+    GlobalGraphDependencyInference,
+)
+from arxitex.extractor.dependency_inference.global_dependency_proposer import (
+    GlobalDependencyProposer,
 )
 from arxitex.extractor.graph_building.base_builder import BaseGraphBuilder
 from arxitex.extractor.models import DocumentGraph, Edge
@@ -29,6 +40,8 @@ class GraphEnhancer:
     def __init__(self):
         self.regex_builder = BaseGraphBuilder()
         self.llm_dependency_checker = GraphDependencyInference()
+        self.global_dependency_inferencer = GlobalGraphDependencyInference()
+        self.global_dependency_proposer = GlobalDependencyProposer()
 
         definition_builder = DefinitionBuilder()
         context_finder = ContextFinder()
@@ -46,6 +59,8 @@ class GraphEnhancer:
         source_file: Optional[str] = None,
         infer_dependencies: bool = True,
         enrich_content: bool = True,
+        dependency_mode: DependencyInferenceMode = "pairwise",
+        dependency_config: Optional[DependencyInferenceConfig] = None,
     ) -> DocumentGraph:
         logger.info("Starting Pass 1: Building base graph from LaTeX structure...")
         graph = self.regex_builder.build_graph(project_dir, source_file)
@@ -86,10 +101,15 @@ class GraphEnhancer:
                 )
             else:
                 logger.info(
-                    "--- Starting Pass 3: Inferring dependencies with efficient filtering ---"
+                    "--- Starting Pass 3: Inferring dependencies (mode-aware) ---"
                 )
-                graph = await self._infer_and_add_dependencies(
-                    graph, artifact_to_terms_map, bank
+                cfg = dependency_config or DependencyInferenceConfig()
+                graph = await self._infer_and_add_dependencies_mode_aware(
+                    graph=graph,
+                    artifact_to_terms_map=artifact_to_terms_map,
+                    bank=bank,
+                    dependency_mode=dependency_mode,
+                    cfg=cfg,
                 )
 
         reference_edges = len([e for e in graph.edges if e.reference_type])
@@ -102,6 +122,188 @@ class GraphEnhancer:
         )
 
         return graph, bank, artifact_to_terms_map
+
+    async def _infer_and_add_dependencies_mode_aware(
+        self,
+        graph: DocumentGraph,
+        artifact_to_terms_map: Dict[str, List[str]],
+        bank: DefinitionBank,
+        dependency_mode: DependencyInferenceMode,
+        cfg: DependencyInferenceConfig,
+    ) -> DocumentGraph:
+        internal_nodes = [node for node in graph.nodes if not node.is_external]
+        if len(internal_nodes) < 2:
+            logger.info("Not enough internal nodes to infer dependencies. Skipping.")
+            return graph
+
+        # Choose mode if auto.
+        selected_mode = dependency_mode
+        reason = None
+        tok_est = None
+        if dependency_mode == "auto":
+            selected_mode, reason, tok_est = choose_mode_auto(internal_nodes, cfg)
+
+        logger.info(
+            f"Dependency inference mode={selected_mode} (requested={dependency_mode})"
+            + (f" | {reason}" if reason else "")
+            + (f" | tok_est≈{tok_est}" if tok_est is not None else "")
+        )
+
+        if selected_mode == "pairwise":
+            return await self._infer_and_add_dependencies_pairwise(
+                graph, artifact_to_terms_map, bank
+            )
+
+        if selected_mode == "global":
+            return await self._infer_and_add_dependencies_global(
+                graph, internal_nodes, cfg
+            )
+
+        if selected_mode == "hybrid":
+            return await self._infer_and_add_dependencies_hybrid(
+                graph=graph,
+                internal_nodes=internal_nodes,
+                cfg=cfg,
+            )
+
+        logger.warning(
+            f"Unknown dependency_mode={selected_mode}. Falling back to pairwise."
+        )
+        return await self._infer_and_add_dependencies_pairwise(
+            graph, artifact_to_terms_map, bank
+        )
+
+    async def _infer_and_add_dependencies_global(
+        self,
+        graph: DocumentGraph,
+        internal_nodes: List,
+        cfg: DependencyInferenceConfig,
+    ) -> DocumentGraph:
+        logger.info(
+            f"[global] Running one-shot dependency inference for N={len(internal_nodes)}"
+        )
+        result = await self.global_dependency_inferencer.ainfer_dependencies(
+            internal_nodes, cfg
+        )
+
+        id_to_node = {n.id: n for n in internal_nodes}
+        added = 0
+        dropped = 0
+
+        for e in result.edges:
+            if e.source_id == e.target_id:
+                dropped += 1
+                continue
+            if e.source_id not in id_to_node or e.target_id not in id_to_node:
+                dropped += 1
+                continue
+            if graph.find_edge(e.source_id, e.target_id):
+                continue
+
+            graph.add_edge(
+                Edge(
+                    source_id=e.source_id,
+                    target_id=e.target_id,
+                    dependency_type=e.dependency_type,
+                    dependency=e.justification,
+                )
+            )
+            added += 1
+
+        logger.success(
+            f"[global] Added {added} dependency edges (dropped_invalid={dropped})."
+        )
+        return graph
+
+    async def _infer_and_add_dependencies_hybrid(
+        self,
+        graph: DocumentGraph,
+        internal_nodes: List,
+        cfg: DependencyInferenceConfig,
+    ) -> DocumentGraph:
+        logger.info(
+            f"[hybrid] Propose+verify dependency inference for N={len(internal_nodes)}"
+        )
+
+        proposal = await self.global_dependency_proposer.apropose(internal_nodes, cfg)
+
+        # Cap and filter candidates.
+        id_to_node = {n.id: n for n in internal_nodes}
+        candidates = []
+        seen = set()
+
+        # Enforce per-source top-k (best-effort) by simple iteration order.
+        per_source_count: Dict[str, int] = defaultdict(int)
+        for pe in proposal.edges:
+            if pe.source_id == pe.target_id:
+                continue
+            if pe.source_id not in id_to_node or pe.target_id not in id_to_node:
+                continue
+            if graph.find_edge(pe.source_id, pe.target_id):
+                continue
+            if per_source_count[pe.source_id] >= cfg.hybrid_topk_per_source:
+                continue
+            key = (pe.source_id, pe.target_id)
+            if key in seen:
+                continue
+            seen.add(key)
+            per_source_count[pe.source_id] += 1
+            candidates.append(key)
+            if len(candidates) >= cfg.hybrid_max_total_candidates:
+                break
+
+        logger.info(
+            f"[hybrid] Proposed_edges={len(proposal.edges)}, candidates_after_caps={len(candidates)} (topk_per_source={cfg.hybrid_topk_per_source}, max_total={cfg.hybrid_max_total_candidates})"
+        )
+
+        if not candidates:
+            logger.info("[hybrid] No candidates to verify.")
+            return graph
+
+        # Verify candidates with pairwise checker.
+        tasks_with_context = []
+        for source_id, target_id in candidates:
+            source_node = id_to_node[source_id]
+            target_node = id_to_node[target_id]
+            task = asyncio.create_task(
+                self.llm_dependency_checker.ainfer_dependency(
+                    source_node.to_dict(), target_node.to_dict()
+                )
+            )
+            tasks_with_context.append(
+                {"source": source_node, "target": target_node, "task": task}
+            )
+
+        results = await asyncio.gather(
+            *[t["task"] for t in tasks_with_context], return_exceptions=True
+        )
+
+        added_edges_count = 0
+        for context, result in zip(tasks_with_context, results):
+            if isinstance(result, Exception):
+                source_id = context["source"].id
+                target_id = context["target"].id
+                logger.error(
+                    f"[hybrid] Error verifying pair ({source_id}, {target_id}): {result}"
+                )
+                continue
+
+            if result and result.has_dependency:
+                source_node = context["source"]
+                target_node = context["target"]
+                graph.add_edge(
+                    Edge(
+                        source_id=source_node.id,
+                        target_id=target_node.id,
+                        dependency_type=result.dependency_type,
+                        dependency=result.justification
+                        or "Inferred by LLM based on global proposal.",
+                    )
+                )
+                added_edges_count += 1
+
+        logger.success(f"[hybrid] Added {added_edges_count} verified dependency edges.")
+        return graph
 
     async def _enrich_artifact_content(self, graph: DocumentGraph, latex_content: str):
         """
@@ -148,7 +350,7 @@ class GraphEnhancer:
 
         return words_a.issubset(words_b)
 
-    async def _infer_and_add_dependencies(
+    async def _infer_and_add_dependencies_pairwise(
         self,
         graph: DocumentGraph,
         artifact_to_terms_map: Dict[str, List[str]],

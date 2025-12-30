@@ -114,6 +114,28 @@ For each artifact, we construct a "conceptual footprint" by combining the terms 
 
 Finally, we send those pairs to an LLM to establish whether there is a dependency relationship between the two, and if yes what type of dependency this is.
 
+### Dependency inference modes (pairwise / global / hybrid / auto)
+The dependency inference stage supports multiple strategies. These can be selected via `--dependency-mode`.
+
+- **`pairwise`** (original behavior):
+  - Generate candidate pairs using term overlap + subword overlap.
+  - Run the pairwise verifier LLM once per candidate pair.
+
+- **`global`** (one-shot):
+  - Run a single LLM call that outputs the final dependency edges for the whole paper.
+  - Uses **statements + truncated proofs** (Option B) to stay within a bounded prompt size.
+  - Controlled by: `--dependency-global-proof-char-budget`.
+
+- **`hybrid`** (propose + verify):
+  - Run one global *proposal* LLM call to propose candidate edges (sparse).
+  - Then run the pairwise verifier only on the proposed candidates.
+  - Candidate explosion is controlled via caps:
+    - `--dependency-hybrid-topk` (max prerequisites proposed per source artifact)
+    - `--dependency-hybrid-max-total` (hard cap on total candidates to verify)
+
+- **`auto`** (recommended default):
+  - Chooses between `global`, `hybrid`, and `pairwise` based on artifact count and an estimated token budget.
+
 ## 1.4 Paper Processing Pipeline
 Examples:
 
@@ -154,7 +176,32 @@ python -m arxitex.workflows.cli discover  --query cat:math.GR  --max-papers 10
 The `process` command is the workhorse of the pipeline. It takes papers from the queue, downloads their LaTeX source, and runs the full analysis pipeline as explained above on them concurrently to generate their knowledge graphs.
 
 ```bash
-python -m arxitex.workflows.cli process --max-papers 20 --workers 8  --enrich-content --infer-dependencies
+OPENAI_API_KEY=... \
+python -m arxitex.workflows.cli process \
+  --mode full \
+  --persist-db \
+  --max-papers 20 \
+  --workers 8 \
+  --dependency-mode auto
+```
+
+You can force a specific dependency inference strategy:
+
+```bash
+# One-shot global dependency inference (statements + truncated proofs)
+python -m arxitex.workflows.cli process --mode full --persist-db \
+  --dependency-mode global \
+  --dependency-global-proof-char-budget 1200
+
+# Hybrid: global proposal -> pairwise verification
+python -m arxitex.workflows.cli process --mode full --persist-db \
+  --dependency-mode hybrid \
+  --dependency-hybrid-topk 8 \
+  --dependency-hybrid-max-total 250
+
+# Original behavior
+python -m arxitex.workflows.cli process --mode full --persist-db \
+  --dependency-mode pairwise
 ```
 
 ## 2.4 (Optional) Build a "VIP" subset using citation counts (OpenAlex)
