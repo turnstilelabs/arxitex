@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import re
+import urllib.parse
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
@@ -15,6 +16,7 @@ from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
 
 ARXIV_VERSION_RE = re.compile(r"^(?P<base>.+)v(?P<vnum>\d+)$")
+ARXIV_MODERN_RE = re.compile(r"^\d{4}\.\d{4,5}$")
 
 
 def strip_arxiv_version(arxiv_id: str) -> str:
@@ -133,6 +135,47 @@ async def fetch_openalex_citation(
     # - pick the best candidate by title similarity, then check author overlap
     # - use that candidate's `cited_by_count`
 
+    def _mk_empty() -> CitationRecord:
+        return CitationRecord(
+            paper_id=base_arxiv_id,
+            source="openalex",
+            source_work_id=None,
+            citation_count=None,
+            last_fetched_at_utc=_utc_now_iso(),
+            raw_json=None,
+        )
+
+    # 1) DOI-first for modern arXiv ids (fast + accurate)
+    if ARXIV_MODERN_RE.match(base_arxiv_id):
+        doi = f"10.48550/arXiv.{base_arxiv_id}"
+        doi_enc = urllib.parse.quote(doi, safe="")
+        doi_url = f"https://api.openalex.org/works/doi:{doi_enc}"
+        try:
+            if mailto:
+                resp = await client.get(doi_url, params={"mailto": mailto})
+            else:
+                resp = await client.get(doi_url)
+        except Exception:
+            resp = None
+
+        if resp is not None:
+            if resp.status_code == 429:
+                raise httpx.HTTPStatusError(
+                    "rate_limited", request=resp.request, response=resp
+                )
+            if resp.status_code == 200:
+                best = resp.json()
+                return CitationRecord(
+                    paper_id=base_arxiv_id,
+                    source="openalex",
+                    source_work_id=best.get("id"),
+                    citation_count=best.get("cited_by_count"),
+                    last_fetched_at_utc=_utc_now_iso(),
+                    raw_json=json.dumps(best),
+                )
+            # 404 -> fall back to title search
+
+    # 2) Search-based fallback (title + authors)
     q = title or base_arxiv_id
     params = {"search": q, "per-page": 25}
     if mailto:
@@ -186,14 +229,10 @@ async def fetch_openalex_citation(
 
     # If we have a title, require a minimal similarity to avoid garbage matches.
     if title and (best is None or best_score < 0.6):
-        return CitationRecord(
-            paper_id=base_arxiv_id,
-            source="openalex",
-            source_work_id=None,
-            citation_count=None,
-            last_fetched_at_utc=_utc_now_iso(),
-            raw_json=None,
-        )
+        return _mk_empty()
+
+    if best is None:
+        return _mk_empty()
 
     return CitationRecord(
         paper_id=base_arxiv_id,
@@ -233,26 +272,29 @@ async def backfill_citations_openalex(
             seen.add(b)
             uniq.append(b)
 
-    if max_papers is not None:
-        uniq = uniq[:max_papers]
-
     cutoff = datetime.now(timezone.utc) - timedelta(days=refresh_days)
 
     # filter stale/missing
     existing_ts = _load_existing_citation_timestamps(db_path)
     to_fetch: list[str] = []
     for bid in uniq:
+        need_fetch = False
         ts = existing_ts.get(bid)
         if not ts:
+            need_fetch = True
+        else:
+            try:
+                dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+            except Exception:
+                need_fetch = True
+            else:
+                if dt < cutoff:
+                    need_fetch = True
+
+        if need_fetch:
             to_fetch.append(bid)
-            continue
-        try:
-            dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-        except Exception:
-            to_fetch.append(bid)
-            continue
-        if dt < cutoff:
-            to_fetch.append(bid)
+            if max_papers is not None and len(to_fetch) >= max_papers:
+                break
 
     logger.info(
         f"OpenAlex citation backfill: unique={len(uniq)} to_fetch={len(to_fetch)} refresh_days={refresh_days}"
