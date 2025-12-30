@@ -40,9 +40,26 @@ class DummyDefinitionBank:
         # mapping: term -> Definition or None
         self._mapping = mapping or {}
 
+    def _normalize_term(self, term: str) -> str:
+        return term.strip().lower()
+
     async def find(self, term):
         # mimic async find returning Definition or None
         return self._mapping.get(term)
+
+    async def find_many(self, terms):
+        found = []
+        seen = set()
+        for t in terms:
+            d = self._mapping.get(t)
+            if d is None:
+                continue
+            k = self._normalize_term(d.term)
+            if k in seen:
+                continue
+            seen.add(k)
+            found.append(d)
+        return found
 
 
 class DummyLLMChecker:

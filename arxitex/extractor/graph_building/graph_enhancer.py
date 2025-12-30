@@ -377,15 +377,26 @@ class GraphEnhancer:
             logger.info(
                 "Building conceptual footprint for each artifact by including term dependencies..."
             )
+
+            # PERF: Prefetch definitions in batch to avoid many bank.find() calls
+            # (each of which acquires the bank lock). This keeps footprint building
+            # in pure Python after a single lock acquisition.
+            all_terms = set().union(*artifact_to_terms_map.values())
+            definitions = await bank.find_many(list(all_terms))
+            canonical_term_to_deps = {
+                bank._normalize_term(d.term): set(d.dependencies or [])
+                for d in definitions
+            }
+
             artifact_footprints = defaultdict(set)
             for artifact in internal_nodes:
                 direct_terms = artifact_to_terms_map.get(artifact.id, [])
                 artifact_footprints[artifact.id].update(direct_terms)
 
                 for term in direct_terms:
-                    definition = await bank.find(term)
-                    if definition and definition.dependencies:
-                        artifact_footprints[artifact.id].update(definition.dependencies)
+                    deps = canonical_term_to_deps.get(bank._normalize_term(term))
+                    if deps:
+                        artifact_footprints[artifact.id].update(deps)
 
             # --- Phase 2: Generate Candidate Pairs from Overlaps ---
             logger.info(
