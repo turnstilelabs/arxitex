@@ -57,7 +57,7 @@ class DummyLLMChecker:
             "use" in tgt_content and "target" in src_content
         ):
             return DummyLLMChecker.Result(
-                True, dependency_type="uses_result", justification="Detected usage"
+                True, dependency_type="used_in", justification="Detected usage"
             )
         return DummyLLMChecker.Result(False)
 

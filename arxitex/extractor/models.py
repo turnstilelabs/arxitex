@@ -190,36 +190,16 @@ class ArtifactNode:
 
 
 class DependencyType(str, Enum):
+    """Simplified dependency taxonomy between two artifacts.
+
+    Semantics assume the graph direction is: Target → Source.
     """
-    Defines the types of logical or structural dependencies between two artifacts in a document.
-    """
 
-    # --- Logical Dependencies ---
-    USES_RESULT = "uses_result"
-    """The source artifact's proof relies on a theorem, lemma, or proposition from the target."""
+    USED_IN = "used_in"
+    """Target is used as a prerequisite (definition/result/concept) by Source."""
 
-    USES_DEFINITION = "uses_definition"
-    """The source artifact uses a term, notation, or concept formally defined in the target."""
-
-    PROVES = "proves"
-    """The source artifact is the formal proof of the statement made in the target."""
-
-    # --- Illustrative Dependencies ---
-    PROVIDES_EXAMPLE = "provides_example"
-    """The source artifact is a concrete example illustrating the concept from the target."""
-
-    PROVIDES_REMARK = "provides_remark"
-    """The source artifact is a remark that provides context or commentary on the target."""
-
-    # --- Hierarchical Dependencies ---
-    IS_COROLLARY_OF = "is_corollary_of"
-    """The source artifact is a direct and immediate consequence of the target theorem."""
-
-    IS_SPECIAL_CASE_OF = "is_special_case_of"
-    """The source artifact is a more specific version of a general result in the target."""
-
-    IS_GENERALIZATION_OF = "is_generalization_of"
-    """The source artifact presents a result that extends a more specific result from the target."""
+    GENERALIZES = "generalizes"
+    """Source generalizes Target (Target is a special case of Source)."""
 
 
 @dataclass
@@ -230,7 +210,7 @@ class Edge:
 
     source_id: str
     target_id: str
-    dependency_type: DependencyType = None
+    dependency_type: Optional[DependencyType] = None
     dependency: Optional[str] = None
     context: Optional[str] = None
     reference_type: Optional[ReferenceType] = None

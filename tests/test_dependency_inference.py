@@ -8,18 +8,6 @@ from arxitex.extractor.dependency_inference.dependency_models import (
 )
 
 
-class DummyResult:
-    def __init__(
-        self,
-        has_dependency,
-        dependency_type="uses_result",
-        justification="just because",
-    ):
-        self.has_dependency = has_dependency
-        self.dependency_type = dependency_type
-        self.justification = justification
-
-
 def test_infer_dependency_sync_monkeypatch(monkeypatch):
     gdi = GraphDependencyInference()
 
@@ -27,7 +15,7 @@ def test_infer_dependency_sync_monkeypatch(monkeypatch):
     def fake_execute_prompt(prompt, output_class, model):
         # Return a pydantic model instance or object compatible with PairwiseDependencyCheck
         return PairwiseDependencyCheck(
-            has_dependency=True, dependency_type="uses_result", justification="evidence"
+            has_dependency=True, dependency_type="used_in", justification="evidence"
         )
 
     monkeypatch.setattr("arxitex.llms.llms.execute_prompt", fake_execute_prompt)
