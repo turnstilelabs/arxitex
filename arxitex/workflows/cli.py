@@ -9,6 +9,7 @@ from loguru import logger
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
 from arxitex.llms.usage_context import llm_usage_context
+from arxitex.tools.citations_backfill import run_backfill as run_citations_backfill
 from arxitex.tools.discovery_queue_dedup import dedup_discovery_queue
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
@@ -297,6 +298,53 @@ async def main():
         help="Print the specific arXiv IDs that were/would be deleted.",
     )
 
+    # --- 'backfill-citations' command ---
+    parser_citations = subparsers.add_parser(
+        "backfill-citations",
+        help=(
+            "Fetch total citation counts from OpenAlex for all arXiv IDs present "
+            "in the pipeline DB (discovery + processed + papers tables)."
+        ),
+    )
+    parser_citations.add_argument(
+        "--max-papers",
+        type=int,
+        default=None,
+        help="Limit number of unique base arXiv ids to fetch (for testing)",
+    )
+    parser_citations.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help="Concurrent OpenAlex requests",
+    )
+    parser_citations.add_argument(
+        "--qps",
+        type=float,
+        default=1.0,
+        help=(
+            "Global OpenAlex request rate limit (requests/second) across all workers. "
+            "Use something conservative like 0.5–1.0 for long runs."
+        ),
+    )
+    parser_citations.add_argument(
+        "--refresh-days",
+        type=int,
+        default=30,
+        help="Refetch citations if older than this many days",
+    )
+    parser_citations.add_argument(
+        "--mailto",
+        type=str,
+        default=None,
+        help="Optional mailto parameter recommended by OpenAlex (contact email)",
+    )
+    parser_citations.add_argument(
+        "--only-discovery",
+        action="store_true",
+        help="Only backfill citation counts for discovery-queue papers",
+    )
+
     args = parser.parse_args()
 
     exit_code = 0
@@ -440,6 +488,12 @@ async def main():
         if args.show_ids:
             for aid in report.deleted_arxiv_ids:
                 logger.info(f"delete: {aid}")
+
+    elif args.command == "backfill-citations":
+        # Reuse the pipeline output dir DB.
+        # The implementation reads IDs from discovered_papers / processed_papers / papers.
+        args.db_path = str(Path(args.output_dir) / "arxitex_indices.db")
+        exit_code = await run_citations_backfill(args)
 
     logger.info(f"Command '{args.command}' has completed.")
     return exit_code

@@ -214,6 +214,29 @@ def ensure_schema(db_path: str | Path) -> None:
             "CREATE INDEX IF NOT EXISTS idx_llm_usage_created ON llm_usage(created_at_utc);"
         )
 
+        # -- Per-paper citation counts (VIP selection)
+        # We store per *base* arXiv id (strip vN). Total citations are sourced from OpenAlex.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS paper_citations (
+                paper_id TEXT PRIMARY KEY,
+                source TEXT NOT NULL,
+                source_work_id TEXT,
+                citation_count INTEGER,
+                last_fetched_at_utc TEXT NOT NULL,
+                raw_json TEXT,
+                FOREIGN KEY (paper_id) REFERENCES papers(paper_id)
+                    ON DELETE CASCADE
+            );
+            """
+        )
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_paper_citations_count ON paper_citations(citation_count);"
+        )
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_paper_citations_fetched ON paper_citations(last_fetched_at_utc);"
+        )
+
         # Useful indexes
         conn.execute(
             "CREATE INDEX IF NOT EXISTS idx_artifacts_by_paper ON artifacts(paper_id);"

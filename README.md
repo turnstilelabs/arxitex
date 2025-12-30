@@ -157,6 +157,40 @@ The `process` command is the workhorse of the pipeline. It takes papers from the
 python -m arxitex.workflows.cli process --max-papers 20 --workers 8  --enrich-content --infer-dependencies
 ```
 
+## 2.4 (Optional) Build a "VIP" subset using citation counts (OpenAlex)
+
+You can enrich the pipeline DB with **total citation counts** from OpenAlex and use this
+signal to select a smaller, high-value subset of papers to run expensive LLM enhancements on.
+
+### Backfill citation counts
+
+This reads arXiv IDs from your existing pipeline DB (`pipeline_output/arxitex_indices.db`) and
+stores results into a new table `paper_citations`.
+
+```bash
+python -m arxitex.workflows.cli -o pipeline_output backfill-citations \
+  --workers 8 \
+  --refresh-days 30 \
+  --mailto "you@domain.com"
+```
+
+For a quick test run:
+
+```bash
+python -m arxitex.workflows.cli -o pipeline_output backfill-citations --max-papers 50 --workers 4 --refresh-days 0
+```
+
+### Query top-cited papers
+
+```bash
+sqlite3 pipeline_output/arxitex_indices.db "
+select paper_id, citation_count
+from paper_citations
+where citation_count is not null
+order by citation_count desc
+limit 50;"
+```
+
 # 2.3 Search format
 We can convert the graph data to a better format for search witht the `--format-for-search` flag. Each artifact is saved with its extracted `terms` and the paper's `title`, `authors`, `abstract`.
 
