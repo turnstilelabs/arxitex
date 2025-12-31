@@ -193,3 +193,39 @@ First example.
     assert types_by_label["defn:first"] == "definition"
     assert types_by_label["prop:first"] == "proposition"
     assert types_by_label["ex:first"] == "example"
+
+
+def test_build_graph_from_content_position_matches_naive(monkeypatch):
+    """The optimized position calculator should match the naive implementation."""
+
+    content = "a\n" * 5 + "X" * 10 + "\n" + "b\n" * 3
+
+    builder = BaseGraphBuilder()
+
+    # We need project_dir for bibliography resolution; point to empty temp.
+    class DummyDir(Path):
+        _flavour = type(Path())._flavour
+
+    proj = DummyDir("/tmp")
+
+    # Make resolver not depend on actual files.
+    monkeypatch.setattr(
+        "arxitex.extractor.graph_building.reference_resolver.ReferenceResolver._find_and_parse_bibliography",
+        lambda self, project_dir: {},
+    )
+
+    builder.build_graph_from_content(content=content, project_dir=proj)
+
+    def naive_pos(start: int, end: int):
+        line_start = content[:start].count("\n") + 1
+        line_end = content[:end].count("\n") + 1
+        last_nl_start = content.rfind("\n", 0, start)
+        col_start = start + 1 if last_nl_start == -1 else start - last_nl_start
+        last_nl_end = content.rfind("\n", 0, end)
+        col_end = end + 1 if last_nl_end == -1 else end - last_nl_end
+        return line_start, line_end, col_start, col_end
+
+    for start, end in [(0, 1), (2, 3), (10, 12), (len(content) - 5, len(content) - 1)]:
+        p = builder._calculate_position(start, end)
+        exp = naive_pos(start, end)
+        assert (p.line_start, p.line_end, p.col_start, p.col_end) == exp

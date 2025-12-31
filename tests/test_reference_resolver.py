@@ -137,3 +137,34 @@ def test_unresolved_internal_label_creates_no_placeholder(tmp_path):
     # No internal edges and no placeholder external nodes for unresolved internal labels
     assert all(e.reference_type != ReferenceType.INTERNAL for e in edges)
     assert external_nodes == []
+
+
+def test_manual_citation_multiple_keys_in_brackets(tmp_path):
+    proj = Path(tmp_path)
+
+    # Provide a .bbl so bib_map contains both keys.
+    bbl = proj / "refs.bbl"
+    bbl.write_text(
+        r"""
+    \begin{thebibliography}{9}
+    \bibitem{Rou01} R. Author, Some paper
+    \bibitem{Bar99} B. Author, Another paper
+    \end{thebibliography}
+    """,
+        encoding="utf-8",
+    )
+
+    content = "Some text."
+    node = ArtifactNode(
+        id="n_manual",
+        type=ArtifactType.REMARK,
+        content="See [Rou01, Bar99, Thm. 2] for details.",
+        position=Position(line_start=1),
+    )
+
+    resolver = ReferenceResolver(content)
+    edges, external_nodes = resolver.resolve_all_references(proj, [node], {})
+
+    external_edges = [e for e in edges if e.reference_type == ReferenceType.EXTERNAL]
+    assert {e.target_id for e in external_edges} == {"external_Rou01", "external_Bar99"}
+    assert {n.label for n in external_nodes} == {"Rou01", "Bar99"}

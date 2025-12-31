@@ -7,6 +7,7 @@ from typing import Dict, List, Optional
 
 from loguru import logger
 
+from arxitex.downloaders.utils import read_and_combine_tex_files
 from arxitex.extractor.dependency_inference.auto_mode import choose_mode_auto
 from arxitex.extractor.dependency_inference.dependency_inference import (
     GraphDependencyInference,
@@ -63,15 +64,17 @@ class GraphEnhancer:
         dependency_config: Optional[DependencyInferenceConfig] = None,
     ) -> DocumentGraph:
         logger.info("Starting Pass 1: Building base graph from LaTeX structure...")
-        graph = self.regex_builder.build_graph(project_dir, source_file)
+
+        # PERF: read/concatenate LaTeX once and reuse for all subsequent passes.
+        latex_content = read_and_combine_tex_files(project_dir)
+        graph = self.regex_builder.build_graph_from_content(
+            content=latex_content, source_file=source_file, project_dir=project_dir
+        )
 
         if not graph.nodes:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
             return DocumentGraph(), DefinitionBank(), {}
 
-        from arxitex.downloaders.utils import read_and_combine_tex_files
-
-        latex_content = read_and_combine_tex_files(project_dir)
         bank = None
         artifact_to_terms_map = {}
         should_enrich = enrich_content or infer_dependencies

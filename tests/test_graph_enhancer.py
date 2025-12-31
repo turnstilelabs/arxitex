@@ -1,4 +1,5 @@
 import asyncio
+from pathlib import Path
 
 from arxitex.extractor.dependency_inference.dependency_mode import (
     DependencyInferenceConfig,
@@ -60,6 +61,39 @@ class DummyDefinitionBank:
             seen.add(k)
             found.append(d)
         return found
+
+
+def test_graph_enhancer_reads_combined_latex_once(monkeypatch, tmp_path):
+    """Regression: GraphEnhancer should not call read_and_combine_tex_files twice."""
+
+    from arxitex.extractor.graph_building import graph_enhancer as ge_mod
+
+    calls = {"n": 0}
+
+    def fake_read_and_combine(project_dir):
+        calls["n"] += 1
+        return r"""
+\begin{theorem}\label{thm:one}
+X
+\end{theorem}
+"""
+
+    monkeypatch.setattr(ge_mod, "read_and_combine_tex_files", fake_read_and_combine)
+
+    ge = GraphEnhancer()
+
+    # Avoid triggering enrichment/deps.
+    graph, bank, artifact_to_terms_map = asyncio.run(
+        ge.build_graph(
+            project_dir=Path(tmp_path),
+            source_file="x",
+            infer_dependencies=False,
+            enrich_content=False,
+        )
+    )
+
+    assert calls["n"] == 1
+    assert graph.nodes
 
 
 class DummyLLMChecker:
