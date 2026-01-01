@@ -282,6 +282,16 @@ async def main():
         help="Global/Hybrid proposer: truncate each proof to this many chars.",
     )
     parser_process.add_argument(
+        "--min-citations",
+        type=int,
+        default=None,
+        help=(
+            "If set, restrict processing to papers with citation_count >= this value "
+            "(from paper_citations via OpenAlex). Papers are processed in descending "
+            "citation_count order with stable tiebreaks."
+        ),
+    )
+    parser_process.add_argument(
         "--format-for-search",
         action="store_true",
         help="Additionally, transform and append artifacts to a .jsonl file.",
@@ -290,6 +300,14 @@ async def main():
         "--persist-db",
         action="store_true",
         help="Persist normalized artifacts/edges/definitions into SQLite (arxitex_indices.db).",
+    )
+    parser_process.add_argument(
+        "--save-graph",
+        action="store_true",
+        help=(
+            "Also save the full per-paper graph JSON under output-dir/graphs. "
+            "By default, graphs are NOT saved when --persist-db is enabled."
+        ),
     )
     parser_process.add_argument(
         "--mode",
@@ -376,6 +394,14 @@ async def main():
         "--persist-db",
         action="store_true",
         help="Persist normalized artifacts/edges/definitions into SQLite.",
+    )
+    parser_reprocess.add_argument(
+        "--save-graph",
+        action="store_true",
+        help=(
+            "Also save the full per-paper graph JSON under output-dir/graphs. "
+            "By default, graphs are NOT saved when --persist-db is enabled."
+        ),
     )
     parser_reprocess.add_argument(
         "--format-for-search",
@@ -471,6 +497,23 @@ async def main():
         action="store_true",
         help="Only backfill citation counts for discovery-queue papers",
     )
+    parser_citations.add_argument(
+        "--only-zero",
+        action="store_true",
+        help=(
+            "Only refetch citations for paper_ids that currently have citation_count = 0 "
+            "in paper_citations (use with --refresh-days 0 to force rerun)."
+        ),
+    )
+    parser_citations.add_argument(
+        "--paper-id",
+        action="append",
+        default=None,
+        help=(
+            "Restrict citation backfill to one specific base arXiv id. "
+            "Can be provided multiple times. Example: --paper-id 2207.12929"
+        ),
+    )
 
     args = parser.parse_args()
 
@@ -506,6 +549,7 @@ async def main():
             infer_dependencies=args.infer_dependencies,
             max_concurrent_tasks=args.workers,
             format_for_search=args.format_for_search,
+            save_graph=(False if args.persist_db else True) or bool(args.save_graph),
             persist_db=args.persist_db,
             mode=mode,
             dependency_mode=args.dependency_mode,
@@ -517,6 +561,7 @@ async def main():
                 "global_include_proofs": True,
                 "global_proof_char_budget": args.dependency_global_proof_char_budget,
             },
+            min_citations=args.min_citations,
         )
         await workflow.run(max_papers=args.max_papers)
 
@@ -597,6 +642,7 @@ async def main():
             infer_dependencies=args.infer_dependencies,
             max_concurrent_tasks=args.workers,
             format_for_search=args.format_for_search,
+            save_graph=(False if args.persist_db else True) or bool(args.save_graph),
             persist_db=args.persist_db,
             mode=mode,
             dependency_mode=args.dependency_mode,
