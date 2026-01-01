@@ -4,7 +4,62 @@ from pathlib import Path
 
 from arxitex.db.connection import connect
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+
+
+def _table_has_column(conn, table: str, column: str) -> bool:
+    try:
+        cols = [
+            r["name"] for r in conn.execute(f"PRAGMA table_info({table})").fetchall()
+        ]
+    except Exception:
+        return False
+    return column in cols
+
+
+def _migrate_paper_citations_drop_raw_json(conn) -> None:
+    """Migration: drop `raw_json` column from paper_citations.
+
+    SQLite doesn't support DROP COLUMN reliably across versions, so we rebuild.
+    """
+
+    if not _table_has_column(conn, "paper_citations", "raw_json"):
+        return
+
+    # Rebuild the table without raw_json.
+    conn.execute("ALTER TABLE paper_citations RENAME TO paper_citations_old")
+
+    conn.execute(
+        """
+        CREATE TABLE paper_citations (
+            paper_id TEXT PRIMARY KEY,
+            source TEXT NOT NULL,
+            source_work_id TEXT,
+            citation_count INTEGER,
+            last_fetched_at_utc TEXT NOT NULL,
+            FOREIGN KEY (paper_id) REFERENCES papers(paper_id)
+                ON DELETE CASCADE
+        );
+        """
+    )
+
+    conn.execute(
+        """
+        INSERT INTO paper_citations (paper_id, source, source_work_id, citation_count, last_fetched_at_utc)
+        SELECT paper_id, source, source_work_id, citation_count, last_fetched_at_utc
+        FROM paper_citations_old
+        """
+    )
+
+    conn.execute("DROP TABLE paper_citations_old")
+
+    # Recreate indexes.
+    conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_paper_citations_count ON paper_citations(citation_count);"
+    )
+    conn.execute(
+        "CREATE INDEX IF NOT EXISTS idx_paper_citations_fetched ON paper_citations(last_fetched_at_utc);"
+    )
 
 
 def ensure_schema(db_path: str | Path) -> None:
@@ -39,6 +94,13 @@ def ensure_schema(db_path: str | Path) -> None:
             );
             """
         )
+
+        # -- Minimal migrations (idempotent)
+        # We currently use a small set of targeted migrations keyed off schema
+        # inspection, since SQLite schemas can exist in legacy states.
+        with conn:
+            if _table_has_column(conn, "paper_citations", "raw_json"):
+                _migrate_paper_citations_drop_raw_json(conn)
 
         # -- Per-paper processing state (tracked per mode)
         conn.execute(
@@ -224,7 +286,6 @@ def ensure_schema(db_path: str | Path) -> None:
                 source_work_id TEXT,
                 citation_count INTEGER,
                 last_fetched_at_utc TEXT NOT NULL,
-                raw_json TEXT,
                 FOREIGN KEY (paper_id) REFERENCES papers(paper_id)
                     ON DELETE CASCADE
             );
@@ -263,6 +324,17 @@ def ensure_schema(db_path: str | Path) -> None:
                 "INSERT INTO arxitex_schema_version(version) VALUES (?)",
                 (SCHEMA_VERSION,),
             )
+        else:
+            # Best-effort update to the latest version (schema is maintained to
+            # be backwards compatible via migrations above).
+            try:
+                if int(row["version"]) < SCHEMA_VERSION:
+                    conn.execute(
+                        "UPDATE arxitex_schema_version SET version = ?",
+                        (SCHEMA_VERSION,),
+                    )
+            except Exception:
+                pass
         conn.commit()
     finally:
         conn.close()

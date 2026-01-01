@@ -9,8 +9,172 @@ from loguru import logger
 
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.extractor.models import DocumentGraph
+from arxitex.extractor.models import (
+    ArtifactNode,
+    ArtifactType,
+    DependencyType,
+    DocumentGraph,
+    Edge,
+    Position,
+    ReferenceType,
+)
 from arxitex.symdef.definition_bank import DefinitionBank
+
+
+def load_document_graph(
+    *,
+    db_path: str | Path,
+    paper_id: str,
+    include_prerequisites: bool = True,
+) -> DocumentGraph:
+    """Reconstruct a DocumentGraph from the normalized SQLite schema.
+
+    Notes
+    -----
+    - Internal nodes come from `artifacts`.
+    - External nodes are synthesized from `artifact_edges` targets/sources that
+      are not present in `artifacts`.
+    - If `include_prerequisites` is True, populate each node.prerequisite_defs
+      using `artifact_definition_requirements` + `definitions`.
+    """
+
+    ensure_schema(db_path)
+
+    conn = connect(db_path)
+    try:
+        # Nodes (internal)
+        nodes_by_id: dict[str, ArtifactNode] = {}
+        rows = conn.execute(
+            """
+            SELECT artifact_id, artifact_type, label, content_tex, proof_tex,
+                   line_start, line_end, col_start, col_end
+            FROM artifacts
+            WHERE paper_id = ?
+            """,
+            (paper_id,),
+        ).fetchall()
+
+        for r in rows:
+            pos = None
+            if r["line_start"] is not None:
+                pos = Position(
+                    line_start=int(r["line_start"]),
+                    line_end=int(r["line_end"]) if r["line_end"] is not None else None,
+                    col_start=(
+                        int(r["col_start"]) if r["col_start"] is not None else None
+                    ),
+                    col_end=int(r["col_end"]) if r["col_end"] is not None else None,
+                )
+
+            # Best-effort type mapping.
+            try:
+                atype = ArtifactType(str(r["artifact_type"]))
+            except Exception:
+                atype = ArtifactType.UNKNOWN
+
+            nodes_by_id[str(r["artifact_id"])] = ArtifactNode(
+                id=str(r["artifact_id"]),
+                type=atype,
+                content=str(r["content_tex"] or ""),
+                label=str(r["label"]) if r["label"] is not None else None,
+                position=pos or Position(line_start=0),
+                is_external=False,
+                proof=str(r["proof_tex"]) if r["proof_tex"] is not None else None,
+            )
+
+        # Edges
+        edges: list[Edge] = []
+        erows = conn.execute(
+            """
+            SELECT edge_kind, source_artifact_id, target_artifact_id,
+                   reference_type, dependency_type, context, justification
+            FROM artifact_edges
+            WHERE paper_id = ?
+            """,
+            (paper_id,),
+        ).fetchall()
+
+        # Identify external nodes (appear in edges but not in artifacts)
+        external_ids: set[str] = set()
+        for r in erows:
+            sid = str(r["source_artifact_id"])
+            tid = str(r["target_artifact_id"])
+            if sid not in nodes_by_id:
+                external_ids.add(sid)
+            if tid not in nodes_by_id:
+                external_ids.add(tid)
+
+        for eid in external_ids:
+            nodes_by_id.setdefault(
+                eid,
+                ArtifactNode(
+                    id=eid,
+                    type=ArtifactType.UNKNOWN,
+                    content="",
+                    label=None,
+                    position=Position(line_start=0),
+                    is_external=True,
+                    proof=None,
+                ),
+            )
+
+        for r in erows:
+            dep_type = None
+            ref_type = None
+            if r["dependency_type"] is not None:
+                try:
+                    dep_type = DependencyType(str(r["dependency_type"]))
+                except Exception:
+                    dep_type = None
+            if r["reference_type"] is not None:
+                try:
+                    ref_type = ReferenceType(str(r["reference_type"]))
+                except Exception:
+                    ref_type = None
+
+            edges.append(
+                Edge(
+                    source_id=str(r["source_artifact_id"]),
+                    target_id=str(r["target_artifact_id"]),
+                    dependency_type=dep_type,
+                    dependency=(
+                        str(r["justification"])
+                        if r["justification"] is not None
+                        else None
+                    ),
+                    context=str(r["context"]) if r["context"] is not None else None,
+                    reference_type=ref_type,
+                )
+            )
+
+        if include_prerequisites:
+            # Map artifact -> (term -> definition)
+            prows = conn.execute(
+                """
+                SELECT r.artifact_id, d.term_original, d.definition_text
+                FROM artifact_definition_requirements r
+                JOIN definitions d
+                  ON d.paper_id = r.paper_id
+                 AND d.term_canonical = r.term_canonical
+                WHERE r.paper_id = ?
+                """,
+                (paper_id,),
+            ).fetchall()
+
+            for r in prows:
+                aid = str(r["artifact_id"])
+                term = str(r["term_original"])
+                dtext = str(r["definition_text"])
+                node = nodes_by_id.get(aid)
+                if node is None:
+                    continue
+                node.prerequisite_defs[term] = dtext
+
+        return DocumentGraph(
+            nodes=list(nodes_by_id.values()), edges=edges, source_file=None
+        )
+    finally:
+        conn.close()
 
 
 def _utc_now_iso() -> str:

@@ -84,6 +84,23 @@ def _iter_arxiv_ids_from_discovery_only(db_path: str | Path) -> list[str]:
         conn.close()
 
 
+def _iter_base_ids_with_zero_citations(db_path: str | Path) -> list[str]:
+    """Load base arXiv IDs from paper_citations where citation_count=0.
+
+    This is useful after improving OpenAlex matching logic to re-fetch only the
+    suspicious cases.
+    """
+
+    conn = sqlite3.connect(str(db_path))
+    try:
+        rows = conn.execute(
+            "SELECT paper_id FROM paper_citations WHERE citation_count = 0"
+        ).fetchall()
+        return [r[0] for r in rows if r and r[0]]
+    finally:
+        conn.close()
+
+
 def _load_paper_metadata_map(db_path: str | Path) -> dict[str, dict]:
     """Build base_id -> metadata map from discovered_papers.
 
@@ -102,7 +119,7 @@ def _load_paper_metadata_map(db_path: str | Path) -> dict[str, dict]:
 
         import json
 
-        for r in rows:
+        for i, r in enumerate(rows, start=1):
             try:
                 m = json.loads(r[0])
             except Exception:
@@ -113,13 +130,22 @@ def _load_paper_metadata_map(db_path: str | Path) -> dict[str, dict]:
             base_id = strip_arxiv_version(arxiv_id)
             # Keep the first seen; that's fine.
             out.setdefault(base_id, m)
+
+            if i % 20000 == 0:
+                logger.info(
+                    f"Loaded discovered_papers metadata: {i}/{len(rows)} rows -> {len(out)} base ids"
+                )
         return out
     finally:
         conn.close()
 
 
 async def run_backfill(args) -> int:
-    if getattr(args, "only_discovery", False):
+    if getattr(args, "paper_id", None):
+        arxiv_ids = list(args.paper_id)
+    elif getattr(args, "only_zero", False):
+        arxiv_ids = _iter_base_ids_with_zero_citations(args.db_path)
+    elif getattr(args, "only_discovery", False):
         arxiv_ids = _iter_arxiv_ids_from_discovery_only(args.db_path)
     else:
         arxiv_ids = _iter_arxiv_ids_from_db(args.db_path)
@@ -187,9 +213,28 @@ def main() -> int:
     )
 
     parser.add_argument(
+        "--paper-id",
+        action="append",
+        default=None,
+        help=(
+            "Restrict citation backfill to one specific base arXiv id. "
+            "Can be provided multiple times. Example: --paper-id 2207.12929"
+        ),
+    )
+
+    parser.add_argument(
         "--only-discovery",
         action="store_true",
         help="Only backfill citation counts for discovery-queue papers (ignore processed/papers tables)",
+    )
+
+    parser.add_argument(
+        "--only-zero",
+        action="store_true",
+        help=(
+            "Only refetch citations for paper_ids that currently have citation_count = 0 "
+            "in paper_citations. Use with --refresh-days 0 to force rerun."
+        ),
     )
 
     args = parser.parse_args()
