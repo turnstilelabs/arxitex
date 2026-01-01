@@ -51,10 +51,7 @@ async def process_single_paper(arxiv_id: str, args):
                 "auto_max_tokens_global": getattr(
                     args, "dependency_auto_max_tokens", 12000
                 ),
-                "hybrid_topk_per_source": getattr(args, "dependency_hybrid_topk", 8),
-                "hybrid_max_total_candidates": getattr(
-                    args, "dependency_hybrid_max_total", 250
-                ),
+                "max_total_pairs": getattr(args, "dependency_max_pairs", 100),
                 "global_include_proofs": True,
                 "global_proof_char_budget": getattr(
                     args, "dependency_global_proof_char_budget", 1200
@@ -153,28 +150,19 @@ async def main():
         help="Dependency inference mode when --infer-dependencies is enabled.",
     )
     parser_single.add_argument(
-        "--dependency-auto-max-nodes",
-        type=int,
-        default=30,
-        help="Auto-mode: max artifacts to allow global/hybrid.",
-    )
-    parser_single.add_argument(
         "--dependency-auto-max-tokens",
         type=int,
         default=12000,
         help="Auto-mode: max estimated tokens to allow global/hybrid.",
     )
     parser_single.add_argument(
-        "--dependency-hybrid-topk",
+        "--dependency-max-pairs",
         type=int,
-        default=8,
-        help="Hybrid: max prerequisites proposed per source artifact.",
-    )
-    parser_single.add_argument(
-        "--dependency-hybrid-max-total",
-        type=int,
-        default=250,
-        help="Hybrid: hard cap on total proposed candidates to verify.",
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
     )
     parser_single.add_argument(
         "--dependency-global-proof-char-budget",
@@ -264,16 +252,13 @@ async def main():
         help="Auto-mode: max estimated tokens to allow global/hybrid.",
     )
     parser_process.add_argument(
-        "--dependency-hybrid-topk",
+        "--dependency-max-pairs",
         type=int,
-        default=8,
-        help="Hybrid: max prerequisites proposed per source artifact.",
-    )
-    parser_process.add_argument(
-        "--dependency-hybrid-max-total",
-        type=int,
-        default=250,
-        help="Hybrid: hard cap on total proposed candidates to verify.",
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
     )
     parser_process.add_argument(
         "--dependency-global-proof-char-budget",
@@ -556,8 +541,7 @@ async def main():
             dependency_config={
                 "auto_max_nodes_global": args.dependency_auto_max_nodes,
                 "auto_max_tokens_global": args.dependency_auto_max_tokens,
-                "hybrid_topk_per_source": args.dependency_hybrid_topk,
-                "hybrid_max_total_candidates": args.dependency_hybrid_max_total,
+                "max_total_pairs": args.dependency_max_pairs,
                 "global_include_proofs": True,
                 "global_proof_char_budget": args.dependency_global_proof_char_budget,
             },
@@ -649,8 +633,7 @@ async def main():
             dependency_config={
                 "auto_max_nodes_global": args.dependency_auto_max_nodes,
                 "auto_max_tokens_global": args.dependency_auto_max_tokens,
-                "hybrid_topk_per_source": args.dependency_hybrid_topk,
-                "hybrid_max_total_candidates": args.dependency_hybrid_max_total,
+                "max_total_pairs": args.dependency_max_pairs,
                 "global_include_proofs": True,
                 "global_proof_char_budget": args.dependency_global_proof_char_budget,
             },

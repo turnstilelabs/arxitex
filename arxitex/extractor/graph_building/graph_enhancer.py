@@ -63,7 +63,9 @@ class GraphEnhancer:
         dependency_mode: DependencyInferenceMode = "pairwise",
         dependency_config: Optional[DependencyInferenceConfig] = None,
     ) -> DocumentGraph:
-        logger.info("Starting Pass 1: Building base graph from LaTeX structure...")
+        logger.info(
+            f"[{source_file}] Starting Pass 1: Building base graph from LaTeX structure..."
+        )
 
         # PERF: read/concatenate LaTeX once and reuse for all subsequent passes.
         latex_content = read_and_combine_tex_files(project_dir)
@@ -100,11 +102,12 @@ class GraphEnhancer:
         if infer_dependencies:
             if not artifact_to_terms_map:
                 logger.warning(
-                    "Cannot infer dependencies because term extraction failed or was skipped."
+                    f"[{source_file}] Cannot infer dependencies because term extraction "
+                    "failed or was skipped."
                 )
             else:
                 logger.info(
-                    "--- Starting Pass 3: Inferring dependencies (mode-aware) ---"
+                    f"[{source_file}] --- Starting Pass 3: Inferring dependencies (mode-aware) ---"
                 )
                 cfg = dependency_config or DependencyInferenceConfig()
                 graph = await self._infer_and_add_dependencies_mode_aware(
@@ -118,10 +121,11 @@ class GraphEnhancer:
         reference_edges = len([e for e in graph.edges if e.reference_type])
         dependency_edges = len([e for e in graph.edges if e.dependency_type])
         logger.success(
-            f"Hybrid extraction complete. Graph has {len(graph.nodes)} artifacts and {len(graph.edges)} total edges."
+            f"[{source_file}] Hybrid extraction complete. Graph has {len(graph.nodes)} "
+            f"artifacts and {len(graph.edges)} total edges."
         )
         logger.info(
-            f"Edge breakdown: {reference_edges} reference-based, {dependency_edges} dependency-based."
+            f"[{source_file}] Edge breakdown: {reference_edges} reference-based, {dependency_edges} dependency-based."
         )
 
         return graph, bank, artifact_to_terms_map
@@ -154,7 +158,10 @@ class GraphEnhancer:
 
         if selected_mode == "pairwise":
             return await self._infer_and_add_dependencies_pairwise(
-                graph, artifact_to_terms_map, bank
+                graph=graph,
+                artifact_to_terms_map=artifact_to_terms_map,
+                bank=bank,
+                cfg=cfg,
             )
 
         if selected_mode == "global":
@@ -173,7 +180,10 @@ class GraphEnhancer:
             f"Unknown dependency_mode={selected_mode}. Falling back to pairwise."
         )
         return await self._infer_and_add_dependencies_pairwise(
-            graph, artifact_to_terms_map, bank
+            graph=graph,
+            artifact_to_terms_map=artifact_to_terms_map,
+            bank=bank,
+            cfg=cfg,
         )
 
     async def _infer_and_add_dependencies_global(
@@ -230,13 +240,11 @@ class GraphEnhancer:
 
         proposal = await self.global_dependency_proposer.apropose(internal_nodes, cfg)
 
-        # Cap and filter candidates.
+        # Filter + dedupe candidates from global proposer.
         id_to_node = {n.id: n for n in internal_nodes}
-        candidates = []
-        seen = set()
+        seen: set[tuple[str, str]] = set()
+        final_candidates: list[tuple[str, str]] = []
 
-        # Enforce per-source top-k (best-effort) by simple iteration order.
-        per_source_count: Dict[str, int] = defaultdict(int)
         for pe in proposal.edges:
             if pe.source_id == pe.target_id:
                 continue
@@ -244,28 +252,33 @@ class GraphEnhancer:
                 continue
             if graph.find_edge(pe.source_id, pe.target_id):
                 continue
-            if per_source_count[pe.source_id] >= cfg.hybrid_topk_per_source:
-                continue
             key = (pe.source_id, pe.target_id)
             if key in seen:
                 continue
             seen.add(key)
-            per_source_count[pe.source_id] += 1
-            candidates.append(key)
-            if len(candidates) >= cfg.hybrid_max_total_candidates:
-                break
+            final_candidates.append(key)
+
+        num_candidates = len(final_candidates)
+
+        if num_candidates == 0:
+            logger.info("[stage=deps_hybrid] No candidates to verify.")
+            return graph
+
+        if num_candidates > cfg.max_total_pairs:
+            logger.warning(
+                f"[stage=deps_hybrid] candidate_pairs={num_candidates} exceeds "
+                f"cap={cfg.max_total_pairs}; skipping hybrid dependency inference "
+                "for this paper to avoid excessive LLM calls."
+            )
+            return graph
 
         logger.info(
-            f"[hybrid] Proposed_edges={len(proposal.edges)}, candidates_after_caps={len(candidates)} (topk_per_source={cfg.hybrid_topk_per_source}, max_total={cfg.hybrid_max_total_candidates})"
+            f"[stage=deps_hybrid] Verifying {num_candidates} candidate pairs from global proposer."
         )
-
-        if not candidates:
-            logger.info("[hybrid] No candidates to verify.")
-            return graph
 
         # Verify candidates with pairwise checker.
         tasks_with_context = []
-        for source_id, target_id in candidates:
+        for source_id, target_id in final_candidates:
             source_node = id_to_node[source_id]
             target_node = id_to_node[target_id]
             task = asyncio.create_task(
@@ -358,6 +371,7 @@ class GraphEnhancer:
         graph: DocumentGraph,
         artifact_to_terms_map: Dict[str, List[str]],
         bank: DefinitionBank,
+        cfg: DependencyInferenceConfig,
     ) -> DocumentGraph:
         """
         Analyzes artifacts to infer dependencies efficiently using conceptual and
@@ -461,14 +475,24 @@ class GraphEnhancer:
                 if not graph.find_edge(source_node.id, target_node.id):
                     final_candidate_pairs.append((source_node, target_node))
 
-        if not final_candidate_pairs:
+        num_candidates = len(final_candidate_pairs)
+
+        if num_candidates == 0:
             logger.debug(
                 "No promising candidate pairs found after filtering. Skipping LLM verification."
             )
             return graph
 
+        if num_candidates > cfg.max_total_pairs:
+            logger.warning(
+                f"[stage=deps_pairwise] candidate_pairs={num_candidates} exceeds "
+                f"cap={cfg.max_total_pairs}; skipping pairwise dependency "
+                "inference for this paper to avoid excessive LLM calls."
+            )
+            return graph
+
         logger.info(
-            f"Generated {len(final_candidate_pairs)} candidate pairs for LLM verification."
+            f"[stage=deps_pairwise] Generated {num_candidates} candidate pairs for LLM verification."
         )
 
         tasks_with_context = []

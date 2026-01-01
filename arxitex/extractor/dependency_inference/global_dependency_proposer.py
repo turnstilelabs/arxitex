@@ -25,7 +25,8 @@ class GlobalDependencyProposer:
     ) -> ProposedEdges:
         prompt = self.prompt_generator.make_prompt(artifacts, cfg)
         logger.info(
-            f"[hybrid] Proposing candidate dependencies for {len(artifacts)} artifacts (topk_per_source={cfg.hybrid_topk_per_source}, proof_char_budget={cfg.global_proof_char_budget})"
+            f"[hybrid] Proposing candidate dependencies for {len(artifacts)} artifacts "
+            f"(proof_char_budget={cfg.global_proof_char_budget})"
         )
         with llm_usage_stage("dependency_proposal"):
             return await llms.aexecute_prompt(

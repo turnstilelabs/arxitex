@@ -1,5 +1,13 @@
 import dataclasses
 import json
+
+# --- HTTP client timeouts for LLM calls ---
+#
+# We allow these to be tuned via environment variables so long-running
+# completions (e.g. global proposer) can be given more headroom without
+# changing code. Defaults are conservative but higher than the original
+# 30s to reduce spurious timeouts under load.
+import os
 import time
 
 import httpx
@@ -22,7 +30,12 @@ from .registry import (
 )
 from .retry_utils import retry_async, retry_sync
 
-timeout = httpx.Timeout(30.0, connect=5.0)
+LLM_TIMEOUT_SECONDS = float(os.getenv("ARXITEX_LLM_TIMEOUT_SECONDS", "90"))
+LLM_CONNECT_TIMEOUT_SECONDS = float(
+    os.getenv("ARXITEX_LLM_CONNECT_TIMEOUT_SECONDS", "10")
+)
+
+timeout = httpx.Timeout(LLM_TIMEOUT_SECONDS, connect=LLM_CONNECT_TIMEOUT_SECONDS)
 
 
 @retry_sync

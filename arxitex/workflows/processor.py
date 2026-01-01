@@ -2,6 +2,7 @@ import asyncio
 import json
 import os
 import sqlite3
+from datetime import datetime, timezone
 from pathlib import Path
 
 from filelock import FileLock
@@ -129,6 +130,41 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         self._write_summary_report()
         logger.info("Processing workflow finished.")
 
+    def _write_summary_report(self):
+        """Categorize results and write a summary report for this processing run.
+
+        Extends the base summary with an explicit 'skipped_in_this_run' bucket so
+        that non-retryable cases like graph_empty are visible, rather than only
+        being implied by the difference between 'attempted' and
+        success/failure counts.
+        """
+
+        successful = [r for r in self.results if r and r.get("status") == "success"]
+        failed = [r for r in self.results if r and r.get("status") == "failure"]
+        skipped = [r for r in self.results if r and r.get("status") == "skipped"]
+
+        summary = {
+            "workflow_name": self.__class__.__name__,
+            "run_timestamp_utc": datetime.now(timezone.utc).isoformat(),
+            "papers_attempted_in_this_run": len(self.results),
+            "successful_in_this_run": successful,
+            "failed_in_this_run": failed,
+            "skipped_in_this_run": skipped,
+        }
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        report_filename = f"summary_{self.__class__.__name__.lower()}_{timestamp}.json"
+        report_path = os.path.join(self.components.output_dir, report_filename)
+
+        try:
+            with open(report_path, "w", encoding="utf-8") as f:
+                json.dump(summary, f, indent=2)
+            logger.info(
+                f"Successfully wrote this run's summary report to {report_path}"
+            )
+        except Exception as e:
+            logger.error(f"Could not write summary report: {e}")
+
     def _get_citation_filtered_pending_papers(self) -> list[dict]:
         """Return pending papers with citation_count >= min_citations.
 
@@ -223,6 +259,11 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         arxiv_id = item["arxiv_id"]
         paper_metadata = item
         category = paper_metadata.get("primary_category", "unknown").replace(".", "_")
+
+        logger.info(
+            f"[paper={arxiv_id}] Starting processing "
+            f"(mode={self.mode}, dep_mode={self.dependency_mode})"
+        )
 
         try:
             temp_base_dir = Path(self.components.output_dir) / "temp_processing"
@@ -332,6 +373,47 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
 
         except Exception as e:
             err = classify_processing_error(e)
+            # Special-case: empty/invalid graphs are considered non-retryable.
+            if err.code == "graph_empty":
+                # Record as a skipped outcome in processed_papers for auditing.
+                self.components.processing_index.update_processed_papers_status(
+                    arxiv_id,
+                    status="skipped_graph_empty",
+                    **err.to_details_dict(),
+                )
+
+                # Remove from discovery queue and add to skipped index so we
+                # never retry this paper in future runs.
+                try:
+                    self.components.discovery_index.remove_paper(arxiv_id)
+                except Exception:
+                    # Best-effort; if this fails we still mark it as skipped.
+                    logger.warning(
+                        f"Could not remove {arxiv_id} from discovery queue after graph_empty."
+                    )
+
+                try:
+                    self.components.skipped_index.add(
+                        arxiv_id,
+                        "graph_empty_no_detectable_statements",
+                    )
+                except Exception:
+                    logger.warning(
+                        f"Could not record {arxiv_id} in skipped_papers after graph_empty."
+                    )
+
+                logger.warning(
+                    f"SKIPPED (graph_empty): {arxiv_id} [{err.code} @ {err.stage}]: {err.message}. "
+                    "Moved to skipped_papers and removed from discovery queue."
+                )
+
+                return {
+                    "status": "skipped",
+                    "arxiv_id": arxiv_id,
+                    **err.to_details_dict(),
+                }
+
+            # Default: treat as retryable failure and leave in discovery queue.
             self.components.processing_index.update_processed_papers_status(
                 arxiv_id,
                 status="failure",

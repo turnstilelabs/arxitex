@@ -26,9 +26,16 @@ class DependencyInferenceConfig:
     global_include_proofs: bool = True
     global_proof_char_budget: int = 1200
 
-    # --- hybrid caps (critical to avoid expensive redundancy) ---
-    hybrid_topk_per_source: int = 8
-    hybrid_max_total_candidates: int = 250
+    # --- Global per-paper cap on LLM-verified dependency pairs ---
+    # Applies uniformly to both hybrid and pairwise strategies.
+    #
+    # Each mode first uses its own heuristics (global proposer for hybrid,
+    # term/definition footprints for pairwise) to generate a deduped list of
+    # candidate (source, target) pairs. If the resulting list has more than
+    # ``max_total_pairs`` entries for a given paper, we skip dependency
+    # inference for that paper entirely (with a clear warning) to avoid
+    # excessive LLM calls.
+    max_total_pairs: int = 100
 
     # --- verification controls ---
     # Keep current behavior: pairwise verification includes proofs.

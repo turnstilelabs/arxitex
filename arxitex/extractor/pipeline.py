@@ -105,8 +105,7 @@ async def run_async_pipeline(args):
         dependency_config = {
             "auto_max_nodes_global": args.dependency_auto_max_nodes,
             "auto_max_tokens_global": args.dependency_auto_max_tokens,
-            "hybrid_topk_per_source": args.dependency_hybrid_topk,
-            "hybrid_max_total_candidates": args.dependency_hybrid_max_total,
+            "max_total_pairs": args.dependency_hybrid_max_total,
             "global_include_proofs": True,
             "global_proof_char_budget": args.dependency_global_proof_char_budget,
         }
@@ -245,16 +244,13 @@ Examples:
         help="Auto-mode: max estimated tokens to allow global/hybrid.",
     )
     parser.add_argument(
-        "--dependency-hybrid-topk",
+        "--dependency-max-pairs",
         type=int,
-        default=8,
-        help="Hybrid: max prerequisites proposed per source artifact.",
-    )
-    parser.add_argument(
-        "--dependency-hybrid-max-total",
-        type=int,
-        default=250,
-        help="Hybrid: hard cap on total proposed candidates to verify.",
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
     )
     parser.add_argument(
         "--dependency-global-proof-char-budget",

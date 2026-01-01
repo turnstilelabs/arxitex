@@ -336,6 +336,7 @@ async def replace_definitions_and_mappings(
     conn.execute("DELETE FROM definitions WHERE paper_id = ?", (paper_id,))
 
     bank_dict = await bank.to_dict()
+    known_defs = set(bank_dict.keys())
 
     def_rows = []
     alias_rows = []
@@ -363,9 +364,19 @@ async def replace_definitions_and_mappings(
         for alias in d.get("aliases") or []:
             alias_rows.append((paper_id, term_canonical, alias))
 
-        # Dependencies are stored as term strings; store canonical.
+        # Dependencies are stored as term strings; store canonical. Only
+        # create dependency edges when the target term itself has a
+        # definition; otherwise we'd violate the FK on
+        # (paper_id, depends_on_term_canonical).
         for dep in d.get("dependencies") or []:
-            dep_rows.append((paper_id, term_canonical, bank._normalize_term(dep)))
+            canon_dep = bank._normalize_term(dep)
+            if canon_dep not in known_defs:
+                logger.debug(
+                    f"Skipping definition dependency {term_canonical} -> {canon_dep}: "
+                    "no definition found for target term."
+                )
+                continue
+            dep_rows.append((paper_id, term_canonical, canon_dep))
 
     conn.executemany(
         """
@@ -398,9 +409,6 @@ async def replace_definitions_and_mappings(
     # artifact_terms + artifact_definition_requirements
     term_rows = []
     req_rows = []
-
-    # Build a quick membership set for (paper_id, term_canonical) definitions.
-    known_defs = set(bank_dict.keys())
 
     for artifact_id, terms in (artifact_to_terms_map or {}).items():
         for term_raw in terms:

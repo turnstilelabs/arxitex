@@ -23,15 +23,14 @@ class GlobalDependencyProposalPromptGenerator:
     def make_prompt(
         self, artifacts: Iterable[ArtifactNode], cfg: DependencyInferenceConfig
     ) -> Prompt:
-        system = f"""
+        system = """
         You are an expert mathematician.
         Your task is to PROPOSE likely prerequisite dependencies between artifacts from a single paper.
 
-        Output must be a single JSON object {{"edges": [...]}}.
+        Output must be a single JSON object {"edges": [...] }.
         Each edge must have `source_id` and `target_id`.
 
         Sparsity rule:
-        - For each source artifact, propose at most {cfg.hybrid_topk_per_source} prerequisite targets.
         - Prefer earlier artifacts as prerequisites.
         - Avoid redundant edges.
         - Do not output self-loops.
