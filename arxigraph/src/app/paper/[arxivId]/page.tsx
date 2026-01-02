@@ -34,9 +34,17 @@ function normalizeEdgeForDisplay(edge: any): {
     }
 
     const ref = (edge?.reference_type ?? edge?.referenceType ?? null) as string | null;
+    const typ = (edge?.type ?? null) as string | null;
 
-    // Reverse direction for “used_in” semantics
-    if (depRaw === 'uses_result' || depRaw === 'uses_definition' || depRaw === 'is_corollary_of') {
+    // Canonical semantics (must mirror processGraphData):
+    // - For "used_in" edges, arrow points prerequisite -> result.
+    // Normalize both raw and already-normalized dependency types.
+    if (
+        depRaw === 'uses_result' ||
+        depRaw === 'uses_definition' ||
+        depRaw === 'is_corollary_of' ||
+        depRaw === 'used_in'
+    ) {
         return {
             source: rawT,
             target: rawS,
@@ -45,12 +53,21 @@ function normalizeEdgeForDisplay(edge: any): {
         };
     }
 
-    // Reverse direction for “generalized_by” semantics
-    if (depRaw === 'is_generalization_of') {
+    if (depRaw === 'is_generalization_of' || depRaw === 'generalized_by') {
         return {
             source: rawT,
             target: rawS,
             dependency_type: 'generalized_by',
+            reference_type: ref,
+        };
+    }
+
+    // Internal cross-references: referenced node is a prerequisite for the referrer.
+    if ((depRaw === 'internal' || !depRaw) && (ref === 'internal' || typ === 'internal')) {
+        return {
+            source: rawT,
+            target: rawS,
+            dependency_type: 'internal',
             reference_type: ref,
         };
     }
@@ -107,6 +124,22 @@ export default function PaperPage() {
         return v == null ? true : v !== '0';
     }, [searchParams]);
 
+    // Fallback label based on which analyses are enabled, used when we
+    // don't yet have (or can't parse) a more specific stage label from
+    // the backend streaming status events.
+    const analysisLabel = useMemo(() => {
+        if (inferDependencies && enrichContent) {
+            return 'processing paper';
+        }
+        if (inferDependencies) {
+            return 'inferring dependencies between artifacts';
+        }
+        if (enrichContent) {
+            return 'enriching symbols and definitions for artifacts';
+        }
+        return 'building base graph';
+    }, [inferDependencies, enrichContent]);
+
     const hasFullAnalysis = enrichContent && inferDependencies;
 
     const [paperMeta, setPaperMeta] = useState<PaperMeta | null>(null);
@@ -133,10 +166,19 @@ export default function PaperPage() {
     const [selectedEnrich, setSelectedEnrich] = useState(false);
     const [selectedDeps, setSelectedDeps] = useState(false);
 
+    // Track the current high-level pipeline stage based on streamed
+    // backend status messages (base graph, enrichment, dependencies).
+    const [stageLabel, setStageLabel] = useState<string | null>(null);
+
     const statsRef = useRef({
         nodeIds: new Set<string>(),
         edgeKeys: new Set<string>(),
     });
+
+    // Ensure we only reset the graph once per run, and only when the first
+    // node of the new run arrives. This avoids mixing graphs across runs
+    // while still keeping the previous graph visible while the backend works.
+    const shouldResetGraphRef = useRef(false);
 
     const absUrl = `https://arxiv.org/abs/${arxivId}`;
 
@@ -195,12 +237,15 @@ export default function PaperPage() {
             setError(null);
             setProcessingError(null);
             setIsErrorModalOpen(false);
-            graphRef.current?.reset();
+            setStageLabel(null);
 
             // Reset process stats for this run.
             statsRef.current.nodeIds = new Set();
             statsRef.current.edgeKeys = new Set();
             setStats({ artifacts: 0, links: 0 });
+
+            // Mark that the next node we see belongs to a fresh run.
+            shouldResetGraphRef.current = true;
 
             setStatus(['Initiating request...']);
 
@@ -277,79 +322,113 @@ export default function PaperPage() {
                 const decoder = new TextDecoder();
                 let buffer = '';
 
+                function parseSseEvents(chunk: string): Array<{ type: string; data?: any }> {
+                    // Split on blank lines (handle \n\n and \r\n\r\n).
+                    const blocks = chunk.split(/\r?\n\r?\n/);
+                    const completeBlocks = blocks.slice(0, -1);
+                    buffer = blocks[blocks.length - 1];
+
+                    const events: Array<{ type: string; data?: any }> = [];
+                    for (const block of completeBlocks) {
+                        const lines = block.split(/\r?\n/);
+                        const dataLines: string[] = [];
+                        for (const line of lines) {
+                            if (!line) continue;
+                            if (line.startsWith(':')) continue; // comment/keepalive
+                            if (line.startsWith('data:')) {
+                                dataLines.push(line.slice(5).trimStart());
+                            }
+                        }
+                        if (!dataLines.length) continue;
+                        const payload = dataLines.join('\n');
+                        try {
+                            events.push(JSON.parse(payload));
+                        } catch {
+                            console.error('Failed to parse stream chunk:', `data: ${payload}`);
+                        }
+                    }
+                    return events;
+                }
+
                 while (!cancelled) {
                     const { done, value } = await reader.read();
                     if (done) break;
 
                     buffer += decoder.decode(value, { stream: true });
+                    const events = parseSseEvents(buffer);
 
-                    const parts = buffer.split('\n\n');
+                    for (const json of events) {
+                        if (json.type === 'status') {
+                            // Drop keep-alives from log.
+                            if (json.data !== 'keep-alive') {
+                                setStatus((prev) => [...prev, json.data]);
 
-                    for (let i = 0; i < parts.length - 1; i++) {
-                        const part = parts[i];
-                        if (part.startsWith('data: ')) {
-                            try {
-                                const json = JSON.parse(part.substring(6));
-                                if (json.type === 'status') {
-                                    setStatus((prev) => [...prev, json.data]);
-                                } else if (json.type === 'node') {
-                                    const nodeId = String(json?.data?.id ?? '');
-                                    if (nodeId && !statsRef.current.nodeIds.has(nodeId)) {
-                                        statsRef.current.nodeIds.add(nodeId);
-                                        setStats((prev) => ({
-                                            ...prev,
-                                            artifacts: statsRef.current.nodeIds.size,
-                                        }));
-                                    }
-
-                                    graphRef.current?.ingest({ type: 'node', data: json.data });
-                                } else if (json.type === 'link') {
-                                    // Count edges the same way the graph renderer will display them.
-                                    const k = getDisplayedEdgeKey(json.data);
-                                    if (k && !statsRef.current.edgeKeys.has(k)) {
-                                        statsRef.current.edgeKeys.add(k);
-
-                                        setStats((prev) => ({
-                                            ...prev,
-                                            links: statsRef.current.edgeKeys.size,
-                                        }));
-                                    }
-
-                                    graphRef.current?.ingest({ type: 'link', data: json.data });
-                                } else if (json.type === 'error') {
-                                    const details = json.data ?? {};
-                                    const code: string =
-                                        details.reason_code ??
-                                        details.code ??
-                                        'unexpected_error';
-                                    const message: string =
-                                        details.reason ??
-                                        details.message ??
-                                        'An unexpected error occurred while processing this paper.';
-                                    const stage = details.error_stage ?? details.stage;
-
-                                    const err: ProcessingError = { code, message, stage };
-                                    setProcessingError(err);
-                                    setIsErrorModalOpen(true);
-                                    setError(message);
-                                    setStatus((prev) => [...prev, `Error: ${message}`]);
-
-                                    cancelled = true;
-                                    try {
-                                        void reader.cancel();
-                                    } catch {
-                                        // ignore
-                                    }
-                                    break;
-                                } else if (json.type === 'done') {
-                                    // no-op
+                                const msg = String(json.data ?? '').toLowerCase();
+                                if (msg.includes('building base graph')) {
+                                    setStageLabel('building base graph');
+                                } else if (msg.includes('enriching symbols and definitions')) {
+                                    setStageLabel('enriching symbols and definitions for artifacts');
+                                } else if (msg.includes('inferring dependencies between artifacts')) {
+                                    setStageLabel('inferring dependencies between artifacts');
+                                } else if (msg.includes('graph extraction complete')) {
+                                    // Keep the last meaningful stage; the inline
+                                    // label will disappear once isLoading=false.
                                 }
-                            } catch {
-                                console.error('Failed to parse stream chunk:', part);
                             }
+                        } else if (json.type === 'node') {
+                            if (shouldResetGraphRef.current) {
+                                graphRef.current?.reset();
+                                shouldResetGraphRef.current = false;
+                            }
+
+                            const nodeId = String(json?.data?.id ?? '');
+                            if (nodeId && !statsRef.current.nodeIds.has(nodeId)) {
+                                statsRef.current.nodeIds.add(nodeId);
+                                setStats((prev) => ({
+                                    ...prev,
+                                    artifacts: statsRef.current.nodeIds.size,
+                                }));
+                            }
+
+                            graphRef.current?.ingest({ type: 'node', data: json.data });
+                        } else if (json.type === 'link') {
+                            const k = getDisplayedEdgeKey(json.data);
+                            if (k && !statsRef.current.edgeKeys.has(k)) {
+                                statsRef.current.edgeKeys.add(k);
+                                setStats((prev) => ({
+                                    ...prev,
+                                    links: statsRef.current.edgeKeys.size,
+                                }));
+                            }
+
+                            graphRef.current?.ingest({ type: 'link', data: json.data });
+                        } else if (json.type === 'error') {
+                            const details = json.data ?? {};
+                            const code: string =
+                                details.reason_code ??
+                                details.code ??
+                                'unexpected_error';
+                            const message: string =
+                                details.reason ??
+                                details.message ??
+                                'An unexpected error occurred while processing this paper.';
+                            const stage = details.error_stage ?? details.stage;
+
+                            const err: ProcessingError = { code, message, stage };
+                            setProcessingError(err);
+                            setIsErrorModalOpen(true);
+                            setError(message);
+                            setStatus((prev) => [...prev, `Error: ${message}`]);
+
+                            cancelled = true;
+                            try {
+                                void reader.cancel();
+                            } catch {
+                                // ignore
+                            }
+                            break;
                         }
                     }
-                    buffer = parts[parts.length - 1];
                 }
             } catch (err: any) {
                 if (cancelled) return;
@@ -459,7 +538,9 @@ export default function PaperPage() {
                                     {stats.links}
                                 </strong>
                                 <span> links</span>
-                                {isLoading ? <span> · processing…</span> : null}
+                                {isLoading ? (
+                                    <span> · {(stageLabel ?? analysisLabel)}...</span>
+                                ) : null}
                                 {error ? (
                                     <span style={{ color: '#ff6b6b' }}> · error</span>
                                 ) : null}

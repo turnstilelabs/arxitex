@@ -1,8 +1,15 @@
 import { edgeKey } from './data';
 
+/**
+ * Compute the maximum prerequisite depth reachable *upstream* from a node.
+ *
+ * This must follow the same direction as `recomputeProofSubgraph`, i.e.
+ * walking backwards along incoming edges (prerequisite -> result), so that
+ * `proofDepth` and the visual unfolding depth stay in sync.
+ */
 export function getMaxPrereqDepth(
     startId: string,
-    outgoingEdgesBySource: Map<string, Array<{ s: string; t: string; dep: string }>>,
+    incomingEdgesByTarget: Map<string, Array<{ s: string; t: string; dep: string }>>,
 ) {
     const visited = new Set([startId]);
     let frontier = [startId];
@@ -11,11 +18,13 @@ export function getMaxPrereqDepth(
     while (frontier.length) {
         const next: string[] = [];
         for (const id of frontier) {
-            const outs = outgoingEdgesBySource.get(id) || [];
-            for (const { t } of outs) {
-                if (!visited.has(t)) {
-                    visited.add(t);
-                    next.push(t);
+            const ins = incomingEdgesByTarget.get(id) || [];
+            for (const { s, dep } of ins) {
+                // Keep this aligned with recomputeProofSubgraph's traversal
+                if (dep === 'generalized_by') continue;
+                if (!visited.has(s)) {
+                    visited.add(s);
+                    next.push(s);
                 }
             }
         }

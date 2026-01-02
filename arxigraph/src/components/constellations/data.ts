@@ -18,11 +18,30 @@ export function processGraphData(graphData: ConstellationGraphData): ProcessedGr
     const edges = (graphData.edges || [])
         .map((e) => {
             const dep = e.dependency_type || 'internal';
+            const ref = (e as any).reference_type || (e as any).referenceType || null;
+            const typ = (e as any).type || null;
+
+            // Canonical semantics (to match Constellations):
+            // - For canonical "used_in" edges, we assume the backend already
+            //   sends prerequisite -> result, so we keep (source, target) as-is.
+            // - For legacy/raw forms like "uses_result" / "uses_definition" /
+            //   "is_corollary_of", we flip them into the same prerequisite ->
+            //   result orientation and re-label as "used_in".
+            if (dep === 'used_in') {
+                return { ...e, dependency_type: 'used_in' };
+            }
             if (dep === 'uses_result' || dep === 'uses_definition' || dep === 'is_corollary_of') {
                 return { ...e, dependency_type: 'used_in', source: (e as any).target, target: (e as any).source };
             }
-            if (dep === 'is_generalization_of') {
+            if (dep === 'is_generalization_of' || dep === 'generalized_by') {
                 return { ...e, dependency_type: 'generalized_by', source: (e as any).target, target: (e as any).source };
+            }
+
+            // Internal cross-references (\Cref, \ref, etc.) are also dependencies:
+            // a node that references another node depends on it, so we want
+            // prerequisite -> result (referenced -> referrer).
+            if (dep === 'internal' && (ref === 'internal' || typ === 'internal')) {
+                return { ...e, dependency_type: 'internal', source: (e as any).target, target: (e as any).source };
             }
             if (dep === 'provides_remark') {
                 return null;

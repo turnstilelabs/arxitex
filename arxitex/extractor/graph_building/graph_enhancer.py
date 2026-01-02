@@ -3,7 +3,7 @@ import re
 from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Awaitable, Callable, Dict, List, Optional
 
 from loguru import logger
 
@@ -23,7 +23,7 @@ from arxitex.extractor.dependency_inference.global_dependency_proposer import (
     GlobalDependencyProposer,
 )
 from arxitex.extractor.graph_building.base_builder import BaseGraphBuilder
-from arxitex.extractor.models import DocumentGraph, Edge
+from arxitex.extractor.models import ArtifactNode, DocumentGraph, Edge
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.symdef.document_enhancer import DocumentEnhancer
@@ -62,10 +62,17 @@ class GraphEnhancer:
         enrich_content: bool = True,
         dependency_mode: DependencyInferenceMode = "pairwise",
         dependency_config: Optional[DependencyInferenceConfig] = None,
+        on_base_graph: Optional[Callable[[DocumentGraph], Awaitable[None]]] = None,
+        on_enriched_node: Optional[Callable[[ArtifactNode], Awaitable[None]]] = None,
+        on_dependency_edge: Optional[Callable[[Edge], Awaitable[None]]] = None,
+        on_status: Optional[Callable[[str], Awaitable[None]]] = None,
     ) -> tuple[DocumentGraph, DefinitionBank, dict[str, list[str]]]:
         logger.info(
             f"[{source_file}] Starting Pass 1: Building base graph from LaTeX structure..."
         )
+
+        if on_status is not None:
+            await on_status("building base graph")
 
         # PERF: read/concatenate LaTeX once and reuse for all subsequent passes.
         latex_content = read_and_combine_tex_files(project_dir)
@@ -77,6 +84,11 @@ class GraphEnhancer:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
             return DocumentGraph(), DefinitionBank(), {}
 
+        # Give callers a chance to observe/stream the base regex graph before
+        # any LLM-based enhancements are applied.
+        if on_base_graph is not None:
+            await on_base_graph(graph)
+
         bank = None
         artifact_to_terms_map = {}
         should_enrich = enrich_content or infer_dependencies
@@ -85,9 +97,11 @@ class GraphEnhancer:
             logger.info(
                 "--- Starting Pass 2: Enriching artifact content with definitions ---"
             )
+            if on_status is not None:
+                await on_status("enriching symbols and definitions for artifacts")
             try:
                 enrichment_results = await self._enrich_artifact_content(
-                    graph, latex_content
+                    graph, latex_content, on_enriched_node
                 )
                 bank = enrichment_results["definition_bank"]
                 artifact_to_terms_map = enrichment_results["artifact_to_terms_map"]
@@ -105,10 +119,16 @@ class GraphEnhancer:
                     f"[{source_file}] Cannot infer dependencies because term extraction "
                     "failed or was skipped."
                 )
+                if on_status is not None:
+                    await on_status(
+                        "skipping dependency inference (no enrichment data)"
+                    )
             else:
                 logger.info(
                     f"[{source_file}] --- Starting Pass 3: Inferring dependencies (mode-aware) ---"
                 )
+                if on_status is not None:
+                    await on_status("inferring dependencies between artifacts")
                 cfg = dependency_config or DependencyInferenceConfig()
                 graph = await self._infer_and_add_dependencies_mode_aware(
                     graph=graph,
@@ -116,6 +136,7 @@ class GraphEnhancer:
                     bank=bank,
                     dependency_mode=dependency_mode,
                     cfg=cfg,
+                    on_dependency_edge=on_dependency_edge,
                 )
 
         reference_edges = len([e for e in graph.edges if e.reference_type])
@@ -137,6 +158,7 @@ class GraphEnhancer:
         bank: DefinitionBank,
         dependency_mode: DependencyInferenceMode,
         cfg: DependencyInferenceConfig,
+        on_dependency_edge: Optional[Callable[[Edge], Awaitable[None]]] = None,
     ) -> DocumentGraph:
         internal_nodes = [node for node in graph.nodes if not node.is_external]
         if len(internal_nodes) < 2:
@@ -162,11 +184,12 @@ class GraphEnhancer:
                 artifact_to_terms_map=artifact_to_terms_map,
                 bank=bank,
                 cfg=cfg,
+                on_dependency_edge=on_dependency_edge,
             )
 
         if selected_mode == "global":
             return await self._infer_and_add_dependencies_global(
-                graph, internal_nodes, cfg
+                graph, internal_nodes, cfg, on_dependency_edge
             )
 
         if selected_mode == "hybrid":
@@ -174,6 +197,7 @@ class GraphEnhancer:
                 graph=graph,
                 internal_nodes=internal_nodes,
                 cfg=cfg,
+                on_dependency_edge=on_dependency_edge,
             )
 
         logger.warning(
@@ -184,6 +208,7 @@ class GraphEnhancer:
             artifact_to_terms_map=artifact_to_terms_map,
             bank=bank,
             cfg=cfg,
+            on_dependency_edge=on_dependency_edge,
         )
 
     async def _infer_and_add_dependencies_global(
@@ -191,6 +216,7 @@ class GraphEnhancer:
         graph: DocumentGraph,
         internal_nodes: List,
         cfg: DependencyInferenceConfig,
+        on_dependency_edge: Optional[Callable[[Edge], Awaitable[None]]] = None,
     ) -> DocumentGraph:
         logger.info(
             f"[global] Running one-shot dependency inference for N={len(internal_nodes)}"
@@ -213,14 +239,15 @@ class GraphEnhancer:
             if graph.find_edge(e.source_id, e.target_id):
                 continue
 
-            graph.add_edge(
-                Edge(
-                    source_id=e.source_id,
-                    target_id=e.target_id,
-                    dependency_type=e.dependency_type,
-                    dependency=e.justification,
-                )
+            new_edge = Edge(
+                source_id=e.source_id,
+                target_id=e.target_id,
+                dependency_type=e.dependency_type,
+                dependency=e.justification,
             )
+            graph.add_edge(new_edge)
+            if on_dependency_edge is not None:
+                await on_dependency_edge(new_edge)
             added += 1
 
         logger.success(
@@ -233,6 +260,7 @@ class GraphEnhancer:
         graph: DocumentGraph,
         internal_nodes: List,
         cfg: DependencyInferenceConfig,
+        on_dependency_edge: Optional[Callable[[Edge], Awaitable[None]]] = None,
     ) -> DocumentGraph:
         logger.info(
             f"[hybrid] Propose+verify dependency inference for N={len(internal_nodes)}"
@@ -307,21 +335,27 @@ class GraphEnhancer:
             if result and result.has_dependency:
                 source_node = context["source"]
                 target_node = context["target"]
-                graph.add_edge(
-                    Edge(
-                        source_id=source_node.id,
-                        target_id=target_node.id,
-                        dependency_type=result.dependency_type,
-                        dependency=result.justification
-                        or "Inferred by LLM based on global proposal.",
-                    )
+                new_edge = Edge(
+                    source_id=source_node.id,
+                    target_id=target_node.id,
+                    dependency_type=result.dependency_type,
+                    dependency=result.justification
+                    or "Inferred by LLM based on global proposal.",
                 )
+                graph.add_edge(new_edge)
+                if on_dependency_edge is not None:
+                    await on_dependency_edge(new_edge)
                 added_edges_count += 1
 
         logger.success(f"[hybrid] Added {added_edges_count} verified dependency edges.")
         return graph
 
-    async def _enrich_artifact_content(self, graph: DocumentGraph, latex_content: str):
+    async def _enrich_artifact_content(
+        self,
+        graph: DocumentGraph,
+        latex_content: str,
+        on_enriched_node: Optional[Callable[[ArtifactNode], Awaitable[None]]] = None,
+    ):
         """
         Uses the DocumentEnhancer to create self-contained content for each node.
         """
@@ -341,6 +375,8 @@ class GraphEnhancer:
             if node.id in definitions_map:
                 node.prerequisite_defs = definitions_map[node.id]
                 updated_count += 1
+                if on_enriched_node is not None:
+                    await on_enriched_node(node)
 
         logger.success(
             f"Successfully added prerequisite definitions to {updated_count} artifacts."
@@ -372,6 +408,7 @@ class GraphEnhancer:
         artifact_to_terms_map: Dict[str, List[str]],
         bank: DefinitionBank,
         cfg: DependencyInferenceConfig | None = None,
+        on_dependency_edge: Optional[Callable[[Edge], Awaitable[None]]] = None,
     ) -> DocumentGraph:
         """
         Analyzes artifacts to infer dependencies efficiently using conceptual and
@@ -535,6 +572,8 @@ class GraphEnhancer:
                     or "Inferred by LLM based on shared terminology.",
                 )
                 graph.add_edge(new_edge)
+                if on_dependency_edge is not None:
+                    await on_dependency_edge(new_edge)
                 added_edges_count += 1
                 logger.debug(
                     f"Created new dependency edge: {source_node.id} -> {target_node.id} (Type: {result.dependency_type})"

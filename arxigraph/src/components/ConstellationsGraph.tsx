@@ -169,10 +169,19 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
             unfoldMore: () => {
                 if (!state.proofMode) return;
-                state.proofDepth = Math.min(
-                    getMaxPrereqDepth(state.proofTargetId!, state.refs.outgoingEdgesBySource),
-                    state.proofDepth + 1,
-                );
+                // Use incomingEdgesByTarget so the depth calculation matches the
+                // actual proof-subgraph traversal direction.
+                const maxDepth = getMaxPrereqDepth(state.proofTargetId!, state.refs.incomingEdgesByTarget);
+
+                // If there are no additional prerequisite layers, don't let
+                // "Unfold More" accidentally *reduce* the visible depth.
+                // Previously, when maxDepth was 0, the call to Math.min(0, depth+1)
+                // would set proofDepth to 0, hiding all prerequisites and
+                // making the control feel broken. Instead, we simply no-op
+                // when there is nothing more to unfold.
+                if (maxDepth <= state.proofDepth) return;
+
+                state.proofDepth = Math.min(maxDepth, state.proofDepth + 1);
                 actions.recomputeProofSubgraph();
                 if (state.proofTargetId) actions.updateInfoPanel(state.refs.nodeById.get(state.proofTargetId));
             },

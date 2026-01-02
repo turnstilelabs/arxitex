@@ -292,11 +292,36 @@ export function applyMutations(ig: IncrementalGraphState, state: any, actions: a
     setupLegends(processed.nodeTypes, processed.edgeTypes, processed.nodeColors, processed.edgeColors, state, actions);
 
     ig.simulation.on('tick', () => {
+        // Draw links shortened to the node boundaries so arrowheads remain visible.
         ig.linkSel
-            .attr('x1', (d: any) => d.source.x)
-            .attr('y1', (d: any) => d.source.y)
-            .attr('x2', (d: any) => d.target.x)
-            .attr('y2', (d: any) => d.target.y);
+            .attr('x1', (d: any) => {
+                const r = ig.radiusScale(ig.nodeDegrees.get(d.source.id) || 1);
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                return d.source.x + (dx / dist) * r;
+            })
+            .attr('y1', (d: any) => {
+                const r = ig.radiusScale(ig.nodeDegrees.get(d.source.id) || 1);
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                return d.source.y + (dy / dist) * r;
+            })
+            .attr('x2', (d: any) => {
+                const r = ig.radiusScale(ig.nodeDegrees.get(d.target.id) || 1);
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                return d.target.x - (dx / dist) * r;
+            })
+            .attr('y2', (d: any) => {
+                const r = ig.radiusScale(ig.nodeDegrees.get(d.target.id) || 1);
+                const dx = d.target.x - d.source.x;
+                const dy = d.target.y - d.source.y;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                return d.target.y - (dy / dist) * r;
+            });
 
         ig.nodeSel.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
 

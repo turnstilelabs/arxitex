@@ -16,7 +16,7 @@ import sys
 import tempfile
 import webbrowser
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Any, Awaitable, Callable, Dict, Optional
 
 from loguru import logger
 
@@ -41,6 +41,10 @@ async def agenerate_artifact_graph(
     dependency_mode: str = "pairwise",
     dependency_config: Optional[dict] = None,
     source_dir: Optional[Path] = None,
+    on_base_graph: Optional[Callable[[Any], Awaitable[None]]] = None,
+    on_enriched_node: Optional[Callable[[Any], Awaitable[None]]] = None,
+    on_dependency_edge: Optional[Callable[[Any], Awaitable[None]]] = None,
+    on_status: Optional[Callable[[str], Awaitable[None]]] = None,
 ) -> Dict:
     """
     Orchestrates the full pipeline to generate a dependency graph fromve an arXiv paper.
@@ -91,6 +95,10 @@ async def agenerate_artifact_graph(
                 enrich_content=enrich_content,
                 dependency_mode=dependency_mode,
                 dependency_config=dep_cfg,
+                on_base_graph=on_base_graph,
+                on_enriched_node=on_enriched_node,
+                on_dependency_edge=on_dependency_edge,
+                on_status=on_status,
             )
 
             return {

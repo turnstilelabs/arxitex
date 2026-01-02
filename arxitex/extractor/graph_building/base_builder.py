@@ -1,5 +1,5 @@
+import hashlib
 import re
-import uuid
 from bisect import bisect_right
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -206,8 +206,20 @@ class BaseGraphBuilder:
                 detached_proofs.append(proof_block)
             else:
                 artifact_counter += 1
-                node_id = f"{env_type}-{artifact_counter}-{uuid.uuid4().hex[:6]}"
                 label = self._extract_label(raw_content)
+
+                # Stable IDs are critical for the webapp streaming use-case.
+                # Prefer label-based IDs when available, otherwise fall back to a
+                # deterministic hash based on environment type + document position.
+                if label:
+                    safe_label = re.sub(r"[^A-Za-z0-9_.:-]+", "_", label)
+                    node_id = f"{env_type}:{safe_label}"
+                else:
+                    # Use raw env type + artifact counter + source offsets to
+                    # make IDs stable across runs for the same document.
+                    pos_sig = f"{env_type}|{match.start()}|{full_end_pos}"
+                    digest = hashlib.sha1(pos_sig.encode("utf-8")).hexdigest()[:8]
+                    node_id = f"{env_type}-{artifact_counter}-{digest}"
 
                 if label:
                     self.label_to_node_id_map[label] = node_id
