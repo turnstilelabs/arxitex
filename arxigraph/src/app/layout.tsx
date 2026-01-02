@@ -1,8 +1,7 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import './globals.css';
-
-// Use Constellations fonts (Inter + Source Serif 4) via Google Fonts CSS.
 
 export const metadata: Metadata = {
   title: 'ArxiGraph',

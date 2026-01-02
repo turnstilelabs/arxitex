@@ -14,15 +14,9 @@ export const NODE_PALETTE = [
     '#17becf',
 ];
 
-function hashString(s: string): number {
-    let h = 0;
-    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-    return h;
-}
-
 export const COLORS = {
     // Node colors are assigned in `processGraphData` using NODE_PALETTE order.
-    nodes: (_type: string) => NODE_PALETTE[0],
+    nodes: () => NODE_PALETTE[0],
     edges: (type: string) => {
         // closer to constellations defaults
         switch (type) {

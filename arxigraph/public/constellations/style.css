@@ -1,0 +1,213 @@
+/* Distilled proof & visualization theme (ported from Constellations assets/style.css) */
+
+:root {
+  --background: #121212;
+  --surface1: #1a1a1a;
+  --surface2: #242424;
+  --primary-text: #e0e0e0;
+  --secondary-text: #aaaaaa;
+  --accent: #ffdd57;
+  --accent-hover: #ffc800;
+  --border-color: #333333;
+}
+
+body.landing-page {
+  font-family: 'Source Serif 4', Georgia, serif;
+  background: var(--background);
+  color: var(--primary-text);
+  margin: 0;
+  line-height: 1.6;
+  font-size: 17px;
+}
+
+body.visualization-page {
+  font-family: 'Source Serif 4', serif;
+  margin: 0;
+  padding: 20px;
+  background: var(--background);
+  color: var(--primary-text);
+}
+
+.visualization-page .depth-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  background: var(--surface2);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+  color: var(--primary-text);
+  font-family: 'Inter', sans-serif;
+}
+
+.visualization-page .depth-btn:hover {
+  background: var(--surface1);
+}
+
+.visualization-page .depth-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--background);
+  font-weight: 700;
+}
+
+.visualization-page .depth-btn--primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.visualization-page .muted {
+  color: var(--secondary-text);
+  font-style: italic;
+}
+
+.visualization-page .math-content {
+  line-height: 1.65;
+  color: var(--primary-text);
+}
+
+.visualization-page .result-item,
+.visualization-page .def-item,
+.visualization-page .target-item {
+  margin: 12px 0;
+}
+
+.visualization-page .overlay-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1500;
+}
+
+.visualization-page .highlight-rect {
+  position: fixed;
+  background: rgba(255, 221, 87, 0.35);
+  outline: 1px solid #ffd94a;
+  border-radius: 2px;
+}
+
+.visualization-page #pin-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1501;
+}
+
+.visualization-page .pin {
+  position: fixed;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffd94a;
+  border: 1px solid #caa500;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.visualization-page .comment-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100vh;
+  background: var(--surface2);
+  color: var(--primary-text);
+  border-left: 1px solid var(--border-color);
+  transform: translateX(100%);
+  transition: transform 200ms ease;
+  z-index: 1600;
+  display: flex;
+  flex-direction: column;
+}
+
+.visualization-page .comment-panel.open {
+  transform: translateX(0);
+}
+
+.visualization-page .comment-panel header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-color);
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.visualization-page .comment-panel header .close {
+  font-size: 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--secondary-text);
+}
+
+.visualization-page .comment-panel header .close:hover {
+  color: var(--primary-text);
+}
+
+.visualization-page .threads {
+  overflow: auto;
+  padding: 10px;
+  flex: 1;
+}
+
+.visualization-page .thread-card {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+  background: var(--surface1);
+}
+
+.visualization-page .thread-card.active {
+  outline: 2px solid var(--accent);
+}
+
+.visualization-page .thread-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: var(--primary-text);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 6px;
+}
+
+.visualization-page .thread-card header .actions .icon-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--secondary-text);
+  border-radius: 4px;
+}
+
+.visualization-page .thread-card header .actions .icon-btn:hover {
+  background: var(--surface2);
+  color: var(--primary-text);
+}
+
+.visualization-page .thread-card .content {
+  max-height: 320px;
+  overflow: auto;
+}
+
+@media print {
+  .dp-actions {
+    display: none;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
