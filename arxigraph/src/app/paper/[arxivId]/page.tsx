@@ -7,6 +7,7 @@ import Image from 'next/image';
 
 import Graph, { type ConstellationsGraphHandle } from '@/components/Graph';
 import GraphFeedbackModal from '@/components/GraphFeedbackModal';
+import ProcessingErrorModal, { type ProcessingError } from '@/components/ProcessingErrorModal';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_ARXITEX_BACKEND_URL ?? 'http://127.0.0.1:8000';
 
@@ -116,6 +117,9 @@ export default function PaperPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
+    const [processingError, setProcessingError] = useState<ProcessingError | null>(null);
+    const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
     const [stats, setStats] = useState<ProcessStats>({
         artifacts: 0,
         links: 0,
@@ -189,6 +193,8 @@ export default function PaperPage() {
         async function run() {
             setIsLoading(true);
             setError(null);
+            setProcessingError(null);
+            setIsErrorModalOpen(false);
             graphRef.current?.reset();
 
             // Reset process stats for this run.
@@ -205,8 +211,66 @@ export default function PaperPage() {
                     body: JSON.stringify({ arxivUrl: absUrl, enrichContent, inferDependencies }),
                 });
 
-                if (!response.ok || !response.body) {
-                    throw new Error(`Request failed with status: ${response.status}`);
+                // Handle early failures (e.g. validation errors, missing API keys)
+                if (!response.ok) {
+                    let details: any = null;
+                    try {
+                        details = await response.json();
+                    } catch {
+                        // ignore JSON parse errors; we'll fall back to a generic message.
+                    }
+
+                    if (details) {
+                        const rawDetail = details.detail as string | undefined;
+
+                        // Map common FastAPI 400 detail messages into our
+                        // structured error codes so the UI can show tailored copy.
+                        let inferredCode: string | undefined;
+                        if (typeof rawDetail === 'string') {
+                            const lower = rawDetail.toLowerCase();
+                            if (lower.includes('openai_api_key is not set')) {
+                                inferredCode = 'enhancements_misconfigured';
+                            } else if (
+                                lower.includes('could not extract arxiv id') ||
+                                lower.includes('invalid arxiv id')
+                            ) {
+                                inferredCode = 'invalid_arxiv_id';
+                            }
+                        }
+
+                        const code: string =
+                            details.reason_code ??
+                            details.code ??
+                            inferredCode ??
+                            'unexpected_error';
+
+                        const message: string =
+                            details.reason ??
+                            details.message ??
+                            rawDetail ??
+                            `Request failed with status: ${response.status}`;
+
+                        const stage = details.error_stage ?? details.stage;
+
+                        const err: ProcessingError = { code, message, stage };
+                        setProcessingError(err);
+                        setIsErrorModalOpen(true);
+                        setError(message);
+                        setStatus((prev) => [...prev, `Error: ${message}`]);
+                    } else {
+                        const message = `Request failed with status: ${response.status}`;
+                        setError(message);
+                        setStatus((prev) => [...prev, `Error: ${message}`]);
+                    }
+
+                    return;
+                }
+
+                if (!response.body) {
+                    const message = 'Server did not return a response body.';
+                    setError(message);
+                    setStatus((prev) => [...prev, `Error: ${message}`]);
+                    return;
                 }
 
                 const reader = response.body.getReader();
@@ -252,6 +316,31 @@ export default function PaperPage() {
                                     }
 
                                     graphRef.current?.ingest({ type: 'link', data: json.data });
+                                } else if (json.type === 'error') {
+                                    const details = json.data ?? {};
+                                    const code: string =
+                                        details.reason_code ??
+                                        details.code ??
+                                        'unexpected_error';
+                                    const message: string =
+                                        details.reason ??
+                                        details.message ??
+                                        'An unexpected error occurred while processing this paper.';
+                                    const stage = details.error_stage ?? details.stage;
+
+                                    const err: ProcessingError = { code, message, stage };
+                                    setProcessingError(err);
+                                    setIsErrorModalOpen(true);
+                                    setError(message);
+                                    setStatus((prev) => [...prev, `Error: ${message}`]);
+
+                                    cancelled = true;
+                                    try {
+                                        void reader.cancel();
+                                    } catch {
+                                        // ignore
+                                    }
+                                    break;
                                 } else if (json.type === 'done') {
                                     // no-op
                                 }
@@ -264,8 +353,24 @@ export default function PaperPage() {
                 }
             } catch (err: any) {
                 if (cancelled) return;
-                setError(err.message);
-                setStatus((prev) => [...prev, `Error: ${err.message}`]);
+
+                const message: string =
+                    (err && typeof err.message === 'string')
+                        ? err.message
+                        : 'Failed to contact processing backend.';
+
+                // Treat network/transport failures as a structured backend error so
+                // users see the dedicated modal instead of a raw "Failed to fetch".
+                const backendError: ProcessingError = {
+                    code: 'backend_unreachable',
+                    message,
+                    stage: 'backend',
+                };
+
+                setProcessingError(backendError);
+                setIsErrorModalOpen(true);
+                setError(message);
+                setStatus((prev) => [...prev, `Error: ${message}`]);
             } finally {
                 if (cancelled) return;
                 setIsLoading(false);
@@ -321,7 +426,10 @@ export default function PaperPage() {
                                 >
                                     {paperMeta.authors.join(', ')}
                                 </div>
-                            ) : paperMetaError ? (
+                            ) : paperMetaError && !processingError ? (
+                                // When we have a structured processing error, prefer the
+                                // dedicated modal instead of showing this inline metadata
+                                // error line.
                                 <div
                                     className="mt-2 text-sm"
                                     style={{ color: '#ff6b6b' }}
@@ -531,7 +639,7 @@ export default function PaperPage() {
                     </div>
                 )}
 
-                {error && (
+                {error && !processingError && (
                     <p
                         className="mt-4 font-semibold"
                         style={{ color: '#ff6b6b' }}
@@ -551,6 +659,13 @@ export default function PaperPage() {
                             : undefined
                     }
                     contextLabel={feedbackContextLabel}
+                />
+
+                <ProcessingErrorModal
+                    open={isErrorModalOpen && !!processingError}
+                    error={processingError}
+                    onClose={() => setIsErrorModalOpen(false)}
+                    currentArxivUrl={absUrl}
                 />
 
                 <div className="w-full mt-6">
