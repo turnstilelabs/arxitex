@@ -1,11 +1,16 @@
 import argparse
 import asyncio
 import os
+import sqlite3
 from pathlib import Path
 
 from loguru import logger
 
+from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
+from arxitex.llms.usage_context import llm_usage_context
+from arxitex.tools.citations_backfill import run_backfill as run_citations_backfill
+from arxitex.tools.discovery_queue_dedup import dedup_discovery_queue
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
 from arxitex.workflows.runner import ArxivPipelineComponents
@@ -34,12 +39,32 @@ async def process_single_paper(arxiv_id: str, args):
     try:
         temp_base_dir = Path(components.output_dir) / "temp_processing"
 
-        results = await agenerate_artifact_graph(
-            arxiv_id=arxiv_id,
-            enrich_content=args.enrich_content,
-            infer_dependencies=args.infer_dependencies,
-            source_dir=temp_base_dir,
+        # Single-paper runs should also be attributed for LLM usage tracking.
+        mode = (
+            "full"
+            if args.infer_dependencies
+            else ("defs" if args.enrich_content else "raw")
         )
+        with llm_usage_context(paper_id=arxiv_id, mode=mode):
+            dependency_config = {
+                "auto_max_nodes_global": getattr(args, "dependency_auto_max_nodes", 30),
+                "auto_max_tokens_global": getattr(
+                    args, "dependency_auto_max_tokens", 12000
+                ),
+                "max_total_pairs": getattr(args, "dependency_max_pairs", 100),
+                "global_include_proofs": True,
+                "global_proof_char_budget": getattr(
+                    args, "dependency_global_proof_char_budget", 1200
+                ),
+            }
+            results = await agenerate_artifact_graph(
+                arxiv_id=arxiv_id,
+                enrich_content=args.enrich_content,
+                infer_dependencies=args.infer_dependencies,
+                dependency_mode=getattr(args, "dependency_mode", "auto"),
+                dependency_config=dependency_config,
+                source_dir=temp_base_dir,
+            )
 
         graph = results.get("graph")
         if not graph or not graph.nodes:
@@ -62,12 +87,22 @@ async def process_single_paper(arxiv_id: str, args):
         return {"status": "success"}
 
     except Exception as e:
-        reason = f"End-to-end processing failed for {arxiv_id}: {e}"
-        logger.error(reason, exc_info=True)
-        components.processing_index.update_processed_papers_status(
-            arxiv_id, status="failure", reason=str(e)
+        err = classify_processing_error(e)
+        logger.error(
+            f"End-to-end processing failed for {arxiv_id} "
+            f"[{err.code} @ {err.stage}]: {err.message}",
+            exc_info=True,
         )
-        return {"status": "failure", "reason": reason}
+        components.processing_index.update_processed_papers_status(
+            arxiv_id,
+            status="failure",
+            **err.to_details_dict(),
+        )
+        return {
+            "status": "failure",
+            "arxiv_id": arxiv_id,
+            **err.to_details_dict(),
+        }
 
 
 async def main():
@@ -106,6 +141,34 @@ async def main():
         "--infer-dependencies",
         action="store_true",
         help="Use LLM to infer dependencies between artifacts.",
+    )
+    parser_single.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when --infer-dependencies is enabled.",
+    )
+    parser_single.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser_single.add_argument(
+        "--dependency-max-pairs",
+        type=int,
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
+    )
+    parser_single.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
     )
     parser_single.add_argument(
         "--force",
@@ -170,9 +233,271 @@ async def main():
         help="Use LLM to infer dependencies between artifacts for papers in the batch.",
     )
     parser_process.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when infer-dependencies/full mode is enabled.",
+    )
+    parser_process.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser_process.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser_process.add_argument(
+        "--dependency-max-pairs",
+        type=int,
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
+    )
+    parser_process.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
+    )
+    parser_process.add_argument(
+        "--min-citations",
+        type=int,
+        default=None,
+        help=(
+            "If set, restrict processing to papers with citation_count >= this value "
+            "(from paper_citations via OpenAlex). Papers are processed in descending "
+            "citation_count order with stable tiebreaks."
+        ),
+    )
+    parser_process.add_argument(
         "--format-for-search",
         action="store_true",
         help="Additionally, transform and append artifacts to a .jsonl file.",
+    )
+    parser_process.add_argument(
+        "--persist-db",
+        action="store_true",
+        help="Persist normalized artifacts/edges/definitions into SQLite (arxitex_indices.db).",
+    )
+    parser_process.add_argument(
+        "--save-graph",
+        action="store_true",
+        help=(
+            "Also save the full per-paper graph JSON under output-dir/graphs. "
+            "By default, graphs are NOT saved when --persist-db is enabled."
+        ),
+    )
+    parser_process.add_argument(
+        "--mode",
+        type=str,
+        choices=["raw", "defs", "full"],
+        default="raw",
+        help=(
+            "Extraction mode: 'raw' (regex only, no LLM), "
+            "'defs' (LLM definitions/terms, no dependency inference), "
+            "'full' (defs + dependency inference)."
+        ),
+    )
+
+    # --- 'reprocess-paper' command ---
+    parser_reprocess = subparsers.add_parser(
+        "reprocess-paper",
+        help=(
+            "Reset DB state and reprocess a single paper by ID "
+            "(discover + process) with the chosen mode."
+        ),
+    )
+    parser_reprocess.add_argument(
+        "arxiv_id", help="The arXiv ID to reprocess (e.g., '2305.15334')."
+    )
+    parser_reprocess.add_argument(
+        "--mode",
+        type=str,
+        choices=["raw", "defs", "full"],
+        default="raw",
+        help=(
+            "Extraction mode: 'raw' (regex only, no LLM), "
+            "'defs' (LLM definitions/terms, no dependency inference), "
+            "'full' (defs + dependency inference)."
+        ),
+    )
+    parser_reprocess.add_argument(
+        "--enrich-content",
+        action="store_true",
+        help="Backwards-compat: if set, will upgrade mode to 'defs' unless already 'full'.",
+    )
+    parser_reprocess.add_argument(
+        "--infer-dependencies",
+        action="store_true",
+        help="Backwards-compat: if set, will force mode to 'full'.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when full mode is enabled.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-hybrid-topk",
+        type=int,
+        default=8,
+        help="Hybrid: max prerequisites proposed per source artifact.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-hybrid-max-total",
+        type=int,
+        default=250,
+        help="Hybrid: hard cap on total proposed candidates to verify.",
+    )
+    parser_reprocess.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
+    )
+    parser_reprocess.add_argument(
+        "--persist-db",
+        action="store_true",
+        help="Persist normalized artifacts/edges/definitions into SQLite.",
+    )
+    parser_reprocess.add_argument(
+        "--save-graph",
+        action="store_true",
+        help=(
+            "Also save the full per-paper graph JSON under output-dir/graphs. "
+            "By default, graphs are NOT saved when --persist-db is enabled."
+        ),
+    )
+    parser_reprocess.add_argument(
+        "--format-for-search",
+        action="store_true",
+        help="Additionally append artifacts to a JSONL search index.",
+    )
+    parser_reprocess.add_argument(
+        "-w",
+        "--workers",
+        type=int,
+        default=1,
+        help="Number of concurrent processing tasks (default: 1).",
+    )
+    parser_reprocess.add_argument(
+        "--reset-modes",
+        nargs="*",
+        default=None,
+        help=(
+            "Optional list of ingestion modes to reset in paper_ingestion_state "
+            "(e.g. raw defs full). Default: reset all modes for that paper."
+        ),
+    )
+
+    # --- 'dedup-discovery-queue' command ---
+    parser_dedup = subparsers.add_parser(
+        "dedup-discovery-queue",
+        help=(
+            "Deduplicate the discovery queue by base arXiv id (strip vN), keeping only the highest version."
+        ),
+    )
+    parser_dedup.add_argument(
+        "--dry-run",
+        action="store_true",
+        help=(
+            "Do not modify the database; only print what would be deleted. "
+            "(Default: false)"
+        ),
+    )
+    parser_dedup.add_argument(
+        "--no-backup",
+        action="store_true",
+        help="Do not create a timestamped .bak backup before deleting rows.",
+    )
+    parser_dedup.add_argument(
+        "--show-ids",
+        action="store_true",
+        help="Print the specific arXiv IDs that were/would be deleted.",
+    )
+
+    # --- 'backfill-citations' command ---
+    parser_citations = subparsers.add_parser(
+        "backfill-citations",
+        help=(
+            "Fetch total citation counts from OpenAlex for all arXiv IDs present "
+            "in the pipeline DB (discovery + processed + papers tables)."
+        ),
+    )
+    parser_citations.add_argument(
+        "--max-papers",
+        type=int,
+        default=None,
+        help="Limit number of unique base arXiv ids to fetch (for testing)",
+    )
+    parser_citations.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help="Concurrent OpenAlex requests",
+    )
+    parser_citations.add_argument(
+        "--qps",
+        type=float,
+        default=1.0,
+        help=(
+            "Global OpenAlex request rate limit (requests/second) across all workers. "
+            "Use something conservative like 0.5–1.0 for long runs."
+        ),
+    )
+    parser_citations.add_argument(
+        "--refresh-days",
+        type=int,
+        default=30,
+        help="Refetch citations if older than this many days",
+    )
+    parser_citations.add_argument(
+        "--mailto",
+        type=str,
+        default=None,
+        help="Optional mailto parameter recommended by OpenAlex (contact email)",
+    )
+    parser_citations.add_argument(
+        "--only-discovery",
+        action="store_true",
+        help="Only backfill citation counts for discovery-queue papers",
+    )
+    parser_citations.add_argument(
+        "--only-zero",
+        action="store_true",
+        help=(
+            "Only refetch citations for paper_ids that currently have citation_count = 0 "
+            "in paper_citations (use with --refresh-days 0 to force rerun)."
+        ),
+    )
+    parser_citations.add_argument(
+        "--paper-id",
+        action="append",
+        default=None,
+        help=(
+            "Restrict citation backfill to one specific base arXiv id. "
+            "Can be provided multiple times. Example: --paper-id 2207.12929"
+        ),
     )
 
     args = parser.parse_args()
@@ -194,14 +519,155 @@ async def main():
 
     elif args.command == "process":
         components = ArxivPipelineComponents(output_dir=args.output_dir)
+
+        # Backwards compatibility: if the user still uses the old flags,
+        # auto-select an equivalent mode.
+        mode = args.mode
+        if args.infer_dependencies:
+            mode = "full"
+        elif args.enrich_content and args.mode == "raw":
+            mode = "defs"
+
         workflow = ProcessingWorkflow(
             components=components,
             enrich_content=args.enrich_content,
             infer_dependencies=args.infer_dependencies,
             max_concurrent_tasks=args.workers,
             format_for_search=args.format_for_search,
+            save_graph=(False if args.persist_db else True) or bool(args.save_graph),
+            persist_db=args.persist_db,
+            mode=mode,
+            dependency_mode=args.dependency_mode,
+            dependency_config={
+                "auto_max_nodes_global": args.dependency_auto_max_nodes,
+                "auto_max_tokens_global": args.dependency_auto_max_tokens,
+                "max_total_pairs": args.dependency_max_pairs,
+                "global_include_proofs": True,
+                "global_proof_char_budget": args.dependency_global_proof_char_budget,
+            },
+            min_citations=args.min_citations,
         )
         await workflow.run(max_papers=args.max_papers)
+
+    elif args.command == "reprocess-paper":
+        components = ArxivPipelineComponents(output_dir=args.output_dir)
+        db_path = components.db_path
+
+        logger.info(f"Resetting processed state for {args.arxiv_id} in {db_path}...")
+        conn = sqlite3.connect(db_path)
+        try:
+            cur = conn.cursor()
+
+            # Clear processed_papers status
+            cur.execute(
+                "DELETE FROM processed_papers WHERE arxiv_id = ?",
+                (args.arxiv_id,),
+            )
+
+            # Clear ingestion state for this paper (optionally per-mode)
+            if args.reset_modes:
+                placeholders = ",".join("?" * len(args.reset_modes))
+                sql = (
+                    "DELETE FROM paper_ingestion_state "
+                    "WHERE paper_id = ? AND mode IN (" + placeholders + ")"
+                )
+                cur.execute(sql, (args.arxiv_id, *args.reset_modes))
+            else:
+                cur.execute(
+                    "DELETE FROM paper_ingestion_state WHERE paper_id = ?",
+                    (args.arxiv_id,),
+                )
+
+            conn.commit()
+        finally:
+            conn.close()
+
+        # Re-discover this paper by ID and add it to the discovery queue
+        search_query = f"id:{args.arxiv_id}"
+        logger.info(f"Fetching metadata from ArXiv for {args.arxiv_id}...")
+
+        response_text = components.arxiv_api.fetch_papers(
+            search_query, start=0, batch_size=1
+        )
+        if not response_text:
+            logger.error(f"No response from ArXiv for {search_query}.")
+            return 1
+
+        entries_in_batch, _, entries = components.arxiv_api.parse_response(
+            response_text
+        )
+        if not entries:
+            logger.error(f"Paper {args.arxiv_id} not found on ArXiv.")
+            return 1
+
+        paper = components.arxiv_api.entry_to_paper(entries[0])
+        if not paper:
+            logger.error(f"Failed to parse ArXiv entry for {args.arxiv_id}.")
+            return 1
+
+        added_count = components.discovery_index.add_papers([paper])
+        if added_count == 0:
+            logger.info(
+                f"Paper {args.arxiv_id} was already in the discovery queue; proceeding to process."
+            )
+        else:
+            logger.info(f"Added {args.arxiv_id} to discovery queue.")
+
+        # Derive effective mode with backwards-compat flags like the 'process' command
+        mode = args.mode
+        if args.infer_dependencies:
+            mode = "full"
+        elif args.enrich_content and args.mode == "raw":
+            mode = "defs"
+
+        workflow = ProcessingWorkflow(
+            components=components,
+            enrich_content=args.enrich_content,
+            infer_dependencies=args.infer_dependencies,
+            max_concurrent_tasks=args.workers,
+            format_for_search=args.format_for_search,
+            save_graph=(False if args.persist_db else True) or bool(args.save_graph),
+            persist_db=args.persist_db,
+            mode=mode,
+            dependency_mode=args.dependency_mode,
+            dependency_config={
+                "auto_max_nodes_global": args.dependency_auto_max_nodes,
+                "auto_max_tokens_global": args.dependency_auto_max_tokens,
+                "max_total_pairs": args.dependency_max_pairs,
+                "global_include_proofs": True,
+                "global_proof_char_budget": args.dependency_global_proof_char_budget,
+            },
+        )
+        # When reprocessing, restrict the workflow to the specific paper ID so
+        # we don't accidentally pick the first pending paper from the queue.
+        await workflow.run(max_papers=1, target_arxiv_id=args.arxiv_id)
+
+    elif args.command == "dedup-discovery-queue":
+        components = ArxivPipelineComponents(output_dir=args.output_dir)
+        report = dedup_discovery_queue(
+            components.db_path,
+            dry_run=bool(args.dry_run),
+            make_backup=not bool(args.no_backup),
+        )
+
+        logger.info(
+            "Discovery queue dedup report: "
+            f"rows_before={report.rows_before}, "
+            f"base_dupes_before={report.base_ids_duplicated_before}, "
+            f"rows_to_delete={report.rows_to_delete}, "
+            f"rows_deleted={report.rows_deleted}, "
+            f"base_dupes_after={report.base_ids_duplicated_after}, "
+            f"backup={report.backup_path}"
+        )
+        if args.show_ids:
+            for aid in report.deleted_arxiv_ids:
+                logger.info(f"delete: {aid}")
+
+    elif args.command == "backfill-citations":
+        # Reuse the pipeline output dir DB.
+        # The implementation reads IDs from discovered_papers / processed_papers / papers.
+        args.db_path = str(Path(args.output_dir) / "arxitex_indices.db")
+        exit_code = await run_citations_backfill(args)
 
     logger.info(f"Command '{args.command}' has completed.")
     return exit_code

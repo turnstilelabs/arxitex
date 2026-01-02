@@ -228,39 +228,35 @@ class ReferenceResolver:
                             )
                         )
 
-        # Now, search for any bib keys that were NOT found via an explicit \cite command.
-        # This ensures we match "Rou01" before we match "Rou".
-        sorted_bib_keys = sorted(bib_map.keys(), key=len, reverse=True)
-
-        for cite_key in sorted_bib_keys:
-            if cite_key in found_cite_keys:
+        # Manual citation scan (fast path): look for bracket/paren spans like
+        #   [Rou01, Thm 2] or (Doe01, p. 3)
+        # and extract *multiple* cite keys from the same span.
+        # We avoid O(nodes * bib_keys) scanning.
+        for span in self._iter_bracket_spans(full_content, max_span_chars=500):
+            inner = span[1:-1]  # strip [] or ()
+            # Find candidate tokens that look like bib keys.
+            # Keep letters/numbers and common separators.
+            tokens = re.findall(r"[A-Za-z0-9][A-Za-z0-9:_\-\.]*", inner)
+            matched_keys = [
+                t for t in tokens if t in bib_map and t not in found_cite_keys
+            ]
+            if not matched_keys:
                 continue
 
-            # This finds the key when it's used as a "word" like [AuthorYear, Theorem X].
-            escaped_key = re.escape(cite_key)
-            manual_pattern = re.compile(
-                r"([\(\[][^[\]\(\)]*\b" + escaped_key + r"\b[^[\]\(\)]*[\)\]])"
-            )
-
-            for match in manual_pattern.finditer(full_content):
-                logger.debug(
-                    f"Found manual citation for key '{cite_key}' in node {node.id}"
-                )
-
-                context_start = max(0, match.start() - 50)
-                context_end = min(len(full_content), match.end() + 50)
-                context = (
-                    full_content[context_start:context_end].replace("\n", " ").strip()
-                )
+            for cite_key in matched_keys:
+                found_cite_keys.add(cite_key)
                 bib_entry = bib_map[cite_key]
 
-                full_match_text = match.group(1)
-                inner_content = full_match_text.strip("[]()")
-                note_text = re.sub(r"\b" + escaped_key + r"\b", "", inner_content)
-                note = note_text.strip(" ,")
+                # Build note by removing *all* matched keys from the inner span.
+                note_text = inner
+                for k in matched_keys:
+                    note_text = re.sub(r"\b" + re.escape(k) + r"\b", "", note_text)
+                note = note_text.strip(" ,") or None
 
-                if not note:
-                    note = None
+                # Context window around the first occurrence of this key within the span.
+                # (Approx: use the full span location in the concatenated content.)
+                # We don't keep exact offsets for each token; the span itself is good enough.
+                context = span
 
                 if not any(
                     r.target_id == cite_key and r.note == note for r in references
@@ -275,9 +271,30 @@ class ReferenceResolver:
                             note=note,
                         )
                     )
-                break
 
         return references
+
+    def _iter_bracket_spans(self, text: str, *, max_span_chars: int) -> List[str]:
+        """Yield non-nested bracket/paren spans like '[...]' or '(...)'.
+
+        This is intentionally conservative (no nesting) and bounded by max_span_chars
+        to avoid pathological regex backtracking or huge spans.
+        """
+
+        spans: List[str] = []
+        for open_ch, close_ch in (("[", "]"), ("(", ")")):
+            start = 0
+            while True:
+                i = text.find(open_ch, start)
+                if i == -1:
+                    break
+                j = text.find(close_ch, i + 1)
+                if j == -1:
+                    break
+                if j - i + 1 <= max_span_chars:
+                    spans.append(text[i : j + 1])
+                start = j + 1
+        return spans
 
     def _create_graph_links(
         self, nodes: List[ArtifactNode], label_to_node_id_map: Dict[str, str]

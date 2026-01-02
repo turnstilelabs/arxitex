@@ -42,9 +42,12 @@ def test_candidate_generation_overlaps_and_subwords(monkeypatch):
         "n3": ["approximate union closed"],
     }
 
-    # Prepare a dummy bank where find returns a Definition with dependencies for 'union closed' term
+    # Prepare a dummy bank where find_many returns a Definition with dependencies
+    # for 'union closed' term. Also ensure find() is never called.
     class DummyBank:
         def __init__(self):
+            self.find_calls = 0
+            self.find_many_calls = 0
             self._map = {
                 "union closed": Definition(
                     term="union closed",
@@ -55,8 +58,21 @@ def test_candidate_generation_overlaps_and_subwords(monkeypatch):
                 )
             }
 
+        def _normalize_term(self, term: str) -> str:
+            return term.strip().lower()
+
         async def find(self, term):
+            self.find_calls += 1
             return self._map.get(term)
+
+        async def find_many(self, terms):
+            self.find_many_calls += 1
+            out = []
+            for t in terms:
+                d = self._map.get(t)
+                if d is not None:
+                    out.append(d)
+            return out
 
     bank = DummyBank()
 
@@ -76,8 +92,15 @@ def test_candidate_generation_overlaps_and_subwords(monkeypatch):
     ge.llm_dependency_checker = DummyLLM()
 
     new_graph = asyncio.run(
-        ge._infer_and_add_dependencies(graph, artifact_to_terms_map, bank)
+        ge._infer_and_add_dependencies_pairwise(
+            graph, artifact_to_terms_map, bank, cfg=None
+        )
     )
+
+    # Regression: footprint expansion should use a single find_many, not repeated find()
+    assert bank.find_many_calls == 1
+    assert bank.find_calls == 0
+
     # The function returns the (possibly mutated) DocumentGraph; ensure we got the same object back.
     assert new_graph is graph
 
