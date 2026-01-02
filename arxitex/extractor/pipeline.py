@@ -105,7 +105,7 @@ async def run_async_pipeline(args):
         dependency_config = {
             "auto_max_nodes_global": args.dependency_auto_max_nodes,
             "auto_max_tokens_global": args.dependency_auto_max_tokens,
-            "max_total_pairs": args.dependency_hybrid_max_total,
+            "max_total_pairs": args.dependency_max_pairs,
             "global_include_proofs": True,
             "global_proof_char_budget": args.dependency_global_proof_char_budget,
         }

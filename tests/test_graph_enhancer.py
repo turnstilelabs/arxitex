@@ -179,7 +179,9 @@ def test_infer_and_add_dependencies_with_enrichment():
     bank = DummyDefinitionBank(mapping=mapping)
 
     new_graph = asyncio.run(
-        ge._infer_and_add_dependencies_pairwise(graph, artifact_to_terms_map, bank)
+        ge._infer_and_add_dependencies_pairwise(
+            graph, artifact_to_terms_map, bank, cfg=None
+        )
     )
 
     # After running, we expect at least one edge added
@@ -209,7 +211,9 @@ def test_infer_and_add_dependencies_fallback_all_pairs():
     graph = make_graph_two_nodes()
 
     # call with no enrichment data (bank None, empty artifact_to_terms_map) -> fallback to all pairs
-    new_graph = asyncio.run(ge._infer_and_add_dependencies_pairwise(graph, {}, None))
+    new_graph = asyncio.run(
+        ge._infer_and_add_dependencies_pairwise(graph, {}, None, cfg=None)
+    )
 
     # No edges should be added because LLM returns no dependency
     assert len(new_graph.edges) == 0
@@ -221,9 +225,8 @@ def test_dependency_mode_hybrid_calls_proposer_and_verifier():
     ge.global_dependency_proposer = DummyGlobalProposer()
     graph = make_graph_two_nodes()
 
-    cfg = DependencyInferenceConfig(
-        hybrid_topk_per_source=5, hybrid_max_total_candidates=10
-    )
+    # For now, we only support a global per-paper cap on verified pairs.
+    cfg = DependencyInferenceConfig(max_total_pairs=10)
     new_graph = asyncio.run(
         ge._infer_and_add_dependencies_hybrid(
             graph=graph, internal_nodes=graph.nodes, cfg=cfg

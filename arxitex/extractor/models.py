@@ -75,24 +75,6 @@ class Reference:
 
 
 @dataclass
-class Citation:
-    """Represents a citation to an external work, including contextual notes."""
-
-    cite_key: str
-    full_reference: str
-    arxiv_id: Optional[str] = None
-    note: Optional[str] = None  # Captures text from e.g., \cite[Theorem 3.1]{...}
-
-    def to_dict(self) -> Dict:
-        return {
-            "cite_key": self.cite_key,
-            "full_reference": self.full_reference,
-            "arxiv_id": self.arxiv_id,
-            "note": self.note,
-        }
-
-
-@dataclass
 class ArtifactNode:
     """
     Represents a mathematical artifact in the document graph.

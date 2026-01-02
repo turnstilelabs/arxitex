@@ -37,6 +37,4 @@ class DependencyInferenceConfig:
     # excessive LLM calls.
     max_total_pairs: int = 100
 
-    # --- verification controls ---
-    # Keep current behavior: pairwise verification includes proofs.
-    hybrid_verify_with_proofs: bool = True
+    # (Reserved for future extensions; currently all verification includes proofs.)

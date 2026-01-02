@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import sqlite3
 from pathlib import Path
-from typing import Optional
 
 
 def connect(db_path: str | Path, *, timeout_s: float = 30) -> sqlite3.Connection:
@@ -31,15 +30,3 @@ def connect(db_path: str | Path, *, timeout_s: float = 30) -> sqlite3.Connection
     conn.execute("PRAGMA synchronous = NORMAL;")
 
     return conn
-
-
-def with_connection(db_path: str | Path, fn, *args, **kwargs):
-    """Small helper to run a function with an opened connection."""
-
-    conn: Optional[sqlite3.Connection] = None
-    try:
-        conn = connect(db_path)
-        return fn(conn, *args, **kwargs)
-    finally:
-        if conn is not None:
-            conn.close()

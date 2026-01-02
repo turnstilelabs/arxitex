@@ -129,9 +129,9 @@ The dependency inference stage supports multiple strategies. These can be select
 - **`hybrid`** (propose + verify):
   - Run one global *proposal* LLM call to propose candidate edges (sparse).
   - Then run the pairwise verifier only on the proposed candidates.
-  - Candidate explosion is controlled via caps:
-    - `--dependency-hybrid-topk` (max prerequisites proposed per source artifact)
-    - `--dependency-hybrid-max-total` (hard cap on total candidates to verify)
+  - Candidate explosion is controlled via caps (wired through the CLI into a single
+    per-paper pair cap):
+    - `--dependency-max-pairs` (global cap on the number of LLM-verified pairs per paper)
 
 - **`auto`** (recommended default):
   - Chooses between `global`, `hybrid`, and `pairwise` based on artifact count and an estimated token budget.
@@ -194,10 +194,9 @@ python -m arxitex.workflows.cli process --mode full --persist-db \
   --dependency-global-proof-char-budget 1200
 
 # Hybrid: global proposal -> pairwise verification
-python -m arxitex.workflows.cli process --mode full --persist-db \
+  python -m arxitex.workflows.cli process --mode full --persist-db \
   --dependency-mode hybrid \
-  --dependency-hybrid-topk 8 \
-  --dependency-hybrid-max-total 250
+  --dependency-max-pairs 250
 
 # Original behavior
 python -m arxitex.workflows.cli process --mode full --persist-db \

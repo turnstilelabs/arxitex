@@ -62,7 +62,7 @@ class GraphEnhancer:
         enrich_content: bool = True,
         dependency_mode: DependencyInferenceMode = "pairwise",
         dependency_config: Optional[DependencyInferenceConfig] = None,
-    ) -> DocumentGraph:
+    ) -> tuple[DocumentGraph, DefinitionBank, dict[str, list[str]]]:
         logger.info(
             f"[{source_file}] Starting Pass 1: Building base graph from LaTeX structure..."
         )
@@ -371,12 +371,15 @@ class GraphEnhancer:
         graph: DocumentGraph,
         artifact_to_terms_map: Dict[str, List[str]],
         bank: DefinitionBank,
-        cfg: DependencyInferenceConfig,
+        cfg: DependencyInferenceConfig | None = None,
     ) -> DocumentGraph:
         """
         Analyzes artifacts to infer dependencies efficiently using conceptual and
         term overlap to generate candidates.
         """
+        # Default configuration when called directly from tests or legacy paths.
+        cfg = cfg or DependencyInferenceConfig()
+
         internal_nodes = [node for node in graph.nodes if not node.is_external]
         if len(internal_nodes) < 2:
             logger.info("Not enough internal nodes to infer dependencies. Skipping.")

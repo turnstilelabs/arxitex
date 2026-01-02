@@ -92,7 +92,9 @@ def test_candidate_generation_overlaps_and_subwords(monkeypatch):
     ge.llm_dependency_checker = DummyLLM()
 
     new_graph = asyncio.run(
-        ge._infer_and_add_dependencies_pairwise(graph, artifact_to_terms_map, bank)
+        ge._infer_and_add_dependencies_pairwise(
+            graph, artifact_to_terms_map, bank, cfg=None
+        )
     )
 
     # Regression: footprint expansion should use a single find_many, not repeated find()
