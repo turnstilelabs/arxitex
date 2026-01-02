@@ -15,6 +15,8 @@ function extractArxivId(arxivUrl: string): string | null {
 export default function Home() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [enrichContent, setEnrichContent] = useState(true);
+  const [inferDependencies, setInferDependencies] = useState(true);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,8 +24,7 @@ export default function Home() {
 
     const formData = new FormData(event.currentTarget);
     const arxivUrl = (formData.get('arxivUrl') as string).trim();
-    const enrichContent = formData.get('enrichContent') === 'on';
-    const inferDependencies = formData.get('inferDependencies') === 'on';
+    // Use component state; the toggles are clickable pills (no checkbox inputs).
 
     const arxivId = extractArxivId(arxivUrl);
     if (!arxivId) {
@@ -95,31 +96,33 @@ export default function Home() {
           className="mt-2 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm"
           style={{ color: 'var(--secondary-text)' }}
         >
-          <label
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-[var(--border-color)] bg-[var(--surface2)] cursor-pointer transition hover:border-[var(--accent)] hover:bg-[var(--surface1)]"
+          <button
+            type="button"
+            onClick={() => setEnrichContent((v) => !v)}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border cursor-pointer transition"
+            style={{
+              borderColor: enrichContent ? 'var(--accent)' : 'var(--border-color)',
+              background: enrichContent ? 'var(--surface1)' : 'var(--surface2)',
+              color: 'var(--secondary-text)',
+            }}
+            aria-pressed={enrichContent}
           >
-            <input
-              type="checkbox"
-              name="enrichContent"
-              defaultChecked
-              className="h-3 w-3 accent-[var(--accent)]"
-            />
-            <span className="text-[0.78rem] sm:text-xs md:text-sm">
-              Enhance artifacts (definitions/symbols)
-            </span>
-          </label>
+            Enhance artifacts (definitions/symbols)
+          </button>
 
-          <label
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border border-[var(--border-color)] bg-[var(--surface2)] cursor-pointer transition hover:border-[var(--accent)] hover:bg-[var(--surface1)]"
+          <button
+            type="button"
+            onClick={() => setInferDependencies((v) => !v)}
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border cursor-pointer transition"
+            style={{
+              borderColor: inferDependencies ? 'var(--accent)' : 'var(--border-color)',
+              background: inferDependencies ? 'var(--surface1)' : 'var(--surface2)',
+              color: 'var(--secondary-text)',
+            }}
+            aria-pressed={inferDependencies}
           >
-            <input
-              type="checkbox"
-              name="inferDependencies"
-              defaultChecked
-              className="h-3 w-3 accent-[var(--accent)]"
-            />
-            <span className="text-[0.78rem] sm:text-xs md:text-sm">Infer dependencies</span>
-          </label>
+            Infer dependencies
+          </button>
         </div>
       </form>
 

@@ -5,6 +5,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState }
 
 import { getMaxPrereqDepth, recomputeProofSubgraph } from './constellations/proof';
 import { edgeKey } from './constellations/data';
+import { buildDistillModel, renderDistilledWindow } from './constellations/distiller';
 
 import {
     hideInfoPanel,
@@ -176,6 +177,23 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
                 if (state.proofTargetId) actions.updateInfoPanel(state.refs.nodeById.get(state.proofTargetId));
             },
 
+            generateDistilledProof: () => {
+                if (!state.proofMode || !state.proofTargetId) return;
+
+                // Ensure proof subgraph is up to date before building the model.
+                actions.recomputeProofSubgraph();
+
+                const graphData = state.graphData || { nodes: [], edges: [] };
+                const model = buildDistillModel(
+                    state,
+                    state.refs.nodeById,
+                    state.refs.incomingEdgesByTarget,
+                    graphData,
+                );
+
+                renderDistilledWindow(model);
+            },
+
             reportNodeIssue: (d: any) => {
                 if (!onReportNode) return;
                 const label = String(d?.display_name ?? d?.label ?? d?.id ?? '');
@@ -185,15 +203,15 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
                 onReportNode({ id, label, type });
             },
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state, onReportNode]);
 
     useEffect(() => {
-        if (!svgRef.current) return;
+        const svgEl = svgRef.current;
+        if (!svgEl) return;
 
-        const rect = svgRef.current.getBoundingClientRect();
+        const rect = svgEl.getBoundingClientRect();
         igRef.current = initIncrementalGraph({
-            svgEl: svgRef.current,
+            svgEl,
             width: rect.width,
             height: rect.height,
             state,
@@ -219,7 +237,7 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
         return () => {
             igRef.current?.simulation.stop();
-            d3.select(svgRef.current).selectAll('*').remove();
+            d3.select(svgEl).selectAll('*').remove();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -279,22 +297,34 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
                 <div className={legendOpen ? 'legend' : 'legend legend--collapsed'}>
                     <div className="legend-header">
-                        <h3 className="legend-title">Legend</h3>
-                        <button
-                            type="button"
-                            className="legend-toggle"
-                            aria-label={legendOpen ? 'Collapse legend' : 'Expand legend'}
-                            onClick={() => setLegendOpen((v) => !v)}
-                        >
-                            {legendOpen ? '▾' : '▸'}
-                        </button>
+                        {!legendOpen ? (
+                            <>
+                                <h3 className="legend-title">Legend</h3>
+                                <button
+                                    type="button"
+                                    className="legend-toggle"
+                                    aria-label="Expand legend"
+                                    onClick={() => setLegendOpen(true)}
+                                >
+                                    ▸
+                                </button>
+                            </>
+                        ) : null}
                     </div>
 
                     <div className="legend-body">
-                        <h3>Node Types</h3>
+                        <div className="legend-section-header">
+                            <h3>Node Types</h3>
+                            <button
+                                type="button"
+                                className="legend-toggle"
+                                aria-label="Collapse legend"
+                                onClick={() => setLegendOpen(false)}
+                            >
+                                ▾
+                            </button>
+                        </div>
                         <div id="node-legend-container" className="legend-grid" />
-                        <h3 style={{ marginTop: 10 }}>Edge Types</h3>
-                        <div id="edge-legend-container" className="legend-grid" />
                         <p style={{ marginTop: 8, fontSize: 12, color: 'var(--secondary-text)' }}>
                             Click a node to focus. Right-click a node to explore proof path.
                         </p>

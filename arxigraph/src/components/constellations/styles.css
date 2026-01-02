@@ -61,6 +61,19 @@
     margin-bottom: 8px;
 }
 
+/* When expanded, we place the toggle next to the section header (Node Types). */
+.legend-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.legend-section-header h3 {
+    margin: 0;
+}
+
 .legend-title {
     margin: 0;
     font-weight: 900;

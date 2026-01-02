@@ -40,14 +40,7 @@ export function setupLegends(
     });
   });
 
-  const edgeLegendContainer = d3.select('#edge-legend-container');
-  edgeLegendContainer.selectAll('*').remove();
-
-  edgeTypes.forEach((type) => {
-    const item = edgeLegendContainer.append('div').attr('class', 'legend-item');
-    item.append('div').attr('class', 'edge-legend-line').style('background-color', edgeColors[type]);
-    item.append('span').text(type.replace(/_/g, ' '));
-  });
+  // Edge types removed from the legend UI.
 }
 
 export async function renderNodeTooltip(tooltipEl: HTMLDivElement, event: any, d: any) {
@@ -103,8 +96,8 @@ export async function updateInfoPanel(
     ? `
           <div class="proof-controls-inline">
             <button id="proof-unfold-less" class="depth-btn">← Unfold Less</button>
-            <span style="color: var(--secondary-text); font-family: Inter, system-ui, sans-serif; font-size: 12px;">Depth: ${state.proofDepth}</span>
             <button id="proof-unfold-more" class="depth-btn">Unfold More →</button>
+            <button id="proof-distill" class="depth-btn depth-btn--primary">Generate Distilled Proof</button>
           </div>
         `
     : `
@@ -119,9 +112,7 @@ export async function updateInfoPanel(
     infoHTML += `<h4>Prerequisites</h4><div class="math-content">${cleanLatex(d.prerequisites_preview)}</div>`;
   }
 
-  if (d.position && typeof d.position.line_start !== 'undefined') {
-    infoHTML += `<div style="margin-top:10px; font-size:12px; color: var(--secondary-text)">Source position: line ${d.position.line_start}${d.position.line_end ? `–${d.position.line_end}` : ''}</div>`;
-  }
+  // Source position removed from UI.
 
   infoBodyEl.innerHTML = infoHTML;
   infoPanelEl.classList.add('visible');
@@ -147,6 +138,11 @@ export async function updateInfoPanel(
   const moreBtn = document.getElementById('proof-unfold-more');
   if (moreBtn) {
     moreBtn.onclick = () => actions.unfoldMore();
+  }
+
+  const distillBtn = document.getElementById('proof-distill');
+  if (distillBtn) {
+    distillBtn.onclick = () => actions.generateDistilledProof();
   }
 
   await typesetMath([infoBodyEl]);
