@@ -60,10 +60,21 @@ async def _run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
         f"Starting extraction for {args.arxiv_id} | infer_deps={infer_deps}, enrich_content={enrich_content}"
     )
 
+    # Mirror dependency-mode handling from extractor/pipeline.py
+    dependency_config = {
+        "auto_max_nodes_global": args.dependency_auto_max_nodes,
+        "auto_max_tokens_global": args.dependency_auto_max_tokens,
+        "max_total_pairs": args.dependency_max_pairs,
+        "global_include_proofs": True,
+        "global_proof_char_budget": args.dependency_global_proof_char_budget,
+    }
+
     results = await agenerate_artifact_graph(
         arxiv_id=args.arxiv_id,
         infer_dependencies=infer_deps,
         enrich_content=enrich_content,
+        dependency_mode=args.dependency_mode,
+        dependency_config=dependency_config,
         source_dir=None,
     )
 
@@ -121,6 +132,40 @@ def main(argv: list[str] | None = None) -> None:
             "Automatically activates content enrichment for best results in the "
             "underlying pipeline."
         ),
+    )
+    parser.add_argument(
+        "--dependency-mode",
+        type=str,
+        choices=["pairwise", "global", "hybrid", "auto"],
+        default="auto",
+        help="Dependency inference mode when --infer-deps is enabled.",
+    )
+    parser.add_argument(
+        "--dependency-auto-max-nodes",
+        type=int,
+        default=30,
+        help="Auto-mode: max artifacts to allow global/hybrid.",
+    )
+    parser.add_argument(
+        "--dependency-auto-max-tokens",
+        type=int,
+        default=12000,
+        help="Auto-mode: max estimated tokens to allow global/hybrid.",
+    )
+    parser.add_argument(
+        "--dependency-max-pairs",
+        type=int,
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
+    )
+    parser.add_argument(
+        "--dependency-global-proof-char-budget",
+        type=int,
+        default=1200,
+        help="Global/Hybrid proposer: truncate each proof to this many chars.",
     )
     parser.add_argument(
         "--enrich-content",
