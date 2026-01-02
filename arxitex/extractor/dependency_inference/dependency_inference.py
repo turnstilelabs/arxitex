@@ -7,6 +7,7 @@ from arxitex.extractor.dependency_inference.dependency_prompt import (
     DependencyInferencePromptGenerator,
 )
 from arxitex.llms import llms
+from arxitex.llms.usage_context import llm_usage_stage
 
 
 class GraphDependencyInference:
@@ -24,11 +25,12 @@ class GraphDependencyInference:
         )
 
         try:
-            return llms.execute_prompt(
-                prompt,
-                output_class=PairwiseDependencyCheck,
-                model="gpt-5-mini-2025-08-07",
-            )
+            with llm_usage_stage("dependency_inference"):
+                return llms.execute_prompt(
+                    prompt,
+                    output_class=PairwiseDependencyCheck,
+                    model="gpt-5-mini-2025-08-07",
+                )
         except Exception as e:
             logger.error(f"Error during dependency inference: {e}")
             raise RuntimeError(
@@ -44,11 +46,12 @@ class GraphDependencyInference:
         )
 
         try:
-            result = await llms.aexecute_prompt(
-                prompt,
-                output_class=PairwiseDependencyCheck,
-                model="gpt-5-mini-2025-08-07",
-            )
+            with llm_usage_stage("dependency_inference"):
+                result = await llms.aexecute_prompt(
+                    prompt,
+                    output_class=PairwiseDependencyCheck,
+                    model="gpt-5-mini-2025-08-07",
+                )
             dependency_type = getattr(result, "dependency_type", "N/A")
             logger.success(f"{log_prefix}\n Result: {dependency_type}.")
 

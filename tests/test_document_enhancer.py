@@ -1,4 +1,5 @@
 import asyncio
+import time
 
 from arxitex.extractor.models import ArtifactNode, ArtifactType, Position
 from arxitex.symdef.definition_bank import DefinitionBank
@@ -8,6 +9,13 @@ from arxitex.symdef.utils import ContextFinder
 
 class DummyBuilder:
     """A deterministic, async stub replacing the real DefinitionBuilder/LLM."""
+
+    def __init__(
+        self, *, sleep_s: float = 0.0, synthesized_definition: str | None = None
+    ):
+        self.sleep_s = sleep_s
+        self.synthesized_definition = synthesized_definition
+        self.synthesis_calls: list[str] = []
 
     async def aextract_document_terms(self, full_document_content: str):
         # pretend the LLM found a single term "TermOne"
@@ -29,7 +37,14 @@ class DummyBuilder:
     async def asynthesize_definition(
         self, term: str, context_snippets: str, base_definition
     ):
-        # Return a deterministic synthesized definition
+        self.synthesis_calls.append(term)
+        if self.sleep_s:
+            await asyncio.sleep(self.sleep_s)
+
+        if self.synthesized_definition is not None:
+            return self.synthesized_definition
+
+        # Default: Return a deterministic synthesized definition
         return f"SYNTHETIC_DEF_FOR_{term}"
 
 
@@ -96,3 +111,97 @@ def test_document_enhancer_synthesizes_and_registers(tmp_path):
         if "SYNTHETIC_DEF_FOR" in deftext or "SYNTHETIC_DEF_FOR_TermOne" in deftext:
             found = True
     assert found
+
+
+def test_document_enhancer_synthesis_is_concurrent_across_terms():
+    # Two terms, two artifacts; synthesis sleep should overlap.
+    latex_lines = [
+        "Title\n",
+        "Intro paragraph\n",
+        "More text\n",
+        "Here we use TermOne in a sentence.\n",
+        "Here we use TermTwo in a sentence.\n",
+        "End.\n",
+    ]
+    latex = "".join(latex_lines)
+
+    artifacts = [
+        ArtifactNode(
+            id="a1",
+            type=ArtifactType.THEOREM,
+            content="Here we use TermOne in a sentence.",
+            label="lbl1",
+            position=Position(line_start=4, line_end=4, col_start=1, col_end=40),
+        ),
+        ArtifactNode(
+            id="a2",
+            type=ArtifactType.THEOREM,
+            content="Here we use TermTwo in a sentence.",
+            label="lbl2",
+            position=Position(line_start=5, line_end=5, col_start=1, col_end=40),
+        ),
+    ]
+
+    dummy_builder = DummyBuilder(sleep_s=0.25)
+
+    async def aextract_document_terms(_full_document_content: str):
+        return ["TermOne", "TermTwo"]
+
+    # Monkeypatch the document terms method for this test instance.
+    dummy_builder.aextract_document_terms = aextract_document_terms  # type: ignore
+
+    enhancer = DocumentEnhancer(
+        llm_enhancer=dummy_builder,
+        context_finder=ContextFinder(),
+        definition_bank=DefinitionBank(),
+    )
+
+    start = time.perf_counter()
+    asyncio.run(enhancer.enhance_document(artifacts, latex, use_global_extraction=True))
+    elapsed = time.perf_counter() - start
+
+    # If serialized, we'd expect ~0.50s (2 * 0.25). With concurrency, closer to ~0.25.
+    # Give a generous bound for CI variance.
+    assert elapsed < 0.45
+    assert sorted(dummy_builder.synthesis_calls) == ["TermOne", "TermTwo"]
+
+
+def test_document_enhancer_validation_flag_blocks_untrusted_definitions():
+    # Term appears in context, but synthesized definition is *not* in context.
+    latex_lines = [
+        "Title\n",
+        "Intro paragraph\n",
+        "More text\n",
+        "Here we use TermOne in a sentence.\n",
+        "End.\n",
+    ]
+    latex = "".join(latex_lines)
+    art = ArtifactNode(
+        id="a1",
+        type=ArtifactType.THEOREM,
+        content="Here we use TermOne in a sentence.",
+        label="lbl1",
+        position=Position(line_start=4, line_end=4, col_start=1, col_end=40),
+    )
+
+    dummy_builder = DummyBuilder(
+        synthesized_definition="This sentence is not in the context."
+    )
+    enhancer = DocumentEnhancer(
+        llm_enhancer=dummy_builder,
+        context_finder=ContextFinder(),
+        definition_bank=DefinitionBank(),
+    )
+
+    results = asyncio.run(
+        enhancer.enhance_document(
+            [art],
+            latex,
+            use_global_extraction=True,
+            validate_synthesized_definitions=True,
+        )
+    )
+
+    bank_dict = asyncio.run(results["definition_bank"].to_dict())
+    # No definition should have been registered.
+    assert bank_dict == {}

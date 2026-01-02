@@ -8,6 +8,7 @@ import httpx
 from loguru import logger
 
 from arxitex.downloaders.utils import (
+    ExtractionError,
     detect_file_type,
     try_extract_gzip,
     try_extract_tar,
@@ -167,15 +168,19 @@ class AsyncSourceDownloader:
             )
 
         success = False
-        if file_type != "unknown":
-            success = extractors[["tar", "gzip", "zip", "tex"].index(file_type)]()
+        try:
+            if file_type != "unknown":
+                success = extractors[["tar", "gzip", "zip", "tex"].index(file_type)]()
 
-        if not success:
-            logger.warning("Trying all extraction methods for unknown file type...")
-            for extractor in extractors:
-                if extractor():
-                    success = True
-                    break
+            if not success:
+                logger.warning("Trying all extraction methods for unknown file type...")
+                for extractor in extractors:
+                    if extractor():
+                        success = True
+                        break
+        except ExtractionError as e:
+            # Upgrade low-level extraction failures into a clearer high-level error.
+            raise ArxivExtractorError(str(e)) from e
 
         if not success:
             raise ArxivExtractorError(

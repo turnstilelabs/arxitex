@@ -3,12 +3,24 @@ import re
 from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
-from typing import Any, AsyncIterator, Dict, List, Optional
+from typing import Dict, List, Optional
 
 from loguru import logger
 
+from arxitex.downloaders.utils import read_and_combine_tex_files
+from arxitex.extractor.dependency_inference.auto_mode import choose_mode_auto
 from arxitex.extractor.dependency_inference.dependency_inference import (
     GraphDependencyInference,
+)
+from arxitex.extractor.dependency_inference.dependency_mode import (
+    DependencyInferenceConfig,
+    DependencyInferenceMode,
+)
+from arxitex.extractor.dependency_inference.global_dependency_inference import (
+    GlobalGraphDependencyInference,
+)
+from arxitex.extractor.dependency_inference.global_dependency_proposer import (
+    GlobalDependencyProposer,
 )
 from arxitex.extractor.graph_building.base_builder import BaseGraphBuilder
 from arxitex.extractor.models import DocumentGraph, Edge
@@ -29,6 +41,8 @@ class GraphEnhancer:
     def __init__(self):
         self.regex_builder = BaseGraphBuilder()
         self.llm_dependency_checker = GraphDependencyInference()
+        self.global_dependency_inferencer = GlobalGraphDependencyInference()
+        self.global_dependency_proposer = GlobalDependencyProposer()
 
         definition_builder = DefinitionBuilder()
         context_finder = ContextFinder()
@@ -46,17 +60,23 @@ class GraphEnhancer:
         source_file: Optional[str] = None,
         infer_dependencies: bool = True,
         enrich_content: bool = True,
-    ) -> DocumentGraph:
-        logger.info("Starting Pass 1: Building base graph from LaTeX structure...")
-        graph = self.regex_builder.build_graph(project_dir, source_file)
+        dependency_mode: DependencyInferenceMode = "pairwise",
+        dependency_config: Optional[DependencyInferenceConfig] = None,
+    ) -> tuple[DocumentGraph, DefinitionBank, dict[str, list[str]]]:
+        logger.info(
+            f"[{source_file}] Starting Pass 1: Building base graph from LaTeX structure..."
+        )
+
+        # PERF: read/concatenate LaTeX once and reuse for all subsequent passes.
+        latex_content = read_and_combine_tex_files(project_dir)
+        graph = self.regex_builder.build_graph_from_content(
+            content=latex_content, source_file=source_file, project_dir=project_dir
+        )
 
         if not graph.nodes:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
             return DocumentGraph(), DefinitionBank(), {}
 
-        from arxitex.downloaders.utils import read_and_combine_tex_files
-
-        latex_content = read_and_combine_tex_files(project_dir)
         bank = None
         artifact_to_terms_map = {}
         should_enrich = enrich_content or infer_dependencies
@@ -82,26 +102,224 @@ class GraphEnhancer:
         if infer_dependencies:
             if not artifact_to_terms_map:
                 logger.warning(
-                    "Cannot infer dependencies because term extraction failed or was skipped."
+                    f"[{source_file}] Cannot infer dependencies because term extraction "
+                    "failed or was skipped."
                 )
             else:
                 logger.info(
-                    "--- Starting Pass 3: Inferring dependencies with efficient filtering ---"
+                    f"[{source_file}] --- Starting Pass 3: Inferring dependencies (mode-aware) ---"
                 )
-                graph = await self._infer_and_add_dependencies(
-                    graph, artifact_to_terms_map, bank
+                cfg = dependency_config or DependencyInferenceConfig()
+                graph = await self._infer_and_add_dependencies_mode_aware(
+                    graph=graph,
+                    artifact_to_terms_map=artifact_to_terms_map,
+                    bank=bank,
+                    dependency_mode=dependency_mode,
+                    cfg=cfg,
                 )
 
         reference_edges = len([e for e in graph.edges if e.reference_type])
         dependency_edges = len([e for e in graph.edges if e.dependency_type])
         logger.success(
-            f"Hybrid extraction complete. Graph has {len(graph.nodes)} artifacts and {len(graph.edges)} total edges."
+            f"[{source_file}] Hybrid extraction complete. Graph has {len(graph.nodes)} "
+            f"artifacts and {len(graph.edges)} total edges."
         )
         logger.info(
-            f"Edge breakdown: {reference_edges} reference-based, {dependency_edges} dependency-based."
+            f"[{source_file}] Edge breakdown: {reference_edges} reference-based, {dependency_edges} dependency-based."
         )
 
         return graph, bank, artifact_to_terms_map
+
+    async def _infer_and_add_dependencies_mode_aware(
+        self,
+        graph: DocumentGraph,
+        artifact_to_terms_map: Dict[str, List[str]],
+        bank: DefinitionBank,
+        dependency_mode: DependencyInferenceMode,
+        cfg: DependencyInferenceConfig,
+    ) -> DocumentGraph:
+        internal_nodes = [node for node in graph.nodes if not node.is_external]
+        if len(internal_nodes) < 2:
+            logger.info("Not enough internal nodes to infer dependencies. Skipping.")
+            return graph
+
+        # Choose mode if auto.
+        selected_mode = dependency_mode
+        reason = None
+        tok_est = None
+        if dependency_mode == "auto":
+            selected_mode, reason, tok_est = choose_mode_auto(internal_nodes, cfg)
+
+        logger.info(
+            f"Dependency inference mode={selected_mode} (requested={dependency_mode})"
+            + (f" | {reason}" if reason else "")
+            + (f" | tok_est≈{tok_est}" if tok_est is not None else "")
+        )
+
+        if selected_mode == "pairwise":
+            return await self._infer_and_add_dependencies_pairwise(
+                graph=graph,
+                artifact_to_terms_map=artifact_to_terms_map,
+                bank=bank,
+                cfg=cfg,
+            )
+
+        if selected_mode == "global":
+            return await self._infer_and_add_dependencies_global(
+                graph, internal_nodes, cfg
+            )
+
+        if selected_mode == "hybrid":
+            return await self._infer_and_add_dependencies_hybrid(
+                graph=graph,
+                internal_nodes=internal_nodes,
+                cfg=cfg,
+            )
+
+        logger.warning(
+            f"Unknown dependency_mode={selected_mode}. Falling back to pairwise."
+        )
+        return await self._infer_and_add_dependencies_pairwise(
+            graph=graph,
+            artifact_to_terms_map=artifact_to_terms_map,
+            bank=bank,
+            cfg=cfg,
+        )
+
+    async def _infer_and_add_dependencies_global(
+        self,
+        graph: DocumentGraph,
+        internal_nodes: List,
+        cfg: DependencyInferenceConfig,
+    ) -> DocumentGraph:
+        logger.info(
+            f"[global] Running one-shot dependency inference for N={len(internal_nodes)}"
+        )
+        result = await self.global_dependency_inferencer.ainfer_dependencies(
+            internal_nodes, cfg
+        )
+
+        id_to_node = {n.id: n for n in internal_nodes}
+        added = 0
+        dropped = 0
+
+        for e in result.edges:
+            if e.source_id == e.target_id:
+                dropped += 1
+                continue
+            if e.source_id not in id_to_node or e.target_id not in id_to_node:
+                dropped += 1
+                continue
+            if graph.find_edge(e.source_id, e.target_id):
+                continue
+
+            graph.add_edge(
+                Edge(
+                    source_id=e.source_id,
+                    target_id=e.target_id,
+                    dependency_type=e.dependency_type,
+                    dependency=e.justification,
+                )
+            )
+            added += 1
+
+        logger.success(
+            f"[global] Added {added} dependency edges (dropped_invalid={dropped})."
+        )
+        return graph
+
+    async def _infer_and_add_dependencies_hybrid(
+        self,
+        graph: DocumentGraph,
+        internal_nodes: List,
+        cfg: DependencyInferenceConfig,
+    ) -> DocumentGraph:
+        logger.info(
+            f"[hybrid] Propose+verify dependency inference for N={len(internal_nodes)}"
+        )
+
+        proposal = await self.global_dependency_proposer.apropose(internal_nodes, cfg)
+
+        # Filter + dedupe candidates from global proposer.
+        id_to_node = {n.id: n for n in internal_nodes}
+        seen: set[tuple[str, str]] = set()
+        final_candidates: list[tuple[str, str]] = []
+
+        for pe in proposal.edges:
+            if pe.source_id == pe.target_id:
+                continue
+            if pe.source_id not in id_to_node or pe.target_id not in id_to_node:
+                continue
+            if graph.find_edge(pe.source_id, pe.target_id):
+                continue
+            key = (pe.source_id, pe.target_id)
+            if key in seen:
+                continue
+            seen.add(key)
+            final_candidates.append(key)
+
+        num_candidates = len(final_candidates)
+
+        if num_candidates == 0:
+            logger.info("[stage=deps_hybrid] No candidates to verify.")
+            return graph
+
+        if num_candidates > cfg.max_total_pairs:
+            logger.warning(
+                f"[stage=deps_hybrid] candidate_pairs={num_candidates} exceeds "
+                f"cap={cfg.max_total_pairs}; skipping hybrid dependency inference "
+                "for this paper to avoid excessive LLM calls."
+            )
+            return graph
+
+        logger.info(
+            f"[stage=deps_hybrid] Verifying {num_candidates} candidate pairs from global proposer."
+        )
+
+        # Verify candidates with pairwise checker.
+        tasks_with_context = []
+        for source_id, target_id in final_candidates:
+            source_node = id_to_node[source_id]
+            target_node = id_to_node[target_id]
+            task = asyncio.create_task(
+                self.llm_dependency_checker.ainfer_dependency(
+                    source_node.to_dict(), target_node.to_dict()
+                )
+            )
+            tasks_with_context.append(
+                {"source": source_node, "target": target_node, "task": task}
+            )
+
+        results = await asyncio.gather(
+            *[t["task"] for t in tasks_with_context], return_exceptions=True
+        )
+
+        added_edges_count = 0
+        for context, result in zip(tasks_with_context, results):
+            if isinstance(result, Exception):
+                source_id = context["source"].id
+                target_id = context["target"].id
+                logger.error(
+                    f"[hybrid] Error verifying pair ({source_id}, {target_id}): {result}"
+                )
+                continue
+
+            if result and result.has_dependency:
+                source_node = context["source"]
+                target_node = context["target"]
+                graph.add_edge(
+                    Edge(
+                        source_id=source_node.id,
+                        target_id=target_node.id,
+                        dependency_type=result.dependency_type,
+                        dependency=result.justification
+                        or "Inferred by LLM based on global proposal.",
+                    )
+                )
+                added_edges_count += 1
+
+        logger.success(f"[hybrid] Added {added_edges_count} verified dependency edges.")
+        return graph
 
     async def _enrich_artifact_content(self, graph: DocumentGraph, latex_content: str):
         """
@@ -148,150 +366,20 @@ class GraphEnhancer:
 
         return words_a.issubset(words_b)
 
-    async def astream_dependency_edges(
-        self,
-        *,
-        graph: DocumentGraph,
-        artifact_to_terms_map: Dict[str, List[str]],
-        bank: DefinitionBank,
-    ) -> AsyncIterator[dict]:
-        """Stream dependency edges as LLM checks complete.
-
-        This yields edge dictionaries (Edge.to_dict()) for each dependency edge
-        accepted by the LLM.
-        """
-
-        internal_nodes = [node for node in graph.nodes if not node.is_external]
-        if len(internal_nodes) < 2:
-            return
-
-        id_to_node_map = {node.id: node for node in internal_nodes}
-        final_candidate_pairs: list[tuple[Any, Any]] = []
-
-        has_enrichment_data = bool(bank and artifact_to_terms_map)
-
-        if has_enrichment_data:
-            logger.info(
-                "Building conceptual footprint for each artifact by including term dependencies..."
-            )
-            artifact_footprints = defaultdict(set)
-            for artifact in internal_nodes:
-                direct_terms = artifact_to_terms_map.get(artifact.id, [])
-                artifact_footprints[artifact.id].update(direct_terms)
-
-                for term in direct_terms:
-                    definition = await bank.find(term)
-                    if definition and definition.dependencies:
-                        artifact_footprints[artifact.id].update(definition.dependencies)
-
-            logger.info(
-                "Generating candidate pairs from conceptual and subword overlap..."
-            )
-            candidate_pairs_unordered = set()
-
-            for id1, id2 in combinations(id_to_node_map.keys(), 2):
-                footprint1 = artifact_footprints[id1]
-                footprint2 = artifact_footprints[id2]
-
-                if not footprint1.isdisjoint(footprint2):
-                    candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
-                    continue
-
-                found_subword_link = False
-                for term1 in footprint1:
-                    for term2 in footprint2:
-                        if self._is_subword_of(term1, term2) or self._is_subword_of(
-                            term2, term1
-                        ):
-                            candidate_pairs_unordered.add(tuple(sorted((id1, id2))))
-                            found_subword_link = True
-                            break
-                    if found_subword_link:
-                        break
-
-            for id1, id2 in candidate_pairs_unordered:
-                node1, node2 = id_to_node_map[id1], id_to_node_map[id2]
-                source_node, target_node = (
-                    (node2, node1)
-                    if node1.position.line_start < node2.position.line_start
-                    else (node1, node2)
-                )
-
-                if not graph.find_edge(source_node.id, target_node.id):
-                    final_candidate_pairs.append((source_node, target_node))
-        else:
-            logger.warning(
-                "No enrichment data found. Falling back to checking all artifact pairs."
-            )
-            for node1, node2 in combinations(internal_nodes, 2):
-                source_node, target_node = (
-                    (node1, node2)
-                    if node1.position.line_start < node2.position.line_start
-                    else (node2, node1)
-                )
-
-                if not graph.find_edge(source_node.id, target_node.id):
-                    final_candidate_pairs.append((source_node, target_node))
-
-        if not final_candidate_pairs:
-            return
-
-        logger.info(
-            f"Generated {len(final_candidate_pairs)} candidate pairs for LLM verification."
-        )
-
-        async def _run_check(source_node: Any, target_node: Any):
-            """Wrapper so we never lose source/target context when awaiting results."""
-            result = await self.llm_dependency_checker.ainfer_dependency(
-                source_node.to_dict(), target_node.to_dict()
-            )
-            return source_node, target_node, result
-
-        tasks: list[asyncio.Task] = [
-            asyncio.create_task(_run_check(source_node, target_node))
-            for source_node, target_node in final_candidate_pairs
-        ]
-
-        added_edges_count = 0
-        for fut in asyncio.as_completed(tasks):
-            try:
-                source_node, target_node, result = await fut
-            except Exception as e:
-                logger.error(f"Error during dependency inference task: {e}")
-                continue
-
-            has_dep = (
-                bool(getattr(result, "has_dependency", False))
-                or getattr(result, "dependency_type", None) is not None
-            )
-            if not has_dep:
-                continue
-
-            new_edge = Edge(
-                source_id=source_node.id,
-                target_id=target_node.id,
-                dependency_type=getattr(result, "dependency_type", None),
-                dependency=getattr(result, "justification", None)
-                or "Inferred by LLM based on shared terminology.",
-            )
-            graph.add_edge(new_edge)
-            added_edges_count += 1
-            yield new_edge.to_dict()
-
-        logger.success(
-            f"Added {added_edges_count} new dependency edges based on LLM verification."
-        )
-
-    async def _infer_and_add_dependencies(
+    async def _infer_and_add_dependencies_pairwise(
         self,
         graph: DocumentGraph,
         artifact_to_terms_map: Dict[str, List[str]],
         bank: DefinitionBank,
+        cfg: DependencyInferenceConfig | None = None,
     ) -> DocumentGraph:
         """
         Analyzes artifacts to infer dependencies efficiently using conceptual and
         term overlap to generate candidates.
         """
+        # Default configuration when called directly from tests or legacy paths.
+        cfg = cfg or DependencyInferenceConfig()
+
         internal_nodes = [node for node in graph.nodes if not node.is_external]
         if len(internal_nodes) < 2:
             logger.info("Not enough internal nodes to infer dependencies. Skipping.")
@@ -309,15 +397,26 @@ class GraphEnhancer:
             logger.info(
                 "Building conceptual footprint for each artifact by including term dependencies..."
             )
+
+            # PERF: Prefetch definitions in batch to avoid many bank.find() calls
+            # (each of which acquires the bank lock). This keeps footprint building
+            # in pure Python after a single lock acquisition.
+            all_terms = set().union(*artifact_to_terms_map.values())
+            definitions = await bank.find_many(list(all_terms))
+            canonical_term_to_deps = {
+                bank._normalize_term(d.term): set(d.dependencies or [])
+                for d in definitions
+            }
+
             artifact_footprints = defaultdict(set)
             for artifact in internal_nodes:
                 direct_terms = artifact_to_terms_map.get(artifact.id, [])
                 artifact_footprints[artifact.id].update(direct_terms)
 
                 for term in direct_terms:
-                    definition = await bank.find(term)
-                    if definition and definition.dependencies:
-                        artifact_footprints[artifact.id].update(definition.dependencies)
+                    deps = canonical_term_to_deps.get(bank._normalize_term(term))
+                    if deps:
+                        artifact_footprints[artifact.id].update(deps)
 
             # --- Phase 2: Generate Candidate Pairs from Overlaps ---
             logger.info(
@@ -379,14 +478,24 @@ class GraphEnhancer:
                 if not graph.find_edge(source_node.id, target_node.id):
                     final_candidate_pairs.append((source_node, target_node))
 
-        if not final_candidate_pairs:
+        num_candidates = len(final_candidate_pairs)
+
+        if num_candidates == 0:
             logger.debug(
                 "No promising candidate pairs found after filtering. Skipping LLM verification."
             )
             return graph
 
+        if num_candidates > cfg.max_total_pairs:
+            logger.warning(
+                f"[stage=deps_pairwise] candidate_pairs={num_candidates} exceeds "
+                f"cap={cfg.max_total_pairs}; skipping pairwise dependency "
+                "inference for this paper to avoid excessive LLM calls."
+            )
+            return graph
+
         logger.info(
-            f"Generated {len(final_candidate_pairs)} candidate pairs for LLM verification."
+            f"[stage=deps_pairwise] Generated {num_candidates} candidate pairs for LLM verification."
         )
 
         tasks_with_context = []
@@ -414,19 +523,15 @@ class GraphEnhancer:
                 )
                 continue
 
-            has_dep = (
-                bool(getattr(result, "has_dependency", False))
-                or getattr(result, "dependency_type", None) is not None
-            )
-            if has_dep:
+            if result and result.has_dependency:
                 source_node = context["source"]
                 target_node = context["target"]
 
                 new_edge = Edge(
                     source_id=source_node.id,
                     target_id=target_node.id,
-                    dependency_type=getattr(result, "dependency_type", None),
-                    dependency=getattr(result, "justification", None)
+                    dependency_type=result.dependency_type,
+                    dependency=result.justification
                     or "Inferred by LLM based on shared terminology.",
                 )
                 graph.add_edge(new_edge)

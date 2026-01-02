@@ -4,7 +4,7 @@ import json
 import re
 import tempfile
 from pathlib import Path
-from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import aiofiles
 from loguru import logger
@@ -71,17 +71,20 @@ class DocumentEnhancer:
         self.llm_enhancer = llm_enhancer
         self.context_finder = context_finder
         self.bank = definition_bank
-        self._synthesis_lock = asyncio.Lock()
+
+        # NOTE: We want to prevent duplicate synthesis work for the same term while
+        # still allowing full concurrency for different terms. A single global lock
+        # would serialize all synthesis calls.
+        self._term_locks_guard = asyncio.Lock()
+        self._term_synthesis_locks: Dict[str, asyncio.Lock] = {}
 
     async def enhance_document(
         self,
         artifacts: List[ArtifactNode],
         latex_content: str,
         use_global_extraction: bool = True,
-        on_artifact_enhanced: Optional[
-            Callable[[str, Dict[str, str]], Awaitable[None]]
-        ] = None,
-    ) -> Dict[str, Any]:
+        validate_synthesized_definitions: bool = False,
+    ) -> Dict[str, str]:
         """
         Enhances the document by processing all artifacts to ensure they are self-contained
         Args:
@@ -115,6 +118,7 @@ class DocumentEnhancer:
                 artifact_end_positions,
                 latex_content,
                 use_global_extraction=use_global_extraction,
+                validate_synthesized_definitions=validate_synthesized_definitions,
             )
         )
 
@@ -127,7 +131,6 @@ class DocumentEnhancer:
             artifact_to_terms_map,
             term_to_first_artifact_map,
             all_artifacts_map,
-            on_artifact_enhanced=on_artifact_enhanced,
         )
 
         logger.success("Document enhancement complete.")
@@ -140,6 +143,17 @@ class DocumentEnhancer:
     async def _is_term_missing(self, term: str) -> bool:
         """Helper to check if a term is in the bank using the proper find method."""
         return await self.bank.find(term) is None
+
+    async def _get_synthesis_lock_for_term(self, term: str) -> asyncio.Lock:
+        """Returns a stable per-term lock, creating it if needed."""
+        # Use the bank's normalization to ensure variants of the same term share a lock.
+        canonical_term = self.bank._normalize_term(term)
+        async with self._term_locks_guard:
+            lock = self._term_synthesis_locks.get(canonical_term)
+            if lock is None:
+                lock = asyncio.Lock()
+                self._term_synthesis_locks[canonical_term] = lock
+            return lock
 
     def _calculate_start_positions(
         self, artifacts: List[ArtifactNode], latex_content: str
@@ -262,21 +276,6 @@ class DocumentEnhancer:
 
         return sorted(list(set(sanitized_terms)))
 
-    async def _extract_and_sanitize_for_artifact(self, artifact):
-        """
-        Sanitizes artifact content and extracts terms using the LLM.
-        """
-        try:
-            clean_content = re.sub(r"[^\x20-\x7E\n\t\r]", "", artifact.content)
-            raw_terms = await self.llm_enhancer.aextract_terms(clean_content)
-            return artifact.id, raw_terms
-        except Exception as e:
-            logger.error(
-                f"Failed to extract terms from artifact {artifact.id}: {e}",
-                exc_info=True,
-            )
-            return artifact.id, []
-
     async def _extract_terms_globally(
         self, artifacts: List[ArtifactNode]
     ) -> Tuple[set, Dict[str, List[str]], Dict[str, str]]:
@@ -367,6 +366,7 @@ class DocumentEnhancer:
         end_positions: Dict[str, int],
         latex_content: str,
         use_global_extraction: bool,
+        validate_synthesized_definitions: bool,
     ) -> Tuple[Dict[str, List[str]], Dict[str, str]]:
         """
         Discovers all terms via a single LLM call, sanitizes the result, then synthesizes definitions.
@@ -405,6 +405,7 @@ class DocumentEnhancer:
                 start_positions=start_positions,
                 end_positions=end_positions,
                 latex_content=latex_content,
+                validate_synthesized_definitions=validate_synthesized_definitions,
             )
             for term in missing_terms
             if term in term_to_first_artifact_map
@@ -420,6 +421,7 @@ class DocumentEnhancer:
         start_positions: Dict[str, int],
         end_positions: Dict[str, int],
         latex_content: str,
+        validate_synthesized_definitions: bool,
     ):
         """
         Defines a single term by combining the context from the preceding paragraph
@@ -427,7 +429,8 @@ class DocumentEnhancer:
         """
         log_prefix = f"[{term} @ {source_artifact_id}]"
 
-        async with self._synthesis_lock:
+        term_lock = await self._get_synthesis_lock_for_term(term)
+        async with term_lock:
             if await self.bank.find(term) is not None:
                 logger.info(
                     f"{log_prefix} Term was already defined by a concurrent task. Skipping."
@@ -502,37 +505,32 @@ class DocumentEnhancer:
                 )
                 return
 
-            # Validate and register the synthesized definition
-            # TODO fix :)
-            if synthesized_text:
-                """
-                full_context_str = " ".join(context_snippets)
-                if self._validate_definition_in_context(synthesized_text, full_context_str):
-                    logger.success(f"{log_prefix} Synthesized and validated definition: '{synthesized_text}'")
-                    new_def = Definition(
-                        term=term,
-                        definition_text=synthesized_text,
-                        source_artifact_id=f"synthesized_from_context_for_{source_artifact_id}",
-                        dependencies=[base_definition.term] if base_definition else [],
-                    )
-                    await self.bank.register(new_def)
-                else:
-                    logger.error(f"{log_prefix} LLM synthesis failed validation. Discarding.")
-                """
-                logger.success(
-                    f"{log_prefix} Synthesized and validated definition: '{synthesized_text}'"
-                )
-                new_def = Definition(
-                    term=term,
-                    definition_text=synthesized_text,
-                    source_artifact_id=f"synthesized_from_context_for_{source_artifact_id}",
-                    dependencies=[base_definition.term] if base_definition else [],
-                )
-                await self.bank.register(new_def)
-            else:
+            # Validate and register the synthesized definition (optional).
+            if not synthesized_text:
                 logger.warning(
                     f"{log_prefix} LLM returned no content for the definition."
                 )
+                return
+
+            if (
+                validate_synthesized_definitions
+                and not self._validate_definition_in_context(
+                    synthesized_text, combined_context
+                )
+            ):
+                logger.error(
+                    f"{log_prefix} Synthesized definition failed validation. Discarding."
+                )
+                return
+
+            logger.success(f"{log_prefix} Synthesized definition: '{synthesized_text}'")
+            new_def = Definition(
+                term=term,
+                definition_text=synthesized_text,
+                source_artifact_id=f"synthesized_from_context_for_{source_artifact_id}",
+                dependencies=[base_definition.term] if base_definition else [],
+            )
+            await self.bank.register(new_def)
 
     async def _enhance_all_artifacts(
         self,
@@ -540,42 +538,19 @@ class DocumentEnhancer:
         artifact_to_terms_map: Dict[str, List[str]],
         term_to_first_artifact_map: Dict[str, str],
         all_artifacts_map: Dict[str, ArtifactNode],
-        *,
-        on_artifact_enhanced: Optional[
-            Callable[[str, Dict[str, str]], Awaitable[None]]
-        ] = None,
     ) -> Dict[str, Dict[str, str]]:
-        """Concurrently enhances all artifacts using the pre-computed terms map.
-
-        If `on_artifact_enhanced` is provided, it is awaited as each artifact
-        finishes, enabling progressive streaming.
-        """
-
+        """Concurrently enhances all artifacts using the pre-computed terms map."""
         tasks = [
-            asyncio.create_task(
-                self._enhance_single_artifact(
-                    artifact,
-                    artifact_to_terms_map.get(artifact.id, []),
-                    term_to_first_artifact_map,
-                    all_artifacts_map,
-                )
+            self._enhance_single_artifact(
+                artifact,
+                artifact_to_terms_map.get(artifact.id, []),
+                term_to_first_artifact_map,
+                all_artifacts_map,
             )
             for artifact in artifacts
         ]
-
-        results: Dict[str, Dict[str, str]] = {}
-        for task in asyncio.as_completed(tasks):
-            artifact_id, prereq_defs = await task
-            results[artifact_id] = prereq_defs
-            if on_artifact_enhanced is not None:
-                try:
-                    await on_artifact_enhanced(artifact_id, prereq_defs)
-                except Exception as e:
-                    logger.warning(
-                        f"on_artifact_enhanced callback failed for {artifact_id}: {e}"
-                    )
-
-        return results
+        results = await asyncio.gather(*tasks)
+        return {artifact_id: content for artifact_id, content in results}
 
     async def _enhance_single_artifact(
         self,
@@ -630,36 +605,37 @@ class DocumentEnhancer:
 
         return {term: definition.definition_text for term, definition in sorted_defs}
 
-    # TODO FIX this :)
     def _validate_definition_in_context(
         self, definition_text: str, context: str
     ) -> bool:
         """
-        Ensures that every sentence in the generated definition exists verbatim in the context.
+        Best-effort local validation to reduce hallucinations.
+
+        We do NOT enforce strict sentence-level verbatim containment because LaTeX,
+        punctuation, and whitespace normalization can introduce false negatives.
+        Instead, we check whether the canonicalized definition appears as a substring
+        of the canonicalized context.
         """
         if not definition_text:
+            return False
+
+        from arxitex.symdef.utils import create_canonical_search_string
+
+        canonical_context = create_canonical_search_string(context)
+        canonical_def = create_canonical_search_string(definition_text)
+        if not canonical_def:
+            return False
+
+        if f" {canonical_def} " in f" {canonical_context} ":
+            logger.debug(
+                "LLM-generated definition passed canonical substring validation."
+            )
             return True
 
-        norm_context = " ".join(context.split())
-
-        # Simple sentence splitting. For production, NLTK's sent_tokenize is more robust.
-        generated_sentences = re.split(r"(?<=[.?!])\s+", definition_text.strip())
-
-        if not generated_sentences:
-            return True
-
-        for sent in generated_sentences:
-            if not sent:
-                continue
-            norm_sent = " ".join(sent.split())
-            if norm_sent not in norm_context:
-                logger.warning(
-                    f"Validation FAILED. Sentence not in context: '{norm_sent}'"
-                )
-                return False
-
-        logger.debug("LLM-generated definition passed validation.")
-        return True
+        logger.warning(
+            "Validation FAILED. Canonicalized definition was not found in the canonicalized context."
+        )
+        return False
 
 
 async def main():

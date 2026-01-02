@@ -5,6 +5,18 @@ from typing import Any, Optional
 
 from loguru import logger
 
+_USAGE_SINKS: list[callable] = []
+
+
+def register_usage_sink(fn) -> None:
+    """Register a callable sink that will receive every TokenUsage event.
+
+    A sink should be fast and best-effort. Any exceptions raised by sinks are
+    swallowed so LLM calls never fail due to telemetry.
+    """
+
+    _USAGE_SINKS.append(fn)
+
 
 @dataclass
 class TokenUsage:
@@ -54,6 +66,14 @@ def log_usage(u: TokenUsage) -> None:
             extra=f" context={u.context}" if u.context else "",
         )
     )
+
+    # Best-effort sinks
+    for sink in list(_USAGE_SINKS):
+        try:
+            sink(u)
+        except Exception:
+            # Never fail core execution due to metrics.
+            pass
 
 
 def log_response_usage(

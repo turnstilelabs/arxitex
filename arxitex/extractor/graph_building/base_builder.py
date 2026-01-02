@@ -1,11 +1,13 @@
 import re
 import uuid
+from bisect import bisect_right
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
 
 from loguru import logger
 
 from arxitex.downloaders.utils import read_and_combine_tex_files
+from arxitex.extractor.graph_building.newtheorem_scanner import NewTheoremScanner
 from arxitex.extractor.graph_building.proof_linker import ProofLinker
 from arxitex.extractor.graph_building.reference_resolver import ReferenceResolver
 from arxitex.extractor.models import ArtifactNode, ArtifactType, DocumentGraph, Position
@@ -36,12 +38,43 @@ class BaseGraphBuilder:
     }
     PROOF_ENV_TYPE = "proof"
 
+    # Mapping from LaTeX environment names (often custom/abbreviated) to
+    # canonical artifact type names used in ARTIFACT_TYPES.
+    ENV_NAME_ALIASES: Dict[str, str] = {
+        # Theorems
+        "thm": "theorem",
+        "Thm": "theorem",
+        "THEOREM": "theorem",
+        # Definitions
+        "defn": "definition",
+        "defi": "definition",
+        "Def": "definition",
+        # Propositions
+        "prop": "proposition",
+        "Prop": "proposition",
+        # Lemmas (short aliases; canonical "lemma" is already in ARTIFACT_TYPES)
+        "lem": "lemma",
+        "Lem": "lemma",
+        # Corollaries
+        "cor": "corollary",
+        "Cor": "corollary",
+        # Claims (short alias; canonical "claim" already present)
+        "clm": "claim",
+        # Observations
+        "obs": "observation",
+        # Conjectures
+        "conj": "conjecture",
+        # Remarks
+        "Rem": "remark",
+    }
+
     def __init__(self):
         self.artifact_type_map = {
             name: ArtifactType(name) for name in self.ARTIFACT_TYPES
         }
         self.content: str = ""
         self.label_to_node_id_map: Dict[str, str] = {}
+        self._newline_offsets: List[int] = []
 
     def build_graph(
         self,
@@ -49,8 +82,34 @@ class BaseGraphBuilder:
         source_file: Optional[str] = None,
     ) -> DocumentGraph:
         logger.debug("Starting LaTeX graph extraction.")
-        self.content = read_and_combine_tex_files(project_dir)
+
+        content = read_and_combine_tex_files(project_dir)
+        return self.build_graph_from_content(
+            content=content, source_file=source_file, project_dir=project_dir
+        )
+
+    def build_graph_from_content(
+        self,
+        content: str,
+        source_file: Optional[str] = None,
+        project_dir: Optional[Path] = None,
+    ) -> DocumentGraph:
+        """Build a graph from an already combined LaTeX string.
+
+        This lets upstream orchestration (e.g., GraphEnhancer) avoid reading and
+        concatenating TeX sources multiple times.
+        """
+        self.content = content
         self.content = re.sub(r"(?<!\\)%.*", "", self.content)
+        self._newline_offsets = [m.start() for m in re.finditer("\n", self.content)]
+
+        # Build a per-document alias map by combining static aliases with
+        # aliases discovered from \newtheorem declarations.
+        dynamic_aliases = NewTheoremScanner.scan(self.content)
+        self.env_name_aliases: Dict[str, str] = {
+            **self.ENV_NAME_ALIASES,
+            **dynamic_aliases,
+        }
 
         graph = DocumentGraph(source_file=source_file)
         self.label_to_node_id_map.clear()
@@ -67,6 +126,11 @@ class BaseGraphBuilder:
         self.proof_linker.link_proofs(nodes, detached_proofs, node_char_offsets)
 
         # 3. Delegate ALL reference and citation handling to the new resolver.
+        if project_dir is None:
+            raise ValueError(
+                "project_dir must be provided to resolve bibliography/citations."
+            )
+
         edges, external_nodes = self.reference_resolver.resolve_all_references(
             project_dir, nodes, self.label_to_node_id_map
         )
@@ -95,7 +159,15 @@ class BaseGraphBuilder:
         detached_proofs: List[Dict] = []
         node_char_offsets: Dict[str, Tuple[int, int]] = {}
 
-        all_env_types = "|".join(list(self.ARTIFACT_TYPES) + [self.PROOF_ENV_TYPE])
+        all_env_types = "|".join(
+            sorted(
+                set(
+                    list(self.ARTIFACT_TYPES)
+                    + list(self.env_name_aliases.keys())
+                    + [self.PROOF_ENV_TYPE]
+                )
+            )
+        )
         pattern = re.compile(rf"\\begin\{{({all_env_types})(\*?)\}}(?:\[([^\]]*)\])?")
 
         artifact_counter = 0
@@ -105,19 +177,22 @@ class BaseGraphBuilder:
             if not match:
                 break
 
-            env_type, star, optional_arg = (
-                match.group(1).lower(),
-                match.group(2) or "",
-                match.group(3),
-            )
+            raw_env_type = match.group(1)
+            env_type = self.env_name_aliases.get(raw_env_type, raw_env_type).lower()
+            star = match.group(2) or ""
+            optional_arg = match.group(3)
+
             block_start = match.end()
-            end_tag_pos = self._find_matching_end(env_type, star, block_start)
+            end_tag_pos = self._find_matching_end(raw_env_type, star, block_start)
 
             if end_tag_pos == -1:
                 cursor = match.end()
                 continue
 
-            full_end_pos = end_tag_pos + len(f"\\end{{{env_type}{star}}}")
+            # Use the *raw* environment name when computing the end tag length so
+            # that aliases like "thm" (canonicalized to "theorem") still produce
+            # correct character offsets.
+            full_end_pos = end_tag_pos + len(f"\\end{{{raw_env_type}{star}}}")
             raw_content = self.content[block_start:end_tag_pos].strip()
 
             if env_type == self.PROOF_ENV_TYPE:
@@ -187,23 +262,22 @@ class BaseGraphBuilder:
         return label_match.group(1).strip() if label_match else None
 
     def _calculate_position(self, start_offset: int, end_offset: int) -> Position:
-        """Calculates line numbers from character offsets."""
-        line_start = self.content[:start_offset].count("\n") + 1
-        line_end = self.content[:end_offset].count("\n") + 1
+        """Calculates line/column numbers from character offsets.
 
-        # Find the position of the last newline before the start of the artifact
-        last_newline_before_start = self.content.rfind("\n", 0, start_offset)
-        if last_newline_before_start == -1:
-            col_start = start_offset + 1
-        else:
-            col_start = start_offset - last_newline_before_start
+        Uses a precomputed newline index to avoid O(doc_length) work per node.
+        """
 
-        # Find the position of the last newline before the end of the artifact
-        last_newline_before_end = self.content.rfind("\n", 0, end_offset)
-        if last_newline_before_end == -1:
-            col_end = end_offset + 1
-        else:
-            col_end = end_offset - last_newline_before_end
+        # Number of newlines strictly before the offset.
+        line_start = bisect_right(self._newline_offsets, start_offset - 1) + 1
+        line_end = bisect_right(self._newline_offsets, end_offset - 1) + 1
+
+        def col_at(offset: int) -> int:
+            idx = bisect_right(self._newline_offsets, offset - 1) - 1
+            last_nl = self._newline_offsets[idx] if idx >= 0 else -1
+            return offset - last_nl
+
+        col_start = col_at(start_offset)
+        col_end = col_at(end_offset)
 
         return Position(
             line_start=line_start,

@@ -114,6 +114,28 @@ For each artifact, we construct a "conceptual footprint" by combining the terms 
 
 Finally, we send those pairs to an LLM to establish whether there is a dependency relationship between the two, and if yes what type of dependency this is.
 
+### Dependency inference modes (pairwise / global / hybrid / auto)
+The dependency inference stage supports multiple strategies. These can be selected via `--dependency-mode`.
+
+- **`pairwise`** (original behavior):
+  - Generate candidate pairs using term overlap + subword overlap.
+  - Run the pairwise verifier LLM once per candidate pair.
+
+- **`global`** (one-shot):
+  - Run a single LLM call that outputs the final dependency edges for the whole paper.
+  - Uses **statements + truncated proofs** (Option B) to stay within a bounded prompt size.
+  - Controlled by: `--dependency-global-proof-char-budget`.
+
+- **`hybrid`** (propose + verify):
+  - Run one global *proposal* LLM call to propose candidate edges (sparse).
+  - Then run the pairwise verifier only on the proposed candidates.
+  - Candidate explosion is controlled via caps (wired through the CLI into a single
+    per-paper pair cap):
+    - `--dependency-max-pairs` (global cap on the number of LLM-verified pairs per paper)
+
+- **`auto`** (recommended default):
+  - Chooses between `global`, `hybrid`, and `pairwise` based on artifact count and an estimated token budget.
+
 ## 1.4 Paper Processing Pipeline
 Examples:
 
@@ -154,7 +176,65 @@ python -m arxitex.workflows.cli discover  --query cat:math.GR  --max-papers 10
 The `process` command is the workhorse of the pipeline. It takes papers from the queue, downloads their LaTeX source, and runs the full analysis pipeline as explained above on them concurrently to generate their knowledge graphs.
 
 ```bash
-python -m arxitex.workflows.cli process --max-papers 20 --workers 8  --enrich-content --infer-dependencies
+OPENAI_API_KEY=... \
+python -m arxitex.workflows.cli process \
+  --mode full \
+  --persist-db \
+  --max-papers 20 \
+  --workers 8 \
+  --dependency-mode auto
+```
+
+You can force a specific dependency inference strategy:
+
+```bash
+# One-shot global dependency inference (statements + truncated proofs)
+python -m arxitex.workflows.cli process --mode full --persist-db \
+  --dependency-mode global \
+  --dependency-global-proof-char-budget 1200
+
+# Hybrid: global proposal -> pairwise verification
+  python -m arxitex.workflows.cli process --mode full --persist-db \
+  --dependency-mode hybrid \
+  --dependency-max-pairs 250
+
+# Original behavior
+python -m arxitex.workflows.cli process --mode full --persist-db \
+  --dependency-mode pairwise
+```
+
+## 2.4 (Optional) Build a "VIP" subset using citation counts (OpenAlex)
+
+You can enrich the pipeline DB with **total citation counts** from OpenAlex and use this
+signal to select a smaller, high-value subset of papers to run expensive LLM enhancements on.
+
+### Backfill citation counts
+
+This reads arXiv IDs from your existing pipeline DB (`pipeline_output/arxitex_indices.db`) and
+stores results into a new table `paper_citations`.
+
+```bash
+python -m arxitex.workflows.cli -o pipeline_output backfill-citations \
+  --workers 8 \
+  --refresh-days 30 \
+  --mailto "you@domain.com"
+```
+
+For a quick test run:
+
+```bash
+python -m arxitex.workflows.cli -o pipeline_output backfill-citations --max-papers 50 --workers 4 --refresh-days 0
+```
+
+### Query top-cited papers
+
+```bash
+sqlite3 pipeline_output/arxitex_indices.db "
+select paper_id, citation_count
+from paper_citations
+where citation_count is not null
+order by citation_count desc
+limit 50;"
 ```
 
 # 2.3 Search format
