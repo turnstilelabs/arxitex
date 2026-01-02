@@ -99,6 +99,27 @@ async def astream_artifact_graph(
                 on_dependency_edge=on_dependency_edge,
                 on_status=on_status,
             )
+            # Optionally emit the definition bank at the end of the stream,
+            # if enrichment was enabled and a non-empty bank is available.
+            bank = results.get("bank")
+            if bank is not None and enrich_content:
+                try:
+                    bank_dict = await bank.to_dict()
+                except Exception as e:  # pragma: no cover - defensive
+                    logger.error(
+                        "Failed to serialize definition bank for %s: %s",
+                        arxiv_id,
+                        e,
+                    )
+                    bank_dict = None
+
+                if bank_dict:
+                    await queue.put(
+                        {
+                            "type": "definition_bank",
+                            "data": bank_dict,
+                        }
+                    )
         except ArxivExtractorError as e:
             logger.error(f"A processing error occurred while building graph: {e}")
             err = classify_processing_error(e)

@@ -9,13 +9,24 @@ interface GraphProps {
   nodes?: ConstellationNode[];
   links?: ConstellationEdge[];
   onReportNode?: (node: { id: string; label: string; type?: string }) => void;
+  stats?: { artifacts: number; links: number };
+  onReportGraph?: () => void;
 }
 
 const Graph = forwardRef<ConstellationsGraphHandle, GraphProps>(function Graph(
-  { nodes = [], links = [], onReportNode },
+  { nodes = [], links = [], onReportNode, stats, onReportGraph },
   ref,
 ) {
-  return <ConstellationsGraph ref={ref} nodes={nodes} links={links} onReportNode={onReportNode} />;
+  return (
+    <ConstellationsGraph
+      ref={ref}
+      nodes={nodes}
+      links={links}
+      onReportNode={onReportNode}
+      stats={stats}
+      onReportGraph={onReportGraph}
+    />
+  );
 });
 
 export default Graph;

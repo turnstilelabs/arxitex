@@ -174,7 +174,12 @@ class ArtifactNode:
 class DependencyType(str, Enum):
     """Simplified dependency taxonomy between two artifacts.
 
-    Semantics assume the graph direction is: Target → Source.
+    Internal (extractor) convention:
+        - `source_id` is the dependent.
+        - `target_id` is the prerequisite.
+
+    Note: the frontend visualization prefers arrows to point prerequisite → dependent.
+    We normalize that direction at serialization time in `Edge.to_dict()`.
     """
 
     USED_IN = "used_in"
@@ -204,9 +209,22 @@ class Edge:
         dep_type_str = self.dependency_type.value if self.dependency_type else None
         ref_type_str = self.reference_type.value if self.reference_type else None
 
+        # Frontend/UI semantics:
+        # The UI renders arrows from `source` -> `target`.
+        # For `used_in`, we want the arrow to mean:
+        #   prerequisite -> dependent
+        #
+        # Internally, `used_in` edges are stored as:
+        #   dependent (source_id) -> prerequisite (target_id)
+        # so we swap the serialized direction for `used_in`.
+        source_id = self.source_id
+        target_id = self.target_id
+        if self.dependency_type == DependencyType.USED_IN:
+            source_id, target_id = target_id, source_id
+
         return {
-            "source": self.source_id,
-            "target": self.target_id,
+            "source": source_id,
+            "target": target_id,
             "context": self.context,
             "reference_type": ref_type_str,
             "dependency_type": dep_type_str,

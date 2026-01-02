@@ -12,7 +12,14 @@
   --border-color: #333333;
 }
 
-@theme inline {
+/* NOTE:
+   `@theme` is a Tailwind v4 directive. Some editors / tooling will flag it as
+   "Unknown at rule" even though Tailwind can handle it.
+
+   We currently don't rely on these tokens, so we keep compatibility by
+   expressing them as regular CSS variables.
+*/
+:root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -65,4 +72,7 @@ code {
 }
 
 /* Constellations-inspired graph UI */
-@import "../components/constellations/styles.css";
+/* NOTE: We import the Constellations global CSS from `src/app/layout.tsx`
+   instead of using a CSS `@import`, because Turbopack's CSS resolver can
+   mis-handle relative `@import` paths in monorepos (multiple package.json).
+*/

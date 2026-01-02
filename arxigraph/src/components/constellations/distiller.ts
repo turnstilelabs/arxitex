@@ -112,7 +112,11 @@ export function buildDistillModel(
   const excludeTypes = new Set(['remark', 'unknown']);
   const allowedResultTypes = new Set(['theorem', 'lemma', 'proposition', 'corollary', 'claim']);
 
-  const allIds = Array.from(state.proofVisibleNodes || []);
+  // `proofVisibleNodes` is populated from various UI interactions and can end
+  // up typed as `unknown` at compile time. Normalize to string ids.
+  const allIds: string[] = Array.from(state.proofVisibleNodes || [])
+    .map((id: any) => String(id ?? ''))
+    .filter(Boolean);
   const keptIds = allIds.filter((id) => {
     const n = nodeById.get(id);
     if (!n) return false;

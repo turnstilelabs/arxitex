@@ -95,9 +95,29 @@ export async function updateInfoPanel(
   const proofControls = state?.proofMode
     ? `
           <div class="proof-controls-inline">
-            <button id="proof-unfold-less" class="depth-btn">← Unfold Less</button>
-            <button id="proof-unfold-more" class="depth-btn">Unfold More →</button>
-            <button id="proof-distill" class="depth-btn depth-btn--primary">Generate Distilled Proof</button>
+            <button id="proof-distill" class="depth-btn depth-btn--primary proof-btn-center">Generate Distilled Proof</button>
+
+            <div class="proof-depth-controls" aria-label="Unfolding depth controls">
+              <button
+                id="proof-unfold-less"
+                class="depth-btn depth-btn--icon"
+                title="Unfold less (decrease depth)"
+                aria-label="Unfold less (decrease depth)"
+              >
+                −
+              </button>
+              <div class="proof-depth-label" title="Current unfolding depth" aria-label="Current unfolding depth">
+                Depth: ${Number(state?.proofDepth ?? 0)}
+              </div>
+              <button
+                id="proof-unfold-more"
+                class="depth-btn depth-btn--icon"
+                title="Unfold more (increase depth)"
+                aria-label="Unfold more (increase depth)"
+              >
+                +
+              </button>
+            </div>
           </div>
         `
     : `

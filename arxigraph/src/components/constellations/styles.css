@@ -248,11 +248,45 @@
 
 .proof-controls-inline {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
+    gap: 8px;
     margin: 6px 0 12px;
+}
+
+/* Keep the center action aligned with the previous single-button location:
+   [Unfold less] [Generate Distilled Proof] [Unfold more]
+*/
+.proof-controls-inline .proof-btn-center {
+    width: 100%;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.depth-btn--icon {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
+    font-weight: 900;
+}
+
+.proof-depth-controls {
+    display: grid;
+    grid-template-columns: 34px auto 34px;
+    align-items: center;
+    gap: 8px;
+}
+
+.proof-depth-label {
+    font-size: 11px;
+    color: var(--secondary-text);
+    font-family: 'Inter', system-ui, sans-serif;
+    pointer-events: none;
 }
 
 .proof-action {

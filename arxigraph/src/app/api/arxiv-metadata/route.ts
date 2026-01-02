@@ -12,21 +12,24 @@ function stripVersion(arxivId: string) {
 }
 
 function decodeXmlEntities(s: string) {
+    // arXiv's Atom feed uses normal XML entities (&amp;, &lt;, …) and
+    // numeric character references.
     return s
-        .replace(/&/g, '&')
-        .replace(/</g, '<')
-        .replace(/>/g, '>')
-        .replace(/"/g, '"')
-        .replace(/'/g, "'")
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&apos;/g, "'")
         .replace(/&#39;/g, "'")
-        .replace(/&#(\d+);/g, (_m, n) => String.fromCharCode(Number(n)));
+        .replace(/&#(\d+);/g, (_m, n) => String.fromCharCode(Number(n)))
+        // Must come last so we don't double-decode newly introduced '&'
+        .replace(/&amp;/g, '&');
 }
 
 function normalizeText(s: string) {
     return decodeXmlEntities(s).replace(/\s+/g, ' ').trim();
 }
 
-function parseAtomEntry(xml: string): { title: string; authors: string[] } | null {
+function parseAtomEntry(xml: string): { title: string; authors: string[]; abstract: string } | null {
     // arXiv returns an Atom feed. There's a <title> for the <feed> and a <title> for the <entry>.
     // We want the entry title and authors.
     const entryMatch = xml.match(/<entry>([\s\S]*?)<\/entry>/);
@@ -37,6 +40,9 @@ function parseAtomEntry(xml: string): { title: string; authors: string[] } | nul
     const titleMatch = entryXml.match(/<title[^>]*>([\s\S]*?)<\/title>/);
     const title = titleMatch ? normalizeText(titleMatch[1]) : '';
 
+    const abstractMatch = entryXml.match(/<summary[^>]*>([\s\S]*?)<\/summary>/);
+    const abstract = abstractMatch ? normalizeText(abstractMatch[1]) : '';
+
     const authors = Array.from(
         entryXml.matchAll(
             /<author>[\s\S]*?<name[^>]*>([\s\S]*?)<\/name>[\s\S]*?<\/author>/g,
@@ -45,7 +51,7 @@ function parseAtomEntry(xml: string): { title: string; authors: string[] } | nul
         .map((m) => normalizeText(m[1]))
         .filter(Boolean);
 
-    return { title, authors };
+    return { title, authors, abstract };
 }
 
 export async function GET(req: NextRequest) {
@@ -83,7 +89,12 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ error: 'No arXiv entry found' }, { status: 404 });
         }
 
-        return NextResponse.json({ arxivId, title: parsedEntry.title, authors: parsedEntry.authors });
+        return NextResponse.json({
+            arxivId,
+            title: parsedEntry.title,
+            authors: parsedEntry.authors,
+            abstract: parsedEntry.abstract,
+        });
     } catch (e: any) {
         return NextResponse.json({ error: e?.message ?? String(e) }, { status: 500 });
     }

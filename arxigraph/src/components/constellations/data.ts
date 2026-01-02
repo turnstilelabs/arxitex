@@ -21,9 +21,12 @@ export function processGraphData(graphData: ConstellationGraphData): ProcessedGr
             const ref = (e as any).reference_type || (e as any).referenceType || null;
             const typ = (e as any).type || null;
 
-            // Canonical semantics (to match Constellations):
-            // - For canonical "used_in" edges, we assume the backend already
-            //   sends prerequisite -> result, so we keep (source, target) as-is.
+            // Canonical semantics:
+            // We render edges as SVG arrows from `source -> target`.
+            // For `used_in`, we want the arrow to mean:
+            //   prerequisite -> dependent
+            // So `source` should already be the prerequisite and `target` the dependent.
+            // (We normalize backend semantics in the API layer, not here.)
             // - For legacy/raw forms like "uses_result" / "uses_definition" /
             //   "is_corollary_of", we flip them into the same prerequisite ->
             //   result orientation and re-label as "used_in".

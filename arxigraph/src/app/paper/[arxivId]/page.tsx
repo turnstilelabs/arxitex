@@ -8,6 +8,8 @@ import Image from 'next/image';
 import Graph, { type ConstellationsGraphHandle } from '@/components/Graph';
 import GraphFeedbackModal from '@/components/GraphFeedbackModal';
 import ProcessingErrorModal, { type ProcessingError } from '@/components/ProcessingErrorModal';
+import DefinitionBankCard, { type DefinitionBankEntry } from '@/components/DefinitionBankCard';
+import { typesetMath } from '@/components/constellations/mathjax';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_ARXITEX_BACKEND_URL ?? 'http://127.0.0.1:8000';
 
@@ -92,6 +94,7 @@ function getDisplayedEdgeKey(edge: any): string {
 type PaperMeta = {
     title: string;
     authors: string[];
+    abstract: string;
 };
 
 async function fetchArxivMetadata(arxivId: string): Promise<PaperMeta> {
@@ -103,8 +106,8 @@ async function fetchArxivMetadata(arxivId: string): Promise<PaperMeta> {
         throw new Error(`Failed to fetch paper metadata (status ${res.status})`);
     }
 
-    const json = (await res.json()) as { title: string; authors: string[] };
-    return { title: json.title, authors: json.authors };
+    const json = (await res.json()) as { title: string; authors: string[]; abstract?: string };
+    return { title: json.title, authors: json.authors, abstract: json.abstract ?? '' };
 }
 
 export default function PaperPage() {
@@ -145,6 +148,18 @@ export default function PaperPage() {
     const [paperMeta, setPaperMeta] = useState<PaperMeta | null>(null);
     const [paperMetaError, setPaperMetaError] = useState<string | null>(null);
 
+    const abstractRef = useRef<HTMLDivElement | null>(null);
+
+    function normalizeAbstract(s: string) {
+        // Keep in sync with other MathJax-enabled renderers in the app.
+        // - De-double-escape backslashes ("\\\\alpha" -> "\\alpha")
+        // - Strip LaTeX labels that can confuse MathJax
+        return String(s)
+            .replace(/\\\\/g, '\\')
+            .replace(/\\label\{[^}]*\}/g, '')
+            .trim();
+    }
+
     const graphRef = useRef<ConstellationsGraphHandle | null>(null);
     const [status, setStatus] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -165,6 +180,8 @@ export default function PaperPage() {
     const [advancedAnalysisOpen, setAdvancedAnalysisOpen] = useState(false);
     const [selectedEnrich, setSelectedEnrich] = useState(false);
     const [selectedDeps, setSelectedDeps] = useState(false);
+
+    const [definitionBank, setDefinitionBank] = useState<DefinitionBankEntry[]>([]);
 
     // Track the current high-level pipeline stage based on streamed
     // backend status messages (base graph, enrichment, dependencies).
@@ -228,6 +245,13 @@ export default function PaperPage() {
             cancelled = true;
         };
     }, [arxivId]);
+
+    useEffect(() => {
+        if (!paperMeta?.abstract) return;
+        // MathJax is loaded globally in `src/app/layout.tsx`, but we need to
+        // manually typeset dynamic client-rendered content.
+        void typesetMath([abstractRef.current]);
+    }, [paperMeta?.abstract]);
 
     useEffect(() => {
         let cancelled = false;
@@ -402,6 +426,21 @@ export default function PaperPage() {
                             }
 
                             graphRef.current?.ingest({ type: 'link', data: json.data });
+                        } else if (json.type === 'definition_bank') {
+                            const raw = json.data ?? {};
+                            const entries: DefinitionBankEntry[] = Object.values(raw).map(
+                                (d: any) => ({
+                                    term: String(d?.term ?? ''),
+                                    definitionText: String(d?.definition_text ?? ''),
+                                    aliases: Array.isArray(d?.aliases) ? d.aliases : [],
+                                }),
+                            );
+
+                            entries.sort((a, b) =>
+                                a.term.localeCompare(b.term, undefined, { sensitivity: 'base' }),
+                            );
+
+                            setDefinitionBank(entries);
                         } else if (json.type === 'error') {
                             const details = json.data ?? {};
                             const code: string =
@@ -517,7 +556,23 @@ export default function PaperPage() {
                                 </div>
                             ) : null}
 
-                            {/* Stats line */}
+                            {paperMeta?.abstract ? (
+                                <div
+                                    ref={abstractRef}
+                                    className="mt-3 text-sm leading-relaxed"
+                                    style={{
+                                        background: 'var(--surface2)',
+                                        border: '1px solid var(--border-color)',
+                                        borderRadius: 10,
+                                        padding: 12,
+                                        color: 'var(--primary-text)',
+                                    }}
+                                >
+                                    {normalizeAbstract(paperMeta.abstract)}
+                                </div>
+                            ) : null}
+
+                            {/* Processing / status line (kept under abstract) */}
                             <div
                                 className="mt-3 text-sm flex items-center gap-2 flex-wrap"
                                 style={{
@@ -525,55 +580,12 @@ export default function PaperPage() {
                                     fontFamily: 'Inter, system-ui, sans-serif',
                                 }}
                             >
-                                <span>Extracted </span>
-                                <strong
-                                    style={{ color: 'var(--primary-text)', fontWeight: 700 }}
-                                >
-                                    {stats.artifacts}
-                                </strong>
-                                <span> artifacts with </span>
-                                <strong
-                                    style={{ color: 'var(--primary-text)', fontWeight: 700 }}
-                                >
-                                    {stats.links}
-                                </strong>
-                                <span> links</span>
                                 {isLoading ? (
-                                    <span> · {(stageLabel ?? analysisLabel)}...</span>
+                                    <span>{(stageLabel ?? analysisLabel)}...</span>
                                 ) : null}
                                 {error ? (
-                                    <span style={{ color: '#ff6b6b' }}> · error</span>
+                                    <span style={{ color: '#ff6b6b' }}>error</span>
                                 ) : null}
-
-                                {/* Suggest a correction button after stats */}
-                                <button
-                                    type="button"
-                                    className="inline-flex items-center justify-center p-0.5 rounded hover:bg-transparent"
-                                    style={{ color: 'var(--secondary-text)' }}
-                                    aria-label="Suggest a correction for this graph"
-                                    title="Suggest a correction"
-                                    onClick={() => {
-                                        setFeedbackScope('graph');
-                                        setFeedbackNodeId(null);
-                                        setFeedbackContextLabel(undefined);
-                                        setFeedbackOpen(true);
-                                    }}
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="14"
-                                        height="14"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <path d="M4 22V4" />
-                                        <path d="M4 4h12l-1.5 4L20 12H4" />
-                                    </svg>
-                                </button>
 
                                 {!hasFullAnalysis && (
                                     <button
@@ -765,9 +777,22 @@ export default function PaperPage() {
                                 setFeedbackContextLabel(n.label);
                                 setFeedbackOpen(true);
                             }}
+                            stats={stats}
+                            onReportGraph={() => {
+                                setFeedbackScope('graph');
+                                setFeedbackNodeId(null);
+                                setFeedbackContextLabel(undefined);
+                                setFeedbackOpen(true);
+                            }}
                         />
                     </div>
                 </div>
+
+                {definitionBank.length > 0 && (
+                    <div className="w-full mt-4">
+                        <DefinitionBankCard definitions={definitionBank} />
+                    </div>
+                )}
 
                 <div className="w-full mt-4">
                     <h2 className="font-semibold">Analysis Log:</h2>

@@ -28,6 +28,8 @@ type Props = {
     nodes?: ConstellationNode[];
     links?: ConstellationEdge[];
     onReportNode?: (node: { id: string; label: string; type?: string }) => void;
+    stats?: { artifacts: number; links: number };
+    onReportGraph?: () => void;
 };
 
 export type GraphIngestEvent = { type: string; data?: any };
@@ -38,7 +40,7 @@ export type ConstellationsGraphHandle = {
 };
 
 const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(function ConstellationsGraph(
-    { nodes = [], links = [], onReportNode },
+    { nodes = [], links = [], onReportNode, stats, onReportGraph },
     ref,
 ) {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -323,7 +325,39 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
                     <div className="legend-body">
                         <div className="legend-section-header">
-                            <h3>Node Types</h3>
+                            <div className="flex items-center gap-2">
+                                <h3 style={{ margin: 0 }}>
+                                    {typeof stats?.artifacts === 'number' && typeof stats?.links === 'number'
+                                        ? `${stats.artifacts} artifacts · ${stats.links} links`
+                                        : 'Legend'}
+                                </h3>
+
+                                {onReportGraph ? (
+                                    <button
+                                        type="button"
+                                        className="inline-flex items-center justify-center p-0.5 rounded hover:bg-transparent"
+                                        style={{ color: 'var(--secondary-text)' }}
+                                        aria-label="Suggest a correction for this graph"
+                                        title="Suggest a correction"
+                                        onClick={onReportGraph}
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="14"
+                                            height="14"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                        >
+                                            <path d="M4 22V4" />
+                                            <path d="M4 4h12l-1.5 4L20 12H4" />
+                                        </svg>
+                                    </button>
+                                ) : null}
+                            </div>
                             <button
                                 type="button"
                                 className="legend-toggle"
