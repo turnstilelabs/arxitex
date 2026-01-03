@@ -370,11 +370,24 @@ class ReferenceResolver:
                         external_node_id = created_external_nodes_map[target_key]
                     else:
                         external_node_id = f"external_{target_key}"
+
+                        # Use bibliography metadata (when available) to give external
+                        # references a meaningful preview. This avoids generic
+                        # "Unknown" nodes in downstream visualizations.
+                        if ref.full_reference:
+                            node_content = ref.full_reference
+                        else:
+                            node_content = (
+                                f"External reference {target_key} "
+                                "(no bibliography entry found in project)."
+                            )
+
                         external_node = ArtifactNode(
                             id=external_node_id,
                             label=target_key,
-                            type=ArtifactType.UNKNOWN,
+                            type=ArtifactType.EXTERNAL_REFERENCE,
                             is_external=True,
+                            content=node_content,
                         )
                         new_external_nodes.append(external_node)
                         created_external_nodes_map[target_key] = external_node_id

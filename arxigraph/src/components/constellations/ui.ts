@@ -25,7 +25,10 @@ export function setupLegends(
   nodeTypes.forEach((type) => {
     const item = nodeLegendContainer.append('div').attr('class', 'legend-item').attr('id', `legend-item-${type}`);
     item.append('div').attr('class', 'legend-color').style('background-color', nodeColors[type]);
-    item.append('span').text(type.charAt(0).toUpperCase() + type.slice(1));
+    // Human-friendly label: replace underscores with spaces, capitalize first letter.
+    const prettyLabelBase = type.replace(/_/g, ' ');
+    const prettyLabel = prettyLabelBase.charAt(0).toUpperCase() + prettyLabelBase.slice(1);
+    item.append('span').text(prettyLabel);
 
     item.on('click', () => {
       if (state.pinned) return;

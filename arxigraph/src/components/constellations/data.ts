@@ -73,6 +73,7 @@ export function processGraphData(graphData: ConstellationGraphData): ProcessedGr
         'claim',
         'fact',
         'observation',
+        'external_reference',
         'unknown',
     ];
 

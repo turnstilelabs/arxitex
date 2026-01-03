@@ -167,4 +167,7 @@ def test_manual_citation_multiple_keys_in_brackets(tmp_path):
 
     external_edges = [e for e in edges if e.reference_type == ReferenceType.EXTERNAL]
     assert {e.target_id for e in external_edges} == {"external_Rou01", "external_Bar99"}
+    # External nodes should be created once per cite key, with the label equal
+    # to the BibTeX key and a dedicated EXTERNAL_REFERENCE type.
     assert {n.label for n in external_nodes} == {"Rou01", "Bar99"}
+    assert all(n.type.name == "EXTERNAL_REFERENCE" for n in external_nodes)

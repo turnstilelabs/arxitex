@@ -23,6 +23,7 @@ class ArtifactType(Enum):
     CLAIM = "claim"
     FACT = "fact"
     OBSERVATION = "observation"
+    EXTERNAL_REFERENCE = "external_reference"
     UNKNOWN = "unknown"
 
 
@@ -142,8 +143,14 @@ class ArtifactNode:
         """
         Generate a display name for the artifact.
         Uses the type capitalized (e.g., "Theorem", "Definition").
+        For external references, try to surface a more human-friendly label.
         """
-        # TODO: consider using label if available
+        if self.is_external and self.type == ArtifactType.EXTERNAL_REFERENCE:
+            # Prefer an explicit label (usually the BibTeX key), falling back to id.
+            base = self.label or self.id
+            return f"Reference: {base}"
+
+        # TODO: consider using label if available for internal artifacts as well.
         return self.type.value.capitalize()
 
     @property
