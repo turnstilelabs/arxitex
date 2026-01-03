@@ -219,3 +219,5 @@ data/viz/
 *.egg-info
 conjecture.egg-info/
 arxitex/conjecture.egg-info/
+# Hugging Face dataset cache
+hf-dataset/
