@@ -13,6 +13,17 @@ import { typesetMath } from '@/components/constellations/mathjax';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_ARXITEX_BACKEND_URL ?? 'http://127.0.0.1:8000';
 
+const HF_DATASET_ORG = process.env.NEXT_PUBLIC_HF_DATASET_ORG;
+const HF_DATASET_REPO = process.env.NEXT_PUBLIC_HF_DATASET_REPO;
+const HF_DATASET_REF = process.env.NEXT_PUBLIC_HF_DATASET_REF ?? 'main';
+
+function hfJsonUrlForArxivId(arxivId: string): string | null {
+    if (!HF_DATASET_ORG || !HF_DATASET_REPO) return null;
+
+    const safeId = arxivId.replace('/', '_');
+    return `https://huggingface.co/datasets/${HF_DATASET_ORG}/${HF_DATASET_REPO}/resolve/${HF_DATASET_REF}/data/arxiv_${safeId}.json`;
+}
+
 type ProcessStats = {
     artifacts: number;
     links: number;
@@ -256,7 +267,9 @@ export default function PaperPage() {
     useEffect(() => {
         let cancelled = false;
 
-        async function run() {
+        async function runViaBackend() {
+            console.log('[Backend] Falling back to backend /process-paper for', arxivId);
+
             setIsLoading(true);
             setError(null);
             setProcessingError(null);
@@ -271,14 +284,25 @@ export default function PaperPage() {
             // Mark that the next node we see belongs to a fresh run.
             shouldResetGraphRef.current = true;
 
-            setStatus(['Initiating request...']);
+            setStatus((prev) => [
+                ...prev,
+                'Initiating backend request... (HF dataset not available or fetch failed)',
+            ]);
 
             try {
+                console.log('[Backend] POST', `${BACKEND_URL}/process-paper`, {
+                    arxivUrl: absUrl,
+                    enrichContent,
+                    inferDependencies,
+                });
+
                 const response = await fetch(`${BACKEND_URL}/process-paper`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ arxivUrl: absUrl, enrichContent, inferDependencies }),
                 });
+
+                console.log('[Backend] Response status', response.status);
 
                 // Handle early failures (e.g. validation errors, missing API keys)
                 if (!response.ok) {
@@ -493,6 +517,104 @@ export default function PaperPage() {
                 if (cancelled) return;
                 setIsLoading(false);
             }
+        }
+
+        async function run() {
+            setIsLoading(true);
+            setError(null);
+            setProcessingError(null);
+            setIsErrorModalOpen(false);
+            setStageLabel(null);
+
+            // Reset process stats for this run.
+            statsRef.current.nodeIds = new Set();
+            statsRef.current.edgeKeys = new Set();
+            setStats({ artifacts: 0, links: 0 });
+
+            // Mark that the next node we see belongs to a fresh run.
+            shouldResetGraphRef.current = true;
+
+            setStatus(['Initiating request...']);
+
+            const hfUrl = hfJsonUrlForArxivId(arxivId);
+
+            if (hfUrl) {
+                console.log('[HF] Trying Hugging Face URL', hfUrl, 'for', arxivId);
+                setStatus((prev) => [...prev, `Trying Hugging Face dataset at ${hfUrl}`]);
+                try {
+                    const res = await fetch(hfUrl, {
+                        // Data is immutable when HF_DATASET_REF is a commit hash.
+                        cache: 'force-cache',
+                    });
+
+                    console.log('[HF] Response status', res.status, 'for', hfUrl);
+
+                    if (res.ok) {
+                        const payload = await res.json();
+                        console.log('[HF] Successfully loaded payload from Hugging Face for', arxivId);
+                        const graph = payload?.graph ?? {};
+                        const nodes: any[] = Array.isArray(graph?.nodes) ? graph.nodes : [];
+                        const edges: any[] = Array.isArray(graph?.edges) ? graph.edges : [];
+
+                        // Reset and ingest full snapshot.
+                        graphRef.current?.reset();
+                        statsRef.current.nodeIds = new Set();
+                        statsRef.current.edgeKeys = new Set();
+
+                        for (const node of nodes) {
+                            const nodeId = String(node?.id ?? '');
+                            if (nodeId && !statsRef.current.nodeIds.has(nodeId)) {
+                                statsRef.current.nodeIds.add(nodeId);
+                            }
+                            graphRef.current?.ingest({ type: 'node', data: node });
+                        }
+
+                        for (const edge of edges) {
+                            const k = getDisplayedEdgeKey(edge);
+                            if (k && !statsRef.current.edgeKeys.has(k)) {
+                                statsRef.current.edgeKeys.add(k);
+                            }
+                            graphRef.current?.ingest({ type: 'link', data: edge });
+                        }
+
+                        setStats({
+                            artifacts: statsRef.current.nodeIds.size,
+                            links: statsRef.current.edgeKeys.size,
+                        });
+
+                        const rawBank = payload?.definition_bank ?? null;
+                        if (rawBank && typeof rawBank === 'object') {
+                            const entries: DefinitionBankEntry[] = Object.values(rawBank).map((d: any) => ({
+                                term: String(d?.term ?? ''),
+                                definitionText: String(d?.definition_text ?? ''),
+                                aliases: Array.isArray(d?.aliases) ? d.aliases : [],
+                            }));
+
+                            entries.sort((a, b) =>
+                                a.term.localeCompare(b.term, undefined, { sensitivity: 'base' }),
+                            );
+
+                            setDefinitionBank(entries);
+                        } else {
+                            setDefinitionBank([]);
+                        }
+
+                        setStatus((prev) => [...prev, 'Loaded from Hugging Face dataset.']);
+                        setIsLoading(false);
+                        return;
+                    }
+                } catch (e: any) {
+                    // Log and fall back to backend.
+                    console.error('Failed to load from Hugging Face dataset:', e);
+                    setStatus((prev) => [
+                        ...prev,
+                        'Hugging Face fetch failed, falling back to backend.',
+                    ]);
+                }
+            }
+
+            // Fallback: live backend streaming.
+            await runViaBackend();
         }
 
         run();

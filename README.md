@@ -21,6 +21,63 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+## Exporting processed papers to a Hugging Face dataset
+
+Once papers have been processed and persisted into the SQLite DB (via the
+`workflows.cli process` commands with `--persist-db`), you can export each
+paper's graph + definition bank into a single JSON file suitable for a
+Hugging Face dataset and the ArxiGraph webapp.
+
+Use the `export_hf_dataset` tool:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data
+```
+
+Key points:
+
+- No re-processing: this tool only reads from the existing SQLite DB; it
+  does not call LLMs or re-run extraction.
+- It discovers successfully processed papers via the `processed_papers`
+  table (managed by `ProcessedIndex`).
+- For each paper it reconstructs the graph and definition data and
+  writes:
+
+  ```jsonc
+  {
+    "graph": { /* DocumentGraph.to_dict(...) */ },
+    "definition_bank": { /* term -> definition */ } | null,
+    "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... }
+  }
+  ```
+
+  to `--output-dir` using the filename convention:
+
+  ```text
+  arxiv_{arxiv_id.replace('/', '_')}.json
+  ```
+
+You can restrict export to a subset of arXiv IDs with:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data \
+  --only-arxiv-id 2103.14030 --only-arxiv-id 2211.11689
+```
+
+In a Hugging Face `datasets` repo these files typically live under
+`data/`, and can be fetched from URLs of the form:
+
+```text
+https://huggingface.co/datasets/<org>/<repo>/resolve/<ref>/data/arxiv_2211.11689.json
+```
+
+where `<ref>` is either a branch name like `main` or an immutable
+commit hash used for version pinning.
+
 # 1. Building a graph from an ArXiv paper
 ## 1.1 Initial Graph Construction (`extractor/graph_building`)
 We collect all artifacts (definition, proposition, claim, theorem,...) with regular expressions as well as the explicit dependencies between thoses (through the use of `\ref{...}`).
