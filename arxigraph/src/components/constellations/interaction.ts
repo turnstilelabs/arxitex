@@ -44,6 +44,9 @@ export function setupInteractions(
             node.classed('selected', (n: any) => n.id === d.id);
             actions.updateInfoPanel(d);
             actions.updateFloatingControls();
+            // When clicking a node while in proof mode, also center the view
+            // on that node so the user doesn't have to manually pan/zoom.
+            if (actions.focusOnNode) actions.focusOnNode(d);
             return;
         }
 
@@ -71,6 +74,10 @@ export function setupInteractions(
 
         actions.updateInfoPanel(d);
         actions.updateFloatingControls();
+
+        // Center and zoom to the clicked node to make navigation smoother
+        // on large graphs.
+        if (actions.focusOnNode) actions.focusOnNode(d);
     });
 
     svg.on('click', () => {

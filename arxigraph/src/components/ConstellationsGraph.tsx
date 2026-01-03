@@ -6,6 +6,7 @@ import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState }
 import { getMaxPrereqDepth, recomputeProofSubgraph } from './constellations/proof';
 import { edgeKey } from './constellations/data';
 import { buildDistillModel, renderDistilledWindow } from './constellations/distiller';
+import { ZOOM_EXTENT } from './constellations/config';
 
 import {
     hideInfoPanel,
@@ -53,6 +54,10 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
     const [legendOpen, setLegendOpen] = useState(true);
 
+    // Ensure we only perform an automatic initial zoom-to-fit once per
+    // component lifecycle, after the first graph is laid out.
+    const [didInitialZoom, setDidInitialZoom] = useState(false);
+
     const [state] = useState(() => ({
         pinned: false,
         pinnedNode: null as any,
@@ -68,7 +73,8 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
     const igRef = useRef<IncrementalGraphState | null>(null);
 
-    // Initial load (non-streaming): ingest given arrays once.
+    // Initial load (non-streaming): ingest given arrays once, then perform
+    // an automatic zoom-to-fit so the user immediately sees the whole graph.
     useEffect(() => {
         if (!nodes.length && !links.length) return;
         if (!igRef.current) return;
@@ -77,11 +83,75 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
         for (const e of links) addEdge(igRef.current, e);
 
         applyMutations(igRef.current, state, actions);
+
+        if (!didInitialZoom) {
+            // Allow a short delay so the simulation takes a few steps and
+            // nodes have reasonable positions before we fit the view.
+            setTimeout(() => {
+                actions.zoomToFit();
+                setDidInitialZoom(true);
+            }, 250);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Actions used by interaction/ui
     const actions = useMemo(() => {
+        function computeGraphBBox(targetNodes?: any[]) {
+            const refs = state.refs || {};
+            const width = refs.width ?? svgRef.current?.getBoundingClientRect().width ?? 1;
+            const height = refs.height ?? svgRef.current?.getBoundingClientRect().height ?? 1;
+
+            const values: any[] =
+                targetNodes && targetNodes.length
+                    ? targetNodes
+                    : Array.from((refs.nodeById as Map<string, any> | undefined)?.values?.() ?? []);
+
+            const pts = values.filter((d) => typeof d?.x === 'number' && typeof d?.y === 'number');
+            if (!pts.length) return null;
+
+            let minX = pts[0].x;
+            let maxX = pts[0].x;
+            let minY = pts[0].y;
+            let maxY = pts[0].y;
+            for (const p of pts) {
+                if (p.x < minX) minX = p.x;
+                if (p.x > maxX) maxX = p.x;
+                if (p.y < minY) minY = p.y;
+                if (p.y > maxY) maxY = p.y;
+            }
+
+            return { minX, maxX, minY, maxY, width, height };
+        }
+
+        function zoomToBounds(bounds: { minX: number; maxX: number; minY: number; maxY: number; width: number; height: number }) {
+            const refs = state.refs || {};
+            const svg = refs.svg as d3.Selection<SVGSVGElement, unknown, null, undefined> | undefined;
+            const zoom = refs.zoom as d3.ZoomBehavior<SVGSVGElement, unknown> | undefined;
+            if (!svg || !zoom) return;
+
+            const { minX, maxX, minY, maxY, width, height } = bounds;
+            const graphWidth = Math.max(1, maxX - minX);
+            const graphHeight = Math.max(1, maxY - minY);
+            const padding = 40;
+
+            let scale = Math.min(
+                width / (graphWidth + padding * 2),
+                height / (graphHeight + padding * 2),
+            );
+
+            scale = Math.min(ZOOM_EXTENT[1], Math.max(ZOOM_EXTENT[0], scale * 0.9));
+
+            const cx = (minX + maxX) / 2;
+            const cy = (minY + maxY) / 2;
+
+            const tx = width / 2 - scale * cx;
+            const ty = height / 2 - scale * cy;
+
+            const transform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+            svg.transition().duration(300).call(zoom.transform as any, transform);
+        }
+
         return {
             // Kept for compatibility with the original Constellations interaction module.
             // We moved the proof controls into the right-side info panel.
@@ -122,6 +192,31 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
                 if (infoPanelRef.current) hideInfoPanel(infoPanelRef.current);
             },
 
+            // Camera helpers -------------------------------------------------
+            zoomToFit: () => {
+                const bounds = computeGraphBBox();
+                if (!bounds) return;
+                zoomToBounds(bounds);
+            },
+
+            focusOnNode: (d: any) => {
+                if (!d || typeof d.x !== 'number' || typeof d.y !== 'number') return;
+                const refs = state.refs || {};
+                const svg = refs.svg as d3.Selection<SVGSVGElement, unknown, null, undefined> | undefined;
+                const zoom = refs.zoom as d3.ZoomBehavior<SVGSVGElement, unknown> | undefined;
+                const width = refs.width ?? svgRef.current?.getBoundingClientRect().width ?? 1;
+                const height = refs.height ?? svgRef.current?.getBoundingClientRect().height ?? 1;
+                if (!svg || !zoom) return;
+
+                let scale = 2; // comfortable zoom on a single node
+                scale = Math.min(ZOOM_EXTENT[1], Math.max(ZOOM_EXTENT[0], scale));
+
+                const tx = width / 2 - scale * d.x;
+                const ty = height / 2 - scale * d.y;
+                const transform = d3.zoomIdentity.translate(tx, ty).scale(scale);
+                svg.transition().duration(250).call(zoom.transform as any, transform);
+            },
+
             enterProofMode: (targetId: string) => {
                 state.proofMode = true;
                 state.proofTargetId = targetId;
@@ -134,6 +229,9 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
 
                 actions.recomputeProofSubgraph();
                 if (state.refs.nodeById.has(targetId)) actions.updateInfoPanel(state.refs.nodeById.get(targetId));
+
+                const targetNode = state.refs.nodeById.get(targetId);
+                if (targetNode) actions.focusOnNode(targetNode);
             },
 
             exitProofMode: () => {
@@ -331,6 +429,17 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
                                         ? `${stats.artifacts} artifacts · ${stats.links} links`
                                         : 'Legend'}
                                 </h3>
+
+                                <button
+                                    type="button"
+                                    className="inline-flex items-center justify-center px-1 py-0.5 text-xs rounded hover:bg-transparent"
+                                    style={{ color: 'var(--secondary-text)' }}
+                                    aria-label="Reset graph view"
+                                    title="Reset view"
+                                    onClick={actions.zoomToFit}
+                                >
+                                    Reset view
+                                </button>
 
                                 {onReportGraph ? (
                                     <button

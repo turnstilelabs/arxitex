@@ -11,6 +11,11 @@ export type IncrementalGraphState = {
     defs: any;
     g: any;
 
+    // View / layout metadata
+    width: number;
+    height: number;
+    zoom: d3.ZoomBehavior<SVGSVGElement, unknown>;
+
     linkLayer: any;
     nodeLayer: any;
     labelLayer: any;
@@ -35,6 +40,9 @@ export type IncrementalGraphState = {
     // cached colors/types
     nodeColors: Record<string, string>;
     edgeColors: Record<string, string>;
+
+    // Optional component-level layout helpers
+    componentCenters?: Record<string, { x: number; y: number }>;
 };
 
 export type InitIncrementalGraphArgs = {
@@ -121,7 +129,9 @@ export function initIncrementalGraph({ svgEl, width, height, state, actions }: I
     const simulation = d3
         .forceSimulation<any>([] as any)
         .force('link', linkForce)
-        .force('charge', d3.forceManyBody().strength(-250))
+        // Start with a moderately strong repulsive force; we will tune
+        // parameters dynamically in applyMutations based on graph size.
+        .force('charge', d3.forceManyBody().strength(-150))
         .force('center', d3.forceCenter(width / 2, height / 2));
 
     const nodeById = new Map<string, any>();
@@ -144,6 +154,9 @@ export function initIncrementalGraph({ svgEl, width, height, state, actions }: I
     state.refs = {
         svg,
         g,
+        width,
+        height,
+        zoom,
         simulation,
         link: linkSel,
         node: nodeSel,
@@ -160,6 +173,9 @@ export function initIncrementalGraph({ svgEl, width, height, state, actions }: I
         svg,
         defs,
         g,
+        width,
+        height,
+        zoom,
         linkLayer,
         nodeLayer,
         labelLayer,
@@ -219,6 +235,117 @@ export function applyMutations(ig: IncrementalGraphState, state: any, actions: a
         'collide',
         d3.forceCollide().radius((d: any) => ig.radiusScale(ig.nodeDegrees.get(d.id) || 1) + 6),
     );
+
+    // --- Graph-size-aware layout tuning -----------------------------------
+    const isLargeGraph = processed.nodes.length > 200;
+
+    const charge = d3
+        .forceManyBody()
+        .strength(isLargeGraph ? -80 : -150)
+        // Limit the distance over which nodes repel each other so
+        // disconnected components don't fly arbitrarily far apart.
+        .distanceMax(isLargeGraph ? 250 : 400);
+
+    ig.simulation.force('charge', charge);
+
+    const baseLinkDistance = 90;
+    const linkDistance = isLargeGraph ? 60 : baseLinkDistance;
+    ig.linkForce.distance(linkDistance);
+
+    // --- Component-aware layout: gently pull each connected component
+    // toward a stable center, while still letting the force layout do the
+    // heavy lifting locally.
+    const idToNode = new Map<string, any>();
+    (processed.nodes as any[]).forEach((n) => {
+        idToNode.set(n.id, n);
+    });
+
+    const neighbors = new Map<string, Set<string>>();
+    (processed.nodes as any[]).forEach((n) => {
+        neighbors.set(n.id, new Set());
+    });
+
+    (processed.edges as any[]).forEach((e) => {
+        const s = typeof e.source === 'object' ? e.source.id : e.source;
+        const t = typeof e.target === 'object' ? e.target.id : e.target;
+        if (!neighbors.has(s)) neighbors.set(s, new Set());
+        if (!neighbors.has(t)) neighbors.set(t, new Set());
+        neighbors.get(s)!.add(t);
+        neighbors.get(t)!.add(s);
+    });
+
+    let compIndex = 0;
+    const componentIds = new Map<string, string>();
+
+    for (const n of processed.nodes as any[]) {
+        if (componentIds.has(n.id)) continue;
+        const cid = String(compIndex++);
+        const queue: string[] = [n.id];
+        componentIds.set(n.id, cid);
+        while (queue.length) {
+            const current = queue.shift()!;
+            const nbrs = neighbors.get(current);
+            if (!nbrs) continue;
+            for (const nb of nbrs) {
+                if (!componentIds.has(nb)) {
+                    componentIds.set(nb, cid);
+                    queue.push(nb);
+                }
+            }
+        }
+    }
+
+    const components = new Map<string, any[]>();
+    (processed.nodes as any[]).forEach((n) => {
+        const cid = componentIds.get(n.id) ?? '0';
+        (n as any).componentId = cid;
+        components.set(cid, [...(components.get(cid) ?? []), n]);
+
+        const local = ig.nodeById.get(n.id);
+        if (local) (local as any).componentId = cid;
+    });
+
+    const compIds = Array.from(components.keys());
+    const k = compIds.length;
+    const { width, height } = ig;
+    const compCenter: Record<string, { x: number; y: number }> = {};
+
+    if (k === 1) {
+        // Single component: just keep it centered.
+        const cid = compIds[0];
+        compCenter[cid] = { x: width / 2, y: height / 2 };
+    } else if (k > 1) {
+        const radius = Math.min(width, height) * 0.3;
+        compIds.forEach((cid, i) => {
+            const angle = (2 * Math.PI * i) / k;
+            compCenter[cid] = {
+                x: width / 2 + radius * Math.cos(angle),
+                y: height / 2 + radius * Math.sin(angle),
+            };
+        });
+    }
+
+    ig.componentCenters = compCenter;
+
+    if (k > 0) {
+        ig.simulation
+            .force(
+                'componentX',
+                d3.forceX((d: any) => {
+                    const cid = (d as any).componentId ?? componentIds.get(d.id) ?? '0';
+                    const c = compCenter[cid];
+                    return c ? c.x : width / 2;
+                }).strength(0.05),
+            )
+            .force(
+                'componentY',
+                d3.forceY((d: any) => {
+                    const cid = (d as any).componentId ?? componentIds.get(d.id) ?? '0';
+                    const c = compCenter[cid];
+                    return c ? c.y : height / 2;
+                }).strength(0.05),
+            );
+    }
 
     ig.simulation.nodes(processed.nodes as any);
     ig.linkForce.links(processed.edges as any);
@@ -292,6 +419,16 @@ export function applyMutations(ig: IncrementalGraphState, state: any, actions: a
     setupLegends(processed.nodeTypes, processed.edgeTypes, processed.nodeColors, processed.edgeColors, state, actions);
 
     ig.simulation.on('tick', () => {
+        const { width, height } = ig;
+
+        // Keep nodes within a soft bounding box so disconnected components
+        // don't drift infinitely far from the viewport.
+        const margin = 40;
+        ig.nodeSel.each((d: any) => {
+            d.x = Math.max(margin, Math.min(width - margin, d.x));
+            d.y = Math.max(margin, Math.min(height - margin, d.y));
+        });
+
         // Draw links shortened to the node boundaries so arrowheads remain visible.
         ig.linkSel
             .attr('x1', (d: any) => {
