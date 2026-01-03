@@ -3,12 +3,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-function extractArxivId(arxivUrl: string): string | null {
+function extractArxivId(input: string): string | null {
+  // Accept either a full arXiv URL or a bare arXiv identifier.
   // Supports:
   // - https://arxiv.org/abs/2211.11689v1
   // - https://arxiv.org/pdf/2211.11689v1.pdf
   // - old-style: https://arxiv.org/abs/hep-th/9901001
-  const match = arxivUrl.match(/(\d{4}\.\d{4,5}(?:v\d+)?|[a-z-]+\/\d{7}(?:v\d+)?)/i);
+  // - bare ID: 2211.11689v1
+  // - bare old-style ID: hep-th/9901001
+  const match = input.match(/(\d{4}\.\d{4,5}(?:v\d+)?|[a-z-]+\/\d{7}(?:v\d+)?)/i);
   return match ? match[1] : null;
 }
 
@@ -23,12 +26,14 @@ export default function Home() {
     setError(null);
 
     const formData = new FormData(event.currentTarget);
-    const arxivUrl = (formData.get('arxivUrl') as string).trim();
+    const input = (formData.get('arxivUrl') as string).trim();
     // Use component state; the toggles are clickable pills (no checkbox inputs).
 
-    const arxivId = extractArxivId(arxivUrl);
+    const arxivId = extractArxivId(input);
     if (!arxivId) {
-      setError('Could not extract an arXiv ID from the provided URL.');
+      setError(
+        'Could not extract an arXiv ID from the provided input. Please enter a full arXiv URL (https://arxiv.org/abs/...) or an arXiv identifier like 1410.5929v1.',
+      );
       return;
     }
 
@@ -52,7 +57,7 @@ export default function Home() {
           ArxiGraph
         </h1>
         <p className="mt-2 text-lg" style={{ color: 'var(--secondary-text)' }}>
-          Paste an arXiv URL to visualize its mathematical dependency graph.
+          Paste an arXiv URL or ID to visualize its mathematical dependency graph.
         </p>
       </div>
 
@@ -68,9 +73,9 @@ export default function Home() {
       >
         <div className="flex items-center gap-2">
           <input
-            type="url"
+            type="text"
             name="arxivUrl"
-            placeholder="https://arxiv.org/abs/..."
+            placeholder="https://arxiv.org/abs/... or 1410.5929v1"
             required
             className="flex-grow p-3 rounded-lg shadow-sm focus:outline-none"
             style={{
