@@ -3,7 +3,7 @@ import re
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List
+from typing import Dict, List
 
 import aiofiles
 from loguru import logger
@@ -238,3 +238,66 @@ def create_canonical_search_string(text: str) -> str:
     text = re.sub(r"([\[\]\(\)\{\},=+\-*/<>:])", r" \1 ", text)
     canonical_string = re.sub(r"\s+", " ", text).strip()
     return canonical_string
+
+
+# --- LaTeX macro utilities -------------------------------------------------
+
+_MACRO_PATTERNS = [
+    # \newcommand{\cF}{\mathcal{F}}
+    re.compile(
+        r"\\newcommand\s*\{\s*\\(?P<name>[A-Za-z@]+)\s*\}\s*\{(?P<body>(?:[^{}]|\{[^{}]*\})*)\}",
+        re.MULTILINE,
+    ),
+    # \renewcommand{\cF}{...}
+    re.compile(
+        r"\\renewcommand\s*\{\s*\\(?P<name>[A-Za-z@]+)\s*\}\s*\{(?P<body>(?:[^{}]|\{[^{}]*\})*)\}",
+        re.MULTILINE,
+    ),
+    # \def\cF{...}
+    re.compile(
+        r"\\def\s*\\(?P<name>[A-Za-z@]+)\s*\{(?P<body>(?:[^{}]|\{[^{}]*\})*)\}",
+        re.MULTILINE,
+    ),
+    # \DeclareMathOperator{\Hom}{Hom} / \DeclareMathOperator*{\Hom}{Hom}
+    re.compile(
+        r"\\DeclareMathOperator\*?\s*\{\s*\\(?P<name>[A-Za-z@]+)\s*\}\s*\{(?P<body>(?:[^{}]|\{[^{}]*\})*)\}",
+        re.MULTILINE,
+    ),
+]
+
+
+def extract_latex_macros(latex: str) -> Dict[str, str]:
+    """Best-effort extraction of simple, argument-free LaTeX macros.
+
+    Returns a mapping from macro name (without leading backslash) to its
+    replacement body, e.g. {"cF": "\\mathcal{F}"}.
+
+    This intentionally ignores macros with arguments ("#1", "#2", ...)
+    to keep behaviour predictable and low-risk.
+    """
+
+    if not latex:
+        return {}
+
+    # Restrict search to the preamble for safety.
+    doc_start = latex.find("\\begin{document}")
+    search_region = latex if doc_start == -1 else latex[:doc_start]
+
+    macros: Dict[str, str] = {}
+
+    for pattern in _MACRO_PATTERNS:
+        for match in pattern.finditer(search_region):
+            name = match.group("name")  # e.g. "cF"
+            body = (match.group("body") or "").strip()
+
+            if not name or not body:
+                continue
+
+            # Skip macros whose body appears to take arguments; supporting
+            # those correctly would require more TeX awareness than we want.
+            if "#1" in body or "#2" in body or "#3" in body:
+                continue
+
+            macros[name] = body
+
+    return macros

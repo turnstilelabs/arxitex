@@ -16,7 +16,8 @@ For each selected arXiv ID it writes a JSON file of the form::
     {
       "graph": { ... DocumentGraph.to_dict(...) ... },
       "definition_bank": { ... } | null,
-      "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... }
+      "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... },
+      "latex_macros": { "cF": "\\mathcal{F}", ... }
     }
 
 The filename convention matches the Hugging Face dataset layout used by
@@ -217,10 +218,15 @@ def export_paper(
 
     graph_dict = graph.to_dict(arxiv_id=arxiv_id, extractor_mode=extractor_mode)
 
+    # NOTE: As of now, LaTeX macros are not persisted in SQLite, so the
+    # HF export payload does not include a per-paper macro map. The key is
+    # present for forward-compatibility with the live backend / CLI payload
+    # shape, and remains an empty object for historical exports.
     payload: Dict[str, Any] = {
         "graph": graph_dict,
         "definition_bank": definition_bank,
         "artifact_to_terms_map": artifact_to_terms_map,
+        "latex_macros": {},
     }
 
     # 4) Write to output directory using the Hugging Face-compatible naming convention

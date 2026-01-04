@@ -88,23 +88,26 @@ async def agenerate_artifact_graph(
 
                 dep_cfg = DependencyInferenceConfig(**dependency_config)
 
-            graph, bank, artifact_to_terms_map = await enhancer.build_graph(
-                project_dir=project_dir,
-                source_file=f"arxiv:{arxiv_id}",
-                infer_dependencies=infer_dependencies,
-                enrich_content=enrich_content,
-                dependency_mode=dependency_mode,
-                dependency_config=dep_cfg,
-                on_base_graph=on_base_graph,
-                on_enriched_node=on_enriched_node,
-                on_dependency_edge=on_dependency_edge,
-                on_status=on_status,
+            graph, bank, artifact_to_terms_map, latex_macros = (
+                await enhancer.build_graph(
+                    project_dir=project_dir,
+                    source_file=f"arxiv:{arxiv_id}",
+                    infer_dependencies=infer_dependencies,
+                    enrich_content=enrich_content,
+                    dependency_mode=dependency_mode,
+                    dependency_config=dep_cfg,
+                    on_base_graph=on_base_graph,
+                    on_enriched_node=on_enriched_node,
+                    on_dependency_edge=on_dependency_edge,
+                    on_status=on_status,
+                )
             )
 
             return {
                 "graph": graph,
                 "bank": bank,
                 "artifact_to_terms_map": artifact_to_terms_map,
+                "latex_macros": latex_macros,
             }
 
 

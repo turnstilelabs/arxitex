@@ -81,6 +81,7 @@ async def _run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
     graph = results.get("graph")
     bank = results.get("bank")
     artifact_to_terms_map = results.get("artifact_to_terms_map", {})
+    latex_macros = results.get("latex_macros", {})
 
     if not graph or not graph.nodes:
         logger.warning("No artifacts were extracted; returning empty graph.")
@@ -108,6 +109,7 @@ async def _run_pipeline(args: argparse.Namespace) -> Dict[str, Any]:
         "graph": graph_dict,
         "definition_bank": bank_dict,
         "artifact_to_terms_map": artifact_to_terms_map,
+        "latex_macros": latex_macros,
     }
 
     return payload

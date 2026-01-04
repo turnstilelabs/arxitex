@@ -8,30 +8,24 @@ import './globals.css';
 // Importing here avoids CSS `@import` path resolution issues in Turbopack.
 import '@/components/constellations/styles.css';
 
+// Default MathJax config. Per-paper macros extracted from the LaTeX preamble
+// can be merged into `window.MathJax.tex.macros` at runtime by the page
+// components (see paper/[arxivId]/page.tsx).
+const DEFAULT_MATHJAX_CONFIG = `window.MathJax = {
+  tex: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']],
+    processEscapes: true,
+    macros: {
+      eps: '{\\varepsilon}',
+    },
+  },
+};`;
+
 export const metadata: Metadata = {
     title: 'ArxiGraph',
     description: 'Visualize mathematical dependency graphs extracted from arXiv papers.',
 };
-
-// We don't parse each paper's LaTeX preamble, so paper-specific macros
-// (e.g. \F, \G, ...) are unknown. Instead of guessing meanings, we map
-// single-letter uppercase macros to their literal letter.
-//
-// NOTE: This is intentionally conservative. If later you want better fidelity,
-// we'd need to extract and feed preamble macros from the source.
-const DEFAULT_MATHJAX_CONFIG = `window.MathJax = {
-  tex: {
-    inlineMath: [['$','$'], ['\\\\(','\\\\)']],
-    displayMath: [['$$','$$'], ['\\\\[','\\\\]']],
-    processEscapes: true,
-    macros: {
-      A: 'A', B: 'B', C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', H: 'H', I: 'I', J: 'J',
-      K: 'K', L: 'L', M: 'M', N: 'N', O: 'O', P: 'P', Q: 'Q', R: 'R', S: 'S', T: 'T',
-      U: 'U', V: 'V', W: 'W', X: 'X', Y: 'Y', Z: 'Z',
-      eps: '{\\\\varepsilon}',
-    },
-  },
-};`;
 
 export default function RootLayout({
     children,

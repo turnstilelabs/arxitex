@@ -27,7 +27,7 @@ from arxitex.extractor.models import ArtifactNode, DocumentGraph, Edge
 from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.symdef.document_enhancer import DocumentEnhancer
-from arxitex.symdef.utils import ContextFinder
+from arxitex.symdef.utils import ContextFinder, extract_latex_macros
 
 
 class GraphEnhancer:
@@ -66,7 +66,7 @@ class GraphEnhancer:
         on_enriched_node: Optional[Callable[[ArtifactNode], Awaitable[None]]] = None,
         on_dependency_edge: Optional[Callable[[Edge], Awaitable[None]]] = None,
         on_status: Optional[Callable[[str], Awaitable[None]]] = None,
-    ) -> tuple[DocumentGraph, DefinitionBank, dict[str, list[str]]]:
+    ) -> tuple[DocumentGraph, DefinitionBank, dict[str, list[str]], dict[str, str]]:
         logger.info(
             f"[{source_file}] Starting Pass 1: Building base graph from LaTeX structure..."
         )
@@ -76,13 +76,34 @@ class GraphEnhancer:
 
         # PERF: read/concatenate LaTeX once and reuse for all subsequent passes.
         latex_content = read_and_combine_tex_files(project_dir)
+
+        # Extract simple, argument-free LaTeX macros from the preamble so the
+        # frontend (MathJax) can render paper-specific shorthand like "\\cF".
+        try:
+            latex_macros: dict[str, str] = extract_latex_macros(latex_content)
+        except Exception:
+            # Macro extraction is best-effort only; never break graph building.
+            latex_macros = {}
+
         graph = self.regex_builder.build_graph_from_content(
             content=latex_content, source_file=source_file, project_dir=project_dir
         )
 
+        # Attach macros to the graph instance for introspection/debugging. The
+        # primary consumer is the higher-level pipeline, which returns
+        # `latex_macros` separately alongside the graph.
+        # Best-effort only: if graph doesn't support attribute assignment, we
+        # let it fail silently.
+        try:  # pragma: no cover - best-effort attribute set
+            graph.latex_macros = latex_macros
+        except Exception:
+            pass
+
         if not graph.nodes:
             logger.warning("Regex pass found no artifacts. Aborting LLM analysis.")
-            return DocumentGraph(), DefinitionBank(), {}
+            # Still return the (possibly empty) macro map so callers can
+            # inspect it if needed.
+            return DocumentGraph(), DefinitionBank(), {}, latex_macros
 
         # Give callers a chance to observe/stream the base regex graph before
         # any LLM-based enhancements are applied.
@@ -149,7 +170,7 @@ class GraphEnhancer:
             f"[{source_file}] Edge breakdown: {reference_edges} reference-based, {dependency_edges} dependency-based."
         )
 
-        return graph, bank, artifact_to_terms_map
+        return graph, bank, artifact_to_terms_map, latex_macros
 
     async def _infer_and_add_dependencies_mode_aware(
         self,

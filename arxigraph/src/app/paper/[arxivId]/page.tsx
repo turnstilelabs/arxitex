@@ -193,6 +193,7 @@ export default function PaperPage() {
     const [selectedDeps, setSelectedDeps] = useState(false);
 
     const [definitionBank, setDefinitionBank] = useState<DefinitionBankEntry[]>([]);
+    const latexMacrosRef = useRef<Record<string, string>>({});
 
     // Track the current high-level pipeline stage based on streamed
     // backend status messages (base graph, enrichment, dependencies).
@@ -422,6 +423,23 @@ export default function PaperPage() {
                                     // Keep the last meaningful stage; the inline
                                     // label will disappear once isLoading=false.
                                 }
+                            }
+                        } else if (json.type === 'latex_macros') {
+                            const m = (json.data ?? {}) as Record<string, string>;
+                            latexMacrosRef.current = m;
+
+                            // Merge per-paper macros into the global MathJax config.
+                            const win = window as any;
+                            if (win.MathJax && win.MathJax.config && win.MathJax.config.tex) {
+                                win.MathJax.config.tex.macros = {
+                                    ...(win.MathJax.config.tex.macros || {}),
+                                    ...m,
+                                };
+                            } else if (win.MathJax && win.MathJax.tex) {
+                                win.MathJax.tex.macros = {
+                                    ...(win.MathJax.tex.macros || {}),
+                                    ...m,
+                                };
                             }
                         } else if (json.type === 'node') {
                             if (shouldResetGraphRef.current) {

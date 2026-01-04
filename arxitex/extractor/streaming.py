@@ -120,6 +120,17 @@ async def astream_artifact_graph(
                             "data": bank_dict,
                         }
                     )
+
+            # Emit LaTeX macros (if any) so the frontend can configure
+            # MathJax with paper-specific shorthand like "\\cF".
+            latex_macros = results.get("latex_macros") or {}
+            if latex_macros:
+                await queue.put(
+                    {
+                        "type": "latex_macros",
+                        "data": latex_macros,
+                    }
+                )
         except ArxivExtractorError as e:
             logger.error(f"A processing error occurred while building graph: {e}")
             err = classify_processing_error(e)
