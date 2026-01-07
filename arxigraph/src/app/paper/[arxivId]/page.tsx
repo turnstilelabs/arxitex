@@ -828,7 +828,7 @@ export default function PaperPage() {
                                                 className="text-[0.75rem]"
                                                 style={{ color: 'var(--secondary-text)' }}
                                             >
-                                                Add enriched definitions and symbols.
+                                                Use an LLM to enrich artifacts with symbols and concise definitions.
                                             </div>
                                         </div>
                                     </label>
@@ -849,7 +849,7 @@ export default function PaperPage() {
                                                 className="text-[0.75rem]"
                                                 style={{ color: 'var(--secondary-text)' }}
                                             >
-                                                Add inferred result/definition links.
+                                                Use an LLM to infer the logical dependencies between artifacts.
                                             </div>
                                         </div>
                                     </label>
