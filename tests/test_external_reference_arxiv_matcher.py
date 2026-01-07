@@ -3,6 +3,7 @@ import json
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.tools.external_reference_arxiv_matcher import (
     extract_title_and_authors,
+    generate_title_candidates,
     match_external_reference_to_arxiv,
 )
 
@@ -37,6 +38,59 @@ def test_extract_title_and_authors_emph():
     title, authors = extract_title_and_authors(ref)
     assert title == "A Great Paper"
     assert len(authors) >= 1
+
+
+def test_extract_title_and_authors_title_dot_textit_pattern():
+    ref = (
+        r"T. Abe, The stability of the family of $A_2$-type arrangements. "
+        r"\\textit{J. Math. Kyoto Univ.} \\textbf{46} (2006), no. 3, 617--639."
+    )
+    title, authors = extract_title_and_authors(ref)
+    # Should capture the title before \textit{...}.
+    assert title is not None
+    assert "stability of the family" in title.lower()
+    assert any("abe" in a.lower() for a in authors)
+
+
+def test_url_reference_returns_no_title_or_authors():
+    ref = (
+        r"B.~McKay. \\newblock Combinatorial data. \\newblock "
+        r"http://cs.anu.edu.au/people/bdm/data, Dec. 2011."
+    )
+    title, authors = extract_title_and_authors(ref)
+    assert title is None
+    assert authors == []
+
+
+def test_candidates_prefer_title_over_journal_metadata():
+    ref = (
+        "M.~Baker, S.~Norine, Harmonic morphisms and hyperelliptic graphs. "
+        "International Math.~Research Notices 15 (2009), 2914--2955."
+    )
+    cands, authors = generate_title_candidates(ref, limit=4)
+    assert authors  # should extract something
+    assert cands
+    # best candidate should not include the journal chunk
+    assert (
+        "Harmonic morphisms and hyperelliptic graphs".lower() in cands[0].title.lower()
+    )
+    assert "research notices" not in cands[0].title.lower()
+
+
+def test_candidates_do_not_pick_publisher_or_journal_as_title():
+    ref = r"O.~Kallenberg, Foundations of Modern Probability, Second Edition, \\emph{Springer,} 2002."
+    cands, _authors = generate_title_candidates(ref, limit=4)
+    assert cands
+    assert "foundations of modern probability" in cands[0].title.lower()
+    assert "springer" not in cands[0].title.lower()
+
+
+def test_candidates_handle_year_prefix_and_latex_accents():
+    ref = r"Pfeiffer, G., R{\\\"o}hrle, G., 2005. Special involutions and bulky parabolic subgroups in finite {C}oxeter groups. J. Aust. Math. Soc. 79~(1), 141--147."
+    cands, _authors = generate_title_candidates(ref, limit=4)
+    assert cands
+    assert "special involutions" in cands[0].title.lower()
+    assert "2005" not in cands[0].title.lower()
 
 
 def test_matcher_direct_regex_fast_path():

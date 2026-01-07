@@ -16,6 +16,7 @@ from arxitex.db.schema import ensure_schema
 from arxitex.tools.external_reference_arxiv_matcher import (
     MatchResult,
     extract_title_and_authors,
+    generate_title_candidates,
     match_external_reference_to_arxiv,
 )
 
@@ -79,6 +80,23 @@ def _iter_external_reference_artifacts(
     return [dict(r) for r in rows]
 
 
+def _load_successfully_processed_arxiv_ids(db_path: str) -> list[str]:
+    """Return arxiv_id list from processed_papers where status LIKE 'success%'.
+
+    We treat processed_papers as the authoritative indicator that the pipeline
+    successfully handled a paper (graph built, or a success variant).
+    """
+
+    conn = connect(db_path)
+    try:
+        rows = conn.execute(
+            "SELECT arxiv_id FROM processed_papers WHERE status LIKE 'success%'"
+        ).fetchall()
+        return [str(r[0]) for r in rows if r and r[0]]
+    finally:
+        conn.close()
+
+
 def upsert_match_row(
     conn,
     *,
@@ -131,6 +149,7 @@ async def backfill_external_reference_arxiv_matches(
     *,
     db_path: str | Path,
     only_paper_ids: Optional[list[str]] = None,
+    only_processed_success: bool = False,
     max_refs: Optional[int] = None,
     qps: float = 1.0,
     refresh_days: int = 30,
@@ -141,6 +160,13 @@ async def backfill_external_reference_arxiv_matches(
 
     db_path = str(db_path)
     ensure_schema(db_path)
+
+    if only_processed_success:
+        only_paper_ids = _load_successfully_processed_arxiv_ids(db_path)
+        logger.info(
+            "External ref backfill: restricting to processed_papers status LIKE 'success%%' (count={})",
+            len(only_paper_ids),
+        )
 
     existing_ts = _load_existing_match_timestamps(db_path)
     cutoff = datetime.now(timezone.utc) - timedelta(days=max(0, int(refresh_days)))
@@ -188,6 +214,30 @@ async def backfill_external_reference_arxiv_matches(
                 external_artifact_id,
                 full_reference[:160],
             )
+
+            # Candidate introspection (up to 4) so we can understand bad queries.
+            try:
+                cands, _authors = generate_title_candidates(full_reference, limit=4)
+                logger.info(
+                    "[extref] candidates paper_id={} artifact_id={} -> {}",
+                    paper_id,
+                    external_artifact_id,
+                    [
+                        {
+                            "title": c.title,
+                            "method": c.method,
+                            "score": round(float(c.score), 3),
+                        }
+                        for c in cands
+                    ],
+                )
+            except Exception as e:  # pragma: no cover
+                logger.warning(
+                    "[extref] candidate_generation_failed paper_id={} artifact_id={} err={!r}",
+                    paper_id,
+                    external_artifact_id,
+                    e,
+                )
 
         ts = existing_ts.get((paper_id, external_artifact_id))
         if ts and not force:
@@ -306,6 +356,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Restrict to a specific paper_id (repeatable).",
     )
     p.add_argument(
+        "--only-processed-success",
+        action="store_true",
+        help=(
+            "Restrict to paper_ids in processed_papers with status LIKE 'success%'. "
+            "Useful to avoid processing papers that failed upstream."
+        ),
+    )
+    p.add_argument(
         "--max-refs",
         type=int,
         default=None,
@@ -340,6 +398,7 @@ def main(argv: list[str] | None = None) -> int:
         backfill_external_reference_arxiv_matches(
             db_path=args.db_path,
             only_paper_ids=args.paper_id,
+            only_processed_success=bool(args.only_processed_success),
             max_refs=args.max_refs,
             qps=args.qps,
             refresh_days=args.refresh_days,

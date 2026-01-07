@@ -31,6 +31,30 @@ def test_backfill_creates_joinable_rows(monkeypatch, tmp_path):
     finally:
         conn.close()
 
+    # Mark the paper as successfully processed.
+    connp = sqlite3.connect(str(db_path))
+    try:
+        # processed_papers table is managed by ProcessedIndex in production; create
+        # a minimal compatible version here.
+        connp.execute(
+            """
+            CREATE TABLE IF NOT EXISTS processed_papers (
+                arxiv_id TEXT PRIMARY KEY,
+                status TEXT NOT NULL,
+                processed_timestamp_utc TEXT NOT NULL,
+                output_path TEXT,
+                details TEXT
+            )
+            """
+        )
+        connp.execute(
+            "INSERT OR REPLACE INTO processed_papers(arxiv_id, status, processed_timestamp_utc) VALUES (?, ?, ?)",
+            ("p1", "success", "2020-01-01T00:00:00+00:00"),
+        )
+        connp.commit()
+    finally:
+        connp.close()
+
     # Patch the matcher so the test doesn't perform network calls.
     from arxitex import tools as _tools_pkg  # noqa: F401
     from arxitex.tools import external_reference_arxiv_backfill as backfill_mod
@@ -58,6 +82,7 @@ def test_backfill_creates_joinable_rows(monkeypatch, tmp_path):
         backfill_external_reference_arxiv_matches(
             db_path=str(db_path),
             only_paper_ids=["p1"],
+            only_processed_success=True,
             qps=1000,
             refresh_days=0,
             force=True,
