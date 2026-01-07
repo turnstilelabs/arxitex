@@ -4,7 +4,7 @@ from pathlib import Path
 
 from arxitex.db.connection import connect
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 
 def _table_has_column(conn, table: str, column: str) -> bool:
@@ -296,6 +296,53 @@ def ensure_schema(db_path: str | Path) -> None:
         )
         conn.execute(
             "CREATE INDEX IF NOT EXISTS idx_paper_citations_fetched ON paper_citations(last_fetched_at_utc);"
+        )
+
+        # -- External reference -> matched arXiv id
+        # This is a post-processing/backfill table to connect external
+        # bibliography references to an arXiv paper id (when the bib entry does
+        # not explicitly mention arXiv).
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS external_reference_arxiv_matches (
+                paper_id TEXT NOT NULL,
+                external_artifact_id TEXT NOT NULL,
+                matched_arxiv_id TEXT,
+                match_method TEXT NOT NULL, -- direct_regex|search|none
+                extracted_title TEXT,
+                extracted_authors_json TEXT,
+                matched_title TEXT,
+                matched_authors_json TEXT,
+                title_score REAL,
+                author_overlap REAL,
+                arxiv_query TEXT,
+                last_matched_at_utc TEXT NOT NULL,
+                PRIMARY KEY (paper_id, external_artifact_id),
+                FOREIGN KEY (paper_id, external_artifact_id)
+                    REFERENCES artifacts(paper_id, artifact_id)
+                    ON DELETE CASCADE
+            );
+            """
+        )
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_extref_matches_arxiv_id ON external_reference_arxiv_matches(matched_arxiv_id);"
+        )
+
+        # Cache to avoid repeatedly querying arXiv for the same normalized
+        # (title, authors) tuple.
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS external_reference_arxiv_search_cache (
+                cache_key TEXT PRIMARY KEY,
+                matched_arxiv_id TEXT,
+                matched_title TEXT,
+                matched_authors_json TEXT,
+                title_score REAL,
+                author_overlap REAL,
+                arxiv_query TEXT,
+                last_fetched_at_utc TEXT NOT NULL
+            );
+            """
         )
 
         # Useful indexes
