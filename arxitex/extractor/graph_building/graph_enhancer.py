@@ -28,6 +28,8 @@ from arxitex.symdef.definition_bank import DefinitionBank
 from arxitex.symdef.definition_builder.definition_builder import DefinitionBuilder
 from arxitex.symdef.document_enhancer import DocumentEnhancer
 from arxitex.symdef.utils import ContextFinder, extract_latex_macros
+from arxitex.tex.dialect import TeXDialect, detect_tex_dialect
+from arxitex.tex.normalize import normalize_tex
 
 
 class GraphEnhancer:
@@ -74,15 +76,33 @@ class GraphEnhancer:
         if on_status is not None:
             await on_status("building base graph")
 
-        # PERF: read/concatenate LaTeX once and reuse for all subsequent passes.
         latex_content = read_and_combine_tex_files(project_dir)
 
+        # Best-effort support for non-LaTeX TeX dialects (AMS-TeX / plain TeX):
+        dialect = detect_tex_dialect(latex_content)
+        if dialect != TeXDialect.LATEX:
+            try:
+                norm = normalize_tex(latex_content, dialect)
+                if norm.changed:
+                    logger.info(
+                        f"[{source_file}] Normalized TeX dialect '{dialect.value}' into LaTeX-like environments."
+                    )
+                    latex_content = norm.content
+                else:
+                    logger.debug(
+                        f"[{source_file}] TeX dialect '{dialect.value}' detected but no normalization changes applied."
+                    )
+            except Exception as e:
+                # Best-effort only: if normalization fails, fall back to raw content.
+                logger.warning(
+                    f"[{source_file}] TeX normalization failed; proceeding with raw content: {e}"
+                )
+
         # Extract simple, argument-free LaTeX macros from the preamble so the
-        # frontend (MathJax) can render paper-specific shorthand like "\\cF".
+        # frontend can render paper-specific shorthand like "\\cF".
         try:
             latex_macros: dict[str, str] = extract_latex_macros(latex_content)
         except Exception:
-            # Macro extraction is best-effort only; never break graph building.
             latex_macros = {}
 
         graph = self.regex_builder.build_graph_from_content(
