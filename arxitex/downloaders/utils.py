@@ -135,11 +135,38 @@ def try_extract_gzip(file_path: Path, dest_path: Path, arxiv_id: str) -> bool:
         with gzip.open(file_path, "rb") as gz_file:
             content = gz_file.read()
 
+        tex_file = dest_path / f"{arxiv_id.replace('/', '_')}.tex"
+
+        # Preferred signal: typical LaTeX document markers.
         if b"\\documentclass" in content or b"\\begin{document}" in content:
-            tex_file = dest_path / f"{arxiv_id.replace('/', '_')}.tex"
             tex_file.write_bytes(content)
             logger.info("File detected as gzipped TeX file.")
             return True
+
+        # Fallback: many arXiv sources are valid TeX but do not contain
+        # \documentclass / \begin{document} (e.g. class/style fragments).
+        # If the payload looks like plain text, write it out anyway so the
+        # rest of the pipeline can attempt parsing.
+        if content:
+            printable = 0
+            for b in content[:100_000]:
+                if b in (9, 10, 13) or 32 <= b <= 126:
+                    printable += 1
+
+            ratio = printable / min(len(content), 100_000)
+            # Require "mostly text" and at least some TeX-ish backslashes.
+            if ratio > 0.85 and b"\\" in content:
+                tex_file.write_bytes(content)
+                # NOTE: Loguru uses `{}` formatting, so we must avoid literal
+                # braces like `\begin{document}` in log messages.
+                logger.warning(
+                    "Gzip payload for {} lacks LaTeX document markers "
+                    "(\\\\documentclass / \\\\begin-document) but looks like text; "
+                    "saving as {} anyway.",
+                    arxiv_id,
+                    tex_file.name,
+                )
+                return True
     except gzip.BadGzipFile as e:
         # Distinguish between "not actually gzip" and "gzip but broken".
         from arxitex.downloaders.utils import is_gzipped  # local import to avoid cycles

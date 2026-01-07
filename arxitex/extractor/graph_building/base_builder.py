@@ -159,16 +159,18 @@ class BaseGraphBuilder:
         detached_proofs: List[Dict] = []
         node_char_offsets: Dict[str, Tuple[int, int]] = {}
 
-        all_env_types = "|".join(
-            sorted(
-                set(
-                    list(self.ARTIFACT_TYPES)
-                    + list(self.env_name_aliases.keys())
-                    + [self.PROOF_ENV_TYPE]
-                )
-            )
+        # IMPORTANT: Escape environment names before embedding into a regex.
+        # Some documents (e.g. via \newtheorem) define environments whose
+        # names contain regex meta-characters like `*` .
+        env_names = (
+            list(self.ARTIFACT_TYPES)
+            + list(self.env_name_aliases.keys())
+            + [self.PROOF_ENV_TYPE]
         )
-        pattern = re.compile(rf"\\begin\{{({all_env_types})(\*?)\}}(?:\[([^\]]*)\])?")
+        all_env_types = "|".join(sorted({re.escape(name) for name in env_names}))
+
+        # Capture any number of trailing stars after the environment name.
+        pattern = re.compile(rf"\\begin\{{({all_env_types})(\*+)?\}}(?:\[([^\]]*)\])?")
 
         artifact_counter = 0
         cursor = 0

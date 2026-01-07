@@ -1,4 +1,5 @@
 import asyncio
+import os
 import re
 from pathlib import Path
 from typing import Optional
@@ -131,6 +132,65 @@ class AsyncSourceDownloader:
                             chunk_size=self.config["chunk_size"]
                         ):
                             await f.write(chunk)
+
+                # After download, detect HTML reCAPTCHA responses that arXiv
+                # sometimes serves instead of the real source archive.
+                try:
+                    head_bytes = b""
+                    with open(download_path, "rb") as fh:
+                        head_bytes = fh.read(2048)
+
+                    text_head = head_bytes.decode("utf-8", errors="ignore")
+                    lower_head = text_head.lower()
+
+                    if (
+                        "<html" in lower_head
+                        and "recaptcha" in lower_head
+                        and "arxiv" in lower_head
+                    ):
+                        logger.error(
+                            f"arXiv returned an HTML reCAPTCHA challenge instead of "
+                            f"LaTeX source for {arxiv_id}."
+                        )
+                        # Best-effort: remove the HTML file so it cannot be
+                        # mistaken for an archive later.
+                        try:
+                            os.remove(download_path)
+                        except OSError:
+                            pass
+
+                        raise ArxivExtractorError(
+                            "Blocked by arXiv reCAPTCHA; received HTML challenge "
+                            "page instead of LaTeX source. Try again later or "
+                            "reduce request rate."
+                        )
+
+                    # Withdrawn papers: arXiv may serve an HTML notice instead
+                    # of a source archive.
+                    if "withdrawn" in lower_head and ("<html" in lower_head):
+                        logger.error(
+                            "arXiv indicates this submission is withdrawn; no source archive is available "
+                            "for {}.",
+                            arxiv_id,
+                        )
+                        try:
+                            os.remove(download_path)
+                        except OSError:
+                            pass
+
+                        raise ArxivExtractorError(
+                            "Paper appears withdrawn on arXiv; LaTeX source archive is unavailable."
+                        )
+                except ArxivExtractorError:
+                    # Propagate our explicit signal to callers.
+                    raise
+                except Exception as e:
+                    # If detection fails for any reason, fall back to normal
+                    # behavior and let later stages report a generic error.
+                    logger.debug(
+                        f"Failed to inspect downloaded file for reCAPTCHA HTML: {e}"
+                    )
+
                 logger.info(f"Successfully downloaded source to {download_path}")
                 return download_path
             except (httpx.RequestError, httpx.HTTPStatusError) as e:
@@ -151,6 +211,15 @@ class AsyncSourceDownloader:
         )
 
     def _blocking_extract(self, file_path: Path, dest_path: Path, arxiv_id: str):
+        """Detect and extract the downloaded source archive.
+
+        We intentionally try *all* extractor strategies in a safe order instead of
+        binding strictly to the first detected type. This is important because
+        many arXiv sources are packaged as gzip-wrapped tar archives (tar.gz),
+        which previously showed up as file_type == "gzip" and caused us to skip
+        the tar extractor, leading to `source_extract_failed` for valid inputs.
+        """
+
         dest_path.mkdir(parents=True, exist_ok=True)
         file_type = detect_file_type(file_path)
         logger.info(f"Detected file type: {file_type}")
@@ -169,15 +238,13 @@ class AsyncSourceDownloader:
 
         success = False
         try:
-            if file_type != "unknown":
-                success = extractors[["tar", "gzip", "zip", "tex"].index(file_type)]()
-
-            if not success:
-                logger.warning("Trying all extraction methods for unknown file type...")
-                for extractor in extractors:
-                    if extractor():
-                        success = True
-                        break
+            # Always attempt all known extractor strategies. The individual
+            # helpers are written to cheaply return False when the format
+            # doesn't match (e.g. not actually a tar/zip/gzip/plain-TeX).
+            for extractor in extractors:
+                if extractor():
+                    success = True
+                    break
         except ExtractionError as e:
             # Upgrade low-level extraction failures into a clearer high-level error.
             raise ArxivExtractorError(str(e)) from e
