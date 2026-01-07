@@ -1,7 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
+const EXPERIMENTAL_PREVIEW_SEEN_KEY = 'arxigraph.experimentalPreview.seen';
+
+function FlagIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline-block', verticalAlign: 'text-bottom' }}
+    >
+      <path d="M4 22V4" />
+      <path d="M4 4h12l-1.5 4L20 12H4" />
+    </svg>
+  );
+}
 
 function extractArxivId(input: string): string | null {
   // Accept either a full arXiv URL or a bare arXiv identifier.
@@ -20,6 +42,29 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [enrichContent, setEnrichContent] = useState(true);
   const [inferDependencies, setInferDependencies] = useState(true);
+
+  const [experimentalOpen, setExperimentalOpen] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState<string | null>(null);
+
+  const experimentalBody = useMemo(
+    () => (
+      <>
+        <div className="text-sm" style={{ color: 'var(--primary-text)' }}>
+          This is a research prototype. Some relationships may be incomplete or incorrectly inferred.
+          If you spot an issue, we’d love your feedback{' '}
+          <span
+            title="Suggest a correction"
+            aria-label="Suggest a correction"
+            style={{ color: 'var(--secondary-text)' }}
+          >
+            <FlagIcon size={14} />
+          </span>
+          .
+        </div>
+      </>
+    ),
+    [],
+  );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +86,40 @@ export default function Home() {
     search.set('enrich', enrichContent ? '1' : '0');
     search.set('deps', inferDependencies ? '1' : '0');
 
-    router.push(`/paper/${encodeURIComponent(arxivId)}?${search.toString()}`);
+    const url = `/paper/${encodeURIComponent(arxivId)}?${search.toString()}`;
+
+    let hasSeenExperimental = true;
+    try {
+      // Only runs in the browser.
+      hasSeenExperimental = localStorage.getItem(EXPERIMENTAL_PREVIEW_SEEN_KEY) === '1';
+    } catch {
+      // If localStorage isn't available, default to "seen" to avoid blocking.
+      hasSeenExperimental = true;
+    }
+
+    if (!hasSeenExperimental) {
+      setPendingUrl(url);
+      setExperimentalOpen(true);
+      return;
+    }
+
+    router.push(url);
+  };
+
+  const handleExperimentalCancel = () => {
+    setExperimentalOpen(false);
+    setPendingUrl(null);
+  };
+
+  const handleExperimentalContinue = () => {
+    try {
+      localStorage.setItem(EXPERIMENTAL_PREVIEW_SEEN_KEY, '1');
+    } catch {
+      // ignore
+    }
+    setExperimentalOpen(false);
+    if (pendingUrl) router.push(pendingUrl);
+    setPendingUrl(null);
   };
 
   return (
@@ -49,6 +127,80 @@ export default function Home() {
       className="flex flex-col items-center min-h-screen p-4 sm:p-8 md:p-12"
       style={{ background: 'var(--background)', color: 'var(--primary-text)' }}
     >
+      {experimentalOpen ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center"
+        >
+          <div
+            className="absolute inset-0"
+            style={{ background: 'rgba(0,0,0,0.65)' }}
+            onClick={handleExperimentalCancel}
+          />
+
+          <div
+            className="relative w-[92vw] max-w-lg rounded-xl p-4 sm:p-5"
+            style={{
+              background: 'var(--surface1)',
+              border: '1px solid var(--border-color)',
+              color: 'var(--primary-text)',
+            }}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <h2
+                  className="text-lg font-semibold"
+                  style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                >
+                  Experimental preview
+                </h2>
+              </div>
+
+              <button
+                type="button"
+                className="paper-link-btn"
+                aria-label="Close"
+                onClick={handleExperimentalCancel}
+                title="Close"
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="mt-4 grid gap-4">
+              {experimentalBody}
+
+              <div className="mt-1 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={handleExperimentalCancel}
+                  className="rounded-lg px-3 py-2"
+                  style={{
+                    border: '1px solid var(--border-color)',
+                    color: 'var(--secondary-text)',
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleExperimentalContinue}
+                  className="rounded-lg px-4 py-2 font-semibold"
+                  style={{
+                    background: 'var(--accent)',
+                    color: '#111',
+                  }}
+                >
+                  Continue
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <div className="w-full max-w-4xl text-center">
         <h1
           className="text-4xl sm:text-5xl font-black tracking-tight"
@@ -57,7 +209,7 @@ export default function Home() {
           ArxiGraph
         </h1>
         <p className="mt-2 text-lg" style={{ color: 'var(--secondary-text)' }}>
-          Paste an arXiv URL or ID to visualize its mathematical dependency graph.
+          Visualize the logical structure of mathematical papers on arXiv.
         </p>
       </div>
 
@@ -71,29 +223,45 @@ export default function Home() {
           padding: 16,
         }}
       >
-        <div className="flex items-center gap-2">
+        <div className="relative">
           <input
             type="text"
             name="arxivUrl"
             placeholder="https://arxiv.org/abs/... or 1410.5929v1"
             required
-            className="flex-grow p-3 rounded-lg shadow-sm focus:outline-none"
+            className="w-full p-3 pr-12 rounded-lg shadow-sm focus:outline-none"
             style={{
               background: 'var(--surface2)',
               border: '1px solid var(--border-color)',
               color: 'var(--primary-text)',
             }}
           />
+
           <button
             type="submit"
-            className="px-6 py-3 font-semibold rounded-lg shadow-md transition-colors"
+            aria-label="Generate graph"
+            title="Generate graph"
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md transition-colors hover:text-[var(--accent)] focus-visible:text-[var(--accent)] focus-visible:outline-none"
             style={{
-              background: 'var(--accent)',
-              color: 'var(--background)',
-              border: '2px solid var(--accent)',
+              color: 'var(--secondary-text)',
             }}
           >
-            Generate Graph
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M7 17L17 7" />
+              <path d="M7 7h10v10" />
+            </svg>
           </button>
         </div>
 
@@ -112,7 +280,9 @@ export default function Home() {
             }}
             aria-pressed={enrichContent}
           >
-            Enhance artifacts (definitions/symbols)
+            <span suppressHydrationWarning>
+              Enhance artifacts (definitions/symbols)
+            </span>
           </button>
 
           <button
