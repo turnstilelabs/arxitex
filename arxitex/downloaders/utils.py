@@ -190,7 +190,19 @@ def try_handle_plain_text(file_path: Path, dest_path: Path, arxiv_id: str) -> bo
             return False
 
         content_str = content.decode("utf-8", errors="ignore")
-        if "\\documentclass" in content_str or "\\begin{document}" in content_str:
+
+        # Accept LaTeX *or* AMS/plain-TeX-ish markers.
+        looks_like_tex = (
+            "\\documentclass" in content_str
+            or "\\begin{document}" in content_str
+            or "\\proclaim" in content_str
+            or "\\endproclaim" in content_str
+            or "\\demo" in content_str
+            or "\\enddemo" in content_str
+            or "\\bye" in content_str
+        )
+
+        if looks_like_tex:
             tex_file = dest_path / f"{arxiv_id.replace('/', '_')}.tex"
             tex_file.write_text(content_str, encoding="utf-8")
             logger.info("File detected as plain TeX file.")
@@ -226,7 +238,15 @@ def read_and_combine_tex_files(project_dir: Path) -> str:
                 logger.debug(f"Could not inspect extensionless file {p}: {e}")
                 continue
 
-            if "\\documentclass" in text or "\\begin{document}" in text:
+            if (
+                "\\documentclass" in text
+                or "\\begin{document}" in text
+                or "\\proclaim" in text
+                or "\\endproclaim" in text
+                or "\\demo" in text
+                or "\\enddemo" in text
+                or "\\bye" in text
+            ):
                 candidates.append(p)
 
         if candidates:
