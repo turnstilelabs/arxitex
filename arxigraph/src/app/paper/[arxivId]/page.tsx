@@ -128,14 +128,17 @@ export default function PaperPage() {
 
     const arxivId = params.arxivId;
 
+    // Default behavior:
+    // - If params are absent, we do a baseline extraction run.
+    // - "Run Additional Analysis" lets users opt into enrichment/dependency inference.
     const inferDependencies = useMemo(() => {
         const v = searchParams.get('deps');
-        return v == null ? true : v !== '0';
+        return v == null ? false : v !== '0';
     }, [searchParams]);
 
     const enrichContent = useMemo(() => {
         const v = searchParams.get('enrich');
-        return v == null ? true : v !== '0';
+        return v == null ? false : v !== '0';
     }, [searchParams]);
 
     // Fallback label based on which analyses are enabled, used when we
@@ -155,6 +158,8 @@ export default function PaperPage() {
     }, [inferDependencies, enrichContent]);
 
     const hasFullAnalysis = enrichContent && inferDependencies;
+    const [loadedFromHF, setLoadedFromHF] = useState(false);
+    const hasFullAnalysisOrHF = hasFullAnalysis || loadedFromHF;
 
     const [paperMeta, setPaperMeta] = useState<PaperMeta | null>(null);
     const [paperMetaError, setPaperMetaError] = useState<string | null>(null);
@@ -556,6 +561,9 @@ export default function PaperPage() {
 
             const hfUrl = hfJsonUrlForArxivId(arxivId);
 
+            // Reset for each new arxivId.
+            setLoadedFromHF(false);
+
             if (hfUrl) {
                 console.log('[HF] Trying Hugging Face URL', hfUrl, 'for', arxivId);
                 setStatus((prev) => [...prev, `Trying Hugging Face dataset at ${hfUrl}`]);
@@ -570,6 +578,8 @@ export default function PaperPage() {
                     if (res.ok) {
                         const payload = await res.json();
                         console.log('[HF] Successfully loaded payload from Hugging Face for', arxivId);
+
+                        setLoadedFromHF(true);
                         const graph = payload?.graph ?? {};
                         const nodes: any[] = Array.isArray(graph?.nodes) ? graph.nodes : [];
                         const edges: any[] = Array.isArray(graph?.edges) ? graph.edges : [];
@@ -640,7 +650,7 @@ export default function PaperPage() {
         return () => {
             cancelled = true;
         };
-    }, [absUrl, enrichContent, inferDependencies]);
+    }, [absUrl, enrichContent, inferDependencies, arxivId]);
 
     return (
         <main
@@ -727,7 +737,7 @@ export default function PaperPage() {
                                     <span style={{ color: '#ff6b6b' }}>error</span>
                                 ) : null}
 
-                                {!hasFullAnalysis && (
+                                {!hasFullAnalysisOrHF && (
                                     <button
                                         type="button"
                                         className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium border shadow-sm hover:bg-[var(--surface2)] disabled:opacity-60"
@@ -769,7 +779,7 @@ export default function PaperPage() {
                     {/* spacer */}
                 </div>
 
-                {advancedAnalysisOpen && !hasFullAnalysis && (
+                {advancedAnalysisOpen && !hasFullAnalysisOrHF && (
                     <div
                         className="fixed inset-0 z-40 flex items-center justify-center px-4"
                         style={{ background: 'rgba(0,0,0,0.4)' }}

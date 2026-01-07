@@ -40,8 +40,6 @@ function extractArxivId(input: string): string | null {
 export default function Home() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const [enrichContent, setEnrichContent] = useState(true);
-  const [inferDependencies, setInferDependencies] = useState(true);
 
   const [experimentalOpen, setExperimentalOpen] = useState(false);
   const [pendingUrl, setPendingUrl] = useState<string | null>(null);
@@ -82,11 +80,7 @@ export default function Home() {
       return;
     }
 
-    const search = new URLSearchParams();
-    search.set('enrich', enrichContent ? '1' : '0');
-    search.set('deps', inferDependencies ? '1' : '0');
-
-    const url = `/paper/${encodeURIComponent(arxivId)}?${search.toString()}`;
+    const url = `/paper/${encodeURIComponent(arxivId)}`;
 
     let hasSeenExperimental = true;
     try {
@@ -265,40 +259,7 @@ export default function Home() {
           </button>
         </div>
 
-        <div
-          className="mt-2 flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm"
-          style={{ color: 'var(--secondary-text)' }}
-        >
-          <button
-            type="button"
-            onClick={() => setEnrichContent((v) => !v)}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border cursor-pointer transition"
-            style={{
-              borderColor: enrichContent ? 'var(--accent)' : 'var(--border-color)',
-              background: enrichContent ? 'var(--surface1)' : 'var(--surface2)',
-              color: 'var(--secondary-text)',
-            }}
-            aria-pressed={enrichContent}
-          >
-            <span suppressHydrationWarning>
-              Enhance artifacts (definitions/symbols)
-            </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setInferDependencies((v) => !v)}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-full border cursor-pointer transition"
-            style={{
-              borderColor: inferDependencies ? 'var(--accent)' : 'var(--border-color)',
-              background: inferDependencies ? 'var(--surface1)' : 'var(--surface2)',
-              color: 'var(--secondary-text)',
-            }}
-            aria-pressed={inferDependencies}
-          >
-            Infer dependencies
-          </button>
-        </div>
+        {/* Advanced analysis toggles moved to the paper page (only shown when needed). */}
       </form>
 
       {error && (
