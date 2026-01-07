@@ -35,7 +35,6 @@ type Props = {
 function issueTypeOptions(scope: FeedbackScope): Array<{ value: FeedbackIssueType; label: string }> {
     if (scope === 'node') {
         return [
-            { value: 'missing_node', label: 'Missing artifact' },
             { value: 'spurious_node', label: 'Spurious artifact (should not exist)' },
             { value: 'wrong_node_type', label: 'Wrong type / label' },
             { value: 'wrong_node_text', label: 'Wrong or incomplete statement' },
@@ -54,7 +53,6 @@ function issueTypeOptions(scope: FeedbackScope): Array<{ value: FeedbackIssueTyp
     }
 
     return [
-        { value: 'graph_missing_section', label: 'Large parts missing / missing section(s)' },
         { value: 'graph_low_coverage', label: 'Graph is incomplete / too sparse / too coarse' },
         { value: 'graph_layout_confusing', label: 'Layout confusing / misleading' },
         { value: 'other', label: 'Other' },
@@ -72,7 +70,6 @@ export default function GraphFeedbackModal(props: Props) {
     const [userEmail, setUserEmail] = useState('');
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
     const options = useMemo(() => issueTypeOptions(scope), [scope]);
@@ -87,7 +84,6 @@ export default function GraphFeedbackModal(props: Props) {
         setUserDisplay('');
         setUserEmail('');
         setIsSubmitting(false);
-        setError(null);
         setSuccess(false);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [open, scope, nodeId, edgeId]);
@@ -96,21 +92,16 @@ export default function GraphFeedbackModal(props: Props) {
 
     const title =
         scope === 'node'
-            ? `Suggest a correction (node)`
+            ? `Suggest a correction for this node`
             : scope === 'edge'
                 ? `Suggest a correction (dependency)`
-                : `Suggest a correction (graph)`;
+                : `Suggest a correction`;
 
     const contextLine =
-        scope === 'node'
-            ? `About node: ${contextLabel ?? nodeId ?? ''}`
-            : scope === 'edge'
-                ? `About edge: ${contextLabel ?? edgeId ?? ''}`
-                : `About paper: ${paperId}`;
+        scope === 'edge' ? `About edge: ${contextLabel ?? edgeId ?? ''}` : null;
 
     async function submit() {
         setIsSubmitting(true);
-        setError(null);
 
         const clientSubmitMs = Date.now() - createdAtRef.current;
 
@@ -138,14 +129,23 @@ export default function GraphFeedbackModal(props: Props) {
 
             if (!res.ok && res.status !== 204) {
                 const json = (await res.json().catch(() => null)) as any;
-                throw new Error(json?.error ?? `Submission failed (status ${res.status})`);
+                // We don't show infra errors (e.g. Supabase) to the user.
+                // Still log so it can be caught in monitoring.
+                console.error('graph-feedback submission failed', {
+                    status: res.status,
+                    error: json?.error,
+                    details: json?.details,
+                });
             }
 
             setSuccess(true);
             // Close shortly after success so users see confirmation.
             setTimeout(() => onClose(), 650);
         } catch (e: any) {
-            setError(e?.message ?? String(e));
+            // Always show a positive confirmation in the UI.
+            console.error('graph-feedback submission error', e);
+            setSuccess(true);
+            setTimeout(() => onClose(), 650);
         } finally {
             setIsSubmitting(false);
         }
@@ -179,9 +179,14 @@ export default function GraphFeedbackModal(props: Props) {
                         >
                             {title}
                         </h2>
-                        <div className="mt-1 text-sm" style={{ color: 'var(--secondary-text)' }}>
-                            {contextLine}
-                        </div>
+                        {contextLine ? (
+                            <div
+                                className="mt-1 text-sm"
+                                style={{ color: 'var(--secondary-text)' }}
+                            >
+                                {contextLine}
+                            </div>
+                        ) : null}
                     </div>
 
                     <button
@@ -275,15 +280,9 @@ export default function GraphFeedbackModal(props: Props) {
                         This project is experimental. Your feedback helps improve the extraction.
                     </div>
 
-                    {error ? (
-                        <div className="text-sm" style={{ color: '#ff6b6b' }}>
-                            {error}
-                        </div>
-                    ) : null}
-
                     {success ? (
                         <div className="text-sm" style={{ color: '#7bed9f' }}>
-                            Thanks! Your suggestion was recorded.
+                            Feedback sent.
                         </div>
                     ) : null}
 

@@ -446,7 +446,7 @@ const ConstellationsGraph = forwardRef<ConstellationsGraphHandle, Props>(functio
                                         type="button"
                                         className="inline-flex items-center justify-center p-0.5 rounded hover:bg-transparent"
                                         style={{ color: 'var(--secondary-text)' }}
-                                        aria-label="Suggest a correction for this graph"
+                                        aria-label="Suggest a correction"
                                         title="Suggest a correction"
                                         onClick={onReportGraph}
                                     >
