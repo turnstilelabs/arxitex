@@ -3,6 +3,15 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import dynamic from 'next/dynamic';
+
+const HomeCitationIslands = dynamic(() => import('@/components/HomeCitationIslands'), {
+  ssr: false,
+  // In homepage fullscreen mode, we don't want any fallback UI that pushes layout or competes
+  // with the overlay header. The background will simply appear once the client chunk loads.
+  loading: () => null,
+});
+
 const EXPERIMENTAL_PREVIEW_SEEN_KEY = 'arxigraph.experimentalPreview.seen';
 
 function FlagIcon({ size = 14 }: { size?: number }) {
@@ -117,156 +126,165 @@ export default function Home() {
   };
 
   return (
-    <main
-      className="flex flex-col items-center min-h-screen p-4 sm:p-8 md:p-12"
-      style={{ background: 'var(--background)', color: 'var(--primary-text)' }}
-    >
-      {experimentalOpen ? (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center"
-        >
-          <div
-            className="absolute inset-0"
-            style={{ background: 'rgba(0,0,0,0.65)' }}
-            onClick={handleExperimentalCancel}
-          />
+    <main className="relative w-screen h-screen overflow-hidden" style={{ background: 'var(--background)' }}>
+      {/* Fullscreen graph background */}
+      <div className="fixed inset-0 z-0">
+        <HomeCitationIslands topK={20} fullscreen />
+      </div>
 
+      {/* Top overlay */}
+      <div className="relative z-10 flex flex-col items-center px-4 sm:px-8 md:px-12 pt-4 sm:pt-8">
+        {experimentalOpen ? (
           <div
-            className="relative w-[92vw] max-w-lg rounded-xl p-4 sm:p-5"
-            style={{
-              background: 'var(--surface1)',
-              border: '1px solid var(--border-color)',
-              color: 'var(--primary-text)',
-            }}
+            role="dialog"
+            aria-modal="true"
+            className="fixed inset-0 z-50 flex items-center justify-center"
           >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h2
-                  className="text-lg font-semibold"
-                  style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+            <div
+              className="absolute inset-0"
+              style={{ background: 'rgba(0,0,0,0.65)' }}
+              onClick={handleExperimentalCancel}
+            />
+
+            <div
+              className="relative w-[92vw] max-w-lg rounded-xl p-4 sm:p-5"
+              style={{
+                background: 'var(--surface1)',
+                border: '1px solid var(--border-color)',
+                color: 'var(--primary-text)',
+              }}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h2
+                    className="text-lg font-semibold"
+                    style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+                  >
+                    Experimental preview
+                  </h2>
+                </div>
+
+                <button
+                  type="button"
+                  className="paper-link-btn"
+                  aria-label="Close"
+                  onClick={handleExperimentalCancel}
+                  title="Close"
                 >
-                  Experimental preview
-                </h2>
+                  ×
+                </button>
               </div>
 
-              <button
-                type="button"
-                className="paper-link-btn"
-                aria-label="Close"
-                onClick={handleExperimentalCancel}
-                title="Close"
-              >
-                ×
-              </button>
-            </div>
+              <div className="mt-4 grid gap-4">
+                {experimentalBody}
 
-            <div className="mt-4 grid gap-4">
-              {experimentalBody}
+                <div className="mt-1 flex items-center justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={handleExperimentalCancel}
+                    className="rounded-lg px-3 py-2"
+                    style={{
+                      border: '1px solid var(--border-color)',
+                      color: 'var(--secondary-text)',
+                    }}
+                  >
+                    Cancel
+                  </button>
 
-              <div className="mt-1 flex items-center justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={handleExperimentalCancel}
-                  className="rounded-lg px-3 py-2"
-                  style={{
-                    border: '1px solid var(--border-color)',
-                    color: 'var(--secondary-text)',
-                  }}
-                >
-                  Cancel
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleExperimentalContinue}
-                  className="rounded-lg px-4 py-2 font-semibold"
-                  style={{
-                    background: 'var(--accent)',
-                    color: '#111',
-                  }}
-                >
-                  Continue
-                </button>
+                  <button
+                    type="button"
+                    onClick={handleExperimentalContinue}
+                    className="rounded-lg px-4 py-2 font-semibold"
+                    style={{
+                      background: 'var(--accent)',
+                      color: '#111',
+                    }}
+                  >
+                    Continue
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ) : null}
+        ) : null}
 
-      <div className="w-full max-w-4xl text-center">
-        <h1
-          className="text-4xl sm:text-5xl font-black tracking-tight"
-          style={{ color: 'var(--accent)' }}
-        >
-          ArxiGraph
-        </h1>
-        <p className="mt-2 text-lg" style={{ color: 'var(--secondary-text)' }}>
-          Visualize the logical structure of mathematical papers on arXiv.
-        </p>
-      </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-xl mt-8 flex flex-col gap-3"
-        style={{
-          background: 'var(--surface1)',
-          border: '1px solid var(--border-color)',
-          borderRadius: 12,
-          padding: 16,
-        }}
-      >
-        <div className="relative">
-          <input
-            type="text"
-            name="arxivUrl"
-            placeholder="https://arxiv.org/abs/... or 1410.5929v1"
-            required
-            className="w-full p-3 pr-12 rounded-lg shadow-sm focus:outline-none"
-            style={{
-              background: 'var(--surface2)',
-              border: '1px solid var(--border-color)',
-              color: 'var(--primary-text)',
-            }}
-          />
-
-          <button
-            type="submit"
-            aria-label="Generate graph"
-            title="Generate graph"
-            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md transition-colors hover:text-[var(--accent)] focus-visible:text-[var(--accent)] focus-visible:outline-none"
-            style={{
-              color: 'var(--secondary-text)',
-            }}
+        <div className="w-full max-w-4xl text-center">
+          <h1
+            className="text-4xl sm:text-5xl font-black tracking-tight"
+            style={{ color: 'var(--accent)' }}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-              focusable="false"
-            >
-              <path d="M7 17L17 7" />
-              <path d="M7 7h10v10" />
-            </svg>
-          </button>
+            ArxiGraph
+          </h1>
+          <p className="mt-2 text-lg" style={{ color: 'var(--secondary-text)' }}>
+            Visualize the logical structure of mathematical papers on arXiv.
+          </p>
         </div>
 
-        {/* Advanced analysis toggles moved to the paper page (only shown when needed). */}
-      </form>
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-xl mt-6 flex flex-col gap-3"
+          style={{
+            background: 'rgba(20,20,20,0.35)',
+            border: '1px solid rgba(255,255,255,0.10)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: 12,
+            padding: 16,
+          }}
+        >
+          <div className="relative">
+            <input
+              type="text"
+              name="arxivUrl"
+              placeholder="https://arxiv.org/abs/... or 1410.5929v1"
+              required
+              className="w-full p-3 pr-12 rounded-lg shadow-sm focus:outline-none"
+              style={{
+                background: 'rgba(18,18,18,0.55)',
+                border: '1px solid rgba(255,255,255,0.10)',
+                color: 'var(--primary-text)',
+              }}
+            />
 
-      {error && (
-        <p className="mt-4 font-semibold" style={{ color: '#ff6b6b' }}>
-          Error: {error}
-        </p>
-      )}
+            <button
+              type="submit"
+              aria-label="Generate graph"
+              title="Generate graph"
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-md transition-colors hover:text-[var(--accent)] focus-visible:text-[var(--accent)] focus-visible:outline-none"
+              style={{
+                color: 'var(--secondary-text)',
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M7 17L17 7" />
+                <path d="M7 7h10v10" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Advanced analysis toggles moved to the paper page (only shown when needed). */}
+        </form>
+
+        {error && (
+          <p className="mt-4 font-semibold" style={{ color: '#ff6b6b' }}>
+            Error: {error}
+          </p>
+        )}
+
+        {/* Spacer to keep overlay from hugging the bottom on tall screens */}
+        <div className="h-6" />
+      </div>
     </main>
   );
 }
