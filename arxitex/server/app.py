@@ -70,19 +70,59 @@ def _sse_data(payload: dict[str, Any]) -> bytes:
 
 app = FastAPI(title="ArxiTex Backend", version="0.1.0")
 
-# Local dev defaults: allow Next.js dev server.
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3001",
-    ],
-    allow_credentials=False,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# ---------------------------------------------------------------------------
+# CORS
+#
+# We need CORS for the Next.js frontend to call this backend directly.
+#
+# Goals:
+# - Dev: allow any localhost port (so you can run Next on 3000/3001/3006/etc).
+# - Prod: allow explicit origins via env vars (so we don't accidentally ship
+#   a too-permissive policy).
+#
+# Env vars (preferred in prod):
+# - ARXITEX_CORS_ALLOW_ORIGINS="https://app.example.com,https://staging.example.com"
+# - ARXITEX_CORS_ALLOW_ORIGIN_REGEX="https://.*\\.example\\.com"
+# ---------------------------------------------------------------------------
+
+
+def _cors_allow_origins_from_env() -> list[str] | None:
+    raw = (os.getenv("ARXITEX_CORS_ALLOW_ORIGINS") or "").strip()
+    if not raw:
+        return None
+    origins = [o.strip() for o in raw.split(",") if o.strip()]
+    return origins or None
+
+
+def _cors_allow_origin_regex_from_env() -> str | None:
+    raw = (os.getenv("ARXITEX_CORS_ALLOW_ORIGIN_REGEX") or "").strip()
+    return raw or None
+
+
+cors_allow_origins = _cors_allow_origins_from_env()
+cors_allow_origin_regex = _cors_allow_origin_regex_from_env()
+
+if cors_allow_origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=cors_allow_origins,
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    # Safe dev default: allow any localhost origin.
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[],
+        allow_origin_regex=cors_allow_origin_regex
+        # IMPORTANT: this is a *raw regex string*; do not over-escape.
+        # We want to match e.g. "http://localhost:3000".
+        or r"https?://(localhost|127\.0\.0\.1):\d+",
+        allow_credentials=False,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 
 @app.get("/health")
