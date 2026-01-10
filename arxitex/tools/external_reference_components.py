@@ -25,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sqlite3
 from collections import Counter, defaultdict, deque
 from dataclasses import dataclass
 from pathlib import Path
@@ -206,6 +207,167 @@ def _write_components(out_dir: Path, comps: list[ComponentResult]) -> None:
             json.dump(comp.to_json_dict(), f, ensure_ascii=False, indent=2)
 
 
+def _chunked(seq: list[str], n: int) -> Iterable[list[str]]:
+    for i in range(0, len(seq), n):
+        yield seq[i : i + n]
+
+
+def _table_exists(conn, table: str) -> bool:
+    row = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name = ? LIMIT 1", (table,)
+    ).fetchone()
+    return row is not None
+
+
+def _load_titles_from_papers(conn, paper_ids: list[str]) -> dict[str, str]:
+    """Return base_id -> title from normalized `papers` table.
+
+    Important: in this repo, `papers.paper_id` is typically stored *with* version
+    suffix (e.g. 1110.0099v1). Component nodes are base ids.
+    We therefore query both:
+      - exact `paper_id IN (<base ids>)` (in case some are stored without version)
+      - `paper_id LIKE '<base>v%'` (most common)
+    and normalize results back to base ids.
+    """
+
+    if not paper_ids:
+        return {}
+    if not _table_exists(conn, "papers"):
+        return {}
+
+    out: dict[str, str] = {}
+
+    # Chunk to avoid SQLite parameter limit.
+    for chunk in _chunked(paper_ids, 150):
+        in_placeholders = ",".join(["?"] * len(chunk))
+        like_params = [f"{pid}v%" for pid in chunk]
+        like_clause = " OR ".join(["paper_id LIKE ?" for _ in like_params])
+
+        where = f"paper_id IN ({in_placeholders})"
+        params: list[str] = list(chunk)
+        if like_clause:
+            where = f"({where}) OR ({like_clause})"
+            params.extend(like_params)
+
+        rows = conn.execute(
+            f"SELECT paper_id, title FROM papers WHERE {where}",
+            params,
+        ).fetchall()
+
+        for r in rows:
+            raw_id = str(r["paper_id"] or "").strip()
+            if not raw_id:
+                continue
+            base_id = strip_arxiv_version(raw_id)
+            if base_id not in paper_ids:
+                continue
+            if base_id in out:
+                continue
+            title = (r["title"] or "").strip() if r["title"] is not None else ""
+            if title:
+                out[base_id] = title
+
+    return out
+
+
+def _load_titles_from_discovered(conn, paper_ids: list[str]) -> dict[str, str]:
+    """Best-effort: pull titles from legacy discovered_papers.metadata JSON.
+
+    The discovery queue may store arxiv_id with version suffix. We normalize to base ids.
+    """
+
+    if not paper_ids:
+        return {}
+    if not _table_exists(conn, "discovered_papers"):
+        return {}
+
+    # Ensure the table has expected columns.
+    try:
+        cols = {
+            r["name"]
+            for r in conn.execute("PRAGMA table_info(discovered_papers)").fetchall()
+        }
+    except Exception:
+        return {}
+    if "arxiv_id" not in cols or "metadata" not in cols:
+        return {}
+
+    # Query both exact ids and common versioned variants via LIKE.
+    # Keep this bounded by only using ids we need.
+    out: dict[str, str] = {}
+
+    # Split into chunks to avoid hitting SQLite parameter limit.
+    for chunk in _chunked(paper_ids, 150):
+        like_params = [f"{pid}v%" for pid in chunk]
+        in_placeholders = ",".join(["?"] * len(chunk))
+        like_clause = " OR ".join(["arxiv_id LIKE ?" for _ in like_params])
+        where = f"arxiv_id IN ({in_placeholders})"
+        params: list[str] = list(chunk)
+        if like_clause:
+            where = f"({where}) OR ({like_clause})"
+            params.extend(like_params)
+
+        try:
+            rows = conn.execute(
+                f"SELECT arxiv_id, metadata FROM discovered_papers WHERE {where}",
+                params,
+            ).fetchall()
+        except sqlite3.OperationalError:
+            return {}
+
+        for r in rows:
+            raw_id = str(r["arxiv_id"] or "").strip()
+            if not raw_id:
+                continue
+            base_id = strip_arxiv_version(raw_id)
+            if base_id not in paper_ids:
+                continue
+            if base_id in out:
+                continue
+
+            meta_raw = r["metadata"]
+            if not meta_raw:
+                continue
+            try:
+                meta = json.loads(meta_raw)
+            except Exception:
+                continue
+            title = (meta.get("title") or "").strip()
+            if title:
+                out[base_id] = title
+
+    return out
+
+
+def build_paper_titles_map(
+    *, db_path: str | Path, paper_ids: list[str]
+) -> dict[str, str]:
+    """Build a base-arXiv-id -> title map for a set of node IDs."""
+
+    if not paper_ids:
+        return {}
+
+    ensure_schema(db_path)
+    conn = connect(db_path)
+    try:
+        titles = _load_titles_from_papers(conn, paper_ids)
+
+        missing = [pid for pid in paper_ids if pid not in titles]
+        if missing:
+            titles.update(_load_titles_from_discovered(conn, missing))
+
+        return titles
+    finally:
+        conn.close()
+
+
+def _write_paper_titles(out_dir: Path, titles: dict[str, str]) -> None:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / "paper_titles.json"
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(titles, f, ensure_ascii=False, indent=2)
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(
         description=(
@@ -291,6 +453,17 @@ def main(argv: list[str] | None = None) -> int:
         )
 
     _write_components(out_dir, comps)
+
+    # Also write a title map for the union of all nodes, for UI tooltips.
+    all_node_ids = sorted({n for c in comps for n in c.nodes})
+    titles = build_paper_titles_map(db_path=args.db_path, paper_ids=all_node_ids)
+    _write_paper_titles(out_dir, titles)
+
+    logger.info(
+        "Wrote paper_titles.json for {}/{} nodes (missing titles fall back to arXiv id)",
+        len(titles),
+        len(all_node_ids),
+    )
     return 0
 
 
