@@ -9,6 +9,23 @@ The Next.js web UI lives in a separate repo:
 
 It talks to this backend via HTTP (FastAPI). See `arxitex/server/app.py`.
 
+## Backend API versioning (for ArxiGraph compatibility)
+
+ArxiGraph can optionally enforce that it is talking to a compatible ArxiTex backend.
+
+- ArxiTex exposes `GET /version` returning:
+  - `version`: package version
+  - `api_version`: API contract version (defaults to `version`, but can be overridden)
+- ArxiGraph can set `NEXT_PUBLIC_ARXITEX_API_VERSION` to require a match.
+
+Recommended workflow:
+
+1. When you make a breaking change to the backend HTTP contract, bump the API version and tag a release.
+2. Deploy that tagged backend (or set `ARXITEX_API_VERSION` explicitly).
+3. Update ArxiGraph’s `NEXT_PUBLIC_ARXITEX_API_VERSION` to the matching value.
+
+This gives you a clean “frontend pinned to backend API” boundary.
+
 ## Quick summary
 - Parse LaTeX sources to discover mathematical artifacts (theorems, lemmas, definitions, proofs,...).
 - Build a dependency graph linking statements using explicit references and inferred semantic dependencies.

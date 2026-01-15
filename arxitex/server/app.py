@@ -4,6 +4,8 @@ import asyncio
 import json
 import os
 import re
+from importlib.metadata import PackageNotFoundError
+from importlib.metadata import version as pkg_version
 from typing import Any, AsyncIterator
 
 from fastapi import FastAPI, HTTPException
@@ -13,6 +15,30 @@ from pydantic import BaseModel, Field
 
 from arxitex.extractor.models import ArxivExtractorError
 from arxitex.extractor.streaming import astream_artifact_graph
+
+
+def _get_package_version() -> str:
+    """Return the installed package version (best-effort).
+
+    In dev/editable installs this should be present; in some execution
+    contexts it may not be, so we fall back to a sane default.
+    """
+
+    try:
+        return pkg_version("arxitex")
+    except PackageNotFoundError:
+        # Fallback: keep in sync with setup.py when running from source.
+        return "0.1.0"
+
+
+PACKAGE_VERSION = _get_package_version()
+
+# Public API contract version.
+#
+# Recommendation:
+# - Keep this stable for non-breaking changes.
+# - Bump it (and tag a release) when ArxiGraph must update its expectations.
+API_VERSION = os.getenv("ARXITEX_API_VERSION", PACKAGE_VERSION)
 
 
 class ProcessPaperRequest(BaseModel):
@@ -68,7 +94,7 @@ def _sse_data(payload: dict[str, Any]) -> bytes:
     return f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8")
 
 
-app = FastAPI(title="ArxiTex Backend", version="0.1.0")
+app = FastAPI(title="ArxiTex Backend", version=PACKAGE_VERSION)
 
 # ---------------------------------------------------------------------------
 # CORS
@@ -128,6 +154,17 @@ else:
 @app.get("/health")
 async def health() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.get("/version")
+async def version() -> dict[str, str]:
+    """Expose backend version information for frontend compatibility checks."""
+
+    return {
+        "name": "arxitex",
+        "version": PACKAGE_VERSION,
+        "api_version": API_VERSION,
+    }
 
 
 @app.post("/process-paper")
