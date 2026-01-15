@@ -1,31 +1,6 @@
 # ArxiTex: Building Large-Scale Searchable Knowledge Graph
 Our goal is to build a structured, machine-readable knowledge graph representing the logical dependencies and symbolic definitions within a paper.
 
-## Related project: ArxiGraph (frontend)
-
-The Next.js web UI lives in a separate repo:
-
-- https://github.com/dsleo/arxigraph
-
-It talks to this backend via HTTP (FastAPI). See `arxitex/server/app.py`.
-
-## Backend API versioning (for ArxiGraph compatibility)
-
-ArxiGraph can optionally enforce that it is talking to a compatible ArxiTex backend.
-
-- ArxiTex exposes `GET /version` returning:
-  - `version`: package version
-  - `api_version`: API contract version (defaults to `version`, but can be overridden)
-- ArxiGraph can set `NEXT_PUBLIC_ARXITEX_API_VERSION` to require a match.
-
-Recommended workflow:
-
-1. When you make a breaking change to the backend HTTP contract, bump the API version and tag a release.
-2. Deploy that tagged backend (or set `ARXITEX_API_VERSION` explicitly).
-3. Update ArxiGraph’s `NEXT_PUBLIC_ARXITEX_API_VERSION` to the matching value.
-
-This gives you a clean “frontend pinned to backend API” boundary.
-
 ## Quick summary
 - Parse LaTeX sources to discover mathematical artifacts (theorems, lemmas, definitions, proofs,...).
 - Build a dependency graph linking statements using explicit references and inferred semantic dependencies.
@@ -354,3 +329,16 @@ This saves all processed papers into `search_index.jsonl`
 ```jsonl
 {"title": "On the conjugacy problem for subdirect products of hyperbolic groups", "authors": ["Martin R. Bridson"], "arxiv_id": "2507.05087v1", "abstract": "If $G_1$ and $G_2$ are torsion-free hyperbolic groups and $P<G_1\\times G_2$ is a finitely generated subdirect product, then the conjugacy problem in $P$ is solvable if and only if there is a uniform algorithm to decide membership of the cyclic subgroups in the finitely presented group $G_1/(P\\cap G_1)$. The proof of this result relies on a new technique for perturbing elements in a hyperbolic group to ensure that they are not proper powers.", "artifact_id": "lemma-6-2c644b", "artifact_type": "lemma", "content": "**C_G(w)**: we write $C_G(w)$ to denote the centraliser in $G$ of the image of $w\\in F(X)$. \n\n**G**: The rel-cyclics Dehn function of a finitely presented group $\\G=\\<X\\mid R\\>$ is $$ \\d^{c}(n) : = \\max_{w,u} \\{ {\\rm{Area}}(w\\,u^p) +|pn| \\colon |w|+|u|\\le n,\\ w=_\\G u^{-p},\\ |p|\\le  o(u)/2\\}, $$ where $o(u)\\in\\N\\cup\\{\\infty\\}$ is the order of $u$ in $\\G$.\n\n---\n\n\\label{l:find-root}\nIf $G$ is torsion-free and hyperbolic, then there is an algorithm that, given a word $w$ in the generators, will decide if \n$w$ is non-trivial in $G$ and, if it is,  will produce a word $w_0$ such that $C_G(w) = \\<w_0\\>$.", "terms": ["<w_0>", "C_G(w)", "G", "generators", "hyperbolic", "non-trivial", "torsion-free", "word"]}
 ```
+
+## Web app: ArxiGraph)
+
+The Next.js web UI lives in [this separate repo](https://github.com/dsleo/arxigraph/tree/main). It talks to this backend via FastAPI. See `arxitex/server/app.py`.
+
+## Backend API versioning (for ArxiGraph compatibility)
+
+ArxiGraph can optionally enforce that it is talking to a compatible ArxiTex backend.
+
+- ArxiTex exposes `GET /version` returning:
+  - `version`: package version
+  - `api_version`: API contract version (defaults to `version`, but can be overridden)
+- ArxiGraph can set `NEXT_PUBLIC_ARXITEX_API_VERSION` to require a match.
