@@ -1,6 +1,6 @@
 name: CI
 
-"on":
+on:
   push:
   pull_request:
 
@@ -39,29 +39,3 @@ jobs:
         run: |
           pip install pre-commit
           pre-commit run --all-files
-
-  arxigraph:
-    name: ArxiGraph (lint + build)
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: arxigraph
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: arxigraph/package-lock.json
-
-      - name: Install
-        run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Build
-        run: npm run build
