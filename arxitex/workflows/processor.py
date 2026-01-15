@@ -73,6 +73,13 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         """
         logger.info("Starting 'processing' workflow...")
 
+        # Certain failures are explicitly retryable and should be prioritized
+        # in subsequent `process` runs so they don't starve behind high-citation
+        # items (e.g. transient download blocks like arXiv reCAPTCHA).
+        retry_priority_ids = self._get_retry_priority_arxiv_ids(
+            reason_code="source_blocked_by_recaptcha"
+        )
+
         if target_arxiv_id is not None:
             # When a specific target is requested, keep the existing behavior
             # (ignore citation-based ordering) and just look at the queue.
@@ -81,8 +88,42 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             # Restrict to papers with citation_count >= min_citations and
             # order them by citation_count DESC (then base_id ASC).
             all_discovered_papers = self._get_citation_filtered_pending_papers()
+
+            # Ensure transiently blocked papers (e.g. reCAPTCHA) are retried
+            # even if they are currently below the citation threshold.
+            if retry_priority_ids:
+                all_pending = self.components.discovery_index.get_pending_papers()
+                retry_papers = [
+                    p for p in all_pending if p.get("arxiv_id") in retry_priority_ids
+                ]
+
+                # Deduplicate (preserve order): retries first, then citation-ordered.
+                seen: set[str] = set()
+                merged: list[dict] = []
+                for p in retry_papers + all_discovered_papers:
+                    aid = p.get("arxiv_id")
+                    if not aid or aid in seen:
+                        continue
+                    seen.add(aid)
+                    merged.append(p)
+                all_discovered_papers = merged
         else:
             all_discovered_papers = self.components.discovery_index.get_pending_papers()
+
+        # Stable partition: retryable reCAPTCHA-blocked papers first, without
+        # otherwise changing ordering.
+        if retry_priority_ids:
+            prioritized = [
+                p
+                for p in all_discovered_papers
+                if p.get("arxiv_id") in retry_priority_ids
+            ]
+            remaining = [
+                p
+                for p in all_discovered_papers
+                if p.get("arxiv_id") not in retry_priority_ids
+            ]
+            all_discovered_papers = prioritized + remaining
 
         papers_to_process = []
         for paper_metadata in all_discovered_papers:
@@ -243,6 +284,42 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             )
 
             return ordered
+        finally:
+            conn.close()
+
+    def _get_retry_priority_arxiv_ids(self, reason_code: str) -> set[str]:
+        """Return arxiv_ids that should be prioritized for retry.
+
+        Currently used to ensure transient download failures (e.g. arXiv
+        reCAPTCHA) get retried promptly on subsequent `process` runs.
+
+        We store error details as JSON text; we avoid depending on SQLite's JSON
+        extension by doing a simple substring match.
+        """
+
+        if not reason_code:
+            return set()
+
+        db_path = self.components.db_path
+        conn = sqlite3.connect(db_path)
+        conn.row_factory = sqlite3.Row
+        try:
+            # "details" is stored as a JSON string. We match either the raw
+            # code or a JSON-ish fragment; this is deliberately tolerant.
+            like1 = f"%{reason_code}%"
+            rows = conn.execute(
+                """
+                SELECT arxiv_id
+                FROM processed_papers
+                WHERE status = 'failure'
+                  AND details LIKE ?
+                """,
+                (like1,),
+            ).fetchall()
+            return {row["arxiv_id"] for row in rows}
+        except Exception:
+            # Best-effort: if schema missing or DB unavailable, don't block.
+            return set()
         finally:
             conn.close()
 

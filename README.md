@@ -21,6 +21,63 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+## Exporting processed papers to a Hugging Face dataset
+
+Once papers have been processed and persisted into the SQLite DB (via the
+`workflows.cli process` commands with `--persist-db`), you can export each
+paper's graph + definition bank into a single JSON file suitable for a
+Hugging Face dataset and the ArxiGraph webapp.
+
+Use the `export_hf_dataset` tool:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data
+```
+
+Key points:
+
+- No re-processing: this tool only reads from the existing SQLite DB; it
+  does not call LLMs or re-run extraction.
+- It discovers successfully processed papers via the `processed_papers`
+  table (managed by `ProcessedIndex`).
+- For each paper it reconstructs the graph and definition data and
+  writes:
+
+  ```jsonc
+  {
+    "graph": { /* DocumentGraph.to_dict(...) */ },
+    "definition_bank": { /* term -> definition */ } | null,
+    "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... }
+  }
+  ```
+
+  to `--output-dir` using the filename convention:
+
+  ```text
+  arxiv_{arxiv_id.replace('/', '_')}.json
+  ```
+
+You can restrict export to a subset of arXiv IDs with:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data \
+  --only-arxiv-id 2103.14030 --only-arxiv-id 2211.11689
+```
+
+In a Hugging Face `datasets` repo these files typically live under
+`data/`, and can be fetched from URLs of the form:
+
+```text
+https://huggingface.co/datasets/<org>/<repo>/resolve/<ref>/data/arxiv_2211.11689.json
+```
+
+where `<ref>` is either a branch name like `main` or an immutable
+commit hash used for version pinning.
+
 # 1. Building a graph from an ArXiv paper
 ## 1.1 Initial Graph Construction (`extractor/graph_building`)
 We collect all artifacts (definition, proposition, claim, theorem,...) with regular expressions as well as the explicit dependencies between thoses (through the use of `\ref{...}`).
@@ -63,6 +120,11 @@ with a reference to a previous theorem in its proof:
 The `BaseGraphBuilder` is the primary engine for parsing raw LaTeX source code into a structured dependency graph. It operates in a sophisticated, multi-pass pipeline to ensure accuracy and handle the complexities of real-world academic papers.
 
 Instead of a single monolithic class, it acts as an orchestrator, delegating specialized tasks to helper classes for a clean and maintainable design. The core process first parses all artifact and proof environments, then links detached proofs using a semantic-first strategy. Finally, it enriches the artifacts by parsing the bibliography (from embedded content or separate .bbl/.bib files) and extracting all internal (\ref) and external (\cite) references.
+
+### Custom theorem-like environments (\newtheorem)
+Many papers define custom theorem-like environments (e.g. `thmA`, `mainthm`, `prop*`) using `\newtheorem{...}{...}`. During Pass 1 we scan the LaTeX source for these declarations and automatically treat them as first-class artifacts.
+
+The `NewTheoremScanner` maps each declared environment to a canonical artifact type based on the human-facing title ("Theorem", "Lemma", "Definition", …) and merges these dynamic aliases with a static set of common abbreviations (e.g. `thm` → `theorem`, `defn` → `definition`).
 
 ## 1.2 LLM-Powered Symbol Definition Enhancement (`symdef`)
 A major challenge in understanding a paper is tracking the meaning of its specialized symbols and terms (e.g., $h(x)$, union-closed family). This sub-system is dedicated to creating a comprehensive definition bank for every symbol and concept within the paper to make artifacts self-contained. This is crucial for statement search as well. It is organised as follows.
@@ -236,6 +298,24 @@ where citation_count is not null
 order by citation_count desc
 limit 50;"
 ```
+
+## 2.5 Resolve external bibliography entries to arXiv IDs
+The extracted graph includes `external_reference` nodes for citations (from `\cite{...}` and bracket-style citations) with the bibliography entry text attached when available. Bibliography entries do not always contain an explicit arXiv identifier, so ArxiTex provides an optional backfill step that attempts to match each external reference to an arXiv ID.
+
+This uses a two-stage strategy:
+- fast-path: detect explicit arXiv IDs in the reference string (e.g. `arXiv:1234.5678v2`, `abs/1234.5678`)
+- otherwise: heuristically extract a candidate title/authors span from the bibliography entry and query the arXiv API with fuzzy title + author matching.
+
+Run the backfill tool:
+
+```bash
+python -m arxitex.tools.external_reference_arxiv_backfill \
+  --db-path pipeline_output/arxitex_indices.db \
+  --qps 1.0 \
+  --refresh-days 30
+```
+
+Match decisions are stored in the `external_reference_arxiv_matches` table (and a cache table is maintained to avoid repeatedly querying the arXiv API for the same normalized title/authors).
 
 # 2.3 Search format
 We can convert the graph data to a better format for search witht the `--format-for-search` flag. Each artifact is saved with its extracted `terms` and the paper's `title`, `authors`, `abstract`.

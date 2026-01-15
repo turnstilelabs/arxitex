@@ -88,6 +88,27 @@ def classify_processing_error(exc: Exception) -> ErrorInfo:
                 exception_type=etype,
             )
 
+        # Withdrawn papers: no source is available.
+        if "withdrawn" in lower_msg:
+            return ErrorInfo(
+                code="paper_withdrawn",
+                message="Paper is withdrawn on arXiv; source archive is unavailable.",
+                stage="download",
+                exception_type=etype,
+            )
+
+        # Blocked by arXiv anti-bot.
+        if "recaptcha" in lower_msg:
+            return ErrorInfo(
+                code="source_blocked_by_recaptcha",
+                message=(
+                    "arXiv returned a reCAPTCHA challenge page instead of the source archive. "
+                    "Try again later, reduce request rate, or download manually."
+                ),
+                stage="download",
+                exception_type=etype,
+            )
+
         # Archive looks corrupt or unknown.
         if "gzip archive is corrupted" in lower_msg:
             return ErrorInfo(

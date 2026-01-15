@@ -83,7 +83,7 @@ X
     ge = GraphEnhancer()
 
     # Avoid triggering enrichment/deps.
-    graph, bank, artifact_to_terms_map = asyncio.run(
+    graph, bank, artifact_to_terms_map, latex_macros = asyncio.run(
         ge.build_graph(
             project_dir=Path(tmp_path),
             source_file="x",
@@ -94,6 +94,9 @@ X
 
     assert calls["n"] == 1
     assert graph.nodes
+    # No macros defined in the fake LaTeX snippet.
+    assert isinstance(latex_macros, dict)
+    assert latex_macros == {}
 
 
 class DummyLLMChecker:

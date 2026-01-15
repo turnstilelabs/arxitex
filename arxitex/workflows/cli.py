@@ -370,6 +370,15 @@ async def main():
         help="Hybrid: hard cap on total proposed candidates to verify.",
     )
     parser_reprocess.add_argument(
+        "--dependency-max-pairs",
+        type=int,
+        default=100,
+        help=(
+            "Global cap on the number of dependency pairs verified with the LLM "
+            "per paper (applies to both hybrid and pairwise modes)."
+        ),
+    )
+    parser_reprocess.add_argument(
         "--dependency-global-proof-char-budget",
         type=int,
         default=1200,

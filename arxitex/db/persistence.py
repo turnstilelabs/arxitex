@@ -78,7 +78,9 @@ def load_document_graph(
                 content=str(r["content_tex"] or ""),
                 label=str(r["label"]) if r["label"] is not None else None,
                 position=pos or Position(line_start=0),
-                is_external=False,
+                # Treat EXTERNAL_REFERENCE artifacts as external when
+                # reconstructing the graph. All other types are internal.
+                is_external=(atype == ArtifactType.EXTERNAL_REFERENCE),
                 proof=str(r["proof_tex"]) if r["proof_tex"] is not None else None,
             )
 
@@ -105,6 +107,11 @@ def load_document_graph(
                 external_ids.add(tid)
 
         for eid in external_ids:
+            # External nodes reconstructed from the DB do not currently
+            # preserve their original type; some may have been
+            # EXTERNAL_REFERENCE nodes created by the extractor. Since the
+            # `artifacts` table only stores internal artifacts, we treat
+            # these as generic external placeholders here.
             nodes_by_id.setdefault(
                 eid,
                 ArtifactNode(
@@ -252,11 +259,11 @@ def mark_state_failed(conn, *, paper_id: str, mode: str, error: str) -> None:
 
 
 def upsert_artifacts_and_edges(conn, *, paper_id: str, graph: DocumentGraph) -> None:
-    # Artifacts: internal only.
+    # Artifacts: both internal and external. We persist external reference
+    # nodes as normal artifacts so that export_hf_dataset can reconstruct
+    # them (including their type/content) from the DB.
     artifact_rows = []
     for node in graph.nodes:
-        if node.is_external:
-            continue
         pos = node.position
         artifact_rows.append(
             (

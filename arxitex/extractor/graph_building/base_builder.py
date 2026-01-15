@@ -1,5 +1,5 @@
+import hashlib
 import re
-import uuid
 from bisect import bisect_right
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -159,16 +159,18 @@ class BaseGraphBuilder:
         detached_proofs: List[Dict] = []
         node_char_offsets: Dict[str, Tuple[int, int]] = {}
 
-        all_env_types = "|".join(
-            sorted(
-                set(
-                    list(self.ARTIFACT_TYPES)
-                    + list(self.env_name_aliases.keys())
-                    + [self.PROOF_ENV_TYPE]
-                )
-            )
+        # IMPORTANT: Escape environment names before embedding into a regex.
+        # Some documents (e.g. via \newtheorem) define environments whose
+        # names contain regex meta-characters like `*` .
+        env_names = (
+            list(self.ARTIFACT_TYPES)
+            + list(self.env_name_aliases.keys())
+            + [self.PROOF_ENV_TYPE]
         )
-        pattern = re.compile(rf"\\begin\{{({all_env_types})(\*?)\}}(?:\[([^\]]*)\])?")
+        all_env_types = "|".join(sorted({re.escape(name) for name in env_names}))
+
+        # Capture any number of trailing stars after the environment name.
+        pattern = re.compile(rf"\\begin\{{({all_env_types})(\*+)?\}}(?:\[([^\]]*)\])?")
 
         artifact_counter = 0
         cursor = 0
@@ -206,8 +208,20 @@ class BaseGraphBuilder:
                 detached_proofs.append(proof_block)
             else:
                 artifact_counter += 1
-                node_id = f"{env_type}-{artifact_counter}-{uuid.uuid4().hex[:6]}"
                 label = self._extract_label(raw_content)
+
+                # Stable IDs are critical for the webapp streaming use-case.
+                # Prefer label-based IDs when available, otherwise fall back to a
+                # deterministic hash based on environment type + document position.
+                if label:
+                    safe_label = re.sub(r"[^A-Za-z0-9_.:-]+", "_", label)
+                    node_id = f"{env_type}:{safe_label}"
+                else:
+                    # Use raw env type + artifact counter + source offsets to
+                    # make IDs stable across runs for the same document.
+                    pos_sig = f"{env_type}|{match.start()}|{full_end_pos}"
+                    digest = hashlib.sha1(pos_sig.encode("utf-8")).hexdigest()[:8]
+                    node_id = f"{env_type}-{artifact_counter}-{digest}"
 
                 if label:
                     self.label_to_node_id_map[label] = node_id
