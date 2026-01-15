@@ -1,6 +1,14 @@
 # ArxiTex: Building Large-Scale Searchable Knowledge Graph
 Our goal is to build a structured, machine-readable knowledge graph representing the logical dependencies and symbolic definitions within a paper.
 
+## Related project: ArxiGraph (frontend)
+
+The Next.js web UI lives in a separate repo:
+
+- https://github.com/dsleo/arxigraph
+
+It talks to this backend via HTTP (FastAPI). See `arxitex/server/app.py`.
+
 ## Quick summary
 - Parse LaTeX sources to discover mathematical artifacts (theorems, lemmas, definitions, proofs,...).
 - Build a dependency graph linking statements using explicit references and inferred semantic dependencies.
