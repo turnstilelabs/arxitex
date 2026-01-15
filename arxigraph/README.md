@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ArxiGraph
 
-## Getting Started
+ArxiGraph is the **web UI** for exploring ArxiTex outputs (document graphs + definition banks) and for running the ArxiTex extraction pipeline via a local backend.
 
-First, run the development server:
+## What this app does
+
+- Browse paper graphs exported to JSON (e.g. from a Hugging Face dataset) and visualize artifacts + dependencies.
+- Call the ArxiTex **FastAPI backend** to process a paper on-demand and stream results to the UI.
+
+## Local development
+
+### 1) Start the Python backend (ArxiTex)
+
+From the repo root:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -e .
+
+uvicorn arxitex.server.app:app --reload --port 8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Backend health check:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+curl http://127.0.0.1:8000/health
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Note: if you enable enhancements (dependency inference / definition enrichment), the backend requires `OPENAI_API_KEY`.
 
-## Learn More
+### 2) Configure ArxiGraph env vars
 
-To learn more about Next.js, take a look at the following resources:
+Copy the example and edit it:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+cd arxigraph
+cp .env.local.example .env.local
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Minimum required variable:
 
-## Deploy on Vercel
+- `NEXT_PUBLIC_ARXITEX_BACKEND_URL` (defaults to `http://127.0.0.1:8000`)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Optional variables:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `NEXT_PUBLIC_HF_DATASET_ORG`, `NEXT_PUBLIC_HF_DATASET_REPO`, `NEXT_PUBLIC_HF_DATASET_REF` for loading paper exports from a Hugging Face dataset.
+- `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `GRAPH_FEEDBACK_IP_SALT` if you enable feedback ingestion.
+
+### 3) Run the Next.js dev server
+
+```bash
+cd arxigraph
+npm ci
+npm run dev
+```
+
+Then open:
+
+```
+http://localhost:3000
+```
+
+## Build
+
+```bash
+cd arxigraph
+npm run build
+npm run start
+```
