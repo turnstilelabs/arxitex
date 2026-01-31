@@ -20,16 +20,45 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         graph_data: A dictionary containing the graph data (nodes, edges) and stats.
         output_path: The path where the HTML file will be saved.
     """
+    # IMPORTANT:
+    # This HTML contains lots of literal `{` / `}` braces (CSS + JS).
+    # Using Python's `.format(...)` on such a template is fragile.
+    # We therefore use a simple token replacement approach with placeholders
+    # that do NOT use braces.
+    # Use a local vendored D3 if available next to the output file.
+    # This avoids “blank graph” issues when CDN access is blocked.
+    local_d3_rel = "vendor/d3.v7.min.js"
+    local_d3_path = output_path.parent / local_d3_rel
+    d3_script_tag = (
+        f'<script src="{local_d3_rel}"></script>'
+        if local_d3_path.exists()
+        else '<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>'
+    )
+
     html_template = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>arXiv Paper Dependency Graph - {arxiv_id}</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <title>arXiv Paper Dependency Graph - __ARXIV_ID__</title>
+    __D3_SCRIPT_TAG__
 
-    <!-- MATHJAX INTEGRATION: Add MathJax scripts to the head -->
+    <!-- MATHJAX INTEGRATION -->
+    <script>
+      // Configure MathJax *before* loading it.
+      // We want $...$ inline math and $$...$$ display math.
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true,
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+        }
+      };
+    </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
@@ -64,10 +93,10 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
 <body>
     <div class="header">
         <h1>arXiv Paper Dependency Graph</h1>
-        <p><strong>Paper ID:</strong> {arxiv_id} | <strong>Generated:</strong> {timestamp}</p>
+        <p><strong>Paper ID:</strong> __ARXIV_ID__ | <strong>Generated:</strong> __TIMESTAMP__</p>
         <div class="stats">
-            <div class="stat"><strong>{node_count}</strong> artifacts</div>
-            <div class="stat"><strong>{edge_count}</strong> references</div>
+            <div class="stat"><strong>__NODE_COUNT__</strong> artifacts</div>
+            <div class="stat"><strong>__EDGE_COUNT__</strong> references</div>
         </div>
     </div>
     <div class="graph-container">
@@ -81,7 +110,43 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
     </div>
     <div class="tooltip" id="tooltip" style="display: none;"></div>
     <script>
-        const graphData = {graph_data_json};
+        // -----------------------------------------------------------------
+        // Runtime diagnostics
+        // -----------------------------------------------------------------
+        function showBanner(msg) {
+          const el = document.createElement('div');
+          el.style.cssText = 'padding:12px;border:1px solid #f00;background:#fee;color:#900;margin:12px 0;border-radius:6px;white-space:pre-wrap;';
+          el.textContent = msg;
+          document.body.prepend(el);
+        }
+
+        // Surface runtime JS errors (otherwise you'll just see a blank page).
+        // NOTE: this code lives inside a Python triple-quoted string; keep JS string escapes simple.
+        window.addEventListener('error', (e) => {
+          try {
+            showBanner('Runtime error: ' + (e?.message || e) + '\\n' + (e?.filename || '') + ':' + (e?.lineno || '') + ':' + (e?.colno || ''));
+          } catch (_) {
+            // ignore
+          }
+        });
+
+        const graphData = __GRAPH_DATA_JSON__;
+
+        // Guard: D3 must exist.
+        if (typeof d3 === 'undefined') {
+          showBanner('D3 failed to load (graph cannot render). If you are offline or a firewall blocks CDNs, vendor D3 locally under ./vendor/d3.v7.min.js and reload.');
+          window.__GRAPH_BLOCKED__ = true;
+        }
+
+        // Guard: graphData must have nodes/edges arrays.
+        if (!graphData || !Array.isArray(graphData.nodes) || !Array.isArray(graphData.edges)) {
+          showBanner('Graph payload is missing/invalid: expected {nodes:[], edges:[]}.');
+          window.__GRAPH_BLOCKED__ = true;
+        } else {
+          console.log('[graph] nodes=', graphData.nodes.length, 'edges=', graphData.edges.length);
+        }
+
+        if (!window.__GRAPH_BLOCKED__) {
         const nodeTypes = [...new Set(graphData.nodes.map(d => d.type))];
         const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
         const nodeColors = nodeTypes.reduce((acc, type) => {{
@@ -90,17 +155,24 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         }}, {{}});
 
         const svg = d3.select("#graph");
-        const width = svg.node().getBoundingClientRect().width;
-        const height = svg.node().getBoundingClientRect().height;
+        // In some browsers, an <svg> styled only via CSS can briefly report
+        // a 0x0 bounding box when scripts run, resulting in an invisible graph.
+        // Use a robust fallback and set explicit SVG attributes.
+        const bbox = svg.node().getBoundingClientRect();
+        const width = bbox.width || window.innerWidth || 1200;
+        const height = bbox.height || Math.max(400, Math.floor((window.innerHeight || 900) * 0.7));
+        svg.attr("width", width).attr("height", height);
 
         svg.append("defs").append("marker")
             .attr("id", "arrowhead").attr("viewBox", "-0 -5 10 10").attr("refX", 25)
             .attr("refY", 0).attr("orient", "auto").attr("markerWidth", 8).attr("markerHeight", 8)
             .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", "#999");
 
+        // IMPORTANT: `g` must be declared before it is referenced in the zoom handler.
+        // Otherwise browsers throw: "ReferenceError: Cannot access 'g' before initialization"
+        const g = svg.append("g");
         const zoom = d3.zoom().scaleExtent([0.1, 5]).on("zoom", (event) => g.attr("transform", event.transform));
         svg.call(zoom);
-        const g = svg.append("g");
 
         const simulation = d3.forceSimulation(graphData.nodes)
             .force("link", d3.forceLink(graphData.edges).id(d => d.id).distance(120))
@@ -122,16 +194,45 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
 
         const tooltip = d3.select("#tooltip");
 
+        // --- LaTeX helpers -------------------------------------------------
+
+        function normalizeLatex(s) {
+          // Collapse double-backslashes to single-backslashes for MathJax.
+          // (e.g. "\\\\alpha" -> "\\alpha")
+          if (!s) return '';
+          return String(s).replace(/\\\\\\\\/g, "\\\\");
+        }
+
+        function escapeHtml(s) {
+          return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+        }
+
+        function formatLatexText(s) {
+          // Keep TeX delimiters ($...$) but escape HTML special chars.
+          const norm = normalizeLatex(s);
+          // Replace newline characters with <br>.
+          return escapeHtml(norm).replace(/\\n/g, '<br>');
+        }
+
         // --- UPDATED TOOLTIP LOGIC FOR NODES ---
         node.on("mouseover", (event, d) => {{
             // Build the prerequisites section only if it exists
             let prereqHtml = d.prerequisites_preview ?
-                `<h4>Prerequisites</h4><p>${{d.prerequisites_preview}}</p>` : '';
+                `<h4>Prerequisites</h4><p>${{normalizeLatex(d.prerequisites_preview)}}</p>` : '';
+
+            const statement = d.content ? formatLatexText(d.content) : formatLatexText(d.content_preview || '');
+            const proof = d.proof ? `<h4>Proof</h4><p>${{formatLatexText(d.proof)}}</p>` : '';
 
             tooltip.style("display", "block")
                 .html(`<h4>${{d.display_name}}</h4>
                        <p><span class="id-label">ID: ${{d.id}} | Label: ${{d.label || 'N/A'}}</span></p>
-                       <p><strong>Preview:</strong> ${{d.content_preview}}</p>
+                       <p><strong>Statement:</strong><br>${{statement}}</p>
+                       ${{proof}}
                        ${{prereqHtml}}`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
@@ -148,13 +249,14 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         link.on("mouseover", (event, d) => {{
             // Use the reliable 'type' field from Edge.to_dict() and format it.
             const dependencyType = (d.type || 'DEPENDS ON').replace('_', ' ').toUpperCase();
+            const justification = d.dependency ? formatLatexText(d.dependency) : 'N/A';
 
             tooltip.style("display", "block")
                 .html(`<h4>Dependency Link</h4>
                        <p>${{d.source.display_name}} <br>
                           <span class="edge-type">→ ${{dependencyType}} →</span> <br>
                           ${{d.target.display_name}}</p>
-                       <p><strong>Justification:</strong> ${{d.dependency || 'N/A'}}</p>`)
+                       <p><strong>Justification:</strong><br>${{justification}}</p>`)
                 .style("left", (event.pageX + 15) + "px")
                 .style("top", (event.pageY - 28) + "px");
 
@@ -200,6 +302,8 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
         function dragstarted(event, d) {{ if (!event.active) simulation.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; }}
         function dragged(event, d) {{ d.fx = event.x; d.fy = event.y; }}
         function dragended(event, d) {{ if (!event.active) simulation.alphaTarget(0); d.fx = null; d.fy = null; }}
+
+        } // end: if (!window.__GRAPH_BLOCKED__)
     </script>
 </body>
 </html>
@@ -211,18 +315,22 @@ def create_visualization_html(graph_data: Dict, output_path: Path) -> None:
     stats = graph_data.get("stats", {})
     arxiv_id = graph_data.get("arxiv_id", "N/A")
 
-    # Format graph data for JSON embedding
-    graph_data_json = json.dumps(
-        {"nodes": nodes_for_json, "edges": edges_for_json}, indent=2
-    )
+    # Format graph data for JS embedding
+    graph_data_json = json.dumps({"nodes": nodes_for_json, "edges": edges_for_json})
 
-    # Format the HTML template with all the necessary data
-    html_content = html_template.format(
-        arxiv_id=arxiv_id,
-        timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        node_count=stats.get("node_count", 0),
-        edge_count=stats.get("edge_count", 0),
-        graph_data_json=graph_data_json,
+    # The template historically used doubled braces (`{{` / `}}`) because it was
+    # formatted with Python `.format(...)`. We no longer do that, so we collapse
+    # those braces *before* injecting any JSON content (so we don't corrupt LaTeX
+    # that may contain `}}` sequences).
+    render_template = html_template.replace("{{", "{").replace("}}", "}")
+
+    html_content = (
+        render_template.replace("__ARXIV_ID__", str(arxiv_id))
+        .replace("__TIMESTAMP__", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+        .replace("__NODE_COUNT__", str(stats.get("node_count", 0)))
+        .replace("__EDGE_COUNT__", str(stats.get("edge_count", 0)))
+        .replace("__GRAPH_DATA_JSON__", graph_data_json)
+        .replace("__D3_SCRIPT_TAG__", d3_script_tag)
     )
 
     try:
