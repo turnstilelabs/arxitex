@@ -1,0 +1,857 @@
+{
+  "a-algèbre étale": {
+    "term": "A-algèbre étale",
+    "aliases": [
+      "B"
+    ],
+    "definition_text": "\\label{I:2-1-1}\nSoit $A$ un anneau (commutatif). On dit qu'une $A$-algèbre $B$ est étale si \n$B$ est une $A$-algèbre de présentation finie et si les conditions \néquivalentes suivantes sont vérifiées:\n\\begin{enumerate}[\\indent a)]\n  \\item Pour toute $A$-algèbre $C$ et pour tout idéal de carré nul $J$ de \n    $C$, l'application canonique \n    \n    \\[\n      \\hom_{A\\textnormal{-alg}}(B,C) \\to \\hom_{A\\textnormal{-alg}}(B,C/J)\n    \\]\n    est une bijection.\n  \\item $B$ est un $A$-module plat et $\\Omega_{B/A}=0$ (on note $\\Omega_{B/A}$ \n    le module des différentielles relatives).\n  \\item Soit $B=A[X_1,\\dotsc,X_n]/I$ une présentation de $B$. Alors pour tout \n    idéal premier $\\fp$ de $A[X_1,\\dotsc,X_n]$ contenant $I$, il existe des \n    polynômes $P_1,\\dotsc,P_n\\in I$ tels que $I_\\fp$ soit engendré par les \n    images de $P_1,\\dotsc,P_n$ et $\\det(\\partial P_i/\\partial X_j)\\notin \\fp$.  \n\\end{enumerate}",
+    "source_artifact_id": "definition:I:2-1-1",
+    "dependencies": [
+      "\\Omega_{B/A}"
+    ]
+  },
+  "algèbre simple centrale sur k": {
+    "term": "algèbre simple centrale sur K",
+    "aliases": [
+      "A"
+    ],
+    "definition_text": "\\label{I:3-1-1}\nSoit $K$ un corps et $A$ une $K$-algèbre de dimension finie. On dit que $A$ \nest une algèbre simple centrale sur $K$ si les conditions équivalentes \nsuivantes sont vérifiées:\n\\begin{enumerate}[\\indent a)]\n  \\item $A$ n'a pas d'idéal bilatère non trivial et son centre est $K$. \n  \\item Il existe une extension galoisienne finie $K'/K$ telle que \n    $A_{K'} = A\\otimes_K K'$ soit isomorphe à une algèbre de matrices \n    carrées sur $K'$. \n  \\item $A$ est $K$-isomorphe à algèbre de matrices carrées sur un corps \n    gauche de centre $K$.\n\\end{enumerate}",
+    "source_artifact_id": "definition:I:3-1-1",
+    "dependencies": [
+      "algèbre simple centrale"
+    ]
+  },
+  "c_1 field": {
+    "term": "C_1 field (corps C_1)",
+    "aliases": [
+      "$K$"
+    ],
+    "definition_text": "On dit qu'un corps $K$ est $C_1$ si tout polynôme homogène non constant \nf(x_1,\\dotsc,x_n)$ de degré $d<n$ a un zéro non trivial.",
+    "source_artifact_id": "definition:I:3-2-1",
+    "dependencies": [
+      "C_1"
+    ]
+  },
+  "faisceau localement constant constructible": {
+    "term": "faisceau localement constant constructible",
+    "aliases": [
+      "$\\sF$",
+      "l.c.c."
+    ],
+    "definition_text": "On dit qu'un faisceau $\\sF$ sur $X$ est \\emph{localement constant constructible} (en abrégé l.c.c.) s'il est représenté par un revêtement étale de $X$.",
+    "source_artifact_id": "definition:I:4-3-1",
+    "dependencies": []
+  },
+  "faisceau constructible": {
+    "term": "faisceau constructible (constructible sheaf)",
+    "aliases": [
+      "\\sF",
+      "$\\sF$"
+    ],
+    "definition_text": "\\label{I:4-3-2}\nOn dit qu'un faisceau $\\sF$ sur $X$ est \\emph{constructible} s'il vérifie les \nconditions équivalentes suivantes:\n\\begin{enumerate}[\\indent (i)]\n  \\item Il existe une famille finie surjective de sous-schémas $X_i$ de $X$ \n     tels que la restriction de $\\sF$ à $X_i$ soit l.c.c..\n  \\item Il existe une famille finie de morphismes finis $p_i:X_i'\\to X$, pour \n    chaque $i$ un faisceau constant constructible ( = défini par un groupe \n    abélien fini) $C_i$ sur $X_i'$, et un monomorphisme \n    $\\sF\\to \\prod p_{i*} C_i$. \n\\end{enumerate}",
+    "source_artifact_id": "definition:I:4-3-2",
+    "dependencies": []
+  },
+  "foncteur effaçable": {
+    "term": "foncteur effaçable",
+    "aliases": [
+      "T"
+    ],
+    "definition_text": "Soient $\\cC$ une catégorie abélienne et $T$ un foncteur défini sur $\\cC$ à valeurs dans la catégorie des groupes abéliens. On dira que $T$ est \\emph{effaçable} dans $\\cC$ si, pour tout objet $A$ de $\\cC$ et tout $\\alpha\\in T(A)$, il existe un monomorphisme $u:A\\to M$ dans $\\cC$ tel que $T(u)\\alpha = 0$.",
+    "source_artifact_id": "definition:I:4-3-4",
+    "dependencies": []
+  },
+  "groupes de cohomologie à support propre": {
+    "term": "groupes de cohomologie à support propre",
+    "aliases": [
+      "\\h_c^q(X,\\sF)"
+    ],
+    "definition_text": "Soit $X$ un schéma séparé de type fini sur un corps $k$. D'après un théorème de Nagata, il existe un schéma $\\bar X$ propre sur $k$ et une immersion ouverte $j:X\\to\\bar X$. Pour tout faisceau de torsion $\\sF$ sur $X$ on note $j_! \\sF$ le prolongement par $0$ de $\\sF$ à $\\bar X$ et on définit les groupes de \\emph{cohomologie à support propre} \n\\[\n  \\h_c^q(X,\\sF)=\\h^q(\\bar X, j_! \\sF) \\text{.}\n\\]",
+    "source_artifact_id": "definition:I:4-5-1",
+    "dependencies": [
+      "cohomologie à support propre"
+    ]
+  },
+  "générisation": {
+    "term": "générisation",
+    "aliases": [
+      "$t$"
+    ],
+    "definition_text": "On dit qu'un point géométrique $t$ de $S$ est une \\emph{générisation} de \n$s$ s'il est défini par une clôture algébrique du corps résiduel d'un \npoint de $\\widetilde S^s$. On dit aussi que $s$ est une \\emph{spécialisation} \nde $t$ et on appelle \\emph{flèche de spécialisation} le $S$-morphisme \n$t\\to \\widetilde S^s$.",
+    "source_artifact_id": "definition:I:5-1-2",
+    "dependencies": [
+      "flèche de spécialisation"
+    ]
+  },
+  "localement acyclique": {
+    "term": "localement acyclique",
+    "aliases": [],
+    "definition_text": "On dit que $f$ est \\emph{localement acyclique} si, la cohomologie réduite de toute variété de cycles évanescents $\\widetilde X_t^x$ est nulle:\n\\begin{equation*}\\tag{5.1.3.1}\\label{I:eq:5-1-3-1}\n  \\hat\\h^\\bullet(\\widetilde X_t^x,\\dZ/n) = 0\\text{,}\n\\end{equation*}\ni.e. $\\h^0\\left(X_t^x,\\dZ/n\\right) = \\dZ/n$ et $\\h^q(\\widetilde X_t^x,\\dZ/n) = 0$ pour $q>0$.",
+    "source_artifact_id": "definition:I:5-1-3",
+    "dependencies": [
+      "variété de cycles évanescents"
+    ]
+  },
+  "classe $\\cl_n(d)$": {
+    "term": "classe $\\cl_n(D)$",
+    "aliases": [
+      "$\\cl_n(D)$"
+    ],
+    "definition_text": "La \\emph{classe $\\cl_n(D)$} de $D$ dans $\\h_D^2(X,\\dmu_n)$ est $\\partial \\cl(D)$.",
+    "source_artifact_id": "definition:IV:2-1-2",
+    "dependencies": [
+      "\\partial \\cl(D)",
+      "\\dmu_n"
+    ]
+  },
+  "la classe \\cl": {
+    "term": "la classe \\cl(Y)",
+    "aliases": [
+      "$\\cl(Y)$"
+    ],
+    "definition_text": "\\label{IV:2-3-2}\nLa classe $\\cl(Y)\\in\\h_Y^{2 c}\\left(X,\\dZ/n(c)\\right)$ a pour propriété \ncaractéristique que, pour tout section locale $u$ de $\\eR^{2 d}f_! \\dZ/n(d)$, \non a \n[ \n  \\tr_f(u) = \\tr_g\\left(\\cl(Y)\\smallsmile u\\right) \\text{.}\n]\n",
+    "source_artifact_id": "definition:IV:2-3-2",
+    "dependencies": [
+      "\\dZ/n(c)"
+    ]
+  },
+  "foncteur cohomologique": {
+    "term": "foncteur cohomologique",
+    "aliases": [
+      "F"
+    ],
+    "definition_text": "Soient $\\cA$ une catégorie triangulée, $\\cB$ une catégorie abélienne. \nUn foncteur additif $F:\\cA\\to \\cB$ est die \\emph{foncteur cohomologique} si \npour tout triangle distingué $(X,Y,Z,u,v,w)$ la suite \n\\[\\xymatrix{\n  F(X) \\ar[r]^-{F(u)} \n    & F(Y) \\ar[r]^-{F(v)} \n    & F(Z) \n}\\]\nest exacte.",
+    "source_artifact_id": "definition-91-633833c1",
+    "dependencies": [
+      "catégorie triangulée"
+    ]
+  },
+  "sous-catégorie épaisse": {
+    "term": "sous-catégorie épaisse",
+    "aliases": [
+      "$\\\\cB$"
+    ],
+    "definition_text": "\\label{VIII:2-1-1}\nUne sous-catégorie $\\cB$ d'une catégorie triangulée $\\cA$ est dite \n\\emph{épaisse} si $\\cB$ est une sous-catégorie triangulée pleine de $\\cA$ \net si de plus $\\cB$ possède la propriété suivante: \n\nPour tout morphisme $f:X\\to Y$, se factorisant par un objet de $\\cB$ et contenu \ndans un triangle distingué $(X,Y,Z,f,g,h)$, où $Z$ est un objet de $\\cB$, \nla source de $f$ et le but de $f$ sont des objets de $\\cB$.",
+    "source_artifact_id": "definition:VIII:2-1-1",
+    "dependencies": [
+      "catégorie triangulée"
+    ]
+  },
+  "système multiplicatif de morphismes": {
+    "term": "système multiplicatif de morphismes",
+    "aliases": [
+      "S",
+      "$S$"
+    ],
+    "definition_text": "Soit $\\cA$ un catégorie triangulée. Un ensemble $S$ de morphismes de $\\cA$ \nest appelé \\emph{système multiplicatif de morphismes} si'il posède les \ncinq propriétés suivantes: \n\n\\paragraph{FR1}\n\\phantomsection\\hypertarget{VIII:FR1}{}\nSi $f,g\\in S$ et si $f$ et $g$ sont composables, $f\\circ g\\in S$. Pout tout \nobjet $X$ de $\\cA$, le morphisme identique de $X$ est un élément de $S$. \n\n\\paragraph{FR2}\n\\phantomsection\\hypertarget{VIII:FR2}{}\nDans la catégorie $\\cA$, tout diagramme \n\\[\\xymatrix{\n  & Y \\ar[d]^-{s\\in S} \\\\\n  Z \\ar[r]^-f \n    & X \n}\\]\nse complète en un diagramme commutatif \n\\[\\xymatrix{\n  P \\ar[r]^-g \\ar[d]^-{t\\in S} \n    & Y \\ar[d]^-{s\\in S} \\\\\n  Z \\ar[r]^-f \n    & X \n}\\]\nDe plus la propriété symétrique est vraie. \n\n\\paragraph{FR3}\n\\phantomsection\\hypertarget{VIII:FR3}{}\nSi $f$ et $g$ sont des morphismes, les propriétés suivantes sont \néquivalentes: \n\\begin{enumerate}[\\indent i)]\n  \\item il existe un $s\\in S$ tel que $s\\circ f=s\\circ g$ \n  \\item il existe un $t\\in S$ tel que $f\\circ t=g\\circ t$\n\\end{enumerate}\n\n\\paragraph{FR4}\n\\phantomsection\\hypertarget{VIII:FR4}{}\nSoit $T$ le foncteur de translation de $\\cA$. Par tout élément $s$ de $S$, \n$T(s)\\in S$. \n\n\\paragraph{FR5}\n\\phantomsection\\hypertarget{VIII:FR5}{}\n$(X,Y,Z,u,v,w)$, $(X',Y',Z',u',v',w')$ étant deux triangles distinguées, \n$f$ et $g$ deux éléments de $S$ tels que le couple $(f,g)$ soit un \nmorphisme de $u$ dans $u'$, il existe un morphisme $h\\in S$, tel que \n$(f,g,h)$ soit un morphisme de triangle.",
+    "source_artifact_id": "definition-93-0ed4d6a0",
+    "dependencies": [
+      "FR4",
+      "FR1",
+      "FR2",
+      "FR3",
+      "FR5"
+    ]
+  },
+  "catégorie quotient de \\ca par \\cb": {
+    "term": "catégorie quotient de \\cA par \\cB",
+    "aliases": [
+      "\\cA/\\cB",
+      "\\cA/\\cN",
+      "\\cA/\\underline\\cN",
+      "Q"
+    ],
+    "definition_text": "\\label{VIII:2-3-3}\nSoient $\\cA$ un catégorie triangulée, $\\cB$ une sous-catégorie épaisse \nde $\\cA$, $(Q,\\cA/\\cB)$ la solution du \\hyperlink{VIII:prob1}{problème 1} \n(\\S \\ref{VIII:2-2}). $\\cA/\\cB$ sera appelée la \\emph{catégorie quotient} de \n$\\cA$ par $\\cB$. $Q$ sera appelé le foncteur canonique de passage au \nquotient. Plus généralement soit $\\cN$ une sous-catégorie triangulée de \n$\\cA$ et soit $\\underline\\cN$ la plus petit sous-catégorie épaisse \ncontenant $\\cN$. La catégorie quotient de $\\cA$ par $\\cN$: $\\cA/\\cN$ sera par \ndéfinition $\\cA/\\underline\\cN$.",
+    "source_artifact_id": "definition:VIII:2-3-3",
+    "dependencies": [
+      "sous-catégorie épaisse",
+      "catégorie triangulée"
+    ]
+  },
+  "objet libre à gauche sur \\ca/\\cb (objet $q$-libre à gauche) et objet libre à droite sur \\ca/\\cb": {
+    "term": "objet libre à gauche sur \\cA/\\cB (objet $Q$-libre à gauche) et objet libre à droite sur \\cA/\\cB (objet $Q$-libre à droite)",
+    "aliases": [
+      "objet libre à gauche sur \\cA/\\cB",
+      "objet $Q$-libre à gauche",
+      "objet libre à droite sur \\cA/\\cB",
+      "objet $Q$-libre à droite"
+    ],
+    "definition_text": "Tout objet possédant les propriétés équivalentes (a) et (b) de la proposition précédente, sera appelé: \\emph{objet libre à gauche sur \\cA/\\cB} ou bien encore objet \\emph{$Q$-libre à gauche}. De même, tout objet possédant les propriétés équivalentes (a)' et (b)' sera appelé \\emph{objet libre à droite sur \\cA/\\cB} ou encore objet \\emph{$Q$-libre à droite}. Il est défini à isomorphisme près par la connaissance de $Q(X)\\in\\operatorname{Ob}{\\cA/\\cB}$.",
+    "source_artifact_id": "definition:VIII:2-5-4",
+    "dependencies": []
+  },
+  "sous-catégories triangulées orthogonales": {
+    "term": "sous-catégories triangulées orthogonales",
+    "aliases": [
+      "$\\cN$",
+      "$\\cN'$"
+    ],
+    "definition_text": "\\label{VIII:2-6-1}\nDeux sous-catégories triangulées $\\cN$ et $\\cN'$ d'une catégorie \ntriangulée $\\cA$ sont dites \\emph{orthagonales} si pour tout objet $X$ de \n$\\cN$ et tout objet $Y$ de $\\cN'$, on a: \n\\[\n  \\hom_\\cA(X,Y) = 0 \n\\]\n$\\cN'$ sera dite alors orthogonale à droite à $\\cN$ et $\\cN$ orthogonale \nà gauche à $\\cN'$.",
+    "source_artifact_id": "definition:VIII:2-6-1",
+    "dependencies": [
+      "catégorie triangulée",
+      "orthogonale à droite"
+    ]
+  },
+  "catégorie dérivée": {
+    "term": "catégorie dérivée",
+    "aliases": [
+      "\\eD(\\cA)"
+    ],
+    "definition_text": "        \\label{VIII:3-1-3}\nLa catégorie $\\eD(\\cA)$ sera appelée la \\emph{catégorie dérivée} de la \ncatégorie $\\cA$. Les objets de $\\eD(\\cA)$ isomorphes aux objets de $\\eD^b(\\cA)$ \nseront appelés les objets \\emph{bornés} de $\\eD(\\cA)$. Les objets de \n$\\eD(\\cA)$ isomorphes aux objets de $\\eD^+(\\cA)$ seront appelés les objets \n\\emph{limités à gauche}, les objets de $\\eD(\\cA)$ isomorphes aux objets de \n$\\eD^-(\\cA)$, seront appelés les objets \\emph{limités à droite}.",
+    "source_artifact_id": "definition:VIII:3-1-3",
+    "dependencies": [
+      "limités à droite",
+      "limités à gauche",
+      "\\eD^b(\\cA)"
+    ]
+  },
+  "quasi-isomorphisme": {
+    "term": "quasi-isomorphisme",
+    "aliases": [
+      "f"
+    ],
+    "definition_text": "Un morphisme $f:X^\\bullet \\to Y^\\bullet$ de $\\eC(\\cA)$ (resp. de $\\eK(\\cA)$) \nest appelé un \\emph{quasi-isomorphisme} lorsque pour tout entier $i$ \n\\[\n  \\h^i(f):\\h^i(X) \\to \\h^i(Y) \n\\]\nest un isomorphisme.",
+    "source_artifact_id": "definition:VIII:3-1-7",
+    "dependencies": [
+      "\\eC(\\cA)",
+      "\\eK(\\cA)"
+    ]
+  },
+  "résolution droite (resp. gauche) de type \\sigma de x^\\bullet": {
+    "term": "résolution droite (resp. gauche) de type \\sigma de X^\\bullet",
+    "aliases": [
+      "résolution injective",
+      "résolution projective"
+    ],
+    "definition_text": "        \\label{VIII:3-1-8}\nSoient $\\sigma$ un ensemble d'objets de $\\cA$, $X^\\bullet$ un objet de \n$\\eC(\\cA)$ (resp. $\\eK(\\cA)$). Une re\\'solution droite (reps. gauche) de type \n$\\sigma$ de $X^\\bullet$, est un quasi-isomorphisme $X^\\bullet \\to V^\\bullet$ \n(resp. $V^\\bullet \\to X^\\bullet$) o\\`u $V^\\bullet$ est un complexe dont tous \nles objets appartiennent \\`a $\\sigma$. On dira \\emph{r\\'esolution injective} \n(resp. projective) au lieu de r\\'esolution droite (resp. gauche) de type \ninjectif (resp. projectif).",
+    "source_artifact_id": "definition:VIII:3-1-8",
+    "dependencies": [
+      "quasi-isomorphisme",
+      "\\eC(\\cA)",
+      "\\eK(\\cA)"
+    ]
+  },
+  "i-ème hyper-ext": {
+    "term": "i-ème hyper-ext",
+    "aliases": [
+      "ext^i",
+      "ext^i(X^\\bullet,Y^\\bullet)",
+      "(X^\\bullet,Y^\\bullet)\\mapsto ext^i(X^\\bullet,Y^\\bullet)"
+    ],
+    "definition_text": "On appelle \\emph{$i$-ème hyper-ext$} et on note: \n\\[\n  (X^\\bullet,Y^\\bullet)\\mapsto \\ext^i(X^\\bullet,Y^\\bullet) \n\\]\nle foncteur: $\\hom_{\\eD(\\cA)}(D(X^\\bullet),T^i D(Y^\\bullet))$ (resp. \n$\\hom_{\\eD(\\cA)}(Q(X^\\bullet),T^i Q(Y^\\bullet)))$.",
+    "source_artifact_id": "definition:VIII:3-2-1",
+    "dependencies": []
+  },
+  "morphisme de foncteurs gradués": {
+    "term": "morphisme de foncteurs gradués",
+    "aliases": [
+      "u",
+      "u:F\\to G"
+    ],
+    "definition_text": "\\label{VIII:4-1-1}\nSoient $\\cC$ et $\\cC'$ deux catégories graduées (on désigne par $T$ le \nfoncteur de translation de $\\cC$ et de $\\cC'$), $F$ et $G$ deux foncteurs \ngradués de $\\cC$ dans $\\cC'$. Un \\emph{morphisme de foncteurs gradués} et \nun morphisme de foncteurs: \n\\[\n  u:F\\to G \n\\]\nqui possède la propriété suivante: \n\nPour tout objet $X$ de $\\cC$ le diagramme suivant est commutatif: \n\\[\\xymatrix{\n  F(T X) \\ar[r]^-{u(T X)} \n    & G(T X) \\\\\n  T F(X) \\ar[r]^-{T u(X)} \\ar[u]_-\\wr \n    & T G(X) \\ar[u]_-\\wr \n}\\]",
+    "source_artifact_id": "definition:VIII:4-1-1",
+    "dependencies": []
+  },
+  "foncteur dérivé total": {
+    "term": "foncteur dérivé total (à droite / à gauche)",
+    "aliases": [
+      "$\\Phi$",
+      "foncteur dérivé total à droite",
+      "foncteur dérivé total à gauche",
+      "$\\eR \\Phi$",
+      "$\\eL \\Phi$"
+    ],
+    "definition_text": "\\label{VIII:4-1-2}\nOn dira que $\\Phi$ admet un \\emph{functeur dérivé total} à droite (resp. \nà gauche) si le foncteur $\\%$ (resp. $\\%'$) est représentable. Un objet \nreprésentant le foncteur $\\%$ (resp. $\\%'$) ser appelé foncteur dérivé \ntotal à droite (resp. à gauche) de $\\Phi$ et sera noté \n$\\eR \\Phi$ (resp. $\\eL \\Phi$).\\footnote{Une définition plus maniable (et en \npractique équivalente) est donnée dans \\cite[XVII 1.2]{sga4}.}",
+    "source_artifact_id": "definition:VIII:4-1-2",
+    "dependencies": []
+  },
+  "foncteur dérivé cohomologique à droite": {
+    "term": "foncteur dérivé cohomologique à droite (resp. à gauche)",
+    "aliases": [
+      "$\\eR F$",
+      "$\\eL F$"
+    ],
+    "definition_text": "\\label{VIII:4-1-4}\nOn dira que le foncteur $F$ admet un \\emph{foncteur dérivé cohomologique} \nà droite (resp. à gauche) si le foncteur $\\%$ (resp. $\\%'$) est \nreprésentable. Un objet représentant le foncteur $\\%$ (resp. $\\%'$) sera \nappelé foncteur dérivé cohomologique à droite (resp. à gauche) et \nsera noté $\\eR F$ (resp. $\\eL F$).",
+    "source_artifact_id": "definition:VIII:4-1-4",
+    "dependencies": [
+      "foncteur dérivé cohomologique"
+    ]
+  },
+  "foncteur de dimension cohomologique finie à droite": {
+    "term": "foncteur de dimension cohomologique finie à droite (resp. à gauche)",
+    "aliases": [
+      "f"
+    ],
+    "definition_text": "\\label{VIII:4-2-5} \nSoient $\\cA$ et $\\cB$ deux catégories abéliennes et $f:\\cA\\to \\cB$ un \nfoncteur additif. \n\nOn dira que $f$ est de \\emph{dimension cohomologique finie} à droite (resp. \nà gauche) si $\\eR^+ f$ (resp. $\\eL^- f$) existe et s'il existe un entier \n$m\\geqslant 0$ tel que pour tout entier $n>m$, $\\eR^n f$ (resp. \n$\\eL^{-n} f$) soit nul sur les objets provenant de $\\cA$ par le foncteur $D$. \nLa \\emph{dimension cohomologique} à droite (resp. à gauche) de $f$ est \nalors le plus petit des entiers $m$ possédant la propriété ci-dessus. Si \n$\\eR^+ f$ (resp. $\\eL^- f$) existe et si $f$ n'est pas de dimension \ncohomologique finie, on dira que $f$ est de dimension cohomologique infinie. \n\nUn objet $X$ de $\\cA$ sera dit \\emph{$f$-acyclique} à droite (resp. à \ngauche) si pour tout entier $n>0$, $\\eR^n f(D(X)) = 0$ (resp. \n$\\eL^{-n} f(D(X))=0$).",
+    "source_artifact_id": "definition:VIII:4-2-5",
+    "dependencies": [
+      "f-acyclique"
+    ]
+  },
+  "FR4": {
+    "term": "FR4",
+    "aliases": [],
+    "definition_text": "Soit $T$ le foncteur de translation de $\u0007cA$. Par tout élément $s$ de $S$, $T(s)\\in S$.",
+    "source_artifact_id": "synthesized_from_context_for_definition-93-0ed4d6a0",
+    "dependencies": []
+  },
+  "eI^+": {
+    "term": "\\eI^+(\\cA)",
+    "aliases": [],
+    "definition_text": "Désignons par $\\eI^+(\\cA)$ (resp. $\\eI(\\cA)$) la sous-catégorie triangulée pleine de $\\eK^+(\\cA)$ (resp. de $\\eK(\\cA)$) définie par les complexes dont les objets sont injectifs en tout degré.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-1-4",
+    "dependencies": [
+      "catégorie triangulée",
+      "\\eK^+(\\cA)",
+      "\\eK(\\cA)"
+    ]
+  },
+  "e\\mapsto e_\\cu": {
+    "term": "E\\mapsto E_\\cU",
+    "aliases": [],
+    "definition_text": "Une fibré vectoriel $E$ sur $X$ définit un fibré vectoriel donné $\\cU$-localement $E_\\cU$; le système des restrictions $E_U$ de $E$ aux objets de $\\cU$. Le fait que la notion de fibré vectoriel est de nature locale peut s'exprimer ainsi: pour tout crible couvrant $\\cU$ de $X$, le foncteur $E\\mapsto E_\\cU$, des fibrés vectoriels sur $X$ dans les fibrés vectoriels donnés $\\cU$-localement, est une équivalence de catégories.",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:1-4-5",
+    "dependencies": [
+      "\\cU"
+    ]
+  },
+  "spec": {
+    "term": "\\spec(K)",
+    "aliases": [],
+    "definition_text": "Pour $X=\\spec(K)$ le spectre d'un corps, nous allons voir que la cohomologie étale s'identifie à la cohomologie galoisienne.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-4-4",
+    "dependencies": []
+  },
+  "partial \\cl": {
+    "term": "\\partial \\cl(D)",
+    "aliases": [
+      "classe \\cl_n(D)"
+    ],
+    "definition_text": "La \\emph{classe $\\cl_n(D)$} de $D$ dans $\\h_D^2(X,\\dmu_n)$ est $\\partial \\cl(D)$. ",
+    "source_artifact_id": "synthesized_from_context_for_definition:IV:2-1-2",
+    "dependencies": [
+      "classe $\\cl_n(D)$",
+      "\\dmu_n"
+    ]
+  },
+  "limités à droite": {
+    "term": "limités à droite",
+    "aliases": [],
+    "definition_text": "Les objets de $\\eD(\\cA)$ isomorphes aux objets de $\\eD^-(\\cA)$, seront appelés les objets \\emph{limités à droite}.",
+    "source_artifact_id": "synthesized_from_context_for_definition:VIII:3-1-3",
+    "dependencies": []
+  },
+  "flèche de spécialisation": {
+    "term": "flèche de spécialisation",
+    "aliases": [],
+    "definition_text": "On dit aussi que $s$ est une \\emph{spécialisation} de $t$ et on appelle \\emph{flèche de spécialisation} le $S$-morphisme $t\\to \\widetilde S^s$.}",
+    "source_artifact_id": "synthesized_from_context_for_definition:I:5-1-2",
+    "dependencies": []
+  },
+  "groupe des classes de faisceaux inversibles": {
+    "term": "groupe des classes de faisceaux inversibles",
+    "aliases": [],
+    "definition_text": "où $\\pic(X)$ est le groupe des classes de faisceaux inversibles sur $X$. ",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-2-3",
+    "dependencies": [
+      "\\pic(X)"
+    ]
+  },
+  "pic": {
+    "term": "\\pic(X)",
+    "aliases": [],
+    "definition_text": "où $\\pic(X)$ est le groupe des classes de faisceaux inversibles sur $X$.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-2-3",
+    "dependencies": [
+      "groupe des classes de faisceaux inversibles"
+    ]
+  },
+  "hom_k": {
+    "term": "\\hom_K(A,\\bar K)",
+    "aliases": [],
+    "definition_text": "A toute $K$-algèbre finie étale $A$ (produit fini d'extensions séparables de $K$), associons l'ensemble fini $\\hom_K(A,\\bar K)$. Le groupe de Galois $G$ opère sur cet ensemble à travers un quotient discret (donc fini). Si $A=K[T]/(F)$, il s'identifie à l'ensemble des racines dans $\\bar K$ du polynôme $F$.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-4-3",
+    "dependencies": []
+  },
+  "cn^\\bot": {
+    "term": "\\cN^\\bot",
+    "aliases": [],
+    "definition_text": "La catégorie pleine $\\cN^\\bot$ (resp. $^\\bot\\cN$) engendrée par les objets $X$ de $\\cA$ tels que pour tout objet $Y$ de $\\cN$ on ait $\\hom_\\cA(Y,X)=0$ (resp. $\\hom_\\cA(X,Y)=0$), est une sous-catégorie épaisse de $\\cA$. La catégorie $\\cN^\\bot$ est appelée par abus de langage, l'orthogonale à droite de $\\cN$.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:2-6-2",
+    "dependencies": [
+      "sous-catégorie épaisse"
+    ]
+  },
+  "omega_{b/a}": {
+    "term": "\\Omega_{B/A}",
+    "aliases": [
+      "module des différentielles relatives"
+    ],
+    "definition_text": "B est un $A$-module plat et $\\Omega_{B/A}=0$ (on note $\\Omega_{B/A}$ le module des différentielles relatives).",
+    "source_artifact_id": "synthesized_from_context_for_definition:I:2-1-1",
+    "dependencies": []
+  },
+  "tor-dimension finie": {
+    "term": "tor-dimension finie",
+    "aliases": [],
+    "definition_text": "On dit que $K$ est de tor-dimension $\\leqslant r$ si pour tout $\\Lambda$-module à droite $N$, les hypertors $\\h^i(N\\lotimes_\\Lambda K)$ sont nuls pour $i<-r$. Il est dit de tor-dimension finie si cette condition est vérifiée pour un $r$.",
+    "source_artifact_id": "synthesized_from_context_for_lemma:II:4-5-1",
+    "dependencies": []
+  },
+  "catégorie triangulée": {
+    "term": "catégorie triangulée",
+    "aliases": [],
+    "definition_text": "On appelle \\emph{catégorie triangulée} une catégorie additive graduée par un foncteur de translation, munie d'une famille de triangles qu'on appelle famille des triangles distingués. Cette famille doit vérifier de plus les axiomes:",
+    "source_artifact_id": "synthesized_from_context_for_definition-91-633833c1",
+    "dependencies": [
+      "catégorie dérivée"
+    ]
+  },
+  "gal": {
+    "term": "\\gal(\\bar K/K)",
+    "aliases": [],
+    "definition_text": "Plus précisément soient $K$ un corps, $\\bar K$ un clôture séparable de $K$ et \n$G = \\gal(\\bar K/K)$ le groupe de Galois topologique.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:3-1-6",
+    "dependencies": []
+  },
+  "inversible": {
+    "term": "inversible",
+    "aliases": [],
+    "definition_text": "Un $A$-module $M$ est de type fini (resp. de présentation finie, plat, localement libre de rang fini, inversible (i.e. localement libre de rang un)) dés que le $B$-module $M_{(B)}$ l'est.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:1-4-2",
+    "dependencies": []
+  },
+  "f-acyclique": {
+    "term": "f-acyclique",
+    "aliases": [],
+    "definition_text": "Un objet $X$ de \\cA sera dit \\emph{$f$-acyclique} à droite (resp. à gauche) si pour tout entier $n>0$, \\eR^n f(D(X)) = 0 (resp. \\eL^{-n} f(D(X))=0).",
+    "source_artifact_id": "synthesized_from_context_for_definition:VIII:4-2-5",
+    "dependencies": []
+  },
+  "h^q(x, j_*\\dg_{m,\\eta}) = 0": {
+    "term": "\\h^q(X, j_*\\dG_{m,\\eta}) = 0",
+    "aliases": [],
+    "definition_text": "On a \\h^q(X, j_*\\dG_{m,\\eta}) = 0 pour tout $q>0$.",
+    "source_artifact_id": "synthesized_from_context_for_lemma:I:3-3-3",
+    "dependencies": []
+  },
+  "lotimes": {
+    "term": "\\lotimes",
+    "aliases": [],
+    "definition_text": "Le signe $\\eR$ (resp. $\\mathsf{L}$) indique un foncteur dérivé droit (resp. gauche). Par exemple, $\\lotimes$ indique le foncteur dérivé du produit tensoriel: pour $K$ dans $\\eD^-(\\Lambda^\\circ)$ et $L$ dans $\\eD^-(\\Lambda)$ ($\\Lambda^\\circ$ anneau opposé à $\\Lambda$), $K\\lotimes L$ se calcule comme suit: on prend des quasi-isomorphismes $K'\\to K$, $L'\\to L$, avec $K'$ et $L$ bornés supérieurement et l'un d'eux à composantes plates, et le simple complexe $s(K'\\otimes_\\Lambda L)$ associé au complexe double $K'\\otimes_\\Lambda L'$.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VII:5-2-10",
+    "dependencies": []
+  },
+  "sigma": {
+    "term": "\\Sigma",
+    "aliases": [],
+    "definition_text": "Une suite $\\Sigma=(M'\\to M\\to M'')$ de $A$-modules est exacte dés que la suite $\\Sigma_{(B)}$ qui s'en déduit par extension des scalaires à $B$ est exacte.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:1-4-2",
+    "dependencies": []
+  },
+  "algèbre simple centrale": {
+    "term": "algèbre simple centrale",
+    "aliases": [],
+    "definition_text": "Soit $K$ un corps et $A$ une $K$-algèbre de dimension finie. On dit que $A$ est une algèbre simple centrale sur $K$ si les conditions équivalentes suivantes sont vérifiées: a) $A$ n'a pas d'idéal bilatère non trivial et son centre est $K$. b) Il existe une extension galoisienne finie $K'/K$ telle que $A_{K'} = A\\otimes_K K'$ soit isomorphe à une algèbre de matrices carrées sur $K'$. c) $A$ est $K$-isomorphe à algèbre de matrices carrées sur un corps gauche de centre $K$.",
+    "source_artifact_id": "synthesized_from_context_for_definition:I:3-1-1",
+    "dependencies": [
+      "algèbre simple centrale sur K"
+    ]
+  },
+  "FR1": {
+    "term": "FR1",
+    "aliases": [],
+    "definition_text": "Si $f,g\\in S$ et si $f$ et $g$ sont composables, $f\\circ g\\in S$. Pout tout objet $X$ de $\\cA$, le morphisme identique de $X$ est un élément de $S$.",
+    "source_artifact_id": "synthesized_from_context_for_definition-93-0ed4d6a0",
+    "dependencies": []
+  },
+  "dmu_n": {
+    "term": "\\dmu_n",
+    "aliases": [],
+    "definition_text": "Pour tout entier $n>0$, on appelle faisceau des racines $n$-ièmes de l'unité, et on note \\dmu_n, le noyau de l'élévation à puissance $n$-iéme dans \\dG_m. Si $X$ est un schéma sur un corps séparablement clos $k$ et si $n$ est inversible dans $k$, le choix d'une racine primitive $n$-ième de l'unité $\\zeta\\in k$ définit un isomorphisme $i\\mapsto \\zeta^i$ de \\dZ/n avec \\dmu_n.",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:2-2-5",
+    "dependencies": [
+      "inversible"
+    ]
+  },
+  "h^0": {
+    "term": "\\h^0(X,\\dG_m)",
+    "aliases": [],
+    "definition_text": "On a par définition \n\\[\n  \\h^0(X,\\dG_m) = \\h^0(X,\\sO_X)^\\times\\text{;}\n\\]",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:3-3-1",
+    "dependencies": [
+      "\\dG_m"
+    ]
+  },
+  "foncteur dérivé cohomologique": {
+    "term": "foncteur dérivé cohomologique",
+    "aliases": [],
+    "definition_text": "On dira que le foncteur $F$ admet un \\emph{foncteur dérivé cohomologique} à droite (resp. à gauche) si le foncteur $\\%$ (resp. $\\%'$) est représentable. Un objet représentant le foncteur $\\%$ (resp. $\\%'$) sera appelé foncteur dérivé cohomologique à droite (resp. à gauche) et sera noté \\eR F (resp. \\eL F).",
+    "source_artifact_id": "synthesized_from_context_for_definition:VIII:4-1-4",
+    "dependencies": [
+      "foncteur cohomologique",
+      "foncteur dérivé cohomologique à droite (resp. à gauche)"
+    ]
+  },
+  "h^1": {
+    "term": "\\h^1(X,\\dG_m)",
+    "aliases": [],
+    "definition_text": "On a un isomorphisme:\n\\[\n  \\h^1(X,\\dG_m) = \\pic(X)\\text{,}\n\\]\noù $\\pic(X)$ est le groupe des classes de faisceaux inversibles sur $X$.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-2-3",
+    "dependencies": [
+      "groupe des classes de faisceaux inversibles",
+      "\\pic(X)",
+      "\\dG_m"
+    ]
+  },
+  "an{(\\er^q f_! \\sf)} \\simeq \\er^q \\an f_! \\an \\sf": {
+    "term": "\\an{(\\eR^q f_! \\sF)} \\simeq \\eR^q \\an f_! \\an \\sF",
+    "aliases": [],
+    "definition_text": "Notons par un exposant $\\an{(-)}$ le foncteur de passage aux espaces topologiques usuels, et par $\\eR^q \\an f_!$ les foncteurs dérivés du foncteur image directe à support propre par $\\an f$. On a \\[\n  \\an{(\\eR^q f_! \\sF)} \\simeq \\eR^q \\an f_! \\an \\sF \\text{.}\n\\]",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:4-6-3",
+    "dependencies": [
+      "\\eR^q f_! \\sF"
+    ]
+  },
+  "cb^\\bot": {
+    "term": "\\cB^\\bot",
+    "aliases": [],
+    "definition_text": "Soient \\cA une catégorie triangulée, \\cB une sous-catégorie épaisse de \\cA, \\cB^\\bot l'orthogonale à droite de \\cB, $S(\\cB)$, $s(\\cB^\\bot)$ les systèmes multiplicatifs correspondants, $Q$ et $Q^\\bot$ les foncteurs canoniques de passage au quotient.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:2-6-4",
+    "dependencies": [
+      "sous-catégorie épaisse",
+      "catégorie triangulée"
+    ]
+  },
+  "tr": {
+    "term": "\\tr(a\\smallsmile b)",
+    "aliases": [],
+    "definition_text": "La forme $\\tr(a\\smallsmile b)$ identifie chacun des deux groupes $\\h^i(X,\\dZ/n)$ et $\\h_c^{2-i}(X,\\dmu_n)$ au dual (à valeurs dans $\\dZ/n$) de l'autre.",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:6-2-2",
+    "dependencies": [
+      "\\dmu_n"
+    ]
+  },
+  "cl": {
+    "term": "\\cl(Y,\\sK)",
+    "aliases": [],
+    "definition_text": "Enfin, on notera $\\cl(Y,\\sK)$ la classe à support dans $Y$ telle que \\begin{equation*}\\tag{2.3.3.1}\\label{IV:eq:2-3-3-1}\n  \\tr_g\\left(\\cl(Y,\\sK)\\smallsmile u\\right) = \\tr_{f,\\sK}(u) \\text{.}\n\\end{equation*}",
+    "source_artifact_id": "synthesized_from_context_for_lemma:IV:2-3-7",
+    "dependencies": []
+  },
+  "FR2": {
+    "term": "FR2",
+    "aliases": [],
+    "definition_text": "Dans la catégorie $\\cA$, tout diagramme \n\\[\\xymatrix{\n  & Y \\ar[d]^-{s\\in S} \\\\\n  Z \\ar[r]^-f \n    & X \n}\\]\nse complète en un diagramme commutatif \n\\[\\xymatrix{\n  P \\ar[r]^-g \\ar[d]^-{t\\in S} \n    & Y \\ar[d]^-{s\\in S} \\\\\n  Z \\ar[r]^-f \n    & X \n}\\]\nDe plus la propriété symétrique est vraie.",
+    "source_artifact_id": "synthesized_from_context_for_definition-93-0ed4d6a0",
+    "dependencies": []
+  },
+  "limités à gauche": {
+    "term": "limités à gauche",
+    "aliases": [],
+    "definition_text": "Les objets de $\\eD(\\cA)$ isomorphes aux objets de $\\eD^+(\\cA)$ seront appelés les objets \\emph{limités à gauche}, les objets de $\\eD(\\cA)$ isomorphes aux objets de $\\eD^-(\\cA)$, seront appelés les objets \\emph{limités à droite}.",
+    "source_artifact_id": "synthesized_from_context_for_definition:VIII:3-1-3",
+    "dependencies": [
+      "limités à droite"
+    ]
+  },
+  "C_1": {
+    "term": "C_1",
+    "aliases": [],
+    "definition_text": "On dit qu'un corps $K$ est $C_1$ si tout polynôme homogène non constant \n$f(x_1,\\dotsc,x_n)$ de degré $d<n$ a un zéro non trivial.",
+    "source_artifact_id": "synthesized_from_context_for_definition:I:3-2-1",
+    "dependencies": []
+  },
+  "sf_{\\bar k}": {
+    "term": "\\sF_{\\bar K}",
+    "aliases": [],
+    "definition_text": "Le foncteur \n\\[\n  \\left\\{\\begin{array}{c}\n          \\textnormal{Faisceaux étales} \\\\\n          \\textnormal{sur $\\spec(K)$}\n        \\end{array}\\right\\}\n  \\to \n  \\left\\{\\begin{array}{c}\n          \\textnormal{ensembles sur lesquels} \\\\\n          \\textnormal{$G$ opère continûment}\n        \\end{array}\\right\\}\n\\]\nqui à un \nfaisceau $\\sF$ associe sa fibre $\\sF_{\\bar K}$ au point géométrique \n$\\spec(\\bar K)$ est une équivalence de catégories.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-4-4",
+    "dependencies": [
+      "\\spec(K)"
+    ]
+  },
+  "orthogonale à droite": {
+    "term": "orthogonale à droite",
+    "aliases": [],
+    "definition_text": "Deux sous-catégories triangulées $\\cN$ et $\\cN'$ d'une catégorie triangulée $\\cA$ sont dites \\emph{orthagonales} si pour tout objet $X$ de $\\cN$ et tout objet $Y$ de $\\cN'$, on a: \n\\[\n  \\hom_\\cA(X,Y) = 0 \n\\]\n$\\cN'$ sera dite alors orthogonale à droite à $\\cN$ et $\\cN$ orthogonale à gauche à $\\cN'$. ",
+    "source_artifact_id": "synthesized_from_context_for_definition:VIII:2-6-1",
+    "dependencies": [
+      "catégorie triangulée"
+    ]
+  },
+  "FR3": {
+    "term": "FR3",
+    "aliases": [],
+    "definition_text": "Si $f$ et $g$ sont des morphismes, les propriétés suivantes sont équivalentes: il existe un $s\\in S$ tel que $s\\circ f=s\\circ g$ il existe un $t\\in S$ tel que $f\\circ t=g\\circ t$",
+    "source_artifact_id": "synthesized_from_context_for_definition-93-0ed4d6a0",
+    "dependencies": []
+  },
+  "cU": {
+    "term": "\\cU",
+    "aliases": [],
+    "definition_text": "On dit qu'un ensemble $\\cU$ d'ouverts de $X$ est un \\emph{crible} si pour tout $U\\in\\cU$ et $V\\subset U$, on a $V\\in\\cU$. Soit $\\{U_i\\}\\in\\cS$ une famille finie de $X$-schémas plats sur $X$ telle que $X$ soit le réunion des images des $U_i$, et soit $\\cU$ le crible engendré par $\\{U_i\\}$. ",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:1-4-5",
+    "dependencies": []
+  },
+  "flèche de cospécialisation": {
+    "term": "flèche de cospécialisation",
+    "aliases": [],
+    "definition_text": "Pour toute spécialisation $u:t\\to S(s)$ de points géométriques de $S$, on \\ndefinit alors une flèche, dite \\emph{flèche de cospécialisation}, \\begin{equation*}\\tag{5.2.2.1}\\label{VII:eq:5-2-2-1}\n  \\cosp(u):\\eR\\Gamma(X_t,E|X_t) \\to \\eR\\Gamma(X_s,E|X_s) \\text{,} \n\\end{equation*}\ndéfinie de la manière suivante. Soient $g:X_t\\to X$, $g':\\bar X\\to X$ les \nflèches canoniques.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VII:5-2-5",
+    "dependencies": []
+  },
+  "FR5": {
+    "term": "FR5",
+    "aliases": [],
+    "definition_text": "$(X,Y,Z,u,v,w)$, $(X',Y',Z',u',v',w')$ étant deux triangles distinguées, $f$ et $g$ deux éléments de $S$ tels que le couple $(f,g)$ soit un morphisme de $u$ dans $u'$, il existe un morphisme $h\\in S$, tel que $(f,g,h)$ soit un morphisme de triangle.",
+    "source_artifact_id": "synthesized_from_context_for_definition-93-0ed4d6a0",
+    "dependencies": []
+  },
+  "et X": {
+    "term": "\\et X",
+    "aliases": [],
+    "definition_text": "Soit $X$ un schéma. Soit $\\cS$ la catégorie des $X$-schémas étales; d'après (\\ref{I:2-1-3}.c) tout morphisme de $\\cS$ est un morphisme étale. On appelle \\emph{topologie étale} sur $\\cS$ la topologie pour laquelle un crible sur $U$ est couvrant s'il est engendré par une famille finie de morphismes \\varphi_i:U_i\\to U tels que la réunion des images des \\varphi_i recouvre $U$. On appelle \\emph{site étale} de $X$, et note $\\et X$, le site défini par $\\cS$ de la topologie étale.",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:2-3-4",
+    "dependencies": []
+  },
+  "br": {
+    "term": "\\br(K)",
+    "aliases": [],
+    "definition_text": "Deux telles algèbres sont dites équivalentes si les corps gauches qui leur sont associés par c) sont $K$-isomorphes. Si ces algèbres out même dimension, cela revient à dire qu'elles sont $K$-isomorphes. Le produit tensoriel définit par passage au quotient une structure de groupe abélien sur l'ensemble des classes d'équivalence. C'est ce groupe que l'on appelle classiquement \\emph{le groupe de Brauer} de $K$ et que l'on note \\br(K).",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:3-1-3",
+    "dependencies": []
+  },
+  "eC": {
+    "term": "\\eC(\\cA)",
+    "aliases": [],
+    "definition_text": "Les objets de $\\eC(\\cA)$ seront les complexes de $\\cA$, sans limitation de degré, à différentielle de degré $+1$. Les morphismes de $\\eC(\\cA)$ seront les morphismes de complexes (qui commutent avec la différentielle) conservant le degré.",
+    "source_artifact_id": "synthesized_from_context_for_definition:VIII:3-1-7",
+    "dependencies": []
+  },
+  "pi:\\ee(\\ca)\\to \\mathsf{trd}": {
+    "term": "\\Pi:\\eE(\\cA)\\to \\mathsf{TrD}(\\cA)",
+    "aliases": [],
+    "definition_text": "Il existe un et un seul foncteur: \n\\[\n  \\Pi:\\eE(\\cA) \\to \\mathsf{TrD}(\\cA) \n\\]\nde la forme ($\\deg \\delta(S)=1$): \n\\[\n(S=0 \\to X^\\bullet \\to Y^\\bullet \\to Z^\\bullet \\to 0) \n\\mapsto \n\\xymatrix{\n  & D(Z^\\bullet) \\ar[dl]_-{\\delta(S)} \\\\\n  D(X^\\bullet) \\ar[rr]^-{D(u)} \n    & & D(Y^\\bullet) \\ar[ul]_-{D(v)} \n}\n\\]\ndont la restriction à \\mathsf{SSS}(\\cA) soit \\sigma. Ce foncteur \nest essentiellement surjectif.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-1-5",
+    "dependencies": []
+  },
+  "h^q(\\spec(k),\\dg_m)": {
+    "term": "\\h^q(\\spec(K),\\dG_m)",
+    "aliases": [],
+    "definition_text": "Soient $k$ un corps algébriquement clos et $K$ une extension de degré de transcendance $1$ de $k$. Alors les groupes de cohomologie étale $\\h^q(\\spec(K),\\dG_m)$ sont nuls pour tout $q>0$.",
+    "source_artifact_id": "synthesized_from_context_for_corollary:I:3-2-4",
+    "dependencies": [
+      "\\spec(K)",
+      "\\dG_m"
+    ]
+  },
+  "pgl": {
+    "term": "\\pgl(n,\\bar K)",
+    "aliases": [],
+    "definition_text": "On sait que tout automorphisme de $M_n(\\bar K)$ est intérieur. Par conséquent le groupe $\\aut(M_n(\\bar K))$ s'identifie au groupe linéare projectif $\\pgl(n,\\bar K)$ et on a une bijection canonique:\n\\[\n  \\theta_n : \\br(n,K) \\iso \\h^1\\left(G,\\pgl(n,\\bar K)\\right)\\text{.}\n\\]",
+    "source_artifact_id": "synthesized_from_context_for_lemma:I:3-1-4",
+    "dependencies": []
+  },
+  "h^q": {
+    "term": "\\h^q(X,\\dG_m)",
+    "aliases": [],
+    "definition_text": "\\h^0(X,\\dG_m) &= k^\\times \\text{,} \\\\ \\h^1(X,\\dG_m) &= \\pic(X) \\text{,} \\\\ \\h^q(X,\\dG_m) &= 0 \\text{ pour $q\\geqslant 2$.}",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:3-3-1",
+    "dependencies": [
+      "\\pic(X)",
+      "\\h^0(X,\\dG_m)",
+      "\\h^1(X,\\dG_m)",
+      "\\dG_m"
+    ]
+  },
+  "underline{\\dz/n}": {
+    "term": "\\underline{\\dZ/n}",
+    "aliases": [],
+    "definition_text": "Soit $i$ l'inclusion de $D$ dans $X$. Si $D$ et $X$ sont réguliers, les \nfaisceaux de cohomologie à support $\\eR^p i^! \\dmu_n$ sont nuls pour $p=0,2$, \net $\\eR^2 i^!\\dmu_n = \\underline{\\dZ/n}$, engendré par \n$\\cl_n(D)$. ",
+    "source_artifact_id": "synthesized_from_context_for_proposition:IV:2-1-4",
+    "dependencies": [
+      "\\dmu_n",
+      "\\eR^p i^! \\dmu_n"
+    ]
+  },
+  "eK^b": {
+    "term": "\\eK^b(\\cA)",
+    "aliases": [],
+    "definition_text": "Un complexe est dit borné inférieurement si tous ses objets de degré négatif, sauf au plus un nombre fini, sont nuls. On définit de même les complexes bornés supérieurement, les complexes bornés. On désignera par $\\eK^+(\\cA)$, $\\eK^-(\\cA)$, $\\eK^b(\\cA)$ les sous-catégories pleines de $\\eK(\\cA)$ engendrées par ses familles d'objets. Ces sous-catégories sont des ``\\emph{sous-catégories triangulées}'' de $\\eK(\\cA)$: tout triangle distingué dont deux des objets sont des objets de la sous-catégorie, est isomorphe à un triangle dont les trois objets sont des objets de la sous-catégorie.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-2-3",
+    "dependencies": [
+      "\\eK^+(\\cA)",
+      "\\eK(\\cA)",
+      "\\eK^-(\\cA)"
+    ]
+  },
+  "eD^b": {
+    "term": "\\eD^b(\\cA)",
+    "aliases": [],
+    "definition_text": "Les foncteurs naturels: \n\\begin{align*}\n  \\eD^b(\\cA) &= \\eK^{b,b}(\\cA)/\\eK^{b,\\varnothing}(\\cA) \\to \\eK^{+,b}(\\cA)/\\eK^{+,\\varnothing}(\\cA) \\\\\n  \\eD^b(\\cA) &= \\eK^{b,b}(\\cA)/\\eK^{b,\\varnothing}(\\cA) \\to \\eK^{-,b}(\\cA) / \\eK^{-,\\varnothing}(\\cA) \n\\end{align*}\nsont des équivalences de catégories.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-1-2",
+    "dependencies": [
+      "\\eK^{+,b}(\\cA)"
+    ]
+  },
+  "er^p i^! \\dmu_n": {
+    "term": "\\eR^p i^! \\dmu_n",
+    "aliases": [],
+    "definition_text": "Soit $i$ l'inclusion de $D$ dans $X$. Si $D$ et $X$ sont réguliers, les faisceaux de cohomologie à support $\\eR^p i^! \\dmu_n$ sont nuls pour $p=0,2$, et $\\eR^2 i^!\\dmu_n = \\underline{\\dZ/n}$, engendré par $\\cl_n(D)$.}",
+    "source_artifact_id": "synthesized_from_context_for_proposition:IV:2-1-4",
+    "dependencies": [
+      "\\dmu_n",
+      "\\underline{\\dZ/n}"
+    ]
+  },
+  "mathsf{df}_\\text{parf}": {
+    "term": "\\mathsf{DF}_\\text{parf}(\\Lambda)",
+    "aliases": [],
+    "definition_text": "Soit $\\mathsf{KF}_\\text{parf}(\\Lambda)$ la catégorie d'objets les complexes bornés filtrés de filtration finie $(K,F)$ avec des $\\gr_F^p(K^q)$ projectifs de type fini, et de flèches les morphismes de complexes respectant la filtration, pris à une homotopie respectant la filtration près. Le foncteur $\\mathsf{KF}_\\text{parf}(\\Lambda)\\to\\mathsf{DF}(\\Lambda)$ est pleinement fidèle; son image essentielle $\\mathsf{DF}_\\text{parf}(\\Lambda)$ est presque tous nuls; si $(K,F)$ est dans $\\mathsf{D}_\\text{parf}(\\Lambda)$, alors $K$ est dans $\\mathsf{D}_\\text{parf}(\\Lambda)$. ",
+    "source_artifact_id": "synthesized_from_context_for_lemma:II:4-5-1",
+    "dependencies": []
+  },
+  "pic^0(x)_n": {
+    "term": "\\pic^0(X)_n",
+    "aliases": [],
+    "definition_text": "Remplaçant \\dZ/n par le groupe isomorphe \\dmu_n, on a des isomorphismes canoniques \n\\begin{align*}\n  \\h^0(X,\\dmu_n) &= \\dmu_n \\\\\n  \\h^1(X,\\dmu_n) &= \\pic^0(X)_n \\\\\n  \\h^2(X,\\dmu_n) &= \\dZ/n \\text{.}\n\\end{align*}",
+    "source_artifact_id": "synthesized_from_context_for_corollary:I:3-3-5",
+    "dependencies": [
+      "\\dmu_n"
+    ]
+  },
+  "dZ/n": {
+    "term": "\\dZ/n(c)",
+    "aliases": [],
+    "definition_text": "On se propose de définir une classe fondamentale locale $\\cl(Y)$ qui soit une section globale du faisceau de cohomologie à support $\\eR^{2c}i^! \\dZ/n(c)$ (rappelons que $\\dZ/n(c)=\\dmu_n^{\\otimes c}$).",
+    "source_artifact_id": "synthesized_from_context_for_proposition:IV:2-2-6",
+    "dependencies": []
+  },
+  "eR f": {
+    "term": "\\eR f",
+    "aliases": [],
+    "definition_text": "Soient \\cA et \\cB deux catégories abéliennes et f:\\cA\\to \\cB un foncteur additif. Le \\emph{foncteur dérivé total à droite} du foncteur \\eK^+(f):\\eK^+(\\cA) \\to \\eK^+(\\cB) sera noté \\eR^+ f. On définit de même \\eR^- f, \\eR f, \\eL^+ f, \\eL^- f, \\eL f. Le foncteur \\eR f (resp. \\eL f) existe et induit sur \\eD^+(\\cA) le foncteur \\eR^+ f (resp. \\eL^+ f) et sur \\eD^-(\\cA) le foncteur \\eR^- f (resp. \\eL^- f).",
+    "source_artifact_id": "synthesized_from_context_for_corollary:VIII:4-2-3-2",
+    "dependencies": [
+      "foncteur de dimension cohomologique finie à droite (resp. à gauche)",
+      "\\eK^+(\\cA)",
+      "\\eL f"
+    ]
+  },
+  "variété de cycles évanescents": {
+    "term": "variété de cycles évanescents",
+    "aliases": [],
+    "definition_text": "Soit $f:X\\to S$ un morphisme de schémas. Soient $s$ un point géométrique de $S$, $t$ une générisation de $s$, $x$ un point géométrique de $X$ su-dessus de $s$ et $\\widetilde X_t^x = \\widetilde X^x\\times_{\\widetilde S^s} t$. Alors on dit que $\\widetilde X_t^x$ est une \\emph{variété de cycles évanescents} de $f$ au point $x$.",
+    "source_artifact_id": "synthesized_from_context_for_definition:I:5-1-3",
+    "dependencies": [
+      "générisation"
+    ]
+  },
+  "h_c^\\bullet(g,\\sf(\\chi)) = 0": {
+    "term": "\\h_c^\\bullet(G,\\sF(\\chi)) = 0",
+    "aliases": [],
+    "definition_text": "Soient $G_0$ un groupe algébrique commutatif connexe sur $\\dF_q$ et $\\chi:G_0(\\dF_q) \\to E_\\lambda^\\times$ un caractère non triviale. On a \\begin{align*}\\tag{2.7.1*}\\label{VI:eq:2-7-1*}  \\h_c^\\bullet(G,\\sF(\\chi)) = 0 \\text{.}\\end{align*}",
+    "source_artifact_id": "synthesized_from_context_for_theorem:VI:2-7_",
+    "dependencies": []
+  },
+  "er^q f_* \\sf": {
+    "term": "\\eR^q f_* \\sF",
+    "aliases": [],
+    "definition_text": "Ses foncteurs dérivés à droite \\eR^q f_* s'appellent images directes supérieures. Si \\bar y est un point géométrique de $Y$, on a \\[ (\\eR^q f_* \\sF)_{\\bar y} = \\varinjlim \\h^q(V\\times_Y X,\\sF)\\text{,} \\] limite inductive prise sur les voisinages étales $V$ de $\\bar y$.",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:2-3-4",
+    "dependencies": []
+  },
+  "cohomologiquement propre": {
+    "term": "cohomologiquement propre",
+    "aliases": [],
+    "definition_text": "Nous dirons que $(f,E)$ est \\emph{cohomologiquement propre} rel.\\ à $S$ si la formation de $\\eR f_\\ast E$ commute à tout changement de base $S'\\to S$. Il revient au même de dire qu'après tout changement de base $S'\\to S$, la formation de $\\eR f_\\ast' E'$ (où $f'=f\\times_S S'$, $E'=$image inverse de $E$ sur $X\\times_S S'$) commute à tout changement de base fini $S'' \\to S'$ (cf. \\cite[XII 6.1]{sga4}).",
+    "source_artifact_id": "synthesized_from_context_for_corollary:VII:5-2-8",
+    "dependencies": []
+  },
+  "eK^+": {
+    "term": "\\eK^+(\\cA)",
+    "aliases": [],
+    "definition_text": "Un complexe est dit borné inférieurement si tous ses objets de degré négatif, sauf au plus un nombre fini, sont nuls. On définit de même les complexes bornés supérieurement, les complexes bornés. On désignera par $\\eK^+(\\cA)$, $\\eK^-(\\cA)$, $\\eK^b(\\cA)$ les sous-catégories pleines de $\\eK(\\cA)$ engendrées par ses familles d'objets.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-1-4",
+    "dependencies": [
+      "\\eK^b(\\cA)",
+      "\\eK(\\cA)",
+      "\\eK^-(\\cA)"
+    ]
+  },
+  "eL f": {
+    "term": "\\eL f",
+    "aliases": [],
+    "definition_text": "Soient $\\cA$ et $\\cB$ deux catégories abéliennes et $f:\\cA\\to \\cB$ un foncteur additif. Le \\emph{foncteur dérivé total à droite} du foncteur $\\eK^+(f):\\eK^+(\\cA) \\to \\eK^+(\\cB)$ sera noté $\\eR^+ f$. On définit de même $\\eR^- f$, $\\eR f$, $\\eL^+ f$, $\\eL^- f$, $\\eL f$. Le foncteur $\\eR f$ (resp. $\\eL f$) existe et induit sur $\\eD^+(\\cA)$ le foncteur $\\eR^+ f$ (resp. $\\eL^+ f$) et sur $\\eD^-(\\cA)$ le foncteur $\\eR^- f$ (resp. $\\eL^- f$).",
+    "source_artifact_id": "synthesized_from_context_for_corollary:VIII:4-2-3-2",
+    "dependencies": [
+      "foncteur de dimension cohomologique finie à droite (resp. à gauche)",
+      "\\eR f",
+      "\\eK^+(\\cA)"
+    ]
+  },
+  "dG_m": {
+    "term": "\\dG_m",
+    "aliases": [],
+    "definition_text": "On notera $\\dG_{m,X}$ (ou $\\dG_m$ s'il n'y a pas d'ambiguïté) le faisceau défini par $U\\mapsto \\Gamma(U,\\sO_U^\\times)$; il s'agit bien d'un faisceau grâce au théorème de descente fidèlement plate (\\ref{I:1-4-5}).",
+    "source_artifact_id": "synthesized_from_context_for_proposition:I:2-2-3",
+    "dependencies": []
+  },
+  "ek^{+,b}": {
+    "term": "\\eK^{+,b}(\\cA)",
+    "aliases": [],
+    "definition_text": "Un complexe est dit borné inférieurement si tous ses objets de degré négatif, sauf au plus un nombre fini, sont nuls. On désignera par $\\eK^+(\\cA)$, $\\eK^-(\\cA)$, $\\eK^b(\\cA)$ les sous-catégories pleines de $\\eK(\\cA)$ engendrées par ses familles d'objets. Supposons que $\\cA$ soit une catégorie abélienne. Un complexe est dit cohomologiquement borné inférieurement si tous ses objets de cohomologie de degré négatif sont nuls sauf un nombre fini d'entre eux. On paiera aussi des sous-catégories triangulées $\\eK^{+,b}(\\cA)$, $\\eK^{+,\\varnothing}(\\cA)$, \\ldots etc \\ldots (le premier signe en exposant donne des renseignements sur les objets des complexes, le deuxième signe sur les objets de cohomologie).",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-1-2",
+    "dependencies": [
+      "\\eK^b(\\cA)",
+      "\\eK^+(\\cA)",
+      "\\eK(\\cA)",
+      "\\eK^-(\\cA)"
+    ]
+  },
+  "cohomologie à support propre": {
+    "term": "cohomologie à support propre",
+    "aliases": [],
+    "definition_text": "Soit $X$ un schéma séparé de type fini sur un corps $k$. D'après un théorème de Nagata, il existe un schéma $\\bar X$ propre sur $k$ et une immersion ouverte $j:X\\to\\bar X$. Pour tout faisceau de torsion $\\sF$ sur $X$ on note $j_! \\sF$ le prolongement par $0$ de $\\sF$ à $\\bar X$ et on définit les groupes de \\emph{cohomologie à support propre} \n\\[  \n  \\h_c^q(X,\\sF)=\\h^q(\\bar X, j_! \\sF) \\text{.}\n\\]",
+    "source_artifact_id": "synthesized_from_context_for_definition:I:4-5-1",
+    "dependencies": []
+  },
+  "eK": {
+    "term": "\\eK(\\cA)",
+    "aliases": [],
+    "definition_text": "Pour tout couple d'objet $X^\\bullet$, $Y^\\bullet$ on désigne par $\\operatorname{Htp}(X^\\bullet,Y^\\bullet)$ le sous-groupe de $\\hom_{\\eC(\\cA)}(X^\\bullet,Y^\\bullet)$ des morphismes homotopes à zéro. $\\eK(\\cA)$ sera alors la catégorie dont les objets sont les objets de $\\eC(\\cA)$ et les morphismes de source $X^\\bullet$ et de but $Y^\\bullet$, le groupe: \\[\n  \\hom_{\\eC(\\cA)}(X^\\bullet,Y^\\bullet) / \\operatorname{Htp}(X^\\bullet,Y^\\bullet) \\text{.}\n\\] La loi de composition sur les morphismes de $\\eK(\\cA)$ se définit à partir de la loi de composition sur les morphismes de $\\eC(\\cA)$ en passant au quotient. $\\eK(\\cA)$ est une catégorie additive. Le foncteur de translation $T$ sur $\\eC(\\cA)$ passe au quotient (le translaté d'un morphisme homotope à zéro, est homotope à zéro). Le foncteur obtenu est un automorphisme additif de $\\eK(\\cA)$ que nous noterons encore $T$. Par abus de notation $\\eK(\\cA)$ désignera par la suite la catégorie $\\eK(\\cA)$ graduée par le foncteur $T$.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-1-6",
+    "dependencies": [
+      "\\eC(\\cA)"
+    ]
+  },
+  "er^q f_! \\sf": {
+    "term": "\\eR^q f_! \\sF",
+    "aliases": [],
+    "definition_text": "De même, si $f:X\\to S$ est un morphisme séparé de type fini de schémas noethériens, il existe un morphisme propre $\\bar f:\\bar X\\to S$ et un immersion ouverte $j:X\\to \\bar X$. On définit alors les images directes s supérieures à support propre $\\eR^q f_!$ en posant pour tout faisceau de torsion $\\sF$ sur $X$ \\[  \\eR^q f_! \\sF = \\eR^q f_*(j_! \\sF) \\text{.}\\] On vérifie comme précédemment que cette définition est indépendante de la compactification choisie.",
+    "source_artifact_id": "synthesized_from_context_for_theorem:I:4-5-4",
+    "dependencies": []
+  },
+  "diagramme cartésien": {
+    "term": "diagramme cartésien",
+    "aliases": [],
+    "definition_text": "Un module quasi-cohérent donné $\\cU$-localement définit des modules $M'$, $M''$ et $M'''$ sur $U$, $U\\times_X U$ et $U\\times_X U\\times_X U$, et des isomorphismes $\\rho:p^* M^\\bullet\\simeq M^\\bullet$ pour tout morphisme de projection $p$ entre ces espaces; c'est là un \\emph{diagramme cartésien}",
+    "source_artifact_id": "synthesized_from_context_for_lemma:I:5-1-5",
+    "dependencies": [
+      "\\cU"
+    ]
+  },
+  "eK^-": {
+    "term": "\\eK^-(\\cA)",
+    "aliases": [],
+    "definition_text": "Un complexe est dit borné inférieurement si tous ses objets de degré négatif, sauf au plus un nombre fini, sont nuls. On définit de même les complexes bornés supérieurement, les complexes bornés. On désignera par \\eK^+(\\cA), \\eK^-(\\cA), \\eK^b(\\cA) les sous-catégories pleines de \\eK(\\cA) engendrées par ses familles d'objets. Ces sous-catégories sont des ``\\emph{sous-catégories triangulées}'' de \\eK(\\cA): tout triangle distingué dont deux des objets sont des objets de la sous-catégorie, est isomorphe à un triangle dont les trois objets sont des objets de la sous-catégorie.",
+    "source_artifact_id": "synthesized_from_context_for_proposition:VIII:3-2-3",
+    "dependencies": [
+      "\\eK^b(\\cA)",
+      "\\eK^+(\\cA)",
+      "\\eK(\\cA)"
+    ]
+  }
+}

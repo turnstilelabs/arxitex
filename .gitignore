@@ -221,3 +221,6 @@ conjecture.egg-info/
 arxitex/conjecture.egg-info/
 # Hugging Face dataset cache
 hf-dataset/
+
+# SGA 4 1/2 LaTeX sources (large upstream dump; keep local-only)
+experiment/sga45/src/
