@@ -90,6 +90,13 @@ class ArtifactNode:
     is_external: bool = False
     proof: Optional[str] = None
     prerequisite_defs: Dict[str, str] = field(default_factory=dict)
+    semantic_tag: Optional[str] = None
+    source_file: Optional[str] = None
+    source_line_start: Optional[int] = None
+    pdf_page: Optional[int] = None
+    pdf_label: Optional[str] = None
+    pdf_label_type: Optional[str] = None
+    pdf_label_number: Optional[str] = None
 
     @property
     def content_preview(self) -> str:
@@ -175,6 +182,13 @@ class ArtifactNode:
             "position": self.position.to_dict(),
             "references": [ref.to_dict() for ref in self.references],
             "proof": self.proof,
+            "semantic_tag": self.semantic_tag,
+            "source_file": self.source_file,
+            "source_line_start": self.source_line_start,
+            "pdf_page": self.pdf_page,
+            "pdf_label": self.pdf_label,
+            "pdf_label_type": self.pdf_label_type,
+            "pdf_label_number": self.pdf_label_number,
         }
 
 
