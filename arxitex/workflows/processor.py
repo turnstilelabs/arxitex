@@ -38,6 +38,9 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         dependency_mode: str = "auto",
         dependency_config: dict | None = None,
         min_citations: int | None = None,
+        semantic_tags: bool = False,
+        semantic_tag_model: str = "gpt-5-mini-2025-08-07",
+        semantic_tag_concurrency: int = 4,
     ):
         super().__init__(components, max_concurrent_tasks)
         self.persist_db = persist_db
@@ -50,6 +53,9 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
         self.dependency_mode = dependency_mode
         self.dependency_config = dependency_config or {}
         self.min_citations = min_citations
+        self.semantic_tags = semantic_tags
+        self.semantic_tag_model = semantic_tag_model
+        self.semantic_tag_concurrency = semantic_tag_concurrency
 
         self.graphs_base_dir = os.path.join(self.components.output_dir, "graphs")
         self.search_indices_base_dir = os.path.join(
@@ -375,6 +381,20 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
 
             if not graph or not graph.nodes:
                 raise ValueError("Graph generation resulted in an empty graph.")
+
+            if self.semantic_tags:
+                if not enrich_content:
+                    logger.warning(
+                        f"[paper={arxiv_id}] semantic_tags requested but enrich_content is disabled; skipping tags."
+                    )
+                else:
+                    from arxitex.extractor.semantic_tagger import SemanticTagger
+
+                    tagger = SemanticTagger(
+                        model=self.semantic_tag_model,
+                        concurrency=self.semantic_tag_concurrency,
+                    )
+                    await tagger.tag_nodes(graph.nodes)
 
             graph_data = graph.to_dict(arxiv_id=arxiv_id)
 

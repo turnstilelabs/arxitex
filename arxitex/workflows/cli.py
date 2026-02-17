@@ -39,11 +39,12 @@ async def process_single_paper(arxiv_id: str, args):
     try:
         temp_base_dir = Path(components.output_dir) / "temp_processing"
 
+        effective_enrich = args.enrich_content or args.semantic_tags
         # Single-paper runs should also be attributed for LLM usage tracking.
         mode = (
             "full"
             if args.infer_dependencies
-            else ("defs" if args.enrich_content else "raw")
+            else ("defs" if effective_enrich else "raw")
         )
         with llm_usage_context(paper_id=arxiv_id, mode=mode):
             dependency_config = {
@@ -59,7 +60,7 @@ async def process_single_paper(arxiv_id: str, args):
             }
             results = await agenerate_artifact_graph(
                 arxiv_id=arxiv_id,
-                enrich_content=args.enrich_content,
+                enrich_content=effective_enrich,
                 infer_dependencies=args.infer_dependencies,
                 dependency_mode=getattr(args, "dependency_mode", "auto"),
                 dependency_config=dependency_config,
@@ -69,6 +70,15 @@ async def process_single_paper(arxiv_id: str, args):
         graph = results.get("graph")
         if not graph or not graph.nodes:
             raise ValueError("Graph generation resulted in an empty or invalid graph.")
+
+        if args.semantic_tags:
+            from arxitex.extractor.semantic_tagger import SemanticTagger
+
+            tagger = SemanticTagger(
+                model=args.semantic_tag_model,
+                concurrency=args.semantic_tag_concurrency,
+            )
+            await tagger.tag_nodes(graph.nodes)
 
         graph_data = graph.to_dict(arxiv_id=arxiv_id)
         graphs_output_dir = os.path.join(components.output_dir, "graphs")
@@ -141,6 +151,23 @@ async def main():
         "--infer-dependencies",
         action="store_true",
         help="Use LLM to infer dependencies between artifacts.",
+    )
+    parser_single.add_argument(
+        "--semantic-tags",
+        action="store_true",
+        help="Generate semantic tags for artifacts (requires content enrichment).",
+    )
+    parser_single.add_argument(
+        "--semantic-tag-model",
+        type=str,
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for semantic tags.",
+    )
+    parser_single.add_argument(
+        "--semantic-tag-concurrency",
+        type=int,
+        default=4,
+        help="Max concurrent LLM calls for semantic tags.",
     )
     parser_single.add_argument(
         "--dependency-mode",
@@ -231,6 +258,23 @@ async def main():
         "--infer-dependencies",
         action="store_true",
         help="Use LLM to infer dependencies between artifacts for papers in the batch.",
+    )
+    parser_process.add_argument(
+        "--semantic-tags",
+        action="store_true",
+        help="Generate semantic tags for artifacts (requires content enrichment).",
+    )
+    parser_process.add_argument(
+        "--semantic-tag-model",
+        type=str,
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for semantic tags.",
+    )
+    parser_process.add_argument(
+        "--semantic-tag-concurrency",
+        type=int,
+        default=4,
+        help="Max concurrent LLM calls for semantic tags.",
     )
     parser_process.add_argument(
         "--dependency-mode",
@@ -337,6 +381,23 @@ async def main():
         "--infer-dependencies",
         action="store_true",
         help="Backwards-compat: if set, will force mode to 'full'.",
+    )
+    parser_reprocess.add_argument(
+        "--semantic-tags",
+        action="store_true",
+        help="Generate semantic tags for artifacts (requires content enrichment).",
+    )
+    parser_reprocess.add_argument(
+        "--semantic-tag-model",
+        type=str,
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for semantic tags.",
+    )
+    parser_reprocess.add_argument(
+        "--semantic-tag-concurrency",
+        type=int,
+        default=4,
+        help="Max concurrent LLM calls for semantic tags.",
     )
     parser_reprocess.add_argument(
         "--dependency-mode",
@@ -534,7 +595,7 @@ async def main():
         mode = args.mode
         if args.infer_dependencies:
             mode = "full"
-        elif args.enrich_content and args.mode == "raw":
+        elif (args.enrich_content or args.semantic_tags) and args.mode == "raw":
             mode = "defs"
 
         workflow = ProcessingWorkflow(
@@ -555,6 +616,9 @@ async def main():
                 "global_proof_char_budget": args.dependency_global_proof_char_budget,
             },
             min_citations=args.min_citations,
+            semantic_tags=args.semantic_tags,
+            semantic_tag_model=args.semantic_tag_model,
+            semantic_tag_concurrency=args.semantic_tag_concurrency,
         )
         await workflow.run(max_papers=args.max_papers)
 
@@ -626,7 +690,7 @@ async def main():
         mode = args.mode
         if args.infer_dependencies:
             mode = "full"
-        elif args.enrich_content and args.mode == "raw":
+        elif (args.enrich_content or args.semantic_tags) and args.mode == "raw":
             mode = "defs"
 
         workflow = ProcessingWorkflow(
@@ -646,6 +710,9 @@ async def main():
                 "global_include_proofs": True,
                 "global_proof_char_budget": args.dependency_global_proof_char_budget,
             },
+            semantic_tags=args.semantic_tags,
+            semantic_tag_model=args.semantic_tag_model,
+            semantic_tag_concurrency=args.semantic_tag_concurrency,
         )
         # When reprocessing, restrict the workflow to the specific paper ID so
         # we don't accidentally pick the first pending paper from the queue.
