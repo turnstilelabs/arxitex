@@ -11,7 +11,7 @@ from loguru import logger
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
 from arxitex.llms.usage_context import llm_usage_context
-from arxitex.tools.citations_openalex import strip_arxiv_version
+from arxitex.tools.citations.openalex import strip_arxiv_version
 from arxitex.workflows.runner import ArxivPipelineComponents, AsyncWorkflowRunnerBase
 from arxitex.workflows.utils import save_graph_data, transform_graph_to_search_format
 

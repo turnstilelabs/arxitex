@@ -9,7 +9,7 @@ from loguru import logger
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
 from arxitex.llms.usage_context import llm_usage_context
-from arxitex.tools.citations_backfill import run_backfill as run_citations_backfill
+from arxitex.tools.citations.backfill import run_backfill as run_citations_backfill
 from arxitex.tools.discovery_queue_dedup import dedup_discovery_queue
 from arxitex.workflows.discover import DiscoveryWorkflow
 from arxitex.workflows.processor import ProcessingWorkflow
