@@ -16,7 +16,7 @@ from arxitex.extractor.semantic_tagger.models import SemanticTag
 from arxitex.extractor.semantic_tagger.prompt import SemanticTagPromptGenerator
 from arxitex.llms.llms import aexecute_prompt
 from arxitex.llms.usage_context import llm_usage_stage
-from arxitex.tools.citation_dataset.utils import append_jsonl, ensure_dir, read_jsonl
+from arxitex.tools.citations.dataset.utils import append_jsonl, ensure_dir, read_jsonl
 
 MAX_CONTEXT_CHARS = 2000
 
