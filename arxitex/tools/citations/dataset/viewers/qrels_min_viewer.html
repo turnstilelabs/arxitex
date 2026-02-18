@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Queries/Qrels Viewer</title>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --panel: #fffaf3;
+      --border: #e3d6c9;
+      --text: #1f1a14;
+      --muted: #6b5f54;
+      --chip: #efe6da;
+      --accent: #1b6b5a;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: var(--sans);
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      padding: 14px 18px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    h3 { margin: 0 0 6px 0; font-size: 18px; }
+    .muted { color: var(--muted); font-size: 12px; }
+    .controls {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .controls input, .controls select {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #fff;
+      font-size: 12px;
+    }
+    .file {
+      margin-top: 8px;
+      padding: 8px;
+      border: 1px dashed var(--border);
+      border-radius: 6px;
+      background: #fff;
+      font-size: 12px;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 14px 18px; }
+    .row { border: 1px solid var(--border); background: var(--panel); padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+    .label { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .value { font-size: 12px; white-space: pre-wrap; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: var(--chip); border: 1px solid var(--border); color: var(--muted); padding: 2px 6px; border-radius: 6px; font-size: 11px; }
+    .badge { display: inline-block; padding: 2px 6px; border-radius: 6px; background: #f3f4f6; font-size: 11px; color: #111827; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; margin-top: 6px; }
+    .meta-item { display: flex; gap: 6px; align-items: baseline; }
+    .meta-item .label { margin-top: 0; }
+    .toggle-row { display: flex; gap: 8px; align-items: center; }
+    .toggle-row input { transform: translateY(1px); }
+    .context-box { max-height: 220px; overflow: auto; border: 1px solid var(--border); background: #fff; padding: 8px; border-radius: 6px; }
+    .context-box.full { max-height: none; }
+    .context-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+    .tab { border: 1px solid var(--border); background: #fff; padding: 2px 8px; border-radius: 999px; font-size: 11px; cursor: pointer; }
+    .tab.active { background: var(--chip); color: var(--text); }
+  </style>
+</head>
+<body>
+  <header>
+    <h3>Queries / Qrels Viewer</h3>
+    <div class="muted">Load a queries JSONL (from stage 3) or a qrels JSONL. Viewer adapts to fields found.</div>
+    <div class="file">
+      <input id="file" type="file" accept=".jsonl" />
+      <span id="count" class="muted"></span>
+    </div>
+    <div class="controls">
+      <input id="search" placeholder="search query / ref / label / section" />
+      <select id="style">
+        <option value="">style: any</option>
+        <option value="precise">precise</option>
+        <option value="vague">vague</option>
+      </select>
+      <select id="hasrelevant">
+        <option value="">explicit refs: any</option>
+        <option value="yes">explicit refs: yes</option>
+        <option value="no">explicit refs: no</option>
+      </select>
+      <select id="precision">
+        <option value="">precision: any</option>
+        <option value="explicit">explicit</option>
+        <option value="implicit">implicit</option>
+      </select>
+      <select id="limit">
+        <option value="50">show 50</option>
+        <option value="100">show 100</option>
+        <option value="200">show 200</option>
+        <option value="500">show 500</option>
+      </select>
+    </div>
+    <div class="toggle-row">
+      <label class="muted"><input id="expandAll" type="checkbox" /> show full context</label>
+    </div>
+  </header>
+  <div class="wrap" id="list"></div>
+
+  <script>
+    const fileInput = document.getElementById('file');
+    const searchInput = document.getElementById('search');
+    const styleSelect = document.getElementById('style');
+    const relevantSelect = document.getElementById('hasrelevant');
+    const precisionSelect = document.getElementById('precision');
+    const limitSelect = document.getElementById('limit');
+    const list = document.getElementById('list');
+    const count = document.getElementById('count');
+    const expandAllInput = document.getElementById('expandAll');
+
+    let rows = [];
+    let expandAll = false;
+
+    function render() {
+      const term = searchInput.value.toLowerCase();
+      const style = styleSelect.value;
+      const relFilter = relevantSelect.value;
+      const precisionFilter = precisionSelect.value;
+      const limit = parseInt(limitSelect.value, 10);
+
+      let filtered = rows.filter((r) => {
+        if (style && r.query_style && r.query_style !== style) return false;
+        const hasExplicit = Array.isArray(r.explicit_refs) && r.explicit_refs.length > 0;
+        if (relFilter === 'yes' && !hasExplicit) return false;
+        if (relFilter === 'no' && hasExplicit) return false;
+        const precision = r.reference_precision || ((r.explicit_refs && r.explicit_refs.length > 0) ? 'explicit' : 'implicit');
+        if (precisionFilter && precision !== precisionFilter) return false;
+        if (!term) return true;
+        return JSON.stringify(r).toLowerCase().includes(term);
+      });
+
+      count.textContent = `Showing ${Math.min(filtered.length, limit)} / ${filtered.length}`;
+      list.innerHTML = '';
+
+      filtered.slice(0, limit).forEach((row, i) => {
+        const refs = (row.explicit_refs || row.source_refs || row.refs || []).map(r => r.raw || `${r.kind} ${r.number}`);
+        const relevant = row.selected_ids || [];
+        const mentionPrecision = row.reference_precision || ((row.explicit_refs && row.explicit_refs.length > 0) ? 'explicit' : 'implicit');
+        const sourceArxiv = row.source_arxiv_id || row.arxiv_id || '';
+        const sourceOpenAlex = row.source_openalex_id || '';
+        const htmlToText = (s) => String(s)
+          .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+          .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+
+        const contextParagraph = row.context_paragraph || '';
+        const contextHtml = row.context_html || '';
+        const contextSentence = row.context_sentence || '';
+        const contextFallback = [row.context_prev, row.context_sentence, row.context_next].filter(Boolean).join(' ');
+        const contextRaw = row.context_text || '';
+        const context = contextParagraph || contextHtml || contextFallback || contextRaw || '';
+        const contextIsHtml = /<\s*[a-z][\s\S]*>/i.test(context);
+        const contextText = contextIsHtml ? htmlToText(context) : context;
+        const section = row.section_title || '';
+        const label = row.cite_label || '';
+        const locationType = row.location_type || '';
+
+        const isHashId = (v) => typeof v === 'string' && /^[a-f0-9]{32,64}$/i.test(v);
+        const displayRelevant = relevant.filter((v) => !isHashId(String(v)));
+
+        const escapeHtml = (s) => String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+
+        const arxivLink = sourceArxiv ? `https://arxiv.org/abs/${encodeURIComponent(sourceArxiv)}` : '';
+
+        const contextId = `ctx-${i}`;
+        const tabsId = `tabs-${i}`;
+        const tabRenderedId = `tab-rendered-${i}`;
+        const tabTextId = `tab-text-${i}`;
+        const tabSentenceId = `tab-sentence-${i}`;
+        const tabParagraphId = `tab-paragraph-${i}`;
+        const tabRawId = `tab-raw-${i}`;
+        const el = document.createElement('div');
+        el.className = 'row';
+        el.innerHTML = `
+          <div class="label">Query</div>
+          <div class="value">${escapeHtml(row.query_text || '')}</div>
+          <div class="meta-grid">
+            <div class="meta-item"><span class="label">Style</span><span class="value"><span class="badge">${row.query_style || 'n/a'}</span></span></div>
+            <div class="meta-item"><span class="label">Mention</span><span class="value"><span class="chip">${escapeHtml(mentionPrecision || '—')}</span></span></div>
+            <div class="meta-item"><span class="label">Source</span><span class="value">${
+            sourceArxiv
+              ? `<a href="${arxivLink}" target="_blank" rel="noopener noreferrer">${escapeHtml(sourceArxiv)}</a>`
+              : '—'
+          }</span></div>
+            <div class="meta-item"><span class="label">Relevant</span><span class="value"><span class="chips">${displayRelevant.map(r => `<span class=\"chip\">${r}</span>`).join('')}</span></span></div>
+          </div>
+          <div class="label">Context</div>
+          <div class="context-tabs" id="${tabsId}">
+            ${contextIsHtml ? `<span class="tab active" id="${tabRenderedId}">Rendered HTML</span>` : ''}
+            <span class="tab ${contextIsHtml ? '' : 'active'}" id="${tabTextId}">Text</span>
+            ${contextSentence ? `<span class="tab" id="${tabSentenceId}">Sentence</span>` : ''}
+            ${contextParagraph ? `<span class="tab" id="${tabParagraphId}">Paragraph</span>` : ''}
+            ${contextRaw ? `<span class="tab" id="${tabRawId}">Raw</span>` : ''}
+          </div>
+          <div class="value context-box ${expandAll ? 'full' : ''}" id="${contextId}"></div>
+          <div class="label">Mention type</div>
+          <div class="value"><span class="chip">${escapeHtml(locationType || '—')}</span></div>
+        `;
+        list.appendChild(el);
+
+        const ctxEl = document.getElementById(contextId);
+        const tabsEl = document.getElementById(tabsId);
+        const setActive = (activeId) => {
+          if (!tabsEl) return;
+          tabsEl.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          const active = document.getElementById(activeId);
+          if (active) active.classList.add('active');
+        };
+        const setContent = (mode) => {
+          if (!ctxEl) return;
+          if (mode === 'rendered') {
+            ctxEl.innerHTML = contextIsHtml ? context : escapeHtml(contextText);
+          } else if (mode === 'text') {
+            ctxEl.textContent = contextText;
+          } else if (mode === 'sentence') {
+            ctxEl.textContent = contextSentence;
+          } else if (mode === 'paragraph') {
+            ctxEl.textContent = contextParagraph || contextText;
+          } else if (mode === 'raw') {
+            ctxEl.textContent = contextRaw || context;
+          }
+        };
+
+        if (contextIsHtml) {
+          setActive(tabRenderedId);
+          setContent('rendered');
+        } else {
+          setActive(tabTextId);
+          setContent('text');
+        }
+
+        const bindTab = (id, mode) => {
+          const elTab = document.getElementById(id);
+          if (!elTab) return;
+          elTab.addEventListener('click', () => {
+            setActive(id);
+            setContent(mode);
+          });
+        };
+
+        if (contextIsHtml) bindTab(tabRenderedId, 'rendered');
+        bindTab(tabTextId, 'text');
+        if (contextSentence) bindTab(tabSentenceId, 'sentence');
+        if (contextParagraph) bindTab(tabParagraphId, 'paragraph');
+        if (contextRaw) bindTab(tabRawId, 'raw');
+      });
+    }
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      rows = text.split('\n').filter(Boolean).map(line => JSON.parse(line));
+      render();
+    });
+
+    [searchInput, styleSelect, relevantSelect, precisionSelect, limitSelect].forEach(el => {
+      el.addEventListener('input', render);
+      el.addEventListener('change', render);
+    });
+
+    expandAllInput.addEventListener('change', () => {
+      expandAll = expandAllInput.checked;
+      render();
+    });
+  </script>
+</body>
+</html>

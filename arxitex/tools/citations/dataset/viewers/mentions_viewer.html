@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mentions Viewer</title>
+  <style>
+    :root {
+      --bg: #f7f4ef;
+      --ink: #1f1a14;
+      --muted: #6b5f54;
+      --accent: #1b6b5a;
+      --card: #fffaf3;
+      --line: #e3d6c9;
+      --chip: #efe6da;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: radial-gradient(1200px 800px at 10% 0%, #fff5e7 0%, var(--bg) 55%, #f3efe8 100%);
+    }
+    header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #fff7ec 0%, #fff3e2 100%);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    h1 {
+      margin: 0 0 8px 0;
+      font-size: 22px;
+      letter-spacing: 0.2px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    label {
+      font-size: 12px;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+    input[type="file"], input[type="text"], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: white;
+      font-size: 14px;
+    }
+    main {
+      padding: 18px 24px 40px;
+    }
+    .summary {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .chip {
+      background: var(--chip);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      margin: 0 0 6px 0;
+    }
+    .meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .mono { font-family: var(--mono); }
+    .section {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 6px 0;
+    }
+    .context {
+      background: #fff;
+      border: 1px dashed var(--line);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    .context b { color: var(--accent); }
+    .small {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .empty {
+      padding: 24px;
+      border: 1px dashed var(--line);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--muted);
+      background: #fff;
+    }
+    @media (max-width: 900px) {
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mentions Viewer</h1>
+    <div class="controls">
+      <div class="row">
+        <div>
+          <label>Load mentions JSONL</label>
+          <input id="fileInput" type="file" accept=".jsonl,.txt" />
+        </div>
+        <div>
+          <label>Filter (title, arXiv, section, label, explicit ref)</label>
+          <input id="filterInput" type="text" placeholder="type to filter" />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Source</label>
+          <select id="sourceSelect">
+            <option value="">All</option>
+            <option value="ar5iv">ar5iv</option>
+            <option value="pdf">pdf</option>
+          </select>
+        </div>
+        <div>
+          <label>Max cards</label>
+          <input id="limitInput" type="text" value="200" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="summary" id="summary"></div>
+    <div id="cards" class="cards"></div>
+    <div id="empty" class="empty" style="display:none;">No results. Try a different filter.</div>
+  </main>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const filterInput = document.getElementById('filterInput');
+    const sourceSelect = document.getElementById('sourceSelect');
+    const limitInput = document.getElementById('limitInput');
+    const cards = document.getElementById('cards');
+    const summary = document.getElementById('summary');
+    const empty = document.getElementById('empty');
+
+    let rows = [];
+
+    function normalize(s) {
+      return (s || '').toLowerCase();
+    }
+
+    function getExplicitRefText(row) {
+      const refs = row.explicit_refs || [];
+      return refs.map(r => r.raw || '').filter(Boolean).join('; ');
+    }
+
+    function highlight(text, needle) {
+      if (!needle) return text;
+      const n = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return text.replace(new RegExp(n, 'ig'), m => `<b>${m}</b>`);
+    }
+
+    function render() {
+      const q = normalize(filterInput.value.trim());
+      const sourceFilter = sourceSelect.value;
+      const limit = Math.max(1, parseInt(limitInput.value || '200', 10));
+
+      const filtered = rows.filter(r => {
+        if (sourceFilter && r.source !== sourceFilter) return false;
+        if (!q) return true;
+        const blob = [
+          r.title,
+          r.arxiv_id,
+          r.section_title,
+          r.cite_label,
+          r.context_sentence,
+          r.context_prev,
+          r.context_next,
+          r.bib_entry,
+          getExplicitRefText(r)
+        ].join(' ');
+        return normalize(blob).includes(q);
+      });
+
+      summary.innerHTML = '';
+      const chips = [
+        `Total rows: ${rows.length}`,
+        `Filtered: ${filtered.length}`,
+        `Showing: ${Math.min(filtered.length, limit)}`
+      ];
+      chips.forEach(c => {
+        const span = document.createElement('span');
+        span.className = 'chip';
+        span.textContent = c;
+        summary.appendChild(span);
+      });
+
+      cards.innerHTML = '';
+      if (!filtered.length) {
+        empty.style.display = 'block';
+        return;
+      }
+      empty.style.display = 'none';
+
+      filtered.slice(0, limit).forEach(r => {
+        const explicit = getExplicitRefText(r);
+        const card = document.createElement('div');
+        card.className = 'card';
+        const title = r.title || '(untitled)';
+        const section = r.section_title || '—';
+        const label = r.cite_label || '—';
+        const source = r.source || 'unknown';
+        const ctx = r.context_sentence || '';
+        const prev = r.context_prev || '';
+        const next = r.context_next || '';
+        const html = highlight(ctx, filterInput.value.trim());
+
+        card.innerHTML = `
+          <div class="title">${title}</div>
+          <div class="meta">
+            <span>arXiv: <span class="mono">${r.arxiv_id || '—'}</span></span>
+            <span>Source: ${source}</span>
+            <span>Label: ${label}</span>
+          </div>
+          <div class="section">Section: ${section}</div>
+          <div class="context">${html}</div>
+          <div class="small" style="margin-top:6px;">Prev: ${prev || '—'}</div>
+          <div class="small">Next: ${next || '—'}</div>
+          <div class="footer">
+            <span>Explicit refs: ${explicit || '—'}</span>
+          </div>
+        `;
+        cards.appendChild(card);
+      });
+    }
+
+    function parseJSONL(text) {
+      return text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map(l => {
+        try { return JSON.parse(l); } catch { return null; }
+      }).filter(Boolean);
+    }
+
+    fileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const text = await file.text();
+      rows = parseJSONL(text);
+      render();
+    });
+
+    filterInput.addEventListener('input', render);
+    sourceSelect.addEventListener('change', render);
+    limitInput.addEventListener('input', render);
+  </script>
+</body>
+</html>
