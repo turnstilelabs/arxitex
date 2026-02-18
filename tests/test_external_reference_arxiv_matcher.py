@@ -1,7 +1,7 @@
 import json
 
 from arxitex.arxiv_api import ArxivAPI
-from arxitex.tools.external_reference_arxiv_matcher import (
+from arxitex.tools.citations.arxiv_matcher import (
     extract_title_and_authors,
     generate_title_candidates,
     match_external_reference_to_arxiv,

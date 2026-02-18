@@ -5,9 +5,7 @@ from pathlib import Path
 
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.external_reference_components import (
-    extract_top_k_reference_components,
-)
+from arxitex.tools.citations.components import extract_top_k_reference_components
 
 
 def _ensure_paper_and_artifact(

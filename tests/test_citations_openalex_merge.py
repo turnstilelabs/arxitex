@@ -2,7 +2,7 @@ import asyncio
 
 import httpx
 
-from arxitex.tools.citations_openalex import fetch_openalex_citation
+from arxitex.tools.citations.openalex import fetch_openalex_citation
 
 
 class DummyResp:

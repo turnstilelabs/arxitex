@@ -1,4 +1,4 @@
-from arxitex.tools.citations_openalex import strip_arxiv_version
+from arxitex.tools.citations.openalex import strip_arxiv_version
 
 
 def test_strip_arxiv_version_modern():
