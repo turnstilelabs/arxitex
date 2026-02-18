@@ -13,7 +13,7 @@ from loguru import logger
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.external_reference_arxiv_matcher import (
+from arxitex.tools.citations.arxiv_matcher import (
     MatchResult,
     extract_title_and_authors,
     generate_title_candidates,

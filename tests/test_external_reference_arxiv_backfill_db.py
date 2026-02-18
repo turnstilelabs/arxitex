@@ -1,7 +1,7 @@
 import sqlite3
 
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.external_reference_arxiv_backfill import (
+from arxitex.tools.citations.arxiv_backfill import (
     backfill_external_reference_arxiv_matches,
 )
 
@@ -57,8 +57,8 @@ def test_backfill_creates_joinable_rows(monkeypatch, tmp_path):
 
     # Patch the matcher so the test doesn't perform network calls.
     from arxitex import tools as _tools_pkg  # noqa: F401
-    from arxitex.tools import external_reference_arxiv_backfill as backfill_mod
-    from arxitex.tools.external_reference_arxiv_matcher import MatchResult
+    from arxitex.tools.citations import arxiv_backfill as backfill_mod
+    from arxitex.tools.citations.arxiv_matcher import MatchResult
 
     def fake_matcher(**kwargs):
         return MatchResult(

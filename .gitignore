@@ -220,4 +220,6 @@ data/viz/
 conjecture.egg-info/
 arxitex/conjecture.egg-info/
 # Hugging Face dataset cache
-hf-dataset/
+hf-dataset/data/
+data/
+docs/

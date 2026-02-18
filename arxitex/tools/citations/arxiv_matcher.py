@@ -14,7 +14,7 @@ from loguru import logger
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.citations_openalex import strip_arxiv_version
+from arxitex.tools.citations.openalex import strip_arxiv_version
 
 
 @dataclass

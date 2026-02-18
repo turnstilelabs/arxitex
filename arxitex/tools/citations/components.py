@@ -12,7 +12,7 @@ Nodes are arXiv base identifiers only.
 Example
 -------
 
-    python -m arxitex.tools.external_reference_components \
+    python -m arxitex.tools.citations.components \
       --db-path pipeline_output/arxitex_indices.db \
       --top-k 10
 
@@ -35,7 +35,7 @@ from loguru import logger
 
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.citations_openalex import strip_arxiv_version
+from arxitex.tools.citations.openalex import strip_arxiv_version
 
 
 @dataclass(frozen=True)

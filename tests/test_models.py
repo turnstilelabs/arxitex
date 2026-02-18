@@ -49,6 +49,7 @@ def test_display_name_and_raw_content_and_to_dict():
         label="lbl",
         position=Position(line_start=5),
     )
+    node.semantic_tag = "A brief semantic tag."
 
     assert node.display_name == "Theorem"
     assert node.raw_content == node.content
@@ -59,3 +60,4 @@ def test_display_name_and_raw_content_and_to_dict():
     assert "content_preview" in d
     assert "prerequisites_preview" in d
     assert "position" in d
+    assert d["semantic_tag"] == "A brief semantic tag."

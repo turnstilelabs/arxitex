@@ -41,6 +41,8 @@ async def agenerate_artifact_graph(
     dependency_mode: str = "pairwise",
     dependency_config: Optional[dict] = None,
     source_dir: Optional[Path] = None,
+    local_source_dir: Optional[Path] = None,
+    local_source_id: Optional[str] = None,
     on_base_graph: Optional[Callable[[Any], Awaitable[None]]] = None,
     on_enriched_node: Optional[Callable[[Any], Awaitable[None]]] = None,
     on_dependency_edge: Optional[Callable[[Any], Awaitable[None]]] = None,
@@ -61,6 +63,42 @@ async def agenerate_artifact_graph(
     Returns:
         A dictionary containing the full graph data and statistics.
     """
+    dep_cfg = None
+    if dependency_config:
+        from arxitex.extractor.dependency_inference.dependency_mode import (
+            DependencyInferenceConfig,
+        )
+
+        dep_cfg = DependencyInferenceConfig(**dependency_config)
+
+    if local_source_dir:
+        project_dir = Path(local_source_dir).expanduser().resolve()
+        if not project_dir.exists() or not project_dir.is_dir():
+            raise ArxivExtractorError(
+                f"Local source directory not found or not a directory: {project_dir}"
+            )
+        source_label = local_source_id or arxiv_id
+        logger.info(f"[{source_label}] Instantiating GraphEnhancer (local source)...")
+        enhancer = GraphEnhancer()
+        graph, bank, artifact_to_terms_map, latex_macros = await enhancer.build_graph(
+            project_dir=project_dir,
+            source_file=f"local:{source_label}",
+            infer_dependencies=infer_dependencies,
+            enrich_content=enrich_content,
+            dependency_mode=dependency_mode,
+            dependency_config=dep_cfg,
+            on_base_graph=on_base_graph,
+            on_enriched_node=on_enriched_node,
+            on_dependency_edge=on_dependency_edge,
+            on_status=on_status,
+        )
+        return {
+            "graph": graph,
+            "bank": bank,
+            "artifact_to_terms_map": artifact_to_terms_map,
+            "latex_macros": latex_macros,
+        }
+
     log_location = source_dir if source_dir else "system's default temp directory"
     logger.debug(f"[{arxiv_id}] Creating temporary directory inside: {log_location}")
 
@@ -79,14 +117,6 @@ async def agenerate_artifact_graph(
 
             logger.info(f"[{arxiv_id}] Instantiating GraphEnhancer...")
             enhancer = GraphEnhancer()
-
-            dep_cfg = None
-            if dependency_config:
-                from arxitex.extractor.dependency_inference.dependency_mode import (
-                    DependencyInferenceConfig,
-                )
-
-                dep_cfg = DependencyInferenceConfig(**dependency_config)
 
             graph, bank, artifact_to_terms_map, latex_macros = (
                 await enhancer.build_graph(
@@ -127,6 +157,8 @@ async def run_async_pipeline(args):
             enrich_content=args.enrich_content,
             dependency_mode=args.dependency_mode,
             dependency_config=dependency_config,
+            local_source_dir=args.source_dir,
+            local_source_id=args.source_id,
         )
 
         graph = results.get("graph")
@@ -145,6 +177,30 @@ async def run_async_pipeline(args):
             extractor_mode = "hybrid (content-only)"
 
         logger.info(f"Extraction completed using mode: {extractor_mode}")
+        if args.semantic_tags:
+            if not args.enrich_content:
+                logger.warning(
+                    "semantic-tags requested but enrich-content is disabled; skipping tags."
+                )
+            else:
+                from arxitex.extractor.semantic_tagger import SemanticTagger
+
+                tagger = SemanticTagger(
+                    model=args.semantic_tag_model,
+                    concurrency=args.semantic_tag_concurrency,
+                )
+                await tagger.tag_nodes(graph.nodes)
+        if args.pdf_path:
+            from arxitex.extractor.pdf_labels import annotate_nodes_with_pdf_labels
+
+            updated = annotate_nodes_with_pdf_labels(
+                graph.nodes,
+                tex_root=Path(args.source_dir).expanduser().resolve(),
+                pdf_path=Path(args.pdf_path).expanduser().resolve(),
+                synctex_column=args.synctex_column,
+                pdf_label_max_distance=args.pdf_label_max_distance,
+            )
+            logger.info("Annotated {} nodes with PDF labels", updated)
         graph_data_to_save = graph.to_dict(
             arxiv_id=args.arxiv_id, extractor_mode=extractor_mode
         )
@@ -227,7 +283,21 @@ Examples:
 """,
     )
     parser.add_argument(
-        "arxiv_id", help="arXiv identifier (e.g., '2103.14030', 'math.AG/0601001')"
+        "arxiv_id",
+        nargs="?",
+        default=None,
+        help="arXiv identifier (e.g., '2103.14030', 'math.AG/0601001')",
+    )
+    parser.add_argument(
+        "--source-dir",
+        type=Path,
+        help="Local TeX source directory to process instead of downloading from arXiv.",
+    )
+    parser.add_argument(
+        "--source-id",
+        type=str,
+        default=None,
+        help="Identifier used in logs/output when --source-dir is set (defaults to 'local').",
     )
     parser.add_argument(
         "--infer-deps",
@@ -275,6 +345,41 @@ Examples:
         help="Enable Pass 2: Use LLM to enrich artifact content with prerequisite definitions.",
     )
     parser.add_argument(
+        "--semantic-tags",
+        action="store_true",
+        help="Generate semantic tags for artifacts (requires content enrichment).",
+    )
+    parser.add_argument(
+        "--semantic-tag-model",
+        type=str,
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for semantic tags.",
+    )
+    parser.add_argument(
+        "--semantic-tag-concurrency",
+        type=int,
+        default=4,
+        help="Max concurrent LLM calls for semantic tags.",
+    )
+    parser.add_argument(
+        "--pdf-path",
+        type=Path,
+        default=None,
+        help="Path to compiled PDF for annotating nodes with PDF-visible labels (SyncTeX).",
+    )
+    parser.add_argument(
+        "--pdf-label-max-distance",
+        type=float,
+        default=200.0,
+        help="Max distance (points) between SyncTeX hit and PDF label text.",
+    )
+    parser.add_argument(
+        "--synctex-column",
+        type=int,
+        default=1,
+        help="Column to use for SyncTeX lookup when annotating PDF labels.",
+    )
+    parser.add_argument(
         "--all-enhancements",
         action="store_true",
         help="Convenience flag to enable both --infer-deps and --enrich-content.",
@@ -306,13 +411,25 @@ Examples:
     )
 
     args = parser.parse_args()
+    if not args.arxiv_id and not args.source_dir:
+        parser.error("Provide an arXiv ID or --source-dir.")
+    if args.source_dir and not args.arxiv_id:
+        args.arxiv_id = args.source_id or "local"
     if args.all_enhancements:
         args.infer_deps = True
         args.enrich_content = True
+    if args.semantic_tags and not args.enrich_content:
+        logger.info("semantic-tags enabled: auto-enabling --enrich-content.")
+        args.enrich_content = True
+    if args.pdf_path:
+        if not args.source_dir:
+            parser.error("--pdf-path requires --source-dir.")
 
-    if (args.infer_deps or args.enrich_content) and not os.getenv("OPENAI_API_KEY"):
+    if (args.infer_deps or args.enrich_content or args.semantic_tags) and not os.getenv(
+        "OPENAI_API_KEY"
+    ):
         parser.error(
-            "The --infer-deps and --enrich-content flags require the OPENAI_API_KEY environment variable."
+            "The --infer-deps, --enrich-content, and --semantic-tags flags require the OPENAI_API_KEY environment variable."
         )
 
     asyncio.run(run_async_pipeline(args))

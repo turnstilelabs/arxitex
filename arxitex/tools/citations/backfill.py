@@ -7,7 +7,7 @@ from pathlib import Path
 
 from loguru import logger
 
-from arxitex.tools.citations_openalex import (
+from arxitex.tools.citations.openalex import (
     backfill_citations_openalex,
     strip_arxiv_version,
 )

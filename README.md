@@ -169,7 +169,27 @@ Last but not least, we enhanced each artifact with the definition of all its ter
 }
 ```
 
-## 1.3 LLM-Powered Dependency Inference (`extractor/dependency_inference`)
+## 1.3 LLM-Powered Semantic Tags (`semantic_tagger`)
+Semantic tags are short, plain-English summaries attached to artifacts.
+
+**Single paper:**
+
+```bash
+OPENAI_API_KEY=... \
+python -m arxitex.extractor.pipeline 2211.11689 --enrich-content --semantic-tags -o data/graphs/2211.11689.json
+```
+
+This produces a standard graph JSON with an added `semantic_tag` field per node. This can also be used directly:
+
+```bash
+python -m arxitex.extractor.semantic_tagger \
+  --artifacts data/citation_dataset/{target}_artifacts.jsonl \
+  --out data/citation_dataset/{target}_artifacts_tagged.jsonl
+```
+
+This input JSONL file must have a `text` field with the artifact content.
+
+## 1.4 LLM-Powered Dependency Inference (`extractor/dependency_inference`)
 The initial regex-based graph is often incomplete, as many dependencies are often implied rather than explicitly referenced. We can enhance the graph by inferring these missing logical links.
 
 For each artifact, we construct a "conceptual footprint" by combining the terms directly used in the artifact with the known dependencies of those terms from the `DefinitionBank`. We then generate a list of high-potential candidate pairs by identifying artifacts that share concepts, either through direct term overlap or through a hierarchical "subword" relationship (e.g., linking "approximate union closed set system" to "union closed set system")
@@ -213,6 +233,9 @@ Examples:
 
   # Regex + infer dependency links + enrich artifact
   python pipeline.py 2211.11689 --all-enhancements --pretty
+
+  # Local TeX source extraction (no arXiv download)
+  python -m arxitex.extractor.pipeline --source-dir data/perfectoid_tex --source-id perfectoid --all-enhancements --pretty -o data/graphs/perfectoid.json
 ```
 
 ## 1.5 Graph Visualization
@@ -246,6 +269,8 @@ python -m arxitex.workflows.cli process \
   --workers 8 \
   --dependency-mode auto
 ```
+
+To add semantic tags during batch processing, include `--semantic-tags` (requires `--mode defs` or `--mode full`).
 
 You can force a specific dependency inference strategy:
 
@@ -309,7 +334,7 @@ This uses a two-stage strategy:
 Run the backfill tool:
 
 ```bash
-python -m arxitex.tools.external_reference_arxiv_backfill \
+python -m arxitex.tools.citations.arxiv_backfill \
   --db-path pipeline_output/arxitex_indices.db \
   --qps 1.0 \
   --refresh-days 30

@@ -50,3 +50,7 @@ tenacity==8.5.0
 # Web backend (ArxiGraph -> ArxiTex)
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
+# citation_dataset extras
+beautifulsoup4==4.12.3
+lxml==5.2.2
+pdfminer.six==20231228

@@ -61,6 +61,7 @@ def transform_graph_to_search_format(
             "content": content_full,
             "terms": (artifact_to_terms_map or {}).get(node.id, []),
             "proof": node.proof,
+            "semantic_tag": node.semantic_tag,
         }
         searchable_artifacts.append(search_doc)
 
