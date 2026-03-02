@@ -138,6 +138,8 @@ celerybeat.pid
 .env
 .envrc
 .venv
+.torch_extensions/
+.venv-arm64/
 env/
 venv/
 ENV/

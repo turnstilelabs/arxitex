@@ -176,6 +176,7 @@ class ArtifactNode:
             "type": self.type.value,
             "content": self.content,
             "content_preview": self.content_preview,
+            "prerequisite_defs": self.prerequisite_defs,
             "prerequisites_preview": self.prerequisites_preview,
             "display_name": self.display_name,
             "label": self.label,

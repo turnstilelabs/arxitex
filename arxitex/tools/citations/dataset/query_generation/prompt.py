@@ -60,7 +60,9 @@ class QueryPromptGenerator:
         system = f"""You are a mathematician generating a realistic search query.
 You must simulate a researcher writing the paper who knows the needed
 result is in {target_name} but does NOT know the exact location or name.
-Return only the query text as a question sentence. Do not answer."""
+Return only the query text as a single question sentence. Do not answer.
+Do NOT mention the title {target_name} explicitly.
+The query must be unambiguous and refer to ONE specific result (single artifact)."""
 
         user = f"""
 Context:
@@ -72,6 +74,13 @@ Task:
   to find where in {target_name} this result appears.
 - The researcher knows it's in {target_name} but not the name or location.
 - Do NOT include answers.
+- Do NOT mention the title {target_name} explicitly.
+- Keep the query to a single sentence of at most 30 words.
+- Avoid vague or deictic references (e.g., "this subsection", "the above", "the following").
+- Avoid plural scope (e.g., "in which sections", "in the literature", "in Scholze's papers").
+- Ensure the query targets ONE specific statement/definition/lemma/theorem/construction.
+- Avoid asking for the label itself (e.g., "Which theorem/lemma/proposition..."). Ask for where the statement or proof appears instead.
+- Do NOT reference numbered conditions (i)/(ii), conjectures by number, or abbreviated citations like Sch12 or Scholze 2012.
 - Style: {style}. If style is "precise", use technical hints from context.
   If style is "vague", be less specific but still technical.
 """

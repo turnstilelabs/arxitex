@@ -61,6 +61,13 @@ Each query row also stores:
 - `source_refs`, `source_named_refs`, `source_ref_text`
 - `explicit_refs` (structured refs extracted from context)
 
+### Query Quality Filters (default)
+The generator applies strict filters to reduce leakage and overlong queries:
+- Rejects queries that mention the target title (case-insensitive).
+- Rejects queries containing theorem/lemma/etc with explicit numbers.
+- Rejects bracketed citations (e.g., `[Sch12]`) and section markers.
+- Rejects queries longer than 30 words.
+
 ## Stage 4: graph extraction for retrieval
 
 Build a graph from the local TeX source tree (with PDF labels) before running Stage 3:
