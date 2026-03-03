@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Retrieval Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      integrity="sha384-nB0miv6/jRmo5UMMR1a7Vd2Kd7Rk3U0l1s4qG7bM9YZoGgnirR5wR5q3K2ONV6kK"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Retrieval Viewer</h1>
+      <span>Compare per‑query results across methods</span>
+    </header>
+
+    <div id="loadStatus" class="muted" style="margin-bottom: 12px;"></div>
+
+    <section class="panel">
+      <div class="label">Query</div>
+      <select id="querySelect"></select>
+      <div style="margin-top: 10px;">
+        <div class="label">Method</div>
+        <select id="methodSelect"></select>
+      </div>
+      <div id="queryMeta" class="query-text" style="margin-top: 10px;"></div>
+      <div id="queryRefs" class="muted" style="margin-top: 6px;"></div>
+    </section>
+
+    <section class="panel">
+      <div class="label">Results</div>
+      <div id="resultsGrid"></div>
+    </section>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"
+      integrity="sha384-XB2n6FhHfMOeD1Q6n5Y0X0n6H2WzQ8oR1YcHWb9lZfC2Chl8P5XUjvx1dBqS2K3d"
+      crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      integrity="sha384-f16Q2zQFv5sJ0bQm2eZ6qB2s2m2sM3w0eC7D0Q5mYy3lK6xgTzqF1dRZ2k0w6L9m"
+      crossorigin="anonymous"></script>
+    <script src="viewer.js"></script>
+  </body>
+</html>

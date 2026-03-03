@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-import re
 from importlib.metadata import PackageNotFoundError
 from importlib.metadata import version as pkg_version
 from typing import Any, AsyncIterator
@@ -13,6 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
+from arxitex.arxiv_utils import parse_arxiv_id
 from arxitex.extractor.models import ArxivExtractorError
 from arxitex.extractor.streaming import astream_artifact_graph
 
@@ -54,19 +54,7 @@ class ProcessPaperRequest(BaseModel):
 
 
 def _extract_arxiv_id(arxiv_url: str) -> str:
-    # Supports:
-    # - https://arxiv.org/abs/2211.11689
-    # - https://arxiv.org/abs/2211.11689v1
-    # - https://arxiv.org/abs/math.AG/0601001
-    # - https://arxiv.org/pdf/2211.11689.pdf
-    match = re.search(
-        r"(\d{4}\.\d{4,5}(?:v\d+)?|[a-z-]+(?:\.[a-z]{2})?/\d{7}(?:v\d+)?)",
-        arxiv_url,
-        flags=re.IGNORECASE,
-    )
-    if not match:
-        raise ValueError("Could not extract arXiv ID from URL")
-    return match.group(1)
+    return parse_arxiv_id(arxiv_url)
 
 
 def _require_openai_key_if_needed(

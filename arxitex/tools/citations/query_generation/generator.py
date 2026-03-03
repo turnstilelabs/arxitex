@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
@@ -8,9 +9,9 @@ from loguru import logger
 from pydantic import BaseModel, Field
 
 from arxitex.llms.llms import aexecute_prompt
-from arxitex.tools.citations.dataset.query_generation.models import MentionContext
-from arxitex.tools.citations.dataset.query_generation.prompt import QueryPromptGenerator
-from arxitex.tools.citations.dataset.utils import (
+from arxitex.tools.citations.query_generation.models import MentionContext
+from arxitex.tools.citations.query_generation.prompt import QueryPromptGenerator
+from arxitex.tools.citations.utils import (
     append_jsonl,
     extract_named,
     extract_refs,
@@ -20,6 +21,26 @@ from arxitex.tools.citations.dataset.utils import (
 
 class QuerySingle(BaseModel):
     query_text: str = Field(..., min_length=4)
+
+
+MAX_QUERY_WORDS = 30
+
+LEAK_PATTERNS = [
+    # Theorem/Lemma/etc + number
+    r"\b(?:Theorem|Thm\.?|Lemma|Lem\.?|Proposition|Prop\.?|Corollary|Cor\.?|"
+    r"Definition|Def\.?|Example|Ex\.?|Remark|Rem\.?)\s*\d+(?:\.\d+)*\s*(?:\([ivxIVX]+\))?\b",
+    # Section numbers
+    r"\b(?:Section|Sec\.?)\s*\d+(?:\.\d+)*\b",
+    r"§\s*\d+(?:\.\d+)*",
+    # Bracketed citations like [Sch12]
+    r"\[[A-Za-z]{2,}\d{2,}[^\]]*\]",
+    # Roman numeral condition references like (i), (ii), (iii)
+    r"\(\s*[ivxIVX]+\s*\)",
+    # Conjecture numbers
+    r"\bConjecture\s*\d+(?:\.\d+)*\b",
+    # Abbreviated citations like Sch12, Sch 2012, Scholze 2012
+    r"\bSch(?:olze)?\s*\d{2,4}\b",
+]
 
 
 def _extract_source_refs(row: Dict[str, Any]) -> Dict[str, Any]:
@@ -63,6 +84,23 @@ class QueryGenerator:
         self.temperature = temperature
         self.concurrency = max(1, int(concurrency))
         self.prompt_generator = QueryPromptGenerator()
+        self._leak_regexes = [re.compile(pat) for pat in LEAK_PATTERNS]
+
+    def _is_leaky(self, text: str) -> bool:
+        if not text:
+            return True
+        lower = text.lower()
+        if self.target_name and self.target_name.lower() in lower:
+            return True
+        for rx in self._leak_regexes:
+            if rx.search(text):
+                return True
+        return False
+
+    def _too_long(self, text: str) -> bool:
+        if not text:
+            return True
+        return len(text.split()) > MAX_QUERY_WORDS
 
     async def generate_from_mentions(
         self,
@@ -110,6 +148,20 @@ class QueryGenerator:
                         if not text:
                             logger.warning(
                                 "Empty {} query for arXiv {}",
+                                style,
+                                row.get("arxiv_id"),
+                            )
+                            continue
+                        if self._too_long(text):
+                            logger.warning(
+                                "Rejected {} query (too long) for arXiv {}",
+                                style,
+                                row.get("arxiv_id"),
+                            )
+                            continue
+                        if self._is_leaky(text):
+                            logger.warning(
+                                "Rejected {} query (leaky) for arXiv {}",
                                 style,
                                 row.get("arxiv_id"),
                             )

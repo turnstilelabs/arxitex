@@ -1,3 +1,5 @@
+"""CLI to backfill OpenAlex citation counts for arXiv ids in the pipeline DB."""
+
 from __future__ import annotations
 
 import argparse
@@ -7,58 +9,9 @@ from pathlib import Path
 
 from loguru import logger
 
-from arxitex.tools.citations.openalex import (
-    backfill_citations_openalex,
-    strip_arxiv_version,
-)
-
-
-def _iter_arxiv_ids_from_db(db_path: str | Path) -> list[str]:
-    """Load arXiv IDs from discovery + processed tables.
-
-    The pipeline DB contains two different schemas depending on usage:
-    - Legacy indices: discovered_papers, processed_papers
-    - Normalized schema: papers
-
-    We primarily care about the discovery queue and already-processed papers.
-    """
-
-    conn = sqlite3.connect(str(db_path))
-    try:
-        conn.row_factory = sqlite3.Row
-        ids: list[str] = []
-
-        # discovered_papers (legacy queue)
-        try:
-            rows = conn.execute("SELECT arxiv_id FROM discovered_papers").fetchall()
-            ids.extend([r[0] for r in rows if r and r[0]])
-        except sqlite3.OperationalError:
-            pass
-
-        # processed_papers (legacy)
-        try:
-            rows = conn.execute("SELECT arxiv_id FROM processed_papers").fetchall()
-            ids.extend([r[0] for r in rows if r and r[0]])
-        except sqlite3.OperationalError:
-            pass
-
-        # normalized papers table (if you use persistence)
-        try:
-            rows = conn.execute("SELECT paper_id FROM papers").fetchall()
-            ids.extend([r[0] for r in rows if r and r[0]])
-        except sqlite3.OperationalError:
-            pass
-
-        # stable unique
-        seen = set()
-        out = []
-        for a in ids:
-            if a not in seen:
-                seen.add(a)
-                out.append(a)
-        return out
-    finally:
-        conn.close()
+from arxitex.arxiv_utils import normalize_arxiv_id
+from arxitex.tools.backfill.common import iter_arxiv_ids_from_db
+from arxitex.tools.openalex import backfill_citations_openalex
 
 
 def _iter_arxiv_ids_from_discovery_only(db_path: str | Path) -> list[str]:
@@ -127,7 +80,7 @@ def _load_paper_metadata_map(db_path: str | Path) -> dict[str, dict]:
             arxiv_id = m.get("arxiv_id")
             if not arxiv_id:
                 continue
-            base_id = strip_arxiv_version(arxiv_id)
+            base_id = normalize_arxiv_id(arxiv_id)
             # Keep the first seen; that's fine.
             out.setdefault(base_id, m)
 
@@ -148,9 +101,10 @@ async def run_backfill(args) -> int:
     elif getattr(args, "only_discovery", False):
         arxiv_ids = _iter_arxiv_ids_from_discovery_only(args.db_path)
     else:
-        arxiv_ids = _iter_arxiv_ids_from_db(args.db_path)
+        arxiv_ids = iter_arxiv_ids_from_db(args.db_path)
     logger.info(f"Loaded {len(arxiv_ids)} arXiv ids from DB")
 
+    # Load metadata to improve OpenAlex search matching quality.
     meta_map = _load_paper_metadata_map(args.db_path)
     logger.info(f"Loaded metadata for {len(meta_map)} base arXiv ids")
 

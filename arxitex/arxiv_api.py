@@ -6,6 +6,8 @@ from urllib.parse import urlparse
 import requests
 from loguru import logger
 
+from arxitex.arxiv_utils import parse_arxiv_id
+
 
 class ArxivAPI:
     """Handles communication with the ArXiv API"""
@@ -105,10 +107,11 @@ class ArxivAPI:
 
     def extract_arxiv_id(self, id_url):
         """Extract ArXiv ID from a URL or ID string"""
-        if "arxiv.org" in id_url or "/abs/" in id_url:
-            return id_url.split("/abs/")[-1]
-        else:
-            # For cases where the ID might be in different format
+        try:
+            return parse_arxiv_id(id_url, preserve_version=True)
+        except Exception:
+            if "arxiv.org" in id_url or "/abs/" in id_url:
+                return id_url.split("/abs/")[-1]
             parsed = urlparse(id_url)
             path = parsed.path
             return path.split("/")[-1]

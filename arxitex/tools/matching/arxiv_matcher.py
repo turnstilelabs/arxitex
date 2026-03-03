@@ -1,3 +1,5 @@
+"""Match external references (TeX/strings) to arXiv papers via metadata search."""
+
 from __future__ import annotations
 
 import hashlib
@@ -6,15 +8,20 @@ import re
 import unicodedata
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
-from difflib import SequenceMatcher
 from typing import Optional
 
 from loguru import logger
 
 from arxitex.arxiv_api import ArxivAPI
+from arxitex.arxiv_utils import normalize_arxiv_id
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.citations.openalex import strip_arxiv_version
+from arxitex.tools.matching.scoring import (
+    author_overlap,
+    normalize_author,
+    normalize_title,
+    title_similarity,
+)
 
 
 @dataclass
@@ -30,40 +37,6 @@ def _utc_now_iso() -> str:
 
 def _norm_ws(s: str) -> str:
     return re.sub(r"\s+", " ", (s or "").strip())
-
-
-def normalize_title(s: str) -> str:
-    """Normalize titles for fuzzy matching."""
-
-    # Decompose accents, strip combining marks.
-    t = unicodedata.normalize("NFKD", s or "")
-    t = "".join(ch for ch in t if not unicodedata.combining(ch))
-    t = t.lower()
-    # Drop common TeX commands and braces.
-    t = re.sub(r"\\(emph|textit|textbf|itshape|bfseries)\b", " ", t)
-    t = re.sub(r"[{}]", " ", t)
-    # Remove inline math.
-    t = re.sub(r"\$[^$]*\$", " ", t)
-    # Normalize punctuation to spaces.
-    t = re.sub(r"[^a-z0-9\s]", " ", t)
-    return _norm_ws(t)
-
-
-def normalize_author(s: str) -> str:
-    """Normalize an author string."""
-
-    t = (s or "").strip()
-    t = unicodedata.normalize("NFKD", t)
-    t = "".join(ch for ch in t if not unicodedata.combining(ch))
-    t = t.lower()
-    if not t:
-        return ""
-    if "," in t:
-        parts = [p.strip() for p in t.split(",") if p.strip()]
-        if len(parts) >= 2:
-            t = " ".join(parts[1:] + [parts[0]])
-    t = re.sub(r"[^a-z0-9\s]", " ", t)
-    return _norm_ws(t)
 
 
 ARXIV_ID_IN_TEXT_RE = re.compile(
@@ -454,27 +427,6 @@ def _author_last_name(authors: list[str]) -> Optional[str]:
     return n[-1] if n else None
 
 
-def _author_overlap(wanted: list[str], got: list[str]) -> float:
-    def last_name(a: str) -> str:
-        na = normalize_author(a)
-        toks = [t for t in na.split(" ") if t]
-        return toks[-1] if toks else ""
-
-    w = {last_name(a) for a in (wanted or []) if last_name(a)}
-    g = {last_name(a) for a in (got or []) if last_name(a)}
-    if not w or not g:
-        return 0.0
-    return len(w.intersection(g)) / max(1, len(w))
-
-
-def _title_score(wanted: str, got: str) -> float:
-    a = normalize_title(wanted)
-    b = normalize_title(got)
-    if not a or not b:
-        return 0.0
-    return SequenceMatcher(a=a, b=b).ratio()
-
-
 @dataclass
 class MatchResult:
     matched_arxiv_id: Optional[str]
@@ -564,11 +516,11 @@ def match_external_reference_to_arxiv(
 ) -> MatchResult:
     """Try up to `max_candidates` candidate titles and keep the best arXiv match."""
 
-    # direct id
+    # Fast path: explicit arXiv id in the reference text.
     direct = try_extract_arxiv_id_from_text(full_reference)
     if direct:
         return MatchResult(
-            matched_arxiv_id=strip_arxiv_version(direct),
+            matched_arxiv_id=normalize_arxiv_id(direct),
             match_method="direct_regex",
             extracted_title=None,
             extracted_authors=[],
@@ -579,7 +531,7 @@ def match_external_reference_to_arxiv(
             arxiv_query=None,
         )
 
-    # candidates
+    # Candidate title extraction: either explicit override or parse from the reference.
     if extracted_title:
         candidates = [
             TitleCandidate(title=extracted_title, method="provided", score=0.0)
@@ -654,6 +606,7 @@ def match_external_reference_to_arxiv(
                         )
 
                         if ma and ts is not None:
+                            ma = normalize_arxiv_id(ma)
                             score = ts + 0.1 * (ao or 0.0)
                             if score > best_score:
                                 best_score = score
@@ -693,7 +646,7 @@ def match_external_reference_to_arxiv(
                 )
             continue
 
-        # pick best entry for this candidate
+        # Pick the best arXiv entry for this candidate title.
         local_best: Optional[MatchResult] = None
         local_best_score = -1.0
 
@@ -703,13 +656,13 @@ def match_external_reference_to_arxiv(
                 continue
             pt = paper.get("title") or ""
             pa = paper.get("authors") or []
-            ts = _title_score(title, pt)
-            ao = _author_overlap(authors, pa)
+            ts = title_similarity(title, pt)
+            ao = author_overlap(authors, pa, use_last_name=True)
             score = ts + 0.1 * ao
             if score > local_best_score:
                 local_best_score = score
                 local_best = MatchResult(
-                    matched_arxiv_id=strip_arxiv_version(
+                    matched_arxiv_id=normalize_arxiv_id(
                         str(paper.get("arxiv_id") or "")
                     ),
                     match_method="search",
@@ -725,7 +678,7 @@ def match_external_reference_to_arxiv(
         if local_best is None:
             continue
 
-        # Threshold
+        # Thresholding: require high title similarity, and some author overlap if authors exist.
         if local_best.title_score is not None:
             if authors:
                 ok = (

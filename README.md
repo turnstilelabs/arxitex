@@ -78,6 +78,31 @@ https://huggingface.co/datasets/<org>/<repo>/resolve/<ref>/data/arxiv_2211.11689
 where `<ref>` is either a branch name like `main` or an immutable
 commit hash used for version pinning.
 
+# Citation Dataset Pipeline (arXiv → OpenAlex → Mentions → Queries)
+The citation dataset pipeline builds a dataset of papers that cite a target paper and extracts mention contexts from arXiv sources. It starts from an arXiv URL or id, resolves the target work in OpenAlex, and then uses OpenAlex to discover all citing works.
+
+High-level flow:
+- **Resolve target**: arXiv id → title/authors → OpenAlex Work ID.
+- **Stage 1 (OpenAlex)**: fetch works that cite the target (outputs `{target}_works.jsonl`).
+- **Stage 2 (Mentions)**: for arXiv-available works, extract mention contexts from ar5iv/PDF (outputs `{target}_mentions.jsonl`).
+- **Stage 3 (Queries)**: generate synthetic researcher queries from mention contexts (outputs `{target}_queries.jsonl`).
+
+Usage example:
+```bash
+python -m arxitex.tools.citations.arxiv_identification \
+  --target-arxiv https://arxiv.org/abs/1111.4914 \
+  --out-dir data/citation_dataset \
+  --cache-dir data/citation_dataset/cache
+
+python -m arxitex.tools.citations.get_citations \
+  --target-arxiv https://arxiv.org/abs/1111.4914 \
+  --out-dir data/citation_dataset
+
+python -m arxitex.tools.citations.query_generation \
+  --target-arxiv https://arxiv.org/abs/1111.4914 \
+  --out-dir data/citation_dataset
+```
+
 # 1. Building a graph from an ArXiv paper
 ## 1.1 Initial Graph Construction (`extractor/graph_building`)
 We collect all artifacts (definition, proposition, claim, theorem,...) with regular expressions as well as the explicit dependencies between thoses (through the use of `\ref{...}`).
@@ -235,7 +260,7 @@ Examples:
   python pipeline.py 2211.11689 --all-enhancements --pretty
 
   # Local TeX source extraction (no arXiv download)
-  python -m arxitex.extractor.pipeline --source-dir data/perfectoid_tex --source-id perfectoid --all-enhancements --pretty -o data/graphs/perfectoid.json
+  python -m arxitex.extractor.pipeline --source-dir data/<paper>_tex --source-id <paper> --all-enhancements --pretty -o data/graphs/<paper>.json
 ```
 
 ## 1.5 Graph Visualization
@@ -334,7 +359,7 @@ This uses a two-stage strategy:
 Run the backfill tool:
 
 ```bash
-python -m arxitex.tools.citations.arxiv_backfill \
+python -m arxitex.tools.backfill.arxiv_backfill \
   --db-path pipeline_output/arxitex_indices.db \
   --qps 1.0 \
   --refresh-days 30
