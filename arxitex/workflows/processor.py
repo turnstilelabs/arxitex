@@ -8,10 +8,10 @@ from pathlib import Path
 from filelock import FileLock
 from loguru import logger
 
+from arxitex.arxiv_utils import normalize_arxiv_id
 from arxitex.db.error_utils import classify_processing_error
 from arxitex.extractor.pipeline import agenerate_artifact_graph
 from arxitex.llms.usage_context import llm_usage_context
-from arxitex.tools.citations.openalex import strip_arxiv_version
 from arxitex.workflows.runner import ArxivPipelineComponents, AsyncWorkflowRunnerBase
 from arxitex.workflows.utils import save_graph_data, transform_graph_to_search_format
 
@@ -239,7 +239,7 @@ class ProcessingWorkflow(AsyncWorkflowRunnerBase):
             best_meta_by_base: dict[str, dict] = {}
             for row in cur:
                 arxiv_id = row["arxiv_id"]
-                base_id = strip_arxiv_version(arxiv_id)
+                base_id = normalize_arxiv_id(arxiv_id)
 
                 try:
                     meta = json.loads(row["metadata"])

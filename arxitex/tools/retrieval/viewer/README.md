@@ -7,10 +7,10 @@ This is a static HTML viewer to compare per‑query retrieval results across met
 1. Start a local server from the repo root:
    - `python -m http.server 8000`
 2. Open `http://localhost:8000/arxitex/tools/retrieval/viewer/index.html` in a browser.
-3. The viewer auto‑loads the default paths (hardcoded in `viewer.js`).
-   - Graph JSON: `data/graphs/perfectoid.json`
-   - Queries JSONL: `data/citation_dataset/perfectoid_queries.jsonl`
-   - Results JSONL for each method: `e1_results.jsonl`, `e2_results.jsonl`, `e3_results.jsonl`, `e4_results.jsonl`, `e5_results.jsonl`
+3. Add URL parameters to point to your files:
+   - `?graph=/data/graphs/your_target.json`
+   - `&queries=/data/citation_dataset/your_target_queries.jsonl`
+   - Optional: `&e1=...&e2=...&e3=...&e4=...&e5=...`
 4. Pick a query from the dropdown to inspect results.
 
 ## Math Rendering

@@ -1,10 +1,12 @@
+"""Backfill arXiv matches for external references stored in the pipeline DB."""
+
 from __future__ import annotations
 
 import argparse
 import asyncio
 import json
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -13,7 +15,12 @@ from loguru import logger
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.citations.arxiv_matcher import (
+from arxitex.tools.backfill.common import (
+    load_existing_timestamps,
+    make_throttle,
+    should_refresh,
+)
+from arxitex.tools.matching.arxiv_matcher import (
     MatchResult,
     extract_title_and_authors,
     generate_title_candidates,
@@ -34,26 +41,6 @@ class BackfillStats:
     no_title: int = 0
     none: int = 0
     failed: int = 0
-
-
-def _load_existing_match_timestamps(db_path: str) -> dict[tuple[str, str], str]:
-    ensure_schema(db_path)
-    conn = connect(db_path)
-    try:
-        rows = conn.execute(
-            """
-            SELECT paper_id, external_artifact_id, last_matched_at_utc
-            FROM external_reference_arxiv_matches
-            """
-        ).fetchall()
-        out: dict[tuple[str, str], str] = {}
-        for r in rows:
-            if not r:
-                continue
-            out[(str(r[0]), str(r[1]))] = str(r[2])
-        return out
-    finally:
-        conn.close()
 
 
 def _iter_external_reference_artifacts(
@@ -168,8 +155,12 @@ async def backfill_external_reference_arxiv_matches(
             len(only_paper_ids),
         )
 
-    existing_ts = _load_existing_match_timestamps(db_path)
-    cutoff = datetime.now(timezone.utc) - timedelta(days=max(0, int(refresh_days)))
+    existing_ts = load_existing_timestamps(
+        db_path,
+        table="external_reference_arxiv_matches",
+        key_cols=("paper_id", "external_artifact_id"),
+        ts_col="last_matched_at_utc",
+    )
 
     conn = connect(db_path)
     try:
@@ -186,19 +177,8 @@ async def backfill_external_reference_arxiv_matches(
     api = ArxivAPI()
     stats = BackfillStats()
 
-    # Global throttling similar to OpenAlex tool
-    throttle_lock = asyncio.Lock()
-    last_request_at = 0.0
-
-    async def throttle():
-        nonlocal last_request_at
-        min_interval = 1.0 / max(0.05, float(qps))
-        async with throttle_lock:
-            now = asyncio.get_event_loop().time()
-            wait = (last_request_at + min_interval) - now
-            if wait > 0:
-                await asyncio.sleep(wait)
-            last_request_at = asyncio.get_event_loop().time()
+    # Global throttling to avoid hammering the arXiv API.
+    throttle = make_throttle(qps)
 
     for r in refs:
         paper_id = str(r["paper_id"])
@@ -240,14 +220,9 @@ async def backfill_external_reference_arxiv_matches(
                 )
 
         ts = existing_ts.get((paper_id, external_artifact_id))
-        if ts and not force:
-            try:
-                dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
-            except Exception:
-                dt = None
-            if dt is not None and dt >= cutoff:
-                stats.skipped_fresh += 1
-                continue
+        if not should_refresh(ts, refresh_days=refresh_days, force=force):
+            stats.skipped_fresh += 1
+            continue
 
         try:
             # Throttle only around actual API calls. The matcher has a direct

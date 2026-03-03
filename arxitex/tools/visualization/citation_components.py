@@ -12,7 +12,7 @@ Nodes are arXiv base identifiers only.
 Example
 -------
 
-    python -m arxitex.tools.citations.components \
+    python -m arxitex.tools.visualization.citation_components \
       --db-path pipeline_output/arxitex_indices.db \
       --top-k 10
 
@@ -33,9 +33,9 @@ from typing import Iterable
 
 from loguru import logger
 
+from arxitex.arxiv_utils import normalize_arxiv_id
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-from arxitex.tools.citations.openalex import strip_arxiv_version
 
 
 @dataclass(frozen=True)
@@ -106,8 +106,8 @@ def _load_edges(
             if not src or not dst:
                 continue
             if normalize_arxiv_ids:
-                src = strip_arxiv_version(src)
-                dst = strip_arxiv_version(dst)
+                src = normalize_arxiv_id(src)
+                dst = normalize_arxiv_id(dst)
             out.append(DirectedEdge(source=src, target=dst))
         return out
     finally:
@@ -258,7 +258,7 @@ def _load_titles_from_papers(conn, paper_ids: list[str]) -> dict[str, str]:
             raw_id = str(r["paper_id"] or "").strip()
             if not raw_id:
                 continue
-            base_id = strip_arxiv_version(raw_id)
+            base_id = normalize_arxiv_id(raw_id)
             if base_id not in paper_ids:
                 continue
             if base_id in out:
@@ -319,7 +319,7 @@ def _load_titles_from_discovered(conn, paper_ids: list[str]) -> dict[str, str]:
             raw_id = str(r["arxiv_id"] or "").strip()
             if not raw_id:
                 continue
-            base_id = strip_arxiv_version(raw_id)
+            base_id = normalize_arxiv_id(raw_id)
             if base_id not in paper_ids:
                 continue
             if base_id in out:

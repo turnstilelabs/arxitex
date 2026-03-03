@@ -4,7 +4,7 @@ import re
 from typing import Optional
 
 from arxitex.llms.prompt import Prompt
-from arxitex.tools.citations.dataset.query_generation.models import MentionContext
+from arxitex.tools.citations.query_generation.models import MentionContext
 
 
 def sanitize_prompt_context(text: str) -> str:

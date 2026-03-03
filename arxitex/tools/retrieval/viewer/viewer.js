@@ -27,14 +27,24 @@ const state = {
 };
 
 const DEFAULT_PATHS = {
-  graph: "/data/graphs/perfectoid.json",
-  queries: "/data/citation_dataset/perfectoid_queries.jsonl",
-  e1: "/data/retrieval/perfectoid/perfectoid_best_20260227T093235Z/e1_content+all/auto/e1_results.jsonl",
-  e2: "/data/retrieval/perfectoid/perfectoid_best_20260227T093359Z/e2_content+semantic/auto/e2_results.jsonl",
-  e3: "/data/retrieval/perfectoid/perfectoid_best_20260227T093622Z/e3_content+all/auto/e3_results.jsonl",
+  graph: "",
+  queries: "",
+  e1: "",
+  e2: "",
+  e3: "",
   e4: "",
   e5: "",
 };
+
+function getPathParams() {
+  const params = new URLSearchParams(window.location.search || "");
+  const paths = { ...DEFAULT_PATHS };
+  for (const key of Object.keys(paths)) {
+    const val = params.get(key);
+    if (val) paths[key] = val;
+  }
+  return paths;
+}
 
 function readFile(file) {
   return new Promise((resolve, reject) => {
@@ -347,10 +357,12 @@ function renderMethodOptions() {
 
 async function loadFromPaths() {
   loadStatus.textContent = "Loading…";
-  const graphPath = DEFAULT_PATHS.graph;
-  const queriesPath = DEFAULT_PATHS.queries;
+  const paths = getPathParams();
+  const graphPath = paths.graph;
+  const queriesPath = paths.queries;
   if (!graphPath || !queriesPath) {
-    loadStatus.textContent = "Graph + queries paths are required.";
+    loadStatus.textContent =
+      "Provide ?graph=...&queries=... (and optional e1/e2/e3/e4/e5) in the URL.";
     return;
   }
 
@@ -362,11 +374,11 @@ async function loadFromPaths() {
   state.queries = parseJsonl(queriesText);
 
   const pathMap = {
-    e1: DEFAULT_PATHS.e1,
-    e2: DEFAULT_PATHS.e2,
-    e3: DEFAULT_PATHS.e3,
-    e4: DEFAULT_PATHS.e4,
-    e5: DEFAULT_PATHS.e5,
+    e1: paths.e1,
+    e2: paths.e2,
+    e3: paths.e3,
+    e4: paths.e4,
+    e5: paths.e5,
   };
   for (const key of Object.keys(pathMap)) {
     const path = pathMap[key];

@@ -9,9 +9,9 @@ from loguru import logger
 from pydantic import BaseModel, Field
 
 from arxitex.llms.llms import aexecute_prompt
-from arxitex.tools.citations.dataset.query_generation.models import MentionContext
-from arxitex.tools.citations.dataset.query_generation.prompt import QueryPromptGenerator
-from arxitex.tools.citations.dataset.utils import (
+from arxitex.tools.citations.query_generation.models import MentionContext
+from arxitex.tools.citations.query_generation.prompt import QueryPromptGenerator
+from arxitex.tools.citations.utils import (
     append_jsonl,
     extract_named,
     extract_refs,

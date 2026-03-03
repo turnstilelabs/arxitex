@@ -11,17 +11,34 @@ pip install -r requirements.txt
 ```
 
 Additional deps for this pipeline:
-- `beautifulsoup4`, `lxml`, `pdfminer.six`
+- `beautifulsoup4`, `lxml`, `pdfminer.six`, `aiohttp`
+
+## High-level flow
+- **Resolve target**: arXiv URL/id → title/authors → OpenAlex Work ID.
+- **Stage 1**: fetch works that cite the target (OpenAlex).
+- **Stage 2**: extract mention contexts from ar5iv/PDF for arXiv-available works.
+- **Stage 3**: generate synthetic researcher queries from mentions.
 
 ## Stage 1: OpenAlex citing works
 
 ```bash
-python -m arxitex.tools.citations.dataset.arxiv_identification \
+python -m arxitex.tools.citations.arxiv_identification \
   --target-id my-target \
   --target-ids https://openalex.org/W123... \
   --out-dir data/citation_dataset \
   --cache-dir data/citation_dataset/cache
 ```
+
+Or resolve from an arXiv URL/id:
+
+```bash
+python -m arxitex.tools.citations.arxiv_identification \
+  --target-arxiv https://arxiv.org/abs/2211.11689 \
+  --out-dir data/citation_dataset \
+  --cache-dir data/citation_dataset/cache
+```
+
+If `--target-id` is omitted, it is derived from the arXiv id (e.g., `arxiv_2211.11689`).
 
 Outputs:
 - `{target}_target_ids.json`
@@ -33,11 +50,31 @@ Stage 2 matches the target's bibliography entry by title and then extracts in-te
 citations for the corresponding label(s).
 
 ```bash
-python -m arxitex.tools.citations.dataset.get_citations \
+python -m arxitex.tools.citations.get_citations \
   --target-title "Target Work Title" \
   --target-id my-target \
   --out-dir data/citation_dataset \
   --cache-dir data/citation_dataset/cache
+```
+
+Or derive the target title from an arXiv URL/id:
+
+```bash
+python -m arxitex.tools.citations.get_citations \
+  --target-arxiv https://arxiv.org/abs/2211.11689 \
+  --out-dir data/citation_dataset \
+  --cache-dir data/citation_dataset/cache
+```
+
+Offline (cache-only) mode:
+
+```bash
+python -m arxitex.tools.citations.get_citations \
+  --target-title "Target Work Title" \
+  --target-id my-target \
+  --out-dir data/citation_dataset \
+  --cache-dir data/citation_dataset/cache \
+  --offline
 ```
 
 Outputs:
@@ -48,9 +85,17 @@ Outputs:
 ## Stage 3: synthetic queries
 
 ```bash
-python -m arxitex.tools.citations.dataset.query_generation \
+python -m arxitex.tools.citations.query_generation \
   --target-id my-target \
   --target-name "Target Work Title" \
+  --out-dir data/citation_dataset
+```
+
+Or derive the target name from an arXiv URL/id:
+
+```bash
+python -m arxitex.tools.citations.query_generation \
+  --target-arxiv https://arxiv.org/abs/2211.11689 \
   --out-dir data/citation_dataset
 ```
 

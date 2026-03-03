@@ -10,26 +10,9 @@ from typing import Any, Optional
 import httpx
 from loguru import logger
 
+from arxitex.arxiv_utils import normalize_arxiv_id
 from arxitex.db.connection import connect
 from arxitex.db.schema import ensure_schema
-
-ARXIV_VERSION_RE = re.compile(r"^(?P<base>.+)v(?P<vnum>\d+)$")
-ARXIV_MODERN_RE = re.compile(r"^\d{4}\.\d{4,5}$")
-
-
-def strip_arxiv_version(arxiv_id: str) -> str:
-    """Normalize an arXiv id to the base work id (strip trailing vN).
-
-    Examples
-    --------
-    - 2501.01234v3 -> 2501.01234
-    - math.AG/0601001v2 -> math.AG/0601001
-    - 2501.01234 -> 2501.01234
-    """
-
-    arxiv_id = (arxiv_id or "").strip()
-    m = ARXIV_VERSION_RE.match(arxiv_id)
-    return m.group("base") if m else arxiv_id
 
 
 @dataclass
@@ -277,7 +260,7 @@ async def backfill_citations_openalex(
 
     ensure_schema(db_path)
 
-    base_ids = [strip_arxiv_version(a) for a in arxiv_ids if a]
+    base_ids = [normalize_arxiv_id(a) for a in arxiv_ids if a]
     # stable unique
     seen = set()
     uniq = []

@@ -102,7 +102,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--root-dir",
-        default="data/retrieval/perfectoid",
+        default="data/retrieval",
         help="Root directory to scan.",
     )
     parser.add_argument(
