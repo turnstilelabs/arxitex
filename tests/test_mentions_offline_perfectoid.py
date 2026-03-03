@@ -3,6 +3,8 @@ import json
 from collections import Counter
 from pathlib import Path
 
+import pytest
+
 from arxitex.tools.citations import get_citations
 
 
@@ -26,6 +28,11 @@ def test_offline_mentions_match_perfectoid(tmp_path: Path):
     out_dir = tmp_path / "out"
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    works_path = Path("data/citation_dataset/perfectoid_works.jsonl")
+    cache_dir = Path("data/citation_dataset/cache")
+    if not works_path.exists() or not cache_dir.exists():
+        pytest.skip("Perfectoid offline fixtures not available in this environment.")
+
     args = [
         "--target-arxiv",
         "https://arxiv.org/abs/1205.2208",
@@ -34,11 +41,11 @@ def test_offline_mentions_match_perfectoid(tmp_path: Path):
         "--target-id",
         "perfectoid",
         "--works-file",
-        "data/citation_dataset/perfectoid_works.jsonl",
+        str(works_path),
         "--out-dir",
         str(out_dir),
         "--cache-dir",
-        "data/citation_dataset/cache",
+        str(cache_dir),
         "--offline",
     ]
 
