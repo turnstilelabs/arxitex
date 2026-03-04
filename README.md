@@ -199,7 +199,7 @@ The `discover` command is the entry point for finding papers. It automatically f
 python -m arxitex.workflows.cli discover  --query cat:math.GR  --max-papers 10
 ```
 
-# 2.2 Process: Analyzing Papers in Parallel Batches
+## 2.2 Process: Analyzing Papers in Parallel Batches
 
 The `process` command is the workhorse of the pipeline. It takes papers from the queue, downloads their LaTeX source, and runs the full analysis pipeline as explained above on them concurrently to generate their knowledge graphs.
 
