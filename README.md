@@ -21,63 +21,6 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## Exporting processed papers to a Hugging Face dataset
-
-Once papers have been processed and persisted into the SQLite DB (via the
-`workflows.cli process` commands with `--persist-db`), you can export each
-paper's graph + definition bank into a single JSON file suitable for a
-Hugging Face dataset and the ArxiGraph webapp.
-
-Use the `export_hf_dataset` tool:
-
-```bash
-python -m arxitex.tools.export_hf_dataset \
-  --db-path path/to/arxitex.sqlite \
-  --output-dir /path/to/hf-dataset/data
-```
-
-Key points:
-
-- No re-processing: this tool only reads from the existing SQLite DB; it
-  does not call LLMs or re-run extraction.
-- It discovers successfully processed papers via the `processed_papers`
-  table (managed by `ProcessedIndex`).
-- For each paper it reconstructs the graph and definition data and
-  writes:
-
-  ```jsonc
-  {
-    "graph": { /* DocumentGraph.to_dict(...) */ },
-    "definition_bank": { /* term -> definition */ } | null,
-    "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... }
-  }
-  ```
-
-  to `--output-dir` using the filename convention:
-
-  ```text
-  arxiv_{arxiv_id.replace('/', '_')}.json
-  ```
-
-You can restrict export to a subset of arXiv IDs with:
-
-```bash
-python -m arxitex.tools.export_hf_dataset \
-  --db-path path/to/arxitex.sqlite \
-  --output-dir /path/to/hf-dataset/data \
-  --only-arxiv-id 2103.14030 --only-arxiv-id 2211.11689
-```
-
-In a Hugging Face `datasets` repo these files typically live under
-`data/`, and can be fetched from URLs of the form:
-
-```text
-https://huggingface.co/datasets/<org>/<repo>/resolve/<ref>/data/arxiv_2211.11689.json
-```
-
-where `<ref>` is either a branch name like `main` or an immutable
-commit hash used for version pinning.
-
 # 1. Building a graph from an ArXiv paper
 ## 1.1 Initial Graph Construction (`extractor/graph_building`)
 We collect all artifacts (definition, proposition, claim, theorem,...) with regular expressions as well as the explicit dependencies between thoses (through the use of `\ref{...}`).
@@ -290,7 +233,7 @@ python -m arxitex.workflows.cli process --mode full --persist-db \
   --dependency-mode pairwise
 ```
 
-## 2.4 (Optional) Build a "VIP" subset using citation counts (OpenAlex)
+## 2.3 (Optional) Build a "VIP" subset using citation counts (OpenAlex)
 
 You can enrich the pipeline DB with **total citation counts** from OpenAlex and use this
 signal to select a smaller, high-value subset of papers to run expensive LLM enhancements on.
@@ -324,7 +267,7 @@ order by citation_count desc
 limit 50;"
 ```
 
-## 2.5 Resolve external bibliography entries to arXiv IDs
+## 2.4 Resolve external bibliography entries to arXiv IDs
 The extracted graph includes `external_reference` nodes for citations (from `\cite{...}` and bracket-style citations) with the bibliography entry text attached when available. Bibliography entries do not always contain an explicit arXiv identifier, so ArxiTex provides an optional backfill step that attempts to match each external reference to an arXiv ID.
 
 This uses a two-stage strategy:
@@ -342,17 +285,50 @@ python -m arxitex.tools.backfill.arxiv_backfill \
 
 Match decisions are stored in the `external_reference_arxiv_matches` table (and a cache table is maintained to avoid repeatedly querying the arXiv API for the same normalized title/authors).
 
-# 2.6 Search format
-We can convert the graph data to a better format for search witht the `--format-for-search` flag. Each artifact is saved with its extracted `terms` and the paper's `title`, `authors`, `abstract`.
+## 2.5 Exporting processed papers to a Hugging Face dataset
+
+Once papers have been processed and persisted into the SQLite DB (via the
+`workflows.cli process` commands with `--persist-db`), you can export each
+paper's graph + definition bank into a single JSON file suitable for a
+Hugging Face dataset.
+
+Use the `export_hf_dataset` tool:
 
 ```bash
-python workflows/cli.py process -n 1 --enrich-content --format-for-search
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data
 ```
 
-This saves all processed papers into `search_index.jsonl`
+Main points:
 
-```jsonl
-{"title": "On the conjugacy problem for subdirect products of hyperbolic groups", "authors": ["Martin R. Bridson"], "arxiv_id": "2507.05087v1", "abstract": "If $G_1$ and $G_2$ are torsion-free hyperbolic groups and $P<G_1\\times G_2$ is a finitely generated subdirect product, then the conjugacy problem in $P$ is solvable if and only if there is a uniform algorithm to decide membership of the cyclic subgroups in the finitely presented group $G_1/(P\\cap G_1)$. The proof of this result relies on a new technique for perturbing elements in a hyperbolic group to ensure that they are not proper powers.", "artifact_id": "lemma-6-2c644b", "artifact_type": "lemma", "content": "**C_G(w)**: we write $C_G(w)$ to denote the centraliser in $G$ of the image of $w\\in F(X)$. \n\n**G**: The rel-cyclics Dehn function of a finitely presented group $\\G=\\<X\\mid R\\>$ is $$ \\d^{c}(n) : = \\max_{w,u} \\{ {\\rm{Area}}(w\\,u^p) +|pn| \\colon |w|+|u|\\le n,\\ w=_\\G u^{-p},\\ |p|\\le  o(u)/2\\}, $$ where $o(u)\\in\\N\\cup\\{\\infty\\}$ is the order of $u$ in $\\G$.\n\n---\n\n\\label{l:find-root}\nIf $G$ is torsion-free and hyperbolic, then there is an algorithm that, given a word $w$ in the generators, will decide if \n$w$ is non-trivial in $G$ and, if it is,  will produce a word $w_0$ such that $C_G(w) = \\<w_0\\>$.", "terms": ["<w_0>", "C_G(w)", "G", "generators", "hyperbolic", "non-trivial", "torsion-free", "word"]}
+- No re-processing: this only reads from the existing SQLite DB.
+- It discovers successfully processed papers via the `processed_papers`
+  table.
+- For each paper it reconstructs the graph and definition data and
+  writes:
+
+  ```jsonc
+  {
+    "graph": { /* DocumentGraph.to_dict(...) */ },
+    "definition_bank": { /* term -> definition */ } | null,
+    "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... }
+  }
+  ```
+
+  to `--output-dir` using the filename convention:
+
+  ```text
+  arxiv_{arxiv_id.replace('/', '_')}.json
+  ```
+
+You can restrict export to a subset of arXiv IDs with:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data \
+  --only-arxiv-id 2103.14030 --only-arxiv-id 2211.11689
 ```
 
 ## 3. Citation Dataset Pipeline (arXiv → Mentions → Queries)
