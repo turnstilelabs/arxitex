@@ -1,4 +1,4 @@
-"""Mention extraction helpers for citation dataset stage 2."""
+"""Mention extraction helpers for the mentions pipeline stage 2."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ from typing import Any, Dict, List, Optional
 from bs4 import BeautifulSoup
 from pdfminer.high_level import extract_text as pdf_extract_text
 
-from arxitex.tools.citations.mention_utils import (
+from arxitex.tools.mentions.extraction.mention_utils import (
     build_label_regex,
     derive_labels_from_entry,
     find_sentence_index,
@@ -17,7 +17,7 @@ from arxitex.tools.citations.mention_utils import (
     split_sentences,
     title_matches_entry,
 )
-from arxitex.tools.citations.utils import extract_refs
+from arxitex.tools.mentions.utils import extract_refs
 
 
 def _window_text(sentences: List[str], idx: int, window: int = 1) -> str:

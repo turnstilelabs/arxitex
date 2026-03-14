@@ -355,8 +355,8 @@ This saves all processed papers into `search_index.jsonl`
 {"title": "On the conjugacy problem for subdirect products of hyperbolic groups", "authors": ["Martin R. Bridson"], "arxiv_id": "2507.05087v1", "abstract": "If $G_1$ and $G_2$ are torsion-free hyperbolic groups and $P<G_1\\times G_2$ is a finitely generated subdirect product, then the conjugacy problem in $P$ is solvable if and only if there is a uniform algorithm to decide membership of the cyclic subgroups in the finitely presented group $G_1/(P\\cap G_1)$. The proof of this result relies on a new technique for perturbing elements in a hyperbolic group to ensure that they are not proper powers.", "artifact_id": "lemma-6-2c644b", "artifact_type": "lemma", "content": "**C_G(w)**: we write $C_G(w)$ to denote the centraliser in $G$ of the image of $w\\in F(X)$. \n\n**G**: The rel-cyclics Dehn function of a finitely presented group $\\G=\\<X\\mid R\\>$ is $$ \\d^{c}(n) : = \\max_{w,u} \\{ {\\rm{Area}}(w\\,u^p) +|pn| \\colon |w|+|u|\\le n,\\ w=_\\G u^{-p},\\ |p|\\le  o(u)/2\\}, $$ where $o(u)\\in\\N\\cup\\{\\infty\\}$ is the order of $u$ in $\\G$.\n\n---\n\n\\label{l:find-root}\nIf $G$ is torsion-free and hyperbolic, then there is an algorithm that, given a word $w$ in the generators, will decide if \n$w$ is non-trivial in $G$ and, if it is,  will produce a word $w_0$ such that $C_G(w) = \\<w_0\\>$.", "terms": ["<w_0>", "C_G(w)", "G", "generators", "hyperbolic", "non-trivial", "torsion-free", "word"]}
 ```
 
-## 3. Citation Dataset Pipeline (arXiv → Mentions → Queries)
-The citation dataset pipeline builds a dataset of papers that cite a target paper and extracts mention contexts from arXiv sources. It starts from an arXiv URL or id, resolves the target work in OpenAlex, and then uses OpenAlex to discover all citing works.
+## 3. Mentions Dataset Pipeline (arXiv → Mentions → Queries)
+The mentions pipeline builds a dataset of papers that cite a target paper and extracts mention contexts from arXiv sources. It starts from an arXiv URL or id, resolves the target work in OpenAlex, and then uses OpenAlex to discover all citing works.
 
 High-level flow:
 - **Resolve target**: arXiv id → title/authors → OpenAlex Work ID.
@@ -366,16 +366,16 @@ High-level flow:
 
 Usage example:
 ```bash
-python -m arxitex.tools.citations.arxiv_identification \
+python -m arxitex.tools.mentions.acquisition.citing_works_cli \
   --target-arxiv https://arxiv.org/abs/1111.4914 \
   --out-dir data/citation_dataset \
   --cache-dir data/citation_dataset/cache
 
-python -m arxitex.tools.citations.get_citations \
+python -m arxitex.tools.mentions.extraction.extract_mentions_cli \
   --target-arxiv https://arxiv.org/abs/1111.4914 \
   --out-dir data/citation_dataset
 
-python -m arxitex.tools.citations.query_generation \
+python -m arxitex.tools.mentions.generation \
   --target-arxiv https://arxiv.org/abs/1111.4914 \
   --out-dir data/citation_dataset
 ```

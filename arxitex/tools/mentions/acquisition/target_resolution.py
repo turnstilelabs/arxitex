@@ -1,4 +1,4 @@
-"""Resolve citation dataset targets via arXiv + OpenAlex."""
+"""Resolve mentions pipeline targets via arXiv + OpenAlex."""
 
 from __future__ import annotations
 

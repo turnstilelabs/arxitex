@@ -12,8 +12,8 @@ from loguru import logger
 
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.arxiv_utils import parse_arxiv_id
-from arxitex.tools.citations.query_generation import QueryGenerator
-from arxitex.tools.citations.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.acquisition.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.generation import QueryGenerator
 from arxitex.utils import ensure_dir, read_jsonl
 
 

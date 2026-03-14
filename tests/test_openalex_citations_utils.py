@@ -1,4 +1,6 @@
-from arxitex.tools.citations.openalex_citations import normalize_openalex_work_id
+from arxitex.tools.mentions.acquisition.openalex_citations import (
+    normalize_openalex_work_id,
+)
 
 
 def test_normalize_openalex_work_id_variants():

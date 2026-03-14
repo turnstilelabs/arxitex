@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from arxitex.tools.citations import get_citations
+from arxitex.tools.mentions.extraction import extract_mentions_cli
 
 
 def _read_jsonl(path: Path):
@@ -49,7 +49,7 @@ def test_offline_mentions_match_perfectoid(tmp_path: Path):
         "--offline",
     ]
 
-    asyncio.run(get_citations.main(args))
+    asyncio.run(extract_mentions_cli.main(args))
 
     generated = out_dir / "perfectoid_mentions.jsonl"
     expected = Path("data/citation_dataset/perfectoid_mentions.jsonl")

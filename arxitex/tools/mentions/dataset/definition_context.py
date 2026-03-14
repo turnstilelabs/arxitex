@@ -8,7 +8,7 @@ from typing import Dict, List
 
 from bs4 import BeautifulSoup
 
-from arxitex.tools.citations.mention_utils import split_sentences
+from arxitex.tools.mentions.extraction.mention_utils import split_sentences
 
 DEF_CUE_RE = re.compile(
     r"\b(let|define|denote|we call|we say|we write)\b",

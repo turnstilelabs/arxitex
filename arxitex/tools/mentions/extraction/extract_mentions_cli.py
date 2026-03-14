@@ -28,8 +28,8 @@ from arxitex.arxiv_utils import (
     normalize_arxiv_id,
     parse_arxiv_id,
 )
-from arxitex.tools.citations.mention_extraction import MentionExtractor
-from arxitex.tools.citations.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.acquisition.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.extraction.mention_extraction import MentionExtractor
 from arxitex.utils import append_jsonl, ensure_dir, read_jsonl, sha256_hash
 
 
@@ -89,7 +89,7 @@ async def fetch_to_cache(
     return cache_path
 
 
-class MentionExtractionStage:
+class MentionContextExtractionStage:
     def __init__(
         self,
         *,
@@ -418,7 +418,7 @@ async def main(argv: Optional[List[str]] = None) -> int:
     if not target_title:
         raise SystemExit("No target title provided. Pass --target-title.")
 
-    stage = MentionExtractionStage(
+    stage = MentionContextExtractionStage(
         works_file=args.works_file,
         target_title=target_title,
         target_id=target_id,

@@ -1,4 +1,4 @@
-from arxitex.tools.citations.utils import extract_named, extract_refs
+from arxitex.tools.mentions.utils import extract_named, extract_refs
 
 
 def test_extract_refs_allows_abbrev_with_dot() -> None:

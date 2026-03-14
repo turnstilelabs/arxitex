@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
-from typing import Dict, Iterable
+from typing import Any, Dict, Iterable
 
 
 def ensure_dir(path: str) -> None:
@@ -24,6 +24,11 @@ def read_jsonl(path: str) -> Iterable[Dict]:
 def append_jsonl(path: str, obj: Dict) -> None:
     with open(path, "a", encoding="utf-8") as f:
         f.write(json.dumps(obj, ensure_ascii=False) + "\n")
+
+
+def write_json(path: str, obj: Any) -> None:
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2)
 
 
 def sha256_hash(text: str) -> str:

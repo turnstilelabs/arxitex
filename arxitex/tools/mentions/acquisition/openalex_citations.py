@@ -1,4 +1,4 @@
-"""OpenAlex citation lookup helpers for citation dataset stage 1."""
+"""Stage 1: fetch OpenAlex citing works for a target and write *_works.jsonl."""
 
 from __future__ import annotations
 
@@ -13,16 +13,11 @@ import requests
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.arxiv_utils import is_arxiv_url, try_parse_arxiv_id
 from arxitex.tools.matching.arxiv_matcher import match_external_reference_to_arxiv
-from arxitex.utils import append_jsonl, ensure_dir, sha256_hash
+from arxitex.utils import append_jsonl, ensure_dir, sha256_hash, write_json
 
 OPENALEX_BASE = "https://api.openalex.org"
 MAX_RETRIES = 5
 BACKOFF_BASE_SECONDS = 1.0
-
-
-def write_json(path: str, obj: Any) -> None:
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(obj, f, ensure_ascii=False, indent=2)
 
 
 def normalize_openalex_work_id(raw: str) -> str:

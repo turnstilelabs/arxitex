@@ -1,4 +1,4 @@
-from arxitex.tools.citations.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.acquisition.target_resolution import OpenAlexTargetResolver
 
 
 def test_select_openalex_work_id_perfectoid():

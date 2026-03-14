@@ -21,11 +21,11 @@ from loguru import logger
 
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.arxiv_utils import parse_arxiv_id
-from arxitex.tools.citations.openalex_citations import (
+from arxitex.tools.mentions.acquisition.openalex_citations import (
     OpenAlexCitingWorksStage,
     normalize_openalex_work_id,
 )
-from arxitex.tools.citations.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.acquisition.target_resolution import OpenAlexTargetResolver
 from arxitex.utils import ensure_dir
 
 

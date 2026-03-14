@@ -1,11 +1,11 @@
-"""Shared helpers for citation_dataset stages."""
+"""Reference parsing helpers for the mentions pipeline."""
 
 from __future__ import annotations
 
 import re
 from typing import Dict, List
 
-# Canonicalize statement kind aliases used in citations.
+# Canonicalize statement kind aliases used in mention parsing.
 TYPE_ALIASES = {
     "theorem": ["theorem", "th", "thm"],
     "proposition": ["proposition", "prop", "prop."],
@@ -18,10 +18,11 @@ TYPE_ALIASES = {
 
 # Match explicit refs like "Theorem 2.1", "Prop. 3", "Theorem A".
 TYPE_PATTERN = re.compile(
-    r"\b(?P<kind>theorem|th\.?|thm\.?|proposition|prop\.?|lemma|lem\.?|corollary|cor\.?|definition|def\.?|example|ex\.?|remark|rem\.?)"
-    r"(?=\s|\(|\d|[A-Z])"  # avoid matching inside words; allow letter-only numbers
+    r"\b(?P<kind>theorem|thm|th|proposition|prop|lemma|lem|corollary|cor|definition|def|example|ex|remark|rem)"
+    r"(?:\.)?"  # optional dot for abbreviations
+    r"(?=\s|\(|\d|(?-i:[A-Z]))"  # avoid matching inside words; allow letter-only numbers
     r"\s*\(?"  # optional space/paren before number
-    r"(?P<num>(?:[IVXLCDM]+\s*\.)?\s*\d+(?:\.\d+)*|[A-Z](?:\.\d+)*)\)?",
+    r"(?P<num>(?:[IVXLCDM]+\s*\.)?\s*\d+(?:\.\d+)*|(?-i:[A-Z])(?:\.\d+)*)\)?",
     re.IGNORECASE,
 )
 
