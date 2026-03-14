@@ -17,6 +17,8 @@ Our goal is to build a structured, machine-readable knowledge graph representing
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+# For the mentions pipeline extras:
+pip install -e ".[mentions]"
 # or for editable install:
 pip install -e .
 ```

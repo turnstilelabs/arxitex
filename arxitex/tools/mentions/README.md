@@ -8,10 +8,10 @@ Use the arxitex environment and install missing deps:
 
 ```bash
 pip install -r requirements.txt
+pip install -e ".[mentions]"
 ```
 
-Additional deps for this pipeline:
-- `beautifulsoup4`, `lxml`, `pdfminer.six`, `aiohttp`
+The mentions pipeline extras are provided via the `mentions` extra in `setup.py`.
 
 ## High-level flow
 - **Resolve target**: arXiv URL/id → title/authors → OpenAlex Work ID.
