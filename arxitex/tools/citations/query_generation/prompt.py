@@ -13,10 +13,10 @@ def sanitize_prompt_context(text: str) -> str:
     s = text
     # Drop bracketed citation labels like [Sch12], [KS1]
     s = re.sub(r"\[[A-Za-z]{2,}\d{2,}[^\]]*\]", " ", s)
-    # Drop explicit numbered refs like Theorem 1.3, Def. 2.6(ii), §3.2
+    # Drop explicit refs like Theorem 1.3, Def. 2.6(ii), Theorem A, §3.2
     s = re.sub(
         r"\b(?:Theorem|Thm\.?|Lemma|Lem\.?|Proposition|Prop\.?|Corollary|Cor\.?|Definition|Def\.?|Example|Ex\.?|Remark|Rem\.?)\s*"
-        r"\d+(?:\.\d+)*\s*(?:\([ivxIVX]+\))?",
+        r"(?:\d+(?:\.\d+)*|[A-Z](?:\.\d+)*)\s*(?:\([ivxIVX]+\))?",
         " ",
         s,
     )
@@ -45,13 +45,17 @@ class QueryPromptGenerator:
         target_name: str,
         prompt_id: str,
     ) -> Prompt:
+        explicit_kind = None
+        if ctx.explicit_refs:
+            first = ctx.explicit_refs[0] or {}
+            explicit_kind = (first.get("kind") or "").strip().lower() or None
         context_prev = ctx.context_prev or ""
         context_sentence = ctx.context_sentence or ""
         context_next = ctx.context_next or ""
         stitched = " ".join(
             [s for s in [context_prev, context_sentence, context_next] if s]
         ).strip()
-        raw_paragraph = stitched
+        raw_paragraph = (ctx.context_paragraph or "").strip() or stitched
         if not raw_paragraph and ctx.context_html:
             raw_paragraph = self._html_to_text(ctx.context_html or "")
         full_paragraph = self._truncate(raw_paragraph or "", 1500) or ""
@@ -84,6 +88,8 @@ Task:
 - Style: {style}. If style is "precise", use technical hints from context.
   If style is "vague", be less specific but still technical.
 """
+        if explicit_kind:
+            user += f"\n- The cited statement type is {explicit_kind}. The query must target a {explicit_kind}."
 
         return Prompt(id=prompt_id, system=system, user=user)
 

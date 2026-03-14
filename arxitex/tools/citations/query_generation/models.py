@@ -19,6 +19,7 @@ class MentionContext:
     reference_precision: Optional[str]
     bib_entry: Optional[str]
     explicit_refs: Optional[list]
+    explicit_ref_source: Optional[str]
 
     @classmethod
     def from_row(cls, row: Dict[str, Any]) -> "MentionContext":
@@ -36,4 +37,5 @@ class MentionContext:
             reference_precision=row.get("reference_precision"),
             bib_entry=row.get("bib_entry"),
             explicit_refs=row.get("explicit_refs"),
+            explicit_ref_source=row.get("explicit_ref_source"),
         )

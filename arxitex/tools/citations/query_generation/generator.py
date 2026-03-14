@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import re
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
@@ -9,14 +8,15 @@ from loguru import logger
 from pydantic import BaseModel, Field
 
 from arxitex.llms.llms import aexecute_prompt
+from arxitex.tools.citations.query_generation.filters import (
+    has_location_terms,
+    is_leaky,
+    type_conflict,
+)
 from arxitex.tools.citations.query_generation.models import MentionContext
 from arxitex.tools.citations.query_generation.prompt import QueryPromptGenerator
-from arxitex.tools.citations.utils import (
-    append_jsonl,
-    extract_named,
-    extract_refs,
-    sha256_hash,
-)
+from arxitex.tools.citations.utils import extract_named, extract_refs
+from arxitex.utils import append_jsonl, sha256_hash
 
 
 class QuerySingle(BaseModel):
@@ -24,26 +24,12 @@ class QuerySingle(BaseModel):
 
 
 MAX_QUERY_WORDS = 30
-
-LEAK_PATTERNS = [
-    # Theorem/Lemma/etc + number
-    r"\b(?:Theorem|Thm\.?|Lemma|Lem\.?|Proposition|Prop\.?|Corollary|Cor\.?|"
-    r"Definition|Def\.?|Example|Ex\.?|Remark|Rem\.?)\s*\d+(?:\.\d+)*\s*(?:\([ivxIVX]+\))?\b",
-    # Section numbers
-    r"\b(?:Section|Sec\.?)\s*\d+(?:\.\d+)*\b",
-    r"§\s*\d+(?:\.\d+)*",
-    # Bracketed citations like [Sch12]
-    r"\[[A-Za-z]{2,}\d{2,}[^\]]*\]",
-    # Roman numeral condition references like (i), (ii), (iii)
-    r"\(\s*[ivxIVX]+\s*\)",
-    # Conjecture numbers
-    r"\bConjecture\s*\d+(?:\.\d+)*\b",
-    # Abbreviated citations like Sch12, Sch 2012, Scholze 2012
-    r"\bSch(?:olze)?\s*\d{2,4}\b",
-]
+MAX_QUERY_ATTEMPTS = 3
 
 
-def _extract_source_refs(row: Dict[str, Any]) -> Dict[str, Any]:
+def _extract_source_refs(
+    row: Dict[str, Any], *, max_chars: int = 2000
+) -> Dict[str, Any]:
     context = " ".join(
         [
             row.get("context_sentence") or "",
@@ -54,6 +40,8 @@ def _extract_source_refs(row: Dict[str, Any]) -> Dict[str, Any]:
             row.get("section_title") or "",
         ]
     )
+    if max_chars > 0 and len(context) > max_chars:
+        context = context[:max_chars]
     refs = extract_refs(context)
     named = extract_named(context)
     return {"source_refs": refs, "source_named_refs": named, "source_ref_text": context}
@@ -84,18 +72,6 @@ class QueryGenerator:
         self.temperature = temperature
         self.concurrency = max(1, int(concurrency))
         self.prompt_generator = QueryPromptGenerator()
-        self._leak_regexes = [re.compile(pat) for pat in LEAK_PATTERNS]
-
-    def _is_leaky(self, text: str) -> bool:
-        if not text:
-            return True
-        lower = text.lower()
-        if self.target_name and self.target_name.lower() in lower:
-            return True
-        for rx in self._leak_regexes:
-            if rx.search(text):
-                return True
-        return False
 
     def _too_long(self, text: str) -> bool:
         if not text:
@@ -116,57 +92,95 @@ class QueryGenerator:
             async with sem:
                 try:
                     ctx = MentionContext.from_row(row)
+                    explicit_kind = None
+                    if ctx.explicit_refs:
+                        first = ctx.explicit_refs[0] or {}
+                        explicit_kind = (
+                            first.get("kind") or ""
+                        ).strip().lower() or None
                     styles = ["precise", "vague"]
                     cleaned: List[tuple[str, QuerySingle]] = []
                     for style in styles:
-                        prompt_id = f"synth-query-{style}-{_make_mention_id(ctx)}"
-                        prompt = self.prompt_generator.make_prompt(
-                            ctx,
-                            style=style,
-                            target_name=self.target_name,
-                            prompt_id=prompt_id,
-                        )
-                        if self.temperature is None:
-                            result = await aexecute_prompt(
-                                prompt,
-                                QuerySingle,
-                                model=self.model,
+                        accepted = None
+                        for attempt in range(1, MAX_QUERY_ATTEMPTS + 1):
+                            prompt_id = (
+                                f"synth-query-{style}-{attempt}-{_make_mention_id(ctx)}"
                             )
-                        else:
-                            result = await aexecute_prompt(
-                                prompt,
-                                QuerySingle,
-                                model=self.model,
-                                temperature=self.temperature,
+                            prompt = self.prompt_generator.make_prompt(
+                                ctx,
+                                style=style,
+                                target_name=self.target_name,
+                                prompt_id=prompt_id,
                             )
-                        if not result or not getattr(result, "query_text", None):
-                            logger.warning(
-                                "No {} query for arXiv {}", style, row.get("arxiv_id")
-                            )
-                            continue
-                        text = result.query_text.strip()
-                        if not text:
-                            logger.warning(
-                                "Empty {} query for arXiv {}",
-                                style,
-                                row.get("arxiv_id"),
-                            )
-                            continue
-                        if self._too_long(text):
-                            logger.warning(
-                                "Rejected {} query (too long) for arXiv {}",
-                                style,
-                                row.get("arxiv_id"),
-                            )
-                            continue
-                        if self._is_leaky(text):
-                            logger.warning(
-                                "Rejected {} query (leaky) for arXiv {}",
-                                style,
-                                row.get("arxiv_id"),
-                            )
-                            continue
-                        cleaned.append((style, result))
+                            temp = self.temperature
+                            if temp is None and attempt > 1:
+                                temp = 0.2
+                            if temp is None:
+                                result = await aexecute_prompt(
+                                    prompt,
+                                    QuerySingle,
+                                    model=self.model,
+                                )
+                            else:
+                                result = await aexecute_prompt(
+                                    prompt,
+                                    QuerySingle,
+                                    model=self.model,
+                                    temperature=temp,
+                                )
+                            if not result or not getattr(result, "query_text", None):
+                                logger.warning(
+                                    "No {} query for arXiv {} (attempt {})",
+                                    style,
+                                    row.get("arxiv_id"),
+                                    attempt,
+                                )
+                                continue
+                            text = result.query_text.strip()
+                            if not text:
+                                logger.warning(
+                                    "Empty {} query for arXiv {} (attempt {})",
+                                    style,
+                                    row.get("arxiv_id"),
+                                    attempt,
+                                )
+                                continue
+                            if self._too_long(text):
+                                logger.warning(
+                                    "Rejected {} query (too long) for arXiv {} (attempt {})",
+                                    style,
+                                    row.get("arxiv_id"),
+                                    attempt,
+                                )
+                                continue
+                            if is_leaky(text, self.target_name):
+                                logger.warning(
+                                    "Rejected {} query (leaky) for arXiv {} (attempt {})",
+                                    style,
+                                    row.get("arxiv_id"),
+                                    attempt,
+                                )
+                                continue
+                            if has_location_terms(text):
+                                logger.warning(
+                                    "Rejected {} query (location wording) for arXiv {} (attempt {})",
+                                    style,
+                                    row.get("arxiv_id"),
+                                    attempt,
+                                )
+                                continue
+                            if type_conflict(text, explicit_kind):
+                                logger.warning(
+                                    "Rejected {} query (type mismatch) for arXiv {} (attempt {})",
+                                    style,
+                                    row.get("arxiv_id"),
+                                    attempt,
+                                )
+                                continue
+                            accepted = result
+                            break
+                        if accepted:
+                            cleaned.append((style, accepted))
 
                     if not cleaned:
                         async with counters_lock:
@@ -211,6 +225,10 @@ class QueryGenerator:
                                     "cite_label": row.get("cite_label"),
                                     "bib_entry": row.get("bib_entry"),
                                     "explicit_refs": row.get("explicit_refs") or [],
+                                    "explicit_ref_source": row.get(
+                                        "explicit_ref_source"
+                                    ),
+                                    "explicit_ref_kind": explicit_kind,
                                     "context_sentence": row.get("context_sentence"),
                                     "context_prev": row.get("context_prev"),
                                     "context_next": row.get("context_next"),
