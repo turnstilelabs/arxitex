@@ -12,8 +12,8 @@ import requests
 
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.arxiv_utils import is_arxiv_url, try_parse_arxiv_id
-from arxitex.tools.citations.utils import append_jsonl, ensure_dir, sha256_hash
 from arxitex.tools.matching.arxiv_matcher import match_external_reference_to_arxiv
+from arxitex.utils import append_jsonl, ensure_dir, sha256_hash
 
 OPENALEX_BASE = "https://api.openalex.org"
 MAX_RETRIES = 5

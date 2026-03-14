@@ -30,12 +30,7 @@ from arxitex.arxiv_utils import (
 )
 from arxitex.tools.citations.mention_extraction import MentionExtractor
 from arxitex.tools.citations.target_resolution import OpenAlexTargetResolver
-from arxitex.tools.citations.utils import (
-    append_jsonl,
-    ensure_dir,
-    read_jsonl,
-    sha256_hash,
-)
+from arxitex.utils import append_jsonl, ensure_dir, read_jsonl, sha256_hash
 
 
 class HostThrottle:

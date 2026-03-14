@@ -26,7 +26,7 @@ from arxitex.tools.citations.openalex_citations import (
     normalize_openalex_work_id,
 )
 from arxitex.tools.citations.target_resolution import OpenAlexTargetResolver
-from arxitex.tools.citations.utils import ensure_dir
+from arxitex.utils import ensure_dir
 
 
 def _load_target_ids_file(path: str) -> List[str]:
