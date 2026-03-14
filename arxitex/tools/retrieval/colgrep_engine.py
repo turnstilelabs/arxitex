@@ -235,8 +235,8 @@ def _parse_text_hit(line: str) -> Optional[ColGrepHit]:
     snippet = ""
     score = None
 
-    # path:line:col:
-    m = re.match(r"^(?P<path>[^:]+):\d+:\d+:\s*(?P<rest>.*)$", line)
+    # path:line:col (note: colgrep doesn't always include a colon after col)
+    m = re.match(r"^(?P<path>.+):\d+:\d+\s*(?P<rest>.*)$", line)
     if m:
         path = m.group("path")
         snippet = m.group("rest")
