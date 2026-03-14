@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Build mention-supervised statement retrieval dataset.
 
+This stage can also orchestrate earlier stages for each target:
+- statements extraction (unless --skip-statements)
+- citing-works + mention extraction (unless --skip-mentions)
+
 Pipeline:
 1) Extract statement lists for each target arXiv paper (artifacts only).
 2) Collect citation mentions via OpenAlex + ar5iv/PDF.
@@ -650,8 +654,9 @@ def _build_mentions_dataset(
     mentions_paths: List[Path],
     statement_index: Dict[Tuple[str, str], List[Dict]],
     out_path: Path,
-    queries_out_path: Path,
-    qrels_out_path: Path,
+    queries_out_path: Optional[Path],
+    qrels_out_path: Optional[Path],
+    emit_queries: bool = True,
     strip_explicit_refs: bool = False,
     infer_explicit_refs: bool = False,
     external_only: bool = False,
@@ -667,15 +672,18 @@ def _build_mentions_dataset(
     cache_dir: Optional[Path] = None,
 ) -> int:
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    queries_out_path.parent.mkdir(parents=True, exist_ok=True)
     qrels: Dict[str, List[str]] = {}
+    if emit_queries and queries_out_path is not None:
+        queries_out_path.parent.mkdir(parents=True, exist_ok=True)
     total = 0
     def_cache = None
     if prepend_definitions and cache_dir:
         def_cache = DefinitionIndexCache(cache_dir)
-    with out_path.open("w", encoding="utf-8") as df, queries_out_path.open(
-        "w", encoding="utf-8"
-    ) as qf:
+    if emit_queries and queries_out_path is not None:
+        qf = queries_out_path.open("w", encoding="utf-8")
+    else:
+        qf = None
+    with out_path.open("w", encoding="utf-8") as df:
         for mp in mentions_paths:
             for row in read_jsonl(str(mp)):
                 explicit_refs = row.get("explicit_refs") or []
@@ -794,34 +802,38 @@ def _build_mentions_dataset(
                         )
                         + "\n"
                     )
-                    qf.write(
-                        json.dumps(
-                            {
-                                "query_id": query_id,
-                                "query_text": context,
-                                "query_style": (
-                                    "claim" if strip_explicit_refs else "mention"
-                                ),
-                                "source_arxiv_id": row.get("arxiv_id"),
-                                "target_arxiv_id": arxiv_id,
-                                "explicit_refs": (
-                                    []
-                                    if strip_explicit_refs
-                                    else [{"kind": kind, "number": pref_number}]
-                                ),
-                                "reference_precision": (
-                                    "implicit"
-                                    if strip_explicit_refs
-                                    else (ref_precision or "explicit")
-                                ),
-                            },
-                            ensure_ascii=False,
+                    if qf is not None:
+                        qf.write(
+                            json.dumps(
+                                {
+                                    "query_id": query_id,
+                                    "query_text": context,
+                                    "query_style": (
+                                        "claim" if strip_explicit_refs else "mention"
+                                    ),
+                                    "source_arxiv_id": row.get("arxiv_id"),
+                                    "target_arxiv_id": arxiv_id,
+                                    "explicit_refs": (
+                                        []
+                                        if strip_explicit_refs
+                                        else [{"kind": kind, "number": pref_number}]
+                                    ),
+                                    "reference_precision": (
+                                        "implicit"
+                                        if strip_explicit_refs
+                                        else (ref_precision or "explicit")
+                                    ),
+                                },
+                                ensure_ascii=False,
+                            )
+                            + "\n"
                         )
-                        + "\n"
-                    )
                     qrels.setdefault(query_id, []).append(statement_id)
                     total += 1
-    qrels_out_path.write_text(json.dumps(qrels, indent=2))
+    if qf is not None:
+        qf.close()
+    if emit_queries and qrels_out_path is not None:
+        qrels_out_path.write_text(json.dumps(qrels, indent=2))
     logger.info("Wrote {} mention pairs to {}", total, out_path)
     return total
 
@@ -910,6 +922,11 @@ def main() -> int:
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--skip-statements", action="store_true")
     parser.add_argument("--skip-mentions", action="store_true")
+    parser.add_argument(
+        "--emit-queries",
+        action="store_true",
+        help="Write queries.jsonl and qrels.json (off by default).",
+    )
     parser.add_argument(
         "--no-local-queries",
         action="store_true",
@@ -1132,8 +1149,9 @@ def main() -> int:
         mentions_paths=mentions_paths,
         statement_index=statement_index,
         out_path=dataset_path,
-        queries_out_path=queries_path,
-        qrels_out_path=qrels_path,
+        queries_out_path=queries_path if args.emit_queries else None,
+        qrels_out_path=qrels_path if args.emit_queries else None,
+        emit_queries=bool(args.emit_queries),
         strip_explicit_refs=args.strip_explicit_refs,
         infer_explicit_refs=args.infer_explicit_refs,
         external_only=args.external_only,
