@@ -202,17 +202,41 @@ def load_queries(path: str) -> List[Dict]:
 
 
 def load_qrels(path: str) -> Dict[str, List[str]]:
+    p = Path(path)
+    raw = p.read_text(encoding="utf-8")
+    if not raw.strip():
+        return {}
+    try:
+        data = json.loads(raw)
+        if isinstance(data, dict):
+            qrels = {str(qid): list(rel or []) for qid, rel in data.items() if qid}
+            logger.info("Loaded {} qrels (json dict)", len(qrels))
+            return qrels
+        if isinstance(data, list):
+            qrels: Dict[str, List[str]] = {}
+            for row in data:
+                if not isinstance(row, dict):
+                    continue
+                qid = row.get("query_id")
+                rel = row.get("relevant_ids") or []
+                if not qid:
+                    continue
+                qrels[str(qid)] = list(rel or [])
+            logger.info("Loaded {} qrels (json list)", len(qrels))
+            return qrels
+    except json.JSONDecodeError:
+        pass
+
     qrels: Dict[str, List[str]] = {}
-    with open(path, "r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            row = json.loads(line)
-            qid = row.get("query_id")
-            rel = row.get("relevant_ids") or []
-            if not qid:
-                continue
-            qrels[qid] = rel
-    logger.info("Loaded {} qrels", len(qrels))
+    for line in raw.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        row = json.loads(line)
+        qid = row.get("query_id")
+        rel = row.get("relevant_ids") or []
+        if not qid:
+            continue
+        qrels[str(qid)] = list(rel or [])
+    logger.info("Loaded {} qrels (jsonl)", len(qrels))
     return qrels

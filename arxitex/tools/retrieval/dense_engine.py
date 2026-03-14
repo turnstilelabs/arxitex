@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 from typing import List, Sequence, Tuple
@@ -12,10 +13,14 @@ from loguru import logger
 
 class DenseEngine:
     def __init__(
-        self, model: str = "text-embedding-3-small", cache_dir: str | None = None
+        self,
+        model: str = "text-embedding-3-small",
+        cache_dir: str | None = None,
+        max_chars: int = 4000,
     ):
         self.model = model
         self.cache_dir = Path(cache_dir) if cache_dir else None
+        self.max_chars = max_chars
         self.embeddings: np.ndarray | None = None
         self.ids: List[str] = []
         try:
@@ -31,8 +36,17 @@ class DenseEngine:
             id_path = self.cache_dir / f"embeddings_{self._safe_model_name()}.json"
             if emb_path.exists() and id_path.exists():
                 with id_path.open("r", encoding="utf-8") as f:
-                    cached_ids = json.load(f)
-                if cached_ids == list(ids):
+                    cached = json.load(f)
+                if isinstance(cached, dict):
+                    cached_ids = cached.get("ids") or []
+                    cached_hashes = cached.get("text_hashes") or []
+                else:
+                    cached_ids = cached
+                    cached_hashes = []
+                current_hashes = self._hash_texts(texts) if cached_hashes else []
+                if cached_ids == list(ids) and (
+                    not cached_hashes or cached_hashes == current_hashes
+                ):
                     self.embeddings = np.load(emb_path)
                     self.ids = list(ids)
                     logger.info("Loaded cached embeddings from {}", emb_path)
@@ -46,7 +60,13 @@ class DenseEngine:
             id_path = self.cache_dir / f"embeddings_{self._safe_model_name()}.json"
             np.save(emb_path, self.embeddings)
             with id_path.open("w", encoding="utf-8") as f:
-                json.dump(self.ids, f)
+                json.dump(
+                    {
+                        "ids": self.ids,
+                        "text_hashes": self._hash_texts(texts),
+                    },
+                    f,
+                )
             logger.info("Cached embeddings to {}", emb_path)
 
     def search(self, query: str, k: int = 10) -> Tuple[List[int], List[float]]:
@@ -67,10 +87,24 @@ class DenseEngine:
         batch_size = 64
         vectors: List[List[float]] = []
         for i in range(0, len(texts), batch_size):
-            batch = list(texts[i : i + batch_size])
+            batch = []
+            truncated = 0
+            for t in texts[i : i + batch_size]:
+                if self.max_chars and len(t) > self.max_chars:
+                    batch.append(t[: self.max_chars])
+                    truncated += 1
+                else:
+                    batch.append(t)
             resp = self._client.embeddings.create(model=self.model, input=batch)
             for item in resp.data:
                 vectors.append(item.embedding)
+            if truncated:
+                logger.info(
+                    "Truncated {} / {} texts to {} chars",
+                    truncated,
+                    len(batch),
+                    self.max_chars,
+                )
             logger.info(
                 "Embedded {} / {} texts", min(i + batch_size, len(texts)), len(texts)
             )
@@ -78,3 +112,12 @@ class DenseEngine:
 
     def _safe_model_name(self) -> str:
         return self.model.replace("/", "-")
+
+    def _hash_texts(self, texts: Sequence[str]) -> List[str]:
+        hashes: List[str] = []
+        for t in texts:
+            if self.max_chars and len(t) > self.max_chars:
+                t = t[: self.max_chars]
+            digest = hashlib.sha256(t.encode("utf-8")).hexdigest()
+            hashes.append(digest)
+        return hashes
