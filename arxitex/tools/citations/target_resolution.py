@@ -11,8 +11,8 @@ import requests
 
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.arxiv_utils import parse_arxiv_id
-from arxitex.tools.citations.utils import ensure_dir, sha256_hash
 from arxitex.tools.matching.scoring import best_match_index
+from arxitex.utils import ensure_dir, sha256_hash
 
 
 @dataclass
