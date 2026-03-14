@@ -17,19 +17,20 @@ from typing import Dict, Iterable, List, Tuple
 
 from loguru import logger
 
+from arxitex.tools.retrieval.agentic.service import run_agentic_search
 from arxitex.tools.retrieval.bm25_engine import BM25Engine
+from arxitex.tools.retrieval.colgrep_engine import ColGrepEngine
 from arxitex.tools.retrieval.dense_engine import DenseEngine
-from arxitex.tools.retrieval.graph_expand import (
-    build_dependency_graph,
-    expand_with_prereqs,
-)
 from arxitex.tools.retrieval.io import (
     build_artifacts,
     load_graph,
     load_qrels,
     load_queries,
 )
+from arxitex.tools.retrieval.logic_decomposition import extract_logic_decompositions
+from arxitex.tools.retrieval.logic_rerank import LogicReranker, apply_logic_rerank
 from arxitex.tools.retrieval.metrics import evaluate
+from arxitex.tools.retrieval.msc2020 import MSCDictionary, MSCMatch
 from arxitex.tools.retrieval.normalization import normalize_text
 from arxitex.tools.retrieval.pylate_engine import PyLateEngine
 from arxitex.tools.retrieval.structured import StructuredFields, extract_structured
@@ -38,8 +39,8 @@ EXPERIMENTS = {
     "e1": "bm25",
     "e2": "dense",
     "e3": "pylate",
-    "e4": "graph-expand",
-    "e5": "hybrid-rrf",
+    "e4": "hybrid-rrf",
+    "e5": "agentic-colgrep",
 }
 
 RRF_K = 60
@@ -596,7 +597,7 @@ def main() -> int:
     )
     parser.add_argument("--qrels", default="", help="Optional qrels JSONL path.")
     parser.add_argument("--out-dir", default="data/retrieval", help="Output directory.")
-    parser.add_argument("--experiment", default="all", help="e1,e2,e3,e4,all")
+    parser.add_argument("--experiment", default="all", help="e1,e2,e3,e4,e5,all")
     parser.add_argument(
         "--top-k", type=int, default=10, help="Top-K results per query."
     )
@@ -607,11 +608,6 @@ def main() -> int:
         "--pylate-index-dir",
         default="",
         help="Directory to store PyLate index files (default: out-dir).",
-    )
-    parser.add_argument(
-        "--expand-types",
-        default="definition,lemma",
-        help="Comma-separated types to inject.",
     )
     parser.add_argument(
         "--index-mode",
@@ -665,7 +661,7 @@ def main() -> int:
     parser.add_argument(
         "--rrf-include-e2",
         action="store_true",
-        help="Include dense results in e5 RRF fusion (requires OPENAI_API_KEY).",
+        help="Include dense results in e4 RRF fusion (requires OPENAI_API_KEY).",
     )
     parser.add_argument(
         "--structured",
@@ -729,6 +725,76 @@ def main() -> int:
         "--run-id",
         default="",
         help="Run identifier for logs/metadata (default: UTC timestamp).",
+    )
+    parser.add_argument(
+        "--logic-rerank",
+        action="store_true",
+        help="Enable logic-aware reranking on top of retrieval outputs.",
+    )
+    parser.add_argument(
+        "--logic-model",
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for logic decomposition + pairwise entailment labels.",
+    )
+    parser.add_argument(
+        "--logic-cache",
+        default="",
+        help="Cache directory for logic decomposition (default: <out-dir>/logic_cache).",
+    )
+    parser.add_argument(
+        "--logic-concurrency",
+        type=int,
+        default=4,
+        help="Parallelism for logic decomposition and hypothesis labeling.",
+    )
+    parser.add_argument(
+        "--logic-top-n",
+        type=int,
+        default=20,
+        help="Apply logic reranking only to top N candidates per query (default: 20).",
+    )
+    parser.add_argument(
+        "--logic-msc-csv",
+        default="data/msc2020/msc2020.csv",
+        help="Path to MSC2020 CSV file used for symbolic context triage.",
+    )
+    parser.add_argument(
+        "--logic-no-debruijn",
+        action="store_false",
+        dest="logic_use_debruijn",
+        help="Disable De Bruijn-style fallback normalization in goal scoring.",
+    )
+    parser.add_argument(
+        "--agentic-model",
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for agentic ColGREP retrieval.",
+    )
+    parser.add_argument(
+        "--agentic-max-steps",
+        type=int,
+        default=3,
+        help="Max agentic refinement steps (default: 3).",
+    )
+    parser.add_argument(
+        "--agentic-top-k",
+        type=int,
+        default=10,
+        help="Top-K ColGREP candidates per step (default: 10).",
+    )
+    parser.add_argument(
+        "--colgrep-bin",
+        default="colgrep",
+        help="ColGREP binary path (default: colgrep).",
+    )
+    parser.add_argument(
+        "--colgrep-index-dir",
+        default="",
+        help="ColGREP index directory (optional).",
+    )
+    parser.add_argument(
+        "--colgrep-chunks-dir",
+        default="",
+        help="ColGREP chunk directory (defaults to --colgrep-index-dir).",
     )
     parser.set_defaults(include_proofs=True, include_type_prefix=True)
     args = parser.parse_args()
@@ -824,6 +890,64 @@ def main() -> int:
         logger.error("No queries loaded from {}", args.queries)
         return 1
 
+    logic_artifacts = {}
+    logic_queries = {}
+    query_msc: Dict[str, MSCMatch] = {}
+    artifact_msc: Dict[str, MSCMatch] = {}
+    logic_reranker = None
+    if args.logic_rerank:
+        logic_cache_dir = (
+            Path(args.logic_cache)
+            if args.logic_cache
+            else Path(args.out_dir) / "logic_cache"
+        )
+        logic_artifacts = extract_logic_decompositions(
+            texts=[a.text for a in artifacts],
+            ids=ids,
+            model=args.logic_model,
+            cache_path=logic_cache_dir / "artifacts.jsonl",
+            concurrency=args.logic_concurrency,
+        )
+        query_ids_for_logic = [q["query_id"] for q in queries]
+        query_texts_for_logic = [q["query_text"] for q in queries]
+        logic_queries = extract_logic_decompositions(
+            texts=query_texts_for_logic,
+            ids=query_ids_for_logic,
+            model=args.logic_model,
+            cache_path=logic_cache_dir / "queries.jsonl",
+            concurrency=args.logic_concurrency,
+        )
+
+        msc_dict = None
+        if os.path.exists(args.logic_msc_csv):
+            msc_dict = MSCDictionary.from_csv(args.logic_msc_csv)
+        else:
+            logger.warning(
+                "MSC2020 CSV not found at {}. Context score will be 0.0.",
+                args.logic_msc_csv,
+            )
+
+        if msc_dict is not None:
+            query_msc = {
+                qid: msc_dict.match_context(
+                    (logic_queries.get(qid) and logic_queries[qid].context) or ""
+                )
+                for qid in query_ids_for_logic
+            }
+            artifact_msc = {
+                aid: msc_dict.match_context(
+                    (logic_artifacts.get(aid) and logic_artifacts[aid].context) or ""
+                )
+                for aid in ids
+            }
+
+        logic_reranker = LogicReranker(
+            model=args.logic_model,
+            top_n=args.logic_top_n,
+            concurrency=args.logic_concurrency,
+            use_debruijn=args.logic_use_debruijn,
+        )
+
     qrels = load_qrels(args.qrels) if args.qrels else {}
     if not qrels:
         # Build qrels from graph + explicit_refs in queries.
@@ -871,7 +995,6 @@ def main() -> int:
         qrels = {qid: rel for qid, rel in qrels.items() if qid in query_ids}
         if args.single_source_only_metrics:
             qrels = {qid: rel for qid, rel in qrels.items() if len(rel) == 1}
-    expand_types = [t.strip() for t in args.expand_types.split(",") if t.strip()]
 
     pylate_index_dir = args.pylate_index_dir or args.out_dir
 
@@ -888,7 +1011,7 @@ def main() -> int:
         "experiments": (
             args.experiment.lower()
             if args.experiment != "all"
-            else ["e1", "e2", "e3", "e4", "e5"]
+            else ["e1", "e2", "e3", "e4"]
         ),
         "top_k": args.top_k,
         "query_counts": {
@@ -910,6 +1033,22 @@ def main() -> int:
                 PyLateEngine, "model_name", "lightonai/Reason-ModernColBERT"
             ),
             "pylate_index_dir": pylate_index_dir,
+        },
+        "logic_rerank": {
+            "enabled": bool(args.logic_rerank),
+            "model": args.logic_model,
+            "top_n": args.logic_top_n,
+            "concurrency": args.logic_concurrency,
+            "msc_csv": args.logic_msc_csv,
+            "use_debruijn": bool(args.logic_use_debruijn),
+        },
+        "agentic_colgrep": {
+            "model": args.agentic_model,
+            "max_steps": args.agentic_max_steps,
+            "top_k": args.agentic_top_k,
+            "colgrep_bin": args.colgrep_bin,
+            "colgrep_index_dir": args.colgrep_index_dir or None,
+            "colgrep_chunks_dir": args.colgrep_chunks_dir or None,
         },
     }
     with open(
@@ -964,31 +1103,6 @@ def main() -> int:
             )
             results_cache["e3"] = results
         elif exp == "e4":
-            # Stage 3 + graph expansion
-            base_results, latency = run_pylate(
-                texts,
-                ids,
-                queries,
-                args.top_k,
-                index_dir=pylate_index_dir,
-                model_name=args.pylate_model,
-            )
-            dep_graph = build_dependency_graph(graph.edges)
-            for qid, row in base_results.items():
-                indices = row.get("indices", [])
-                retrieved_ids = _resolve_artifact_ids(indices, id_lookup)
-                expanded = expand_with_prereqs(
-                    retrieved_ids, dep_graph, node_types, expand_types
-                )
-                results[qid] = {
-                    "query_id": qid,
-                    "query_text": row.get("query_text"),
-                    "indices": indices,
-                    "scores": row.get("scores", []),
-                    "expanded_ids": expanded,
-                }
-            results_cache["e4"] = results
-        elif exp == "e5":
             base_results: List[Dict[str, Dict]] = []
             if "e1" in results_cache:
                 base_results.append(results_cache["e1"])
@@ -1027,6 +1141,59 @@ def main() -> int:
                 idx_lookup=idx_lookup,
                 k=args.top_k,
             )
+            results_cache["e4"] = results
+        elif exp == "e5":
+            chunks_dir = args.colgrep_chunks_dir or args.colgrep_index_dir
+            if not chunks_dir:
+                logger.error(
+                    "--colgrep-chunks-dir or --colgrep-index-dir is required for e5"
+                )
+                logger.remove(sink_id)
+                continue
+
+            engine = ColGrepEngine(
+                chunks_dir=chunks_dir,
+                index_dir=args.colgrep_index_dir or None,
+                colgrep_bin=args.colgrep_bin,
+            )
+            try:
+                engine.build()
+            except Exception as exc:
+                logger.warning("ColGREP build failed: {}", exc)
+
+            results = {}
+
+            def _search_fn(q: str, k: int, *, _engine=engine):
+                return [c.__dict__ for c in _engine.search_candidates(q, k=k)]
+
+            for row in queries:
+                mention = row.get("query_text") or ""
+                agent_result = run_agentic_search(
+                    mention=mention,
+                    search_fn=_search_fn,
+                    model=args.agentic_model,
+                    max_steps=args.agentic_max_steps,
+                    top_k=args.agentic_top_k,
+                )
+                ordered_ids = agent_result.candidates
+                scored_pairs = list(zip(ordered_ids, agent_result.scores))
+                filtered_ids = []
+                indices = []
+                scores = []
+                for aid, score in scored_pairs:
+                    if aid in idx_lookup:
+                        filtered_ids.append(aid)
+                        indices.append(idx_lookup[aid])
+                        scores.append(score)
+                results[row["query_id"]] = {
+                    "query_id": row["query_id"],
+                    "query_text": mention,
+                    "indices": indices,
+                    "scores": scores,
+                    "artifact_ids": filtered_ids,
+                    "selected_id": agent_result.selected_id,
+                    "agent_trace": [t.__dict__ for t in agent_result.trace],
+                }
             results_cache["e5"] = results
         else:
             logger.warning("Skipping unsupported experiment: {}", exp)
@@ -1036,7 +1203,7 @@ def main() -> int:
         if (
             args.structured
             and (args.structured_filter or args.structured_boost)
-            and exp in {"e1", "e2", "e3", "e5"}
+            and exp in {"e1", "e2", "e3", "e4"}
         ):
             _apply_structured_filter_boost(
                 results,
@@ -1049,7 +1216,7 @@ def main() -> int:
                 boost=args.structured_boost,
             )
 
-        if args.type_rerank and exp in {"e1", "e2", "e3", "e5"}:
+        if args.type_rerank and exp in {"e1", "e2", "e3", "e4"}:
             for row in results.values():
                 indices = row.get("indices", [])
                 scores = row.get("scores", [])
@@ -1065,6 +1232,18 @@ def main() -> int:
                 row["indices"] = new_indices
                 row["scores"] = new_scores
 
+        if args.logic_rerank and exp in {"e1", "e2", "e3", "e4"}:
+            apply_logic_rerank(
+                results=results,
+                query_ids=[q["query_id"] for q in queries],
+                id_lookup=id_lookup,
+                query_logic=logic_queries,
+                artifact_logic=logic_artifacts,
+                query_msc=query_msc,
+                artifact_msc=artifact_msc,
+                reranker=logic_reranker,
+            )
+
         # Map indices to ids
         for row in results.values():
             indices = row.get("indices", [])
@@ -1075,14 +1254,7 @@ def main() -> int:
 
         metrics = {}
         if qrels:
-            if exp == "e4":
-                target = {
-                    qid: row.get("expanded_ids", []) for qid, row in results.items()
-                }
-            else:
-                target = {
-                    qid: row.get("artifact_ids", []) for qid, row in results.items()
-                }
+            target = {qid: row.get("artifact_ids", []) for qid, row in results.items()}
             metrics = evaluate(target, qrels, k=args.top_k)
         if latency is not None:
             metrics["pylate_latency_sec"] = latency
@@ -1100,7 +1272,7 @@ def main() -> int:
                 queries=queries,
                 qrels=qrels,
                 k=args.top_k,
-                use_expanded=(exp == "e4"),
+                use_expanded=False,
             )
             per_query_paths[exp] = _write_per_query_metrics(
                 args.out_dir, exp, per_query_rows

@@ -23,6 +23,9 @@ pip install -e ".[mentions]"
 pip install -e .
 ```
 
+Retrieval baselines and biencoder training live under `arxitex/tools/retrieval/`.
+See `arxitex/tools/retrieval/README.md` for usage.
+
 ## Exporting processed papers to a Hugging Face dataset
 
 Once papers have been processed and persisted into the SQLite DB (via the
