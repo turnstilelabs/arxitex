@@ -20,6 +20,14 @@ from arxitex.tools.citations.mention_utils import (
 from arxitex.tools.citations.utils import extract_refs
 
 
+def _window_text(sentences: List[str], idx: int, window: int = 1) -> str:
+    if not sentences:
+        return ""
+    start = max(0, idx - window)
+    end = min(len(sentences), idx + window + 1)
+    return " ".join(s for s in sentences[start:end] if s)
+
+
 @dataclass
 class MentionExtractor:
     target_title: str
@@ -44,7 +52,16 @@ class MentionExtractor:
             idx = find_sentence_index(sentences, label_re)
             if not sentences or idx < 0:
                 continue
-            explicit_refs = extract_refs(sentences[idx])
+            sentence_text = sentences[idx] if sentences else ""
+            window_text = _window_text(sentences, idx, window=1)
+            explicit_refs = extract_refs(sentence_text)
+            explicit_ref_source = "cite_sentence" if explicit_refs else None
+            if not explicit_refs:
+                explicit_refs = extract_refs(window_text)
+                explicit_ref_source = "window" if explicit_refs else None
+            if not explicit_refs:
+                explicit_refs = extract_refs(text)
+                explicit_ref_source = "paragraph" if explicit_refs else None
             mentions.append(
                 {
                     **base,
@@ -56,10 +73,12 @@ class MentionExtractor:
                     "context_next": (
                         sentences[idx + 1] if idx + 1 < len(sentences) else None
                     ),
+                    "context_paragraph": text,
                     "context_html": context_html,
                     "source": source,
                     "source_url": source_url,
                     "explicit_refs": explicit_refs,
+                    "explicit_ref_source": explicit_ref_source,
                     "reference_precision": "explicit" if explicit_refs else "implicit",
                 }
             )
@@ -157,7 +176,16 @@ class MentionExtractor:
                     continue
                 seen.add(key)
 
-                explicit_refs = extract_refs(sentences[idx] if sentences else para_text)
+                sentence_text = sentences[idx] if sentences else ""
+                window_text = _window_text(sentences, idx, window=1)
+                explicit_refs = extract_refs(sentence_text)
+                explicit_ref_source = "cite_sentence" if explicit_refs else None
+                if not explicit_refs:
+                    explicit_refs = extract_refs(window_text)
+                    explicit_ref_source = "window" if explicit_refs else None
+                if not explicit_refs:
+                    explicit_refs = extract_refs(para_text)
+                    explicit_ref_source = "paragraph" if explicit_refs else None
                 mentions.append(
                     {
                         **base,
@@ -169,6 +197,7 @@ class MentionExtractor:
                         "context_next": (
                             sentences[idx + 1] if idx + 1 < len(sentences) else None
                         ),
+                        "context_paragraph": para_text,
                         "context_html": context_html,
                         "source": "ar5iv",
                         "source_url": source_url,
@@ -176,6 +205,7 @@ class MentionExtractor:
                         "cite_label": label or None,
                         "bib_entry": bib_targets[bib_id].get("text"),
                         "explicit_refs": explicit_refs,
+                        "explicit_ref_source": explicit_ref_source,
                         "reference_precision": (
                             "explicit" if explicit_refs else "implicit"
                         ),
