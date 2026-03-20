@@ -150,7 +150,10 @@ def build_mentions_dataset(
     gold_links: Dict[str, List[str]] = {}
     if context_rows:
         mapping = build_gold_links(
-            context_rows.values(), target_registry, policy=policy
+            context_rows.values(),
+            target_registry,
+            policy=policy,
+            include_records=bool(mapping_report_path),
         )
         gold_links = {str(k): list(v) for k, v in mapping.gold_links.items()}
 

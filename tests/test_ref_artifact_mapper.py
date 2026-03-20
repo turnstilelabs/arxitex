@@ -6,8 +6,6 @@ from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
     Policy,
     build_gold_links,
     build_target_registry,
-    map_explicit_refs_to_artifacts,
-    resolve_target_version,
 )
 
 
@@ -38,36 +36,23 @@ def _registry_with_two_versions():
     return build_target_registry(nodes)
 
 
-def test_resolve_target_version_prefers_explicit_id():
+def test_build_gold_links_exact_kind_number():
     registry = _registry_with_two_versions()
-    row = {"target_arxiv_id": "pmihes2012"}
-    res = resolve_target_version(row, registry, policy=Policy())
-    assert res["status"] == "mapped"
-    assert res["version_id"] == "pmihes2012"
+    rows = [
+        {
+            "context_id": "c1",
+            "target_arxiv_id": "pmihes2012",
+            "target_match_status": "exact_target",
+            "explicit_refs": [{"kind": "definition", "number": "2.6"}],
+            "context_text": "By Definition 2.6.",
+        }
+    ]
+    mapped = build_gold_links(rows, registry, policy=Policy(), include_records=True)
+    assert mapped.gold_links == {"c1": ["pmihes2012:def_26"]}
+    assert mapped.records[0]["mapping_tier"] == "exact"
 
 
-def test_resolve_target_version_unresolved_when_explicit_missing():
-    registry = _registry_with_two_versions()
-    row = {"target_arxiv_id": "missing"}
-    res = resolve_target_version(row, registry, policy=Policy())
-    assert res["status"] == "version_unresolved"
-
-
-def test_map_explicit_ref_exact_kind_number():
-    registry = _registry_with_two_versions()
-    row = {
-        "context_id": "c1",
-        "target_arxiv_id": "pmihes2012",
-        "target_match_status": "exact_target",
-        "explicit_refs": [{"kind": "definition", "number": "2.6"}],
-    }
-    mapped = map_explicit_refs_to_artifacts(row, registry, policy=Policy())
-    assert mapped["status"] == "mapped"
-    assert [m["statement_id"] for m in mapped["matches"]] == ["pmihes2012:def_26"]
-    assert mapped["matches"][0]["tier"] == "exact"
-
-
-def test_exact_kind_number_duplicate_is_dropped_as_ambiguous():
+def test_build_gold_links_duplicate_exact_is_ambiguous_drop():
     nodes = [
         {
             "id": "perfectoid:theorem:A",
@@ -85,15 +70,18 @@ def test_exact_kind_number_duplicate_is_dropped_as_ambiguous():
         },
     ]
     registry = build_target_registry(nodes)
-    row = {
-        "context_id": "c1",
-        "target_arxiv_id": "perfectoid",
-        "target_match_status": "exact_target",
-        "explicit_refs": [{"kind": "theorem", "number": "5.2"}],
-    }
-    mapped = map_explicit_refs_to_artifacts(row, registry, policy=Policy())
-    assert mapped["status"] == "ref_ambiguous"
-    assert mapped["reason"] == "exact_multi_hit"
+    rows = [
+        {
+            "context_id": "c1",
+            "target_arxiv_id": "perfectoid",
+            "target_match_status": "exact_target",
+            "explicit_refs": [{"kind": "theorem", "number": "5.2"}],
+            "context_text": "By Theorem 5.2.",
+        }
+    ]
+    mapped = build_gold_links(rows, registry, policy=Policy(), include_records=True)
+    assert mapped.gold_links == {}
+    assert mapped.diagnostics.dropped_by_reason.get("exact_multi_hit") == 1
 
 
 def test_build_gold_links_drops_unresolved_and_is_deterministic():
@@ -122,6 +110,7 @@ def test_build_gold_links_drops_unresolved_and_is_deterministic():
     assert res1.gold_links == {"c_ok": ["pmihes2012:def_26"]}
     assert res1.diagnostics.mapped_rows == 1
     assert res1.diagnostics.dropped_rows == 1
+    assert res1.diagnostics.dropped_by_reason.get("ref_not_found") == 1
 
 
 def test_non_target_never_reaches_gold_links():
@@ -152,16 +141,15 @@ def test_curated_alias_maps_same_work_alt_version(tmp_path):
     alias_path = tmp_path / "aliases.json"
     alias_path.write_text(
         json.dumps(
-            {
-                "allow": [
-                    {
-                        "version_id": "1111.4914",
-                        "kind": "definition",
-                        "alt_number": "2.6",
-                        "statement_id": "canon:def_2_7",
-                    }
-                ]
-            }
+            [
+                {
+                    "version_id": "1111.4914",
+                    "kind": "definition",
+                    "alt_number": "2.6",
+                    "statement_id": "canon:def_2_7",
+                    "action": "allow",
+                }
+            ]
         ),
         encoding="utf-8",
     )
@@ -180,3 +168,27 @@ def test_curated_alias_maps_same_work_alt_version(tmp_path):
     )
     assert res.gold_links == {"c_alias": ["canon:def_2_7"]}
     assert res.diagnostics.alias_usage.get("curated_allow") == 1
+
+
+def test_no_number_only_fallback_kind_mismatch_stays_unresolved():
+    nodes = [
+        {
+            "id": "paper:def_1_1",
+            "arxiv_id": "paper",
+            "type": "definition",
+            "pdf_label_number": "1.1",
+            "content": "Definition content.",
+        }
+    ]
+    registry = build_target_registry(nodes)
+    rows = [
+        {
+            "context_id": "c1",
+            "target_arxiv_id": "paper",
+            "target_match_status": "exact_target",
+            "explicit_refs": [{"kind": "theorem", "number": "1.1"}],
+        }
+    ]
+    res = build_gold_links(rows, registry, policy=Policy())
+    assert res.gold_links == {}
+    assert res.diagnostics.dropped_by_reason.get("ref_not_found") == 1

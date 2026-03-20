@@ -7,8 +7,6 @@ from .ref_artifact_mapper import (
     TargetRegistry,
     build_gold_links,
     build_target_registry,
-    map_explicit_refs_to_artifacts,
-    resolve_target_version,
 )
 
 __all__ = [
@@ -18,6 +16,4 @@ __all__ = [
     "TargetRegistry",
     "build_gold_links",
     "build_target_registry",
-    "map_explicit_refs_to_artifacts",
-    "resolve_target_version",
 ]

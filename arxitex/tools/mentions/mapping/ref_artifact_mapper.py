@@ -13,7 +13,7 @@ RULE_PRIORITY = {"override": 3, "deny": 2, "allow": 1}
 
 @dataclass(frozen=True)
 class Policy:
-    """Only curated alias file path is configurable; strict mapping is fixed."""
+    """Strict policy with optional curated alias file."""
 
     alias_curated_path: Optional[str] = None
 
@@ -43,7 +43,6 @@ class GoldLinksBuildResult:
 class VersionCandidate:
     version_id: str
     by_kind_number: Dict[Tuple[str, str], List[str]]
-    by_number: Dict[str, Dict[str, List[str]]]
     node_ids: set[str]
 
 
@@ -60,14 +59,6 @@ def _source_id(row: Dict) -> str:
 
 def _target_status(row: Dict) -> str:
     return _norm(row.get("target_match_status") or "unknown")
-
-
-def _ref_kind(ref: Dict) -> str:
-    return _norm((ref.get("kind") or "").strip("."))
-
-
-def _ref_number(ref: Dict) -> str:
-    return _norm(ref.get("number") or "")
 
 
 def _bump(counter: Dict[str, int], key: str) -> None:
@@ -135,142 +126,46 @@ def _make_record(
     }
 
 
-def build_target_registry(
-    nodes: Iterable[Dict],
-    *,
-    default_version_id: str = "default",
-) -> TargetRegistry:
-    grouped: Dict[str, Dict] = {}
-    for node in nodes:
-        node_id = node.get("id")
-        kind = _norm((node.get("type") or "").strip("."))
-        version_id = (
-            _norm(node.get("arxiv_id") or default_version_id) or default_version_id
-        )
-        if not node_id or not kind:
-            continue
-
-        bucket = grouped.setdefault(
-            version_id,
-            {
-                "node_ids": set(),
-                "by_kind_number": {},
-            },
-        )
-        bucket["node_ids"].add(node_id)
-
-        number_raw = _norm(node.get("pdf_label_number") or "")
-        if not number_raw:
-            continue
-        by_kn = bucket["by_kind_number"]
-        for number in _numbers_for_node(number_raw, version_id):
-            by_kn.setdefault((kind, number), []).append(node_id)
-
-    registry: TargetRegistry = {}
-    for version_id, bucket in grouped.items():
-        by_kind_number: Dict[Tuple[str, str], List[str]] = {}
-        by_number: Dict[str, Dict[str, List[str]]] = {}
-        for (kind, number), ids in bucket["by_kind_number"].items():
-            uniq_ids = sorted(set(ids))
-            by_kind_number[(kind, number)] = uniq_ids
-            by_number.setdefault(number, {})[kind] = uniq_ids
-        registry[version_id] = VersionCandidate(
-            version_id=version_id,
-            by_kind_number=by_kind_number,
-            by_number=by_number,
-            node_ids=set(bucket["node_ids"]),
-        )
-    return registry
-
-
-def resolve_target_version(
-    mention_row: Dict,
-    target_registry: TargetRegistry,
-    *,
-    policy: Policy,
-) -> Dict[str, Optional[str]]:
-    _ = policy
-    if not target_registry:
-        return {
-            "status": "version_unresolved",
-            "version_id": None,
-            "reason": "empty_registry",
-        }
+def _resolve_version(
+    row: Dict, registry: TargetRegistry
+) -> Tuple[str, Optional[str], str]:
+    if not registry:
+        return "version_unresolved", None, "empty_registry"
 
     explicit = _norm(
-        mention_row.get("resolved_target_version")
-        or mention_row.get("target_arxiv_id")
-        or ""
+        row.get("resolved_target_version") or row.get("target_arxiv_id") or ""
     )
     if explicit:
-        if explicit in target_registry:
-            return {"status": "mapped", "version_id": explicit, "reason": None}
-        return {
-            "status": "version_unresolved",
-            "version_id": None,
-            "reason": "explicit_target_not_found",
-        }
+        if explicit in registry:
+            return "mapped", explicit, ""
+        return "version_unresolved", None, "explicit_target_not_found"
 
-    if len(target_registry) == 1:
-        only = next(iter(target_registry.values()))
-        return {"status": "mapped", "version_id": only.version_id, "reason": None}
-
-    return {
-        "status": "version_ambiguous",
-        "version_id": None,
-        "reason": "missing_explicit_target_version",
-    }
+    if len(registry) == 1:
+        return "mapped", next(iter(registry.keys())), ""
+    return "version_ambiguous", None, "missing_explicit_target_version"
 
 
-def _map_direct_ref(
+def _match_exact(
     *,
     candidate: VersionCandidate,
     kind: str,
     number: str,
 ) -> Tuple[Optional[Dict], Optional[str]]:
     for num in _numbers_for_ref(number, candidate.version_id):
-        exact_hits = candidate.by_kind_number.get((kind, num)) or []
-        if len(exact_hits) == 1:
+        hits = candidate.by_kind_number.get((kind, num)) or []
+        if len(hits) == 1:
             return {
-                "statement_id": exact_hits[0],
+                "statement_id": hits[0],
                 "tier": "exact",
                 "alias_source": None,
             }, None
-        if len(exact_hits) > 1:
+        if len(hits) > 1:
             return None, "exact_multi_hit"
-
-        same_kind = (candidate.by_number.get(num) or {}).get(kind) or []
-        if len(same_kind) == 1:
-            return {
-                "statement_id": same_kind[0],
-                "tier": "number_only",
-                "alias_source": None,
-            }, None
-        if len(same_kind) > 1:
-            return None, "number_only_multi_hit_same_kind"
-    return None, None
-
-
-def _iter_alias_entries(payload: object) -> Iterable[Tuple[str, Dict]]:
-    if isinstance(payload, list):
-        for item in payload:
-            if isinstance(item, dict):
-                yield "allow", item
-        return
-    if not isinstance(payload, dict):
-        return
-    for action in ("allow", "override", "deny"):
-        entries = payload.get(action)
-        if isinstance(entries, dict):
-            entries = [entries]
-        if not isinstance(entries, list):
-            continue
-        for item in entries:
-            if isinstance(item, dict):
-                yield action, item
+    return None, "ref_not_found"
 
 
 def _load_curated_aliases(path: Optional[str]) -> Dict[Tuple[str, str, str], Dict]:
+    """Canonical alias format only: list[dict]."""
     if not path:
         return {}
     alias_path = Path(path)
@@ -278,15 +173,20 @@ def _load_curated_aliases(path: Optional[str]) -> Dict[Tuple[str, str, str], Dic
         return {}
 
     payload = json.loads(alias_path.read_text(encoding="utf-8"))
+    if not isinstance(payload, list):
+        return {}
+
     selected: Dict[Tuple[str, str, str], Dict] = {}
-    for action_hint, item in _iter_alias_entries(payload):
-        action = _norm(item.get("action") or action_hint or "allow")
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        action = _norm(item.get("action") or "allow")
         if action not in {"allow", "override", "deny"}:
             continue
         key = (
             _norm(item.get("version_id") or "*") or "*",
             _norm(item.get("kind") or ""),
-            _norm(item.get("alt_number") or item.get("number") or ""),
+            _norm(item.get("alt_number") or ""),
         )
         if not key[1] or not key[2]:
             continue
@@ -299,12 +199,12 @@ def _load_curated_aliases(path: Optional[str]) -> Dict[Tuple[str, str, str], Dic
         if prev is None:
             selected[key] = candidate
             continue
+
         prev_pri = RULE_PRIORITY.get(prev["action"], 0)
         cand_pri = RULE_PRIORITY.get(action, 0)
         if cand_pri > prev_pri:
             selected[key] = candidate
-            continue
-        if cand_pri == prev_pri and (prev.get("statement_id") or "") != (
+        elif cand_pri == prev_pri and (prev.get("statement_id") or "") != (
             candidate.get("statement_id") or ""
         ):
             selected[key] = {
@@ -315,7 +215,7 @@ def _load_curated_aliases(path: Optional[str]) -> Dict[Tuple[str, str, str], Dic
     return selected
 
 
-def _resolve_curated_alias(
+def _resolve_alias(
     *,
     version: VersionCandidate,
     kind: str,
@@ -324,7 +224,7 @@ def _resolve_curated_alias(
     aliases: Dict[Tuple[str, str, str], Dict],
 ) -> Tuple[Optional[Dict], Optional[str]]:
     if target_status != "same_work_alt_version":
-        return None, "alias_not_allowed_for_target_status"
+        return None, None
 
     rule = aliases.get((version.version_id, kind, alt_number)) or aliases.get(
         ("*", kind, alt_number)
@@ -348,71 +248,38 @@ def _resolve_curated_alias(
     }, None
 
 
-def map_explicit_refs_to_artifacts(
-    mention_row: Dict,
-    target_registry: TargetRegistry,
+def _map_row_refs(
     *,
-    policy: Policy,
-    version_resolution: Optional[Dict[str, Optional[str]]] = None,
-    curated_rules_by_key: Optional[Dict[Tuple[str, str, str], Dict]] = None,
-) -> Dict:
-    version_resolution = version_resolution or resolve_target_version(
-        mention_row, target_registry, policy=policy
-    )
-    version_status = version_resolution.get("status")
-    version_id = version_resolution.get("version_id")
-    if version_status != "mapped" or not version_id:
-        return {
-            "status": "ref_unresolved",
-            "matches": [],
-            "reason": "version_unresolved",
-        }
-
-    version = target_registry.get(version_id)
-    if not version:
-        return {
-            "status": "ref_unresolved",
-            "matches": [],
-            "reason": "version_not_in_registry",
-        }
-
-    refs = mention_row.get("explicit_refs") or []
+    row: Dict,
+    candidate: VersionCandidate,
+    aliases: Dict[Tuple[str, str, str], Dict],
+) -> Tuple[str, List[Dict], str, List[str]]:
+    refs = row.get("explicit_refs") or []
     if not refs:
-        return {
-            "status": "ref_unresolved",
-            "matches": [],
-            "reason": "missing_explicit_refs",
-        }
+        return "ref_unresolved", [], "missing_explicit_refs", []
 
-    target_status = _target_status(mention_row)
-    aliases = curated_rules_by_key or {}
+    target_status = _target_status(row)
     matches: List[Dict] = []
     alias_sources: List[str] = []
-    last_reason = "no_ref_match"
+    last_reason = "ref_not_found"
 
     for ref in refs:
-        kind = _ref_kind(ref)
-        number = _ref_number(ref)
+        kind = _norm((ref.get("kind") or "").strip("."))
+        number = _norm(ref.get("number") or "")
         if not kind or not number:
             continue
 
-        direct_match, direct_reason = _map_direct_ref(
-            candidate=version,
-            kind=kind,
-            number=number,
+        exact_match, exact_reason = _match_exact(
+            candidate=candidate, kind=kind, number=number
         )
-        if direct_match is not None:
-            matches.append(direct_match)
+        if exact_match is not None:
+            matches.append(exact_match)
             continue
-        if direct_reason and target_status != "same_work_alt_version":
-            return {
-                "status": "ref_ambiguous",
-                "matches": [],
-                "reason": direct_reason,
-            }
+        if exact_reason == "exact_multi_hit":
+            return "ref_ambiguous", [], "exact_multi_hit", []
 
-        alias_match, alias_reason = _resolve_curated_alias(
-            version=version,
+        alias_match, alias_reason = _resolve_alias(
+            version=candidate,
             kind=kind,
             alt_number=number,
             target_status=target_status,
@@ -423,19 +290,50 @@ def map_explicit_refs_to_artifacts(
             if alias_match.get("alias_source"):
                 alias_sources.append(alias_match["alias_source"])
             continue
-        last_reason = direct_reason or alias_reason or "no_ref_match"
+        if alias_reason:
+            last_reason = alias_reason
 
     if not matches:
-        reason = "alias_unresolved" if last_reason.startswith("alias_") else last_reason
-        return {"status": "ref_unresolved", "matches": [], "reason": reason}
-
+        return "ref_unresolved", [], last_reason, []
     unique_matches = list({m["statement_id"]: m for m in matches}.values())
-    return {
-        "status": "mapped",
-        "matches": unique_matches,
-        "reason": None,
-        "alias_sources": alias_sources,
-    }
+    return "mapped", unique_matches, "", alias_sources
+
+
+def build_target_registry(
+    nodes: Iterable[Dict],
+    *,
+    default_version_id: str = "default",
+) -> TargetRegistry:
+    grouped: Dict[str, Dict[Tuple[str, str], List[str]]] = {}
+    node_ids_by_version: Dict[str, set[str]] = {}
+
+    for node in nodes:
+        node_id = node.get("id")
+        kind = _norm((node.get("type") or "").strip("."))
+        version_id = (
+            _norm(node.get("arxiv_id") or default_version_id) or default_version_id
+        )
+        if not node_id or not kind:
+            continue
+        node_ids_by_version.setdefault(version_id, set()).add(node_id)
+        raw_number = _norm(node.get("pdf_label_number") or "")
+        if not raw_number:
+            continue
+        by_kind_number = grouped.setdefault(version_id, {})
+        for number in _numbers_for_node(raw_number, version_id):
+            by_kind_number.setdefault((kind, number), []).append(node_id)
+
+    registry: TargetRegistry = {}
+    for version_id, by_kind_number_raw in grouped.items():
+        by_kind_number = {
+            key: sorted(set(ids)) for key, ids in by_kind_number_raw.items()
+        }
+        registry[version_id] = VersionCandidate(
+            version_id=version_id,
+            by_kind_number=by_kind_number,
+            node_ids=node_ids_by_version.get(version_id, set()),
+        )
+    return registry
 
 
 def build_gold_links(
@@ -443,11 +341,12 @@ def build_gold_links(
     target_registry: TargetRegistry,
     *,
     policy: Policy,
+    include_records: bool = False,
 ) -> GoldLinksBuildResult:
     gold_links: Dict[str, List[str]] = {}
     stats = MappingStats()
     records: List[Dict] = []
-    curated_aliases = _load_curated_aliases(policy.alias_curated_path)
+    aliases = _load_curated_aliases(policy.alias_curated_path)
 
     for row in rows:
         stats.total_rows += 1
@@ -464,98 +363,112 @@ def build_gold_links(
             _bump(stats.dropped_by_target_status, target_status or "unknown")
             _bump(stats.dropped_by_source, _source_id(row))
             stats.dropped_rows += 1
-            records.append(
-                _make_record(
-                    row=row,
-                    context_id=context_id,
-                    target_status=target_status,
-                    status="dropped",
-                    drop_reason=target_drop,
-                    version_status="not_attempted",
+            if include_records:
+                records.append(
+                    _make_record(
+                        row=row,
+                        context_id=context_id,
+                        target_status=target_status,
+                        status="dropped",
+                        drop_reason=target_drop,
+                        version_status="not_attempted",
+                    )
                 )
-            )
             continue
         _bump(stats.kept_by_target_status, target_status or "unknown")
 
-        version = resolve_target_version(row, target_registry, policy=policy)
-        if version.get("status") != "mapped" or not version.get("version_id"):
-            reason = (
-                version.get("reason") or version.get("status") or "version_unresolved"
-            )
+        version_status, version_id, version_reason = _resolve_version(
+            row, target_registry
+        )
+        if version_status != "mapped" or not version_id:
+            reason = version_reason or version_status
             _bump(stats.dropped_by_reason, reason)
             _bump(stats.dropped_by_source, _source_id(row))
             stats.dropped_rows += 1
-            records.append(
-                _make_record(
-                    row=row,
-                    context_id=context_id,
-                    target_status=target_status,
-                    status="dropped",
-                    drop_reason=reason,
-                    version_status=version.get("status"),
-                    version_id=version.get("version_id"),
+            if include_records:
+                records.append(
+                    _make_record(
+                        row=row,
+                        context_id=context_id,
+                        target_status=target_status,
+                        status="dropped",
+                        drop_reason=reason,
+                        version_status=version_status,
+                        version_id=version_id,
+                    )
                 )
-            )
             continue
 
-        mapped = map_explicit_refs_to_artifacts(
-            row,
-            target_registry,
-            policy=policy,
-            version_resolution=version,
-            curated_rules_by_key=curated_aliases,
+        candidate = target_registry.get(version_id)
+        if candidate is None:
+            reason = "version_not_in_registry"
+            _bump(stats.dropped_by_reason, reason)
+            _bump(stats.dropped_by_source, _source_id(row))
+            stats.dropped_rows += 1
+            if include_records:
+                records.append(
+                    _make_record(
+                        row=row,
+                        context_id=context_id,
+                        target_status=target_status,
+                        status="dropped",
+                        drop_reason=reason,
+                        version_status=version_status,
+                        version_id=version_id,
+                    )
+                )
+            continue
+
+        map_status, matches, map_reason, alias_sources = _map_row_refs(
+            row=row,
+            candidate=candidate,
+            aliases=aliases,
         )
-        if mapped.get("status") != "mapped":
-            reason = mapped.get("reason") or mapped.get("status") or "ref_unresolved"
+        if map_status != "mapped":
+            reason = map_reason or map_status
             _bump(stats.dropped_by_reason, reason)
             if reason.startswith("alias_"):
                 _bump(stats.dropped_alias_reasons, reason)
             _bump(stats.dropped_by_source, _source_id(row))
             stats.dropped_rows += 1
-            records.append(
-                _make_record(
-                    row=row,
-                    context_id=context_id,
-                    target_status=target_status,
-                    status="dropped",
-                    drop_reason=reason,
-                    version_status=version.get("status"),
-                    version_id=version.get("version_id"),
+            if include_records:
+                records.append(
+                    _make_record(
+                        row=row,
+                        context_id=context_id,
+                        target_status=target_status,
+                        status="dropped",
+                        drop_reason=reason,
+                        version_status=version_status,
+                        version_id=version_id,
+                    )
                 )
-            )
             continue
 
-        matches = mapped.get("matches") or []
         statement_ids = [m["statement_id"] for m in matches]
         if statement_ids:
             gold_links[context_id] = statement_ids
         stats.mapped_rows += 1
-
         for match in matches:
             _bump(stats.mapped_by_tier, match["tier"])
             if match.get("alias_source"):
                 _bump(stats.alias_usage, match["alias_source"])
 
-        records.append(
-            _make_record(
-                row=row,
-                context_id=context_id,
-                target_status=target_status,
-                status="mapped",
-                drop_reason=None,
-                version_status=version.get("status"),
-                version_id=version.get("version_id"),
-                mapping_tier=",".join(sorted({m["tier"] for m in matches})),
-                alias_sources=sorted(
-                    {
-                        s
-                        for s in (mapped.get("alias_sources") or [])
-                        if isinstance(s, str) and s
-                    }
-                ),
-                mapped_statement_ids=statement_ids,
+        if include_records:
+            records.append(
+                _make_record(
+                    row=row,
+                    context_id=context_id,
+                    target_status=target_status,
+                    status="mapped",
+                    drop_reason=None,
+                    version_status=version_status,
+                    version_id=version_id,
+                    mapping_tier=",".join(sorted({m["tier"] for m in matches})),
+                    alias_sources=sorted({s for s in alias_sources if s}),
+                    mapped_statement_ids=statement_ids,
+                )
             )
-        )
 
     return GoldLinksBuildResult(
         gold_links=gold_links, diagnostics=stats, records=records

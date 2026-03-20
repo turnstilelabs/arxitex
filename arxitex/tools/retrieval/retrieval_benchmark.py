@@ -919,6 +919,7 @@ def main() -> int:
             policy=RefMappingPolicy(
                 alias_curated_path=(args.mapping_curated_aliases or None),
             ),
+            include_records=True,
         )
         qrels = qrel_result.gold_links
         qrel_mapping_diagnostics = {
