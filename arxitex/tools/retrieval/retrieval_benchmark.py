@@ -17,6 +17,13 @@ from typing import Dict, Iterable, List, Tuple
 
 from loguru import logger
 
+from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
+    Policy as RefMappingPolicy,
+)
+from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
+    build_gold_links,
+    build_target_registry,
+)
 from arxitex.tools.retrieval.agentic.service import run_agentic_search
 from arxitex.tools.retrieval.bm25_engine import BM25Engine
 from arxitex.tools.retrieval.colgrep_engine import ColGrepEngine
@@ -33,6 +40,7 @@ from arxitex.tools.retrieval.metrics import evaluate
 from arxitex.tools.retrieval.msc2020 import MSCDictionary, MSCMatch
 from arxitex.tools.retrieval.normalization import normalize_text
 from arxitex.tools.retrieval.pylate_engine import PyLateEngine
+from arxitex.tools.retrieval.qrels_audit import audit_qrels_alignment
 from arxitex.tools.retrieval.structured import StructuredFields, extract_structured
 
 EXPERIMENTS = {
@@ -44,6 +52,9 @@ EXPERIMENTS = {
 }
 
 RRF_K = 60
+PREFLIGHT_MIN_QRELS_COVERAGE = 0.99
+PREFLIGHT_MAX_MISMATCHES = 0
+PREFLIGHT_MAX_AMBIGUOUS_KEYS = 3
 
 TYPE_HINTS = {
     "definition": ["definition", "def.", "defn", "defn."],
@@ -165,6 +176,12 @@ def _prepare_queries(
                 "query_style": query_style,
                 "explicit_refs_count": explicit_refs_count,
                 "query_len": query_len,
+                "explicit_refs": row.get("explicit_refs") or [],
+                "reference_precision": row.get("reference_precision"),
+                "target_arxiv_id": row.get("target_arxiv_id"),
+                "source_arxiv_id": row.get("source_arxiv_id") or row.get("arxiv_id"),
+                "bib_entry": row.get("bib_entry"),
+                "target_match_status": row.get("target_match_status"),
             }
         )
     return prepared
@@ -174,6 +191,26 @@ def _write_results(path: str, results: Dict[str, Dict]) -> None:
     with open(path, "w", encoding="utf-8") as f:
         for row in results.values():
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def _to_mapping_context_rows(rows: List[Dict]) -> List[Dict]:
+    """Adapt retrieval query rows to the canonical context-row mapping contract."""
+    out: List[Dict] = []
+    for row in rows:
+        context_id = row.get("query_id")
+        if not context_id:
+            continue
+        out.append(
+            {
+                "context_id": context_id,
+                "context_text": row.get("query_text") or "",
+                "explicit_refs": row.get("explicit_refs") or [],
+                "target_arxiv_id": row.get("target_arxiv_id"),
+                "source_arxiv_id": row.get("source_arxiv_id") or row.get("arxiv_id"),
+                "target_match_status": row.get("target_match_status"),
+            }
+        )
+    return out
 
 
 def _resolve_artifact_ids(indices: List, id_lookup: Dict[int, str]) -> List[str]:
@@ -593,9 +630,22 @@ def main() -> int:
         "--graph", default="public/data/sga4-5.json", help="Graph JSON path."
     )
     parser.add_argument(
-        "--queries", default="data/sga4-5_queries.jsonl", help="Queries JSONL path."
+        "--queries",
+        default="data/citation_dataset/queries.jsonl",
+        help="Queries JSONL path.",
     )
-    parser.add_argument("--qrels", default="", help="Optional qrels JSONL path.")
+    parser.add_argument(
+        "--qrels",
+        "--gold-links",
+        dest="qrels",
+        default="data/citation_dataset/qrels.json",
+        help="Optional gold-links JSON/JSONL path (qrels format).",
+    )
+    parser.add_argument(
+        "--mapping-curated-aliases",
+        default="",
+        help="Optional curated alias JSON used by auto gold-link mapping.",
+    )
     parser.add_argument("--out-dir", default="data/retrieval", help="Output directory.")
     parser.add_argument("--experiment", default="all", help="e1,e2,e3,e4,e5,all")
     parser.add_argument(
@@ -650,7 +700,7 @@ def main() -> int:
     parser.add_argument(
         "--single-source-only-metrics",
         action="store_true",
-        help="Compute metrics only on queries whose qrels resolve to exactly one artifact.",
+        help="Compute metrics only on queries whose gold links resolve to exactly one artifact.",
     )
     parser.add_argument(
         "--bm25-k1", type=float, default=None, help="BM25 k1 parameter override."
@@ -795,6 +845,11 @@ def main() -> int:
         "--colgrep-chunks-dir",
         default="",
         help="ColGREP chunk directory (defaults to --colgrep-index-dir).",
+    )
+    parser.add_argument(
+        "--preflight-report",
+        default="",
+        help="Optional path to write gold-links preflight JSON (default: <out-dir>/qrels_preflight.json).",
     )
     parser.set_defaults(include_proofs=True, include_type_prefix=True)
     args = parser.parse_args()
@@ -949,52 +1004,81 @@ def main() -> int:
         )
 
     qrels = load_qrels(args.qrels) if args.qrels else {}
+    qrel_mapping_diagnostics = None
+    qrel_mapping_report_path = None
     if not qrels:
-        # Build qrels from graph + explicit_refs in queries.
-        index: Dict[str, List[str]] = {}
-        for node_id, node in graph.nodes.items():
-            node_type = (node.get("type") or "").lower().strip(".")
-            if not node_type:
-                continue
-            number = (node.get("pdf_label_number") or "").strip()
-            if not number and node.get("pdf_label"):
-                import re
-
-                m = re.search(r"(\d+(?:\.\d+)*)", node.get("pdf_label") or "")
-                if m:
-                    number = m.group(1)
-            if not number:
-                continue
-            key = f"{node_type}:{number}"
-            index.setdefault(key, []).append(node_id)
-
-        built = {}
-        for row in _read_queries(args.queries):
-            qid = row.get("query_id")
-            if not qid:
-                continue
-            refs = row.get("explicit_refs") or []
-            ref_ids: List[str] = []
-            for ref in refs:
-                kind = (ref.get("kind") or "").lower().strip(".")
-                number = (ref.get("number") or "").strip()
-                if not kind or not number:
-                    continue
-                key = f"{kind}:{number}"
-                ref_ids.extend(index.get(key, []))
-            ref_ids = list(dict.fromkeys(ref_ids))
-            if ref_ids:
-                built[qid] = ref_ids
-        qrels = built
+        # Build gold links (qrels format) from graph + explicit refs via shared resolver.
+        registry = build_target_registry(
+            graph.nodes.values(),
+            default_version_id=(Path(args.graph).stem or "default"),
+        )
+        qrel_result = build_gold_links(
+            _to_mapping_context_rows(queries),
+            registry,
+            policy=RefMappingPolicy(
+                require_kind_match=True,
+                allow_number_only_fallback=True,
+                strict_target_match=True,
+                drop_unknown_target=True,
+                alias_curated_path=(args.mapping_curated_aliases or None),
+            ),
+        )
+        qrels = qrel_result.gold_links
+        qrel_mapping_diagnostics = {
+            "total_rows": qrel_result.diagnostics.total_rows,
+            "mapped_rows": qrel_result.diagnostics.mapped_rows,
+            "dropped_rows": qrel_result.diagnostics.dropped_rows,
+            "dropped_by_reason": qrel_result.diagnostics.dropped_by_reason,
+            "mapped_by_tier": qrel_result.diagnostics.mapped_by_tier,
+            "dropped_by_source": qrel_result.diagnostics.dropped_by_source,
+            "kept_by_target_status": qrel_result.diagnostics.kept_by_target_status,
+            "dropped_by_target_status": qrel_result.diagnostics.dropped_by_target_status,
+            "alias_usage": qrel_result.diagnostics.alias_usage,
+            "dropped_alias_reasons": qrel_result.diagnostics.dropped_alias_reasons,
+        }
+        qrel_mapping_report_path = os.path.join(
+            args.out_dir, "qrels_mapping_report.jsonl"
+        )
+        with open(qrel_mapping_report_path, "w", encoding="utf-8") as mf:
+            for rec in qrel_result.records:
+                mf.write(json.dumps(rec, ensure_ascii=False) + "\n")
         if qrels:
             logger.info(
-                "Built qrels from graph + explicit_refs ({} queries)", len(qrels)
+                "Built gold links from graph + explicit_refs ({} queries)", len(qrels)
             )
     if qrels:
         query_ids = {q["query_id"] for q in queries}
         qrels = {qid: rel for qid, rel in qrels.items() if qid in query_ids}
         if args.single_source_only_metrics:
             qrels = {qid: rel for qid, rel in qrels.items() if len(rel) == 1}
+
+    qrels_preflight = audit_qrels_alignment(
+        queries=queries,
+        qrels=qrels,
+        graph_nodes=graph.nodes.values(),
+    )
+    # Always persist audit diagnostics; optionally fail fast on threshold violations.
+    qrels_preflight_path = args.preflight_report or os.path.join(
+        args.out_dir, "qrels_preflight.json"
+    )
+    with open(qrels_preflight_path, "w", encoding="utf-8") as pf:
+        json.dump(qrels_preflight, pf, ensure_ascii=False, indent=2)
+    failures: List[str] = []
+    coverage = float(qrels_preflight.get("qrels_coverage", 0.0))
+    mismatch_count = int(qrels_preflight.get("mismatch_count", 0))
+    ambiguous_keys = int(qrels_preflight.get("ambiguous_statement_key_count", 0))
+    if coverage < PREFLIGHT_MIN_QRELS_COVERAGE:
+        failures.append(f"qrels_coverage={coverage} < {PREFLIGHT_MIN_QRELS_COVERAGE}")
+    if mismatch_count > PREFLIGHT_MAX_MISMATCHES:
+        failures.append(f"mismatch_count={mismatch_count} > {PREFLIGHT_MAX_MISMATCHES}")
+    if ambiguous_keys > PREFLIGHT_MAX_AMBIGUOUS_KEYS:
+        failures.append(
+            "ambiguous_statement_key_count="
+            f"{ambiguous_keys} > {PREFLIGHT_MAX_AMBIGUOUS_KEYS}"
+        )
+    if failures:
+        logger.error("Preflight failed: {}", "; ".join(failures))
+        return 2
 
     pylate_index_dir = args.pylate_index_dir or args.out_dir
 
@@ -1011,7 +1095,7 @@ def main() -> int:
         "experiments": (
             args.experiment.lower()
             if args.experiment != "all"
-            else ["e1", "e2", "e3", "e4"]
+            else ["e1", "e2", "e3", "e4", "e5"]
         ),
         "top_k": args.top_k,
         "query_counts": {
@@ -1019,6 +1103,10 @@ def main() -> int:
             "filtered": len(queries),
         },
         "qrels_coverage": len(qrels) if qrels else 0,
+        "qrels_mapping": qrel_mapping_diagnostics,
+        "qrels_mapping_report_path": qrel_mapping_report_path,
+        "qrels_preflight": qrels_preflight,
+        "qrels_preflight_path": qrels_preflight_path,
         "artifact_count": len(artifacts),
         "environment": {
             "python": sys.version.split()[0],

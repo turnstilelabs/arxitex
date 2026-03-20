@@ -2,26 +2,28 @@
 
 Build a dataset of works that cite a target work, extract mention contexts from arXiv/ar5iv, generate synthetic researcher queries, and align those queries to statements from the target's TeX sources.
 
-## Quick start (Stage 5 entrypoint)
+## Quick start
 
-Single target (one arXiv id):
+1) Acquire network-dependent inputs (citing works, mentions, statements):
+
+```bash
+python -m arxitex.tools.mentions.dataset.acquire_inputs \
+  --targets 2211.11689 \
+  --out-dir data/mentions_dataset \
+  --statements-dir data/statements/mentions \
+  --cache-dir data/cache
+```
+
+2) Build deterministic local dataset (contexts + gold links):
 
 ```bash
 python -m arxitex.tools.mentions.dataset.build_dataset \
   --targets 2211.11689 \
+  --statements-dir data/statements/mentions \
   --out-dir data/mentions_dataset
 ```
 
-Multiple targets (targets.json):
-
-```bash
-python -m arxitex.tools.mentions.dataset.build_dataset \
-  --targets-json data/mentions/targets.json \
-  --out-dir data/mentions_dataset
-```
-
-Stage 5 will run statements extraction and mention extraction per target unless you pass
-`--skip-statements` or `--skip-mentions`.
+`build_dataset` is now local-only: it does not call OpenAlex/arXiv/ar5iv.
 
 ## Setup
 
@@ -150,31 +152,34 @@ python -m arxitex.extractor.pipeline \
   -o data/statements/{target}.json
 ```
 
-## Stage 5: dataset build
+## Stage 5: mention supervision build
 
-Merge mentions, queries, and statements into a retrieval dataset and qrels:
+Build clean mention contexts and gold links against target statements:
 
 ```bash
 python -m arxitex.tools.mentions.dataset.build_dataset \
-  --targets-path data/citation_dataset/targets.json \
+  --targets-json data/mentions/targets.json \
   --statements-dir data/statements/mentions \
-  --mentions-dir data/citation_dataset \
-  --queries-dir data/citation_dataset \
-  --out-dir data/mentions_dataset
+  --out-dir data/mentions
+```
+
+If inputs are missing, run:
+
+```bash
+python -m arxitex.tools.mentions.dataset.acquire_inputs \
+  --targets-json data/mentions/targets.json \
+  --statements-dir data/statements/mentions \
+  --out-dir data/mentions \
+  --cache-dir data/cache
 ```
 
 Outputs:
 - `combined_statements.json`
-- `mentions_dataset.jsonl`
-- `mentions_queries.jsonl` (only when `--emit-queries`)
-- `mentions_qrels.json` (only when `--emit-queries`)
-
-Notes:
-- Stage 5 can orchestrate earlier stages per target. It will run statement extraction
-  unless you pass `--skip-statements`, and it will run citing-works + mention extraction
-  unless you pass `--skip-mentions`.
-- For a single target, you can still use Stage 5 by providing a one-item `targets.json`
-  or `--targets <arxiv_id>`. Use skip flags if you already ran stages 1–4 manually.
+- `statements.jsonl`
+- `mention_contexts.jsonl`
+- `mention_gold_links.json`
+- `splits/*_mention_contexts.jsonl`
+- `splits/*_mention_gold_links.json`
 
 ### Multi-target source prep (optional)
 
@@ -201,4 +206,4 @@ python -m arxitex.tools.mentions.dataset.sources.expand_targets_from_works \
 
 ## Review viewer
 
-Open `qrels_min_viewer.html` in a browser and load the `{target}_queries.jsonl`.
+Open `qrels_min_viewer.html` in a browser and load the stage output JSON (queries or gold links).

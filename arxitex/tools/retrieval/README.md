@@ -5,22 +5,32 @@ mentions dataset produced by `arxitex.tools.mentions.dataset.build_dataset`.
 
 ## Quick start with mentions dataset
 
-1) Build the mentions dataset and emit queries/qrels:
+1) Acquire mention inputs (network):
+
+```bash
+python -m arxitex.tools.mentions.dataset.acquire_inputs \
+  --targets 2211.11689 \
+  --out-dir data/mentions_dataset \
+  --statements-dir data/statements/mentions \
+  --cache-dir data/cache
+```
+
+2) Build the mentions dataset locally (contexts + gold links):
 
 ```bash
 python -m arxitex.tools.mentions.dataset.build_dataset \
   --targets 2211.11689 \
-  --out-dir data/mentions_dataset \
-  --emit-queries
+  --statements-dir data/statements/mentions \
+  --out-dir data/mentions_dataset
 ```
 
-2) Run the retrieval benchmark:
+3) Run the retrieval benchmark:
 
 ```bash
 python -m arxitex.tools.retrieval.retrieval_benchmark \
   --graph data/mentions_dataset/combined_statements.json \
-  --queries data/mentions_dataset/queries.jsonl \
-  --qrels data/mentions_dataset/qrels.json \
+  --queries data/mentions_dataset/mention_contexts.jsonl \
+  --gold-links data/mentions_dataset/mention_gold_links.json \
   --out-dir data/retrieval \
   --experiment e1
 ```
@@ -28,7 +38,7 @@ python -m arxitex.tools.retrieval.retrieval_benchmark \
 Notes:
 - `--graph` expects a JSON file with `nodes` (edges optional). The combined
   statements output from Stage 5 is sufficient.
-- `--qrels` accepts either JSONL (`{"query_id":..., "relevant_ids":[...]}` per line)
+- `--gold-links` (alias `--qrels`) accepts either JSONL (`{"query_id":..., "relevant_ids":[...]}` per line)
   or a JSON dict (`{"qid": ["id1", "id2"]}`).
 
 ## Experiments
