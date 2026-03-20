@@ -49,9 +49,12 @@ ENV_TYPES = {
     "rem": "Remark",
 }
 
-PDF_LABEL_RE = re.compile(
-    r"\b(Theorem|Thm\.|Lemma|Lem\.|Proposition|Prop\.|Corollary|Cor\.|Claim|Clm\.|Conjecture|Conj\.|Definition|Def\.|Example|Ex\.|Remark|Rem\.)\s*"
-    r"([0-9]+(?:\.[0-9]+)*)",
+# Match heading-style labels only (line-start anchored), e.g. "Theorem 5.10 ...".
+# This avoids false matches from inline references such as
+# "in the proof of Theorem 5.2 ..." that can otherwise overwrite true labels.
+PDF_LABEL_HEADER_RE = re.compile(
+    r"^\s*(Theorem|Thm\.|Lemma|Lem\.|Proposition|Prop\.|Corollary|Cor\.|Claim|Clm\.|Conjecture|Conj\.|Definition|Def\.|Example|Ex\.|Remark|Rem\.)\s*"
+    r"([0-9]+(?:\.[0-9]+)*)\b",
     re.IGNORECASE,
 )
 
@@ -304,7 +307,7 @@ def _find_label_near(
 
     candidates: List[Tuple[float, str, str]] = []
     for text, bbox in lines:
-        match = PDF_LABEL_RE.search(text)
+        match = PDF_LABEL_HEADER_RE.search(text)
         if match:
             label = f"{match.group(1).rstrip('.')}".capitalize()
             if label.lower() != expected_label.lower():
@@ -499,7 +502,7 @@ def _find_label_in_lines(
     # Candidate label lines of the expected type.
     candidate_indices = []
     for i, (line, _) in enumerate(lines):
-        match = PDF_LABEL_RE.search(line)
+        match = PDF_LABEL_HEADER_RE.search(line)
         if not match:
             continue
         label = f"{match.group(1).rstrip('.')}".capitalize()
@@ -543,7 +546,7 @@ def _find_label_in_lines(
         else _closest_to_anchor(candidate_indices)
     )
     if idx is not None:
-        match = PDF_LABEL_RE.search(lines[idx][0])
+        match = PDF_LABEL_HEADER_RE.search(lines[idx][0])
         if match:
             return f"{match.group(1).rstrip('.')}".capitalize(), match.group(2)
     return None
@@ -638,7 +641,7 @@ def annotate_nodes_with_pdf_labels(
         lines = pdf_text.get(page, [])
         label_lines = []
         for idx, (line, _) in enumerate(lines):
-            match = PDF_LABEL_RE.search(line)
+            match = PDF_LABEL_HEADER_RE.search(line)
             if not match:
                 continue
             label = f"{match.group(1).rstrip('.')}".capitalize()

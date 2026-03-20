@@ -119,6 +119,7 @@ def extract_structured(
 
     async def run() -> Dict[str, StructuredFields]:
         sem = asyncio.Semaphore(max(1, int(concurrency)))
+        write_lock = asyncio.Lock()
 
         async def process(tid: str, text: str) -> None:
             async with sem:
@@ -126,7 +127,8 @@ def extract_structured(
                     prompt_id = f"struct-{_hash(text)[:12]}"
                     fields = await _extract_one(text, model, prompt_id)
                     cache[tid] = fields
-                    _append_cache(cache_path, tid, fields)
+                    async with write_lock:
+                        _append_cache(cache_path, tid, fields)
                 except Exception as exc:
                     logger.warning("Structured extraction failed for {}: {}", tid, exc)
 

@@ -34,6 +34,19 @@ setup(
     packages=find_packages(exclude=("tests", "pipeline_output", "data")),
     include_package_data=True,
     install_requires=read_requirements(),
+    extras_require={
+        "mentions": [
+            "beautifulsoup4==4.12.3",
+            "lxml==5.2.2",
+            "pdfminer.six==20231228",
+            "sentence-transformers==4.0.2",
+            "torch==2.2.2",
+            # faiss-cpu wheels are not available for macOS arm64; install via conda or skip.
+            "faiss-cpu==1.8.0.post1; platform_system != 'Darwin'",
+            # PyLate requires fast-plaid (no macOS wheels). Skip on macOS; use bi-encoder only.
+            "pylate==1.4.0; platform_system != 'Darwin'",
+        ],
+    },
     python_requires=">=3.11",
     classifiers=[
         "License :: OSI Approved :: MIT License",

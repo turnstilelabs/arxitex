@@ -17,12 +17,14 @@ from typing import Dict, Iterable, List, Tuple
 
 from loguru import logger
 
-from arxitex.tools.retrieval.bm25_engine import BM25Engine
-from arxitex.tools.retrieval.dense_engine import DenseEngine
-from arxitex.tools.retrieval.graph_expand import (
-    build_dependency_graph,
-    expand_with_prereqs,
+from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
+    build_gold_links,
+    build_target_registry,
 )
+from arxitex.tools.retrieval.agentic.service import run_agentic_search
+from arxitex.tools.retrieval.bm25_engine import BM25Engine
+from arxitex.tools.retrieval.colgrep_engine import ColGrepEngine
+from arxitex.tools.retrieval.dense_engine import DenseEngine
 from arxitex.tools.retrieval.io import (
     build_artifacts,
     load_graph,
@@ -32,17 +34,21 @@ from arxitex.tools.retrieval.io import (
 from arxitex.tools.retrieval.metrics import evaluate
 from arxitex.tools.retrieval.normalization import normalize_text
 from arxitex.tools.retrieval.pylate_engine import PyLateEngine
+from arxitex.tools.retrieval.qrels_audit import audit_qrels_alignment
 from arxitex.tools.retrieval.structured import StructuredFields, extract_structured
 
 EXPERIMENTS = {
     "e1": "bm25",
     "e2": "dense",
     "e3": "pylate",
-    "e4": "graph-expand",
-    "e5": "hybrid-rrf",
+    "e4": "hybrid-rrf",
+    "e5": "agentic-colgrep",
 }
 
 RRF_K = 60
+PREFLIGHT_MIN_QRELS_COVERAGE = 0.99
+PREFLIGHT_MAX_MISMATCHES = 0
+PREFLIGHT_MAX_AMBIGUOUS_KEYS = 3
 
 TYPE_HINTS = {
     "definition": ["definition", "def.", "defn", "defn."],
@@ -164,6 +170,12 @@ def _prepare_queries(
                 "query_style": query_style,
                 "explicit_refs_count": explicit_refs_count,
                 "query_len": query_len,
+                "explicit_refs": row.get("explicit_refs") or [],
+                "reference_precision": row.get("reference_precision"),
+                "target_arxiv_id": row.get("target_arxiv_id"),
+                "source_arxiv_id": row.get("source_arxiv_id") or row.get("arxiv_id"),
+                "bib_entry": row.get("bib_entry"),
+                "target_match_status": row.get("target_match_status"),
             }
         )
     return prepared
@@ -173,6 +185,26 @@ def _write_results(path: str, results: Dict[str, Dict]) -> None:
     with open(path, "w", encoding="utf-8") as f:
         for row in results.values():
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def _to_mapping_context_rows(rows: List[Dict]) -> List[Dict]:
+    """Adapt retrieval query rows to the canonical context-row mapping contract."""
+    out: List[Dict] = []
+    for row in rows:
+        context_id = row.get("query_id")
+        if not context_id:
+            continue
+        out.append(
+            {
+                "context_id": context_id,
+                "context_text": row.get("query_text") or "",
+                "explicit_refs": row.get("explicit_refs") or [],
+                "target_arxiv_id": row.get("target_arxiv_id"),
+                "source_arxiv_id": row.get("source_arxiv_id") or row.get("arxiv_id"),
+                "target_match_status": row.get("target_match_status"),
+            }
+        )
+    return out
 
 
 def _resolve_artifact_ids(indices: List, id_lookup: Dict[int, str]) -> List[str]:
@@ -592,11 +624,24 @@ def main() -> int:
         "--graph", default="public/data/sga4-5.json", help="Graph JSON path."
     )
     parser.add_argument(
-        "--queries", default="data/sga4-5_queries.jsonl", help="Queries JSONL path."
+        "--queries",
+        default="data/citation_dataset/queries.jsonl",
+        help="Queries JSONL path.",
     )
-    parser.add_argument("--qrels", default="", help="Optional qrels JSONL path.")
+    parser.add_argument(
+        "--qrels",
+        "--gold-links",
+        dest="qrels",
+        default="data/citation_dataset/qrels.json",
+        help="Optional gold-links JSON/JSONL path (qrels format).",
+    )
+    parser.add_argument(
+        "--mapping-curated-aliases",
+        default="",
+        help="Optional curated alias JSON used by auto gold-link mapping.",
+    )
     parser.add_argument("--out-dir", default="data/retrieval", help="Output directory.")
-    parser.add_argument("--experiment", default="all", help="e1,e2,e3,e4,all")
+    parser.add_argument("--experiment", default="all", help="e1,e2,e3,e4,e5,all")
     parser.add_argument(
         "--top-k", type=int, default=10, help="Top-K results per query."
     )
@@ -607,11 +652,6 @@ def main() -> int:
         "--pylate-index-dir",
         default="",
         help="Directory to store PyLate index files (default: out-dir).",
-    )
-    parser.add_argument(
-        "--expand-types",
-        default="definition,lemma",
-        help="Comma-separated types to inject.",
     )
     parser.add_argument(
         "--index-mode",
@@ -654,7 +694,7 @@ def main() -> int:
     parser.add_argument(
         "--single-source-only-metrics",
         action="store_true",
-        help="Compute metrics only on queries whose qrels resolve to exactly one artifact.",
+        help="Compute metrics only on queries whose gold links resolve to exactly one artifact.",
     )
     parser.add_argument(
         "--bm25-k1", type=float, default=None, help="BM25 k1 parameter override."
@@ -665,7 +705,7 @@ def main() -> int:
     parser.add_argument(
         "--rrf-include-e2",
         action="store_true",
-        help="Include dense results in e5 RRF fusion (requires OPENAI_API_KEY).",
+        help="Include dense results in e4 RRF fusion (requires OPENAI_API_KEY).",
     )
     parser.add_argument(
         "--structured",
@@ -729,6 +769,43 @@ def main() -> int:
         "--run-id",
         default="",
         help="Run identifier for logs/metadata (default: UTC timestamp).",
+    )
+    parser.add_argument(
+        "--agentic-model",
+        default="gpt-5-mini-2025-08-07",
+        help="LLM model for agentic ColGREP retrieval.",
+    )
+    parser.add_argument(
+        "--agentic-max-steps",
+        type=int,
+        default=3,
+        help="Max agentic refinement steps (default: 3).",
+    )
+    parser.add_argument(
+        "--agentic-top-k",
+        type=int,
+        default=10,
+        help="Top-K ColGREP candidates per step (default: 10).",
+    )
+    parser.add_argument(
+        "--colgrep-bin",
+        default="colgrep",
+        help="ColGREP binary path (default: colgrep).",
+    )
+    parser.add_argument(
+        "--colgrep-index-dir",
+        default="",
+        help="ColGREP index directory (optional).",
+    )
+    parser.add_argument(
+        "--colgrep-chunks-dir",
+        default="",
+        help="ColGREP chunk directory (defaults to --colgrep-index-dir).",
+    )
+    parser.add_argument(
+        "--preflight-report",
+        default="",
+        help="Optional path to write gold-links preflight JSON (default: <out-dir>/qrels_preflight.json).",
     )
     parser.set_defaults(include_proofs=True, include_type_prefix=True)
     args = parser.parse_args()
@@ -825,53 +902,76 @@ def main() -> int:
         return 1
 
     qrels = load_qrels(args.qrels) if args.qrels else {}
+    qrel_mapping_diagnostics = None
+    qrel_mapping_report_path = None
     if not qrels:
-        # Build qrels from graph + explicit_refs in queries.
-        index: Dict[str, List[str]] = {}
-        for node_id, node in graph.nodes.items():
-            node_type = (node.get("type") or "").lower().strip(".")
-            if not node_type:
-                continue
-            number = (node.get("pdf_label_number") or "").strip()
-            if not number and node.get("pdf_label"):
-                import re
-
-                m = re.search(r"(\d+(?:\.\d+)*)", node.get("pdf_label") or "")
-                if m:
-                    number = m.group(1)
-            if not number:
-                continue
-            key = f"{node_type}:{number}"
-            index.setdefault(key, []).append(node_id)
-
-        built = {}
-        for row in _read_queries(args.queries):
-            qid = row.get("query_id")
-            if not qid:
-                continue
-            refs = row.get("explicit_refs") or []
-            ref_ids: List[str] = []
-            for ref in refs:
-                kind = (ref.get("kind") or "").lower().strip(".")
-                number = (ref.get("number") or "").strip()
-                if not kind or not number:
-                    continue
-                key = f"{kind}:{number}"
-                ref_ids.extend(index.get(key, []))
-            ref_ids = list(dict.fromkeys(ref_ids))
-            if ref_ids:
-                built[qid] = ref_ids
-        qrels = built
+        # Build gold links (qrels format) from graph + explicit refs via shared resolver.
+        registry = build_target_registry(
+            graph.nodes.values(),
+            default_version_id=(Path(args.graph).stem or "default"),
+        )
+        qrel_result = build_gold_links(
+            _to_mapping_context_rows(queries),
+            registry,
+            alias_curated_path=(args.mapping_curated_aliases or None),
+            include_records=True,
+        )
+        qrels = qrel_result.gold_links
+        qrel_mapping_diagnostics = {
+            "total_rows": qrel_result.diagnostics.total_rows,
+            "mapped_rows": qrel_result.diagnostics.mapped_rows,
+            "dropped_rows": qrel_result.diagnostics.dropped_rows,
+            "dropped_by_reason": qrel_result.diagnostics.dropped_by_reason,
+            "mapped_by_tier": qrel_result.diagnostics.mapped_by_tier,
+            "dropped_by_source": qrel_result.diagnostics.dropped_by_source,
+            "kept_by_target_status": qrel_result.diagnostics.kept_by_target_status,
+            "dropped_by_target_status": qrel_result.diagnostics.dropped_by_target_status,
+            "alias_usage": qrel_result.diagnostics.alias_usage,
+            "dropped_alias_reasons": qrel_result.diagnostics.dropped_alias_reasons,
+        }
+        qrel_mapping_report_path = os.path.join(
+            args.out_dir, "qrels_mapping_report.jsonl"
+        )
+        with open(qrel_mapping_report_path, "w", encoding="utf-8") as mf:
+            for rec in qrel_result.records:
+                mf.write(json.dumps(rec, ensure_ascii=False) + "\n")
         if qrels:
             logger.info(
-                "Built qrels from graph + explicit_refs ({} queries)", len(qrels)
+                "Built gold links from graph + explicit_refs ({} queries)", len(qrels)
             )
     if qrels:
         query_ids = {q["query_id"] for q in queries}
         qrels = {qid: rel for qid, rel in qrels.items() if qid in query_ids}
         if args.single_source_only_metrics:
             qrels = {qid: rel for qid, rel in qrels.items() if len(rel) == 1}
-    expand_types = [t.strip() for t in args.expand_types.split(",") if t.strip()]
+
+    qrels_preflight = audit_qrels_alignment(
+        queries=queries,
+        qrels=qrels,
+        graph_nodes=graph.nodes.values(),
+    )
+    # Always persist audit diagnostics; optionally fail fast on threshold violations.
+    qrels_preflight_path = args.preflight_report or os.path.join(
+        args.out_dir, "qrels_preflight.json"
+    )
+    with open(qrels_preflight_path, "w", encoding="utf-8") as pf:
+        json.dump(qrels_preflight, pf, ensure_ascii=False, indent=2)
+    failures: List[str] = []
+    coverage = float(qrels_preflight.get("qrels_coverage", 0.0))
+    mismatch_count = int(qrels_preflight.get("mismatch_count", 0))
+    ambiguous_keys = int(qrels_preflight.get("ambiguous_statement_key_count", 0))
+    if coverage < PREFLIGHT_MIN_QRELS_COVERAGE:
+        failures.append(f"qrels_coverage={coverage} < {PREFLIGHT_MIN_QRELS_COVERAGE}")
+    if mismatch_count > PREFLIGHT_MAX_MISMATCHES:
+        failures.append(f"mismatch_count={mismatch_count} > {PREFLIGHT_MAX_MISMATCHES}")
+    if ambiguous_keys > PREFLIGHT_MAX_AMBIGUOUS_KEYS:
+        failures.append(
+            "ambiguous_statement_key_count="
+            f"{ambiguous_keys} > {PREFLIGHT_MAX_AMBIGUOUS_KEYS}"
+        )
+    if failures:
+        logger.error("Preflight failed: {}", "; ".join(failures))
+        return 2
 
     pylate_index_dir = args.pylate_index_dir or args.out_dir
 
@@ -896,6 +996,10 @@ def main() -> int:
             "filtered": len(queries),
         },
         "qrels_coverage": len(qrels) if qrels else 0,
+        "qrels_mapping": qrel_mapping_diagnostics,
+        "qrels_mapping_report_path": qrel_mapping_report_path,
+        "qrels_preflight": qrels_preflight,
+        "qrels_preflight_path": qrels_preflight_path,
         "artifact_count": len(artifacts),
         "environment": {
             "python": sys.version.split()[0],
@@ -910,6 +1014,14 @@ def main() -> int:
                 PyLateEngine, "model_name", "lightonai/Reason-ModernColBERT"
             ),
             "pylate_index_dir": pylate_index_dir,
+        },
+        "agentic_colgrep": {
+            "model": args.agentic_model,
+            "max_steps": args.agentic_max_steps,
+            "top_k": args.agentic_top_k,
+            "colgrep_bin": args.colgrep_bin,
+            "colgrep_index_dir": args.colgrep_index_dir or None,
+            "colgrep_chunks_dir": args.colgrep_chunks_dir or None,
         },
     }
     with open(
@@ -964,31 +1076,6 @@ def main() -> int:
             )
             results_cache["e3"] = results
         elif exp == "e4":
-            # Stage 3 + graph expansion
-            base_results, latency = run_pylate(
-                texts,
-                ids,
-                queries,
-                args.top_k,
-                index_dir=pylate_index_dir,
-                model_name=args.pylate_model,
-            )
-            dep_graph = build_dependency_graph(graph.edges)
-            for qid, row in base_results.items():
-                indices = row.get("indices", [])
-                retrieved_ids = _resolve_artifact_ids(indices, id_lookup)
-                expanded = expand_with_prereqs(
-                    retrieved_ids, dep_graph, node_types, expand_types
-                )
-                results[qid] = {
-                    "query_id": qid,
-                    "query_text": row.get("query_text"),
-                    "indices": indices,
-                    "scores": row.get("scores", []),
-                    "expanded_ids": expanded,
-                }
-            results_cache["e4"] = results
-        elif exp == "e5":
             base_results: List[Dict[str, Dict]] = []
             if "e1" in results_cache:
                 base_results.append(results_cache["e1"])
@@ -1027,6 +1114,59 @@ def main() -> int:
                 idx_lookup=idx_lookup,
                 k=args.top_k,
             )
+            results_cache["e4"] = results
+        elif exp == "e5":
+            chunks_dir = args.colgrep_chunks_dir or args.colgrep_index_dir
+            if not chunks_dir:
+                logger.error(
+                    "--colgrep-chunks-dir or --colgrep-index-dir is required for e5"
+                )
+                logger.remove(sink_id)
+                continue
+
+            engine = ColGrepEngine(
+                chunks_dir=chunks_dir,
+                index_dir=args.colgrep_index_dir or None,
+                colgrep_bin=args.colgrep_bin,
+            )
+            try:
+                engine.build()
+            except Exception as exc:
+                logger.warning("ColGREP build failed: {}", exc)
+
+            results = {}
+
+            def _search_fn(q: str, k: int, *, _engine=engine):
+                return [c.__dict__ for c in _engine.search_candidates(q, k=k)]
+
+            for row in queries:
+                mention = row.get("query_text") or ""
+                agent_result = run_agentic_search(
+                    mention=mention,
+                    search_fn=_search_fn,
+                    model=args.agentic_model,
+                    max_steps=args.agentic_max_steps,
+                    top_k=args.agentic_top_k,
+                )
+                ordered_ids = agent_result.candidates
+                scored_pairs = list(zip(ordered_ids, agent_result.scores))
+                filtered_ids = []
+                indices = []
+                scores = []
+                for aid, score in scored_pairs:
+                    if aid in idx_lookup:
+                        filtered_ids.append(aid)
+                        indices.append(idx_lookup[aid])
+                        scores.append(score)
+                results[row["query_id"]] = {
+                    "query_id": row["query_id"],
+                    "query_text": mention,
+                    "indices": indices,
+                    "scores": scores,
+                    "artifact_ids": filtered_ids,
+                    "selected_id": agent_result.selected_id,
+                    "agent_trace": [t.__dict__ for t in agent_result.trace],
+                }
             results_cache["e5"] = results
         else:
             logger.warning("Skipping unsupported experiment: {}", exp)
@@ -1036,7 +1176,7 @@ def main() -> int:
         if (
             args.structured
             and (args.structured_filter or args.structured_boost)
-            and exp in {"e1", "e2", "e3", "e5"}
+            and exp in {"e1", "e2", "e3", "e4"}
         ):
             _apply_structured_filter_boost(
                 results,
@@ -1049,7 +1189,7 @@ def main() -> int:
                 boost=args.structured_boost,
             )
 
-        if args.type_rerank and exp in {"e1", "e2", "e3", "e5"}:
+        if args.type_rerank and exp in {"e1", "e2", "e3", "e4"}:
             for row in results.values():
                 indices = row.get("indices", [])
                 scores = row.get("scores", [])
@@ -1075,14 +1215,7 @@ def main() -> int:
 
         metrics = {}
         if qrels:
-            if exp == "e4":
-                target = {
-                    qid: row.get("expanded_ids", []) for qid, row in results.items()
-                }
-            else:
-                target = {
-                    qid: row.get("artifact_ids", []) for qid, row in results.items()
-                }
+            target = {qid: row.get("artifact_ids", []) for qid, row in results.items()}
             metrics = evaluate(target, qrels, k=args.top_k)
         if latency is not None:
             metrics["pylate_latency_sec"] = latency
@@ -1100,7 +1233,7 @@ def main() -> int:
                 queries=queries,
                 qrels=qrels,
                 k=args.top_k,
-                use_expanded=(exp == "e4"),
+                use_expanded=False,
             )
             per_query_paths[exp] = _write_per_query_metrics(
                 args.out_dir, exp, per_query_rows

@@ -17,9 +17,71 @@ Our goal is to build a structured, machine-readable knowledge graph representing
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+# For the mentions pipeline extras:
+pip install -e ".[mentions]"
 # or for editable install:
 pip install -e .
 ```
+
+Retrieval baselines and biencoder training live under `arxitex/tools/retrieval/`.
+See `arxitex/tools/retrieval/README.md` for usage.
+
+## Exporting processed papers to a Hugging Face dataset
+
+Once papers have been processed and persisted into the SQLite DB (via the
+`workflows.cli process` commands with `--persist-db`), you can export each
+paper's graph + definition bank into a single JSON file suitable for a
+Hugging Face dataset and the ArxiGraph webapp.
+
+Use the `export_hf_dataset` tool:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data
+```
+
+Key points:
+
+- No re-processing: this tool only reads from the existing SQLite DB; it
+  does not call LLMs or re-run extraction.
+- It discovers successfully processed papers via the `processed_papers`
+  table (managed by `ProcessedIndex`).
+- For each paper it reconstructs the graph and definition data and
+  writes:
+
+  ```jsonc
+  {
+    "graph": { /* DocumentGraph.to_dict(...) */ },
+    "definition_bank": { /* term -> definition */ } | null,
+    "artifact_to_terms_map": { "artifact_id": ["term1", ...], ... }
+  }
+  ```
+
+  to `--output-dir` using the filename convention:
+
+  ```text
+  arxiv_{arxiv_id.replace('/', '_')}.json
+  ```
+
+You can restrict export to a subset of arXiv IDs with:
+
+```bash
+python -m arxitex.tools.export_hf_dataset \
+  --db-path path/to/arxitex.sqlite \
+  --output-dir /path/to/hf-dataset/data \
+  --only-arxiv-id 2103.14030 --only-arxiv-id 2211.11689
+```
+
+In a Hugging Face `datasets` repo these files typically live under
+`data/`, and can be fetched from URLs of the form:
+
+```text
+https://huggingface.co/datasets/<org>/<repo>/resolve/<ref>/data/arxiv_2211.11689.json
+```
+
+where `<ref>` is either a branch name like `main` or an immutable
+commit hash used for version pinning.
 
 # 1. Building a graph from an ArXiv paper
 ## 1.1 Initial Graph Construction (`extractor/graph_building`)
@@ -331,8 +393,8 @@ python -m arxitex.tools.export_hf_dataset \
   --only-arxiv-id 2103.14030 --only-arxiv-id 2211.11689
 ```
 
-## 3. Citation Dataset Pipeline (arXiv → Mentions → Queries)
-The citation dataset pipeline builds a dataset of papers that cite a target paper and extracts mention contexts from arXiv sources. It starts from an arXiv URL or id, resolves the target work in OpenAlex, and then uses OpenAlex to discover all citing works.
+## 3. Mentions Dataset Pipeline (arXiv → Mentions → Queries)
+The mentions pipeline builds a dataset of papers that cite a target paper and extracts mention contexts from arXiv sources. It starts from an arXiv URL or id, resolves the target work in OpenAlex, and then uses OpenAlex to discover all citing works.
 
 High-level flow:
 - **Resolve target**: arXiv id → title/authors → OpenAlex Work ID.
@@ -342,16 +404,16 @@ High-level flow:
 
 Usage example:
 ```bash
-python -m arxitex.tools.citations.arxiv_identification \
+python -m arxitex.tools.mentions.acquisition.citing_works_cli \
   --target-arxiv https://arxiv.org/abs/1111.4914 \
   --out-dir data/citation_dataset \
   --cache-dir data/citation_dataset/cache
 
-python -m arxitex.tools.citations.get_citations \
+python -m arxitex.tools.mentions.extraction.extract_mentions_cli \
   --target-arxiv https://arxiv.org/abs/1111.4914 \
   --out-dir data/citation_dataset
 
-python -m arxitex.tools.citations.query_generation \
+python -m arxitex.tools.mentions.generation \
   --target-arxiv https://arxiv.org/abs/1111.4914 \
   --out-dir data/citation_dataset
 ```
