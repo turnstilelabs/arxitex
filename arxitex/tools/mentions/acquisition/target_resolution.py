@@ -2,23 +2,99 @@
 
 from __future__ import annotations
 
-import json
-import os
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, field
 from typing import Any, Iterable, Optional
-
-import requests
 
 from arxitex.arxiv_api import ArxivAPI
 from arxitex.arxiv_utils import parse_arxiv_id
 from arxitex.tools.matching.scoring import best_match_index
-from arxitex.utils import ensure_dir, sha256_hash
+from arxitex.tools.mentions.acquisition.openalex_citations import (
+    OPENALEX_BASE,
+    OpenAlexClient,
+)
+from arxitex.tools.mentions.extraction.mention_utils import title_similarity
+
+DOI_RE = re.compile(r"\b10\.\d{4,9}/\S+\b", re.IGNORECASE)
+YEAR_RE = re.compile(r"\b(19|20)\d{2}\b")
+SURVEY_RE = re.compile(
+    r"\b(survey|current developments|cdm|lecture notes|applications?)\b",
+    re.IGNORECASE,
+)
+PMIHES_RE = re.compile(r"\b(ih[eé]s|publ\.\s*math|hautes [eé]tudes)\b", re.IGNORECASE)
 
 
-@dataclass
-class TargetMetadata:
+@dataclass(frozen=True)
+class TargetWorkProfile:
     title: str
-    authors: list[str]
+    authors: list[str] = field(default_factory=list)
+    doi: Optional[str] = None
+    year: Optional[int] = None
+
+
+def _norm(s: str) -> str:
+    return re.sub(r"[^a-z0-9]+", " ", (s or "").lower()).strip()
+
+
+def _extract_doi(text: str) -> Optional[str]:
+    m = DOI_RE.search(text or "")
+    if not m:
+        return None
+    return m.group(0).rstrip(".,);]").lower()
+
+
+def _extract_year(text: str) -> Optional[int]:
+    m = YEAR_RE.search(text or "")
+    if not m:
+        return None
+    try:
+        return int(m.group(0))
+    except Exception:
+        return None
+
+
+def classify_bib_entry(entry_text: str, profile: TargetWorkProfile) -> str:
+    """Classify whether a bibliography entry points to the target work."""
+    text = (entry_text or "").strip()
+    if not text:
+        return "unknown"
+
+    doi = _extract_doi(text)
+    if profile.doi and doi:
+        if doi == profile.doi.lower():
+            return "exact_target"
+        return "non_target"
+
+    sim = title_similarity(text, profile.title or "")
+    text_norm = _norm(text)
+    title_norm = _norm(profile.title or "")
+    title_prefix_match = bool(title_norm and title_norm in text_norm)
+    has_survey_cue = bool(SURVEY_RE.search(text))
+    has_pmihes_cue = bool(PMIHES_RE.search(text))
+    entry_year = _extract_year(text)
+    year_delta = (
+        abs(entry_year - profile.year)
+        if entry_year is not None and profile.year is not None
+        else None
+    )
+
+    if title_prefix_match and has_survey_cue:
+        return "non_target"
+
+    # Bibliography strings are short/noisy; title phrase containment is a strong cue.
+    if title_prefix_match:
+        if has_pmihes_cue:
+            return "same_work_alt_version"
+        if year_delta is not None and year_delta <= 3:
+            return "same_work_alt_version"
+        if sim >= 0.85:
+            return "same_work_alt_version"
+        return "unknown"
+
+    if sim >= 0.92 and not has_survey_cue:
+        return "same_work_alt_version"
+
+    return "non_target"
 
 
 class OpenAlexTargetResolver:
@@ -42,6 +118,13 @@ class OpenAlexTargetResolver:
         self.mailto = mailto
         self.api_key = api_key
         self.per_page = per_page
+        self._openalex_client = OpenAlexClient(
+            cache_dir=cache_dir,
+            rate_limit=0.0,
+            mailto=mailto,
+            api_key=api_key,
+            per_page=per_page,
+        )
 
     def derive_target_id(self, arxiv_id: str) -> str:
         if not arxiv_id:
@@ -49,7 +132,7 @@ class OpenAlexTargetResolver:
         safe = arxiv_id.replace("/", "_").strip()
         return f"arxiv_{safe}"
 
-    def fetch_arxiv_metadata(self, arxiv_id: str, api: ArxivAPI) -> TargetMetadata:
+    def fetch_arxiv_metadata(self, arxiv_id: str, api: ArxivAPI) -> TargetWorkProfile:
         params = {"id_list": parse_arxiv_id(arxiv_id)}
         resp = api.session.get(api.base_url, params=params, timeout=30)
         resp.raise_for_status()
@@ -59,7 +142,7 @@ class OpenAlexTargetResolver:
         paper = api.entry_to_paper(entries[0])
         if not paper:
             raise RuntimeError(f"Unable to parse arXiv entry for {arxiv_id}")
-        return TargetMetadata(
+        return TargetWorkProfile(
             title=paper.get("title") or "",
             authors=list(paper.get("authors") or []),
         )
@@ -116,27 +199,24 @@ class OpenAlexTargetResolver:
         if not title:
             return None
 
+        from urllib.parse import urlencode
+
         params = {"search": title, "per-page": self.per_page}
-        if self.mailto:
-            params["mailto"] = self.mailto
-
-        url = "https://api.openalex.org/works"
-        cache_key = url + "?" + "&".join(f"{k}={v}" for k, v in params.items())
-        ensure_dir(self.cache_dir)
-        cache_path = os.path.join(self.cache_dir, f"{sha256_hash(cache_key)}.json")
-
-        if os.path.exists(cache_path):
-            with open(cache_path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-        else:
-            headers = {}
-            if self.api_key:
-                headers["Authorization"] = f"Bearer {self.api_key}"
-            resp = requests.get(url, params=params, headers=headers, timeout=60)
-            resp.raise_for_status()
-            data = resp.json()
-            with open(cache_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, ensure_ascii=False)
+        url = f"{OPENALEX_BASE}/works?{urlencode(params)}"
+        data = self._openalex_client.fetch_json(url)
 
         results = data.get("results") or []
         return self.select_openalex_work_id(results, title, authors)
+
+    def fetch_openalex_work(self, work_id_or_url: str) -> Optional[dict[str, Any]]:
+        """Fetch one OpenAlex work JSON via shared OpenAlex client/caching."""
+        if not work_id_or_url:
+            return None
+        wid = str(work_id_or_url).strip()
+        if "/works/" in wid:
+            wid = wid.rsplit("/", 1)[-1]
+        if not wid:
+            return None
+
+        url = f"{OPENALEX_BASE}/works/{wid}"
+        return self._openalex_client.fetch_json(url)

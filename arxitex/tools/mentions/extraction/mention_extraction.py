@@ -9,6 +9,10 @@ from typing import Any, Dict, List, Optional
 from bs4 import BeautifulSoup
 from pdfminer.high_level import extract_text as pdf_extract_text
 
+from arxitex.tools.mentions.acquisition.target_resolution import (
+    TargetWorkProfile,
+    classify_bib_entry,
+)
 from arxitex.tools.mentions.extraction.mention_utils import (
     build_label_regex,
     derive_labels_from_entry,
@@ -30,7 +34,7 @@ def _window_text(sentences: List[str], idx: int, window: int = 1) -> str:
 
 @dataclass
 class MentionExtractor:
-    target_title: str
+    target_profile: TargetWorkProfile
 
     def extract_from_paragraph(
         self,
@@ -98,7 +102,7 @@ class MentionExtractor:
             tag.decompose()
 
         mentions: List[Dict[str, Any]] = []
-        bib_targets: Dict[str, Dict[str, str]] = {}
+        bib_targets: Dict[str, Dict[str, Any]] = {}
         for bib in soup.select(".ltx_bibliography .ltx_bibitem, .ltx_bibitem"):
             bib_id = bib.get("id")
             if not bib_id:
@@ -106,13 +110,24 @@ class MentionExtractor:
             text = bib.get_text(" ", strip=True)
             if not text:
                 continue
-            if title_matches_entry(text, self.target_title):
-                tag = bib.select_one(".ltx_bibtag")
-                label = tag.get_text(" ", strip=True) if tag else ""
-                labels = [label] if label else []
-                if not labels:
-                    labels = derive_labels_from_entry(text)
-                bib_targets[bib_id] = {"labels": labels, "text": text}
+            match_status = classify_bib_entry(text, self.target_profile)
+            if match_status not in {"exact_target", "same_work_alt_version"}:
+                continue
+            if not self.target_profile.doi and not title_matches_entry(
+                text, self.target_profile.title
+            ):
+                # Keep strictness when no DOI anchor is available.
+                continue
+            tag = bib.select_one(".ltx_bibtag")
+            label = tag.get_text(" ", strip=True) if tag else ""
+            labels = [label] if label else []
+            if not labels:
+                labels = derive_labels_from_entry(text)
+            bib_targets[bib_id] = {
+                "labels": labels,
+                "text": text,
+                "target_match_status": match_status,
+            }
 
         if bib_targets:
             seen: set = set()
@@ -204,6 +219,9 @@ class MentionExtractor:
                         "cite_target": bib_id,
                         "cite_label": label or None,
                         "bib_entry": bib_targets[bib_id].get("text"),
+                        "target_match_status": bib_targets[bib_id].get(
+                            "target_match_status"
+                        ),
                         "explicit_refs": explicit_refs,
                         "explicit_ref_source": explicit_ref_source,
                         "reference_precision": (
@@ -234,7 +252,8 @@ class MentionExtractor:
         bib_text = "" if bib_idx is None else text[bib_idx:]
 
         labels: List[str] = []
-        if bib_text and self.target_title:
+        target_match_status = "unknown"
+        if bib_text and self.target_profile.title:
             entry_start_re = re.compile(r"^\s*(?:\[[^\]]+\]|\([^\)]+\)|\d+\.)\s+")
             author_year_start_re = re.compile(
                 r"^\s*[A-Z][A-Za-z'`-]+(?:,|\s)\s+.*\b(19|20)\d{2}\b"
@@ -256,8 +275,14 @@ class MentionExtractor:
                 entries.append(" ".join(current))
 
             for entry in entries:
-                if title_matches_entry(entry, self.target_title):
+                match_status = classify_bib_entry(entry, self.target_profile)
+                if match_status in {"exact_target", "same_work_alt_version"}:
+                    if not self.target_profile.doi and not title_matches_entry(
+                        entry, self.target_profile.title
+                    ):
+                        continue
                     labels.extend(derive_labels_from_entry(entry))
+                    target_match_status = match_status
 
         mentions: List[Dict[str, Any]] = []
         for m in re.finditer(r"\S.*?(?:\n{2,}|\Z)", body_text, flags=re.S):
@@ -275,5 +300,7 @@ class MentionExtractor:
                     labels=labels,
                 )
             )
+        for mention in mentions:
+            mention["target_match_status"] = target_match_status
 
         return mentions

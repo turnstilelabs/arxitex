@@ -91,6 +91,16 @@ class QueryGenerator:
         async def process_row(row: Dict[str, Any]) -> None:
             async with sem:
                 try:
+                    match_status = (
+                        row.get("target_match_status") or "exact_target"
+                    ).lower()
+                    if match_status not in {
+                        "exact_target",
+                        "same_work_alt_version",
+                    }:
+                        async with counters_lock:
+                            counters["processed"] += 1
+                        return
                     ctx = MentionContext.from_row(row)
                     explicit_kind = None
                     if ctx.explicit_refs:
@@ -112,22 +122,13 @@ class QueryGenerator:
                                 target_name=self.target_name,
                                 prompt_id=prompt_id,
                             )
-                            temp = self.temperature
-                            if temp is None and attempt > 1:
-                                temp = 0.2
-                            if temp is None:
-                                result = await aexecute_prompt(
-                                    prompt,
-                                    QuerySingle,
-                                    model=self.model,
-                                )
-                            else:
-                                result = await aexecute_prompt(
-                                    prompt,
-                                    QuerySingle,
-                                    model=self.model,
-                                    temperature=temp,
-                                )
+                            # Retry with the same model/temperature; async prompt runner
+                            # does not currently support temperature overrides.
+                            result = await aexecute_prompt(
+                                prompt,
+                                QuerySingle,
+                                model=self.model,
+                            )
                             if not result or not getattr(result, "query_text", None):
                                 logger.warning(
                                     "No {} query for arXiv {} (attempt {})",
@@ -215,6 +216,7 @@ class QueryGenerator:
                                     "query_text": q.query_text,
                                     "query_style": style,
                                     "source_arxiv_id": row.get("arxiv_id"),
+                                    "target_arxiv_id": row.get("target_arxiv_id"),
                                     "source_openalex_id": row.get("openalex_id"),
                                     "mention_id": mention_id,
                                     "location_type": row.get("location_type"),
@@ -229,6 +231,9 @@ class QueryGenerator:
                                         "explicit_ref_source"
                                     ),
                                     "explicit_ref_kind": explicit_kind,
+                                    "target_match_status": row.get(
+                                        "target_match_status"
+                                    ),
                                     "context_sentence": row.get("context_sentence"),
                                     "context_prev": row.get("context_prev"),
                                     "context_next": row.get("context_next"),

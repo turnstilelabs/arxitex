@@ -12,6 +12,7 @@ Outputs:
 
 import argparse
 import asyncio
+import json
 import os
 import sys
 import time
@@ -28,7 +29,10 @@ from arxitex.arxiv_utils import (
     normalize_arxiv_id,
     parse_arxiv_id,
 )
-from arxitex.tools.mentions.acquisition.target_resolution import OpenAlexTargetResolver
+from arxitex.tools.mentions.acquisition.target_resolution import (
+    OpenAlexTargetResolver,
+    TargetWorkProfile,
+)
 from arxitex.tools.mentions.extraction.mention_extraction import MentionExtractor
 from arxitex.utils import append_jsonl, ensure_dir, read_jsonl, sha256_hash
 
@@ -95,6 +99,7 @@ class MentionContextExtractionStage:
         *,
         works_file: str,
         target_title: str,
+        target_profile: TargetWorkProfile,
         target_id: str,
         out_dir: str,
         cache_dir: str,
@@ -106,6 +111,7 @@ class MentionContextExtractionStage:
     ) -> None:
         self.works_file = works_file
         self.target_title = target_title
+        self.target_profile = target_profile
         self.target_id = target_id
         self.out_dir = out_dir
         self.cache_dir = cache_dir
@@ -114,7 +120,7 @@ class MentionContextExtractionStage:
         self.no_pdf = no_pdf
         self.concurrency = concurrency
         self.offline = offline
-        self.extractor = MentionExtractor(target_title=target_title)
+        self.extractor = MentionExtractor(target_profile=target_profile)
 
     async def run(self) -> int:
         ensure_dir(self.out_dir)
@@ -207,6 +213,7 @@ class MentionContextExtractionStage:
                 base = {
                     "openalex_id": work.get("openalex_id"),
                     "arxiv_id": arxiv_id,
+                    "target_arxiv_id": self.target_id,
                     "title": work.get("title"),
                 }
 
@@ -418,9 +425,26 @@ async def main(argv: Optional[List[str]] = None) -> int:
     if not target_title:
         raise SystemExit("No target title provided. Pass --target-title.")
 
+    target_profile = TargetWorkProfile(title=target_title)
+    target_ids_path = os.path.join(args.out_dir, f"{target_id}_target_ids.json")
+    if os.path.exists(target_ids_path):
+        try:
+            target_ids = json.loads(open(target_ids_path, "r", encoding="utf-8").read())
+            if isinstance(target_ids, list) and target_ids:
+                work = resolver.fetch_openalex_work(target_ids[0])
+                if work:
+                    target_profile = TargetWorkProfile(
+                        title=(work.get("title") or target_title),
+                        doi=(work.get("doi") or None),
+                        year=work.get("publication_year"),
+                    )
+        except Exception as exc:
+            logger.warning("Could not load OpenAlex target profile: {}", exc)
+
     stage = MentionContextExtractionStage(
         works_file=args.works_file,
         target_title=target_title,
+        target_profile=target_profile,
         target_id=target_id,
         out_dir=args.out_dir,
         cache_dir=args.cache_dir,
