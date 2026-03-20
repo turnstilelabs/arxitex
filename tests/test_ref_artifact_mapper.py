@@ -42,15 +42,15 @@ def test_resolve_target_version_prefers_explicit_id():
     registry = _registry_with_two_versions()
     row = {"target_arxiv_id": "pmihes2012"}
     res = resolve_target_version(row, registry, policy=Policy())
-    assert res.status == "mapped"
-    assert res.version_id == "pmihes2012"
+    assert res["status"] == "mapped"
+    assert res["version_id"] == "pmihes2012"
 
 
 def test_resolve_target_version_unresolved_when_explicit_missing():
     registry = _registry_with_two_versions()
     row = {"target_arxiv_id": "missing"}
     res = resolve_target_version(row, registry, policy=Policy())
-    assert res.status == "version_unresolved"
+    assert res["status"] == "version_unresolved"
 
 
 def test_map_explicit_ref_exact_kind_number():
@@ -62,9 +62,9 @@ def test_map_explicit_ref_exact_kind_number():
         "explicit_refs": [{"kind": "definition", "number": "2.6"}],
     }
     mapped = map_explicit_refs_to_artifacts(row, registry, policy=Policy())
-    assert mapped.status == "mapped"
-    assert [m.statement_id for m in mapped.matches] == ["pmihes2012:def_26"]
-    assert mapped.matches[0].tier == "exact"
+    assert mapped["status"] == "mapped"
+    assert [m["statement_id"] for m in mapped["matches"]] == ["pmihes2012:def_26"]
+    assert mapped["matches"][0]["tier"] == "exact"
 
 
 def test_exact_kind_number_duplicate_is_dropped_as_ambiguous():
@@ -92,8 +92,8 @@ def test_exact_kind_number_duplicate_is_dropped_as_ambiguous():
         "explicit_refs": [{"kind": "theorem", "number": "5.2"}],
     }
     mapped = map_explicit_refs_to_artifacts(row, registry, policy=Policy())
-    assert mapped.status == "ref_ambiguous"
-    assert mapped.reason == "exact_multi_hit"
+    assert mapped["status"] == "ref_ambiguous"
+    assert mapped["reason"] == "exact_multi_hit"
 
 
 def test_build_gold_links_drops_unresolved_and_is_deterministic():

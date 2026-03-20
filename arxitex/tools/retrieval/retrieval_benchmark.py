@@ -34,10 +34,7 @@ from arxitex.tools.retrieval.io import (
     load_qrels,
     load_queries,
 )
-from arxitex.tools.retrieval.logic_decomposition import extract_logic_decompositions
-from arxitex.tools.retrieval.logic_rerank import LogicReranker, apply_logic_rerank
 from arxitex.tools.retrieval.metrics import evaluate
-from arxitex.tools.retrieval.msc2020 import MSCDictionary, MSCMatch
 from arxitex.tools.retrieval.normalization import normalize_text
 from arxitex.tools.retrieval.pylate_engine import PyLateEngine
 from arxitex.tools.retrieval.qrels_audit import audit_qrels_alignment
@@ -777,44 +774,6 @@ def main() -> int:
         help="Run identifier for logs/metadata (default: UTC timestamp).",
     )
     parser.add_argument(
-        "--logic-rerank",
-        action="store_true",
-        help="Enable logic-aware reranking on top of retrieval outputs.",
-    )
-    parser.add_argument(
-        "--logic-model",
-        default="gpt-5-mini-2025-08-07",
-        help="LLM model for logic decomposition + pairwise entailment labels.",
-    )
-    parser.add_argument(
-        "--logic-cache",
-        default="",
-        help="Cache directory for logic decomposition (default: <out-dir>/logic_cache).",
-    )
-    parser.add_argument(
-        "--logic-concurrency",
-        type=int,
-        default=4,
-        help="Parallelism for logic decomposition and hypothesis labeling.",
-    )
-    parser.add_argument(
-        "--logic-top-n",
-        type=int,
-        default=20,
-        help="Apply logic reranking only to top N candidates per query (default: 20).",
-    )
-    parser.add_argument(
-        "--logic-msc-csv",
-        default="data/msc2020/msc2020.csv",
-        help="Path to MSC2020 CSV file used for symbolic context triage.",
-    )
-    parser.add_argument(
-        "--logic-no-debruijn",
-        action="store_false",
-        dest="logic_use_debruijn",
-        help="Disable De Bruijn-style fallback normalization in goal scoring.",
-    )
-    parser.add_argument(
         "--agentic-model",
         default="gpt-5-mini-2025-08-07",
         help="LLM model for agentic ColGREP retrieval.",
@@ -945,64 +904,6 @@ def main() -> int:
         logger.error("No queries loaded from {}", args.queries)
         return 1
 
-    logic_artifacts = {}
-    logic_queries = {}
-    query_msc: Dict[str, MSCMatch] = {}
-    artifact_msc: Dict[str, MSCMatch] = {}
-    logic_reranker = None
-    if args.logic_rerank:
-        logic_cache_dir = (
-            Path(args.logic_cache)
-            if args.logic_cache
-            else Path(args.out_dir) / "logic_cache"
-        )
-        logic_artifacts = extract_logic_decompositions(
-            texts=[a.text for a in artifacts],
-            ids=ids,
-            model=args.logic_model,
-            cache_path=logic_cache_dir / "artifacts.jsonl",
-            concurrency=args.logic_concurrency,
-        )
-        query_ids_for_logic = [q["query_id"] for q in queries]
-        query_texts_for_logic = [q["query_text"] for q in queries]
-        logic_queries = extract_logic_decompositions(
-            texts=query_texts_for_logic,
-            ids=query_ids_for_logic,
-            model=args.logic_model,
-            cache_path=logic_cache_dir / "queries.jsonl",
-            concurrency=args.logic_concurrency,
-        )
-
-        msc_dict = None
-        if os.path.exists(args.logic_msc_csv):
-            msc_dict = MSCDictionary.from_csv(args.logic_msc_csv)
-        else:
-            logger.warning(
-                "MSC2020 CSV not found at {}. Context score will be 0.0.",
-                args.logic_msc_csv,
-            )
-
-        if msc_dict is not None:
-            query_msc = {
-                qid: msc_dict.match_context(
-                    (logic_queries.get(qid) and logic_queries[qid].context) or ""
-                )
-                for qid in query_ids_for_logic
-            }
-            artifact_msc = {
-                aid: msc_dict.match_context(
-                    (logic_artifacts.get(aid) and logic_artifacts[aid].context) or ""
-                )
-                for aid in ids
-            }
-
-        logic_reranker = LogicReranker(
-            model=args.logic_model,
-            top_n=args.logic_top_n,
-            concurrency=args.logic_concurrency,
-            use_debruijn=args.logic_use_debruijn,
-        )
-
     qrels = load_qrels(args.qrels) if args.qrels else {}
     qrel_mapping_diagnostics = None
     qrel_mapping_report_path = None
@@ -1016,10 +917,6 @@ def main() -> int:
             _to_mapping_context_rows(queries),
             registry,
             policy=RefMappingPolicy(
-                require_kind_match=True,
-                allow_number_only_fallback=True,
-                strict_target_match=True,
-                drop_unknown_target=True,
                 alias_curated_path=(args.mapping_curated_aliases or None),
             ),
         )
@@ -1121,14 +1018,6 @@ def main() -> int:
                 PyLateEngine, "model_name", "lightonai/Reason-ModernColBERT"
             ),
             "pylate_index_dir": pylate_index_dir,
-        },
-        "logic_rerank": {
-            "enabled": bool(args.logic_rerank),
-            "model": args.logic_model,
-            "top_n": args.logic_top_n,
-            "concurrency": args.logic_concurrency,
-            "msc_csv": args.logic_msc_csv,
-            "use_debruijn": bool(args.logic_use_debruijn),
         },
         "agentic_colgrep": {
             "model": args.agentic_model,
@@ -1319,18 +1208,6 @@ def main() -> int:
                 )
                 row["indices"] = new_indices
                 row["scores"] = new_scores
-
-        if args.logic_rerank and exp in {"e1", "e2", "e3", "e4"}:
-            apply_logic_rerank(
-                results=results,
-                query_ids=[q["query_id"] for q in queries],
-                id_lookup=id_lookup,
-                query_logic=logic_queries,
-                artifact_logic=logic_artifacts,
-                query_msc=query_msc,
-                artifact_msc=artifact_msc,
-                reranker=logic_reranker,
-            )
 
         # Map indices to ids
         for row in results.values():

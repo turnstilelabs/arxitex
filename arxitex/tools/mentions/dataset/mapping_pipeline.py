@@ -145,12 +145,7 @@ def build_mentions_dataset(
 
     context_rows = _build_context_rows(mentions_rows)
 
-    policy = RefMappingPolicy(
-        require_kind_match=True,
-        allow_number_only_fallback=True,
-        strict_target_match=True,
-        drop_unknown_target=True,
-    )
+    policy = RefMappingPolicy()
     mapping = None
     gold_links: Dict[str, List[str]] = {}
     if context_rows:
