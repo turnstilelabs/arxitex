@@ -18,9 +18,6 @@ from typing import Dict, Iterable, List, Tuple
 from loguru import logger
 
 from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
-    Policy as RefMappingPolicy,
-)
-from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
     build_gold_links,
     build_target_registry,
 )
@@ -916,9 +913,7 @@ def main() -> int:
         qrel_result = build_gold_links(
             _to_mapping_context_rows(queries),
             registry,
-            policy=RefMappingPolicy(
-                alias_curated_path=(args.mapping_curated_aliases or None),
-            ),
+            alias_curated_path=(args.mapping_curated_aliases or None),
             include_records=True,
         )
         qrels = qrel_result.gold_links

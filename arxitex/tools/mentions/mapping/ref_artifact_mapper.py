@@ -11,13 +11,6 @@ ALLOWED_TARGET_MATCH = {"exact_target", "same_work_alt_version"}
 RULE_PRIORITY = {"override": 3, "deny": 2, "allow": 1}
 
 
-@dataclass(frozen=True)
-class Policy:
-    """Strict policy with optional curated alias file."""
-
-    alias_curated_path: Optional[str] = None
-
-
 @dataclass
 class MappingStats:
     total_rows: int = 0
@@ -340,13 +333,13 @@ def build_gold_links(
     rows: Iterable[Dict],
     target_registry: TargetRegistry,
     *,
-    policy: Policy,
+    alias_curated_path: Optional[str] = None,
     include_records: bool = False,
 ) -> GoldLinksBuildResult:
     gold_links: Dict[str, List[str]] = {}
     stats = MappingStats()
     records: List[Dict] = []
-    aliases = _load_curated_aliases(policy.alias_curated_path)
+    aliases = _load_curated_aliases(alias_curated_path)
 
     for row in rows:
         stats.total_rows += 1

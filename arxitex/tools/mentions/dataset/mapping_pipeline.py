@@ -9,9 +9,6 @@ from typing import Dict, Iterable, List, Optional
 
 from loguru import logger
 
-from arxitex.tools.mentions.mapping.ref_artifact_mapper import (
-    Policy as RefMappingPolicy,
-)
 from arxitex.tools.mentions.mapping.ref_artifact_mapper import build_gold_links
 from arxitex.utils import read_jsonl, sha256_hash
 
@@ -145,14 +142,12 @@ def build_mentions_dataset(
 
     context_rows = _build_context_rows(mentions_rows)
 
-    policy = RefMappingPolicy()
     mapping = None
     gold_links: Dict[str, List[str]] = {}
     if context_rows:
         mapping = build_gold_links(
             context_rows.values(),
             target_registry,
-            policy=policy,
             include_records=bool(mapping_report_path),
         )
         gold_links = {str(k): list(v) for k, v in mapping.gold_links.items()}

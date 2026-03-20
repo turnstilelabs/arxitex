@@ -3,7 +3,6 @@
 from .ref_artifact_mapper import (
     GoldLinksBuildResult,
     MappingStats,
-    Policy,
     TargetRegistry,
     build_gold_links,
     build_target_registry,
@@ -11,7 +10,6 @@ from .ref_artifact_mapper import (
 
 __all__ = [
     "MappingStats",
-    "Policy",
     "GoldLinksBuildResult",
     "TargetRegistry",
     "build_gold_links",
