@@ -6,8 +6,14 @@ import re
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from bs4 import BeautifulSoup
-from pdfminer.high_level import extract_text as pdf_extract_text
+try:
+    from bs4 import BeautifulSoup
+except ModuleNotFoundError:  # pragma: no cover - exercised in minimal CI envs
+    BeautifulSoup = None  # type: ignore[assignment]
+try:
+    from pdfminer.high_level import extract_text as pdf_extract_text
+except ModuleNotFoundError:  # pragma: no cover - exercised in minimal CI envs
+    pdf_extract_text = None  # type: ignore[assignment]
 
 from arxitex.tools.mentions.acquisition.target_resolution import (
     TargetWorkProfile,
@@ -94,6 +100,8 @@ class MentionExtractor:
         source_url: str,
         base: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
+        if BeautifulSoup is None:
+            raise RuntimeError("beautifulsoup4 is required for HTML mention extraction")
         with open(html_path, "r", encoding="utf-8", errors="ignore") as f:
             html = f.read()
 
@@ -238,6 +246,8 @@ class MentionExtractor:
         source_url: str,
         base: Dict[str, Any],
     ) -> List[Dict[str, Any]]:
+        if pdf_extract_text is None:
+            raise RuntimeError("pdfminer.six is required for PDF mention extraction")
         text = pdf_extract_text(pdf_path) or ""
         text = text.replace("\x0c", "\n")
 
