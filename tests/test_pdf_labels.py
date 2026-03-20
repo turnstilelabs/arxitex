@@ -25,6 +25,20 @@ def test_find_label_in_lines():
     assert found == ("Theorem", "1.1")
 
 
+def test_find_label_in_lines_ignores_inline_reference_mentions():
+    lines = [
+        ("In order to finish the proof of Theorem 5.2, it suffices to prove:", None),
+        (
+            "Theorem 5.10. The functor A -> A/varpi induces an equivalence of categories.",
+            None,
+        ),
+        ("More text.", None),
+    ]
+    anchor = "the functor a to a varpi induces an equivalence of categories"
+    found = pl._find_label_in_lines(lines, anchor, "Theorem")
+    assert found == ("Theorem", "5.10")
+
+
 def test_annotate_nodes_with_pdf_labels(monkeypatch, tmp_path):
     tex_root = tmp_path / "tex"
     tex_root.mkdir()
